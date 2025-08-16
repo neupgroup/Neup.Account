@@ -1,0 +1,51 @@
+name: Deploy Clean Production
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "YES" to confirm full reinstall'
+        required: true
+        default: 'NO'
+
+jobs:
+  clean-reinstall:
+    if: ${{ github.event.inputs.confirm == 'YES' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH Key
+        run: |
+          set -e
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Rsync Code (Skip everything except core codebase)
+        run: |
+          set -e
+          rsync -avz --delete \
+            --exclude '.pm2' \
+            --exclude '.ssh' \
+            --exclude 'keys' \
+            ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}
+
+      - name: Full Clean & Fresh Install
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            cd ${{ secrets.DEPLOY_PATH }}
+
+            echo "🧹 Cleaning node_modules, dist, and lock file"
+            rm -rf node_modules dist build package-lock.json
+
+            echo "📦 Installing clean dependencies"
+            npm install --production
+
+            echo "🚀 Restarting with PM2..."
+            pm2 restart all || pm2 start ecosystem.config.js
+            pm2 save
+          EOF
