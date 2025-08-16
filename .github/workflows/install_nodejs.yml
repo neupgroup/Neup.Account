@@ -1,0 +1,30 @@
+name: Install Node.js to Server
+
+on:
+  workflow_dispatch:
+    inputs:
+      server_password:
+        description: 'Temporary sudo password'
+        required: true
+        type: string
+
+jobs:
+  install-node:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Mask password from logs
+        run: echo "::add-mask::${{ inputs.server_password }}"
+
+      - name: SSH and Install Node.js
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: root
+          password: ${{ inputs.server_password }}
+          script: |
+            export DEBIAN_FRONTEND=noninteractive
+            echo "${{ inputs.server_password }}" | sudo -S apt-get update -y
+            echo "${{ inputs.server_password }}" | sudo -S apt-get install wget -y
+            wget -qO- https://deb.nodesource.com/setup_20.x | sudo -E bash -
+            echo "${{ inputs.server_password }}" | sudo -S apt-get install nodejs -y
