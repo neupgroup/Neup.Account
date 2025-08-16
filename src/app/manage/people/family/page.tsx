@@ -1,0 +1,89 @@
+
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { getFamilyGroups } from "./actions";
+import { FamilyManager } from "./family-manager";
+import Link from "next/link";
+import { PartnerManager } from "./partner-manager";
+import { BackButton } from "@/components/ui/back-button";
+import { getPersonalAccountId } from "@/lib/auth-actions";
+import { getUserProfile, checkPermissions } from "@/lib/user-actions";
+import { notFound } from "next/navigation";
+
+export default async function FamilySharingPage() {
+    const canView = await checkPermissions(['people.family.view']);
+    if (!canView) {
+        notFound();
+    }
+    
+    const personalId = await getPersonalAccountId();
+    if (!personalId) return <p>Please log in.</p>;
+
+    const [familyGroups, canAddFamily, canAddPartner] = await Promise.all([
+        getFamilyGroups(),
+        checkPermissions(['people.family.add']),
+        checkPermissions(['people.family.partner.add']),
+        
+    ]);
+
+    return (
+        <div className="grid gap-8">
+            <BackButton href="/manage/people" />
+            <div>
+                <h1 className="text-3xl font-bold tracking-tight">Family Sharing</h1>
+                <p className="text-muted-foreground">
+                    Share your subscriptions and manage accounts with your family members.
+                </p>
+            </div>
+            
+            {familyGroups.length > 0 ? (
+                familyGroups.map(async (group) => {
+                    const isOwner = group.createdBy === personalId;
+                    const canAddMoreFamily = group.members.filter(m => !m.hidden).length < 5;
+                    const ownerProfile = await getUserProfile(group.createdBy);
+                    const ownerName = ownerProfile?.displayName || `${ownerProfile?.firstName} ${ownerProfile?.lastName}`.trim() || 'A User';
+
+                    return (
+                        <div key={group.id} className="space-y-2">
+                             <h2 className="text-xl font-semibold tracking-tight">
+                                {isOwner ? "Your Family Group" : `Family of ${ownerName}`}
+                            </h2>
+                            <p className="text-muted-foreground text-sm">
+                                {isOwner ? "You can add up to 5 members." : "You are a member of this family."} <Link href="/manage/payment/neup.pro" className="underline text-primary">Go premium</Link> to add any number of members.
+                            </p>
+                            <Card>
+                                <CardContent className="p-6">
+                                    <FamilyManager familyGroup={group} canAddMore={canAddMoreFamily} isOwner={isOwner} />
+                                </CardContent>
+                            </Card>
+                        </div>
+                    );
+                })
+            ) : canAddFamily ? (
+                 <div className="space-y-2">
+                    <h2 className="text-xl font-semibold tracking-tight">Your Family</h2>
+                    <p className="text-muted-foreground text-sm">You haven't created or joined a family yet. Invite someone to start one!</p>
+                     <Card>
+                        <CardContent className="p-6">
+                            <FamilyManager familyGroup={{ id: 'temp', createdBy: personalId, members: [] }} canAddMore={true} isOwner={true} />
+                        </CardContent>
+                    </Card>
+                 </div>
+            ) : null }
+            
+             {canAddPartner && (
+                <div className="space-y-2">
+                    <h2 className="text-xl font-semibold tracking-tight">Add Your Partner (Private)</h2>
+                    <p className="text-muted-foreground text-sm">
+                        Add one partner to your family group. This relationship can be kept private from other family members or made public.
+                    </p>
+                    <Card>
+                        <CardContent className="p-6">
+                            <PartnerManager initialFamilyGroup={familyGroups[0] || null} />
+                        </CardContent>
+                    </Card>
+                </div>
+             )}
+        </div>
+    );
+}
