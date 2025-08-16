@@ -34,10 +34,29 @@ jobs:
             --exclude 'keys' \
             ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}
 
-      - name: Full Clean & Fresh Install
+      - name: Full Clean & Fresh Install with Environment Check
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            set -e
             cd ${{ secrets.DEPLOY_PATH }}
+
+            echo "🔍 Checking Node & npm versions..."
+            if ! command -v node >/dev/null 2>&1; then
+              echo "⚡ Node.js not found. Installing latest LTS..."
+              curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+              sudo apt-get install -y nodejs
+            else
+              echo "✅ Node.js version: \$(node -v)"
+              echo "✅ npm version: \$(npm -v)"
+            fi
+
+            echo "🔍 Checking PM2 installation..."
+            if ! command -v pm2 >/dev/null 2>&1; then
+              echo "⚡ PM2 not found. Installing..."
+              sudo npm install -g pm2
+            else
+              echo "✅ PM2 already installed."
+            fi
 
             echo "🧹 Cleaning node_modules, dist, and lock file"
             rm -rf node_modules dist build package-lock.json
@@ -45,7 +64,13 @@ jobs:
             echo "📦 Installing clean dependencies"
             npm install --production
 
-            echo "🚀 Restarting with PM2..."
+            echo "⚡ Configuring PM2 startup (auto-start on reboot)"
+            pm2 startup systemd -u $USER --hp $HOME || true
+            pm2 save
+
+            echo "🚀 Restarting app with PM2..."
             pm2 restart all || pm2 start ecosystem.config.js
             pm2 save
+
+            echo "✅ Deployment completed successfully."
           EOF
