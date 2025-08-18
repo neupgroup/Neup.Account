@@ -3,7 +3,7 @@
 
 import { useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
-import { switchToPersonal } from "@/app/manage/brand/actions"
+import { switchToPersonal } from "@/app/manage/accounts/brand/actions"
 
 export default function SwitchbackPage() {
     const router = useRouter()
