@@ -155,6 +155,8 @@ export async function registerUser(data: z.infer<typeof registerFormSchema>) {
         }
 
         const isAdmin = await isFirstUser();
+        // The permission set name for an admin is 'admin', otherwise 'standard_user'.
+        const permissionSetName = isAdmin ? 'admin' : 'standard_user';
         
         let finalGender = validation.data.gender;
         if (validation.data.gender === 'custom') {
@@ -168,21 +170,20 @@ export async function registerUser(data: z.infer<typeof registerFormSchema>) {
         
         batch.set(doc(db, 'account', accountId), { type: 'individual' });
 
-        // If it's the first user, grant admin permissions by default.
-        if (isAdmin) {
-             const adminPermQuery = query(collection(db, 'permission'), where('name', '==', 'admin'), limit(1));
-             const adminPermSnap = await getDocs(adminPermQuery);
-             if (!adminPermSnap.empty) {
-                const adminPermId = adminPermSnap.docs[0].id;
-                 const newPermitRef = doc(collection(db, 'permit'));
-                batch.set(newPermitRef, {
-                    account_id: accountId,
-                    is_root: true,
-                    permission: [adminPermId],
-                    restricted_permission: [],
-                    created_on: serverTimestamp(),
-                });
-             }
+        // Grant permissions by finding the permission set ID
+        const permQuery = query(collection(db, 'permission'), where('name', '==', permissionSetName), limit(1));
+        const permSnap = await getDocs(permQuery);
+        
+        if (!permSnap.empty) {
+            const permId = permSnap.docs[0].id;
+            const newPermitRef = doc(collection(db, 'permit'));
+            batch.set(newPermitRef, {
+                account_id: accountId,
+                is_root: true,
+                permission: [permId],
+                restricted_permission: [],
+                created_on: serverTimestamp(),
+            });
         }
 
 

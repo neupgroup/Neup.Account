@@ -21,6 +21,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  webpack: (config, { isServer }) => {
+    config.ignoreWarnings = [
+      ...(config.ignoreWarnings || []),
+      /require.extensions is not supported by webpack, Use a loader instead./,
+    ];
+    return config;
+  },
 };
 
 export default nextConfig;
