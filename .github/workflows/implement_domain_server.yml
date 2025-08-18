@@ -1,9 +1,7 @@
 name: Implement Domain and SSL
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   deploy:
