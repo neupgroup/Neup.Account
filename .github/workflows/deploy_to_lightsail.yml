@@ -1,4 +1,4 @@
-name: Deploy to lightsail
+name: Deploy Source & Build on Server (Low RAM + Temporary Swap)
 
 on:
   workflow_dispatch:
@@ -37,17 +37,28 @@ jobs:
             --exclude 'dist' \
             ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}
 
-      # 5️⃣ Build and restart on the server
+      # 5️⃣ Build and restart on the server with temporary swap
       - name: Build & Restart on Server
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
             cd ${{ secrets.DEPLOY_PATH }}
 
-            echo "📦 Installing fresh dependencies..."
-            npm install
+            echo "💾 Creating temporary 4GB swap space..."
+            sudo fallocate -l 4G /tmp/swapfile
+            sudo chmod 600 /tmp/swapfile
+            sudo mkswap /tmp/swapfile
+            sudo swapon /tmp/swapfile
 
-            echo "🏗️ Building using server-side .env..."
+            echo "📦 Installing fresh dependencies (low RAM optimized)..."
+            export NODE_OPTIONS="--max_old_space_size=3072"
+            npm ci --production
+
+            echo "🏗️ Building with server-side .env..."
             npm run build
+
+            echo "💥 Removing temporary swap space..."
+            sudo swapoff /tmp/swapfile
+            sudo rm /tmp/swapfile
 
             echo "🚀 Restarting app with PM2..."
             pm2 restart all || pm2 start ecosystem.config.js
