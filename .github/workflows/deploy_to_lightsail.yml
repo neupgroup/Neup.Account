@@ -1,4 +1,4 @@
-name: Deploy Source and Build on Server
+name: Deploy to Lightsail
 
 on:
   workflow_dispatch:
@@ -10,6 +10,9 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+
+      - name: Install Rsync
+        run: sudo apt-get update && sudo apt-get install -y rsync
 
       - name: Setup SSH Key
         run: |
@@ -42,4 +45,8 @@ jobs:
 
             echo "🏗️ Building with server-side .env..."
             npm run build
+
+            echo "🚀 Restarting app with PM2..."
+            pm2 restart all || pm2 start ecosystem.config.js
+            pm2 save
           EOF
