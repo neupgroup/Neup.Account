@@ -1,4 +1,4 @@
-name: Deploy to Lightsail
+name: Deploy Source and Build on Server
 
 on:
   workflow_dispatch:
@@ -11,16 +11,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18 # or whatever version you use
-
-      - name: Install Dependencies & Build
-        run: |
-          npm ci
-          npm run build
-
       - name: Setup SSH Key
         run: |
           set -e
@@ -29,20 +19,27 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Rsync Build Output (Only .next, public, package.json if needed)
+      - name: Rsync Source Code (skip env, node_modules, builds, etc.)
         run: |
           set -e
           rsync -avz --delete \
-            --exclude '.git' \
             --exclude 'node_modules' \
-            --exclude '.github' \
+            --exclude '.pm2' \
+            --exclude '.env' \
+            --exclude '.ssh' \
+            --exclude 'keys' \
+            --exclude '.next' \
+            --exclude 'dist' \
             ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}
 
-      - name: Restart PM2 (No Install)
+      - name: Build & Restart on Server
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
             cd ${{ secrets.DEPLOY_PATH }}
-            echo "🚀 Restarting PM2 without install..."
-            pm2 restart all || pm2 start ecosystem.config.js
-            pm2 save
+            
+            echo "📦 Installing fresh dependencies..."
+            npm install
+
+            echo "🏗️ Building with server-side .env..."
+            npm run build
           EOF
