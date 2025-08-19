@@ -37,10 +37,10 @@ jobs:
             --exclude 'dist' \
             ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}
 
-      # 5️⃣ Build and restart on the server with temporary swap
+      # Build and restart on server. can stay disconnected.
       - name: Build & Restart on Server
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+          ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
             cd ${{ secrets.DEPLOY_PATH }}
 
             echo "💾 Creating temporary 4GB swap space..."
@@ -51,16 +51,11 @@ jobs:
 
             echo "📦 Installing fresh dependencies (low RAM optimized)..."
             export NODE_OPTIONS="--max_old_space_size=3072"
-            npm ci --production
 
-            echo "🏗️ Building with server-side .env..."
-            npm run build
+            # Build in detached screen to prevent SSH disconnect
+            screen -dmS build bash -c "npm ci --production; npm run build; pm2 restart all; pm2 save"
 
             echo "💥 Removing temporary swap space..."
             sudo swapoff /tmp/swapfile
             sudo rm /tmp/swapfile
-
-            echo "🚀 Restarting app with PM2..."
-            pm2 restart all || pm2 start ecosystem.config.js
-            pm2 save
           EOF
