@@ -1,4 +1,4 @@
-name: Deploy to Lightsail
+name: Deploy to lightsail
 
 on:
   workflow_dispatch:
@@ -8,23 +8,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Pull your code
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Install Rsync
-        run: sudo apt-get update && sudo apt-get install -y rsync
-
+      # 2️⃣ Setup SSH Key for server access
       - name: Setup SSH Key
         run: |
-          set -e
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Rsync Source Code (skip env, node_modules, builds, etc.)
+      # 3️⃣ Install rsync on runner
+      - name: Install rsync
+        run: sudo apt-get update && sudo apt-get install -y rsync
+
+      # 4️⃣ Upload source code to Lightsail (skip env, node_modules, previous builds)
+      - name: Rsync Source Code
         run: |
-          set -e
           rsync -avz --delete \
             --exclude 'node_modules' \
             --exclude '.pm2' \
@@ -35,15 +37,16 @@ jobs:
             --exclude 'dist' \
             ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}
 
+      # 5️⃣ Build and restart on the server
       - name: Build & Restart on Server
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
             cd ${{ secrets.DEPLOY_PATH }}
-            
+
             echo "📦 Installing fresh dependencies..."
             npm install
 
-            echo "🏗️ Building with server-side .env..."
+            echo "🏗️ Building using server-side .env..."
             npm run build
 
             echo "🚀 Restarting app with PM2..."
