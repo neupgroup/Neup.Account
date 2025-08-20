@@ -1,0 +1,47 @@
+name: Upload & Build App (Low RAM)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  upload-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Install rsync on Runner
+        run: sudo apt-get update && sudo apt-get install -y rsync
+
+      - name: Rsync Source Code
+        run: |
+          rsync -avz --delete \
+            --exclude 'node_modules' \
+            --exclude '.pm2' \
+            --exclude '.env' \
+            --exclude '.ssh' \
+            --exclude 'keys' \
+            --exclude '.next' \
+            --exclude 'dist' \
+            ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}
+
+      - name: Build App on Server (Low RAM)
+        run: |
+          ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            cd ${{ secrets.DEPLOY_PATH }}
+
+            echo "📦 Installing dependencies (3GB heap)..."
+            export NODE_OPTIONS="--max_old_space_size=3072"
+            npm ci --production
+
+            echo "🏗️ Building the app..."
+            npm run build
+          EOF
