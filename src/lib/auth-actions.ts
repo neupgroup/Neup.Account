@@ -353,9 +353,9 @@ export async function hasActiveSessionCookies(): Promise<boolean> {
 export async function validateCurrentSession() {
     const session = await getActiveSessionDetails();
     if (!session) {
-        const startUrl = new URL('/auth/signin', 'http://localhost');
-        startUrl.searchParams.set('error', 'session_expired');
-        redirect(startUrl.toString().replace(startUrl.origin, ''));
+        const url = new URL('/auth/signin', 'http://localhost'); // Base URL doesn't matter here
+        url.searchParams.set('error', 'session_expired');
+        redirect(url.pathname + url.search);
     }
 
     // Check for service block

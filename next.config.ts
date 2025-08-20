@@ -1,6 +1,7 @@
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
+  basePath: process.env.app_basepath || '',
   async redirects() {
     return [];
   },
