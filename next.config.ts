@@ -1,7 +1,8 @@
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
-  basePath: process.env.app_basepath || '',
+  basePath: '/account',
+  assetPrefix: '/account',
   async redirects() {
     return [];
   },
