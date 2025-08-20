@@ -21,27 +21,36 @@ jobs:
       - name: Install rsync on Runner
         run: sudo apt-get update && sudo apt-get install -y rsync
 
-      - name: Rsync Source Code
+      - name: Rsync Source Code (keep server .env)
         run: |
           rsync -avz --delete \
             --exclude 'node_modules' \
             --exclude '.pm2' \
-            --exclude '.env' \
+            --exclude '.env' \      # still exclude local .env
             --exclude '.ssh' \
             --exclude 'keys' \
             --exclude '.next' \
             --exclude 'dist' \
             ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}
 
-      - name: Build App on Server (Low RAM)
+      - name: Build App on Server (Low RAM, use server .env)
         run: |
           ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
             cd ${{ secrets.DEPLOY_PATH }}
+
+            # Make sure server .env exists
+            if [ ! -f .env ]; then
+              echo "⚠️ .env file not found on server! Build may fail."
+            else
+              echo "✅ Using existing .env from server."
+            fi
 
             echo "📦 Installing dependencies (3GB heap)..."
             export NODE_OPTIONS="--max_old_space_size=3072"
             npm ci --production
 
-            echo "🏗️ Building the app..."
+            echo "🏗️ Building the app with server .env..."
+            # Ensure .env is loaded
+            export $(grep -v '^#' .env | xargs)
             npm run build
           EOF
