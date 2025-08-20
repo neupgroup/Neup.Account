@@ -43,4 +43,4 @@ jobs:
             echo "✅ Swap created successfully:"
             swapon --show
             free -h
-EOF
+          EOF
