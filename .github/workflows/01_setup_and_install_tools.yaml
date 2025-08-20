@@ -1,0 +1,30 @@
+name: Server Setup & Install Tools
+
+on:
+  workflow_dispatch:
+
+jobs:
+  setup-server:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Install & Update Server Packages
+        run: |
+          ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            echo "🔄 Updating server..."
+            sudo apt-get update -y && sudo apt-get upgrade -y
+
+            echo "📦 Installing Node.js, npm, and rsync..."
+            curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+            sudo apt-get install -y nodejs rsync build-essential
+            node -v
+            npm -v
+            rsync --version
+          EOF
