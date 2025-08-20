@@ -26,23 +26,23 @@ jobs:
           rsync -avz --delete \
             --exclude 'node_modules' \
             --exclude '.pm2' \
-            --exclude '.env' \      # still exclude local .env
+            --exclude '.env' \
             --exclude '.ssh' \
             --exclude 'keys' \
             --exclude '.next' \
             --exclude 'dist' \
-            ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}
+            $GITHUB_WORKSPACE/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}
 
       - name: Build App on Server (Low RAM, use server .env)
         run: |
           ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
             cd ${{ secrets.DEPLOY_PATH }}
 
-            # Make sure server .env exists
+            # Check if .env exists
             if [ ! -f .env ]; then
               echo "⚠️ .env file not found on server! Build may fail."
             else
-              echo "✅ Using existing .env from server."
+              echo "✅ Using existing server .env"
             fi
 
             echo "📦 Installing dependencies (3GB heap)..."
@@ -50,7 +50,7 @@ jobs:
             npm ci --production
 
             echo "🏗️ Building the app with server .env..."
-            # Ensure .env is loaded
+            # Load server .env variables for build
             export $(grep -v '^#' .env | xargs)
             npm run build
           EOF
