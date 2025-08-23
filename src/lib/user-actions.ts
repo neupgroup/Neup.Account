@@ -5,7 +5,7 @@
 import { db } from './firebase';
 import { doc, getDoc, collection, query, where, getDocs, updateDoc, limit, arrayRemove } from 'firebase/firestore';
 import { logError } from './logger';
-import { getActiveAccountId } from './auth-actions';
+import { getActiveAccountId as getActiveAccountIdFromServer, getPersonalAccountId as getPersonalAccountIdFromServer } from './auth-actions';
 
 export type UserProfile = {
     firstName?: string;
@@ -50,10 +50,11 @@ export type UserWarning = {
     noticeType: 'general' | 'success' | 'warning' | 'error';
 };
 
-export async function getAccountType(accountId: string): Promise<string | null> {
-    if (!accountId) return null;
+export async function getAccountType(accountId?: string): Promise<string | null> {
+    const idToFetch = accountId || await getActiveAccountIdFromServer();
+    if (!idToFetch) return null;
     try {
-        const typeRef = doc(db, 'account', accountId);
+        const typeRef = doc(db, 'account', idToFetch);
         const typeDoc = await getDoc(typeRef);
 
         if (typeDoc.exists()) {
@@ -63,16 +64,17 @@ export async function getAccountType(accountId: string): Promise<string | null> 
         return 'individual';
 
     } catch (error) {
-        await logError('database', error, `getAccountType: ${accountId}`);
+        await logError('database', error, `getAccountType: ${idToFetch}`);
         return null;
     }
 }
 
 
-export async function getUserProfile(accountId: string): Promise<UserProfile | null> {
-    if (!accountId) return null;
+export async function getUserProfile(accountId?: string): Promise<UserProfile | null> {
+    const idToFetch = accountId || await getActiveAccountIdFromServer();
+    if (!idToFetch) return null;
     try {
-        const profileRef = doc(db, 'profile', accountId);
+        const profileRef = doc(db, 'profile', idToFetch);
         const profileDoc = await getDoc(profileRef);
 
         if (profileDoc.exists()) {
@@ -88,16 +90,17 @@ export async function getUserProfile(accountId: string): Promise<UserProfile | n
         }
         return null;
     } catch (error) {
-        await logError('database', error, `getUserProfile: ${accountId}`);
+        await logError('database', error, `getUserProfile: ${idToFetch}`);
         throw new Error("Could not fetch user profile.");
     }
 }
 
-export async function getUserContacts(accountId: string): Promise<UserContacts> {
-    if (!accountId) return {};
+export async function getUserContacts(accountId?: string): Promise<UserContacts> {
+    const idToFetch = accountId || await getActiveAccountIdFromServer();
+    if (!idToFetch) return {};
     try {
         const contactsRef = collection(db, 'contact');
-        const q = query(contactsRef, where('account_id', '==', accountId));
+        const q = query(contactsRef, where('account_id', '==', idToFetch));
         const querySnapshot = await getDocs(q);
 
         const contacts: UserContacts = {};
@@ -110,106 +113,39 @@ export async function getUserContacts(accountId: string): Promise<UserContacts> 
 
         return contacts;
     } catch (error) {
-        await logError('database', error, `getUserContacts: ${accountId}`);
+        await logError('database', error, `getUserContacts: ${idToFetch}`);
         throw new Error("Could not fetch user contacts.");
     }
 }
 
-export async function getUserNeupIds(accountId: string): Promise<string[]> {
-    if (!accountId) return [];
+export async function getUserNeupIds(accountId?: string): Promise<string[]> {
+    const idToFetch = accountId || await getActiveAccountIdFromServer();
+    if (!idToFetch) return [];
     try {
         const neupidsRef = collection(db, 'neupid');
-        const q = query(neupidsRef, where('for', '==', accountId));
+        const q = query(neupidsRef, where('for', '==', idToFetch));
         const querySnapshot = await getDocs(q);
         
         return querySnapshot.docs.map(doc => doc.id);
     } catch (error) {
-        await logError('database', error, `getUserNeupIds: ${accountId}`);
+        await logError('database', error, `getUserNeupIds: ${idToFetch}`);
         throw new Error("Could not fetch user NeupIDs.");
     }
 }
 
 export async function getPersonalAccountId() {
-    const cookieStore = require('next/headers').cookies();
-    const session = await require('./auth-actions').getActiveSessionDetails();
-    return session?.auth_account_id || null;
+    return getPersonalAccountIdFromServer();
 }
 
-export async function getUnreadWarnings(): Promise<UserWarning[]> {
-    const accountId = await getActiveAccountId();
-    if (!accountId) return [];
-
-    try {
-        const accountRef = doc(db, 'account', accountId);
-        const accountDoc = await getDoc(accountRef);
-
-        if (!accountDoc.exists() || !accountDoc.data().warnings) {
-            return [];
-        }
-
-        const warnings: WarningObject[] = accountDoc.data().warnings;
-
-        return warnings
-            .filter(warning => {
-                if (warning.persistence === 'untildays' && warning.expiresOn) {
-                    return new Date(warning.expiresOn) > new Date();
-                }
-                return true;
-            })
-            .map((warning, index) => ({
-                id: `${warning.issuedOn}-${index}`,
-                message: warning.message,
-                persistence: warning.persistence,
-                noticeType: warning.noticeType || 'general',
-            }));
-
-    } catch (error) {
-        await logError('database', error, `getUnreadWarnings for ${accountId}`);
-        return [];
-    }
-}
-
-export async function markWarningAsRead(warningId: string): Promise<{ success: boolean }> {
-    const accountId = await getActiveAccountId();
-    if (!accountId) return { success: false };
-
-    try {
-        const accountRef = doc(db, 'account', accountId);
-        const accountDoc = await getDoc(accountRef);
-        
-        if (!accountDoc.exists() || !accountDoc.data().warnings) {
-             return { success: false };
-        }
-        
-        const warnings: WarningObject[] = accountDoc.data().warnings;
-        const [issuedOnToFind] = warningId.split(/-\d+$/);
-
-        const warningToRemove = warnings.find(w => w.issuedOn === issuedOnToFind && w.persistence === 'dismissable');
-        
-        if (warningToRemove) {
-             await updateDoc(accountRef, {
-                warnings: arrayRemove(warningToRemove)
-            });
-            return { success: true };
-        }
-        
-        return { success: false };
-
-    } catch (error) {
-        await logError('database', error, `markWarningAsRead: ${warningId}`);
-        return { success: false };
-    }
-}
-
-
-export async function getUserPermissions(accountId: string): Promise<string[]> {
-    if (!accountId) return [];
+export async function getUserPermissions(accountId?: string): Promise<string[]> {
+    const idToFetch = accountId || await getActiveAccountIdFromServer();
+    if (!idToFetch) return [];
     
     try {
-        const accountType = await getAccountType(accountId);
+        const accountType = await getAccountType(idToFetch);
 
         const permitRef = collection(db, 'permit');
-        const q = query(permitRef, where('account_id', '==', accountId));
+        const q = query(permitRef, where('account_id', '==', idToFetch));
         const permitSnapshot = await getDocs(q);
 
         const customPermissionSetIds = new Set<string>();
@@ -252,14 +188,14 @@ export async function getUserPermissions(accountId: string): Promise<string[]> {
         return Array.from(allAccessStrings);
 
     } catch (error) {
-        await logError('database', error, `getUserPermissions for ${accountId}`);
+        await logError('database', error, `getUserPermissions for ${idToFetch}`);
         return [];
     }
 }
 
 
 export async function checkPermissions(requiredPermissions: string[]): Promise<boolean> {
-    const accountId = await getActiveAccountId();
+    const accountId = await getActiveAccountIdFromServer();
     if (!accountId) return false;
 
     // A user with no required permissions should always pass.

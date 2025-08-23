@@ -201,6 +201,6 @@ export async function parseDateString(dateString: string): Promise<{ success: bo
         return { success: false, date: null, error: "Invalid date format." };
     } catch (error) {
         await logError('ai', error, `parseDateString: ${dateString}`);
-        return { success: false, date: null, error: "Could not parse date." };
+        return { success: false, date: null, error: "Could not parse date. The AI service may be unavailable." };
     }
 }

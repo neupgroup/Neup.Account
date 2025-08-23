@@ -26,12 +26,15 @@ import {
     Wallet,
     ShieldCheck,
     Clock,
+    Bell,
 } from "@/components/icons";
+import { NotificationBell } from "../warning-display";
 
 
-const iconMap: { [key: string]: LucideIcon } = {
+const iconMap: { [key: string]: LucideIcon | React.ElementType } = {
     Home: Home,
     "PersonalInfo": UserCircle,
+    "Notifications": NotificationBell,
     "PasswordAndSecurity": Key,
     "LinkedAccounts": Combine,
     "DataAndPrivacy": Database,
@@ -42,8 +45,8 @@ const iconMap: { [key: string]: LucideIcon } = {
     "SignOutAccount": LogOut,
     "SwitchBack": ArrowLeft,
     "Dashboard": Home,
-    "UserManagement": Users,
-    "PendingTasks": Clock,
+    "Account Management": Users,
+    "Requests Management": Clock,
     "PermissionManagement": ShieldCheck,
     "AppManagement": AppWindow,
     "SystemErrors": AlertTriangle,
@@ -89,7 +92,13 @@ export function HomeNavList({ items }: { items: Item[]}) {
     const visibleItems = items.filter(item => !excludedHrefs.includes(item.href));
 
      if (visibleItems.length === 0) {
-        return null;
+        return (
+            <Card>
+                <CardContent className="p-4 text-left">
+                    <p className="text-sm text-muted-foreground">You do not have permission to view any settings in this section.</p>
+                </CardContent>
+            </Card>
+        )
     }
 
     return (

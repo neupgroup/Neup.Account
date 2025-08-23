@@ -53,7 +53,7 @@ export async function getUsersWithRoles(): Promise<UserWithRole[]> {
                 const permitQuery = query(permitRef, where('account_id', '==', accountId), where('is_root', '==', true));
                 const permitSnapshot = await getDocs(permitQuery);
 
-                let permissionSetId = 'standard_user'; // Default role ID if none found
+                let permissionSetId = 'individual.default'; // Default role ID if none found
                  if (!permitSnapshot.empty) {
                     const permitData = permitSnapshot.docs[0].data();
                     if (permitData.permission && permitData.permission.length > 0) {

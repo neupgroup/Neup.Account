@@ -1,11 +1,12 @@
 import type {Metadata} from 'next';
 import './globals.css';
+import 'nprogress/nprogress.css';
 import { Toaster } from "@/components/ui/toaster"
-import PageProgressBar from '@/components/page-progress-bar';
-import { GeolocationClientProvider } from '@/context/geolocation-provider';
+import { GeolocationProvider } from '@/context/geolocation-context';
+import { PageProgressBar } from '@/components/page-progress-bar';
 
 export const metadata: Metadata = {
-  title: 'NeupID',
+  title: 'Neup.Account',
   description: 'Create an account to access NeupID Group Products and Services.',
 };
 
@@ -19,14 +20,14 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
-        <GeolocationClientProvider>
+        <GeolocationProvider>
           <PageProgressBar />
           {children}
           <Toaster />
-        </GeolocationClientProvider>
+        </GeolocationProvider>
       </body>
     </html>
   );

@@ -3,6 +3,8 @@
 import {
     Card,
     CardContent,
+    CardHeader,
+    CardTitle
 } from "@/components/ui/card";
 import { getUserSessions } from "../actions";
 import { SessionManager } from "../session-manager";
@@ -50,12 +52,10 @@ export default async function DevicesPage() {
                     You can sign out any session you don't recognize.
                 </p>
                 <Card>
-                    <CardContent className="p-0">
-                        <SessionManager 
-                            initialSessions={sessions} 
-                            currentSessionId={currentSession?.auth_session_id || null} 
-                        />
-                    </CardContent>
+                    <SessionManager 
+                        initialSessions={sessions} 
+                        currentSessionId={currentSession?.auth_session_id || null} 
+                    />
                 </Card>
             </div>
         </div>

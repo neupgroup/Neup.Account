@@ -77,8 +77,7 @@ export async function getAccessList(accountId: string): Promise<UserAccess[]> {
     const q = query(
       permitsRef,
       where('target_id', '==', accountId),
-      where('is_root', '==', false),
-      where('status', '==', 'approved')
+      where('is_root', '==', false)
     );
     const querySnapshot = await getDocs(q);
 
@@ -246,19 +245,39 @@ export async function grantAccessByNeupId(formData: FormData, geolocation?: stri
         const alreadyExistsQuery = query(permitsRef, where('target_id', '==', ownerAccountId), where('account_id', '==', targetAccountId));
         const alreadyExistsSnapshot = await getDocs(alreadyExistsQuery);
         if (!alreadyExistsSnapshot.empty) {
-            return { success: false, error: "This user already has access or a pending invitation." };
+            return { success: false, error: "This user already has access." };
+        }
+        
+        const requestsRef = collection(db, 'requests');
+        const q = query(
+            requestsRef,
+            where('action', '==', 'access_invitation'),
+            where('sender_id', '==', ownerAccountId),
+            where('recipient_id', '==', targetAccountId),
+            where('status', '==', 'pending')
+        );
+        const existingRequests = await getDocs(q);
+        if(!existingRequests.empty) {
+            return { success: false, error: 'An invitation has already been sent to this user.' };
         }
 
+
         // Add the new access document with a 'pending' status
-        await addDoc(permitsRef, {
-            target_id: ownerAccountId,
-            account_id: targetAccountId,
-            is_root: false,
-            app_id: 'neup_console', // App slug for the management console itself
-            created_on: serverTimestamp(),
-            permission: [], // No permissions granted by default
-            status: 'pending', // This is an invitation
+        const requestRef = await addDoc(requestsRef, {
+            action: 'access_invitation',
+            sender_id: ownerAccountId,
+            recipient_id: targetAccountId,
+            status: 'pending',
+            createdAt: serverTimestamp(),
         });
+        
+        await addDoc(collection(db, 'notifications'), {
+            recipient_id: targetAccountId,
+            request_id: requestRef.id,
+            is_read: false,
+            createdAt: serverTimestamp()
+        });
+
 
         await logActivity(ownerAccountId, `Sent access invitation to ${neupId}`, 'Pending', undefined, undefined, geolocation);
         revalidatePath('/manage/access');
@@ -266,103 +285,6 @@ export async function grantAccessByNeupId(formData: FormData, geolocation?: stri
 
     } catch (error) {
         await logError('database', error, 'grantAccessByNeupId');
-        return { success: false, error: 'An unexpected error occurred.' };
-    }
-}
-
-export async function getPendingInvitations(): Promise<Invitation[]> {
-    const inviteeAccountId = await getPersonalAccountId();
-    if (!inviteeAccountId) return [];
-
-    try {
-        const permitsRef = collection(db, 'permit');
-        const q = query(
-            permitsRef,
-            where('account_id', '==', inviteeAccountId),
-            where('status', '==', 'pending')
-        );
-
-        const querySnapshot = await getDocs(q);
-        if (querySnapshot.empty) return [];
-
-        const invitations = await Promise.all(
-            querySnapshot.docs.map(async (docSnap) => {
-                const data = docSnap.data();
-                const ownerProfile = await getUserProfile(data.target_id);
-                const ownerNeupIds = await getUserNeupIds(data.target_id);
-
-                if (!ownerProfile) return null;
-
-                return {
-                    permitId: docSnap.id,
-                    grantedBy: {
-                        name: ownerProfile.displayName || `${ownerProfile.firstName} ${ownerProfile.lastName}`.trim(),
-                        neupId: ownerNeupIds[0] || 'N/A',
-                        displayPhoto: ownerProfile.displayPhoto,
-                    },
-                    grantedOn: data.created_on?.toDate().toLocaleString() || new Date().toLocaleString()
-                }
-            })
-        );
-        
-        return invitations.filter((invite): invite is Invitation => invite !== null);
-
-    } catch (error) {
-        await logError('database', error, 'getPendingInvitations');
-        return [];
-    }
-}
-
-export async function acceptInvitation(permitId: string, geolocation?: string): Promise<{ success: boolean; error?: string }> {
-    const inviteeAccountId = await getPersonalAccountId();
-    if (!inviteeAccountId) return { success: false, error: 'User not authenticated.' };
-    
-    try {
-        const permitRef = doc(db, 'permit', permitId);
-        const permitDoc = await getDoc(permitRef);
-        
-        if (!permitDoc.exists() || permitDoc.data().account_id !== inviteeAccountId) {
-            return { success: false, error: "Invitation not found or not intended for you." };
-        }
-        
-        await updateDoc(permitRef, {
-            status: 'approved',
-            approved_on: serverTimestamp()
-        });
-        
-        const ownerAccountId = permitDoc.data().target_id;
-        await logActivity(ownerAccountId, `Access invitation accepted by ${inviteeAccountId}`, 'Success', undefined, undefined, geolocation);
-
-        revalidatePath('/manage/access');
-        return { success: true };
-    } catch (error) {
-         await logError('database', error, `acceptInvitation: ${permitId}`);
-        return { success: false, error: 'An unexpected error occurred.' };
-    }
-}
-
-
-export async function rejectInvitation(permitId: string, geolocation?: string): Promise<{ success: boolean; error?: string }> {
-    const inviteeAccountId = await getPersonalAccountId();
-    if (!inviteeAccountId) return { success: false, error: 'User not authenticated.' };
-
-    try {
-        const permitRef = doc(db, 'permit', permitId);
-        const permitDoc = await getDoc(permitRef);
-
-        if (!permitDoc.exists() || permitDoc.data().account_id !== inviteeAccountId) {
-            return { success: false, error: "Invitation not found or not intended for you." };
-        }
-
-        const ownerAccountId = permitDoc.data().target_id;
-        await deleteDoc(permitRef);
-        
-        await logActivity(ownerAccountId, `Access invitation rejected by ${inviteeAccountId}`, 'Success', undefined, undefined, geolocation);
-
-        revalidatePath('/manage/access');
-        return { success: true };
-    } catch (error) {
-         await logError('database', error, `rejectInvitation: ${permitId}`);
         return { success: false, error: 'An unexpected error occurred.' };
     }
 }

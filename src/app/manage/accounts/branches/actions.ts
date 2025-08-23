@@ -4,7 +4,7 @@
 
 import { z } from 'zod';
 import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs, writeBatch, doc, serverTimestamp, getDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs, writeBatch, doc, serverTimestamp, getDoc, limit } from 'firebase/firestore';
 import { getActiveAccountId } from '@/lib/auth-actions';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
@@ -74,8 +74,24 @@ export async function createBranchAccount(data: z.infer<typeof formSchema>, geol
         batch.set(newAccountRef, {
             type: 'branch',
             parentBrandId: parentBrandId,
-            managedBy: [personalAccountId]
         });
+        
+        // Grant management permission to the creator
+        const defaultPermQuery = query(collection(db, 'permission'), where('name', '==', 'individual.default'), limit(1));
+        const defaultPermSnap = await getDocs(defaultPermQuery);
+        if (!defaultPermSnap.empty) {
+            const permId = defaultPermSnap.docs[0].id;
+            const newPermitRef = doc(collection(db, 'permit'));
+            batch.set(newPermitRef, {
+                account_id: personalAccountId, // The user who manages
+                target_id: branchAccountId, // The branch account being managed
+                is_root: false,
+                permission: [permId],
+                created_on: serverTimestamp(),
+                managed_by: personalAccountId,
+            });
+        }
+
 
         const newNeupIdRef = doc(db, 'neupid', fullNeupId);
         batch.set(newNeupIdRef, { for: branchAccountId, is_primary: true });

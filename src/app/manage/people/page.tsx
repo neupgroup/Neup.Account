@@ -1,7 +1,7 @@
 
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, Contact, UserX, ChevronRight } from "lucide-react";
+import { Users, Contact, UserX, ChevronRight, MailQuestion } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { checkPermissions } from "@/lib/user-actions";
@@ -30,8 +30,11 @@ const FeatureListItem = ({
 
 
 export default async function PeopleSharingPage() {
-    const canViewFamily = await checkPermissions(['people.family.view']);
-
+    const [canViewFamily, canViewInvitations] = await Promise.all([
+        checkPermissions(['people.family.view']),
+        checkPermissions(['notification.read'])
+    ]);
+    
     const sharingFeatures = [
         {
             icon: Users,
@@ -39,6 +42,13 @@ export default async function PeopleSharingPage() {
             description: "Manage your family group and shared subscriptions.",
             href: "/manage/people/family",
             show: canViewFamily,
+        },
+        {
+            icon: MailQuestion,
+            title: "Invitations",
+            description: "Accept or reject requests from other users.",
+            href: "/manage/people/invitations",
+            show: canViewInvitations,
         },
         {
             icon: Contact,

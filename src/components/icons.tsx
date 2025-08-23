@@ -61,6 +61,10 @@ import {
     Trash2,
     Share2,
     Bug,
+    MailQuestion,
+    Handshake,
+    CheckCircle2,
+    XCircle,
 } from "lucide-react";
 
 export {
@@ -125,4 +129,8 @@ export {
     Trash2,
     Share2,
     Bug,
+    MailQuestion,
+    Handshake,
+    CheckCircle2,
+    XCircle,
 };

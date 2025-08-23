@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import { useRef, useTransition, useState, useEffect, useCallback } from 'react';
@@ -15,7 +14,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter }
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form";
 import { BackButton } from '@/components/ui/back-button';
 import { Loader2 } from 'lucide-react';
 import { checkPermissions } from '@/lib/user-actions';

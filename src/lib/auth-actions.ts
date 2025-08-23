@@ -155,8 +155,8 @@ export async function registerUser(data: z.infer<typeof registerFormSchema>) {
         }
 
         const isAdmin = await isFirstUser();
-        // The permission set name for an admin is 'admin', otherwise 'standard_user'.
-        const permissionSetName = isAdmin ? 'admin' : 'standard_user';
+        // Use the new permission set names
+        const permissionSetName = isAdmin ? 'root.whole' : 'individual.default';
         
         let finalGender = validation.data.gender;
         if (validation.data.gender === 'custom') {
@@ -568,3 +568,63 @@ export async function removeStoredAccount(accountId: string): Promise<{ success:
         return { success: false, error: "Failed to remove account from device." };
     }
 }
+
+export async function validateNeupId(neupId: string): Promise<{ success: boolean; error?: string }> {
+    if (!neupId || neupId.length < 3) {
+        return { success: false, error: "NeupID must be at least 3 characters." };
+    }
+
+    try {
+        const neupidRef = doc(db, 'neupid', neupId);
+        const neupidDoc = await getDoc(neupidRef);
+
+        if (!neupidDoc.exists()) {
+            return { success: false, error: "NeupID not found." };
+        }
+
+        const accountId = neupidDoc.data().for;
+        const accountRef = doc(db, 'account', accountId);
+        const accountDoc = await getDoc(accountRef);
+
+        if (!accountDoc.exists()) {
+            return { success: false, error: "Associated account does not exist." };
+        }
+
+        const accountData = accountDoc.data();
+        if (accountData.type === 'brand' || accountData.type === 'branch') {
+             return { success: false, error: "Brand accounts can't be signed in." };
+        }
+
+        if (accountData.block?.status) {
+             const block = accountData.block;
+             if (block.is_permanent || (block.until && block.until.toDate() > new Date())) {
+                return { success: false, error: "This account has been blocked." };
+             }
+        }
+
+        return { success: true };
+
+    } catch(e) {
+        await logError('database', e, `validateNeupId for ${neupId}`);
+        return { success: false, error: 'An unexpected error occurred.' };
+    }
+}
+
+export async function checkNeupIdAvailability(neupId: string): Promise<{ available: boolean }> {
+    const lowerNeupId = neupId.toLowerCase();
+    if (!lowerNeupId || lowerNeupId.length < 3) {
+        return { available: false };
+    }
+    try {
+        const neupidsRef = collection(db, 'neupid');
+        const docRef = doc(neupidsRef, lowerNeupId);
+        const docSnap = await getDoc(docRef);
+        return { available: !docSnap.exists() };
+    } catch (error) {
+        await logError('database', error, `checkNeupIdAvailability: ${lowerNeupId}`);
+        // To be safe, report as unavailable on error
+        return { available: false };
+    }
+}
+
+    

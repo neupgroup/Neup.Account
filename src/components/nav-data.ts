@@ -97,7 +97,7 @@ const allPermissionsMap: Record<string, string[]> = {
 const iconMap: Record<string, string> = {
     "Home": "Home",
     "Personal Info": "PersonalInfo",
-    "Notifications": "Bell",
+    "Notifications": "Notifications",
     "Password & Security": "PasswordAndSecurity",
     "Linked Accounts": "LinkedAccounts",
     "Data & Privacy": "DataAndPrivacy",
@@ -106,7 +106,7 @@ const iconMap: Record<string, string> = {
     "Payment & Subscription": "PaymentAndSubscription",
     "Switch Account": "SwitchAccount",
     "SignOut Account": "SignOutAccount",
-    "Switch Back": "SwitchBack",
+    "Switch Back": "ArrowLeft",
     "Dashboard": "Dashboard",
     "Account Management": "Users",
     "Requests Management": "Clock",
@@ -130,7 +130,7 @@ const accountNavItems: Omit<NavItem, 'requiredPermissions' | 'iconName'>[] = [
     { href: "/auth/signout", label: "SignOut Account", description: "Sign out of your account." },
 ];
 
-const switchBackNav: NavItem = { href: "/auth/switchback", label: "Switch Back", description: "Return to your personal account view.", iconName: "SwitchBack", requiredPermissions: [] };
+const switchBackNav: NavItem = { href: "/auth/accounts", label: "Switch Back", description: "Return to your personal account view.", iconName: "SwitchBack", requiredPermissions: [] };
 
 
 export async function getNavConfig(): Promise<NavSection[]> {
@@ -150,7 +150,7 @@ export async function getNavConfig(): Promise<NavSection[]> {
     ]);
     
     const userPermissionSet = new Set(userPermissions);
-    const primaryNeupId = userNeupIds[0] ? `@${userNeupIds[0]}` : "NeupID";
+    const primaryNeupId = userNeupIds[0] ? `@${userNeupIds[0]}` : "Neup.Account";
 
     const hasAnyPermissionFor = (requiredPermissions: string[]) => {
         if (requiredPermissions.length === 0) return true;

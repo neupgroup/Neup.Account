@@ -1,8 +1,8 @@
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
-  basePath: '/account',
-  assetPrefix: '/account',
+  basePath: '',
+  assetPrefix: '',
   async redirects() {
     return [];
   },

@@ -16,6 +16,7 @@ export type Application = {
     id: string;
     name: string;
     description: string;
+    appSecret: string;
 };
 
 const addAppSchema = z.object({
@@ -79,12 +80,14 @@ export async function addApp(formData: FormData) {
     }
 
     const { id, name, description } = validation.data;
+    const appSecret = crypto.randomBytes(32).toString('hex');
 
     try {
         // We use setDoc here with a specific ID provided by the user
         await setDoc(doc(db, 'applications', id), {
             name,
             description,
+            appSecret,
         });
         
         const adminId = await getPersonalAccountId();

@@ -3,13 +3,12 @@
 "use client";
 
 import { useEffect, useState, useTransition } from 'react';
-import { getUnreadWarnings, markWarningAsRead, type UserWarning } from '@/lib/user-actions';
+import { getNotifications, markNotificationAsRead, type Notification } from '@/app/manage/notifications/actions';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, X, Bell } from '@/components/icons';
 import { cn } from '@/lib/utils';
 import { Skeleton } from './ui/skeleton';
-import { getNotifications } from '../app/manage/notifications/actions';
 import { usePathname } from 'next/navigation';
 import { cva, type VariantProps } from 'class-variance-authority';
 
@@ -20,8 +19,9 @@ export function NotificationBell({ className }: { className?: string}) {
 
     useEffect(() => {
         const fetchNotifications = async () => {
+            setLoading(true);
             const fetchedNotifications = await getNotifications();
-            const unreadCount = fetchedNotifications.warnings.length + fetchedNotifications.requests.length;
+            const unreadCount = fetchedNotifications.sticky.length + fetchedNotifications.requests.length;
             setHasNotifications(unreadCount > 0);
             setLoading(false);
         };
@@ -67,14 +67,14 @@ const warningVariants = cva(
 )
 
 export function WarningDisplay() {
-    const [warnings, setWarnings] = useState<UserWarning[]>([]);
+    const [warnings, setWarnings] = useState<Notification[]>([]);
     const [loading, setLoading] = useState(true);
     const [isPending, startTransition] = useTransition();
 
     useEffect(() => {
         const fetchWarnings = async () => {
-            const fetchedWarnings = await getUnreadWarnings();
-            setWarnings(fetchedWarnings);
+            const { sticky } = await getNotifications();
+            setWarnings(sticky);
             setLoading(false);
         };
 
@@ -83,13 +83,14 @@ export function WarningDisplay() {
 
     const handleDismiss = async (warningId: string) => {
         startTransition(async () => {
-            await markWarningAsRead(warningId);
+            await markNotificationAsRead(warningId);
             setWarnings(prev => prev.filter(w => w.id !== warningId));
         });
     };
 
     if (loading) {
-        return <Skeleton className="h-24 w-full mb-4" />;
+        // Don't render a skeleton if we are not sure there are warnings.
+        return null;
     }
 
     if (warnings.length === 0) {
@@ -104,7 +105,7 @@ export function WarningDisplay() {
                         <AlertTriangle className="h-4 w-4" />
                         <div className="ml-3 flex-1">
                              <h5 className="mb-1 font-medium leading-none tracking-tight">Important Notice</h5>
-                            <div className="text-sm [&_p]:leading-relaxed" dangerouslySetInnerHTML={{ __html: warning.message }} />
+                            <div className="text-sm [&_p]:leading-relaxed" dangerouslySetInnerHTML={{ __html: warning.message || "" }} />
                         </div>
                         {warning.persistence === 'dismissable' && (
                              <Button

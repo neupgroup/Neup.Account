@@ -5,7 +5,7 @@
 import { db } from '@/lib/firebase';
 import { doc, getDoc, collection, query, where, getDocs, updateDoc, writeBatch, serverTimestamp, addDoc, orderBy, limit, arrayUnion } from 'firebase/firestore';
 import { logError } from '@/lib/logger';
-import { type UserProfile, getUserProfile, checkPermissions } from '@/lib/user-actions';
+import { type UserProfile, getUserProfile as fetchUserProfile, checkPermissions } from '@/lib/user-actions';
 import { logActivity } from '@/lib/log-actions';
 import { cookies, headers } from 'next/headers';
 import crypto from 'crypto';
@@ -48,6 +48,10 @@ export type UserDashboardStats = {
     lastIpAddress: string;
     lastLocation: string;
     lastActive: string;
+}
+
+export async function getUserProfile(accountId: string): Promise<UserProfile | null> {
+    return fetchUserProfile(accountId);
 }
 
 export async function getUserDetails(neupId: string): Promise<UserDetails | null> {
@@ -216,7 +220,7 @@ export async function getPermissions(neupId: string): Promise<UserPermissions> {
         const querySnapshot = await getDocs(q);
 
         if (querySnapshot.empty) {
-             return { assignedPermissionSets: ['standard_user'], allPermissions: [] }; // Default
+             return { assignedPermissionSets: ['individual.default'], allPermissions: [] }; // Default
         }
         
         const permitData = querySnapshot.docs[0].data();
@@ -225,8 +229,15 @@ export async function getPermissions(neupId: string): Promise<UserPermissions> {
         const allPermissionSetsQuery = await getDocs(collection(db, 'permission'));
         const permissionSetMap = new Map(allPermissionSetsQuery.docs.map(d => [d.id, d.data().name]));
 
+        const assignedNames = assignedIds.map((id: string) => permissionSetMap.get(id) || id);
+
+        // If no specific root permission is assigned, they get the default
+        if (!assignedNames.some(name => name.startsWith('root.'))) {
+            assignedNames.push('individual.default');
+        }
+
         return { 
-            assignedPermissionSets: assignedIds.map((id: string) => permissionSetMap.get(id) || id),
+            assignedPermissionSets: assignedNames,
             allPermissions: [], // This will be populated on the client from the main list
         };
 
@@ -260,27 +271,31 @@ export async function sendWarning(userId: string, data: z.infer<typeof sendWarni
 
     const { message, reason, noticeType, persistence, days } = validation.data;
     
-    let expiresOn: string | null = null;
+    let expiresOn: Date | null = null;
     if (persistence === 'untildays' && days) {
-        const expiryDate = new Date();
-        expiryDate.setDate(expiryDate.getDate() + days);
-        expiresOn = expiryDate.toISOString();
+        expiresOn = new Date();
+        expiresOn.setDate(expiresOn.getDate() + days);
     }
+    
+    const actionTypeMap = {
+        'general': 'information.sticky',
+        'success': 'success.sticky',
+        'warning': 'warning.sticky',
+        'error': 'danger.sticky'
+    };
 
     try {
-        const accountRef = doc(db, 'account', userId);
-        const newWarning = {
+        await addDoc(collection(db, 'notifications'), {
+            recipient_id: userId,
+            action: actionTypeMap[noticeType],
             message,
             persistence,
-            issuedBy: adminId,
-            issuedOn: new Date().toISOString(),
+            noticeType,
             reason,
             expiresOn,
-            noticeType
-        };
-
-        await updateDoc(accountRef, {
-            warnings: arrayUnion(newWarning)
+            is_read: false,
+            createdAt: serverTimestamp(),
+            sender_id: adminId,
         });
 
         await logActivity(userId, `Admin sent warning: "${message}"`, 'Alert', undefined, adminId);

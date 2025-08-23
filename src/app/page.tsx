@@ -4,20 +4,39 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Shield, Lock, Users } from '@/components/icons';
 import { Card, CardContent } from '@/components/ui/card';
+import { hasActiveSessionCookies } from '@/lib/auth-actions';
+import { NeupIdLogo } from '@/components/neupid-logo';
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const isLoggedIn = await hasActiveSessionCookies();
+
+  const CtaButton = () => (
+    <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
+      {isLoggedIn ? (
+        <Link href="/manage">Continue to Account</Link>
+      ) : (
+        <Link href="/auth/start">Get Started</Link>
+      )}
+    </Button>
+  );
+  
+  const HeaderButton = () => (
+    <Button asChild>
+       {isLoggedIn ? (
+        <Link href="/manage">Continue to Account</Link>
+      ) : (
+        <Link href="/auth/start">Get Started</Link>
+      )}
+    </Button>
+  );
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <header className="sticky top-0 z-50 flex h-16 w-full items-center bg-background shadow">
         <div className="mx-auto flex w-full max-w-[1368px] items-center px-4 lg:px-6">
-          <Link href="/" className="flex items-center justify-center gap-2">
-            
-            <span className="font-semibold">NeupID</span>
-          </Link>
+          <NeupIdLogo iconHref={process.env.COMPANY_URL || "/"} textHref="/" />
           <nav className="ml-auto">
-            <Button asChild>
-              <Link href="/auth/start">Get Started</Link>
-            </Button>
+            <HeaderButton />
           </nav>
         </div>
       </header>
@@ -32,15 +51,11 @@ export default function LandingPage() {
                   </h1>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl">
                     One ID to access all your favorite services seamlessly and
-                    securely. Take control of your digital life with NeupID.
+                    securely. Take control of your digital life with Neup.Account.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                  <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-                    <Link href="/auth/start">
-                      Get Started
-                    </Link>
-                  </Button>
+                  <CtaButton />
                 </div>
               </div>
               <Image
@@ -118,11 +133,7 @@ export default function LandingPage() {
                   Create your secure digital identity today and unlock a world of seamless access.
                 </p>
               </div>
-              <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-                <Link href="/auth/start">
-                  Get Started
-                </Link>
-              </Button>
+              <CtaButton />
             </div>
           </div>
         </section>
@@ -130,7 +141,7 @@ export default function LandingPage() {
       <footer className="flex w-full shrink-0 items-center border-t bg-card py-6">
         <div className="mx-auto flex w-full max-w-[1368px] flex-col items-center gap-2 px-4 sm:flex-row md:px-6">
           <p className="text-xs text-muted-foreground">
-            &copy; {new Date().getFullYear()} NeupID. All rights reserved.
+            &copy; {new Date().getFullYear()} Neup.Account. All rights reserved.
           </p>
           <nav className="sm:ml-auto flex gap-4 sm:gap-6">
             <Link href="/manage/policies" className="text-xs hover:underline underline-offset-4">

@@ -1,39 +1,45 @@
 
-
-import { getNavConfig } from "@/components/nav-data";
-import { HomeNavList } from "@/components/home/home-nav-list";
-import { Card, CardContent } from "@/components/ui/card";
+import { checkPermissions } from '@/lib/user-actions';
+import { notFound } from 'next/navigation';
+import { DashboardHeader } from '@/components/dashboard/dashboard-header';
+import { AlertsCard } from '@/components/dashboard/alerts-card';
+import { QuickActionsCard } from '@/components/dashboard/quick-actions-card';
+import { BillingCard } from '@/components/dashboard/billing-card';
+import { getUserProfile, getUserNeupIds } from '@/lib/user-actions';
+import { getTotpStatus } from '@/app/manage/security/totp/actions';
+import { getRecoveryEmail } from '@/app/manage/security/email/actions';
+import { WarningDisplay } from '@/components/warning-display';
 
 export default async function HomePage() {
+    const [canViewProfile] = await Promise.all([
+        checkPermissions(['profile.view']),
+    ]);
+
+    if (!canViewProfile) {
+        notFound();
+    }
     
-    const navConfig = await getNavConfig();
+     const [profile, neupIds, totpStatus, recoveryEmail] = await Promise.all([
+        getUserProfile(''),
+        getUserNeupIds(''),
+        getTotpStatus(),
+        getRecoveryEmail(),
+    ]);
 
-    const allItems = navConfig.flatMap(section => section.items);
-    const hasVisibleItems = allItems.filter(item => item.href !== '/manage/home').length > 0;
-
+    const headerData = {
+        profile,
+        neupId: neupIds[0] || null,
+        totpEnabled: totpStatus.isEnabled,
+        recoveryEmailSet: !!recoveryEmail,
+    };
+    
     return (
         <div className="grid gap-8">
-             <div>
-                <h1 className="text-3xl font-bold tracking-tight">Home</h1>
-                <p className="text-muted-foreground">
-                    Your central hub for managing your NeupID account.
-                </p>
-            </div>
-
-            {navConfig.map(section => (
-                 <div key={section.title || 'main'} className="space-y-2">
-                    {section.title && <h2 className="text-xl font-semibold tracking-tight">{section.title}</h2>}
-                    <HomeNavList items={section.items} />
-                </div>
-            ))}
-
-            {!hasVisibleItems && (
-                 <Card>
-                    <CardContent className="p-6 text-left text-muted-foreground">
-                        <p>You do not have permission to view any settings.</p>
-                    </CardContent>
-                </Card>
-            )}
+            <WarningDisplay />
+            <DashboardHeader initialData={headerData} />
+            <AlertsCard />
+            <QuickActionsCard />
+            <BillingCard />
         </div>
     )
 }

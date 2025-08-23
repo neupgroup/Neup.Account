@@ -4,7 +4,7 @@
 
 import { z } from 'zod';
 import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs, writeBatch, doc, serverTimestamp } from 'firebase/firestore';
+import { collection, query, where, getDocs, writeBatch, doc, serverTimestamp, limit } from 'firebase/firestore';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
@@ -55,8 +55,24 @@ export async function createDependentAccount(data: z.infer<typeof formSchema>, g
 
         batch.set(newAccountRef, {
             type: 'dependent',
-            guardianAccountId: guardianAccountId
         });
+        
+        // Grant management permission to the guardian
+        const defaultPermQuery = query(collection(db, 'permission'), where('name', '==', 'individual.default'), limit(1));
+        const defaultPermSnap = await getDocs(defaultPermQuery);
+        if (!defaultPermSnap.empty) {
+            const permId = defaultPermSnap.docs[0].id;
+            const newPermitRef = doc(collection(db, 'permit'));
+            batch.set(newPermitRef, {
+                account_id: guardianAccountId, // The user who manages
+                target_id: dependentAccountId, // The account being managed
+                is_root: false,
+                permission: [permId],
+                created_on: serverTimestamp(),
+                managed_by: guardianAccountId,
+            });
+        }
+
 
         const newNeupIdRef = doc(db, 'neupid', neupId);
         batch.set(newNeupIdRef, { for: dependentAccountId, is_primary: true });

@@ -1,6 +1,6 @@
 
 
-"use server";
+'use server';
 
 import { db } from '@/lib/firebase';
 import { doc, getDoc, collection, query, where, getDocs, updateDoc, writeBatch } from 'firebase/firestore';
@@ -15,6 +15,7 @@ export type UserSession = {
     lastLoggedIn: string;
     loginType: string;
     geolocation?: string;
+    rawLastLoggedIn: Date;
 };
 
 export type SecurityDetails = {
@@ -86,8 +87,8 @@ export async function getUserSessions(): Promise<UserSession[]> {
         });
 
         sessions.sort((a, b) => b.rawLastLoggedIn.getTime() - a.rawLastLoggedIn.getTime());
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        return sessions.map(({ rawLastLoggedIn, ...session }) => session);
+        
+        return sessions;
         
     } catch (error) {
         await logError('database', error, `getUserSessions: ${accountId}`);
