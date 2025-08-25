@@ -1,7 +1,7 @@
 
 'use client';
 
-import type { StoredAccount } from '@/lib/auth-actions';
+import type { StoredAccount } from '@/app/actions/auth/session';
 import { getUserProfile, getUserNeupIds } from '@/lib/user-actions';
 import { useEffect, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';

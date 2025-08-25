@@ -2,11 +2,11 @@
 import { BackButton } from "@/components/ui/back-button";
 import { checkPermissions } from "@/lib/user-actions";
 import { notFound } from "next/navigation";
-import { getSocialLinks } from "./actions";
+import { getSocialLinks } from "@/actions/root/site";
 import { SocialLinksManager } from "./social-links-manager";
 
 export default async function SocialSitesPage() {
-    const canView = await checkPermissions(['root.social_links.view']);
+    const canView = await checkPermissions(['root.site.social_accounts.read']);
     if (!canView) {
         notFound();
     }

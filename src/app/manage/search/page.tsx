@@ -1,6 +1,6 @@
 
 import { Suspense } from 'react';
-import { searchAll } from './actions';
+import { searchAll } from '@/actions/search';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { UserCircle, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';

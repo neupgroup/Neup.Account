@@ -5,7 +5,7 @@
 import { z } from 'zod';
 import { db } from '@/lib/firebase';
 import { collection, query, where, getDocs, writeBatch, doc, serverTimestamp, getDoc, limit } from 'firebase/firestore';
-import { getActiveAccountId } from '@/lib/auth-actions';
+import { getActiveAccountId } from '@/actions/auth/session';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
 import { headers } from 'next/headers';

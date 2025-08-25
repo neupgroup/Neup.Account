@@ -1,6 +1,6 @@
 
 import { notFound } from "next/navigation";
-import { getErrorDetails, type SystemErrorDetails } from "../actions";
+import { getErrorDetails, type SystemErrorDetails } from "@/actions/root/site";
 import { BackButton } from "@/components/ui/back-button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

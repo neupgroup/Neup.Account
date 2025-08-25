@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/card"
 
 import { Button } from "@/components/ui/button"
-import type { UserStats } from "../../../manage/root/users/actions"
-import { getUserStats } from "../../../manage/root/users/actions"
+import type { UserStats } from "@/app/actions/root/users"
+import { getUserStats } from "@/app/actions/root/users"
 import { Users, UserCheck, UserPlus, ShieldCheck, Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"

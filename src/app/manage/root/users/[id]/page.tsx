@@ -1,6 +1,6 @@
 
 import { notFound } from "next/navigation";
-import { getUserDetails } from "./actions";
+import { getUserDetails } from "@/actions/root/users";
 import { UserDetailsClient } from "./user-details-client";
 import { checkPermissions } from "@/lib/user-actions";
 

@@ -1,15 +1,17 @@
 
-
 "use client"
 
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect, useCallback } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { format } from "date-fns"
-import { Calendar } from "@/components/icons"
+import { Calendar, CheckCircle2, Loader2, XCircle } from "@/components/icons"
+import NProgress from 'nprogress'
+import { useDebounce } from "use-debounce"
+
 
 import { Button } from "@/components/ui/button"
 import {
@@ -47,7 +49,8 @@ import {
 import { Checkbox } from "@/components/ui/checkbox"
 import { cn } from "@/lib/utils"
 import { useToast } from "@/hooks/use-toast"
-import { registerUser } from "@/lib/auth-actions"
+import { registerUser } from "@/actions/auth/register"
+import { checkNeupIdAvailability } from "@/actions/auth/session"
 import { Label } from "@/components/ui/label"
 import { parseDateString } from "@/app/manage/profile/actions"
 import { GeolocationContext } from "@/context/geolocation-context"
@@ -60,7 +63,15 @@ const formSchema = z.object({
     // Step 2
     gender: z.enum(["male", "female", "custom", "prefer_not_to_say"], { required_error: "Please select a gender."}),
     customGender: z.string().optional(),
-    dob: z.date({ required_error: "Date of birth is required." }),
+    dob: z.date({ required_error: "Date of birth is required." }).refine(
+      (date) => {
+        const ageDifMs = Date.now() - date.getTime();
+        const ageDate = new Date(ageDifMs);
+        const age = Math.abs(ageDate.getUTCFullYear() - 1970);
+        return age >= 16;
+      },
+      { message: "You must be at least 16 years old." }
+    ),
     // Step 3
     nationality: z.string().min(1, "Nationality is required"),
     // Step 4
@@ -94,9 +105,13 @@ export default function RegisterPage() {
     const [dateInput, setDateInput] = useState<string>('');
     const [isParsingDate, setIsParsingDate] = useState(false);
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+    
+    const [neupIdStatus, setNeupIdStatus] = useState<'idle' | 'checking' | 'available' | 'unavailable'>('idle');
+
 
     const form = useForm<FormData>({
         resolver: zodResolver(formSchema),
+        mode: 'onChange',
         defaultValues: {
             firstName: "",
             middleName: "",
@@ -107,6 +122,44 @@ export default function RegisterPage() {
             agreement: false,
         },
     })
+    
+    const neupIdValue = form.watch("neupId");
+    const [debouncedNeupId] = useDebounce(neupIdValue, 500);
+
+    const { formState: { errors, isValid } } = form;
+    const currentFields = steps[currentStep].fields as (keyof FormData)[];
+    const isStepValid = !currentFields.some(field => errors[field]);
+
+
+    useEffect(() => {
+        NProgress.start();
+        return () => {
+            NProgress.done();
+        }
+    }, []);
+
+    useEffect(() => {
+        const progress = (currentStep + 1) / steps.length;
+        NProgress.set(progress);
+    }, [currentStep]);
+
+
+    const checkAvailability = useCallback(async (id: string) => {
+        const neupIdRegex = /^[a-z0-9-]{3,}$/;
+        if (!neupIdRegex.test(id)) {
+            setNeupIdStatus('idle');
+            return;
+        }
+        setNeupIdStatus('checking');
+        const { available } = await checkNeupIdAvailability(id);
+        setNeupIdStatus(available ? 'available' : 'unavailable');
+    }, []);
+    
+    useEffect(() => {
+        if (currentStep === 3) {
+            checkAvailability(debouncedNeupId);
+        }
+    }, [debouncedNeupId, checkAvailability, currentStep]);
 
     const handleDateInputBlur = async () => {
         if (!dateInput) return;
@@ -116,7 +169,6 @@ export default function RegisterPage() {
             return;
         }
 
-        // Avoid re-parsing if the input matches the current valid date
         const currentDate = form.getValues("dob");
         if (currentDate && dateInput === format(currentDate, 'yyyy-MM-dd')) {
             form.clearErrors('dob');
@@ -138,9 +190,13 @@ export default function RegisterPage() {
     };
 
     const handleNext = async () => {
-        const fields = steps[currentStep].fields
-        const output = await form.trigger(fields as (keyof FormData)[], { shouldFocus: true })
+        const output = await form.trigger(currentFields, { shouldFocus: true })
         if (!output) return
+        
+        if (currentStep === 3 && neupIdStatus !== 'available') {
+            form.setError('neupId', { type: 'manual', message: 'This NeupID is unavailable.' });
+            return;
+        }
 
         if (currentStep < steps.length - 1) {
             setCurrentStep(step => step + 1)
@@ -155,6 +211,7 @@ export default function RegisterPage() {
 
     const onSubmit = async (data: FormData) => {
         setIsSubmitting(true);
+        NProgress.set(1.0);
         const locationString = geo?.latitude && geo?.longitude ? `${geo.latitude},${geo.longitude}` : undefined;
         try {
             const result = await registerUser({
@@ -172,6 +229,7 @@ export default function RegisterPage() {
                     title: "Registration Failed",
                     description: result.error || "An unexpected error occurred.",
                 });
+                NProgress.set((currentStep + 1) / steps.length);
             }
         } catch (error) {
             console.error("Error creating user:", error);
@@ -180,9 +238,24 @@ export default function RegisterPage() {
                 title: "Registration Failed",
                 description: "Could not create your account. Please try again.",
             });
+             NProgress.set((currentStep + 1) / steps.length);
         } finally {
             setIsSubmitting(false);
         }
+    }
+    
+    const handleNeupIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '');
+        form.setValue('neupId', value, { shouldValidate: true });
+        if(form.formState.errors.neupId) form.clearErrors('neupId');
+        if(neupIdStatus !== 'idle' && neupIdStatus !== 'checking') setNeupIdStatus('idle');
+    };
+
+    const NeupIdStatusIcon = () => {
+        if (neupIdStatus === 'checking') return <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />;
+        if (neupIdStatus === 'available') return <CheckCircle2 className="h-5 w-5 text-green-500" />;
+        if (neupIdStatus === 'unavailable') return <XCircle className="h-5 w-5 text-destructive" />;
+        return null;
     }
 
     return (
@@ -287,24 +360,25 @@ export default function RegisterPage() {
                                                             )}
                                                         >
                                                             <span>Custom</span>
-                                                            {field.value === 'custom' && (
-                                                                <FormField
-                                                                    control={form.control}
-                                                                    name="customGender"
-                                                                    render={({ field: customField }) => (
-                                                                        <Input
-                                                                            {...customField}
-                                                                            placeholder="Specify"
-                                                                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
-                                                                            className="ml-2 h-8 w-auto flex-grow"
-                                                                        />
-                                                                    )}
-                                                                />
-                                                            )}
                                                         </Label>
                                                     </FormItem>
                                                 </RadioGroup>
                                             </FormControl>
+                                            {form.watch("gender") === 'custom' && (
+                                                <FormField
+                                                    control={form.control}
+                                                    name="customGender"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                            <FormLabel>Specify Gender</FormLabel>
+                                                            <FormControl>
+                                                                <Input {...field} placeholder="Your gender" />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                            )}
                                             <FormMessage />
                                         </FormItem>
                                         )}
@@ -316,7 +390,7 @@ export default function RegisterPage() {
                                         <FormItem className="flex flex-col">
                                             <FormLabel>Date of birth</FormLabel>
                                             <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-                                                <div className="relative w-[240px]">
+                                                <div className="relative w-full">
                                                      <Input
                                                         placeholder="YYYY-MM-DD or e.g. June 12 2002"
                                                         value={dateInput}
@@ -394,7 +468,19 @@ export default function RegisterPage() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>NeupID</FormLabel>
-                                            <FormControl><Input placeholder="johndoe" {...field} /></FormControl>
+                                            <div className="relative">
+                                                <FormControl>
+                                                    <Input
+                                                        placeholder="johndoe"
+                                                        {...field}
+                                                        onChange={handleNeupIdChange}
+                                                        className="pr-10"
+                                                    />
+                                                </FormControl>
+                                                <div className="absolute inset-y-0 right-3 flex items-center">
+                                                    <NeupIdStatusIcon />
+                                                </div>
+                                            </div>
                                             <FormMessage />
                                         </FormItem>
                                     )}
@@ -445,11 +531,11 @@ export default function RegisterPage() {
                         Back
                     </Button>
                     {currentStep < steps.length - 1 ? (
-                        <Button type="button" onClick={handleNext}>
+                        <Button type="button" onClick={handleNext} disabled={!isStepValid || (currentStep === 3 && neupIdStatus !== 'available')}>
                             Next
                         </Button>
                     ) : (
-                        <Button type="submit" form="register-form" disabled={isSubmitting}>
+                        <Button type="submit" form="register-form" disabled={isSubmitting || !isStepValid}>
                             {isSubmitting ? "Creating Account..." : "Create Account"}
                         </Button>
                     )}
@@ -458,12 +544,10 @@ export default function RegisterPage() {
                 <div className="mt-4 text-center text-sm p-6 pt-0">
                     Already have an account?{" "}
                     <Link href="/auth/signin" className="underline text-primary">
-                        Login
+                        Sign In
                     </Link>
                 </div>
             </Card>
         </div>
     )
 }
-
-    

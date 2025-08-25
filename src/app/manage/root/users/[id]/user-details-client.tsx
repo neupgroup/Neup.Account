@@ -1,7 +1,8 @@
 
 "use client";
 
-import { getUserDashboardStats, impersonateUser, type UserDetails } from "./actions";
+import { getUserDashboardStats, type UserDetails } from "@/actions/root/users";
+import { impersonateUser } from "@/actions/root/user-actions";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { BackButton } from "@/components/ui/back-button";

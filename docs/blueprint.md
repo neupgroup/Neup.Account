@@ -1,4 +1,6 @@
-# **App Name**: Sentinel
+# **App Name**: Neup.Account
+Neup and the App Icon will reference to the following site: {{env.COMPANY_URL}}
+The Account will reference to the app itself.
 
 ## Core Features:
 
@@ -11,9 +13,7 @@
 
 ## Style Guidelines:
 
-- Background color: Dark, desaturated blue-gray (#222F3E) to support a dark mode theme.
-- Primary color: A saturated teal (#46B3AC), drawing inspiration from the concept of a security system showing green when operating normally. Provides clear contrast on the dark background.
-- Accent color: A lime green (#83E17A), for CTAs and status indicators, symbolizing security and operational effectiveness. It is 30 degrees away from the teal, and has higher saturation and brightness to give clear visual contrast.
+- Primary color: A blueish (#147EA1), drawing inspiration from the concept of a security system showing green when operating normally. Provides clear contrast on the dark background.
 - Body and headline font: 'Inter', sans-serif, for clear, modern text.
 - Use a set of minimalist line icons to represent account management functions, permissions, and settings.
 - Emphasize a clear, tab-based layout for profile management, roles, permissions, and system policies. Use clear and concise labels.

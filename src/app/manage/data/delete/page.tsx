@@ -3,7 +3,7 @@
 
 import { useState, useTransition, useContext } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { requestAccountDeletion } from "./actions";
+import { requestAccountDeletion } from "@/actions/data/delete";
 import {
   Card,
   CardContent,

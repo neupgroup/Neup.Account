@@ -1,7 +1,7 @@
 
 import React from "react"
 import { DashboardNav } from "@/components/dashboard-nav"
-import { validateCurrentSession } from "@/lib/auth-actions"
+import { validateCurrentSession } from "@/actions/auth/session"
 import { UserNav } from "@/components/user-nav"
 import { NeupIdLogo } from "@/components/neupid-logo"
 

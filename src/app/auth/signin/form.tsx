@@ -3,9 +3,11 @@
 
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
-import React, { useState, useEffect, useContext } from "react"
+import React, { useState, useEffect, useContext, useTransition } from "react"
 import { useToast } from "@/hooks/use-toast"
-import { loginUser } from "@/lib/auth-actions"
+import { loginUser } from "@/actions/auth/login"
+import { validateNeupId } from "@/actions/auth/session"
+import NProgress from 'nprogress'
 
 import { Button } from "@/components/ui/button"
 import {
@@ -18,6 +20,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { GeolocationContext } from "@/context/geolocation-context"
+import { Loader2 } from "lucide-react"
 
 export default function SigninForm() {
   const router = useRouter()
@@ -27,9 +30,14 @@ export default function SigninForm() {
 
   const [step, setStep] = useState(1)
   const [neupId, setNeupId] = useState("")
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isRedirecting, setIsRedirecting] = useState(false);
+  const [password, setPassword] = useState("")
   
+  const [isCheckingNeupId, startNeupIdCheck] = useTransition();
+  const [isSubmitting, startPasswordSubmit] = useTransition();
+
+  const [isRedirecting, setIsRedirecting] = useState(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
+
   const neupIdFromQuery = searchParams.get("neupId");
 
   useEffect(() => {
@@ -54,54 +62,61 @@ export default function SigninForm() {
 
   const handleNeupIdSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const enteredNeupId = (event.currentTarget.elements.namedItem('neupId') as HTMLInputElement).value
-    if (enteredNeupId) {
-        setNeupId(enteredNeupId.toLowerCase())
-        setStep(2)
-    }
+    setValidationError(null);
+    startNeupIdCheck(async () => {
+        NProgress.start();
+        const result = await validateNeupId(neupId);
+        if (result.success) {
+            setStep(2);
+        } else {
+            setValidationError(result.error || 'Invalid NeupID.');
+        }
+        NProgress.done();
+    });
   }
 
-  const handlePasswordSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setIsSubmitting(true)
-    const password = (event.currentTarget.elements.namedItem('password') as HTMLInputElement).value
-    const locationString = geo?.latitude && geo?.longitude ? `${geo.latitude},${geo.longitude}` : undefined;
-
-    try {
-      const result = await loginUser({ neupId: neupId.toLowerCase(), password, geolocation: locationString });
-      
-      if (result.success) {
-        setIsRedirecting(true);
-        router.push("/manage");
-        router.refresh();
-      } else {
-        toast({
-          variant: "destructive",
-          title: "Login Failed",
-          description: result.error || "An unexpected error occurred.",
-        })
-        setIsSubmitting(false)
-      }
-    } catch (error) {
-      console.error("Login error:", error)
-      toast({
-        variant: "destructive",
-        title: "Login Failed",
-        description: "An unexpected error occurred. Please try again.",
-      })
-      setIsSubmitting(false)
-    }
+  const handlePasswordSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    startPasswordSubmit(async () => {
+        NProgress.start();
+        try {
+            const locationString = geo?.latitude && geo?.longitude ? `${geo.latitude},${geo.longitude}` : undefined;
+            const result = await loginUser({ neupId: neupId.toLowerCase(), password, geolocation: locationString });
+            
+            if (result.success) {
+                setIsRedirecting(true);
+                router.push("/manage");
+                // router.refresh() will be triggered by NProgressEvents on navigation
+            } else {
+                toast({
+                variant: "destructive",
+                title: "Sign In Failed",
+                description: result.error || "An unexpected error occurred.",
+                });
+                NProgress.done();
+            }
+        } catch (error) {
+            console.error("Sign In error:", error)
+            toast({
+                variant: "destructive",
+                title: "Sign In Failed",
+                description: "An unexpected error occurred. Please try again.",
+            });
+            NProgress.done();
+        }
+    });
   }
   
   const handleBack = () => {
     setStep(1)
     setNeupId("")
+    setValidationError(null);
   }
 
-  const getButtonText = () => {
-    if (isRedirecting) return "Redirecting to dashboard...";
-    if (isSubmitting) return "Logging in...";
-    return "Login";
+  const handleNeupIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '');
+    setNeupId(value);
+    if(validationError) setValidationError(null);
   }
 
   return (
@@ -113,7 +128,7 @@ export default function SigninForm() {
                     <div className="flex justify-start items-center mb-4">
                         
                     </div>
-                    <CardTitle className="text-2xl font-headline">Sign in with NeupID</CardTitle>
+                    <CardTitle className="text-2xl font-headline">Sign in with Neup.Account</CardTitle>
                     <CardDescription>
                         Sign in with your NeupID to access NeupID Group Products and Services
                     </CardDescription>
@@ -135,22 +150,33 @@ export default function SigninForm() {
                 <form onSubmit={handleNeupIdSubmit} className="grid gap-4">
                     <div className="grid gap-2">
                         <Label htmlFor="neupId">NeupID</Label>
-                        <Input
-                            id="neupId"
-                            name="neupId"
-                            type="text"
-                            placeholder="your-neup-id"
-                            required
-                            autoFocus
-                            defaultValue={neupId}
-                            onChange={(e) => e.target.value = e.target.value.toLowerCase()}
-                        />
+                        <div className="relative">
+                            <Input
+                                id="neupId"
+                                name="neupId"
+                                type="text"
+                                placeholder="neupid"
+                                required
+                                autoFocus
+                                value={neupId}
+                                onChange={handleNeupIdChange}
+                                className="pr-10"
+                            />
+                            {isCheckingNeupId && (
+                                <div className="absolute inset-y-0 right-3 flex items-center">
+                                    <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+                                </div>
+                            )}
+                        </div>
+                         {validationError && (
+                            <p className="text-sm text-destructive">{validationError}</p>
+                        )}
                     </div>
-                    <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
+                    <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isCheckingNeupId}>
                         Next
                     </Button>
                     <div className="mt-4 text-left text-sm">
-                        Don&apos;t have an NeupID?{" "}
+                        Don&apos;t have an Account?{" "}
                         <Link href="/auth/signup" className="underline text-primary">
                             Sign Up
                         </Link>
@@ -167,10 +193,12 @@ export default function SigninForm() {
                             type="password"
                             required
                             autoFocus
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
                     <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting || isRedirecting}>
-                        {getButtonText()}
+                        Sign In
                     </Button>
                     <div className="flex justify-between items-center text-sm">
                         <Link href="/auth/forget" className="underline text-primary">

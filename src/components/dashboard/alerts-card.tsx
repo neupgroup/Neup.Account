@@ -3,8 +3,8 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertTriangle, UserCheck, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { getTotpStatus } from '@/app/manage/security/totp/actions';
-import { getPendingNeupIdRequests } from '@/app/manage/root/requests/neupid/actions';
+import { getTotpStatus } from '@/actions/security/totp';
+import { getPendingNeupIdRequests } from '@/actions/root/requests/neupid/actions';
 import { checkPermissions } from '@/lib/user-actions';
 import { Card, CardContent } from '@/components/ui/card';
 

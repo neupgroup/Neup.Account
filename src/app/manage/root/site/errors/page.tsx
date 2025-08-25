@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge"
-import { getSystemErrors, type SystemError } from "./actions";
+import { getSystemErrors, type SystemError } from "@/actions/root/site";
 import { checkPermissions } from "@/lib/user-actions";
 import { notFound } from "next/navigation";
 import { BackButton } from "@/components/ui/back-button";

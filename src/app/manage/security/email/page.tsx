@@ -6,8 +6,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
-import { emailFormSchema } from "./schema";
-import { getRecoveryEmail, addRecoveryEmail, removeRecoveryEmail } from "./actions";
+import { emailFormSchema } from "@/actions/security/email/schema";
+import { getRecoveryEmail, addRecoveryEmail, removeRecoveryEmail } from "@/actions/security/email/actions";
 
 import { Button } from "@/components/ui/button";
 import {

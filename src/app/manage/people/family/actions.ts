@@ -17,7 +17,7 @@ import {
   writeBatch,
   updateDoc,
 } from 'firebase/firestore';
-import { getPersonalAccountId } from '@/lib/auth-actions';
+import { getPersonalAccountId } from '@/actions/auth/session';
 import { logError } from '@/lib/logger';
 import { getUserProfile, checkPermissions, getUserNeupIds } from '@/lib/user-actions';
 import { revalidatePath } from 'next/cache';

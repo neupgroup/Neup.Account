@@ -3,11 +3,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { KeyRound, Laptop, ShieldCheck, UserPlus, ChevronRight, Share2, FolderGit2 } from 'lucide-react';
 import Link from 'next/link';
-import { getUserSessions } from '@/app/manage/security/actions';
-import { getTotpStatus } from '@/app/manage/security/totp/actions';
-import { getConnectedApplications } from '@/app/manage/data/actions';
+import { getUserSessions } from '@/actions/security/sessions';
+import { getTotpStatus } from '@/actions/security/totp';
+import { getConnectedApplications } from '@/actions/data/applications';
 import { getAccessList } from '@/app/manage/access/actions';
-import { getActiveAccountId } from '@/lib/auth-actions';
+import { getActiveAccountId } from '@/actions/auth/session';
 
 const ActionListItem = ({
     href,

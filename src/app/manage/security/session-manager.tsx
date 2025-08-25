@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import React, { useState, useTransition, useMemo } from 'react';
@@ -7,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Laptop, MapPin } from 'lucide-react';
-import { type UserSession, logoutSessionById, logoutAllOtherSessions } from './actions';
+import { type UserSession, logoutSessionById, logoutAllOtherSessions } from '@/actions/security/sessions';
 import { useToast } from '@/hooks/use-toast';
 import { CardFooter } from '@/components/ui/card';
 

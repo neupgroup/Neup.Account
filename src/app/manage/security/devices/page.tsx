@@ -1,14 +1,13 @@
 
-
 import {
     Card,
     CardContent,
     CardHeader,
     CardTitle
 } from "@/components/ui/card";
-import { getUserSessions } from "../actions";
+import { getUserSessions } from "@/actions/security/sessions";
 import { SessionManager } from "../session-manager";
-import { getActiveSessionDetails } from "@/lib/auth-actions";
+import { getActiveSessionDetails } from "@/actions/auth/session";
 import { BackButton } from "@/components/ui/back-button";
 import { checkPermissions } from "@/lib/user-actions";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";

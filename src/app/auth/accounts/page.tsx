@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { getValidatedStoredAccounts } from '@/lib/auth-actions';
+import { getValidatedStoredAccounts } from '@/actions/auth/switch';
 import { AccountList } from './account-list';
 import { ChevronRight } from '@/components/icons';
 
@@ -40,7 +40,7 @@ export default async function AccountsPage() {
                       className="flex w-full items-center justify-between p-3 rounded-lg hover:bg-muted/50 transition-colors"
                     >
                       <div>
-                        <h3 className="font-semibold">Create account</h3>
+                        <h3 className="font-semibold">Create a Neup.Account</h3>
                       </div>
                       <ChevronRight className="h-5 w-5 text-muted-foreground" />
                     </Link>

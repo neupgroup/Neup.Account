@@ -4,10 +4,10 @@
 import { useState, useTransition, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import type { StoredAccount } from '@/lib/auth-actions';
-import { switchActiveAccount } from '@/lib/auth-actions';
+import type { StoredAccount } from '@/actions/auth/session';
+import { switchActiveAccount } from '@/actions/auth/switch';
 import { useToast } from '@/hooks/use-toast';
-import { getActiveAccountId } from '@/lib/auth-actions';
+import { getActiveAccountId } from '@/actions/auth/session';
 
 type CombinedAccount = StoredAccount & {
     isBrand?: boolean;

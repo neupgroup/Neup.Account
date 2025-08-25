@@ -16,7 +16,7 @@ export default async function StartPage() {
           </div>
           <CardTitle className="text-2xl font-headline">Get Started</CardTitle>
           <CardDescription>
-            Choose an option below to continue with NeupID.
+            Choose an option below to continue with Neup.Account.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -28,7 +28,7 @@ export default async function StartPage() {
               >
                 <div>
                   <h3 className="font-semibold">Continue</h3>
-                  <p className="text-sm text-muted-foreground">Continue with your NeupID you're currently signed in.</p>
+                  <p className="text-sm text-muted-foreground">Continue with your Account you're currently signed in.</p>
                 </div>
                 <ChevronRight className="h-5 w-5 text-muted-foreground" />
               </Link>
@@ -51,7 +51,7 @@ export default async function StartPage() {
               <div>
                 <h3 className="font-semibold">Sign Up</h3>
                 <p className="text-sm text-muted-foreground">
-                  Sign up for an NeupID account to use NeupID Group Products and Services.
+                  Sign up for an Neup.Account to use NeupID Group Products and Services.
                 </p>
               </div>
               <ChevronRight className="h-5 w-5 text-muted-foreground" />

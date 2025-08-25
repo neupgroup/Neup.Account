@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { AppWindow, Share2, ChevronRight, Building, BarChart, FileText, Trash2, PowerOff, CalendarClock, History } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import { getConnectedApplications, type Application } from "./actions";
+import { getConnectedApplications, type Application } from "@/actions/data/applications";
 
 const ICON_MAP: Record<Application['icon'], React.ElementType> = {
     'app-window': AppWindow,

@@ -4,14 +4,12 @@
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { logoutStoredSession, removeStoredAccount } from '@/lib/auth-actions';
+import { logoutStoredSession, removeStoredAccount } from '@/actions/auth/switch';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from '@/components/icons';
+import type { StoredAccount } from '@/actions/auth/session';
 
-type Account = {
-  accountId: string;
-  sessionId: string;
-  expired: boolean;
+type Account = StoredAccount & {
   isUnknown?: boolean;
 }
 
