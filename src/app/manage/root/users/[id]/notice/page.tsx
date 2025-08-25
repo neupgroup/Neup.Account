@@ -1,6 +1,6 @@
 
 import { notFound } from "next/navigation";
-import { getUserDetails, getAccountDetails } from "@/app/actions/root/users";
+import { getUserDetails, getAccountDetails } from "@/actions/root/users";
 import { BlockServiceAccessForm, SendWarningForm } from "../forms";
 import { BackButton } from "@/components/ui/back-button";
 

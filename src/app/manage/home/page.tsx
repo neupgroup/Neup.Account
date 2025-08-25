@@ -7,7 +7,7 @@ import { QuickActionsCard } from '@/components/dashboard/quick-actions-card';
 import { BillingCard } from '@/components/dashboard/billing-card';
 import { getUserProfile, getUserNeupIds } from '@/lib/user-actions';
 import { getTotpStatus } from '@/actions/security/totp';
-import { getRecoveryEmail } from '@/actions/security/email/actions';
+import { getRecoveryEmail } from '@/actions/security/email';
 import { WarningDisplay } from '@/components/warning-display';
 
 export default async function HomePage() {

@@ -1,7 +1,5 @@
-
-
 import { getAccessList } from "./actions";
-import { getActiveAccountId } from "@/lib/auth-actions";
+import { getActiveAccountId } from "@/actions/auth/session";
 import { getUserNeupIds } from "@/lib/user-actions";
 import {
   Card,
@@ -17,8 +15,8 @@ import { ChevronRight } from "@/components/icons";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { AddUserForm } from "./add-user-form";
-import type { Permission } from "../root/permission/actions";
-import { getMasterPermissions } from "../root/permission/actions";
+import type { Permission } from "@/actions/root/permission";
+import { getMasterPermissions } from "@/actions/root/permission";
 
 export default async function AccessControlPage() {
   const accountId = await getActiveAccountId();

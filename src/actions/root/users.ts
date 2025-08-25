@@ -2,7 +2,7 @@
 'use server';
 
 import { db } from '@/lib/firebase';
-import { doc, getDoc, collection, query, where, getDocs, updateDoc, writeBatch, serverTimestamp, addDoc, orderBy, limit, arrayUnion } from 'firebase/firestore';
+import { doc, getDoc, collection, query, where, getDocs, updateDoc, writeBatch, serverTimestamp, addDoc, orderBy, limit, arrayUnion, Timestamp } from 'firebase/firestore';
 import { logError } from '@/lib/logger';
 import { type UserProfile, getUserProfile as fetchUserProfile, checkPermissions } from '@/lib/user-actions';
 
@@ -42,6 +42,13 @@ export type UserDashboardStats = {
     lastLocation: string;
     lastActive: string;
 }
+
+export type UserStats = {
+  totalUsers: number;
+  activeUsers: number;
+  signedUpToday: number;
+};
+
 
 export async function getUserProfile(accountId: string): Promise<UserProfile | null> {
     return fetchUserProfile(accountId);
@@ -225,7 +232,7 @@ export async function getPermissions(neupId: string): Promise<UserPermissions> {
         const assignedNames = assignedIds.map((id: string) => permissionSetMap.get(id) || id);
 
         // If no specific root permission is assigned, they get the default
-        if (!assignedNames.some(name => name.startsWith('root.'))) {
+        if (!assignedNames.some((name: string) => name.startsWith('root.'))) {
             assignedNames.push('individual.default');
         }
 
@@ -238,4 +245,37 @@ export async function getPermissions(neupId: string): Promise<UserPermissions> {
         await logError('database', error, `getPermissions for neupId: ${neupId}`);
         return fallback;
     }
+}
+
+export async function getUserStats(): Promise<UserStats> {
+  try {
+    const profilesCollection = collection(db, 'profile');
+    const profilesSnapshot = await getDocs(profilesCollection);
+    const totalUsers = profilesSnapshot.size;
+
+    // Fetch users signed up today
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
+
+    const q = query(profilesCollection, where('createdAt', '>=', Timestamp.fromDate(startOfToday)));
+    const todaySnapshot = await getDocs(q);
+    const signedUpToday = todaySnapshot.size;
+    
+    return {
+      totalUsers,
+      activeUsers: totalUsers, // No 'status' field, so assuming all are active
+      signedUpToday,
+    };
+  } catch (error) {
+    await logError('database', error, 'getUserStats');
+    // This can happen if 'createdAt' fields don't exist yet for old users.
+    // Gracefully fallback.
+    const profilesCollection = collection(db, 'profile');
+    const profilesSnapshot = await getDocs(profilesCollection);
+    return {
+      totalUsers: profilesSnapshot.size,
+      activeUsers: profilesSnapshot.size,
+      signedUpToday: 0,
+    };
+  }
 }

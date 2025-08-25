@@ -14,12 +14,6 @@ export type UserWithRole = {
   status: "Active" | "Inactive";
 };
 
-export type UserStats = {
-  totalUsers: number;
-  activeUsers: number;
-  signedUpToday: number;
-};
-
 // --- ACTIONS ---
 
 export async function getPermissions() {
@@ -115,37 +109,4 @@ export async function updateUserRole(userId: string, newPermissionId: string): P
         await logError('database', error, `updateUserRole: ${userId}`);
         return { success: false };
     }
-}
-
-export async function getUserStats(): Promise<UserStats> {
-  try {
-    const profilesCollection = collection(db, 'profile');
-    const profilesSnapshot = await getDocs(profilesCollection);
-    const totalUsers = profilesSnapshot.size;
-
-    // Fetch users signed up today
-    const startOfToday = new Date();
-    startOfToday.setHours(0, 0, 0, 0);
-
-    const q = query(profilesCollection, where('createdAt', '>=', Timestamp.fromDate(startOfToday)));
-    const todaySnapshot = await getDocs(q);
-    const signedUpToday = todaySnapshot.size;
-    
-    return {
-      totalUsers,
-      activeUsers: totalUsers, // No 'status' field, so assuming all are active
-      signedUpToday,
-    };
-  } catch (error) {
-    await logError('database', error, 'getUserStats');
-    // This can happen if 'createdAt' fields don't exist yet for old users.
-    // Gracefully fallback.
-    const profilesCollection = collection(db, 'profile');
-    const profilesSnapshot = await getDocs(profilesCollection);
-    return {
-      totalUsers: profilesSnapshot.size,
-      activeUsers: profilesSnapshot.size,
-      signedUpToday: 0,
-    };
-  }
 }

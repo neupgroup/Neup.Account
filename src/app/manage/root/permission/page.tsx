@@ -1,11 +1,10 @@
 
-
 "use client";
 
 import { useEffect, useState, useRef, useTransition, useCallback } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useDebounce } from 'use-debounce';
-import { getMasterPermissions, type Permission } from './actions';
+import { getMasterPermissions, type Permission } from '@/actions/root/permission';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';

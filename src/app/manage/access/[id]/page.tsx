@@ -1,7 +1,7 @@
 
 import { getAccessDetails } from "../actions";
 import { notFound } from "next/navigation";
-import { getMasterPermissions } from "../../root/permission/actions";
+import { getMasterPermissions } from "@/actions/root/permission";
 import {
   Card,
   CardContent,

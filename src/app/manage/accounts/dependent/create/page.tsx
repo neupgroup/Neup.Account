@@ -49,7 +49,7 @@ import { useToast } from "@/hooks/use-toast"
 import { createDependentAccount } from "./actions"
 import { formSchema } from "./schema"
 import { Label } from "@/components/ui/label"
-import { parseDateString } from "@/app/manage/profile/actions"
+import { parseDateString } from "@/actions/profile"
 import { BackButton } from "@/components/ui/back-button"
 
 type FormData = z.infer<typeof formSchema>;

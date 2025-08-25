@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import { useRef, useTransition, useState, useEffect, useCallback } from 'react';
@@ -8,7 +7,7 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useDebounce } from 'use-debounce';
-import { addPermission, checkAppIdExists, type Permission } from '../actions';
+import { addPermission, checkAppIdExists, type Permission } from '@/actions/root/permission';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';

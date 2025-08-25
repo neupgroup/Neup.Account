@@ -52,7 +52,7 @@ import { useToast } from "@/hooks/use-toast"
 import { registerUser } from "@/actions/auth/register"
 import { checkNeupIdAvailability } from "@/actions/auth/session"
 import { Label } from "@/components/ui/label"
-import { parseDateString } from "@/app/manage/profile/actions"
+import { parseDateString } from "@/actions/profile"
 import { GeolocationContext } from "@/context/geolocation-context"
 
 const formSchema = z.object({
@@ -79,7 +79,7 @@ const formSchema = z.object({
     // Step 5
     password: z.string().min(8, "Password must be at least 8 characters."),
     // Step 6
-    agreement: z.boolean().refine((val) => val === true, {
+    agreement: z.boolean().refine((val) => val, {
         message: "You must accept the terms and conditions.",
     }),
 });

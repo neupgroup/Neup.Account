@@ -1,5 +1,3 @@
-
-
 "use server";
 
 import { db } from './firebase';
@@ -259,10 +257,10 @@ export async function loginUser(data: z.infer<typeof loginFormSchema>) {
 }
 
 export async function logoutActiveSession() {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const sessionId = cookieStore.get('auth_session_id')?.value;
     const accountId = cookieStore.get('auth_account_id')?.value;
-    const ipAddress = headers().get('x-forwarded-for') || 'Unknown IP';
+    const ipAddress = (await headers()).get('x-forwarded-for') || 'Unknown IP';
 
     if (sessionId && accountId) {
         try {
@@ -386,7 +384,7 @@ export async function validateCurrentSession() {
 
 
 export async function getActiveAccountId() {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const managingCookie = cookieStore.get('auth_managing')?.value;
 
     if (managingCookie && (managingCookie.startsWith('brand.') || managingCookie.startsWith('dependent.'))) {
@@ -414,7 +412,7 @@ export async function getTotalUsers() {
 }
 
 export async function getStoredAccounts(): Promise<StoredAccount[]> {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const accountsCookie = cookieStore.get('auth_accounts');
     if (accountsCookie?.value) {
         try {
@@ -478,7 +476,7 @@ export async function switchActiveAccount(account: StoredAccount) {
         return { success: false, error: 'Cannot switch to an expired session. Please sign in.' };
     }
     
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const expiresOn = new Date();
     expiresOn.setDate(expiresOn.getDate() + SESSION_DURATION_DAYS);
     const cookieOptions = { path: '/', expires: expiresOn, sameSite: 'lax' as const, secure: true, httpOnly: true };
@@ -512,8 +510,8 @@ export async function switchActiveAccount(account: StoredAccount) {
 }
 
 export async function logoutStoredSession(sessionId: string): Promise<{ success: boolean; error?: string }> {
-    const cookieStore = cookies();
-    const ipAddress = headers().get('x-forwarded-for') || 'Unknown IP';
+    const cookieStore = await cookies();
+    const ipAddress = (await headers()).get('x-forwarded-for') || 'Unknown IP';
     
     try {
         const sessionRef = doc(db, 'session', sessionId);
@@ -550,7 +548,7 @@ export async function logoutStoredSession(sessionId: string): Promise<{ success:
 }
 
 export async function removeStoredAccount(accountId: string): Promise<{ success: boolean; error?: string }> {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     try {
         const existingAccountsCookie = cookieStore.get('auth_accounts');
         if (existingAccountsCookie?.value) {

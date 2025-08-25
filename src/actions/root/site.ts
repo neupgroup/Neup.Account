@@ -200,7 +200,7 @@ export async function getErrorDetails(id: string): Promise<SystemErrorDetails | 
              const userProfile = await getUserProfile(data.accountId);
              user = {
                  name: userProfile?.displayName || 'Unknown User',
-                 neupId: 'N/A' // neupId is not directly on profile, would need another query
+                 neupId: userProfile?.neupId || 'N/A'
              }
         }
 

@@ -1,16 +1,16 @@
 
+'use server';
 
-"use server";
+import { z } from 'zod';
+import bcrypt from 'bcryptjs';
+import { doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 
 import { db } from '@/lib/firebase';
-import { doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
-import bcrypt from 'bcryptjs';
-import { z } from 'zod';
-import { changePasswordSchema } from './schema';
-import { logActivity } from '@/lib/log-actions';
-import { getActiveAccountId } from '@/lib/auth-actions';
-import { logError } from '@/lib/logger';
+import { getActiveAccountId } from '@/actions/auth/session';
 import { checkPermissions } from '@/lib/user-actions';
+import { logActivity } from '@/lib/log-actions';
+import { logError } from '@/lib/logger';
+import { changePasswordSchema } from '@/schemas/security';
 
 export async function changePassword(data: z.infer<typeof changePasswordSchema>, geolocation?: string) {
     const hasPermission = await checkPermissions(['security.pass.modify']);

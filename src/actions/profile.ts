@@ -1,15 +1,14 @@
-
-
 "use server"
 
 import { z } from "zod"
 import { db } from "@/lib/firebase"
-import { doc, updateDoc, collection, addDoc, serverTimestamp, query, where, getDocs, writeBatch, setDoc } from "firebase/firestore"
-import { profileFormSchema, brandProfileFormSchema } from "./schema"
+import { doc, updateDoc, collection, addDoc, serverTimestamp, query, where, getDocs, writeBatch } from "firebase/firestore"
 import { parseDate as parseDateWithAI } from "@/ai/flows/parse-date"
 import { logActivity } from "@/lib/log-actions"
 import { logError } from "@/lib/logger"
 import { checkPermissions } from "@/lib/user-actions"
+import { profileFormSchema, brandProfileFormSchema } from "@/schemas/profile"
+
 
 async function updateOrCreateContact(batch: ReturnType<typeof writeBatch>, accountId: string, type: string, value: string | undefined, hasPermission: boolean) {
     if (!hasPermission) return;

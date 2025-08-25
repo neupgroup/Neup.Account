@@ -1,5 +1,4 @@
 
-
 "use client"
 
 import { useEffect, useState } from "react"
@@ -15,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { getActiveAccountId } from "@/lib/auth-actions"
+import { getActiveAccountId } from "@/actions/auth/session"
 import { getUserProfile, type UserProfile, getUserNeupIds } from "@/lib/user-actions"
 import { getCookie } from "cookies-next"
 import { switchToPersonal } from "@/app/manage/accounts/brand/actions"

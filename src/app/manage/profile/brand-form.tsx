@@ -10,8 +10,8 @@ import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 
 import { getUserProfile, type UserProfile } from "@/lib/user-actions"
-import { updateBrandProfile } from "./actions"
-import { brandProfileFormSchema } from "./schema"
+import { updateBrandProfile } from "@/actions/profile"
+import { brandProfileFormSchema } from "@/schemas/profile"
 import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 

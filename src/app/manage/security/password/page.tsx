@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
-import { changePasswordSchema } from "./schema";
-import { changePassword } from "./actions";
+import { changePassword } from "@/actions/security/password";
+import { changePasswordSchema } from "@/schemas/security";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
@@ -55,7 +55,7 @@ export default function ChangePasswordPage() {
             <div>
                 <h1 className="text-3xl font-bold tracking-tight">Change Password</h1>
                 <p className="text-muted-foreground">
-                    Choose a strong, new password that you don&apos;t use for other accounts.
+                    Choose a strong, new password that you don't use for other accounts.
                 </p>
             </div>
             <div className="space-y-2">

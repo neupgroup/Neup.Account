@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import { useState, useTransition, useEffect, useCallback, useRef } from 'react';
@@ -8,8 +7,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useToast } from '@/hooks/use-toast';
-import { updatePermission, deletePermission } from './actions';
-import { type Permission, checkPermissionNameExists } from '../actions';
+import { updatePermissionSet, deletePermissionSet } from '@/actions/root/permission';
+import { type Permission, checkPermissionNameExists } from '@/actions/root/permission';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -120,7 +119,7 @@ export function PermissionForm({ permission }: { permission: Permission }) {
         data.access.forEach(p => formData.append('access', p));
 
         startTransition(async () => {
-            const result = await updatePermission(permission.id, formData);
+            const result = await updatePermissionSet(permission.id, formData);
             if (result.success) {
                 toast({ title: "Success", description: "Permission set updated.", className: "bg-accent text-accent-foreground" });
                 setIsEditing(false);
@@ -135,7 +134,7 @@ export function PermissionForm({ permission }: { permission: Permission }) {
 
     const handleDelete = () => {
         startTransition(async () => {
-            const result = await deletePermission(permission.id);
+            const result = await deletePermissionSet(permission.id);
              if (result.success) {
                 toast({ title: "Success", description: "Permission set has been deleted." });
                 router.push('/manage/root/permission');

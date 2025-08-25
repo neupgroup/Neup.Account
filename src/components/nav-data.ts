@@ -170,7 +170,7 @@ export async function getNavConfig(): Promise<NavSection[]> {
     const visibleAccountNav = navItemsWithPerms(accountNavItems);
 
     const config: NavSection[] = [];
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const isManaging = !!cookieStore.get('auth_managing')?.value;
     
     if (isManaging) {

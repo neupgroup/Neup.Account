@@ -1,11 +1,11 @@
 
 import { notFound } from "next/navigation";
-import { getPermissionDetails } from "./actions";
+import { getPermissionSetDetails } from "@/actions/root/permission";
 import { PermissionForm } from "./form";
 import { BackButton } from "@/components/ui/back-button";
 
 export default async function PermissionDetailsPage({ params }: { params: { id: string } }) {
-    const permission = await getPermissionDetails(params.id);
+    const permission = await getPermissionSetDetails(params.id);
 
     if (!permission) {
         notFound();

@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useDebounce } from 'use-debounce';
 import { bulkAddPermissions, type BulkAddResult } from './actions';
-import { checkAppIdExists } from '../actions';
+import { checkAppIdExists } from '@/actions/root/permission';
 
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';

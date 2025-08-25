@@ -1,6 +1,6 @@
 
 
-import { getNeupIdRequestDetails } from '@/actions/root/requests/neupid/actions';
+import { getNeupIdRequestDetails } from '@/actions/root/requests';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { RequestDecisionForm } from './form';

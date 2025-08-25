@@ -6,8 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
-import { emailFormSchema } from "@/actions/security/email/schema";
-import { getRecoveryEmail, addRecoveryEmail, removeRecoveryEmail } from "@/actions/security/email/actions";
+import { getRecoveryEmail, addRecoveryEmail, removeRecoveryEmail } from "@/actions/security/email";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -30,6 +29,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Loader2, Plus, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { BackButton } from "@/components/ui/back-button";
+import { emailFormSchema } from "@/schemas/security";
 
 type EmailFormValues = z.infer<typeof emailFormSchema>;
 
