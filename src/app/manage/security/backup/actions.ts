@@ -1,5 +1,3 @@
-
-
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -9,7 +7,7 @@ import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
 import { revalidatePath } from 'next/cache';
 import crypto from 'crypto';
-import { checkPermissions } from '@/lib/user-actions';
+import { checkPermissions } from '@/lib/user';
 
 export type BackupCode = {
     code: string;

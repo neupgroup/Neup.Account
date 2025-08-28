@@ -17,6 +17,11 @@ export default function SignOutPage() {
     // We use a one-time effect to submit a form that calls our server action.
     // This ensures the action runs in the correct context.
     useEffect(() => {
+        // Clear client-side session cache immediately on sign out.
+        if (typeof window !== 'undefined') {
+            sessionStorage.clear();
+        }
+
         // The timeout gives React a moment to render the component,
         // preventing potential "form not connected" warnings.
         const timer = setTimeout(() => {

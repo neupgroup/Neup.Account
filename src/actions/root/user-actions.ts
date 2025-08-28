@@ -1,14 +1,15 @@
 
+
 'use server';
 
 import { db } from '@/lib/firebase';
-import { doc, getDoc, collection, query, where, getDocs, updateDoc, writeBatch, serverTimestamp, addDoc, orderBy, limit, arrayUnion } from 'firebase/firestore';
+import { doc, updateDoc, addDoc, collection, serverTimestamp, deleteDoc, writeBatch, query, where, getDocs, getDoc } from 'firebase/firestore';
 import { logError } from '@/lib/logger';
-import { checkPermissions } from '@/lib/user-actions';
+import { checkPermissions } from '@/lib/user';
+import { getPersonalAccountId } from '@/lib/auth-actions';
 import { logActivity } from '@/lib/log-actions';
 import { cookies, headers } from 'next/headers';
 import crypto from 'crypto';
-import { getPersonalAccountId } from '@/actions/auth/session';
 import { z } from 'zod';
 
 
@@ -179,3 +180,66 @@ export async function impersonateUser(userId: string, neupId: string): Promise<{
         return { success: false, error: 'Could not start impersonation session.' };
     }
 }
+
+
+export async function deleteUserAccount(userId: string): Promise<{ success: boolean; error?: string }> {
+    const canDelete = await checkPermissions(['root.account.delete']);
+    if (!canDelete) {
+        return { success: false, error: 'Permission denied.' };
+    }
+    
+    const adminId = await getPersonalAccountId();
+    if (!adminId) {
+        return { success: false, error: 'Administrator not authenticated.' };
+    }
+
+    try {
+        const batch = writeBatch(db);
+
+        // --- Documents to delete by direct reference ---
+        batch.delete(doc(db, 'account', userId));
+        batch.delete(doc(db, 'profile', userId));
+        batch.delete(doc(db, 'auth_password', userId));
+        // Delete TOTP if it exists
+        const totpRef = doc(db, 'auth_totp', userId);
+        const totpDoc = await getDoc(totpRef);
+        if (totpDoc.exists()) {
+            batch.delete(totpRef);
+        }
+
+        // --- Documents to find and delete via query ---
+        const collectionsToQuery = [
+            'neupid', 
+            'contact', 
+            'permit', // This handles permits given to the user
+            'session', 
+            'activity', 
+            'notifications', 
+            'kyc', 
+            'requests',
+            'recovery_contacts'
+        ];
+        
+        for (const coll of collectionsToQuery) {
+            const q = query(collection(db, coll), where(coll === 'neupid' ? 'for' : 'accountId', '==', userId));
+            const snapshot = await getDocs(q);
+            snapshot.forEach(doc => batch.delete(doc.ref));
+        }
+
+        // --- Also delete permits where this user is the target ---
+        const targetPermitQuery = query(collection(db, 'permit'), where('target_id', '==', userId));
+        const targetPermitSnapshot = await getDocs(targetPermitQuery);
+        targetPermitSnapshot.forEach(doc => batch.delete(doc.ref));
+        
+        await batch.commit();
+        await logActivity(userId, `Account permanently deleted by admin ${adminId}`, 'Alert', undefined, adminId);
+        
+        return { success: true };
+
+    } catch (error) {
+        await logError('database', error, `deleteUserAccount for userId: ${userId}`);
+        return { success: false, error: 'An unexpected error occurred during account deletion.' };
+    }
+}
+
+

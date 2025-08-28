@@ -1,14 +1,14 @@
 
-"use client";
+'use client';
 
-import { useEffect, useState } from 'react';
-import { type UserProfile } from '@/lib/user-actions';
+import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { useRouter } from 'next/navigation';
-
+import { VerifiedBadge } from '../verified-badge';
+import { useSession } from '@/context/session-context';
 
 function getGreeting() {
     const hour = new Date().getHours();
@@ -17,23 +17,10 @@ function getGreeting() {
     return "Good evening";
 }
 
-type HeaderData = {
-    profile: UserProfile | null;
-    neupId: string | null;
-    totpEnabled: boolean;
-    recoveryEmailSet: boolean;
-};
-
-export function DashboardHeader({ initialData }: { initialData: HeaderData | null }) {
-    const [loading, setLoading] = useState(true);
+export function DashboardHeader() {
     const [searchTerm, setSearchTerm] = useState('');
     const router = useRouter();
-
-    useEffect(() => {
-        if (initialData) {
-            setLoading(false);
-        }
-    }, [initialData]);
+    const { profile, loading, isManaging, accountId } = useSession();
 
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -42,17 +29,23 @@ export function DashboardHeader({ initialData }: { initialData: HeaderData | nul
         }
     };
     
-    if (loading || !initialData) {
+    if (loading || !profile) {
         return (
              <div className="space-y-4">
-                <Skeleton className="h-8 w-1/3" />
-                <Skeleton className="h-6 w-1/4" />
+                <div className="flex items-center gap-4">
+                    <Skeleton className="h-16 w-16 rounded-lg" />
+                    <div>
+                        <Skeleton className="h-8 w-48" />
+                        <Skeleton className="h-5 w-24 mt-2" />
+                    </div>
+                </div>
                 <Skeleton className="h-10 w-full" />
             </div>
         )
     }
 
-    const { profile, neupId } = initialData;
+    const greetingName = isManaging ? profile.displayName : profile.firstName;
+
 
     return (
         <div className="space-y-4">
@@ -60,12 +53,15 @@ export function DashboardHeader({ initialData }: { initialData: HeaderData | nul
                  <Avatar className="h-16 w-16 rounded-lg">
                     <AvatarImage src={profile?.displayPhoto} alt={profile?.displayName} data-ai-hint="person" />
                     <AvatarFallback className="rounded-lg text-xl">
-                        {`${profile?.firstName?.[0] || ''}${profile?.lastName?.[0] || ''}`.toUpperCase()}
+                        {`${profile?.displayName?.[0] || ''}`.toUpperCase()}
                     </AvatarFallback>
                 </Avatar>
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight">{getGreeting()}, {profile?.firstName || 'User'}!</h1>
-                    <p className="text-muted-foreground font-mono">@{neupId}</p>
+                    <p className="text-muted-foreground">{getGreeting()}</p>
+                    <div className="flex items-center gap-2">
+                        <h1 className="text-3xl font-bold tracking-tight">{greetingName || 'User'}!</h1>
+                        {accountId && <VerifiedBadge accountId={accountId} className="h-6 w-6" />}
+                    </div>
                 </div>
             </div>
 

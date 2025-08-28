@@ -1,10 +1,10 @@
-
 "use client";
 
 import { useEffect, useState, useRef, useTransition, useCallback } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useDebounce } from 'use-debounce';
-import { getMasterPermissions, type Permission } from '@/actions/root/permission';
+import { getMasterPermissions } from '@/actions/root/permission';
+import type { Permission } from '@/types';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -18,9 +18,9 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Skeleton } from '@/components/ui/skeleton';
-import { ChevronLeft, ChevronRight, Plus, Search, UploadCloud, FilePlus } from 'lucide-react';
+import { ChevronLeft, ChevronRight, UploadCloud, FilePlus, Search } from '@/components/icons';
 import Link from 'next/link';
-import { checkPermissions } from '@/lib/user-actions';
+import { checkPermissions } from '@/lib/user';
 
 const PAGE_SIZE = 10;
 

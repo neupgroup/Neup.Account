@@ -1,22 +1,71 @@
 
+'use client';
+
 import {
     Card,
-    CardContent,
     CardHeader,
     CardTitle
 } from "@/components/ui/card";
 import { getUserSessions } from "@/actions/security/sessions";
-import { SessionManager } from "../session-manager";
-import { getActiveSessionDetails } from "@/actions/auth/session";
+import { SessionManager } from "@/app/manage/security/session-manager";
+import { getActiveSession } from "@/lib/auth-actions";
 import { BackButton } from "@/components/ui/back-button";
-import { checkPermissions } from "@/lib/user-actions";
+import { checkPermissions } from "@/lib/user";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Ban } from "lucide-react";
+import { useState, useEffect } from "react";
+import type { UserSession } from "@/types";
+import { Skeleton } from "@/components/ui/skeleton";
 
-export default async function DevicesPage() {
-    const canView = await checkPermissions(['security.login_devices.view']);
+function DevicesPageSkeleton() {
+    return (
+        <div className="grid gap-8">
+            <BackButton href="/manage/security" />
+            <div>
+                <Skeleton className="h-9 w-1/2" />
+                <Skeleton className="h-5 w-2/3 mt-2" />
+            </div>
+            <div className="space-y-2">
+                <Skeleton className="h-7 w-1/3" />
+                <Skeleton className="h-5 w-1/2" />
+                <Card>
+                    <div className="border rounded-lg p-4 space-y-4">
+                        <Skeleton className="h-20 w-full" />
+                        <Skeleton className="h-20 w-full" />
+                    </div>
+                </Card>
+            </div>
+        </div>
+    )
+}
 
-    if (!canView) {
+export default function DevicesPage() {
+    const [permissionState, setPermissionState] = useState<'loading' | 'granted' | 'denied'>('loading');
+    const [sessions, setSessions] = useState<UserSession[]>([]);
+    const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function fetchData() {
+            const hasPermission = await checkPermissions(['security.login_devices.view']);
+            setPermissionState(hasPermission ? 'granted' : 'denied');
+
+            if (hasPermission) {
+                const [sessionData, currentSessionData] = await Promise.all([
+                    getUserSessions(),
+                    getActiveSession()
+                ]);
+                setSessions(sessionData);
+                setCurrentSessionId(currentSessionData?.sessionId || null);
+            }
+        }
+        fetchData();
+    }, []);
+
+    if (permissionState === 'loading') {
+        return <DevicesPageSkeleton />;
+    }
+
+    if (permissionState === 'denied') {
         return (
              <div className="grid gap-8">
                 <BackButton href="/manage/security" />
@@ -30,11 +79,6 @@ export default async function DevicesPage() {
             </div>
         );
     }
-
-    const [sessions, currentSession] = await Promise.all([
-        getUserSessions(),
-        getActiveSessionDetails()
-    ]);
 
     return (
         <div className="grid gap-8">
@@ -53,7 +97,7 @@ export default async function DevicesPage() {
                 <Card>
                     <SessionManager 
                         initialSessions={sessions} 
-                        currentSessionId={currentSession?.auth_session_id || null} 
+                        currentSessionId={currentSessionId} 
                     />
                 </Card>
             </div>

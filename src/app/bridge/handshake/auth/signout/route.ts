@@ -1,6 +1,5 @@
-
 import { NextResponse, type NextRequest } from 'next/server';
-import { getActiveSessionDetails } from '@/lib/auth-actions';
+import { getActiveSession } from '@/lib/session';
 import { db } from '@/lib/firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { logError } from '@/lib/logger';
@@ -15,14 +14,14 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ success: false, error: 'appId and post_logout_redirect_uri are required.' }, { status: 400 });
     }
 
-    const session = await getActiveSessionDetails();
-    if (!session) {
-         // Not logged in, so just redirect back
-        return NextResponse.redirect(postLogoutRedirectUri);
-    }
-
     try {
-        const sessionRef = doc(db, 'session', session.auth_session_id);
+        const session = await getActiveSession();
+        if (!session) {
+             // Not logged in, so just redirect back
+            return NextResponse.redirect(postLogoutRedirectUri);
+        }
+
+        const sessionRef = doc(db, 'session', session.sessionId);
         const sessionDoc = await getDoc(sessionRef);
 
         if (sessionDoc.exists()) {

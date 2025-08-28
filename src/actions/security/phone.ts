@@ -1,19 +1,19 @@
-
 'use server';
 
 import { db } from '@/lib/firebase';
-import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
-import { getPersonalAccountId } from '@/actions/auth/session';
+import { doc, getDoc, setDoc, deleteDoc, collection } from 'firebase/firestore';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
 import { phoneFormSchema } from '@/schemas/security';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
-import { checkPermissions } from '@/lib/user-actions';
+import { getPersonalAccountId } from '@/lib/auth-actions';
+import { checkPermissions } from '@/lib/user';
 
 const CONTACT_TYPE = 'recoveryPhone';
 
 function getDocRef(accountId: string) {
+    // This custom ID format is to ensure one recovery phone per user.
     return doc(db, 'contact', `${CONTACT_TYPE}_${accountId}`);
 }
 

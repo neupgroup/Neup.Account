@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { getApplicationDetails } from '@/actions/data/applications';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Check, ShieldQuestion, Trash2 } from 'lucide-react';
+import { Check, ShieldQuestion, Trash2 } from '@/components/icons';
 import { BackButton } from '@/components/ui/back-button';
 
 export default async function AppDataAccessPage({ params }: { params: { appId: string, party: string } }) {

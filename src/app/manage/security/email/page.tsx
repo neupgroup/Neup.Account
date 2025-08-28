@@ -26,10 +26,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Loader2, Plus, Trash2 } from "lucide-react";
+import { Loader2, Plus, Trash2 } from "@/components/icons";
 import { cn } from "@/lib/utils";
 import { BackButton } from "@/components/ui/back-button";
 import { emailFormSchema } from "@/schemas/security";
+import { SecondaryHeader } from "@/components/ui/secondary-header";
 
 type EmailFormValues = z.infer<typeof emailFormSchema>;
 
@@ -94,10 +95,10 @@ export default function RecoveryEmailPage() {
                 </p>
             </div>
             <div className="space-y-2">
-                <h2 className="text-xl font-semibold tracking-tight">Manage Email Address</h2>
-                 <p className="text-muted-foreground text-sm">
-                    We will only use this email address for account recovery purposes.
-                </p>
+                <SecondaryHeader
+                    title="Manage Email Address"
+                    description="We will only use this email address for account recovery purposes."
+                />
                 <Card>
                     <CardContent className="pt-6">
                         {loading ? (

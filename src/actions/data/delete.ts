@@ -1,14 +1,15 @@
 
-"use server";
+'use server';
 
 import { z } from "zod";
-import { getActiveAccountId } from "@/actions/auth/session";
+import { getActiveAccountId } from "@/lib/auth-actions";
 import { logActivity } from "@/lib/log-actions";
 import { logError } from "@/lib/logger";
 import { db } from "@/lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, writeBatch, collection, serverTimestamp, updateDoc } from "firebase/firestore";
 import bcrypt from "bcryptjs";
-import { checkPermissions } from "@/lib/user-actions";
+import { checkPermissions } from "@/lib/user";
+import { logoutActiveSession } from "../auth/logout";
 
 const formSchema = z.object({
     password: z.string().min(1, "Password is required to request deletion."),
@@ -32,8 +33,17 @@ export async function requestAccountDeletion(data: z.infer<typeof formSchema>, g
   const { password } = validation.data;
 
   try {
+    const accountRef = doc(db, 'account', accountId);
     const authRef = doc(db, 'auth_password', accountId);
-    const authDoc = await getDoc(authRef);
+    
+    const [accountDoc, authDoc] = await Promise.all([
+        getDoc(accountRef),
+        getDoc(authRef)
+    ]);
+    
+    if (accountDoc.exists() && accountDoc.data().status === 'deletion_requested') {
+        return { success: false, error: "Your account is already scheduled for deletion." };
+    }
 
     if (!authDoc.exists()) {
         await logActivity(accountId, 'Account Deletion Request Failed', 'Failed', undefined, undefined, geolocation);
@@ -45,16 +55,44 @@ export async function requestAccountDeletion(data: z.infer<typeof formSchema>, g
         return { success: false, error: "The password you entered is incorrect." };
     }
     
-    // In a real application, update the user's status and set a 'deletionRequestedAt' timestamp.
-    await logActivity(accountId, "Account Deletion Requested", "Success", undefined, undefined, geolocation);
+    const batch = writeBatch(db);
 
-    console.log(
-      `Account deletion requested for accountId: ${accountId}. A 30-day cool-off period has started.`
-    );
+    // Update the status in the account document
+    batch.update(accountRef, { status: 'deletion_requested' });
+
+    // Create a log in the new account_status collection
+    const statusLogRef = doc(collection(db, 'account_status'));
+    batch.set(statusLogRef, {
+        account_id: accountId,
+        status: 'deletion_requested',
+        remarks: 'User initiated deletion request.',
+        from_date: serverTimestamp(),
+        more_info: 'User verified password to request deletion.'
+    });
+
+    await batch.commit();
+
+    await logActivity(accountId, "Account Deletion Requested", "Success", undefined, undefined, geolocation);
+    await logoutActiveSession();
+
     return { success: true };
 
   } catch (error) {
     await logError("database", error, `requestAccountDeletion: ${accountId}`);
     return { success: false, error: "An unexpected error occurred." };
   }
+}
+
+
+export async function cancelAccountDeletion(accountId: string): Promise<{ success: boolean; error?: string }> {
+    try {
+        const accountRef = doc(db, 'account', accountId);
+        await updateDoc(accountRef, { status: 'active' });
+
+        await logActivity(accountId, "Account Deletion Cancelled", "Success");
+        return { success: true };
+    } catch (error) {
+        await logError('database', error, `cancelAccountDeletion: ${accountId}`);
+        return { success: false, error: "Failed to cancel account deletion." };
+    }
 }

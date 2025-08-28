@@ -1,4 +1,3 @@
-
 import {
     Accordion,
     AccordionContent,
@@ -13,7 +12,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { BackButton } from "@/components/ui/back-button";
-import { checkPermissions } from "@/lib/user-actions";
+import { checkPermissions } from "@/lib/user";
 import { notFound } from "next/navigation";
 
 export default async function PoliciesPage() {

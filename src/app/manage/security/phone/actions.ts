@@ -3,14 +3,14 @@
 'use server';
 
 import { db } from '@/lib/firebase';
-import { doc, getDoc, setDoc, deleteDoc, collection } from 'firebase/firestore';
-import { getPersonalAccountId } from '@/lib/auth-actions';
+import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
-import { phoneFormSchema } from './schema';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
+import { getPersonalAccountId } from '@/lib/auth-actions';
 import { checkPermissions } from '@/lib/user-actions';
+import { phoneFormSchema } from '@/schemas/security';
 
 const CONTACT_TYPE = 'recoveryPhone';
 

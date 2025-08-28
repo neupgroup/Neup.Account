@@ -1,10 +1,9 @@
 
-
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, notFound } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -46,25 +45,35 @@ import {
 import { Checkbox } from "@/components/ui/checkbox"
 import { cn } from "@/lib/utils"
 import { useToast } from "@/hooks/use-toast"
-import { createDependentAccount } from "./actions"
-import { formSchema } from "./schema"
+import { createDependentAccount } from "@/actions/manage/accounts/dependent"
+import { dependentFormSchema } from "@/schemas/dependent"
 import { Label } from "@/components/ui/label"
 import { parseDateString } from "@/actions/profile"
 import { BackButton } from "@/components/ui/back-button"
+import { checkPermissions } from "@/lib/user"
 
-type FormData = z.infer<typeof formSchema>;
+type FormData = z.infer<typeof dependentFormSchema>;
 
 export default function CreateDependentPage() {
     const router = useRouter()
     const { toast } = useToast()
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [canCreate, setCanCreate] = useState<boolean | null>(null);
 
     const [dateInput, setDateInput] = useState<string>('');
     const [isParsingDate, setIsParsingDate] = useState(false);
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+    
+    useEffect(() => {
+        async function verifyPermission() {
+            const hasPermission = await checkPermissions(['linked_accounts.dependent.create']);
+            setCanCreate(hasPermission);
+        }
+        verifyPermission();
+    }, []);
 
     const form = useForm<FormData>({
-        resolver: zodResolver(formSchema),
+        resolver: zodResolver(dependentFormSchema),
         defaultValues: {
             firstName: "",
             middleName: "",
@@ -114,7 +123,7 @@ export default function CreateDependentPage() {
                 description: "Dependent account created successfully.",
                 className: "bg-accent text-accent-foreground"
             });
-            router.push('/manage/accounts');
+            router.push('/manage/accounts/dependent');
             router.refresh();
         } else {
             toast({
@@ -128,10 +137,18 @@ export default function CreateDependentPage() {
         }
         setIsSubmitting(false);
     }
+    
+    if (canCreate === null) {
+        return <div>Loading...</div>; // Or a skeleton loader
+    }
+    if (canCreate === false) {
+        return notFound();
+    }
+
 
     return (
         <div className="grid gap-8">
-            <BackButton href="/manage/accounts" />
+            <BackButton href="/manage/accounts/dependent" />
              <div>
                 <h1 className="text-3xl font-bold tracking-tight">Create Dependent Account</h1>
                 <p className="text-muted-foreground">
@@ -268,5 +285,3 @@ export default function CreateDependentPage() {
         </div>
     )
 }
-
-    

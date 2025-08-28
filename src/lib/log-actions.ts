@@ -1,12 +1,11 @@
 
 
-
 'use server';
 
 import { db } from './firebase';
 import { collection, addDoc, serverTimestamp, query, getDocs, orderBy, limit, DocumentData, getDoc, doc, limitToLast, startAfter, endBefore, where } from 'firebase/firestore';
 import { headers } from 'next/headers';
-import { getUserProfile } from './user-actions';
+import { getUserProfile } from './user';
 import { logError } from './logger';
 import { getActiveAccountId } from './auth-actions';
 

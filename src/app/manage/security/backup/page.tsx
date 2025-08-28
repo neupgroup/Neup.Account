@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Loader2, Download, Copy, RefreshCw } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { BackButton } from '@/components/ui/back-button';
+import { SecondaryHeader } from '@/components/ui/secondary-header';
 
 export default function BackupCodesPage() {
     const [codes, setCodes] = useState<BackupCode[]>([]);
@@ -70,8 +71,10 @@ export default function BackupCodesPage() {
             </div>
             <Card>
                 <CardHeader>
-                    <CardTitle>Your Backup Codes</CardTitle>
-                    <CardDescription>Each code can only be used once. Generate new codes to invalidate this set.</CardDescription>
+                    <SecondaryHeader
+                        title="Your Backup Codes"
+                        description="Each code can only be used once. Generate new codes to invalidate this set."
+                    />
                 </CardHeader>
                 <CardContent className="space-y-6">
                      <Alert variant="destructive">

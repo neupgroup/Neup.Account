@@ -1,14 +1,28 @@
 
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { Shield, Lock, Users } from '@/components/icons';
+import { Shield, Lock, Users, Instagram, Linkedin, Twitter, Facebook, Bot, Link as LinkIcon } from '@/components/icons';
 import { Card, CardContent } from '@/components/ui/card';
 import { hasActiveSessionCookies } from '@/lib/auth-actions';
 import { NeupIdLogo } from '@/components/neupid-logo';
+import { getSocialLinks } from '@/actions/root/site/socials';
+import type { SocialLink } from '@/types';
+
+const socialIcons: Record<SocialLink['type'], React.ElementType> = {
+    instagram: Instagram,
+    linkedin: Linkedin,
+    twitter: Twitter,
+    facebook: Facebook,
+    whatsapp: Bot,
+    other: LinkIcon,
+};
 
 export default async function LandingPage() {
   const isLoggedIn = await hasActiveSessionCookies();
+  const socialLinks = await getSocialLinks();
+  const visibleSocialLinks = socialLinks.filter(link => link.isVisible);
 
   const CtaButton = () => (
     <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
@@ -34,7 +48,7 @@ export default async function LandingPage() {
     <div className="flex flex-col min-h-screen bg-background">
       <header className="sticky top-0 z-50 flex h-16 w-full items-center bg-background shadow">
         <div className="mx-auto flex w-full max-w-[1368px] items-center px-4 lg:px-6">
-          <NeupIdLogo iconHref={process.env.COMPANY_URL || "/"} textHref="/" />
+          <NeupIdLogo iconHref={process.env.NEXT_PUBLIC_COMPANY_URL || "/"} textHref="/" />
           <nav className="ml-auto">
             <HeaderButton />
           </nav>
@@ -138,12 +152,31 @@ export default async function LandingPage() {
           </div>
         </section>
       </main>
-      <footer className="flex w-full shrink-0 items-center border-t bg-card py-6">
-        <div className="mx-auto flex w-full max-w-[1368px] flex-col items-center gap-2 px-4 sm:flex-row md:px-6">
+      <footer className="flex w-full shrink-0 flex-col items-center gap-4 border-t bg-card py-6 md:flex-row">
+        <div className="mx-auto flex w-full max-w-[1368px] flex-col items-center gap-4 px-4 sm:flex-row md:px-6">
           <p className="text-xs text-muted-foreground">
             &copy; {new Date().getFullYear()} Neup.Account. All rights reserved.
           </p>
-          <nav className="sm:ml-auto flex gap-4 sm:gap-6">
+           {visibleSocialLinks.length > 0 && (
+            <div className="flex items-center gap-4 sm:ml-auto">
+              {visibleSocialLinks.map((link) => {
+                const Icon = socialIcons[link.type];
+                return (
+                  <Link
+                    key={link.id}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-foreground"
+                    aria-label={link.type}
+                  >
+                    <Icon className="h-5 w-5" />
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+          <nav className="flex gap-4 sm:ml-4">
             <Link href="/manage/policies" className="text-xs hover:underline underline-offset-4">
               Terms of Service
             </Link>

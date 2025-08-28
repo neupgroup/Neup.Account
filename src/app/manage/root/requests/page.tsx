@@ -1,36 +1,11 @@
 
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Wallet, ShieldCheck, UserCheck, FileText, ChevronRight, Ban } from "lucide-react";
-import Link from "next/link";
+import { Wallet, ShieldCheck, UserCheck, FileText, Ban, Trash2 } from "@/components/icons";
 import React from "react";
-import { checkPermissions } from "@/lib/user-actions";
+import { checkPermissions } from "@/lib/user";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-
-const FeatureListItem = ({
-    icon: Icon,
-    title,
-    description,
-    href,
-}: {
-    icon: React.ElementType,
-    title: string,
-    description: string,
-    href: string,
-}) => (
-    <Link 
-        href={href} 
-        className="flex items-center gap-4 py-4 px-4 rounded-lg transition-colors hover:bg-muted/50"
-    >
-        <Icon className="h-6 w-6 text-muted-foreground" />
-        <div className="flex-grow">
-            <p className="font-medium">{title}</p>
-            {description && <p className="text-sm text-muted-foreground">{description}</p>}
-        </div>
-        <ChevronRight className="h-5 w-5 text-muted-foreground" />
-    </Link>
-);
-
+import { ListItem } from "@/components/ui/list-item";
 
 export default async function RequestsManagementPage() {
     const canView = await checkPermissions(['root.requests.view']);
@@ -61,6 +36,12 @@ export default async function RequestsManagementPage() {
             href: "/manage/root/requests/kyc",
         },
         {
+            icon: ShieldCheck,
+            title: "Verification Requests",
+            description: "Review and process user verification requests.",
+            href: "/manage/root/requests/verifications",
+        },
+        {
             icon: Wallet,
             title: "Payment Verification",
             description: "Verify manual payments made for services like Neup.Pro.",
@@ -72,6 +53,12 @@ export default async function RequestsManagementPage() {
             description: "Address reports filed by users against other users.",
             href: "/manage/root/requests/report",
         },
+        {
+            icon: Trash2,
+            title: "Deletion Requests",
+            description: "Manage and process account deletion requests.",
+            href: "/manage/root/requests/deletion",
+        }
     ];
 
     return (
@@ -87,7 +74,7 @@ export default async function RequestsManagementPage() {
                  <Card>
                     <CardContent className="divide-y p-2">
                         {features.map((feature, index) => (
-                            <FeatureListItem key={index} {...feature} />
+                            <ListItem key={index} {...feature} />
                         ))}
                     </CardContent>
                 </Card>

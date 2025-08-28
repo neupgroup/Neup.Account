@@ -1,5 +1,5 @@
 
-import Link from "next/link";
+
 import React from "react";
 import {
     Card,
@@ -11,33 +11,13 @@ import {
     Mail,
     ShieldCheck,
     Laptop,
-    History,
     Globe,
-    ChevronRight,
     Users,
     FileLock2
-} from "lucide-react";
-
-const SecurityListItem = ({
-    icon: Icon,
-    title,
-    description,
-    href,
-}: {
-    icon: React.ElementType,
-    title: string,
-    description: string,
-    href: string,
-}) => (
-    <Link href={href} className="flex items-center gap-4 py-4 px-4 rounded-lg transition-colors hover:bg-muted/50">
-        <Icon className="h-6 w-6 text-muted-foreground" />
-        <div className="flex-grow">
-            <p className="font-medium">{title}</p>
-            <p className="text-sm text-muted-foreground">{description}</p>
-        </div>
-        <ChevronRight className="h-5 w-5 text-muted-foreground" />
-    </Link>
-);
+} from "@/components/icons";
+import { ListItem } from "@/components/ui/list-item";
+import { SecondaryHeader } from "@/components/ui/secondary-header";
+import { PrimaryHeader } from "@/components/ui/primary-header";
 
 export default async function SecurityPage() {
 
@@ -60,7 +40,7 @@ export default async function SecurityPage() {
         {
             icon: FileLock2,
             title: "Backup Codes",
-            description: "Save codes to use if you lose access to your phone.",
+            description: "Save codes to use if you lose access to your other recovery methods.",
             href: "/manage/security/backup",
         },
         {
@@ -101,44 +81,48 @@ export default async function SecurityPage() {
 
     return (
         <div className="grid gap-8">
-            <div>
-                <h1 className="text-3xl font-bold tracking-tight">Password & Security</h1>
-                <p className="text-muted-foreground">
-                    Manage your account's security settings, review activity, and keep your account safe.
-                </p>
-            </div>
+            <PrimaryHeader
+                title="Password & Security"
+                description="Manage your account's security settings, review activity, and keep your account safe."
+            />
 
-            <div className="space-y-2">
-                <h2 className="text-xl font-semibold tracking-tight">Sign-In Methods</h2>
-                <p className="text-muted-foreground text-sm">Manage your passwords and two-factor authentication.</p>
+            <div className="grid gap-4">
+                <SecondaryHeader
+                    title="Sign-In Methods"
+                    description="Manage your passwords and two-factor authentication."
+                />
                 <Card>
                     <CardContent className="divide-y p-2">
                         {signInMethods.map((item, index) => (
-                           <SecurityListItem key={index} {...item} />
+                           <ListItem key={index} {...item} />
                         ))}
                     </CardContent>
                 </Card>
             </div>
             
-            <div className="space-y-2">
-                <h2 className="text-xl font-semibold tracking-tight">Recovery Methods</h2>
-                <p className="text-muted-foreground text-sm">Set up ways to recover your account if you get locked out.</p>
+            <div className="grid gap-4">
+                 <SecondaryHeader
+                    title="Recovery Methods"
+                    description="Set up ways to recover your account if you get locked out."
+                />
                 <Card>
                     <CardContent className="divide-y p-2">
                         {recoveryMethods.map((item, index) => (
-                           <SecurityListItem key={index} {...item} />
+                           <ListItem key={index} {...item} />
                         ))}
                     </CardContent>
                 </Card>
             </div>
 
-            <div className="space-y-2">
-                <h2 className="text-xl font-semibold tracking-tight">Security Checks</h2>
-                <p className="text-muted-foreground text-sm">Review security issues by running checks across apps, devices, and emails sent.</p>
+            <div className="grid gap-4">
+                <SecondaryHeader
+                    title="Security Checks"
+                    description="Review security issues by running checks across apps, devices, and emails sent."
+                />
                  <Card>
                     <CardContent className="divide-y p-2">
                         {securityChecks.map((item, index) => (
-                           <SecurityListItem key={index} {...item} />
+                           <ListItem key={index} {...item} />
                         ))}
                     </CardContent>
                 </Card>

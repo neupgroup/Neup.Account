@@ -1,11 +1,5 @@
 
 
-"use server";
-
-import { getUserPermissions, getUserNeupIds } from "@/lib/user-actions";
-import { getPersonalAccountId } from "@/lib/auth-actions";
-import { cookies } from "next/headers";
-
 export type NavItem = {
     href: string;
     label: string;
@@ -19,55 +13,71 @@ export type NavSection = {
     items: NavItem[];
 }
 
-const neupIdNavItems: Omit<NavItem, 'requiredPermissions' | 'iconName'>[] = [
-     { 
-        href: "/manage/home", 
-        label: "Home", 
-        description: "Your central account management hub.",
-    },
-    { 
-        href: "/manage/profile", 
-        label: "Personal Info", 
-        description: "Manage your personal details and contact information.",
-    },
-    { 
-        href: "/manage/notifications", 
-        label: "Notifications", 
-        description: "View and manage all your account notifications.",
-    },
-    { 
-        href: "/manage/security", 
-        label: "Password & Security", 
-        description: "Update your password and manage your account's security.",
-    },
-    { 
-        href: "/manage/accounts", 
-        label: "Linked Accounts", 
-        description: "Manage brand, branch, and dependent accounts.",
-    },
-    { 
-        href: "/manage/data", 
-        label: "Data & Privacy", 
-        description: "See your data and the way we use it.",
-    },
-     { 
-        href: "/manage/access", 
-        label: "Access & Control", 
-        description: "Manage who you share data and services with.",
-    },
-    { 
-        href: "/manage/people", 
-        label: "People & Sharing", 
-        description: "Manage who you share data and services with.",
-    },
-    { 
-        href: "/manage/payment", 
-        label: "Payment & Subscription", 
-        description: "Manage billing and subscriptions.",
-    },
-];
+export const navItems = {
+    neupIdNav: [
+        { 
+            href: "/manage/home", 
+            label: "Home", 
+            description: "Your central account management hub.",
+        },
+        { 
+            href: "/manage/profile", 
+            label: "Personal Info", 
+            description: "Manage your personal details and contact information.",
+        },
+        { 
+            href: "/manage/notifications", 
+            label: "Notifications", 
+            description: "View and manage all your account notifications.",
+        },
+        { 
+            href: "/manage/security", 
+            label: "Password & Security", 
+            description: "Update your password and manage your account's security.",
+        },
+        { 
+            href: "/manage/accounts", 
+            label: "Linked Accounts", 
+            description: "Manage brand, branch, and dependent accounts.",
+        },
+        { 
+            href: "/manage/data", 
+            label: "Data & Privacy", 
+            description: "See your data and the way we use it.",
+        },
+        { 
+            href: "/manage/access", 
+            label: "Access & Control", 
+            description: "Manage who you share data and services with.",
+        },
+        { 
+            href: "/manage/people", 
+            label: "People & Sharing", 
+            description: "Manage who you share data and services with.",
+        },
+        { 
+            href: "/manage/payment", 
+            label: "Payment & Subscription", 
+            description: "Manage billing and subscriptions.",
+        },
+    ],
+    managementNav: [
+        { href: "/manage/root/dashboard", label: "Dashboard", description: "A high-level overview of key metrics and system status." },
+        { href: "/manage/root/accounts", label: "Account Management", description: "Manage account roles and permissions." },
+        { href: "/manage/root/requests", label: "Requests Management", description: "Review and act on pending user requests." },
+        { href: "/manage/root/permission", label: "Permission Management", description: "Define system-wide permission sets." },
+        { href: "/manage/root/app", label: "App Management", description: "Create, edit, and manage applications." },
+        { href: "/manage/root/site", label: "Site Configuration", description: "Manage site-wide settings and error logs." },
+    ],
+    accountNav: [
+        { href: "/auth/accounts", label: "Switch Account", description: "Switch between different NeupID accounts." },
+        { href: "/auth/signout", label: "SignOut Account", description: "Sign out of your account." },
+    ],
+    switchBackNav: { href: "/auth/switch", label: "Switch Back", description: "Return to your personal account view.", iconName: "SwitchBack", requiredPermissions: [] }
+};
 
-const allPermissionsMap: Record<string, string[]> = {
+
+export const allPermissionsMap: Record<string, string[]> = {
     "Home": [],
     "Personal Info": ['profile.view', 'profile.modify', 'contact.view', 'contact.add', 'contact.modify', 'contact.remove'],
     "Notifications": ['notification.read'],
@@ -92,9 +102,10 @@ const allPermissionsMap: Record<string, string[]> = {
     "Permission Management": ["root.permission.view"],
     "App Management": ["root.app.view"],
     "Site Configuration": ["root.payment_config.view", "root.errors.view"],
+    "Branches": ['linked_accounts.brand.manage'],
 };
 
-const iconMap: Record<string, string> = {
+export const navIcons: Record<string, string> = {
     "Home": "Home",
     "Personal Info": "PersonalInfo",
     "Notifications": "Notifications",
@@ -113,85 +124,6 @@ const iconMap: Record<string, string> = {
     "Permission Management": "PermissionManagement",
     "App Management": "AppManagement",
     "Site Configuration": "Wallet",
-    "BrandInfo": "UserCircle"
+    "BrandInfo": "UserCircle",
+    "Branches": "LinkedAccounts"
 };
-
-const managementNavItems: Omit<NavItem, 'requiredPermissions' | 'iconName'>[] = [
-    { href: "/manage/root/dashboard", label: "Dashboard", description: "A high-level overview of key metrics and system status." },
-    { href: "/manage/root/users", label: "Account Management", description: "Manage account roles and permissions." },
-    { href: "/manage/root/requests", label: "Requests Management", description: "Review and act on pending user requests." },
-    { href: "/manage/root/permission", label: "Permission Management", description: "Define system-wide permission sets." },
-    { href: "/manage/root/app", label: "App Management", description: "Create, edit, and manage applications." },
-    { href: "/manage/root/site", label: "Site Configuration", description: "Manage site-wide settings and error logs." },
-];
-
-const accountNavItems: Omit<NavItem, 'requiredPermissions' | 'iconName'>[] = [
-    { href: "/auth/accounts", label: "Switch Account", description: "Switch between different NeupID accounts." },
-    { href: "/auth/signout", label: "SignOut Account", description: "Sign out of your account." },
-];
-
-const switchBackNav: NavItem = { href: "/auth/accounts", label: "Switch Back", description: "Return to your personal account view.", iconName: "SwitchBack", requiredPermissions: [] };
-
-
-export async function getNavConfig(): Promise<NavSection[]> {
-    const personalAccountId = await getPersonalAccountId();
-    if (!personalAccountId) {
-         const accountItems: NavItem[] = accountNavItems.map(item => ({
-            ...item,
-            iconName: iconMap[item.label] || "UserCircle",
-            requiredPermissions: []
-        }));
-        return [{ title: "Account", items: accountItems }];
-    }
-
-    const [userPermissions, userNeupIds] = await Promise.all([
-        getUserPermissions(personalAccountId),
-        getUserNeupIds(personalAccountId)
-    ]);
-    
-    const userPermissionSet = new Set(userPermissions);
-    const primaryNeupId = userNeupIds[0] ? `@${userNeupIds[0]}` : "Neup.Account";
-
-    const hasAnyPermissionFor = (requiredPermissions: string[]) => {
-        if (requiredPermissions.length === 0) return true;
-        return requiredPermissions.some(p => userPermissionSet.has(p));
-    };
-
-    const navItemsWithPerms = (items: Omit<NavItem, 'requiredPermissions' | 'iconName'>[]): NavItem[] => {
-        return items.map(item => ({
-            ...item,
-            iconName: iconMap[item.label] || "UserCircle",
-            requiredPermissions: allPermissionsMap[item.label] || []
-        })).filter(item => hasAnyPermissionFor(item.requiredPermissions));
-    };
-
-    const visibleNeupIdNav = navItemsWithPerms(neupIdNavItems);
-    const visibleManagementNav = navItemsWithPerms(managementNavItems);
-    const visibleAccountNav = navItemsWithPerms(accountNavItems);
-
-    const config: NavSection[] = [];
-    const cookieStore = await cookies();
-    const isManaging = !!cookieStore.get('auth_managing')?.value;
-    
-    if (isManaging) {
-        // If managing, only show the brand/dependent profile and a way to switch back
-        config.push({ title: primaryNeupId, items: [
-            { href: "/manage/profile", label: "Brand Info", description: "Manage brand profile.", iconName: "BrandInfo", requiredPermissions: ['profile.view'] },
-        ]});
-         config.push({ title: "Account", items: [switchBackNav, ...visibleAccountNav] });
-
-    } else {
-        // Normal view for personal account
-        if (visibleNeupIdNav.length > 0) {
-            config.push({ title: primaryNeupId, items: visibleNeupIdNav });
-        }
-        if (visibleManagementNav.length > 0) {
-            config.push({ title: "Management", items: visibleManagementNav });
-        }
-        if (visibleAccountNav.length > 0) {
-            config.push({ title: "Account", items: visibleAccountNav });
-        }
-    }
-
-    return config;
-}

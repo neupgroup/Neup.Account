@@ -1,4 +1,3 @@
-
 'use server';
 
 import { z } from 'zod';
@@ -6,8 +5,8 @@ import bcrypt from 'bcryptjs';
 import { doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 
 import { db } from '@/lib/firebase';
-import { getActiveAccountId } from '@/actions/auth/session';
-import { checkPermissions } from '@/lib/user-actions';
+import { getActiveAccountId } from '@/lib/auth-actions';
+import { checkPermissions } from '@/lib/user';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
 import { changePasswordSchema } from '@/schemas/security';

@@ -1,16 +1,15 @@
-
 import { NextResponse, type NextRequest } from 'next/server';
-import { getUserPermissions } from '@/lib/user-actions';
-import { getActiveSessionDetails } from '@/lib/auth-actions';
+import { getUserPermissions } from '@/lib/user';
+import { getActiveSession } from '@/lib/session';
 
 export async function GET(request: NextRequest) {
-    const session = await getActiveSessionDetails();
+    const session = await getActiveSession();
 
     if (!session) {
         return NextResponse.json({ success: false, error: 'Unauthenticated.' }, { status: 401 });
     }
 
-    const permissions = await getUserPermissions(session.auth_account_id);
+    const permissions = await getUserPermissions(session.accountId);
 
     return NextResponse.json({
         success: true,

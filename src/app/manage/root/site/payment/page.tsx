@@ -1,8 +1,6 @@
-
-
 import { getPaymentDetails } from "./actions";
 import { PaymentDetailsForm } from "./form";
-import { checkPermissions } from "@/lib/user-actions";
+import { checkPermissions } from "@/lib/user";
 import { notFound } from "next/navigation";
 import { BackButton } from "@/components/ui/back-button";
 

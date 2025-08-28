@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useTransition, useContext } from "react";
+import { useState, useTransition, useContext, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { requestAccountDeletion } from "@/actions/data/delete";
 import {
@@ -14,32 +14,52 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Loader2, Trash2 } from "lucide-react";
+import { Loader2, Trash2 } from "@/components/icons";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BackButton } from "@/components/ui/back-button";
 import { GeolocationContext } from "@/context/geolocation-context";
+import { SecondaryHeader } from "@/components/ui/secondary-header";
+import { getAccountType } from "@/lib/user"; // We can reuse this to get account status
+import { getActiveAccountId } from "@/lib/auth-actions";
+import { useRouter } from "next/navigation";
 
 
 export default function DeleteAccountPage() {
   const [isPending, startTransition] = useTransition();
   const [isRequested, setIsRequested] = useState(false);
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
+  const [loadingStatus, setLoadingStatus] = useState(true);
   const { toast } = useToast();
   const geo = useContext(GeolocationContext);
+  const router = useRouter();
+
+  useEffect(() => {
+    async function checkAccountStatus() {
+        const accountId = await getActiveAccountId();
+        if (accountId) {
+            const status = await getAccountType(accountId); // Reusing this as it reads the account doc
+            if (status === 'deletion_requested') {
+                setIsRequested(true);
+            }
+        }
+        setLoadingStatus(false);
+    }
+    checkAccountStatus();
+  }, []);
 
   const handleSubmit = (formData: FormData) => {
     startTransition(async () => {
       const locationString = geo?.latitude && geo?.longitude ? `${geo.latitude},${geo.longitude}` : undefined;
-      const result = await requestAccountDeletion({ password: formData.get('password') as string }, locationString);
+      const result = await requestAccountDeletion({ password: formData.get("password") as string }, locationString);
       if (result.success) {
         toast({
           title: "Deletion Request Submitted",
           description:
-            "Your account is scheduled for deletion in 30 days. Log in anytime within this period to cancel.",
+            "Your account is scheduled for deletion. You will be logged out now.",
         });
-        setIsRequested(true);
-        setShowPasswordPrompt(false);
+        // Redirect to signout page to complete the logout process
+        router.push('/auth/signout');
       } else {
         toast({
           variant: "destructive",
@@ -63,10 +83,10 @@ export default function DeleteAccountPage() {
       <form action={handleSubmit}>
         <Card>
             <CardHeader>
-            <CardTitle>Request Account Deletion</CardTitle>
-            <CardDescription>
-                Please read the following information carefully before proceeding.
-            </CardDescription>
+            <SecondaryHeader
+                title="Request Account Deletion"
+                description="Please read the following information carefully before proceeding."
+            />
             </CardHeader>
             <CardContent className="space-y-4">
             <Alert variant="destructive">
@@ -74,18 +94,12 @@ export default function DeleteAccountPage() {
                 <AlertDescription>
                 <ul className="list-disc space-y-2 pl-5 mt-2">
                     <li>
-                    A <strong>30-day cool-off period</strong> will begin once you
-                    request deletion.
+                    Once requested, your account will be scheduled for permanent deletion after 30 days.
                     </li>
                     <li>
-                    Logging in during this 30-day period will{" "}
-                    <strong>automatically cancel</strong> the deletion request.
+                    You will be logged out. Signing back in within 30 days will cancel the deletion request.
                     </li>
-                    <li>
-                    After 30 days, your account will be permanently inaccessible.
-                    A final request will be sent to an administrator for the
-                    complete erasure of your data from our systems.
-                    </li>
+                    <li>After 30 days, an administrator will process the final deletion and your data will be unrecoverable.</li>
                 </ul>
                 </AlertDescription>
             </Alert>
@@ -93,7 +107,7 @@ export default function DeleteAccountPage() {
                 <Alert variant="default" className="border-primary text-primary [&>svg]:text-primary">
                     <AlertTitle>Request Received</AlertTitle>
                     <AlertDescription>
-                        Your account deletion request has been submitted. You have 30 days to cancel this request by signing in.
+                        Your account deletion request has been submitted. You can cancel by logging in within the next 30 days.
                     </AlertDescription>
                 </Alert>
             )}
@@ -106,13 +120,13 @@ export default function DeleteAccountPage() {
             </CardContent>
             <CardFooter>
                  {!showPasswordPrompt && !isRequested && (
-                    <Button type="button" onClick={() => setShowPasswordPrompt(true)} variant="destructive">
+                    <Button type="button" onClick={() => setShowPasswordPrompt(true)} variant="destructive" disabled={loadingStatus}>
                          <Trash2 className="mr-2 h-4 w-4" />
                         Request Account Deletion
                     </Button>
                  )}
                  {showPasswordPrompt && !isRequested && (
-                     <Button variant="destructive" disabled={isPending}>
+                     <Button variant="destructive" disabled={isPending || loadingStatus}>
                         {isPending ? (<Loader2 className="mr-2 h-4 w-4 animate-spin" />) : (<Trash2 className="mr-2 h-4 w-4" />)}
                         Confirm Deletion
                     </Button>

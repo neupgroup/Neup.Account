@@ -17,37 +17,13 @@ import {
   writeBatch,
   limit
 } from 'firebase/firestore';
-import { getActiveAccountId, getPersonalAccountId } from '@/actions/auth/session';
-import { getUserProfile, getUserNeupIds } from '@/lib/user-actions';
+import { getActiveAccountId, getPersonalAccountId } from '@/lib/auth-actions';
+import { getUserProfile, getUserNeupIds, getAccountType, getUserPermissions, checkPermissions } from '@/lib/user';
 import { logError } from '@/lib/logger';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
-import { getAccountType } from '@/lib/user-actions';
 import { logActivity } from '@/lib/log-actions';
-
-export type UserAccess = {
-  permitId: string; // The document ID from 'permit' collection
-  userId: string; // The user ID who has access
-  displayName: string;
-  displayPhoto?: string;
-  permissions: string[];
-  status: 'pending' | 'approved' | 'rejected';
-};
-
-export type AccessDetails = {
-    permitId: string;
-    grantedTo: {
-        id: string;
-        name: string;
-        neupId: string;
-    };
-    grantedBy: {
-        id: string;
-        name: string;
-    };
-    grantedOn: string;
-    permissions: string[];
-};
+import type { UserAccess, AccessDetails, Permission } from '@/types';
 
 export type Invitation = {
     permitId: string;
@@ -73,10 +49,10 @@ const statusOrder: Record<UserAccess['status'], number> = {
 export async function getAccessList(accountId: string): Promise<UserAccess[]> {
   try {
     const permitsRef = collection(db, 'permit');
-    // Find permissions FOR this account, excluding the user's own root access
     const q = query(
       permitsRef,
-      where('target_id', '==', accountId),
+      where('target_account', '==', accountId),
+      where('for_self', '==', false),
       where('is_root', '==', false)
     );
     const querySnapshot = await getDocs(q);
@@ -123,7 +99,7 @@ export async function getAccessDetails(permitId: string): Promise<AccessDetails 
         
         const [grantedToProfile, grantedByProfile, grantedToNeupIds] = await Promise.all([
             getUserProfile(data.account_id), // The user who has access
-            getUserProfile(data.target_id),   // The account being accessed
+            getUserProfile(data.target_account),   // The account being accessed
             getUserNeupIds(data.account_id)
         ]);
 
@@ -139,7 +115,7 @@ export async function getAccessDetails(permitId: string): Promise<AccessDetails 
                 neupId: grantedToNeupIds[0] || 'N/A'
             },
             grantedBy: {
-                id: data.target_id,
+                id: data.target_account,
                 name: grantedByProfile.displayName || `${grantedByProfile.firstName} ${grantedByProfile.lastName}`.trim()
             },
             grantedOn: data.created_on?.toDate().toLocaleString() || new Date().toLocaleString(),
@@ -162,7 +138,7 @@ export async function removeAccess(permitId: string, geolocation?: string): Prom
         const docRef = doc(db, 'permit', permitId);
         const docSnap = await getDoc(docRef);
 
-        if (!docSnap.exists() || docSnap.data().target_id !== currentAccountId) {
+        if (!docSnap.exists() || docSnap.data().target_account !== currentAccountId) {
             return { success: false, error: "Permission denied or grant not found." };
         }
         
@@ -179,6 +155,56 @@ export async function removeAccess(permitId: string, geolocation?: string): Prom
     }
 }
 
+export async function getDelegatablePermissions(): Promise<Permission[]> {
+    const managerId = await getPersonalAccountId();
+    const managedAccountId = await getActiveAccountId();
+    
+    if (!managerId || !managedAccountId || managerId === managedAccountId) {
+        // This function is for when a personal account is managing another account.
+        // For self-permissions, the logic is simpler and doesn't require this complex check.
+        // Fallback to user's own permissions if not in a managing context.
+        const selfPermitQuery = query(collection(db, 'permit'), where('account_id', '==', managerId), where('for_self', '==', true));
+        const selfPermitSnapshot = await getDocs(selfPermitQuery);
+        if (selfPermitSnapshot.empty) return [];
+
+        const selfPermitData = selfPermitSnapshot.docs[0].data();
+        const selfAssignedIds = selfPermitData.permission || [];
+        if (selfAssignedIds.length === 0) return [];
+
+        const selfPermsQuery = query(collection(db, 'permission'), where('__name__', 'in', selfAssignedIds));
+        const selfPermsSnapshot = await getDocs(selfPermsQuery);
+        return selfPermsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Permission));
+    }
+
+    // Find the permit that grants the personal account access to the managed account.
+    const permitQuery = query(
+        collection(db, 'permit'),
+        where('account_id', '==', managerId),
+        where('target_account', '==', managedAccountId)
+    );
+    const permitSnapshot = await getDocs(permitQuery);
+    
+    if (permitSnapshot.empty) return [];
+
+    const permitData = permitSnapshot.docs[0].data();
+
+    // If the manager has full access, they can delegate any non-root permission.
+    if (permitData.full_access) {
+        const allPermsQuery = query(collection(db, 'permission'), where('name', '!=', 'root.whole'));
+        const allPermsSnapshot = await getDocs(allPermsQuery);
+        return allPermsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Permission)).filter(p => !p.name.startsWith('root.'));
+    }
+    
+    // Otherwise, they can only delegate the permissions they have been explicitly assigned for this managed account.
+    const assignedIds = permitData.permission || [];
+    if (assignedIds.length === 0) return [];
+    
+    const delegatablePermsQuery = query(collection(db, 'permission'), where('__name__', 'in', assignedIds));
+    const delegatablePermsSnapshot = await getDocs(delegatablePermsQuery);
+    return delegatablePermsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Permission));
+}
+
+
 export async function updatePermissions(permitId: string, newPermissionIds: string[], geolocation?: string): Promise<{ success: boolean, error?: string}> {
     const currentAccountId = await getActiveAccountId();
     if (!currentAccountId) {
@@ -189,9 +215,19 @@ export async function updatePermissions(permitId: string, newPermissionIds: stri
         const docRef = doc(db, 'permit', permitId);
         const docSnap = await getDoc(docRef);
 
-        if (!docSnap.exists() || docSnap.data().target_id !== currentAccountId) {
+        if (!docSnap.exists() || docSnap.data().target_account !== currentAccountId) {
             return { success: false, error: "Permission denied or grant not found." };
         }
+
+        // --- Permission Delegation Check ---
+        const delegatablePerms = await getDelegatablePermissions();
+        const delegatablePermIds = new Set(delegatablePerms.map(p => p.id));
+        const isAllowed = newPermissionIds.every(id => delegatablePermIds.has(id));
+
+        if (!isAllowed) {
+            return { success: false, error: "You are trying to grant permissions you do not possess." };
+        }
+        // --- End Check ---
         
         const targetUserId = docSnap.data().account_id;
         await updateDoc(docRef, { permission: newPermissionIds });
@@ -242,7 +278,7 @@ export async function grantAccessByNeupId(formData: FormData, geolocation?: stri
 
         // Check if already added
         const permitsRef = collection(db, 'permit');
-        const alreadyExistsQuery = query(permitsRef, where('target_id', '==', ownerAccountId), where('account_id', '==', targetAccountId));
+        const alreadyExistsQuery = query(permitsRef, where('target_account', '==', ownerAccountId), where('account_id', '==', targetAccountId));
         const alreadyExistsSnapshot = await getDocs(alreadyExistsQuery);
         if (!alreadyExistsSnapshot.empty) {
             return { success: false, error: "This user already has access." };

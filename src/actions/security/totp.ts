@@ -1,10 +1,9 @@
-
 'use server';
 
 import { db } from '@/lib/firebase';
-import { doc, getDoc, setDoc, deleteDoc, serverTimestamp, collection } from 'firebase/firestore';
-import { getActiveAccountId } from '@/actions/auth/session';
-import { getUserNeupIds, checkPermissions } from '@/lib/user-actions';
+import { doc, getDoc, setDoc, deleteDoc, serverTimestamp } from 'firebase/firestore';
+import { getActiveAccountId } from '@/lib/auth-actions';
+import { getUserNeupIds, checkPermissions } from '@/lib/user';
 import { authenticator } from 'otplib';
 import qrcode from 'qrcode';
 import bcrypt from 'bcryptjs';
@@ -12,12 +11,13 @@ import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
 import { z } from 'zod';
 import crypto from 'crypto';
+import { totpEnableSchema, totpDisableSchema } from '@/schemas/security';
 
 // We need a consistent secret for encryption. STORE THIS IN A SECURE VAULT.
 // For this example, it's in an environment variable.
-const ENCRYPTION_KEY = process.env.TOTP_ENCRYPTION_KEY;
+const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_TOTP_ENCRYPTION_KEY;
 if (!ENCRYPTION_KEY || ENCRYPTION_KEY.length < 64) {
-    throw new Error('A 32-byte (64-character hex) TOTP_ENCRYPTION_KEY must be set in .env');
+    throw new Error('A 32-byte (64-character hex) NEXT_PUBLIC_TOTP_ENCRYPTION_KEY must be set in .env');
 }
 
 // Basic encryption/decryption functions using Node.js crypto
@@ -73,15 +73,11 @@ export async function generateTotpSecret(): Promise<{ secret: string; qrCodeUrl:
 }
 
 // Verify the token and enable TOTP
-const enableSchema = z.object({
-    secret: z.string(),
-    token: z.string().length(6, "Token must be 6 digits."),
-});
-export async function verifyAndEnableTotp(data: { secret: string, token: string }): Promise<{ success: boolean; error?: string }> {
+export async function verifyAndEnableTotp(data: z.infer<typeof totpEnableSchema>): Promise<{ success: boolean; error?: string }> {
     const canAdd = await checkPermissions(['security.totp.add']);
     if (!canAdd) return { success: false, error: 'Permission denied.' };
 
-    const validation = enableSchema.safeParse(data);
+    const validation = totpEnableSchema.safeParse(data);
     if (!validation.success) {
         return { success: false, error: validation.error.flatten().fieldErrors.token?.[0] };
     }
@@ -112,14 +108,11 @@ export async function verifyAndEnableTotp(data: { secret: string, token: string 
 
 
 // Disable TOTP for the user
-const disableSchema = z.object({
-    password: z.string().min(1, "Password is required."),
-});
-export async function disableTotp(data: { password: string }): Promise<{ success: boolean; error?: string }> {
+export async function disableTotp(data: z.infer<typeof totpDisableSchema>): Promise<{ success: boolean; error?: string }> {
     const canRemove = await checkPermissions(['security.totp.remove']);
     if (!canRemove) return { success: false, error: 'Permission denied.' };
     
-    const validation = disableSchema.safeParse(data);
+    const validation = totpDisableSchema.safeParse(data);
     if (!validation.success) {
         return { success: false, error: validation.error.flatten().fieldErrors.password?.[0] };
     }

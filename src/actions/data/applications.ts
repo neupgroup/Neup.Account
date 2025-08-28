@@ -1,21 +1,11 @@
-
 'use server';
 
 import { db } from '@/lib/firebase';
 import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
-import { getPersonalAccountId } from '@/actions/auth/session';
-import { checkPermissions } from '@/lib/user-actions';
+import { getPersonalAccountId } from '@/lib/auth-actions';
+import { checkPermissions } from '@/lib/user';
 import { logError } from '@/lib/logger';
-
-export type Application = {
-    id: string;
-    name: string;
-    description: string;
-    party: 'first' | 'third';
-    slug: string;
-    dataAccessed: string[];
-    icon: 'app-window' | 'building' | 'bar-chart' | 'share-2'; 
-};
+import type { Application } from '@/types';
 
 type ConnectedApplications = {
     firstParty: Application[];
@@ -86,7 +76,7 @@ export async function getApplicationDetails(appId: string): Promise<Application 
         if (appDoc.exists()) {
             return {
                 id: appDoc.id,
-                ...doc.data()
+                ...appDoc.data()
             } as Application;
         }
 

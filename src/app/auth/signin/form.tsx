@@ -6,7 +6,8 @@ import { useRouter, useSearchParams } from "next/navigation"
 import React, { useState, useEffect, useContext, useTransition } from "react"
 import { useToast } from "@/hooks/use-toast"
 import { loginUser } from "@/actions/auth/login"
-import { validateNeupId } from "@/actions/auth/session"
+import { validateNeupId } from "@/lib/user"
+import { cancelAccountDeletion } from "@/actions/data/delete"
 import NProgress from 'nprogress'
 
 import { Button } from "@/components/ui/button"
@@ -17,10 +18,20 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { GeolocationContext } from "@/context/geolocation-context"
-import { Loader2 } from "lucide-react"
+import { Loader2 } from "@/components/icons"
 
 export default function SigninForm() {
   const router = useRouter()
@@ -37,6 +48,12 @@ export default function SigninForm() {
 
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
+  const [isClient, setIsClient] = useState(false)
+  const [showDeletionDialog, setShowDeletionDialog] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const neupIdFromQuery = searchParams.get("neupId");
 
@@ -66,7 +83,7 @@ export default function SigninForm() {
     startNeupIdCheck(async () => {
         NProgress.start();
         const result = await validateNeupId(neupId);
-        if (result.success) {
+        if (result.success || result.error === 'pending_deletion') {
             setStep(2);
         } else {
             setValidationError(result.error || 'Invalid NeupID.');
@@ -87,6 +104,9 @@ export default function SigninForm() {
                 setIsRedirecting(true);
                 router.push("/manage");
                 // router.refresh() will be triggered by NProgressEvents on navigation
+            } else if (result.error === 'pending_deletion') {
+                setShowDeletionDialog(true);
+                NProgress.done();
             } else {
                 toast({
                 variant: "destructive",
@@ -107,6 +127,34 @@ export default function SigninForm() {
     });
   }
   
+  const handleCancelDeletion = async () => {
+    setShowDeletionDialog(false);
+    startPasswordSubmit(async () => {
+        const neupidsRef = doc(db, 'neupid', neupId);
+        const neupidsSnapshot = await getDoc(neupidsRef);
+        const accountId = neupidsSnapshot.data()?.for;
+        if (!accountId) {
+             toast({ variant: "destructive", title: "Error", description: "Could not find account to cancel deletion." });
+             return;
+        }
+
+        const result = await cancelAccountDeletion(accountId);
+        if (result.success) {
+            toast({ title: "Deletion Cancelled", description: "Your account deletion request has been cancelled. Welcome back!", className: "bg-accent text-accent-foreground" });
+            // Re-attempt login
+            const loginForm = document.getElementById("password-form") as HTMLFormElement;
+            if(loginForm) handlePasswordSubmit(new Event('submit') as any);
+        } else {
+            toast({ variant: "destructive", title: "Error", description: result.error || "Could not cancel deletion." });
+        }
+    });
+  }
+
+  const handleProceedWithDeletion = () => {
+    setShowDeletionDialog(false);
+    router.push('/auth/accounts');
+  }
+
   const handleBack = () => {
     setStep(1)
     setNeupId("")
@@ -177,14 +225,16 @@ export default function SigninForm() {
                     </Button>
                     <div className="mt-4 text-left text-sm">
                         Don&apos;t have an Account?{" "}
-                        <Link href="/auth/signup" className="underline text-primary">
-                            Sign Up
-                        </Link>
+                        {isClient && 
+                            <Link href="/auth/signup" className="underline text-primary">
+                                <span>Sign Up</span>
+                            </Link>
+                        }
                     </div>
                 </form>
             )}
             {step === 2 && (
-                 <form onSubmit={handlePasswordSubmit} className="grid gap-4">
+                 <form id="password-form" onSubmit={handlePasswordSubmit} className="grid gap-4">
                     <div className="grid gap-2">
                         <Label htmlFor="password">Password</Label>
                         <Input
@@ -198,7 +248,7 @@ export default function SigninForm() {
                         />
                     </div>
                     <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting || isRedirecting}>
-                        Sign In
+                        {isSubmitting ? <Loader2 className="animate-spin" /> : 'Sign In'}
                     </Button>
                     <div className="flex justify-between items-center text-sm">
                         <Link href="/auth/forget" className="underline text-primary">
@@ -212,6 +262,23 @@ export default function SigninForm() {
             )}
         </CardContent>
       </Card>
+      
+        <AlertDialog open={showDeletionDialog} onOpenChange={setShowDeletionDialog}>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                    <AlertDialogTitle>Account Deletion Pending</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        Your account is scheduled for deletion. Continuing to sign in will cancel this request. Do you want to proceed?
+                    </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                    <AlertDialogCancel onClick={handleProceedWithDeletion}>Log Out</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleCancelDeletion} disabled={isSubmitting}>
+                         {isSubmitting ? <Loader2 className="animate-spin" /> : 'Cancel Deletion & Sign In'}
+                    </AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
     </div>
   )
 }

@@ -1,12 +1,12 @@
 
+'use client';
 
-"use client";
-
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { approveNeupIdRequest, denyNeupIdRequest, type PendingNeupIdRequest } from '@/actions/root/requests';
+import { approveNeupIdRequest, denyNeupIdRequest } from '@/actions/root/requests/neupid';
+import type { PendingNeupIdRequest } from '@/types';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import {
   AlertDialog,
@@ -19,7 +19,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Terminal } from 'lucide-react';
+import { Loader2, Terminal } from 'lucide-react';
 
 
 export function RequestDecisionForm({ request }: { request: PendingNeupIdRequest }) {
@@ -69,7 +69,10 @@ export function RequestDecisionForm({ request }: { request: PendingNeupIdRequest
         <div className="flex space-x-4">
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button disabled={isSubmitting} className="bg-accent text-accent-foreground hover:bg-accent/90">Approve</Button>
+                <Button disabled={isSubmitting} className="bg-accent text-accent-foreground hover:bg-accent/90">
+                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    Approve
+                </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -80,14 +83,20 @@ export function RequestDecisionForm({ request }: { request: PendingNeupIdRequest
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleApprove} className="bg-accent text-accent-foreground hover:bg-accent/90">Confirm Approval</AlertDialogAction>
+                  <AlertDialogAction onClick={handleApprove} className="bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting}>
+                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    Confirm Approval
+                  </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
             
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="destructive" disabled={isSubmitting}>Deny</Button>
+                <Button variant="destructive" disabled={isSubmitting}>
+                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    Deny
+                </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -98,7 +107,10 @@ export function RequestDecisionForm({ request }: { request: PendingNeupIdRequest
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleDeny} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">Confirm Denial</AlertDialogAction>
+                  <AlertDialogAction onClick={handleDeny} className="bg-destructive text-destructive-foreground hover:bg-destructive/90" disabled={isSubmitting}>
+                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    Confirm Denial
+                  </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>

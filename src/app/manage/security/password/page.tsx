@@ -15,6 +15,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useState, useContext } from "react";
 import { BackButton } from "@/components/ui/back-button";
 import { GeolocationContext } from "@/context/geolocation-context";
+import { SecondaryHeader } from "@/components/ui/secondary-header";
 
 type ChangePasswordFormValues = z.infer<typeof changePasswordSchema>;
 
@@ -59,10 +60,10 @@ export default function ChangePasswordPage() {
                 </p>
             </div>
             <div className="space-y-2">
-                <h2 className="text-xl font-semibold tracking-tight">Update Password</h2>
-                 <p className="text-muted-foreground text-sm">
-                    Enter your current password and a new password to update your account.
-                </p>
+                <SecondaryHeader
+                    title="Update Password"
+                    description="Enter your current password and a new password to update your account."
+                />
                 <Card>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)}>

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useTransition, useMemo } from 'react';
@@ -6,7 +5,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useToast } from '@/hooks/use-toast';
-import { addSocialLink, deleteSocialLink, toggleSocialLinkVisibility, type SocialLink } from "@/actions/root/site";
+import { addSocialLink, deleteSocialLink, toggleSocialLinkVisibility } from "@/actions/root/site/socials";
+import type { SocialLink } from '@/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

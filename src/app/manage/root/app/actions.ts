@@ -1,23 +1,16 @@
 
-
 'use server';
 
 import { db } from '@/lib/firebase';
-import { collection, addDoc, getDocs, query, doc, setDoc } from 'firebase/firestore';
+import { collection, addDoc, getDocs, query, doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { logError } from '@/lib/logger';
 import crypto from 'crypto';
-import { getPersonalAccountId } from '@/actions/auth/session';
+import { getPersonalAccountId } from '@/lib/auth-actions';
 import { logActivity } from '@/lib/log-actions';
 import { checkPermissions } from '@/lib/user-actions';
-
-export type Application = {
-    id: string;
-    name: string;
-    description: string;
-    appSecret: string;
-};
+import type { Application } from '@/types';
 
 const addAppSchema = z.object({
     id: z.string().min(3, { message: "App ID must be at least 3 characters." }),
@@ -53,6 +46,31 @@ export async function getApps(searchQuery?: string): Promise<Application[]> {
     } catch (error) {
         await logError('database', error, 'getApps');
         return [];
+    }
+}
+
+export async function getAppDetails(appId: string): Promise<Application | null> {
+    const canView = await checkPermissions(['root.app.view']);
+    if (!canView) return null;
+
+    try {
+        const appRef = doc(db, 'applications', appId);
+        const appDoc = await getDoc(appRef);
+
+        if (appDoc.exists()) {
+            const data = appDoc.data();
+            // IMPORTANT: Never send the appSecret to the client unless it's just been generated.
+            delete data.appSecret;
+            return {
+                id: appDoc.id,
+                ...data
+            } as Application;
+        }
+
+        return null;
+    } catch (error) {
+        await logError('database', error, `getApplicationDetails: ${appId}`);
+        return null;
     }
 }
 
@@ -98,5 +116,28 @@ export async function addApp(formData: FormData) {
     } catch (error) {
         await logError('database', error, 'addApp');
         return { success: false, error: 'An unexpected error occurred.' };
+    }
+}
+
+
+export async function regenerateAppSecret(appId: string): Promise<{ success: boolean; newSecret?: string; error?: string }> {
+    const canEdit = await checkPermissions(['root.app.edit']);
+    if (!canEdit) {
+        return { success: false, error: 'Permission denied.' };
+    }
+
+    const newSecret = crypto.randomBytes(32).toString('hex');
+
+    try {
+        const appRef = doc(db, 'applications', appId);
+        await updateDoc(appRef, { appSecret: newSecret });
+
+        const adminId = await getPersonalAccountId();
+        await logActivity(adminId || 'unknown', `Regenerated App Secret for: ${appId}`, 'Success');
+
+        return { success: true, newSecret: newSecret };
+    } catch (error) {
+        await logError('database', error, `regenerateAppSecret: ${appId}`);
+        return { success: false, error: 'Failed to regenerate app secret.' };
     }
 }

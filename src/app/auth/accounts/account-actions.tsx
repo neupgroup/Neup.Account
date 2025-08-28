@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useTransition } from 'react';
@@ -7,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { logoutStoredSession, removeStoredAccount } from '@/actions/auth/switch';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from '@/components/icons';
-import type { StoredAccount } from '@/actions/auth/session';
+import type { StoredAccount } from '@/types';
 
 type Account = StoredAccount & {
   isUnknown?: boolean;

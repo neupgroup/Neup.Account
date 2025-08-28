@@ -27,8 +27,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Loader2, Plus, Trash2 } from "lucide-react";
+import { Loader2, Plus, Trash2 } from "@/components/icons";
 import { BackButton } from "@/components/ui/back-button";
+import { SecondaryHeader } from "@/components/ui/secondary-header";
 
 type PhoneFormValues = z.infer<typeof phoneFormSchema>;
 
@@ -91,10 +92,10 @@ export default function RecoveryPhonePage() {
                 </p>
             </div>
             <div className="space-y-2">
-                <h2 className="text-xl font-semibold tracking-tight">Manage Phone Number</h2>
-                 <p className="text-muted-foreground text-sm">
-                    We will only use this number for account recovery purposes.
-                </p>
+                <SecondaryHeader
+                    title="Manage Phone Number"
+                    description="We will only use this number for account recovery purposes."
+                />
                 <Card>
                     <CardContent className="pt-6">
                         {loading ? (

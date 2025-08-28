@@ -1,11 +1,10 @@
 
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { getNotifications } from '@/app/manage/notifications/actions';
+import { getNotifications } from '@/actions/notifications';
 import { Badge } from '@/components/ui/badge';
-import { UserCheck } from 'lucide-react';
+import { UserCheck } from '@/components/icons';
 
 
 export async function ApprovalsCard() {

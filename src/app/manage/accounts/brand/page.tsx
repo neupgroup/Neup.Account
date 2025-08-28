@@ -1,12 +1,14 @@
 
-import Link from "next/link";
-import { getBrandAccounts } from "./actions";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Building, Plus, ArrowRight } from "lucide-react";
+import { getBrandAccounts } from "@/actions/manage/accounts/brand";
 import { notFound } from "next/navigation";
-import { getPersonalAccountId } from "@/lib/user-actions";
+import { getPersonalAccountId } from "@/lib/auth-actions";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { AccountList } from "@/app/auth/accounts/account-list";
+import { Button } from "@/components/ui/button";
+import { Plus } from "@/components/icons";
+import Link from "next/link";
+import { Building } from "lucide-react";
+import { SecondaryHeader } from "@/components/ui/secondary-header";
 
 export default async function BrandAccountsPage() {
     const personalAccountId = await getPersonalAccountId();
@@ -15,6 +17,18 @@ export default async function BrandAccountsPage() {
         notFound();
     }
     const brandAccounts = await getBrandAccounts();
+
+    const mappedBrandAccounts = brandAccounts.map(brand => ({
+        accountId: brand.id,
+        sessionId: '', 
+        sessionKey: '', 
+        expired: false,
+        isBrand: true,
+        displayName: brand.name,
+        neupId: brand.id.substring(0, 8), // Placeholder
+        displayPhoto: brand.logoUrl,
+        plan: brand.plan,
+    }));
 
     return (
         <div className="grid gap-8">
@@ -27,35 +41,18 @@ export default async function BrandAccountsPage() {
             
              <Card>
                 <CardHeader>
-                    <CardTitle>Your Brands</CardTitle>
-                    <CardDescription>
-                        A list of all brand accounts you manage.
-                    </CardDescription>
+                    <SecondaryHeader
+                        title="Your Brands"
+                        description="A list of all brand accounts you manage. Select one to manage it."
+                    />
                 </CardHeader>
-                <CardContent>
-                    {brandAccounts.length > 0 ? (
-                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                            {brandAccounts.map(brand => (
-                                <Card key={brand.id} className="flex flex-col">
-                                    <CardHeader className="flex-row items-center gap-4">
-                                        <Avatar className="h-12 w-12">
-                                            <AvatarImage src={brand.logoUrl} alt={brand.name} data-ai-hint="logo" />
-                                            <AvatarFallback>{brand.name.charAt(0)}</AvatarFallback>
-                                        </Avatar>
-                                        <div>
-                                            <CardTitle className="text-lg">{brand.name}</CardTitle>
-                                            <CardDescription>{brand.plan} Plan</CardDescription>
-                                        </div>
-                                    </CardHeader>
-                                    <CardContent className="flex-grow"></CardContent>
-                                    <CardContent>
-                                         <Button asChild className="w-full">
-                                            <Link href={`/manage/accounts/brand/${brand.id}`}>Manage Brand <ArrowRight className="ml-2 h-4 w-4" /></Link>
-                                        </Button>
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </div>
+                <CardContent className="p-0">
+                    {mappedBrandAccounts.length > 0 ? (
+                        <AccountList 
+                            accounts={mappedBrandAccounts} 
+                            mode="switch"
+                            isPaginated={true}
+                        />
                     ) : (
                         <div className="flex flex-col items-center justify-center text-center p-8 gap-4">
                             <Building className="h-12 w-12 text-muted-foreground/50" />
@@ -66,12 +63,10 @@ export default async function BrandAccountsPage() {
                         </div>
                     )}
                 </CardContent>
-                 <CardContent>
-                    <div className="border-t pt-6">
-                        <Button asChild>
-                            <Link href="/manage/accounts/brand/create"><Plus className="mr-2 h-4 w-4" />Create New Brand</Link>
-                        </Button>
-                    </div>
+                 <CardContent className="pt-6 border-t">
+                    <Button asChild>
+                        <Link href="/manage/accounts/brand/create"><Plus className="mr-2 h-4 w-4" />Create New Brand</Link>
+                    </Button>
                 </CardContent>
             </Card>
         </div>

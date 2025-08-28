@@ -1,16 +1,14 @@
-
-
 'use server';
 
 import { z } from 'zod';
 import { db } from '@/lib/firebase';
 import { collection, query, where, getDocs, writeBatch, doc, serverTimestamp, getDoc, limit } from 'firebase/firestore';
-import { getActiveAccountId } from '@/actions/auth/session';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
 import { headers } from 'next/headers';
 import { revalidatePath } from 'next/cache';
-import { getUserNeupIds, getUserProfile, getPersonalAccountId, checkPermissions } from '@/lib/user-actions';
+import { getUserNeupIds, getUserProfile, checkPermissions } from '@/lib/user';
+import { getActiveAccountId, getPersonalAccountId } from '@/lib/auth-actions';
 
 export type BranchAccount = {
     id: string;

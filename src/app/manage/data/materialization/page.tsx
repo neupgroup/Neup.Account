@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Loader2, CalendarClock } from "lucide-react";
+import { Loader2, CalendarClock } from "@/components/icons";
 import { Input } from "@/components/ui/input";
 import {
   Form,
@@ -36,6 +36,7 @@ import {
 } from "@/components/ui/select";
 import { BackButton } from "@/components/ui/back-button";
 import { GeolocationContext } from "@/context/geolocation-context";
+import { SecondaryHeader } from "@/components/ui/secondary-header";
 
 const formSchema = z.object({
     inactivityDays: z.string().min(1, "Please select a time period."),
@@ -99,10 +100,10 @@ export default function MaterializationPage() {
             <form onSubmit={form.handleSubmit(onSubmit)}>
             <Card>
                 <CardHeader>
-                <CardTitle>Schedule Account Materialization</CardTitle>
-                <CardDescription>
-                    This action will send a request to an administrator for account deletion.
-                </CardDescription>
+                <SecondaryHeader
+                    title="Schedule Account Materialization"
+                    description="This action will send a request to an administrator for account deletion."
+                />
                 </CardHeader>
                 <CardContent className="space-y-4">
                     <Alert>

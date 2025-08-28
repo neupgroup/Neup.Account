@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import { useEffect, useState, useTransition, useCallback } from 'react';
@@ -14,64 +13,98 @@ import {
 import {
     Card,
     CardContent,
-    CardDescription,
     CardHeader,
-    CardTitle,
-    CardFooter
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Plus, Search, Copy } from "lucide-react";
-import { getApps, type Application } from "./actions";
+import { Plus, Search, ChevronRight } from "@/components/icons";
+import { getApps } from "./actions";
+import type { Application } from '@/types';
 import Link from "next/link";
 import { useDebounce } from 'use-debounce';
 import { Skeleton } from '@/components/ui/skeleton';
-import { checkPermissions } from '@/lib/user-actions';
+import { checkPermissions } from '@/lib/user';
 import { useToast } from '@/hooks/use-toast';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Ban } from '@/components/icons';
+
+
+function AppManagementSkeleton() {
+    return (
+        <div className="grid gap-8">
+            <div>
+                <Skeleton className="h-9 w-1/2" />
+                <Skeleton className="h-5 w-2/3 mt-2" />
+            </div>
+            <Card>
+                <CardHeader className="flex flex-row items-center justify-between gap-4">
+                    <Skeleton className="h-10 w-1/2" />
+                    <Skeleton className="h-10 w-32" />
+                </CardHeader>
+                <CardContent className="divide-y p-0">
+                    {[...Array(3)].map((_, i) => (
+                        <div key={i} className="p-4 space-y-2">
+                            <Skeleton className="h-5 w-1/3" />
+                            <Skeleton className="h-4 w-2/3" />
+                        </div>
+                    ))}
+                </CardContent>
+            </Card>
+        </div>
+    )
+}
 
 export default function AppManagementPage() {
     const [apps, setApps] = useState<Application[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [contentLoading, setContentLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
     const [debouncedSearchQuery] = useDebounce(searchQuery, 300);
-    const [canView, setCanView] = useState(false);
+    const [permissionState, setPermissionState] = useState<'loading' | 'granted' | 'denied'>('loading');
     const { toast } = useToast();
+
+    const fetchData = useCallback(async () => {
+        setContentLoading(true);
+        const fetchedApps = await getApps(debouncedSearchQuery);
+        setApps(fetchedApps);
+        setContentLoading(false);
+    }, [debouncedSearchQuery]);
 
     useEffect(() => {
         const verifyPermission = async () => {
             const hasPerm = await checkPermissions(['root.app.view']);
-            setCanView(hasPerm);
+            setPermissionState(hasPerm ? 'granted' : 'denied');
         };
         verifyPermission();
     }, []);
 
-    const fetchData = useCallback(async () => {
-        if (!canView) {
-            setLoading(false);
-            return;
-        };
-        setLoading(true);
-        const fetchedApps = await getApps(debouncedSearchQuery);
-        setApps(fetchedApps);
-        setLoading(false);
-    }, [debouncedSearchQuery, canView]);
-
     useEffect(() => {
-        fetchData();
-    }, [fetchData]);
+        if(permissionState === 'granted') {
+            fetchData();
+        }
+    }, [fetchData, permissionState]);
 
     const handleCopy = (text: string) => {
         navigator.clipboard.writeText(text);
         toast({ title: "Copied to clipboard!" });
     };
 
-    if (!canView) {
+    if (permissionState === 'loading') {
+        return <AppManagementSkeleton />;
+    }
+
+    if (permissionState === 'denied') {
         return (
             <div className="grid gap-8">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight">App Management</h1>
-                    <p className="text-destructive">You do not have permission to view this page.</p>
                 </div>
+                 <Alert variant="destructive">
+                    <Ban className="h-4 w-4" />
+                    <AlertTitle>Permission Denied</AlertTitle>
+                    <AlertDescription>
+                        You do not have permission to view this page.
+                    </AlertDescription>
+                </Alert>
             </div>
         );
     }
@@ -102,56 +135,38 @@ export default function AppManagementPage() {
                         </Link>
                     </Button>
                 </CardHeader>
-                <CardContent>
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>App Name</TableHead>
-                                <TableHead>Description</TableHead>
-                                <TableHead>App Secret</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {loading ? (
-                                [...Array(3)].map((_, i) => (
-                                    <TableRow key={i}>
-                                        <TableCell colSpan={3}><Skeleton className="h-8 w-full" /></TableCell>
-                                    </TableRow>
-                                ))
-                            ) : apps.length > 0 ? (
-                                apps.map((app) => (
-                                    <TableRow key={app.id}>
-                                        <TableCell className="font-medium align-top">
-                                            <Link href={`/manage/root/app/${app.id}`} className="hover:underline">
-                                                {app.name}
-                                            </Link>
-                                            <div className="text-xs text-muted-foreground font-mono flex items-center gap-2">
-                                                <span>{app.id}</span>
-                                                <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => handleCopy(app.id)}>
-                                                    <Copy className="h-3 w-3" />
-                                                </Button>
-                                            </div>
-                                        </TableCell>
-                                        <TableCell className="align-top">{app.description}</TableCell>
-                                        <TableCell className="align-top">
-                                             <div className="font-mono text-xs flex items-center gap-2">
-                                                <span className="truncate">{app.appSecret}</span>
-                                                 <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => handleCopy(app.appSecret)}>
-                                                    <Copy className="h-3 w-3" />
-                                                </Button>
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                ))
-                            ) : (
-                                <TableRow>
-                                    <TableCell colSpan={3} className="h-24 text-center">
-                                        No applications found.
-                                    </TableCell>
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
+                <CardContent className="p-0">
+                    <div className="divide-y">
+                        {contentLoading ? (
+                            [...Array(3)].map((_, i) => (
+                                <div key={i} className="p-4 space-y-2">
+                                    <Skeleton className="h-5 w-1/3" />
+                                    <Skeleton className="h-4 w-2/3" />
+                                </div>
+                            ))
+                        ) : apps.length > 0 ? (
+                            apps.map((app) => (
+                                <Link
+                                    key={app.id}
+                                    href={`/manage/root/app/${app.id}`}
+                                    className="block p-4 hover:bg-muted/50 transition-colors group"
+                                >
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex-grow">
+                                            <p className="font-semibold group-hover:underline">{app.name}</p>
+                                            <p className="text-sm font-mono text-muted-foreground">{app.id}</p>
+                                        </div>
+                                        <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                                    </div>
+                                    <p className="mt-1 text-sm text-muted-foreground">{app.description}</p>
+                                </Link>
+                            ))
+                        ) : (
+                            <div className="p-8 text-center text-muted-foreground">
+                                <p>No applications found.</p>
+                            </div>
+                        )}
+                    </div>
                 </CardContent>
             </Card>
         </div>

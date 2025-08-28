@@ -1,20 +1,73 @@
 
+'use client';
 
-import { getNeupIdRequestDetails } from '@/actions/root/requests';
+import { getNeupIdRequestDetails } from '@/actions/root/requests/neupid';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { RequestDecisionForm } from './form';
 import { notFound } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import type { PendingNeupIdRequest } from '@/types';
+import { Skeleton } from '@/components/ui/skeleton';
+import { BackButton } from '@/components/ui/back-button';
 
-export default async function NeupIdRequestDetailsPage({ params }: { params: { id: string } }) {
-    const requestDetails = await getNeupIdRequestDetails(params.id);
+function RequestDetailsSkeleton() {
+    return (
+        <div className="grid gap-6">
+             <BackButton href="/manage/root/requests" />
+            <Card>
+                <CardHeader>
+                    <Skeleton className="h-7 w-1/2" />
+                    <Skeleton className="h-5 w-3/4 mt-2" />
+                </CardHeader>
+                <CardContent className="space-y-4">
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <Skeleton className="h-10 w-full" />
+                        <Skeleton className="h-10 w-full" />
+                     </div>
+                </CardContent>
+            </Card>
+            <Card>
+                 <CardHeader>
+                    <Skeleton className="h-7 w-1/3" />
+                    <Skeleton className="h-5 w-1/2 mt-2" />
+                </CardHeader>
+                 <CardContent>
+                    <div className="flex space-x-4">
+                        <Skeleton className="h-10 w-24" />
+                        <Skeleton className="h-10 w-24" />
+                    </div>
+                 </CardContent>
+            </Card>
+        </div>
+    )
+}
 
-    if (!requestDetails) {
-        notFound();
+
+export default function NeupIdRequestDetailsPage({ params }: { params: { id: string } }) {
+    const [requestDetails, setRequestDetails] = useState<PendingNeupIdRequest | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchDetails = async () => {
+            const data = await getNeupIdRequestDetails(params.id);
+            if (!data) {
+                notFound();
+            }
+            setRequestDetails(data);
+            setLoading(false);
+        }
+        fetchDetails();
+    }, [params.id]);
+
+
+    if (loading || !requestDetails) {
+        return <RequestDetailsSkeleton />;
     }
 
     return (
         <div className="grid gap-6">
+            <BackButton href="/manage/root/requests" />
             <Card>
                 <CardHeader>
                     <CardTitle>NeupID Request Details</CardTitle>

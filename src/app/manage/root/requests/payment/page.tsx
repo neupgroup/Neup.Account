@@ -1,5 +1,3 @@
-
-
 import {
     Table,
     TableBody,
@@ -14,7 +12,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import { checkPermissions } from "@/lib/user-actions"
+import { checkPermissions } from "@/lib/user"
 import { notFound } from "next/navigation"
 import { BackButton } from "@/components/ui/back-button"
 

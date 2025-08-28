@@ -1,58 +1,75 @@
 
+"use client"
+
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { ChevronRight, Wallet, Gem } from 'lucide-react';
+import { Wallet, Gem } from '@/components/icons';
+import { ListItem } from '../ui/list-item';
+import { SecondaryHeader } from '../ui/secondary-header';
+import { useEffect, useState } from 'react';
+import { Skeleton } from '../ui/skeleton';
 
-const BillingListItem = ({
-    href,
-    icon: Icon,
-    title,
-    description,
-    isExternal = false
-}: {
-    href: string,
-    icon: React.ElementType,
-    title: string,
-    description: string,
-    isExternal?: boolean
-}) => (
-     <Link 
-        href={href} 
-        className="flex items-center gap-4 py-3 px-2 rounded-lg transition-colors hover:bg-muted/50"
-        target={isExternal ? "_blank" : "_self"}
-        rel={isExternal ? "noopener noreferrer" : ""}
-    >
-        <Icon className="h-6 w-6 text-muted-foreground" />
-        <div className="flex-grow">
-            <p className="font-medium">{title}</p>
-            <p className="text-sm text-muted-foreground">{description}</p>
+function BillingCardSkeleton() {
+    return (
+         <div className="space-y-2">
+            <div className="space-y-1">
+                <Skeleton className="h-6 w-1/4" />
+                <Skeleton className="h-4 w-2/5" />
+            </div>
+            <Card>
+                <CardContent className="divide-y p-2">
+                    <div className="flex items-center gap-4 py-4 px-4">
+                        <Skeleton className="h-6 w-6 rounded-full" />
+                        <div className="flex-grow space-y-2">
+                            <Skeleton className="h-4 w-1/3" />
+                            <Skeleton className="h-3 w-1/2" />
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-4 py-4 px-4">
+                        <Skeleton className="h-6 w-6 rounded-full" />
+                        <div className="flex-grow space-y-2">
+                            <Skeleton className="h-4 w-1/3" />
+                            <Skeleton className="h-3 w-1/2" />
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
         </div>
-        <ChevronRight className="h-5 w-5 text-muted-foreground" />
-    </Link>
-);
+    )
+}
 
 
-export async function BillingCard() {
-    // Mock data for now
-    const plan = "Neup.Pro";
-    const nextCharge = "$29.00 on Nov 1, 2024";
+export function BillingCard() {
+    const [loading, setLoading] = useState(true);
+    const [plan, setPlan] = useState("Neup.Pro");
+    const [nextCharge, setNextCharge] = useState("$29.00 on Nov 1, 2024");
+    
+    useEffect(() => {
+        // Mock fetching data
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 1000);
+        return () => clearTimeout(timer);
+    }, [])
 
     const billingItems = [
         { href: '/manage/payment', icon: Wallet, title: 'Manage Subscription', description: `Your next charge is ${nextCharge}.` },
         { href: 'https://neupgroup.com/wallet/history?source=neup', icon: Gem, title: 'Upgrade Plan', description: 'Unlock premium features by upgrading your plan.', isExternal: true },
     ]
+    
+    if(loading) {
+        return <BillingCardSkeleton />;
+    }
 
     return (
          <div className="space-y-2">
-            <h2 className="text-xl font-semibold tracking-tight">Billing & Subscription</h2>
-            <p className="text-muted-foreground text-sm">
-                Your current plan is <span className="font-semibold text-foreground">{plan}</span>.
-            </p>
+            <SecondaryHeader 
+                title="Billing & Subscription"
+                description={`Your current plan is ${plan}.`}
+            />
             <Card>
                 <CardContent className="divide-y p-2">
                      {billingItems.map((item) => (
-                        <BillingListItem 
+                        <ListItem 
                             key={item.href}
                             href={item.href}
                             icon={item.icon}

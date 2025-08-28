@@ -1,22 +1,12 @@
-
-
 'use server';
 
 import { db } from '@/lib/firebase';
 import { collection, query, where, getDocs, doc, updateDoc, deleteDoc, getDoc, serverTimestamp, writeBatch, setDoc, limit, Timestamp } from 'firebase/firestore';
-import { getUserProfile, getUserNeupIds, getPersonalAccountId, checkPermissions } from '@/lib/user-actions';
+import { getUserProfile, getUserNeupIds, getPersonalAccountId, checkPermissions } from '@/lib/user';
 import { logError } from '@/lib/logger';
 import { revalidatePath } from 'next/cache';
+import type { Invitation } from '@/types';
 
-export type Invitation = {
-    notificationId: string;
-    requestId: string;
-    action: string;
-    senderId: string;
-    senderName: string;
-    senderNeupId: string;
-    createdAt: string;
-}
 
 export async function getInvitations(): Promise<Invitation[]> {
     const accountId = await getPersonalAccountId();
@@ -123,7 +113,7 @@ export async function acceptRequest(requestId: string, notificationId: string): 
         });
     }
 
-    batch.delete(requestRef);
+    batch.update(requestRef, { status: 'approved' });
     batch.delete(doc(db, 'notifications', notificationId));
     await batch.commit();
 
@@ -146,7 +136,7 @@ export async function rejectRequest(requestId: string, notificationId: string): 
     }
 
     const batch = writeBatch(db);
-    batch.delete(requestRef);
+    batch.update(requestRef, { status: 'rejected' });
     batch.delete(doc(db, 'notifications', notificationId));
     await batch.commit();
 

@@ -3,7 +3,8 @@
 
 import { useState, useEffect, useTransition } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { getInvitations, acceptRequest, rejectRequest, type Invitation } from './actions';
+import { getInvitations, acceptRequest, rejectRequest } from './actions';
+import type { Invitation } from '@/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -12,7 +13,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { BackButton } from '@/components/ui/back-button';
 
 function InvitationCard({ invitation, onAction }: { invitation: Invitation, onAction: () => void }) {
-    const [isPending, startTransition] = useTransition();
+    const [isAccepting, startAcceptTransition] = useTransition();
+    const [isRejecting, startRejectTransition] = useTransition();
     const { toast } = useToast();
 
     const getActionText = () => {
@@ -26,7 +28,7 @@ function InvitationCard({ invitation, onAction }: { invitation: Invitation, onAc
     };
 
     const handleAccept = () => {
-        startTransition(async () => {
+        startAcceptTransition(async () => {
             const result = await acceptRequest(invitation.requestId, invitation.notificationId);
             if (result.success) {
                 toast({ title: 'Request accepted!', className: 'bg-accent text-accent-foreground' });
@@ -38,7 +40,7 @@ function InvitationCard({ invitation, onAction }: { invitation: Invitation, onAc
     };
 
     const handleReject = () => {
-        startTransition(async () => {
+        startRejectTransition(async () => {
             const result = await rejectRequest(invitation.requestId, invitation.notificationId);
             if (result.success) {
                 toast({ title: 'Request rejected.' });
@@ -55,6 +57,8 @@ function InvitationCard({ invitation, onAction }: { invitation: Invitation, onAc
         return <Users className="h-6 w-6 text-muted-foreground" />;
     }
 
+    const isPending = isAccepting || isRejecting;
+
     return (
         <Card>
             <CardContent className="flex items-center justify-between p-4">
@@ -66,20 +70,12 @@ function InvitationCard({ invitation, onAction }: { invitation: Invitation, onAc
                     </div>
                 </div>
                 <div className="flex gap-2">
-                    {isPending ? (
-                        <Button variant="outline" size="icon" disabled>
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                        </Button>
-                    ) : (
-                        <>
-                            <Button variant="outline" size="icon" className="h-8 w-8 text-green-600 border-green-600 hover:bg-green-50" onClick={handleAccept}>
-                                <Check className="h-4 w-4" />
-                            </Button>
-                            <Button variant="destructive" size="icon" className="h-8 w-8" onClick={handleReject}>
-                                <X className="h-4 w-4" />
-                            </Button>
-                        </>
-                    )}
+                    <Button variant="outline" size="icon" className="h-8 w-8 text-green-600 border-green-600 hover:bg-green-50" onClick={handleAccept} disabled={isPending}>
+                        {isAccepting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
+                    </Button>
+                    <Button variant="destructive" size="icon" className="h-8 w-8" onClick={handleReject} disabled={isPending}>
+                        {isRejecting ? <Loader2 className="h-4 w-4 animate-spin" /> : <X className="h-4 w-4" />}
+                    </Button>
                 </div>
             </CardContent>
         </Card>

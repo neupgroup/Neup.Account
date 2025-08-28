@@ -1,5 +1,3 @@
-
-
 "use client"
 
 import { useEffect, useState, useContext } from 'react'
@@ -9,7 +7,7 @@ import { z } from "zod"
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 
-import { getUserProfile, type UserProfile } from "@/lib/user-actions"
+import { getUserProfile, type UserProfile } from "@/lib/user"
 import { updateBrandProfile } from "@/actions/profile"
 import { brandProfileFormSchema } from "@/schemas/profile"
 import { useToast } from "@/hooks/use-toast"

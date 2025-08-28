@@ -1,9 +1,8 @@
-
 import { NextResponse, type NextRequest } from 'next/server';
 import { db } from '@/lib/firebase';
 import { doc, getDoc, updateDoc, collection, query, where, getDocs, DocumentReference, DocumentData } from 'firebase/firestore';
 import { logError } from '@/lib/logger';
-import { getUserProfile, getUserNeupIds } from '@/lib/user-actions';
+import { getUserProfile, getUserNeupIds } from '@/lib/user';
 
 export async function POST(request: NextRequest) {
     try {

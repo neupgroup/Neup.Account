@@ -25,7 +25,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Loader2, Trash2, CheckCircle2, XCircle, Plus, BadgeX } from 'lucide-react';
+import { Loader2, Trash2, CheckCircle2, XCircle } from 'lucide-react';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useDebounce } from 'use-debounce';
 import { Badge } from '@/components/ui/badge';
@@ -160,6 +160,10 @@ export function PermissionForm({ permission }: { permission: Permission }) {
                         <CardDescription>View or edit the details for this permission set.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
+                         <div>
+                            <Label>Intended For</Label>
+                            <Input value={permission.intended_for.charAt(0).toUpperCase() + permission.intended_for.slice(1)} disabled />
+                        </div>
                         <FormField control={form.control} name="name" render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Set Name</FormLabel>

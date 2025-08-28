@@ -1,19 +1,18 @@
-
 import { NextResponse, type NextRequest } from 'next/server';
-import { getActiveSessionDetails } from '@/lib/auth-actions';
+import { getActiveSession } from '@/lib/session';
 import { db } from '@/lib/firebase';
 import { doc, updateDoc, Timestamp } from 'firebase/firestore';
 import { logError } from '@/lib/logger';
 
 export async function POST(request: NextRequest) {
-    const session = await getActiveSessionDetails();
-
-    if (!session) {
-        return NextResponse.json({ success: false, error: 'Unauthenticated.' }, { status: 401 });
-    }
-
     try {
-        const sessionRef = doc(db, 'session', session.auth_session_id);
+        const session = await getActiveSession();
+
+        if (!session) {
+            return NextResponse.json({ success: false, error: 'Unauthenticated.' }, { status: 401 });
+        }
+
+        const sessionRef = doc(db, 'session', session.sessionId);
 
         const newExpiresOn = new Date();
         newExpiresOn.setDate(newExpiresOn.getDate() + 30); // Extend by 30 days

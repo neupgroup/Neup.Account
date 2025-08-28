@@ -1,25 +1,77 @@
-
-
 'use client';
 
 import Link from "next/link"
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
-import { getNavConfig, type NavSection } from "./nav-data"
+import { type NavSection, navItems, navIcons, allPermissionsMap } from "./nav-data"
 import { Skeleton } from "./ui/skeleton";
-import { NotificationBell } from "./warning-display";
+import { useSession } from "@/context/session-context";
 
 export function DashboardNav() {
     const pathname = usePathname();
-    const [navConfig, setNavConfig] = useState<NavSection[] | null>(null);
+    const { permissions, isManaging, profile, loading } = useSession();
 
-    useEffect(() => {
-        getNavConfig().then(config => setNavConfig(config));
-    }, [pathname]); // Re-fetch config if pathname changes, for managing/personal switch
+    const navConfig: NavSection[] | null = useMemo(() => {
+        if (loading || !permissions) return null;
 
-    if (!navConfig) {
+        const userPermissionSet = new Set(permissions);
+        const hasAnyPermissionFor = (requiredPermissions: string[]) => {
+            if (requiredPermissions.length === 0) return true;
+            return requiredPermissions.some(p => userPermissionSet.has(p));
+        };
+
+        const navItemsWithPerms = (items: Omit<any, 'requiredPermissions' | 'iconName'>[]): any[] => {
+            return items.map(item => ({
+                ...item,
+                iconName: navIcons[item.label] || "UserCircle",
+                requiredPermissions: allPermissionsMap[item.label] || []
+            })).filter(item => hasAnyPermissionFor(item.requiredPermissions));
+        };
+        
+        const accountNavItems = isManaging
+            ? navItems.accountNav.map(item => 
+                item.label === "Switch Account" ? { ...item, href: '/auth/switchback' } : item
+              )
+            : navItems.accountNav;
+
+        const visibleNeupIdNav = navItemsWithPerms(navItems.neupIdNav);
+        const visibleManagementNav = navItemsWithPerms(navItems.managementNav);
+        const visibleAccountNav = navItemsWithPerms(accountNavItems);
+        
+        const primaryNeupId = profile?.neupId ? `@${profile.neupId}` : 'Neup.Account';
+        const title = isManaging ? profile?.displayName : primaryNeupId;
+
+
+        const config: NavSection[] = [];
+        
+        if (isManaging) {
+            config.push({ title: title || "Brand", items: [
+                { href: "/manage/home", label: "Dashboard", description: "Your central account management hub.", iconName: "Dashboard", requiredPermissions: [] },
+                { href: "/manage/profile", label: "Brand Info", description: "Manage brand profile.", iconName: "BrandInfo", requiredPermissions: ['profile.view'] },
+                { href: "/manage/accounts/branches", label: "Branches", description: "Manage brand branches.", iconName: "LinkedAccounts", requiredPermissions: ['linked_accounts.brand.manage'] },
+            ]});
+             config.push({ title: "Account", items: visibleAccountNav });
+
+        } else {
+            if (visibleNeupIdNav.length > 0) {
+                config.push({ title: primaryNeupId, items: visibleNeupIdNav });
+            }
+            if (visibleManagementNav.length > 0) {
+                config.push({ title: "Management", items: visibleManagementNav });
+            }
+            if (visibleAccountNav.length > 0) {
+                config.push({ title: "Account", items: visibleAccountNav });
+            }
+        }
+
+        return config;
+
+    }, [permissions, isManaging, profile, loading]);
+
+
+    if (loading || !navConfig) {
         return (
             <div className="space-y-4">
                 {[...Array(3)].map((_, i) => (

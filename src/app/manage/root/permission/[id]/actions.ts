@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { logError } from '@/lib/logger';
 import type { Permission } from '../actions';
-import { getPersonalAccountId } from '@/app/actions/auth/session';
+import { getPersonalAccountId } from '@/lib/auth-actions';
 import { logActivity } from '@/lib/log-actions';
 import { checkPermissions } from '@/lib/user-actions';
 

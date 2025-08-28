@@ -1,22 +1,32 @@
-
+"use client"
 
 import {
     Card,
     CardContent,
 } from "@/components/ui/card"
-import { Users, AlertTriangle, Clock, ShieldCheck } from "lucide-react"
-import { getTotalUsers } from "@/lib/auth-actions"
-import { checkPermissions } from "@/lib/user-actions"
+import { Users, AlertTriangle, Clock, ShieldCheck } from "@/components/icons"
+import { getUserStats } from "@/actions/root/accounts"
+import { checkPermissions } from "@/lib/user"
 import { notFound } from "next/navigation"
+import { useEffect, useState } from "react"
+import type { UserStats } from "@/types"
 
-export default async function DashboardPage() {
-    const hasPermission = await checkPermissions(['root.dashboard.view']);
-    if (!hasPermission) {
-        notFound();
-    }
-    
-    const timeRanges = ["in 24 hours", "in 1 week", "in 1 month", "in 3 months", "in 6 months", "in 1 year"];
-    const totalUsers = await getTotalUsers();
+export default function DashboardPage() {
+    const [stats, setStats] = useState<UserStats | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const hasPerm = await checkPermissions(['root.dashboard.view']);
+            if (!hasPerm) {
+                notFound();
+            }
+            const userStats = await getUserStats();
+            setStats(userStats);
+            setLoading(false);
+        };
+        fetchData();
+    }, []);
 
     return (
         <div className="grid gap-8">
@@ -38,7 +48,7 @@ export default async function DashboardPage() {
                             </div>
                             <div>
                                 <div className="text-2xl font-bold">
-                                    {totalUsers.toLocaleString()}
+                                    {stats ? stats.totalUsers.toLocaleString() : '...'}
                                 </div>
                                 <p className="text-xs text-muted-foreground">+5.2% from last month</p>
                             </div>
@@ -49,7 +59,7 @@ export default async function DashboardPage() {
                                 <Clock className="h-4 w-4 text-muted-foreground" />
                             </div>
                             <div>
-                                <div className="text-2xl font-bold">456</div>
+                                <div className="text-2xl font-bold">{stats ? stats.activeUsers.toLocaleString() : '...'}</div>
                                 <p className="text-xs text-muted-foreground">in 24 hours</p>
                             </div>
                         </div>

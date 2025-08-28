@@ -1,14 +1,13 @@
-
-"use server";
+'use server';
 
 import { z } from "zod";
-import { getActiveAccountId } from "@/actions/auth/session";
+import { getActiveAccountId } from "@/lib/auth-actions";
 import { logActivity } from "@/lib/log-actions";
 import { logError } from "@/lib/logger";
 import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import bcrypt from "bcryptjs";
-import { checkPermissions } from "@/lib/user-actions";
+import { checkPermissions } from "@/lib/user";
 
 const formSchema = z.object({
     inactivityDays: z.string().min(1, "Please select a time period."),

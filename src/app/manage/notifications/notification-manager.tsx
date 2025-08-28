@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { useState, useTransition, useEffect } from 'react';
@@ -7,12 +5,12 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { AlertTriangle, X, Check, MailQuestion, Users, Bell } from 'lucide-react';
-import type { AllNotifications, Notification } from './actions';
+import { AlertTriangle, X, Check, MailQuestion, Users, Bell } from '@/components/icons';
+import type { AllNotifications, Notification } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { checkPermissions } from '@/lib/user-actions';
-import { markNotificationAsRead } from './actions';
+import { checkPermissions } from '@/lib/user';
+import { markNotificationAsRead } from '@/actions/notifications';
 import Link from 'next/link';
 
 function getActionText(action: string, senderName: string): string {

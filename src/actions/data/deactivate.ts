@@ -1,15 +1,14 @@
-
-"use server";
+'use server';
 
 import { z } from "zod";
-import { getActiveAccountId } from "@/actions/auth/session";
-import { logoutActiveSession } from "@/actions/auth/logout";
 import { logActivity } from "@/lib/log-actions";
 import { logError } from "@/lib/logger";
 import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import bcrypt from "bcryptjs";
-import { checkPermissions } from "@/lib/user-actions";
+import { checkPermissions } from "@/lib/user";
+import { getActiveAccountId } from "@/lib/auth-actions";
+import { logoutActiveSession } from "../auth/logout";
 
 const formSchema = z.object({
     password: z.string().min(1, "Password is required to deactivate your account."),

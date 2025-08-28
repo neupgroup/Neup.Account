@@ -1,20 +1,16 @@
-
 'use server';
 
 import { db } from '@/lib/firebase';
-import { collection, doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import bcrypt from 'bcryptjs';
-import { z } from 'zod';
+import type { z } from 'zod';
 import { logActivity } from '@/lib/log-actions';
 import { headers } from 'next/headers';
-import { createAndSetSession, validateNeupId } from './session';
+import { createAndSetSession } from '@/lib/session';
 import { logError } from '@/lib/logger';
+import { validateNeupId } from '@/lib/user';
+import { loginFormSchema } from '@/schemas/auth';
 
-const loginFormSchema = z.object({
-    neupId: z.string().min(1, "NeupID is required."),
-    password: z.string().min(1, "Password is required."),
-    geolocation: z.string().optional(),
-});
 
 export async function loginUser(data: z.infer<typeof loginFormSchema>) {
     const validation = loginFormSchema.safeParse(data);
@@ -37,6 +33,13 @@ export async function loginUser(data: z.infer<typeof loginFormSchema>) {
         }
         
         const accountId = neupidsSnapshot.data().for;
+        
+        const validationResult = await validateNeupId(neupId);
+        if(validationResult.success === false && validationResult.error !== 'pending_deletion') {
+            await logActivity(accountId, 'Login Attempt Failed', 'Failed', ipAddress, undefined, geolocation);
+            return validationResult;
+        }
+
         const passRef = doc(db, 'auth_password', accountId);
         const passDoc = await getDoc(passRef);
 
@@ -50,6 +53,11 @@ export async function loginUser(data: z.infer<typeof loginFormSchema>) {
             return { success: false, error: 'Invalid NeupID or password.' };
         }
         
+        // After password is confirmed, check for pending deletion
+        if (validationResult.error === 'pending_deletion') {
+            return { success: false, error: 'pending_deletion' };
+        }
+
         await logActivity(accountId, 'Login', 'Success', ipAddress, undefined, geolocation);
         await createAndSetSession(accountId, 'Password', ipAddress, userAgent, geolocation);
 

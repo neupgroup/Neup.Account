@@ -1,6 +1,7 @@
+
 import { getAccessList } from "./actions";
-import { getActiveAccountId } from "@/actions/auth/session";
-import { getUserNeupIds } from "@/lib/user-actions";
+import { getActiveAccountId } from "@/lib/auth-actions";
+import { getUserNeupIds } from "@/lib/user";
 import {
   Card,
   CardContent,
@@ -15,8 +16,10 @@ import { ChevronRight } from "@/components/icons";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { AddUserForm } from "./add-user-form";
-import type { Permission } from "@/actions/root/permission";
+import type { Permission } from "@/types";
 import { getMasterPermissions } from "@/actions/root/permission";
+import { SecondaryHeader } from "@/components/ui/secondary-header";
+import { PrimaryHeader } from "@/components/ui/primary-header";
 
 export default async function AccessControlPage() {
   const accountId = await getActiveAccountId();
@@ -38,18 +41,16 @@ export default async function AccessControlPage() {
 
   return (
     <div className="grid gap-8">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Access & Control</h1>
-        <p className="text-muted-foreground">
-          Review and manage who has access to your account.
-        </p>
-      </div>
+      <PrimaryHeader
+        title="Access & Control"
+        description="Review and manage who has access to your account."
+      />
 
        <div className="space-y-2">
-          <h2 className="text-xl font-semibold tracking-tight">People with access to @{currentNeupId}</h2>
-          <p className="text-muted-foreground text-sm">
-            These people have been granted permissions to manage this account. Invitations are now managed on the Notifications page.
-          </p>
+          <SecondaryHeader
+            title={`People with access to @${currentNeupId}`}
+            description="These people have been granted permissions to manage this account. Invitations are now managed on the Notifications page."
+          />
         </div>
 
       {accessList.length > 0 ? (

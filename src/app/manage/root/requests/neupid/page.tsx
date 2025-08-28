@@ -1,5 +1,4 @@
 
-
 import Link from "next/link"
 import {
     Table,
@@ -19,8 +18,8 @@ import {
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { getPendingNeupIdRequests } from "@/actions/root/requests"
-import { checkPermissions } from "@/lib/user-actions"
+import { getPendingNeupIdRequests } from "./actions"
+import { checkPermissions } from "@/lib/user"
 import { notFound } from "next/navigation"
 import { BackButton } from "@/components/ui/back-button"
 

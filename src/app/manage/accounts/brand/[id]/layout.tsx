@@ -1,6 +1,6 @@
 
 import { notFound } from 'next/navigation';
-import { getUserProfile } from '@/lib/user-actions';
+import { getUserProfile, checkPermissions } from '@/lib/user';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { BrandNav } from './brand-nav';
 import { BackButton } from '@/components/ui/back-button';
@@ -12,9 +12,12 @@ export default async function BrandManagementLayout({
   children: React.ReactNode;
   params: { id: string };
 }) {
-  const brandProfile = await getUserProfile(params.id);
-
-  if (!brandProfile) {
+  const [canManageBrand, brandProfile] = await Promise.all([
+    checkPermissions(['linked_accounts.brand.manage']),
+    getUserProfile(params.id)
+  ]);
+  
+  if (!canManageBrand || !brandProfile) {
     notFound();
   }
 

@@ -20,9 +20,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge"
 import { getActivities, ActivityLog } from "@/lib/log-actions"
-import { ChevronLeft, ChevronRight, Ban } from "lucide-react";
+import { ChevronLeft, ChevronRight, Ban } from "@/components/icons";
 import { BackButton } from "@/components/ui/back-button";
-import { checkPermissions } from "@/lib/user-actions";
+import { checkPermissions } from "@/lib/user";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useEffect, useState, useCallback, use } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -34,13 +34,7 @@ const statusVariantMap: { [key: string]: "default" | "destructive" | "secondary"
     Alert: "destructive",
 }
 
-export default function DataActivityPage({
-  searchParams,
-}: {
-  searchParams?: {
-    after?: string;
-  };
-}) {
+function DataActivityPageComponent({ after }: { after?: string }) {
     const [canView, setCanView] = useState(false);
     const [loading, setLoading] = useState(true);
     const [logs, setLogs] = useState<ActivityLog[]>([]);
@@ -66,9 +60,8 @@ export default function DataActivityPage({
     }, []);
 
     useEffect(() => {
-        const after = searchParams?.after;
         fetchData(after);
-    }, [searchParams, fetchData]);
+    }, [after, fetchData]);
     
     if (!canView && !loading) {
         return (
@@ -168,4 +161,10 @@ export default function DataActivityPage({
             </Card>
         </div>
     )
+}
+
+export default function DataActivityPage() {
+    const searchParams = useSearchParams();
+    const after = searchParams.get('after') || undefined;
+    return <DataActivityPageComponent after={after} />;
 }

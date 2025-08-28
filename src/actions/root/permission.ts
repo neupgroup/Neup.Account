@@ -9,7 +9,6 @@ import {
   where,
   orderBy,
   doc,
-  setDoc,
   getDoc,
   updateDoc,
   deleteDoc,
@@ -17,19 +16,12 @@ import {
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { logError } from '@/lib/logger';
-import { getPersonalAccountId } from '@/actions/auth/session';
 import { logActivity } from '@/lib/log-actions';
-import { checkPermissions } from '@/lib/user-actions';
+import { checkPermissions } from '@/lib/user';
+import { getPersonalAccountId } from '@/lib/auth-actions';
+import type { Permission } from '@/types';
 
 // --- Types ---
-export type Permission = {
-  id: string;
-  name: string; // e.g. property_ReadWrite
-  app_id: string; // e.g. neup_console
-  access: string[]; // e.g. ["property.read", "property.write"]
-  description: string;
-};
-
 type GetPermissionsResponse = {
   permissions: Permission[];
   hasNextPage: boolean;
@@ -42,6 +34,7 @@ const addPermissionSchema = z.object({
   app_id: z.string().min(3, { message: 'App Slug must be at least 3 characters.' }),
   access: z.array(z.string()).min(1, { message: 'At least one permission is required.' }),
   description: z.string().min(10, { message: 'Description must be at least 10 characters.' }),
+  intended_for: z.enum(['individual', 'brand', 'dependent', 'branch', 'root']),
 });
 
 const editPermissionSchema = z.object({
@@ -57,12 +50,12 @@ export async function getMasterPermissions(
   page: number,
   pageSize: number
 ): Promise<GetPermissionsResponse> {
-  const canView = await checkPermissions(['root.permission.view']);
-  if (!canView) {
-    return { permissions: [], hasNextPage: false, hasPrevPage: false };
-  }
-
   try {
+    const canView = await checkPermissions(['root.permission.view']);
+    if (!canView) {
+      return { permissions: [], hasNextPage: false, hasPrevPage: false };
+    }
+
     const permissionsCollection = collection(db, 'permission');
     const q = query(permissionsCollection, orderBy('name'));
     const permissionsSnapshot = await getDocs(q);
@@ -120,6 +113,7 @@ export async function addPermission(
     app_id: formData.get('app_id'),
     access: formData.getAll('access'), // Get all permissions as an array
     description: formData.get('description'),
+    intended_for: formData.get('intended_for'),
   };
 
   const validation = addPermissionSchema.safeParse(rawData);
@@ -132,7 +126,7 @@ export async function addPermission(
     };
   }
 
-  const { name, app_id, access: accessArray, description } = validation.data;
+  const { name, app_id, access: accessArray, description, intended_for } = validation.data;
 
   if (accessArray.length === 0) {
     return { success: false, error: 'Access permissions cannot be empty.' };
@@ -150,6 +144,7 @@ export async function addPermission(
       app_id,
       access: accessArray,
       description,
+      intended_for,
     });
 
     const adminId = await getPersonalAccountId();
@@ -163,6 +158,7 @@ export async function addPermission(
       app_id,
       access: accessArray,
       description,
+      intended_for,
     };
 
     return {

@@ -1,14 +1,15 @@
-
 'use server';
 
 import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs, addDoc, doc, setDoc, getDoc, limit, serverTimestamp, Timestamp, updateDoc, writeBatch } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, setDoc, getDoc, limit, serverTimestamp, writeBatch } from 'firebase/firestore';
 import bcrypt from 'bcryptjs';
-import { z } from 'zod';
 import { logActivity } from '@/lib/log-actions';
 import { headers } from 'next/headers';
-import { createAndSetSession, checkNeupIdAvailability } from './session';
+import { createAndSetSession } from '@/lib/session';
+import { checkNeupIdAvailability } from '@/lib/user';
 import { logError } from '@/lib/logger';
+import { registrationSchema } from '@/schemas/auth';
+import type { z } from 'zod';
 
 async function isFirstUser() {
     const accountsCollection = collection(db, 'account');
@@ -16,22 +17,9 @@ async function isFirstUser() {
     return accountsSnapshot.empty;
 }
 
-const registerFormSchema = z.object({
-    firstName: z.string().min(1),
-    middleName: z.string().optional(),
-    lastName: z.string().min(1),
-    gender: z.enum(["male", "female", "custom", "prefer_not_to_say"]),
-    customGender: z.string().optional(),
-    dob: z.string(),
-    nationality: z.string().min(1),
-    neupId: z.string().min(3, "NeupID must be at least 3 characters."),
-    password: z.string().min(8, "Password must be at least 8 characters."),
-    agreement: z.boolean().refine(val => val, { message: "You must agree to the terms." }),
-    geolocation: z.string().optional(),
-});
 
-export async function registerUser(data: z.infer<typeof registerFormSchema>) {
-    const validation = registerFormSchema.safeParse(data);
+export async function registerUser(data: z.infer<typeof registrationSchema>) {
+    const validation = registrationSchema.safeParse(data);
     if (!validation.success) {
         return { success: false, error: "Invalid data provided.", details: validation.error.flatten() };
     }
@@ -52,7 +40,6 @@ export async function registerUser(data: z.infer<typeof registerFormSchema>) {
         }
 
         const isAdmin = await isFirstUser();
-        // Use the new permission set names
         const permissionSetName = isAdmin ? 'root.whole' : 'individual.default';
         
         let finalGender = validation.data.gender;
@@ -67,7 +54,6 @@ export async function registerUser(data: z.infer<typeof registerFormSchema>) {
         
         batch.set(doc(db, 'account', accountId), { type: 'individual' });
 
-        // Grant permissions by finding the permission set ID
         const permQuery = query(collection(db, 'permission'), where('name', '==', permissionSetName), limit(1));
         const permSnap = await getDocs(permQuery);
         
@@ -76,9 +62,10 @@ export async function registerUser(data: z.infer<typeof registerFormSchema>) {
             const newPermitRef = doc(collection(db, 'permit'));
             batch.set(newPermitRef, {
                 account_id: accountId,
-                is_root: true,
+                for_self: !isAdmin,
+                is_root: isAdmin,
                 permission: [permId],
-                restricted_permission: [],
+                restrictions: [],
                 created_on: serverTimestamp(),
             });
         }

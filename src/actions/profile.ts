@@ -1,12 +1,12 @@
-"use server"
+'use server';
 
 import { z } from "zod"
 import { db } from "@/lib/firebase"
-import { doc, updateDoc, collection, addDoc, serverTimestamp, query, where, getDocs, writeBatch } from "firebase/firestore"
+import { doc, updateDoc, collection, addDoc, serverTimestamp, query, where, getDocs, writeBatch, getDoc } from "firebase/firestore"
 import { parseDate as parseDateWithAI } from "@/ai/flows/parse-date"
 import { logActivity } from "@/lib/log-actions"
 import { logError } from "@/lib/logger"
-import { checkPermissions } from "@/lib/user-actions"
+import { checkPermissions, getUserNeupIds } from "@/lib/user"
 import { profileFormSchema, brandProfileFormSchema } from "@/schemas/profile"
 
 
@@ -83,19 +83,34 @@ export async function updateUserProfile(accountId: string, data: z.infer<typeof 
 
             const profileRef = doc(db, 'profile', accountId);
 
-            const dataToSave = {
+            const dataToSave: Record<string, any> = {
                 ...profileData,
                 gender: finalGender,
-                dob: profileData.dob.toISOString(),
             };
+
+            if (profileData.dob) {
+              dataToSave.dob = profileData.dob.toISOString();
+            }
             
             batch.update(profileRef, dataToSave);
 
              if (newNeupIdRequest && newNeupIdRequest.trim().length > 0) {
+                const accountDoc = await getDoc(doc(db, 'account', accountId));
+                const accountData = accountDoc.data();
+                const existingNeupIds = await getUserNeupIds(accountId);
+                
+                const isPro = accountData?.pro === true;
+                const limit = isPro ? 2 : 1;
+
+                if (existingNeupIds.length >= limit) {
+                    return { success: false, error: `You have reached the limit of ${limit} NeupID(s) for your account.` };
+                }
+
                 const requestsRef = collection(db, 'requests');
                 const newRequestRef = doc(requestsRef);
                 const requestedNeupId = newNeupIdRequest.toLowerCase();
                 batch.set(newRequestRef, {
+                    action: 'neupid_request',
                     accountId: accountId,
                     requestedNeupId: requestedNeupId,
                     status: 'pending',

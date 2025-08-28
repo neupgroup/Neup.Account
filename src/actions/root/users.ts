@@ -2,280 +2,179 @@
 'use server';
 
 import { db } from '@/lib/firebase';
-import { doc, getDoc, collection, query, where, getDocs, updateDoc, writeBatch, serverTimestamp, addDoc, orderBy, limit, arrayUnion, Timestamp } from 'firebase/firestore';
-import { logError } from '@/lib/logger';
-import { type UserProfile, getUserProfile as fetchUserProfile, checkPermissions } from '@/lib/user-actions';
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+  updateDoc,
+  limit,
+  writeBatch,
+  serverTimestamp,
+  setDoc,
+} from 'firebase/firestore';
+import { getUserNeupIds, getUserProfile, getAccountType } from '@/lib/user';
+import { getPersonalAccountId } from '@/lib/auth-actions';
+import { revalidatePath } from 'next/cache';
+import { logActivity } from '@/lib/log-actions';
 
-export type UserDetails = {
-    accountId: string;
-    neupId: string;
-    profile: UserProfile;
+import type {
+  UserDetails,
+  UserActivityLog,
+  UserPermissions,
+  UserDashboardStats,
+} from '@/types';
+
+// Simplified for now, can be expanded later.
+export type UserDetailsLimited = {
+  accountId: string;
+  neupId: string;
+  displayName: string;
 };
 
-export type AccountDetails = {
-    block: {
-        status: boolean;
-        reason?: string;
-        message?: string;
-        is_permanent?: boolean;
-        until?: string | null;
-    } | null;
+export async function getUserDetails(
+  accountId: string
+): Promise<UserDetails | null> {
+  const [profile, neupIds, accountType] = await Promise.all([
+    getUserProfile(accountId),
+    getUserNeupIds(accountId),
+    getAccountType(accountId),
+  ]);
+
+  if (!profile) {
+    return null;
+  }
+
+  return {
+    accountId,
+    neupId: neupIds[0] || 'N/A',
+    profile,
+    accountType: accountType || 'individual',
+  };
 }
 
-export type UserActivityLog = {
-    id: string;
-    action: string;
-    status: string;
-    ip: string;
-    timestamp: string;
-    geolocation?: string;
-    rawTimestamp: Date;
+export async function getAccountDetails(accountId: string) {
+    const accountRef = doc(db, 'account', accountId);
+    const accountDoc = await getDoc(accountRef);
+    if(accountDoc.exists()) {
+        return accountDoc.data();
+    }
+    return null;
 }
 
-export type UserPermissions = {
-    assignedPermissionSets: string[];
-    allPermissions: string[];
-}
 
-export type UserDashboardStats = {
-    lastIpAddress: string;
-    lastLocation: string;
-    lastActive: string;
-}
+export async function getActivity(accountId: string): Promise<UserActivityLog[]> {
+    const activityRef = collection(db, 'activity');
+    const q = query(activityRef, where('targetAccountId', '==', accountId), orderBy('timestamp', 'desc'), limit(20));
+    const snapshot = await getDocs(q);
 
-export type UserStats = {
-  totalUsers: number;
-  activeUsers: number;
-  signedUpToday: number;
-};
-
-
-export async function getUserProfile(accountId: string): Promise<UserProfile | null> {
-    return fetchUserProfile(accountId);
-}
-
-export async function getUserDetails(neupId: string): Promise<UserDetails | null> {
-    const canView = await checkPermissions(['root.account.view_full', 'root.account.view_limited1', 'root.account.view_limited2']);
-    if (!canView) return null;
-
-    try {
-        const lowerNeupId = neupId.toLowerCase();
-        const neupidRef = doc(db, 'neupid', lowerNeupId);
-        const neupidDoc = await getDoc(neupidRef);
-        
-        if (!neupidDoc.exists()) {
-            return null;
-        }
-        
-        const accountId = neupidDoc.data().for;
-        const profile = await getUserProfile(accountId);
-
-        if (!profile) {
-            return null;
-        }
-
+    return snapshot.docs.map(doc => {
+        const data = doc.data();
+        const rawTimestamp = data.timestamp?.toDate() || new Date();
         return {
-            accountId,
-            neupId: lowerNeupId,
-            profile,
+            id: doc.id,
+            action: data.action,
+            status: data.status,
+            ip: data.ip,
+            timestamp: rawTimestamp.toLocaleString(),
+            geolocation: data.geolocation,
+            rawTimestamp
+        }
+    }).sort((a, b) => b.rawTimestamp.getTime() - a.rawTimestamp.getTime());
+}
+
+export async function getPermissions(accountId: string): Promise<UserPermissions> {
+    const permitQuery = query(collection(db, 'permit'), where('account_id', '==', accountId), where('for_self', '==', true));
+    const permitSnapshot = await getDocs(permitQuery);
+    
+    if (permitSnapshot.empty) {
+        return { assignedPermissionSetIds: [], restrictedPermissionSetIds: [], allPermissions: [] };
+    }
+
+    const permitDoc = permitSnapshot.docs[0];
+    const permissionIds: string[] = permitDoc.data().permission || [];
+    const restrictionIds: string[] = permitDoc.data().restrictions || [];
+    
+    const finalPermissionIds = permissionIds.filter(id => !restrictionIds.includes(id));
+
+    if (finalPermissionIds.length === 0) {
+        return { assignedPermissionSetIds: permissionIds, restrictedPermissionSetIds: restrictionIds, allPermissions: [] };
+    }
+    
+    const permsRef = collection(db, 'permission');
+    const permsQuery = query(permsRef, where('__name__', 'in', finalPermissionIds));
+    const permsSnapshot = await getDocs(permsQuery);
+
+    const allPermissions = new Set<string>();
+    permsSnapshot.forEach(doc => {
+        (doc.data().access || []).forEach((p: string) => allPermissions.add(p));
+    });
+
+    return { 
+        assignedPermissionSetIds: permissionIds, 
+        restrictedPermissionSetIds: restrictionIds, 
+        allPermissions: Array.from(allPermissions) 
+    };
+}
+
+export async function updateUserPermissions(accountId: string, newPermissionIds: string[], newRestrictionIds: string[]): Promise<{success: boolean, error?: string}> {
+    try {
+        const permitQuery = query(collection(db, 'permit'), where('account_id', '==', accountId), where('for_self', '==', true), limit(1));
+        const permitSnapshot = await getDocs(permitQuery);
+
+        const dataToSet = {
+            permission: newPermissionIds,
+            restrictions: newRestrictionIds
         };
-    } catch (error) {
-        await logError('database', error, `getUserDetails for neupId: ${neupId}`);
-        return null;
+
+        if (permitSnapshot.empty) {
+            // Document doesn't exist, so create it.
+            const newPermitRef = doc(collection(db, 'permit'));
+            await setDoc(newPermitRef, {
+                ...dataToSet,
+                account_id: accountId,
+                for_self: true,
+                is_root: false,
+                created_on: serverTimestamp(),
+            });
+        } else {
+            // Document exists, so update it.
+            const permitDocRef = permitSnapshot.docs[0].ref;
+            await updateDoc(permitDocRef, dataToSet);
+        }
+        
+        const adminId = await getPersonalAccountId();
+        await logActivity(accountId, `Permissions updated by admin ${adminId}`, 'Success', undefined, adminId);
+        revalidatePath(`/manage/root/accounts/${accountId}/permissions`);
+
+        return { success: true };
+
+    } catch (e) {
+        console.error("Error updating permissions:", e);
+        return { success: false, error: "An unexpected error occurred." };
     }
 }
+
 
 export async function getUserDashboardStats(accountId: string): Promise<UserDashboardStats> {
-    const fallback = { lastIpAddress: 'N/A', lastLocation: 'N/A', lastActive: 'N/A' };
-    const canView = await checkPermissions(['root.account.view_full']);
-    if (!canView) return fallback;
+    const activityRef = collection(db, 'activity');
+    const q = query(activityRef, where('targetAccountId', '==', accountId), orderBy('timestamp', 'desc'), limit(1));
+    const snapshot = await getDocs(q);
 
-    try {
-        const activityRef = collection(db, 'activity');
-
-        // Query for the most recent activity overall
-        const lastActivityQuery = query(
-            activityRef, 
-            where('targetAccountId', '==', accountId), 
-            orderBy('timestamp', 'desc'), 
-            limit(1)
-        );
-
-        // Query for the most recent activity that has a geolocation
-        const lastLocationQuery = query(
-            activityRef,
-            where('targetAccountId', '==', accountId),
-            where('geolocation', '!=', null),
-            orderBy('geolocation'), // Firestore requires this for the inequality
-            orderBy('timestamp', 'desc'),
-            limit(1)
-        );
-
-        const [lastActivitySnapshot, lastLocationSnapshot] = await Promise.all([
-            getDocs(lastActivityQuery),
-            getDocs(lastLocationQuery)
-        ]);
-
-        if (lastActivitySnapshot.empty) {
-            return fallback;
-        }
-
-        const lastActivity = lastActivitySnapshot.docs[0].data();
-        const lastLocation = !lastLocationSnapshot.empty ? lastLocationSnapshot.docs[0].data().geolocation : 'Unknown';
-
+    if (snapshot.empty) {
         return {
-            lastIpAddress: lastActivity.ip || 'N/A',
-            lastLocation: lastLocation,
-            lastActive: lastActivity.timestamp?.toDate().toLocaleString() || 'N/A',
+            lastIpAddress: 'N/A',
+            lastLocation: 'N/A',
+            lastActive: 'N/A',
         };
-
-    } catch (error) {
-        await logError('database', error, `getUserDashboardStats for ${accountId}`);
-        return fallback;
     }
-}
 
-
-export async function getAccountDetails(neupId: string): Promise<AccountDetails | null> {
-    const canView = await checkPermissions(['root.account.view_full']);
-    if (!canView) return null;
-    try {
-        const userDetails = await getUserDetails(neupId);
-        if (!userDetails) return null;
-
-        const accountRef = doc(db, 'account', userDetails.accountId);
-        const accountDoc = await getDoc(accountRef);
-
-        if (!accountDoc.exists()) return null;
-
-        const data = accountDoc.data();
-        const blockData = data.block || null;
-        
-        if (blockData && blockData.until) {
-            blockData.until = blockData.until.toDate().toISOString();
-        }
-
-        return {
-            block: blockData,
-        };
-    } catch(error) {
-         await logError('database', error, `getAccountDetails for neupId: ${neupId}`);
-        return null;
-    }
-}
-
-export async function getActivity(neupId: string): Promise<Omit<UserActivityLog, 'rawTimestamp'>[]> {
-    const canView = await checkPermissions(['root.account.view_activity']);
-    if (!canView) return [];
-
-    try {
-        const userDetails = await getUserDetails(neupId);
-        if (!userDetails) return [];
-
-        const activityRef = collection(db, 'activity');
-        // Query only by targetAccountId to avoid needing a composite index.
-        const q = query(activityRef, where('targetAccountId', '==', userDetails.accountId));
-        const querySnapshot = await getDocs(q);
-
-        const activities: UserActivityLog[] = querySnapshot.docs.map(doc => {
-            const data = doc.data();
-            const timestamp = data.timestamp?.toDate() || new Date();
-            return {
-                id: doc.id,
-                action: data.action,
-                status: data.status,
-                ip: data.ip,
-                timestamp: timestamp.toLocaleString(),
-                geolocation: data.geolocation,
-                rawTimestamp: timestamp,
-            };
-        });
-
-        // Sort in code and take the last 10.
-        activities.sort((a, b) => b.rawTimestamp.getTime() - a.rawTimestamp.getTime());
-        const recentActivities = activities.slice(0, 10);
-        
-        // Remove the rawTimestamp before returning to the client.
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        return recentActivities.map(({ rawTimestamp, ...rest }) => rest);
-
-    } catch(error) {
-        await logError('database', error, `getActivity for neupId: ${neupId}`);
-        return [];
-    }
-}
-
-export async function getPermissions(neupId: string): Promise<UserPermissions> {
-    const fallback: UserPermissions = { assignedPermissionSets: [], allPermissions: [] };
-    const canView = await checkPermissions(['root.account.view_full']);
-    if (!canView) return fallback;
-
-    try {
-        const userDetails = await getUserDetails(neupId);
-        if (!userDetails) return fallback;
-
-        // Fetch assigned permission sets
-        const permitRef = collection(db, 'permit');
-        const q = query(permitRef, where('account_id', '==', userDetails.accountId), where('is_root', '==', true));
-        const querySnapshot = await getDocs(q);
-
-        if (querySnapshot.empty) {
-             return { assignedPermissionSets: ['individual.default'], allPermissions: [] }; // Default
-        }
-        
-        const permitData = querySnapshot.docs[0].data();
-        const assignedIds = permitData.permission || [];
-        
-        const allPermissionSetsQuery = await getDocs(collection(db, 'permission'));
-        const permissionSetMap = new Map(allPermissionSetsQuery.docs.map(d => [d.id, d.data().name]));
-
-        const assignedNames = assignedIds.map((id: string) => permissionSetMap.get(id) || id);
-
-        // If no specific root permission is assigned, they get the default
-        if (!assignedNames.some((name: string) => name.startsWith('root.'))) {
-            assignedNames.push('individual.default');
-        }
-
-        return { 
-            assignedPermissionSets: assignedNames,
-            allPermissions: [], // This will be populated on the client from the main list
-        };
-
-    } catch (error) {
-        await logError('database', error, `getPermissions for neupId: ${neupId}`);
-        return fallback;
-    }
-}
-
-export async function getUserStats(): Promise<UserStats> {
-  try {
-    const profilesCollection = collection(db, 'profile');
-    const profilesSnapshot = await getDocs(profilesCollection);
-    const totalUsers = profilesSnapshot.size;
-
-    // Fetch users signed up today
-    const startOfToday = new Date();
-    startOfToday.setHours(0, 0, 0, 0);
-
-    const q = query(profilesCollection, where('createdAt', '>=', Timestamp.fromDate(startOfToday)));
-    const todaySnapshot = await getDocs(q);
-    const signedUpToday = todaySnapshot.size;
-    
+    const lastActivity = snapshot.docs[0].data();
     return {
-      totalUsers,
-      activeUsers: totalUsers, // No 'status' field, so assuming all are active
-      signedUpToday,
-    };
-  } catch (error) {
-    await logError('database', error, 'getUserStats');
-    // This can happen if 'createdAt' fields don't exist yet for old users.
-    // Gracefully fallback.
-    const profilesCollection = collection(db, 'profile');
-    const profilesSnapshot = await getDocs(profilesCollection);
-    return {
-      totalUsers: profilesSnapshot.size,
-      activeUsers: profilesSnapshot.size,
-      signedUpToday: 0,
-    };
-  }
+        lastIpAddress: lastActivity.ip,
+        lastLocation: lastActivity.geolocation || 'N/A',
+        lastActive: lastActivity.timestamp?.toDate().toLocaleString() || 'N/A',
+    }
 }

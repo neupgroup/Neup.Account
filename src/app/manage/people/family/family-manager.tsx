@@ -1,10 +1,9 @@
-
 "use client";
 
 import { useState, useTransition, useRef } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { addFamilyMember, removeFamilyMember } from './actions';
-import type { FamilyMember, FamilyGroup } from './actions';
+import type { FamilyMember, FamilyGroup } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { UserPlus, Loader2, Trash2 } from 'lucide-react';

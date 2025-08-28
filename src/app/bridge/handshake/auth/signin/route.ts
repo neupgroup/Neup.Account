@@ -1,6 +1,5 @@
-
 import { NextResponse, type NextRequest } from 'next/server';
-import { getActiveSessionDetails } from '@/lib/auth-actions';
+import { getActiveSession } from '@/lib/session';
 import { db } from '@/lib/firebase';
 import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
 import crypto from 'crypto';
@@ -36,20 +35,20 @@ export async function GET(request: NextRequest) {
         return NextResponse.redirect(finalRedirectUrl);
     }
 
-    const session = await getActiveSessionDetails();
-
-    if (!session) {
-        finalRedirectUrl.searchParams.set('error', 'unauthenticated');
-        finalRedirectUrl.searchParams.set('error_description', 'No active user session found.');
-        return NextResponse.redirect(finalRedirectUrl);
-    }
-
     try {
+        const session = await getActiveSession();
+
+        if (!session) {
+            finalRedirectUrl.searchParams.set('error', 'unauthenticated');
+            finalRedirectUrl.searchParams.set('error_description', 'No active user session found.');
+            return NextResponse.redirect(finalRedirectUrl);
+        }
+
         const dependentKey = crypto.randomBytes(32).toString('hex');
         const expiresOn = new Date();
         expiresOn.setMinutes(expiresOn.getMinutes() + 5); // Key is valid for 5 minutes
 
-        const sessionRef = doc(db, 'session', session.auth_session_id);
+        const sessionRef = doc(db, 'session', session.sessionId);
 
         await updateDoc(sessionRef, {
             dependentKey: arrayUnion({
@@ -62,8 +61,8 @@ export async function GET(request: NextRequest) {
         
         // Append the new, secure parameters to the final URL
         finalRedirectUrl.searchParams.set('key', dependentKey);
-        finalRedirectUrl.searchParams.set('session_id', session.auth_session_id);
-        finalRedirectUrl.searchParams.set('account_id', session.auth_account_id);
+        finalRedirectUrl.searchParams.set('session_id', session.sessionId);
+        finalRedirectUrl.searchParams.set('account_id', session.accountId);
         finalRedirectUrl.searchParams.set('expiresOn', expiresOn.toISOString());
         
         return NextResponse.redirect(finalRedirectUrl);

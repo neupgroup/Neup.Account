@@ -2,21 +2,15 @@
 'use server';
 
 import { db } from '@/lib/firebase';
-import { collection, addDoc, getDocs, query, doc, setDoc } from 'firebase/firestore';
+import { collection, addDoc, getDocs, query, doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { logError } from '@/lib/logger';
 import crypto from 'crypto';
-import { getPersonalAccountId } from '@/actions/auth/session';
 import { logActivity } from '@/lib/log-actions';
-import { checkPermissions } from '@/lib/user-actions';
-
-export type Application = {
-    id: string;
-    name: string;
-    description: string;
-    appSecret: string;
-};
+import { checkPermissions } from '@/lib/user';
+import { getPersonalAccountId } from '@/lib/auth-actions';
+import type { Application } from '@/types';
 
 const addAppSchema = z.object({
     id: z.string().min(3, { message: "App ID must be at least 3 characters." }),
@@ -33,10 +27,15 @@ export async function getApps(searchQuery?: string): Promise<Application[]> {
         const q = query(appsCollection);
         const appsSnapshot = await getDocs(q);
 
-        let allApps = appsSnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-        } as Application));
+        let allApps = appsSnapshot.docs.map(doc => {
+             const data = doc.data();
+             // Never send the secret to the list page
+             delete data.appSecret;
+             return {
+                id: doc.id,
+                ...data
+            } as Application
+        });
 
         if (searchQuery) {
             const lowercasedQuery = searchQuery.toLowerCase();

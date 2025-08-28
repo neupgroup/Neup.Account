@@ -2,41 +2,36 @@
 'use server';
 
 import { db } from '@/lib/firebase';
-import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, getDoc, startAfter, endBefore, limit } from 'firebase/firestore';
+import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, getDoc, startAfter, endBefore, limit, where, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { logError } from '@/lib/logger';
-import { checkPermissions } from '@/lib/user-actions';
-import { getUserProfile } from '@/actions/root/users';
+import { checkPermissions, getUserProfile } from '@/lib/user';
+import type { SocialLink, SystemError, SystemErrorDetails, BugReport, BugReportDetails } from '@/types';
+import crypto from 'crypto';
 
 
 // --- SOCIALS ---
-
-export type SocialLink = {
-    id: string;
-    type: 'instagram' | 'linkedin' | 'twitter' | 'facebook' | 'whatsapp' | 'other';
-    url: string;
-    isVisible: boolean;
-};
 
 const socialFormSchema = z.object({
     type: z.enum(['instagram', 'linkedin', 'twitter', 'facebook', 'whatsapp', 'other']),
     url: z.string().url("Please enter a valid URL."),
 });
 
+const SOCIALS_DOC_ID = 'company_socials';
+
 export async function getSocialLinks(): Promise<SocialLink[]> {
     const canView = await checkPermissions(['root.site.social_accounts.read']);
     if (!canView) return [];
 
     try {
-        const linksCollection = collection(db, 'system_socials');
-        const q = query(linksCollection, orderBy('type'));
-        const querySnapshot = await getDocs(q);
+        const docRef = doc(db, 'system', SOCIALS_DOC_ID);
+        const docSnap = await getDoc(docRef);
         
-        return querySnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-        } as SocialLink));
+        if (docSnap.exists() && docSnap.data().links) {
+            return docSnap.data().links as SocialLink[];
+        }
+        return [];
 
     } catch (error) {
         await logError('database', error, 'getSocialLinks');
@@ -57,17 +52,31 @@ export async function addSocialLink(formData: FormData): Promise<{ success: bool
     const { type, url } = validation.data;
     
     try {
-        const newDocRef = await addDoc(collection(db, 'system_socials'), {
-            type,
-            url,
-            isVisible: true,
-        });
+        const newLink: SocialLink = { 
+            id: crypto.randomUUID(), 
+            type, 
+            url, 
+            isVisible: true 
+        };
 
-        const newLink: SocialLink = { id: newDocRef.id, type, url, isVisible: true };
+        const docRef = doc(db, 'system', SOCIALS_DOC_ID);
+        await updateDoc(docRef, { links: arrayUnion(newLink) });
+        
         revalidatePath('/manage/root/site/socials');
         return { success: true, newLink };
 
-    } catch (error) {
+    } catch (error: any) {
+        if (error.code === 'not-found' || (error.message && error.message.includes("No document to update"))) {
+            try {
+                const newLink: SocialLink = { id: crypto.randomUUID(), type, url, isVisible: true };
+                await setDoc(doc(db, 'system', SOCIALS_DOC_ID), { links: [newLink] });
+                revalidatePath('/manage/root/site/socials');
+                return { success: true, newLink };
+            } catch (initError) {
+                await logError('database', initError, 'addSocialLink:init');
+                return { success: false, error: 'Failed to add new link.' };
+            }
+        }
         await logError('database', error, 'addSocialLink');
         return { success: false, error: 'Failed to add new link.' };
     }
@@ -78,10 +87,20 @@ export async function toggleSocialLinkVisibility(id: string, isVisible: boolean)
     if (!canEdit) return { success: false, error: 'Permission denied.' };
 
     try {
-        const docRef = doc(db, 'system_socials', id);
-        await updateDoc(docRef, { isVisible });
-        revalidatePath('/manage/root/site/socials');
-        return { success: true };
+        const docRef = doc(db, 'system', SOCIALS_DOC_ID);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            const links = (docSnap.data().links || []) as SocialLink[];
+            const updatedLinks = links.map(link => 
+                link.id === id ? { ...link, isVisible: !link.isVisible } : link
+            );
+            await updateDoc(docRef, { links: updatedLinks });
+            revalidatePath('/manage/root/site/socials');
+            return { success: true };
+        }
+        return { success: false, error: 'Social links document not found.' };
+
     } catch (error) {
         await logError('database', error, `toggleSocialLinkVisibility: ${id}`);
         return { success: false, error: 'Failed to update visibility.' };
@@ -93,9 +112,20 @@ export async function deleteSocialLink(id: string): Promise<{ success: boolean; 
     if (!canDelete) return { success: false, error: 'Permission denied.' };
 
     try {
-        await deleteDoc(doc(db, 'system_socials', id));
-        revalidatePath('/manage/root/site/socials');
-        return { success: true };
+        const docRef = doc(db, 'system', SOCIALS_DOC_ID);
+        const docSnap = await getDoc(docRef);
+        
+        if (docSnap.exists()) {
+            const links = (docSnap.data().links || []) as SocialLink[];
+            const linkToDelete = links.find(link => link.id === id);
+            
+            if (linkToDelete) {
+                await updateDoc(docRef, { links: arrayRemove(linkToDelete) });
+                revalidatePath('/manage/root/site/socials');
+                return { success: true };
+            }
+        }
+        return { success: false, error: 'Link not found.' };
     } catch (error) {
         await logError('database', error, `deleteSocialLink: ${id}`);
         return { success: false, error: 'Failed to delete link.' };
@@ -104,32 +134,7 @@ export async function deleteSocialLink(id: string): Promise<{ success: boolean; 
 
 
 // --- ERRORS ---
-const PAGE_SIZE = 10;
-
-export type SystemError = {
-    id: string;
-    type: 'ai' | 'database' | 'validation' | 'auth' | 'unknown';
-    context: string;
-    message: string;
-    timestamp: string;
-    status: 'new' | 'in_progress' | 'solved';
-};
-
-export type SystemErrorDetails = SystemError & {
-    fullError: string;
-    user?: {
-        name: string;
-        neupId: string;
-    };
-    ipAddress?: string;
-    geolocation?: string;
-    reproSteps?: string;
-    solution?: string;
-    solvedBy?: string;
-    problemLevel?: 'hot' | 'warm' | 'cold';
-};
-
-type ErrorInternal = SystemError & { rawTimestamp: Date };
+const PAGE_SIZE_ERRORS = 10;
 
 export async function getSystemErrors({
   startAfter: startAfterDocId,
@@ -149,13 +154,13 @@ export async function getSystemErrors({
             constraints.push(startAfter(startDoc));
         }
 
-        constraints.push(limit(PAGE_SIZE + 1));
+        constraints.push(limit(PAGE_SIZE_ERRORS + 1));
 
         const q = query(errorsCollection, ...constraints);
         const errorsSnapshot = await getDocs(q);
         const pageDocs = errorsSnapshot.docs;
 
-        const hasNextPage = pageDocs.length > PAGE_SIZE;
+        const hasNextPage = pageDocs.length > PAGE_SIZE_ERRORS;
         if (hasNextPage) {
             pageDocs.pop();
         }
@@ -224,5 +229,119 @@ export async function getErrorDetails(id: string): Promise<SystemErrorDetails | 
     } catch(e) {
         await logError('database', e, `getErrorDetails for id ${id}`);
         return null;
+    }
+}
+
+
+// --- BUGS ---
+const PAGE_SIZE_BUGS = 10;
+
+export async function getReportedBugs({ startAfter: startAfterDocId }: { startAfter?: string }): Promise<{ bugs: BugReport[], hasNextPage: boolean }> {
+    const canView = await checkPermissions(['root.errors.view']);
+    if (!canView) return { bugs: [], hasNextPage: false };
+    
+    try {
+        const bugsCollection = collection(db, 'error');
+        const constraints = [
+            where('reportType', '==', 'submitted'),
+            orderBy('timestamp', 'desc'),
+        ];
+        
+        if (startAfterDocId) {
+            const startDoc = await getDoc(doc(db, 'error', startAfterDocId));
+            constraints.push(startAfter(startDoc));
+        }
+
+        constraints.push(limit(PAGE_SIZE_BUGS + 1));
+        
+        const q = query(bugsCollection, ...constraints);
+        const snapshot = await getDocs(q);
+        
+        const pageDocs = snapshot.docs;
+        const hasNextPage = pageDocs.length > PAGE_SIZE_BUGS;
+        if (hasNextPage) {
+            pageDocs.pop();
+        }
+
+        const bugs: BugReport[] = await Promise.all(pageDocs.map(async (doc) => {
+            const data = doc.data();
+            const reporterProfile = data.reported_by ? await getUserProfile(data.reported_by) : null;
+            
+            return {
+                id: doc.id,
+                reportedBy: reporterProfile?.displayName || data.reported_by || 'Anonymous',
+                title: data.context,
+                createdAt: data.timestamp?.toDate().toLocaleString() || 'N/A',
+                status: data.status || 'new',
+            };
+        }));
+        
+        return { bugs, hasNextPage };
+
+    } catch (error) {
+        await logError('database', error, 'getReportedBugs');
+        return { bugs: [], hasNextPage: false };
+    }
+}
+
+export async function getBugDetails(id: string): Promise<BugReportDetails | null> {
+    const canView = await checkPermissions(['root.errors.view']);
+    if (!canView) return null;
+
+    try {
+        const bugRef = doc(db, 'error', id);
+        const bugDoc = await getDoc(bugRef);
+
+        if (!bugDoc.exists() || bugDoc.data().reportType !== 'submitted') {
+            return null;
+        }
+
+        const data = bugDoc.data();
+        const reporterProfile = data.reported_by ? await getUserProfile(data.reported_by) : null;
+
+        return {
+            id: bugDoc.id,
+            reportedBy: reporterProfile?.displayName || 'Anonymous',
+            reporterId: data.reported_by,
+            title: data.context,
+            description: data.message,
+            createdAt: data.timestamp?.toDate().toLocaleString() || 'N/A',
+            status: data.status || 'new',
+        };
+    } catch(error) {
+        await logError('database', error, `getBugDetails: ${id}`);
+        return null;
+    }
+}
+
+
+export async function updateBugStatus(id: string, status: 'new' | 'in_progress' | 'solved'): Promise<{ success: boolean; error?: string }> {
+    const canEdit = await checkPermissions(['root.errors.edit']);
+    if (!canEdit) return { success: false, error: 'Permission denied.' };
+    
+    try {
+        const bugRef = doc(db, 'error', id);
+        await updateDoc(bugRef, { status });
+        revalidatePath(`/manage/root/site/bugs/${id}`);
+        revalidatePath('/manage/root/site/bugs');
+        return { success: true };
+    } catch (error) {
+        await logError('database', error, `updateBugStatus: ${id}`);
+        return { success: false, error: 'An unexpected error occurred.' };
+    }
+}
+
+
+export async function deleteBugReport(id: string): Promise<{ success: boolean; error?: string }> {
+    const canDelete = await checkPermissions(['root.errors.delete']);
+    if (!canDelete) return { success: false, error: 'Permission denied.' };
+
+    try {
+        await deleteDoc(doc(db, 'error', id));
+        revalidatePath('/manage/root/site/bugs');
+        return { success: true };
+    } catch (error) {
+        await logError('database', error, `deleteBugReport: ${id}`);
+        return { success: false, error: 'An unexpected error occurred.' };
     }
 }

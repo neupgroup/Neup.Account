@@ -7,7 +7,7 @@ import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { logError } from '@/lib/logger';
 import { checkAppIdExists } from '@/actions/root/permission';
-import { checkPermissions } from '@/lib/user-actions';
+import { checkPermissions } from '@/lib/user';
 
 const singlePermissionSchema = z.object({
     name: z.string().min(3, { message: "Set name must be at least 3 characters." }),
@@ -15,14 +15,9 @@ const singlePermissionSchema = z.object({
         .min(1, { message: "Access permissions string cannot be empty." })
         .refine(value => {
             const permissions = value.split(',').map(s => s.trim()).filter(Boolean);
-            return permissions.length > 0 && permissions.every(p => /^[a-z_]+\.[a-z_]+$/.test(p));
+            return permissions.length > 0 && permissions.every(p => /^[a-z_.]+\.[a-z_.]+$/.test(p));
         }, { message: "All permissions must be in 'domain.action' format." }),
     description: z.string().min(10, { message: "Description must be at least 10 characters." }),
-});
-
-const bulkAddSchema = z.object({
-    app_id: z.string().min(3, "App Slug is required."),
-    permissions: z.array(singlePermissionSchema),
 });
 
 export type BulkAddResult = {
@@ -31,7 +26,11 @@ export type BulkAddResult = {
     message: string;
 };
 
-export async function bulkAddPermissions(appId: string, permissionsJson: string): Promise<BulkAddResult[]> {
+export async function bulkAddPermissions(
+    appId: string, 
+    intendedFor: 'individual' | 'brand' | 'dependent' | 'branch' | 'root',
+    permissionsJson: string
+): Promise<BulkAddResult[]> {
     const canBulkImport = await checkPermissions(['root.permission.bulk_import']);
     if (!canBulkImport) {
         return [{ name: "System", status: 'error', message: "Permission denied." }];
@@ -79,6 +78,7 @@ export async function bulkAddPermissions(appId: string, permissionsJson: string)
                 app_id: appId,
                 access: accessArray,
                 description: perm.description,
+                intended_for: intendedFor, // Add the intended_for value here
             });
             results.push({ name: perm.name, status: 'success', message: 'Successfully added.' });
         } catch (error) {

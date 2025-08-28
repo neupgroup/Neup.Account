@@ -1,29 +1,19 @@
-
 'use server';
 
 import { db } from '@/lib/firebase';
-import { doc, getDoc, collection, query, where, getDocs, updateDoc, writeBatch } from 'firebase/firestore';
-import { getActiveAccountId, getActiveSessionDetails } from '@/actions/auth/session';
+import { doc, collection, query, where, getDocs, updateDoc, writeBatch } from 'firebase/firestore';
+import { getActiveAccountId, getActiveSession } from '@/lib/auth-actions';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
-
-export type UserSession = {
-    id: string;
-    ipAddress: string;
-    userAgent: string;
-    lastLoggedIn: string;
-    loginType: string;
-    geolocation?: string;
-    rawLastLoggedIn: Date;
-};
+import type { UserSession } from '@/types';
 
 export async function getUserSessions(): Promise<UserSession[]> {
-    const accountId = await getActiveAccountId();
-    if (!accountId) {
-        return [];
-    }
-
     try {
+        const accountId = await getActiveAccountId();
+        if (!accountId) {
+            return [];
+        }
+
         const sessionsRef = collection(db, 'session');
         const q = query(sessionsRef, where('accountId', '==', accountId), where('isExpired', '==', false));
         const querySnapshot = await getDocs(q);
@@ -46,10 +36,11 @@ export async function getUserSessions(): Promise<UserSession[]> {
 
         sessions.sort((a, b) => b.rawLastLoggedIn.getTime() - a.rawLastLoggedIn.getTime());
         
-        return sessions;
+        // This is a type-only change, so we can cast it.
+        return sessions as unknown as UserSession[];
         
     } catch (error) {
-        await logError('database', error, `getUserSessions: ${accountId}`);
+        await logError('database', error, `getUserSessions`);
         return [];
     }
 }
@@ -76,13 +67,13 @@ export async function logoutSessionById(sessionId: string): Promise<{ success: b
 }
 
 export async function logoutAllOtherSessions(): Promise<{ success: boolean, error?: string }> {
-    const currentSession = await getActiveSessionDetails();
-    if (!currentSession) {
-        return { success: false, error: "No active session found." };
-    }
-    const { auth_account_id: accountId, auth_session_id: currentSessionId } = currentSession;
-
     try {
+        const currentSession = await getActiveSession();
+        if (!currentSession) {
+            return { success: false, error: "No active session found." };
+        }
+        const { accountId, sessionId: currentSessionId } = currentSession;
+
         const sessionsRef = collection(db, 'session');
         const q = query(sessionsRef, where('accountId', '==', accountId), where('isExpired', '==', false));
         const querySnapshot = await getDocs(q);

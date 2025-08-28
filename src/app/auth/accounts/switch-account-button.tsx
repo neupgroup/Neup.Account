@@ -1,13 +1,12 @@
-
 "use client";
 
 import { useState, useTransition, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import type { StoredAccount } from '@/actions/auth/session';
+import type { StoredAccount } from '@/types';
 import { switchActiveAccount } from '@/actions/auth/switch';
 import { useToast } from '@/hooks/use-toast';
-import { getActiveAccountId } from '@/actions/auth/session';
+import { getActiveAccountId } from '@/lib/auth-actions';
 
 type CombinedAccount = StoredAccount & {
     isBrand?: boolean;

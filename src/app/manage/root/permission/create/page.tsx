@@ -14,9 +14,11 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { BackButton } from '@/components/ui/back-button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Loader2, CheckCircle2, XCircle, Plus, BadgeX } from 'lucide-react';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Loader2, CheckCircle2, XCircle, Plus } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 
 
@@ -25,6 +27,9 @@ const addPermissionSchema = z.object({
     app_id: z.string().min(3, { message: "App Slug must be at least 3 characters." }),
     access: z.array(z.string()).min(1, { message: "At least one permission is required." }),
     description: z.string().min(10, { message: "Description must be at least 10 characters." }),
+    intended_for: z.enum(['individual', 'brand', 'dependent', 'branch', 'root'], {
+        required_error: "You must select who this permission is intended for.",
+    }),
 });
 
 type FormValues = z.infer<typeof addPermissionSchema>;
@@ -92,7 +97,7 @@ export default function CreatePermissionPage() {
                 if (result.newPermission) {
                     setRecentlyAdded(prev => [result.newPermission!, ...prev]);
                 }
-                form.reset({ app_id: data.app_id, name: '', access: [], description: ''});
+                form.reset({ app_id: data.app_id, name: '', access: [], description: '', intended_for: data.intended_for});
                 form.setFocus('name');
             } else {
                 toast({ variant: "destructive", title: "Error", description: result.error || "An error occurred." });
@@ -106,6 +111,14 @@ export default function CreatePermissionPage() {
         if (appIdStatus === 'not_found') return <XCircle className="h-5 w-5 text-destructive" />;
         return null;
     }
+
+    const intendedForOptions = [
+        { value: 'individual', label: 'Individual' },
+        { value: 'brand', label: 'Brand' },
+        { value: 'dependent', label: 'Dependent' },
+        { value: 'branch', label: 'Branch' },
+        { value: 'root', label: 'Root' }
+    ];
 
     return (
         <div className="grid gap-8">
@@ -122,7 +135,32 @@ export default function CreatePermissionPage() {
                     <Card>
                         <CardHeader><CardTitle>Permission Set Details</CardTitle></CardHeader>
                         <CardContent className="space-y-4">
-                            <FormField control={form.control} name="name" render={({ field }) => ( <FormItem><FormLabel>Set Name</FormLabel><FormControl><Input placeholder="property.ReadWrite" {...field} /></FormControl><FormMessage /></FormItem> )}/>
+                            <FormField control={form.control} name="intended_for" render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Intended For</FormLabel>
+                                        <FormControl>
+                                            <RadioGroup
+                                                onValueChange={field.onChange}
+                                                value={field.value}
+                                                className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2"
+                                            >
+                                                {intendedForOptions.map(option => (
+                                                    <FormItem key={option.value}>
+                                                        <RadioGroupItem value={option.value} id={`intended_for_${option.value}`} className="peer sr-only" />
+                                                        <Label
+                                                            htmlFor={`intended_for_${option.value}`}
+                                                            className="flex h-10 w-full cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover px-3 py-2 text-sm font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary"
+                                                        >
+                                                            {option.label}
+                                                        </Label>
+                                                    </FormItem>
+                                                ))}
+                                            </RadioGroup>
+                                        </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}/>
+                            <FormField control={form.control} name="name" render={({ field }) => ( <FormItem><FormLabel>Set Name</FormLabel><FormControl><Input placeholder="e.g., individual.default" {...field} /></FormControl><FormMessage /></FormItem> )}/>
                             <FormField control={form.control} name="app_id" render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>App Slug</FormLabel>

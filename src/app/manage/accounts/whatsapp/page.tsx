@@ -27,9 +27,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Loader2, MessageSquareText, Link2 } from "lucide-react";
+import { Loader2, MessageSquareText, Link2 } from "@/components/icons";
 import { cn } from "@/lib/utils";
 import { BackButton } from "@/components/ui/back-button";
+import { SecondaryHeader } from "@/components/ui/secondary-header";
 
 
 export default function LinkWhatsAppPage() {
@@ -90,10 +91,10 @@ export default function LinkWhatsAppPage() {
                 </p>
             </div>
             <div className="space-y-2">
-                 <h2 className="text-xl font-semibold tracking-tight">Connect Your Number</h2>
-                <p className="text-muted-foreground text-sm">
-                   Enter your WhatsApp number to receive a verification code.
-                </p>
+                 <SecondaryHeader
+                    title="Connect Your Number"
+                    description="Enter your WhatsApp number to receive a verification code."
+                 />
                 <Card>
                      <CardContent className="pt-6">
                         {step === 1 && (

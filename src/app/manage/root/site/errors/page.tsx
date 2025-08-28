@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, useCallback, use } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
     Table,
     TableBody,
@@ -21,13 +21,50 @@ import {
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge"
-import { getSystemErrors, type SystemError } from "@/actions/root/site";
-import { checkPermissions } from "@/lib/user-actions";
-import { notFound } from "next/navigation";
+import { getSystemErrors } from "@/actions/root/site";
+import type { SystemError } from "@/types";
+import { checkPermissions } from "@/lib/user";
 import { BackButton } from "@/components/ui/back-button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Ban } from "@/components/icons";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+
+
+function ErrorsPageSkeleton() {
+    return (
+        <div className="grid gap-8">
+            <BackButton href="/manage/root/site" />
+            <div>
+                <Skeleton className="h-9 w-1/2" />
+                <Skeleton className="h-5 w-2/3 mt-2" />
+            </div>
+            <Card>
+                <CardHeader>
+                    <Skeleton className="h-7 w-1/4" />
+                    <Skeleton className="h-5 w-1/2" />
+                </CardHeader>
+                <CardContent>
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                {[...Array(4)].map((_, i) => <TableHead key={i}><Skeleton className="h-5 w-20" /></TableHead>)}
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {[...Array(5)].map((_, i) => (
+                                <TableRow key={i}>
+                                    <TableCell colSpan={4}><Skeleton className="h-8 w-full" /></TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </CardContent>
+            </Card>
+        </div>
+    )
+}
+
 
 const typeVariantMap: { [key: string]: "default" | "destructive" | "secondary" } = {
     database: "destructive",
@@ -37,16 +74,10 @@ const typeVariantMap: { [key: string]: "default" | "destructive" | "secondary" }
     unknown: "default",
 };
 
-export default function SystemErrorsPage({
-  searchParams,
-}: {
-  searchParams?: {
-    after?: string;
-  };
-}) {
-    const [canView, setCanView] = useState(false);
+function SystemErrorsPageComponent({ after }: { after?: string }) {
+    const [permissionState, setPermissionState] = useState<'loading' | 'granted' | 'denied'>('loading');
     const [errors, setErrors] = useState<SystemError[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [contentLoading, setContentLoading] = useState(true);
     const [page, setPage] = useState(1);
     const [pageHistory, setPageHistory] = useState<(string | undefined)[]>([undefined]); // History of 'after' IDs
     const [hasNextPage, setHasNextPage] = useState(false);
@@ -54,23 +85,26 @@ export default function SystemErrorsPage({
     const router = useRouter();
 
     const fetchData = useCallback(async (startAfter?: string) => {
-        const hasPerm = await checkPermissions(['root.errors.view']);
-        if (!hasPerm) {
-            notFound();
-        }
-        setCanView(hasPerm);
-
-        setLoading(true);
+        setContentLoading(true);
         const data = await getSystemErrors({ startAfter });
         setErrors(data.errors);
         setHasNextPage(data.hasNextPage);
-        setLoading(false);
+        setContentLoading(false);
     }, []);
 
     useEffect(() => {
-        const after = searchParams?.after;
-        fetchData(after);
-    }, [searchParams, fetchData]);
+        const verifyPermission = async () => {
+            const hasPerm = await checkPermissions(['root.errors.view']);
+            setPermissionState(hasPerm ? 'granted' : 'denied');
+        };
+        verifyPermission();
+    }, []);
+
+    useEffect(() => {
+        if (permissionState === 'granted') {
+            fetchData(after);
+        }
+    }, [permissionState, after, fetchData]);
     
     const handleNextPage = () => {
         if (errors.length > 0) {
@@ -91,18 +125,21 @@ export default function SystemErrorsPage({
         router.push(url);
     };
 
-    if (!canView && !loading) {
+    if (permissionState === 'loading') {
+        return <ErrorsPageSkeleton />;
+    }
+
+    if (permissionState === 'denied') {
         return (
             <div className="grid gap-8">
                 <BackButton href="/manage/root/site" />
-                 <Card>
-                    <CardHeader>
-                        <CardTitle>Permission Denied</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p>You do not have permission to view system errors.</p>
-                    </CardContent>
-                </Card>
+                 <Alert variant="destructive">
+                    <Ban className="h-4 w-4" />
+                    <AlertTitle>Permission Denied</AlertTitle>
+                    <AlertDescription>
+                        You do not have permission to view system errors.
+                    </AlertDescription>
+                </Alert>
             </div>
         )
     }
@@ -134,7 +171,7 @@ export default function SystemErrorsPage({
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {loading ? (
+                            {contentLoading ? (
                                 [...Array(5)].map((_, i) => (
                                     <TableRow key={i}>
                                         <TableCell colSpan={4}><Skeleton className="h-8 w-full" /></TableCell>
@@ -168,11 +205,11 @@ export default function SystemErrorsPage({
                     </Table>
                 </CardContent>
                 <CardFooter className="flex justify-end space-x-2 border-t pt-4">
-                     <Button variant="outline" onClick={handlePrevPage} disabled={page === 1 || loading}>
+                     <Button variant="outline" onClick={handlePrevPage} disabled={page === 1 || contentLoading}>
                         <ChevronLeft className="mr-2 h-4 w-4" />
                         Previous
                     </Button>
-                    <Button variant="outline" onClick={handleNextPage} disabled={!hasNextPage || loading}>
+                    <Button variant="outline" onClick={handleNextPage} disabled={!hasNextPage || contentLoading}>
                         Next
                         <ChevronRight className="ml-2 h-4 w-4" />
                     </Button>
@@ -180,4 +217,15 @@ export default function SystemErrorsPage({
             </Card>
         </div>
     )
+}
+
+export default function SystemErrorsPage() {
+    const searchParams = useSearchParams();
+    const after = searchParams.get('after') || undefined;
+
+    return (
+        <React.Suspense fallback={<ErrorsPageSkeleton />}>
+            <SystemErrorsPageComponent after={after} />
+        </React.Suspense>
+    );
 }

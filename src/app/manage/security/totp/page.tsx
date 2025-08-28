@@ -10,8 +10,9 @@ import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { getTotpStatus, generateTotpSecret, verifyAndEnableTotp, disableTotp, getServerTime } from '@/actions/security/totp';
-import { Smartphone, Loader2, Clock } from 'lucide-react';
+import { Smartphone, Loader2, Clock } from '@/components/icons';
 import { BackButton } from '@/components/ui/back-button';
+import { SecondaryHeader } from '@/components/ui/secondary-header';
 
 type SetupState = {
     secret: string;
@@ -197,10 +198,10 @@ export default function AuthenticatorAppPage() {
                 </p>
             </div>
              <div className="space-y-2">
-                <h2 className="text-xl font-semibold tracking-tight">Manage 2FA</h2>
-                <p className="text-muted-foreground text-sm">
-                    Enable or disable two-factor authentication for your account.
-                </p>
+                <SecondaryHeader
+                    title="Manage 2FA"
+                    description="Enable or disable two-factor authentication for your account."
+                />
                 <Card>
                     {renderCardContent()}
                 </Card>

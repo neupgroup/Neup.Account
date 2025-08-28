@@ -8,7 +8,7 @@ export const profileFormSchema = z.object({
   displayPhoto: z.string().url("Please enter a valid URL.").optional().or(z.literal('')),
   gender: z.enum(["male", "female", "custom", "prefer_not_to_say"]),
   customGender: z.string().optional(),
-  dob: z.date({ required_error: "A date of birth is required." }),
+  dob: z.date({ required_error: "A date of birth is required." }).optional(),
   primaryPhone: z.string().optional(),
   secondaryPhone: z.string().optional(),
   permanentLocation: z.string().optional(),

@@ -22,7 +22,7 @@ import { Badge } from "@/components/ui/badge"
 import { getActivities, ActivityLog } from "@/lib/log-actions"
 import { ChevronLeft, ChevronRight, Ban } from "lucide-react";
 import { BackButton } from "@/components/ui/back-button";
-import { checkPermissions } from "@/lib/user-actions";
+import { checkPermissions } from "@/lib/user";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useEffect, useState, useCallback, use } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -35,15 +35,44 @@ const statusVariantMap: { [key: string]: "default" | "destructive" | "secondary"
     Alert: "destructive",
 }
 
-export default function SecurityActivityPage({
-  searchParams,
-}: {
-  searchParams?: {
-    after?: string;
-  };
-}) {
-    const [canView, setCanView] = useState(false);
-    const [loading, setLoading] = useState(true);
+function ActivityPageSkeleton() {
+     return (
+        <div className="grid gap-8">
+            <BackButton href="/manage/data" />
+            <div>
+                <Skeleton className="h-9 w-1/2" />
+                <Skeleton className="h-5 w-2/3 mt-2" />
+            </div>
+            <Card>
+                <CardHeader>
+                    <Skeleton className="h-7 w-1/4" />
+                </CardHeader>
+                <CardContent>
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Action</TableHead>
+                                <TableHead>Status</TableHead>
+                                <TableHead>Timestamp</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {[...Array(5)].map((_, i) => (
+                                <TableRow key={i}>
+                                    <TableCell colSpan={3}><Skeleton className="h-8 w-full" /></TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </CardContent>
+            </Card>
+        </div>
+    )
+}
+
+function SecurityActivityPageComponent({ after }: { after?: string }) {
+    const [permissionState, setPermissionState] = useState<'loading' | 'granted' | 'denied'>('loading');
+    const [contentLoading, setContentLoading] = useState(true);
     const [logs, setLogs] = useState<ActivityLog[]>([]);
     const [page, setPage] = useState(1);
     const [pageHistory, setPageHistory] = useState<(string | undefined)[]>([undefined]); // History of 'after' IDs
@@ -52,24 +81,26 @@ export default function SecurityActivityPage({
     const router = useRouter();
 
     const fetchData = useCallback(async (startAfter?: string) => {
-        const hasPerm = await checkPermissions(['security.recent_activities.view']);
-        setCanView(hasPerm);
-        if (!hasPerm) {
-            setLoading(false);
-            return;
-        }
-
-        setLoading(true);
+        setContentLoading(true);
         const { logs, hasNextPage: newHasNextPage } = await getActivities({ startAfter, forCurrentUser: true });
         setLogs(logs);
         setHasNextPage(newHasNextPage);
-        setLoading(false);
+        setContentLoading(false);
+    }, []);
+    
+    useEffect(() => {
+        const verifyPermission = async () => {
+            const hasPerm = await checkPermissions(['security.recent_activities.view']);
+            setPermissionState(hasPerm ? 'granted' : 'denied');
+        };
+        verifyPermission();
     }, []);
 
     useEffect(() => {
-        const after = searchParams?.after;
-        fetchData(after);
-    }, [searchParams, fetchData]);
+        if (permissionState === 'granted') {
+            fetchData(after);
+        }
+    }, [permissionState, after, fetchData]);
     
     const handleNextPage = () => {
         if (logs.length > 0) {
@@ -90,7 +121,11 @@ export default function SecurityActivityPage({
         router.push(url);
     };
 
-    if (!canView && !loading) {
+    if (permissionState === 'loading') {
+        return <ActivityPageSkeleton />;
+    }
+
+    if (permissionState === 'denied') {
         return (
              <div className="grid gap-8">
                 <BackButton href="/manage/security" />
@@ -122,7 +157,7 @@ export default function SecurityActivityPage({
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                             {loading ? (
+                             {contentLoading ? (
                                 [...Array(5)].map((_, i) => (
                                     <TableRow key={i}>
                                         <TableCell colSpan={3}><Skeleton className="h-8 w-full" /></TableCell>
@@ -151,11 +186,11 @@ export default function SecurityActivityPage({
                     </Table>
                 </CardContent>
                 <CardFooter className="flex justify-end space-x-2 border-t pt-4">
-                     <Button variant="outline" onClick={handlePrevPage} disabled={page === 1 || loading}>
+                     <Button variant="outline" onClick={handlePrevPage} disabled={page === 1 || contentLoading}>
                         <ChevronLeft className="mr-2 h-4 w-4" />
                         Previous
                     </Button>
-                    <Button variant="outline" onClick={handleNextPage} disabled={!hasNextPage || loading}>
+                    <Button variant="outline" onClick={handleNextPage} disabled={!hasNextPage || contentLoading}>
                         Next
                         <ChevronRight className="ml-2 h-4 w-4" />
                     </Button>
@@ -163,4 +198,10 @@ export default function SecurityActivityPage({
             </Card>
         </div>
     )
+}
+
+export default function SecurityActivityPage() {
+    const searchParams = useSearchParams();
+    const after = searchParams.get('after') || undefined;
+    return <SecurityActivityPageComponent after={after} />;
 }

@@ -1,5 +1,3 @@
-
-
 import {
     Table,
     TableBody,
@@ -17,7 +15,7 @@ import {
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { checkPermissions } from "@/lib/user-actions"
+import { checkPermissions } from "@/lib/user"
 import { notFound } from "next/navigation"
 import { BackButton } from "@/components/ui/back-button"
 

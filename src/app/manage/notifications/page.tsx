@@ -1,11 +1,11 @@
 
-
 import { checkPermissions } from '@/lib/user-actions';
 import { notFound } from 'next/navigation';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
-import { Ban } from 'lucide-react';
-import { getNotifications } from './actions';
+import { Ban } from '@/components/icons';
+import { getNotifications } from '@/actions/notifications';
 import { NotificationManager } from './notification-manager';
+import { SecondaryHeader } from '@/components/ui/secondary-header';
 
 export default async function NotificationsPage() {
     const canRead = await checkPermissions(['notification.read']);
@@ -26,12 +26,10 @@ export default async function NotificationsPage() {
     
     return (
         <div className="grid gap-8">
-             <div>
-                <h1 className="text-3xl font-bold tracking-tight">Notifications</h1>
-                <p className="text-muted-foreground">
-                    Review warnings, invitations, and other account alerts.
-                </p>
-            </div>
+             <SecondaryHeader
+                title="Notifications"
+                description="Review warnings, invitations, and other account alerts."
+             />
             <NotificationManager initialNotifications={notifications} />
         </div>
     );

@@ -1,33 +1,39 @@
+import { getAccountType, checkPermissions } from '@/lib/user';
+import { getActiveAccountId } from '@/lib/auth-actions';
+import { IndividualProfileForm } from './individual-form';
+import { BrandProfileForm } from './brand-form';
+import { notFound } from 'next/navigation';
+import { SecondaryHeader } from '@/components/ui/secondary-header';
 
-
-"use client"
-
-import { useEffect, useState } from 'react'
-import { IndividualProfileForm } from '@/app/manage/profile/individual-form'
-import { getActiveAccountId } from '@/actions/auth/session'
-
-export default function ProfilePage() {
-    const [accountId, setAccountId] = useState<string | null>(null);
-
-    useEffect(() => {
-        const fetchAccountId = async () => {
-            const id = await getActiveAccountId();
-            setAccountId(id);
-        };
-        fetchAccountId();
-    }, []);
-
+export default async function ProfilePage() {
+    const accountId = await getActiveAccountId();
     if (!accountId) {
-        return <div>Loading...</div>; // Or a proper skeleton loader
+        notFound();
+    }
+    
+    const [accountType, canViewProfile] = await Promise.all([
+        getAccountType(accountId),
+        checkPermissions(['profile.view'])
+    ]);
+
+    if (!canViewProfile) {
+        notFound();
     }
 
+    const isBrand = accountType === 'brand' || accountType === 'branch';
+
     return (
-        <div>
-            <h1 className="text-3xl font-bold tracking-tight">Personal Information</h1>
-            <p className="text-muted-foreground mb-8">
-                Manage your personal details and contact information.
-            </p>
-            <IndividualProfileForm accountId={accountId} />
+        <div className="space-y-8">
+            <SecondaryHeader
+                title={isBrand ? "Brand Information" : "Personal Information"}
+                description={isBrand ? "Manage your brand's public profile and legal details." : "Manage your personal details and contact information."}
+            />
+            
+            {isBrand ? (
+                <BrandProfileForm accountId={accountId} />
+            ) : (
+                <IndividualProfileForm accountId={accountId} />
+            )}
         </div>
     )
 }

@@ -1,7 +1,6 @@
 
-import { getAccessDetails } from "../actions";
+import { getAccessDetails, getDelegatablePermissions } from "../actions";
 import { notFound } from "next/navigation";
-import { getMasterPermissions } from "@/actions/root/permission";
 import {
   Card,
   CardContent,
@@ -13,24 +12,31 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { AccessManagementForm } from "./form";
 import { BackButton } from "@/components/ui/back-button";
+import type { Permission } from "@/types";
 
 export default async function AccessDetailsPage({
   params,
 }: {
   params: { id: string };
 }) {
-  const [details, permissionsResponse] = await Promise.all([
+  const [details, delegatablePermissionsResponse] = await Promise.all([
     getAccessDetails(params.id),
-    getMasterPermissions("", 1, 999),
+    getDelegatablePermissions(),
   ]);
 
   if (!details) {
     notFound();
   }
 
-  const masterPermissions = permissionsResponse.permissions;
-  const permissionMap = new Map(masterPermissions.map(p => [p.id, p]));
-  const currentPermissionNames = details.permissions.map(pId => permissionMap.get(pId)?.name).filter(Boolean) as string[];
+  const delegatablePermissionMap = new Map(delegatablePermissionsResponse.map(p => [p.id, p]));
+
+  // Filter out any permissions the current user can't delegate
+  const masterPermissions = delegatablePermissionsResponse;
+  
+  // Create a map of only the permissions the current user can delegate for display purposes
+  const currentPermissionNames = details.permissions
+    .map(pId => delegatablePermissionMap.get(pId)?.name)
+    .filter(Boolean) as string[];
 
   return (
     <div className="grid gap-6">

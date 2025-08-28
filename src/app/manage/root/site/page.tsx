@@ -1,32 +1,10 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Wallet, AlertTriangle, Bug, ChevronRight, Share2 } from "lucide-react";
-import Link from "next/link";
+import { Wallet, AlertTriangle, Bug, Share2 } from "@/components/icons";
 import React from "react";
-import { checkPermissions } from "@/lib/user-actions";
+import { checkPermissions } from "@/lib/user";
 import { notFound } from "next/navigation";
-
-const FeatureListItem = ({
-    icon: Icon,
-    title,
-    description,
-    href,
-}: {
-    icon: React.ElementType,
-    title: string,
-    description: string,
-    href: string,
-}) => (
-    <Link href={href} className="flex items-center gap-4 py-4 px-4 rounded-lg transition-colors hover:bg-muted/50">
-        <Icon className="h-6 w-6 text-muted-foreground" />
-        <div className="flex-grow">
-            <p className="font-medium">{title}</p>
-            {description && <p className="text-sm text-muted-foreground">{description}</p>}
-        </div>
-        <ChevronRight className="h-5 w-5 text-muted-foreground" />
-    </Link>
-);
-
+import { ListItem } from "@/components/ui/list-item";
 
 export default async function SiteConfigurationPage() {
     const [canViewPayment, canViewErrors, canViewSocials] = await Promise.all([
@@ -60,7 +38,7 @@ export default async function SiteConfigurationPage() {
             title: "Reported Bugs",
             description: "Review bugs and issues reported by users.",
             href: "/manage/root/site/bugs",
-            show: true, // Assuming anyone who can see this page can see the link
+            show: canViewErrors,
         },
         {
             icon: Share2,
@@ -85,7 +63,7 @@ export default async function SiteConfigurationPage() {
                 <Card>
                     <CardContent className="divide-y p-2">
                         {visibleFeatures.map((feature, index) => (
-                            <FeatureListItem key={index} {...feature} />
+                            <ListItem key={index} {...feature} />
                         ))}
                     </CardContent>
                 </Card>

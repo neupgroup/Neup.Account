@@ -14,11 +14,12 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Loader2, PowerOff } from "lucide-react";
+import { Loader2, PowerOff } from "@/components/icons";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BackButton } from "@/components/ui/back-button";
 import { GeolocationContext } from "@/context/geolocation-context";
+import { SecondaryHeader } from "@/components/ui/secondary-header";
 
 
 export default function DeactivateAccountPage() {
@@ -60,10 +61,10 @@ export default function DeactivateAccountPage() {
        <form action={handleSubmit}>
         <Card>
             <CardHeader>
-            <CardTitle>Deactivate Your Account</CardTitle>
-            <CardDescription>
-                This action will temporarily close your account.
-            </CardDescription>
+            <SecondaryHeader
+                title="Deactivate Your Account"
+                description="This action will temporarily close your account."
+            />
             </CardHeader>
             <CardContent className="space-y-4">
             <Alert>

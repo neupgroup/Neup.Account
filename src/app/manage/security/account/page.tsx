@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { getRecoveryAccounts } from "./actions";
 import { RecoveryAccountManager } from "./recovery-account-manager";
 import { BackButton } from "@/components/ui/back-button";
+import { SecondaryHeader } from "@/components/ui/secondary-header";
 
 export default async function RecoveryAccountPage() {
     const initialAccounts = await getRecoveryAccounts();
@@ -18,10 +19,10 @@ export default async function RecoveryAccountPage() {
             </div>
             
             <div className="space-y-2">
-                <h2 className="text-xl font-semibold tracking-tight">Manage Recovery Accounts</h2>
-                <p className="text-muted-foreground text-sm">
-                    You can add up to 5 trusted accounts. These people can help you get back into your account if you forget your password or it's compromised.
-                </p>
+                <SecondaryHeader
+                    title="Manage Recovery Accounts"
+                    description="You can add up to 5 trusted accounts. These people can help you get back into your account if you forget your password or it's compromised."
+                />
                 <Card>
                     <CardContent className="p-6">
                          <div className="mb-6 rounded-lg border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">

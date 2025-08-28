@@ -1,5 +1,4 @@
 
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getFamilyGroups } from "./actions";
 import { FamilyManager } from "./family-manager";
@@ -9,6 +8,7 @@ import { BackButton } from "@/components/ui/back-button";
 import { getPersonalAccountId } from "@/lib/auth-actions";
 import { getUserProfile, checkPermissions } from "@/lib/user-actions";
 import { notFound } from "next/navigation";
+import { SecondaryHeader } from "@/components/ui/secondary-header";
 
 export default async function FamilySharingPage() {
     const canView = await checkPermissions(['people.family.view']);
@@ -45,12 +45,10 @@ export default async function FamilySharingPage() {
 
                     return (
                         <div key={group.id} className="space-y-2">
-                             <h2 className="text-xl font-semibold tracking-tight">
-                                {isOwner ? "Your Family Group" : `Family of ${ownerName}`}
-                            </h2>
-                            <p className="text-muted-foreground text-sm">
-                                {isOwner ? "You can add up to 5 members." : "You are a member of this family."} <Link href="/manage/payment/neup.pro" className="underline text-primary">Go premium</Link> to add any number of members.
-                            </p>
+                             <SecondaryHeader
+                                title={isOwner ? "Your Family Group" : `Family of ${ownerName}`}
+                                description={isOwner ? "You can add up to 5 members." : "You are a member of this family."}
+                             />
                             <Card>
                                 <CardContent className="p-6">
                                     <FamilyManager familyGroup={group} canAddMore={canAddMoreFamily} isOwner={isOwner} />
@@ -61,8 +59,10 @@ export default async function FamilySharingPage() {
                 })
             ) : canAddFamily ? (
                  <div className="space-y-2">
-                    <h2 className="text-xl font-semibold tracking-tight">Your Family</h2>
-                    <p className="text-muted-foreground text-sm">You haven't created or joined a family yet. Invite someone to start one!</p>
+                    <SecondaryHeader
+                        title="Your Family"
+                        description="You haven't created or joined a family yet. Invite someone to start one!"
+                    />
                      <Card>
                         <CardContent className="p-6">
                             <FamilyManager familyGroup={{ id: 'temp', createdBy: personalId, members: [] }} canAddMore={true} isOwner={true} />
@@ -73,10 +73,10 @@ export default async function FamilySharingPage() {
             
              {canAddPartner && (
                 <div className="space-y-2">
-                    <h2 className="text-xl font-semibold tracking-tight">Add Your Partner (Private)</h2>
-                    <p className="text-muted-foreground text-sm">
-                        Add one partner to your family group. This relationship can be kept private from other family members or made public.
-                    </p>
+                    <SecondaryHeader
+                        title="Add Your Partner (Private)"
+                        description="Add one partner to your family group. This relationship can be kept private from other family members or made public."
+                    />
                     <Card>
                         <CardContent className="p-6">
                             <PartnerManager initialFamilyGroup={familyGroups[0] || null} />

@@ -1,10 +1,9 @@
-
 import { NextResponse, type NextRequest } from 'next/server';
-import { getUserProfile, getUserContacts, getUserNeupIds } from '@/lib/user-actions';
-import { getActiveSessionDetails } from '@/lib/auth-actions';
+import { getUserProfile, getUserContacts, getUserNeupIds } from '@/lib/user';
+import { getActiveSession } from '@/lib/session';
 
-export async function GET(request: NextRequest) {
-    const session = await getActiveSessionDetails();
+export async function POST(request: NextRequest) {
+    const session = await getActiveSession();
 
     if (!session) {
         return NextResponse.json({ success: false, error: 'Unauthenticated.' }, { status: 401 });
@@ -12,9 +11,9 @@ export async function GET(request: NextRequest) {
     
     try {
         const [profile, contacts, neupIds] = await Promise.all([
-            getUserProfile(session.auth_account_id),
-            getUserContacts(session.auth_account_id),
-            getUserNeupIds(session.auth_account_id)
+            getUserProfile(session.accountId),
+            getUserContacts(session.accountId),
+            getUserNeupIds(session.accountId)
         ]);
 
         if (!profile) {

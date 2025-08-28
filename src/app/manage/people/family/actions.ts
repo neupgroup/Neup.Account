@@ -1,5 +1,3 @@
-
-
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -17,27 +15,12 @@ import {
   writeBatch,
   updateDoc,
 } from 'firebase/firestore';
-import { getPersonalAccountId } from '@/actions/auth/session';
+import { getPersonalAccountId } from '@/lib/auth-actions';
 import { logError } from '@/lib/logger';
-import { getUserProfile, checkPermissions, getUserNeupIds } from '@/lib/user-actions';
+import { getUserProfile, checkPermissions, getUserNeupIds } from '@/lib/user';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
-
-export type FamilyMember = {
-  accountId: string;
-  neupId: string;
-  displayName: string;
-  displayPhoto?: string;
-  status: 'pending' | 'approved';
-  hidden: boolean;
-  addedBy: string;
-};
-
-export type FamilyGroup = {
-  id: string; // family doc id
-  createdBy: string;
-  members: FamilyMember[];
-};
+import type { FamilyMember, FamilyGroup } from '@/types';
 
 const addAccountSchema = z.object({
   neupId: z

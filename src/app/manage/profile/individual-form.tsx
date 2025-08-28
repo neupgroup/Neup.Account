@@ -1,5 +1,3 @@
-
-
 "use client"
 
 import { useEffect, useState, useContext } from 'react'
@@ -9,7 +7,7 @@ import { z } from "zod"
 import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
 
-import { getUserProfile, getUserNeupIds, getUserContacts, type UserProfile, type UserContacts } from "@/lib/user-actions"
+import { getUserProfile, getUserNeupIds, getUserContacts, type UserProfile, type UserContacts } from "@/lib/user"
 import { updateUserProfile, parseDateString } from "@/actions/profile"
 import { profileFormSchema } from "@/schemas/profile"
 import { useToast } from "@/hooks/use-toast"
@@ -27,6 +25,8 @@ import { Calendar } from "@/components/ui/calendar"
 import { Label } from '@/components/ui/label'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { GeolocationContext } from '@/context/geolocation-context'
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '@/lib/firebase'
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
@@ -40,6 +40,7 @@ export function IndividualProfileForm({ accountId }: { accountId: string }) {
     const [dateInput, setDateInput] = useState<string>('');
     const [isParsingDate, setIsParsingDate] = useState(false);
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+    const [isPro, setIsPro] = useState(false);
 
 
     const form = useForm<ProfileFormValues>({
@@ -65,11 +66,16 @@ export function IndividualProfileForm({ accountId }: { accountId: string }) {
 
         const fetchData = async () => {
             try {
-                const [profileData, neupIdsData, contactsData] = await Promise.all([
+                const [profileData, neupIdsData, contactsData, accountDoc] = await Promise.all([
                     getUserProfile(accountId),
                     getUserNeupIds(accountId),
-                    getUserContacts(accountId)
+                    getUserContacts(accountId),
+                    getDoc(doc(db, 'account', accountId)),
                 ]);
+
+                if (accountDoc.exists()) {
+                    setIsPro(accountDoc.data()?.pro === true);
+                }
 
                 if (profileData) {
                     let formGender = profileData.gender || 'prefer_not_to_say';
@@ -161,10 +167,17 @@ export function IndividualProfileForm({ accountId }: { accountId: string }) {
         if (result.success) {
             toast({ title: "Success", description: result.message, className: "bg-accent text-accent-foreground" });
             form.reset({ ...form.getValues(), newNeupIdRequest: "" });
+            // Optimistically update NeupIDs if a request was made
+            if (data.newNeupIdRequest) {
+                setNeupIds(prev => [...prev, `${data.newNeupIdRequest} (pending)`])
+            }
         } else {
             toast({ variant: "destructive", title: "Error", description: result.error });
         }
     }
+    
+    const neupIdLimit = isPro ? 2 : 1;
+    const canRequestNeupId = neupIds.length < neupIdLimit;
 
     if (loading) {
         return (
@@ -378,14 +391,22 @@ export function IndividualProfileForm({ accountId }: { accountId: string }) {
                                 ))}
                             </div>
                         </div>
-                        <FormField control={form.control} name="newNeupIdRequest" render={({ field }) => (
-                            <FormItem>
+                        {canRequestNeupId ? (
+                            <FormField control={form.control} name="newNeupIdRequest" render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Request New NeupID</FormLabel>
+                                    <FormControl><Input placeholder="Enter desired NeupID" value={field.value ?? ''} onChange={field.onChange} /></FormControl>
+                                    <FormDescription>Your request will be sent for admin approval. You can request up to {neupIdLimit} NeupIDs.</FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )} />
+                        ) : (
+                             <FormItem>
                                 <FormLabel>Request New NeupID</FormLabel>
-                                <FormControl><Input placeholder="Enter desired NeupID" value={field.value ?? ''} onChange={field.onChange} /></FormControl>
-                                <FormDescription>Your request will be sent for admin approval.</FormDescription>
-                                <FormMessage />
+                                <FormControl><Input placeholder="You have reached your NeupID limit" disabled /></FormControl>
+                                <FormDescription>Upgrade to Pro to request more NeupIDs, or contact an administrator.</FormDescription>
                             </FormItem>
-                        )} />
+                        )}
                     </CardContent>
                 </Card>
 

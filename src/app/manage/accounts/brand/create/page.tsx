@@ -29,36 +29,14 @@ import {
 } from "@/components/ui/form"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useToast } from "@/hooks/use-toast"
-import { createBrandAccount, checkNeupIdAvailability } from "./actions"
+import { createBrandAccount } from "@/actions/manage/accounts/brand"
 import { Textarea } from "@/components/ui/textarea"
-import { CheckCircle2, XCircle, Loader2 } from "lucide-react"
+import { CheckCircle2, XCircle, Loader2 } from "@/components/icons"
 import { BackButton } from "@/components/ui/back-button"
+import { brandCreationSchema, checkNeupIdAvailability } from "@/schemas/auth"
+import { SecondaryHeader } from "@/components/ui/secondary-header"
 
-const formSchema = z.object({
-    fullName: z.string().min(1, "Full name is required"),
-    isLegalEntity: z.boolean().default(false),
-    legalName: z.string().optional(),
-    registrationId: z.string().optional(),
-    hasHeadOffice: z.boolean().default(false),
-    headOfficeLocation: z.string().optional(),
-    servingAreas: z.string().optional(),
-    neupId: z.string()
-        .min(3, "NeupID must be at least 3 characters.")
-        .regex(/^[a-z0-9-]+$/, "NeupID can only contain lowercase letters, numbers, and hyphens."),
-    agreement: z.boolean().refine((val) => val === true, {
-        message: "You must accept the terms and conditions.",
-    }),
-}).superRefine((data, ctx) => {
-    if (data.isLegalEntity && !data.legalName) {
-        ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Legal name is required for legal entities.", path: ["legalName"] });
-    }
-    if (data.hasHeadOffice && !data.headOfficeLocation) {
-        ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Head office location is required.", path: ["headOfficeLocation"] });
-    }
-});
-
-
-type FormData = z.infer<typeof formSchema>;
+type FormData = z.infer<typeof brandCreationSchema>;
 
 export default function CreateBrandPage() {
     const router = useRouter()
@@ -68,7 +46,7 @@ export default function CreateBrandPage() {
     const [neupIdStatus, setNeupIdStatus] = useState<'idle' | 'checking' | 'available' | 'unavailable'>('idle');
 
     const form = useForm<FormData>({
-        resolver: zodResolver(formSchema),
+        resolver: zodResolver(brandCreationSchema),
         defaultValues: {
             fullName: "",
             isLegalEntity: false,
@@ -110,8 +88,8 @@ export default function CreateBrandPage() {
     const onSubmit = async (data: FormData) => {
         setIsSubmitting(true);
         try {
-            await checkAvailability(data.neupId);
-            if (neupIdStatus === 'unavailable') {
+            const checkResult = await checkNeupIdAvailability(data.neupId);
+            if (!checkResult.available) {
                  toast({ variant: "destructive", title: "Creation Failed", description: "The chosen NeupID is not available." });
                  setIsSubmitting(false);
                  return;
@@ -160,8 +138,10 @@ export default function CreateBrandPage() {
              <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                     <div className="space-y-2">
-                        <h2 className="text-xl font-semibold tracking-tight">Brand Information</h2>
-                        <p className="text-muted-foreground text-sm">Provide the basic details for your brand.</p>
+                        <SecondaryHeader
+                            title="Brand Information"
+                            description="Provide the basic details for your brand."
+                        />
                          <Card>
                             <CardContent className="space-y-6 pt-6">
                                 <FormField control={form.control} name="fullName" render={({ field }) => ( <FormItem><FormLabel>Full Name</FormLabel><FormControl><Input placeholder="Stark Industries" {...field} /></FormControl><FormMessage /></FormItem> )} />
@@ -187,8 +167,10 @@ export default function CreateBrandPage() {
                     </div>
 
                     <div className="space-y-2">
-                        <h2 className="text-xl font-semibold tracking-tight">Location Information</h2>
-                        <p className="text-muted-foreground text-sm">Tell us where your brand operates.</p>
+                        <SecondaryHeader
+                            title="Location Information"
+                            description="Tell us where your brand operates."
+                        />
                         <Card>
                             <CardContent className="space-y-6 pt-6">
                                 <FormField control={form.control} name="hasHeadOffice" render={({ field }) => (
@@ -211,8 +193,10 @@ export default function CreateBrandPage() {
                     </div>
 
                     <div className="space-y-2">
-                        <h2 className="text-xl font-semibold tracking-tight">Choose NeupID</h2>
-                        <p className="text-muted-foreground text-sm">This will be the unique public identifier for your brand.</p>
+                        <SecondaryHeader
+                            title="Choose NeupID"
+                            description="This will be the unique public identifier for your brand."
+                        />
                         <Card>
                             <CardContent className="space-y-4 pt-6">
                                  <FormField control={form.control} name="neupId" render={({ field }) => ( 
@@ -239,8 +223,10 @@ export default function CreateBrandPage() {
                     </div>
                     
                     <div className="space-y-2">
-                        <h2 className="text-xl font-semibold tracking-tight">Agreement</h2>
-                         <p className="text-muted-foreground text-sm">Please review and accept the terms to proceed.</p>
+                        <SecondaryHeader
+                            title="Agreement"
+                            description="Please review and accept the terms to proceed."
+                        />
                         <Card>
                             <CardContent className="pt-6">
                                 <FormField control={form.control} name="agreement" render={({ field }) => (

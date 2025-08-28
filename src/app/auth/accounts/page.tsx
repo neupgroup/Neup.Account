@@ -1,8 +1,7 @@
-
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { getValidatedStoredAccounts } from '@/actions/auth/switch';
+import { getValidatedStoredAccounts } from '@/lib/session';
 import { AccountList } from './account-list';
 import { ChevronRight } from '@/components/icons';
 

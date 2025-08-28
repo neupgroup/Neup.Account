@@ -50,39 +50,24 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { cn } from "@/lib/utils"
 import { useToast } from "@/hooks/use-toast"
 import { registerUser } from "@/actions/auth/register"
-import { checkNeupIdAvailability } from "@/actions/auth/session"
+import { registrationSchema } from "@/schemas/auth"
 import { Label } from "@/components/ui/label"
 import { parseDateString } from "@/actions/profile"
 import { GeolocationContext } from "@/context/geolocation-context"
+import { checkNeupIdAvailability } from "@/lib/user"
 
-const formSchema = z.object({
-    // Step 1
-    firstName: z.string().min(1, "First name is required"),
-    middleName: z.string().optional(),
-    lastName: z.string().min(1, "Last name is required"),
-    // Step 2
-    gender: z.enum(["male", "female", "custom", "prefer_not_to_say"], { required_error: "Please select a gender."}),
-    customGender: z.string().optional(),
-    dob: z.date({ required_error: "Date of birth is required." }).refine(
-      (date) => {
-        const ageDifMs = Date.now() - date.getTime();
-        const ageDate = new Date(ageDifMs);
-        const age = Math.abs(ageDate.getUTCFullYear() - 1970);
-        return age >= 16;
-      },
-      { message: "You must be at least 16 years old." }
-    ),
-    // Step 3
-    nationality: z.string().min(1, "Nationality is required"),
-    // Step 4
-    neupId: z.string().min(3, "NeupID must be at least 3 characters."),
-    // Step 5
-    password: z.string().min(8, "Password must be at least 8 characters."),
-    // Step 6
-    agreement: z.boolean().refine((val) => val, {
-        message: "You must accept the terms and conditions.",
-    }),
+const formSchema = registrationSchema.extend({
+  dob: z.date().refine(
+    (date) => {
+      const ageDifMs = Date.now() - date.getTime();
+      const ageDate = new Date(ageDifMs);
+      const age = Math.abs(ageDate.getUTCFullYear() - 1970);
+      return age >= 16;
+    },
+    { message: "You must be at least 16 years old." }
+  )
 });
+
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -216,7 +201,6 @@ export default function RegisterPage() {
         try {
             const result = await registerUser({
                 ...data,
-                dob: data.dob.toISOString(),
                 geolocation: locationString,
             });
 

@@ -17,9 +17,14 @@ import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Loader2, CheckCircle2, XCircle, UploadCloud } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
 
 const formSchema = z.object({
     app_id: z.string().min(3, "App Slug must be at least 3 characters."),
+    intended_for: z.enum(['individual', 'brand', 'dependent', 'branch', 'root'], {
+        required_error: "You must select who this permission is intended for.",
+    }),
     permissionsJson: z.string().min(1, "Permissions JSON cannot be empty.").refine((val) => {
         try {
             JSON.parse(val);
@@ -44,6 +49,14 @@ const jsonTemplate = JSON.stringify([
         "description": "Allows writing and deleting example resources."
     }
 ], null, 2);
+
+const intendedForOptions = [
+    { value: 'individual', label: 'Individual' },
+    { value: 'brand', label: 'Brand' },
+    { value: 'dependent', label: 'Dependent' },
+    { value: 'branch', label: 'Branch' },
+    { value: 'root', label: 'Root' }
+];
 
 export function BulkImportForm() {
     const { toast } = useToast();
@@ -76,7 +89,7 @@ export function BulkImportForm() {
     const onSubmit = async (data: FormValues) => {
         setResults([]);
         startTransition(async () => {
-            const importResults = await bulkAddPermissions(data.app_id, data.permissionsJson);
+            const importResults = await bulkAddPermissions(data.app_id, data.intended_for, data.permissionsJson);
             setResults(importResults);
             
             const successCount = importResults.filter(r => r.status === 'success').length;
@@ -113,6 +126,31 @@ export function BulkImportForm() {
                                             <AppIdStatusIcon />
                                         </div>
                                     </div>
+                                    <FormMessage />
+                                </FormItem>
+                            )}/>
+                            <FormField control={form.control} name="intended_for" render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Intended For</FormLabel>
+                                        <FormControl>
+                                            <RadioGroup
+                                                onValueChange={field.onChange}
+                                                value={field.value}
+                                                className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2"
+                                            >
+                                                {intendedForOptions.map(option => (
+                                                    <FormItem key={option.value}>
+                                                        <RadioGroupItem value={option.value} id={`intended_for_${option.value}`} className="peer sr-only" />
+                                                        <Label
+                                                            htmlFor={`intended_for_${option.value}`}
+                                                            className="flex h-10 w-full cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover px-3 py-2 text-sm font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary"
+                                                        >
+                                                            {option.label}
+                                                        </Label>
+                                                    </FormItem>
+                                                ))}
+                                            </RadioGroup>
+                                        </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}/>

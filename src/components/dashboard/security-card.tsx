@@ -1,9 +1,9 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { getUserSessions } from '@/app/manage/security/actions';
+import { getUserSessions } from '@/actions/security/sessions';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Laptop, ChevronRight } from 'lucide-react';
+import { Laptop, ChevronRight } from '@/components/icons';
 
 
 export async function SecurityCard() {
@@ -34,4 +34,3 @@ export async function SecurityCard() {
         </Card>
     );
 }
-

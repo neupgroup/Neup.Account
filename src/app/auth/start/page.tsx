@@ -1,11 +1,48 @@
 
-import Link from 'next/link';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChevronRight } from '@/components/icons';
-import { hasActiveSessionCookies } from '@/lib/auth-actions';
+'use client';
 
-export default async function StartPage() {
-  const hasSession = await hasActiveSessionCookies();
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ChevronRight, AlertTriangle } from '@/components/icons';
+import { hasActiveSessionCookies } from '@/lib/auth-actions';
+import { useEffect, useState } from 'react';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import React from 'react';
+
+function StartPageComponent() {
+  const [hasSession, setHasSession] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const searchParams = useSearchParams();
+  const error = searchParams.get('error');
+  const errorDescription = searchParams.get('error_description');
+
+  useEffect(() => {
+    async function checkSession() {
+      const sessionExists = await hasActiveSessionCookies();
+      setHasSession(sessionExists);
+      setLoading(false);
+    }
+    checkSession();
+  }, []);
+
+  if (loading) {
+    return (
+        <div className="flex min-h-screen items-start justify-center bg-card md:bg-background md:items-center">
+            <Card className="mx-auto max-w-lg w-full border-0 shadow-none md:border md:shadow-sm">
+                <CardHeader>
+                    <div className="h-8 w-8 rounded-full bg-muted animate-pulse mb-4" />
+                    <div className="h-8 w-3/4 bg-muted animate-pulse" />
+                    <div className="h-5 w-1/2 bg-muted animate-pulse mt-1" />
+                </CardHeader>
+                <CardContent className="space-y-4">
+                     <div className="h-20 w-full bg-muted animate-pulse rounded-lg" />
+                     <div className="h-20 w-full bg-muted animate-pulse rounded-lg" />
+                </CardContent>
+            </Card>
+        </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen items-start justify-center bg-card md:bg-background md:items-center">
@@ -21,6 +58,15 @@ export default async function StartPage() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
+            {error && (
+                <Alert variant="destructive">
+                    <AlertTriangle className="h-4 w-4" />
+                    <AlertTitle>Authentication Error</AlertTitle>
+                    <AlertDescription>
+                        {errorDescription || 'An unknown error occurred. Please try signing in again.'}
+                    </AlertDescription>
+                </Alert>
+            )}
             {hasSession && (
               <Link
                 href="/manage"
@@ -73,4 +119,13 @@ export default async function StartPage() {
       </Card>
     </div>
   );
+}
+
+
+export default function StartPage() {
+    return (
+        <React.Suspense fallback={<div>Loading...</div>}>
+            <StartPageComponent />
+        </React.Suspense>
+    )
 }

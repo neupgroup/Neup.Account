@@ -1,17 +1,12 @@
+
 'use server';
 
 import { db } from '@/lib/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { logError } from '@/lib/logger';
-import { checkPermissions } from '@/lib/user-actions';
+import { checkPermissions } from '@/lib/user';
+import type { SearchResult } from '@/types';
 
-type SearchResult = {
-    id: string;
-    type: 'user' | 'permission';
-    title: string;
-    description: string;
-    url: string;
-};
 
 // A very basic search function. In a real-world scenario,
 // you would use a dedicated search service like Algolia, Typesense, or Elasticsearch.
@@ -47,7 +42,7 @@ export async function searchAll(query: string): Promise<SearchResult[]> {
                         type: 'user',
                         title: displayName || fullName,
                         description: `@${neupId}`,
-                        url: `/manage/root/users/${neupId}`,
+                        url: `/manage/root/accounts/${doc.id}`,
                     });
                 }
             });
