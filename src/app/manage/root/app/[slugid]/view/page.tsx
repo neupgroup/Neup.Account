@@ -1,9 +1,8 @@
-
 'use client';
 
 import { useEffect, useState, useTransition } from 'react';
 import { notFound, useRouter } from 'next/navigation';
-import { getAppDetails, regenerateAppSecret } from '@/actions/root/app/actions';
+import { getAppDetails, regenerateAppSecret } from '../../actions';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';

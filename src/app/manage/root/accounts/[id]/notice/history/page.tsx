@@ -1,7 +1,5 @@
-
-
 import { notFound } from "next/navigation";
-import { getUserDetails } from "../../../../users/actions";
+import { getUserDetails } from "@/actions/root/users";
 import { BackButton } from "@/components/ui/back-button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 
