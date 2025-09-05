@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { getUserProfile, getUserContacts, getUserNeupIds } from '@/lib/user';
-import { getActiveSession } from '@/lib/session';
+import { getActiveSession } from '@/lib/auth-actions';
 
 export async function POST(request: NextRequest) {
     const session = await getActiveSession();

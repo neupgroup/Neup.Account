@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { getActiveSession } from '@/lib/session';
+import { getActiveSession } from '@/lib/auth-actions';
 import { db } from '@/lib/firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { logError } from '@/lib/logger';
