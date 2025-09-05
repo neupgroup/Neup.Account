@@ -13,7 +13,6 @@ export const profileFormSchema = z.object({
   secondaryPhone: z.string().optional(),
   permanentLocation: z.string().optional(),
   currentLocation: z.string().optional(),
-  newNeupIdRequest: z.string().optional(),
 });
 
 export const brandProfileFormSchema = z.object({

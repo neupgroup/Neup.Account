@@ -1,3 +1,4 @@
+
 'use server';
 
 import { z } from "zod"
@@ -7,8 +8,7 @@ import { parseDate as parseDateWithAI } from "@/ai/flows/parse-date"
 import { logActivity } from "@/lib/log-actions"
 import { logError } from "@/lib/logger"
 import { checkPermissions, getUserNeupIds } from "@/lib/user"
-import { profileFormSchema, brandProfileFormSchema } from "@/schemas/profile"
-
+import { brandProfileFormSchema } from "@/schemas/profile"
 
 async function updateOrCreateContact(batch: ReturnType<typeof writeBatch>, accountId: string, type: string, value: string | undefined, hasPermission: boolean) {
     if (!hasPermission) return;
@@ -41,7 +41,7 @@ async function updateOrCreateContact(batch: ReturnType<typeof writeBatch>, accou
 }
 
 
-export async function updateUserProfile(accountId: string, data: z.infer<typeof profileFormSchema>, geolocation?: string) {
+export async function updateUserProfile(accountId: string, data: Record<string, any>, newNeupIdRequest?: string, geolocation?: string) {
     const [canModifyProfile, canModifyContact] = await Promise.all([
         checkPermissions(['profile.modify']),
         checkPermissions(['contact.modify', 'contact.add', 'contact.remove'])
@@ -56,45 +56,29 @@ export async function updateUserProfile(accountId: string, data: z.infer<typeof 
     }
 
     try {
-        const validatedData = profileFormSchema.parse(data)
-        
         const batch = writeBatch(db);
 
         if (canModifyProfile) {
-            let finalGender = validatedData.gender;
-            if (validatedData.gender === 'custom') {
-                if (validatedData.customGender && validatedData.customGender.trim().length > 0) {
-                    finalGender = `c.${validatedData.customGender.trim()}`;
-                } else {
-                    finalGender = 'prefer_not_to_say';
+            const profileData: Record<string, any> = {};
+
+            // List of valid profile fields to prevent unwanted data being written
+            const validProfileFields = ['firstName', 'middleName', 'lastName', 'displayName', 'displayPhoto', 'gender', 'dob'];
+            for(const key of validProfileFields) {
+                if(data[key] !== undefined) {
+                    profileData[key] = data[key];
                 }
             }
-            
-            const { 
-                newNeupIdRequest, 
-                gender, 
-                customGender, 
-                primaryPhone,
-                secondaryPhone,
-                permanentLocation,
-                currentLocation,
-                ...profileData 
-            } = validatedData
 
-            const profileRef = doc(db, 'profile', accountId);
-
-            const dataToSave: Record<string, any> = {
-                ...profileData,
-                gender: finalGender,
-            };
-
-            if (profileData.dob) {
-              dataToSave.dob = profileData.dob.toISOString();
+            if (profileData.dob instanceof Date) {
+              profileData.dob = profileData.dob.toISOString();
             }
             
-            batch.update(profileRef, dataToSave);
+            if(Object.keys(profileData).length > 0) {
+                const profileRef = doc(db, 'profile', accountId);
+                batch.update(profileRef, profileData);
+            }
 
-             if (newNeupIdRequest && newNeupIdRequest.trim().length > 0) {
+            if (newNeupIdRequest && newNeupIdRequest.trim().length > 0) {
                 const accountDoc = await getDoc(doc(db, 'account', accountId));
                 const accountData = accountDoc.data();
                 const existingNeupIds = await getUserNeupIds(accountId);
@@ -120,10 +104,10 @@ export async function updateUserProfile(accountId: string, data: z.infer<typeof 
             }
         }
         
-        await updateOrCreateContact(batch, accountId, 'primaryPhone', validatedData.primaryPhone, canModifyContact);
-        await updateOrCreateContact(batch, accountId, 'secondaryPhone', validatedData.secondaryPhone, canModifyContact);
-        await updateOrCreateContact(batch, accountId, 'permanentLocation', validatedData.permanentLocation, canModifyContact);
-        await updateOrCreateContact(batch, accountId, 'currentLocation', validatedData.currentLocation, canModifyContact);
+        await updateOrCreateContact(batch, accountId, 'primaryPhone', data.primaryPhone, canModifyContact);
+        await updateOrCreateContact(batch, accountId, 'secondaryPhone', data.secondaryPhone, canModifyContact);
+        await updateOrCreateContact(batch, accountId, 'permanentLocation', data.permanentLocation, canModifyContact);
+        await updateOrCreateContact(batch, accountId, 'currentLocation', data.currentLocation, canModifyContact);
 
         await batch.commit();
         

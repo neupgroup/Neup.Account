@@ -1,39 +1,72 @@
-import { getAccountType, checkPermissions } from '@/lib/user';
-import { getActiveAccountId } from '@/lib/auth-actions';
-import { IndividualProfileForm } from './individual-form';
-import { BrandProfileForm } from './brand-form';
-import { notFound } from 'next/navigation';
-import { SecondaryHeader } from '@/components/ui/secondary-header';
+import { Card, CardContent } from "@/components/ui/card";
+import { User, ShieldCheck, Heart, AtSign, Phone, FileText } from "lucide-react";
+import React from "react";
+import { checkPermissions } from "@/lib/user";
+import { notFound } from "next/navigation";
+import { ListItem } from "@/components/ui/list-item";
+import { PrimaryHeader } from "@/components/ui/primary-header";
 
 export default async function ProfilePage() {
-    const accountId = await getActiveAccountId();
-    if (!accountId) {
-        notFound();
-    }
-    
-    const [accountType, canViewProfile] = await Promise.all([
-        getAccountType(accountId),
-        checkPermissions(['profile.view'])
-    ]);
+    const canViewProfile = await checkPermissions(['profile.view']);
 
     if (!canViewProfile) {
         notFound();
     }
 
-    const isBrand = accountType === 'brand' || accountType === 'branch';
+    const profileFeatures = [
+        {
+            icon: User,
+            title: "Display Information",
+            description: "Update your public display name and photo.",
+            href: "/manage/profile/display",
+        },
+        {
+            icon: FileText,
+            title: "Legal Name",
+            description: "Manage your legal first, middle, and last name.",
+            href: "/manage/profile/name",
+        },
+        {
+            icon: Heart,
+            title: "Demographics",
+            description: "Update your date of birth and gender.",
+            href: "/manage/profile/demographics",
+        },
+        {
+            icon: AtSign,
+            title: "NeupID",
+            description: "Manage your unique NeupIDs.",
+            href: "/manage/profile/neupid",
+        },
+        {
+            icon: Phone,
+            title: "Contact Information",
+            description: "Manage your phone numbers and addresses.",
+            href: "/manage/profile/contact",
+        },
+        {
+            icon: ShieldCheck,
+            title: "KYC & Verification",
+            description: "Submit documents to verify your identity.",
+            href: "/manage/profile/documents",
+        },
+    ];
+
 
     return (
-        <div className="space-y-8">
-            <SecondaryHeader
-                title={isBrand ? "Brand Information" : "Personal Information"}
-                description={isBrand ? "Manage your brand's public profile and legal details." : "Manage your personal details and contact information."}
+        <div className="grid gap-8">
+            <PrimaryHeader
+                title="Personal Information"
+                description="Manage your personal details, contact info, and identity verification."
             />
             
-            {isBrand ? (
-                <BrandProfileForm accountId={accountId} />
-            ) : (
-                <IndividualProfileForm accountId={accountId} />
-            )}
+            <Card>
+                <CardContent className="divide-y p-0">
+                    {profileFeatures.map((feature, index) => (
+                        <ListItem key={index} {...feature} />
+                    ))}
+                </CardContent>
+            </Card>
         </div>
     )
 }
