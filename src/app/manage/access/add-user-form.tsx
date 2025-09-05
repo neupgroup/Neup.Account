@@ -4,7 +4,7 @@
 import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
-import { grantAccessByNeupId } from "./actions";
+import { grantAccessByNeupId } from "@/actions/manage/access";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2, UserPlus } from "@/components/icons";

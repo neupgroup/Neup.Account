@@ -154,43 +154,50 @@ export async function removeAccess(permitId: string, geolocation?: string): Prom
 }
 
 export async function getDelegatablePermissions(): Promise<Permission[]> {
-    const personalAccountId = await getPersonalAccountId();
-    if (!personalAccountId) return [];
+    const managerId = await getPersonalAccountId();
+    const managedAccountId = await getActiveAccountId();
+    
+    if (!managerId || !managedAccountId || managerId === managedAccountId) {
+        // Fallback for self-permissions if not in a managing context.
+        const selfPermitQuery = query(collection(db, 'permit'), where('account_id', '==', managerId), where('for_self', '==', true));
+        const selfPermitSnapshot = await getDocs(selfPermitQuery);
+        if (selfPermitSnapshot.empty) return [];
 
-    // Query for the user's own root permit or self permit
-    const permitQuery = query(collection(db, 'permit'), where('account_id', '==', personalAccountId), where('for_self', '==', true));
+        const selfPermitData = selfPermitSnapshot.docs[0].data();
+        const selfAssignedIds = selfPermitData.permission || [];
+        if (selfAssignedIds.length === 0) return [];
+
+        const selfPermsQuery = query(collection(db, 'permission'), where('__name__', 'in', selfAssignedIds));
+        const selfPermsSnapshot = await getDocs(selfPermsQuery);
+        return selfPermsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Permission));
+    }
+
+    // Find the permit that grants the personal account access to the managed account.
+    const permitQuery = query(
+        collection(db, 'permit'),
+        where('account_id', '==', managerId),
+        where('target_account', '==', managedAccountId)
+    );
     const permitSnapshot = await getDocs(permitQuery);
     
-    if (permitSnapshot.empty) {
-        // As a fallback, check if they are a root user (older data model)
-        const rootPermitQuery = query(collection(db, 'permit'), where('account_id', '==', personalAccountId), where('is_root', '==', true));
-        const rootPermitSnapshot = await getDocs(rootPermitQuery);
-        if (rootPermitSnapshot.empty) return [];
-        
-        const permitData = rootPermitSnapshot.docs[0].data();
-         if (permitData.full_permit) {
-            const permsQuery = query(collection(db, 'permission'), where('name', '!=', 'root.whole'));
-            const permsSnapshot = await getDocs(permsQuery);
-            return permsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Permission)).filter(p => !p.name.startsWith('root.'));
-        }
-    }
-    
+    if (permitSnapshot.empty) return [];
+
     const permitData = permitSnapshot.docs[0].data();
-    
-    // If user has full permit, they can delegate any non-root permission
-    if (permitData.full_permit) {
-        const permsQuery = query(collection(db, 'permission'), where('name', '!=', 'root.whole'));
-        const permsSnapshot = await getDocs(permsQuery);
-        return permsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Permission)).filter(p => !p.name.startsWith('root.'));
+
+    // If the manager has full access, they can delegate any non-root permission.
+    if (permitData.full_access) {
+        const allPermsQuery = query(collection(db, 'permission'), where('name', '!=', 'root.whole'));
+        const allPermsSnapshot = await getDocs(allPermsQuery);
+        return allPermsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Permission)).filter(p => !p.name.startsWith('root.'));
     }
     
-    // Otherwise, they can only delegate the permissions they are explicitly assigned
+    // Otherwise, they can only delegate the permissions they have been explicitly assigned.
     const assignedIds = permitData.permission || [];
     if (assignedIds.length === 0) return [];
     
-    const permsQuery = query(collection(db, 'permission'), where('__name__', 'in', assignedIds));
-    const permsSnapshot = await getDocs(permsQuery);
-    return permsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Permission));
+    const delegatablePermsQuery = query(collection(db, 'permission'), where('__name__', 'in', assignedIds));
+    const delegatablePermsSnapshot = await getDocs(delegatablePermsQuery);
+    return delegatablePermsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Permission));
 }
 
 

@@ -1,5 +1,5 @@
 
-import { getAccessList } from "./actions";
+import { getAccessList } from "@/actions/manage/access";
 import { getActiveAccountId } from "@/lib/auth-actions";
 import { getUserNeupIds } from "@/lib/user";
 import {

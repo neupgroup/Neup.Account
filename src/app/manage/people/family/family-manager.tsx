@@ -1,8 +1,9 @@
+
 "use client";
 
 import { useState, useTransition, useRef } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { addFamilyMember, removeFamilyMember } from './actions';
+import { addFamilyMember, removeFamilyMember } from '@/actions/manage/people/family';
 import type { FamilyMember, FamilyGroup } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

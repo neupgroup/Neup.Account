@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { addApp } from '../actions';
+import { addApp } from '@/actions/root/app';
 import crypto from 'crypto';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
@@ -17,7 +17,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form";
 import { BackButton } from '@/components/ui/back-button';
 import { Loader2 } from 'lucide-react';
-import { checkPermissions } from '@/lib/user-actions';
+import { checkPermissions } from '@/lib/user';
 
 const addAppSchema = z.object({
     id: z.string().min(3, { message: "App ID must be at least 3 characters." }),

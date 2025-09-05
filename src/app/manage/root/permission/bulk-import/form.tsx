@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useDebounce } from 'use-debounce';
-import { bulkAddPermissions, type BulkAddResult } from './actions';
+import { bulkAddPermissions, type BulkAddResult } from '@/actions/root/permission/bulk-import';
 import { checkAppIdExists } from '@/actions/root/permission';
 
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
