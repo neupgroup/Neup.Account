@@ -94,7 +94,7 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                                         </div>
                                     </div>
                                     {canMarkAsRead && warning.persistence === 'dismissable' && (
-                                    <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0" onClick={() => handleDismiss(warning.id, 'sticky')} disabled={isPending} aria-label="Dismiss warning">
+                                    <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0 -my-1 -mr-2 text-current" onClick={() => handleDismiss(warning.id, 'sticky')} disabled={isPending} aria-label="Dismiss warning">
                                         <X className="h-4 w-4" />
                                     </Button>
                                     )}
@@ -146,7 +146,7 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                                             <p className="text-xs text-muted-foreground">{new Date(item.createdAt).toLocaleString()}</p>
                                         </div>
                                     </div>
-                                    <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0" onClick={() => handleDismiss(item.id, 'other')} disabled={isPending}>
+                                    <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0 -my-1 -mr-2 text-muted-foreground" onClick={() => handleDismiss(item.id, 'other')} disabled={isPending}>
                                         <X className="h-4 w-4" />
                                     </Button>
                                 </div>

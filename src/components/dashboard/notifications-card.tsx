@@ -38,7 +38,7 @@ export async function NotificationsCard() {
     return (
         <div className="space-y-2">
             <SecondaryHeader 
-                title="Account Updates"
+                title="Notifications"
                 description="Your most recent and important alerts."
             />
             <Card>
@@ -52,6 +52,7 @@ export async function NotificationsCard() {
                         return (
                             <ListItem
                                 key={notification.id}
+                                notification={notification}
                                 href={href}
                                 icon={icon}
                                 title={message}
