@@ -6,17 +6,17 @@ import { AlertTriangle, Bell, ChevronRight, Handshake, MessageSquareWarning, Use
 import { SecondaryHeader } from '../ui/secondary-header';
 import { ListItem } from '../ui/list-item';
 
-function getNotificationDetails(notification: Notification): { icon: React.ElementType, message: string } {
+function getNotificationDetails(notification: Notification): { icon: string, message: string } {
     if (notification.action.includes('sticky')) {
-        return { icon: AlertTriangle, message: notification.message || 'An important notice was posted.' };
+        return { icon: 'AlertTriangle', message: notification.message || 'An important notice was posted.' };
     }
     if (notification.action === 'access_invitation') {
-        return { icon: Handshake, message: `${notification.senderName} wants you to manage their account.` };
+        return { icon: 'Handshake', message: `${notification.senderName} wants you to manage their account.` };
     }
     if (notification.action === 'family_invitation') {
-        return { icon: UserPlus, message: `${notification.senderName} invited you to their family.` };
+        return { icon: 'UserPlus', message: `${notification.senderName} invited you to their family.` };
     }
-    return { icon: MessageSquareWarning, message: notification.message || 'You have a new notification.' };
+    return { icon: 'MessageSquareWarning', message: notification.message || 'You have a new notification.' };
 }
 
 export async function NotificationsCard() {
@@ -38,7 +38,7 @@ export async function NotificationsCard() {
     return (
         <div className="space-y-2">
             <SecondaryHeader 
-                title="Notifications"
+                title="Account Updates"
                 description="Your most recent and important alerts."
             />
             <Card>
@@ -54,7 +54,7 @@ export async function NotificationsCard() {
                                 key={notification.id}
                                 notification={notification}
                                 href={href}
-                                icon={icon}
+                                iconName={icon}
                                 title={message}
                                 description={new Date(notification.createdAt).toLocaleString()}
                             />
@@ -63,7 +63,7 @@ export async function NotificationsCard() {
                      {hasMoreNotifications && (
                         <ListItem
                             href="/manage/notifications"
-                            icon={Bell}
+                            iconName="Bell"
                             title="See all notifications"
                             description={`You have ${prioritizedNotifications.length - 3} more unread notifications.`}
                         />
