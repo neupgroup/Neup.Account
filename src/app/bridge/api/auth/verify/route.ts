@@ -58,7 +58,12 @@ export async function POST(request: NextRequest) {
         }
         
         // 3. Mark the key as used to prevent replay attacks
-        const sessionData = (await getDoc(sessionDocToUpdate)).data();
+        const sessionToUpdateDoc = await getDoc(sessionDocToUpdate);
+        const sessionData = sessionToUpdateDoc.data();
+        if (!sessionData || !sessionData.dependentKey) {
+            return NextResponse.json({ success: false, error: 'Session data or dependent key not found.' }, { status: 500 });
+        }
+        
         const dependentKeys = sessionData.dependentKey;
         dependentKeys[keyIndexToUpdate].isUsed = true;
 
