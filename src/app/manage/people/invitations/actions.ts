@@ -2,7 +2,8 @@
 
 import { db } from '@/lib/firebase';
 import { collection, query, where, getDocs, doc, updateDoc, deleteDoc, getDoc, serverTimestamp, writeBatch, setDoc, limit, Timestamp } from 'firebase/firestore';
-import { getUserProfile, getUserNeupIds, getPersonalAccountId, checkPermissions } from '@/lib/user';
+import { getUserProfile, getUserNeupIds, checkPermissions } from '@/lib/user';
+import { getPersonalAccountId } from '@/lib/auth-actions';
 import { logError } from '@/lib/logger';
 import { revalidatePath } from 'next/cache';
 import type { Invitation } from '@/types';
