@@ -38,7 +38,7 @@ export async function NotificationsCard() {
     return (
         <div className="space-y-2">
             <SecondaryHeader 
-                title="Notifications"
+                title="Account Updates"
                 description="Your most recent and important alerts."
             />
             <Card>
