@@ -4,14 +4,14 @@
 
 import Link from 'next/link';
 import React, { useTransition } from 'react';
-import { ChevronRight, X, type LucideIcon, UserCircle, Home, Key, Combine, Database, FolderGit2, HeartHandshake, Gem, Users, LogOut, ArrowLeft, AppWindow, AlertTriangle, Wallet, ShieldCheck, Clock, FileLock2, Smartphone, Mail, Building, History, FileText, Trash2, PowerOff, CalendarClock, Share2, Bug, MailQuestion, Handshake, Bell, MessageSquareWarning, Contact, CreditCard, Globe, KeyRound, Send, List, UserCheck, Plus, UserX } from '@/components/icons';
+import { ChevronRight, X, type LucideIcon, UserCircle, Home, KeyRound, Combine, Database, FolderGit2, HeartHandshake, Gem, Users, LogOut, ArrowLeft, AppWindow, AlertTriangle, Wallet, ShieldCheck, Clock, FileLock2, Smartphone, Mail, Building, History, FileText, Trash2, PowerOff, CalendarClock, Share2, Bug, MailQuestion, Handshake, Bell, MessageSquareWarning, Contact, CreditCard, Globe, Send, List, UserCheck, Plus, UserX, Camera, AtSign } from '@/components/icons';
 import { Button } from './button';
 import { useToast } from '@/hooks/use-toast';
 import { markNotificationAsRead, type Notification } from '@/actions/notifications';
 
 const iconMap: { [key: string]: LucideIcon | React.ElementType } = {
     UserCircle,
-    Key,
+    KeyRound,
     Home,
     FolderGit2,
     Database,
@@ -44,12 +44,13 @@ const iconMap: { [key: string]: LucideIcon | React.ElementType } = {
     Contact,
     CreditCard,
     Globe,
-    KeyRound,
     Send,
     List,
     UserCheck,
     Plus,
     UserX,
+    Camera,
+    AtSign
 };
 
 type ListItemProps = {

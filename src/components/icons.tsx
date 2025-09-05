@@ -83,6 +83,8 @@ import {
     Send,
     List,
     ArrowUpDown,
+    AtSign,
+    Camera,
 } from "lucide-react";
 
 export {
@@ -169,4 +171,6 @@ export {
     Send,
     List,
     ArrowUpDown,
+    AtSign,
+    Camera,
 };

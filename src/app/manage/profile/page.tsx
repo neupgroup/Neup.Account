@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { User, ShieldCheck, Heart, AtSign, Phone, FileText } from "lucide-react";
 import React from "react";
@@ -15,37 +16,37 @@ export default async function ProfilePage() {
 
     const profileFeatures = [
         {
-            icon: User,
+            iconName: "UserCircle",
             title: "Display Information",
             description: "Update your public display name and photo.",
             href: "/manage/profile/display",
         },
         {
-            icon: FileText,
+            iconName: "FileText",
             title: "Legal Name",
             description: "Manage your legal first, middle, and last name.",
             href: "/manage/profile/name",
         },
         {
-            icon: Heart,
+            iconName: "HeartHandshake",
             title: "Demographics",
             description: "Update your date of birth and gender.",
             href: "/manage/profile/demographics",
         },
         {
-            icon: AtSign,
+            iconName: "AtSign",
             title: "NeupID",
             description: "Manage your unique NeupIDs.",
             href: "/manage/profile/neupid",
         },
         {
-            icon: Phone,
+            iconName: "Contact",
             title: "Contact Information",
             description: "Manage your phone numbers and addresses.",
             href: "/manage/profile/contact",
         },
         {
-            icon: ShieldCheck,
+            iconName: "ShieldCheck",
             title: "KYC & Verification",
             description: "Submit documents to verify your identity.",
             href: "/manage/profile/documents",
