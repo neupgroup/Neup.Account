@@ -12,6 +12,7 @@ import { logError } from '@/lib/logger';
 import { z } from 'zod';
 import crypto from 'crypto';
 import { totpEnableSchema, totpDisableSchema } from '@/schemas/security';
+import { createNotification } from '../notifications';
 
 // We need a consistent secret for encryption. STORE THIS IN A SECURE VAULT.
 // For this example, it's in an environment variable.
@@ -99,6 +100,13 @@ export async function verifyAndEnableTotp(data: z.infer<typeof totpEnableSchema>
         const totpRef = doc(db, 'auth_totp', accountId);
         await setDoc(totpRef, { secret: encryptedSecret, createdAt: serverTimestamp() });
         await logActivity(accountId, 'TOTP Enabled', 'Success');
+        
+        await createNotification({
+            recipient_id: accountId,
+            action: 'informative.security',
+            message: 'Two-factor authentication (2FA) has been enabled on your account.',
+        });
+
         return { success: true };
     } catch(error) {
         await logError('database', error, `verifyAndEnableTotp: ${accountId}`);
@@ -138,6 +146,13 @@ export async function disableTotp(data: z.infer<typeof totpDisableSchema>): Prom
         await deleteDoc(totpRef);
 
         await logActivity(accountId, 'TOTP Disabled', 'Success');
+        
+        await createNotification({
+            recipient_id: accountId,
+            action: 'informative.security',
+            message: 'Two-factor authentication (2FA) has been disabled on your account.',
+        });
+
         return { success: true };
 
     } catch(error) {

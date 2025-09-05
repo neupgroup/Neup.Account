@@ -37,6 +37,18 @@ export type Permission = {
   intended_for: 'individual' | 'brand' | 'dependent' | 'branch' | 'root';
 };
 
+export type NotificationCreate = {
+    recipient_id: string;
+    action: string; // e.g., 'request.family_invitation', 'warning.sticky', 'informative.login'
+    message: string;
+    requestId?: string;
+    sender_id?: string;
+    persistence?: 'dismissable' | 'untildays' | 'permanent';
+    noticeType?: 'general' | 'success' | 'warning' | 'error';
+    reason?: string;
+    expiresOn?: Date | null;
+}
+
 export type Notification = {
   id: string; // notification doc id
   requestId?: string; // Only for request-based notifications
@@ -54,6 +66,7 @@ export type Notification = {
 export type AllNotifications = {
   sticky: Notification[];
   requests: Notification[];
+  other: Notification[];
 };
 
 export type Invitation = {

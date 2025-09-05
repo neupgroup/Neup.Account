@@ -9,6 +9,7 @@ import { logActivity } from '@/lib/log-actions';
 import { cookies, headers } from 'next/headers';
 import crypto from 'crypto';
 import { z } from 'zod';
+import { createNotification } from '../notifications';
 
 
 // --- Administrative Actions ---
@@ -48,7 +49,7 @@ export async function sendWarning(userId: string, data: z.infer<typeof sendWarni
     };
 
     try {
-        await addDoc(collection(db, 'notifications'), {
+        await createNotification({
             recipient_id: userId,
             action: actionTypeMap[noticeType],
             message,
@@ -56,8 +57,6 @@ export async function sendWarning(userId: string, data: z.infer<typeof sendWarni
             noticeType,
             reason,
             expiresOn,
-            is_read: false,
-            createdAt: serverTimestamp(),
             sender_id: adminId,
         });
 
@@ -110,6 +109,16 @@ export async function blockServiceAccess(userId: string, data: z.infer<typeof bl
 
         await updateDoc(accountRef, { block: blockData });
         await logActivity(userId, `Service access blocked. Reason: ${reason}`, 'Alert', undefined, adminId);
+        
+        await createNotification({
+            recipient_id: userId,
+            action: 'danger.sticky',
+            message: `Your account access has been blocked. Reason: ${reason}`,
+            persistence: 'permanent',
+            noticeType: 'error',
+            sender_id: adminId,
+        });
+
         return { success: true };
     } catch (error) {
         await logError('database', error, 'blockServiceAccess');
@@ -129,6 +138,14 @@ export async function unblockServiceAccess(userId: string): Promise<{success: bo
         const accountRef = doc(db, 'account', userId);
         await updateDoc(accountRef, { block: null });
         await logActivity(userId, `Service access unblocked`, 'Success', undefined, adminId);
+        
+        await createNotification({
+            recipient_id: userId,
+            action: 'informative.unblock',
+            message: 'Your account access has been restored.',
+            sender_id: adminId,
+        });
+
         return { success: true };
     } catch (error) {
         await logError('database', error, 'unblockServiceAccess');
@@ -171,6 +188,15 @@ export async function impersonateUser(userId: string, neupId: string): Promise<{
         cookieStore.set('auth_session_key', sessionKey, cookieOptions);
         
         await logActivity(userId, `Admin impersonation started by ${adminId}`, 'Alert', undefined, adminId);
+        
+        await createNotification({
+            recipient_id: userId,
+            action: 'warning.sticky',
+            message: `A root user has accessed your account using an impersonation session.`,
+            persistence: 'permanent',
+            noticeType: 'warning',
+            sender_id: adminId,
+        });
 
         return { success: true };
     } catch(error) {
@@ -239,5 +265,3 @@ export async function deleteUserAccount(userId: string): Promise<{ success: bool
         return { success: false, error: 'An unexpected error occurred during account deletion.' };
     }
 }
-
-
