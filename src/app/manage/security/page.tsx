@@ -5,16 +5,6 @@ import {
     Card,
     CardContent,
 } from "@/components/ui/card";
-import {
-    KeyRound,
-    Smartphone,
-    Mail,
-    ShieldCheck,
-    Laptop,
-    Globe,
-    Users,
-    FileLock2
-} from "@/components/icons";
 import { ListItem } from "@/components/ui/list-item";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 import { PrimaryHeader } from "@/components/ui/primary-header";
@@ -74,7 +64,7 @@ export default async function SecurityPage() {
             iconName: "Globe",
             title: "Third-Party Apps",
             description: "Manage apps that have access to your account data.",
-            href: "#",
+            href: "/manage/data",
         },
     ];
 
