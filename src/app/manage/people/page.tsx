@@ -1,7 +1,6 @@
 
-
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, Contact, UserX, MailQuestion } from "@/components/icons";
+import { Users, MailQuestion, Contact, UserX } from "@/components/icons";
 import React from "react";
 import { checkPermissions } from "@/lib/user";
 import { ListItem } from "@/components/ui/list-item";
@@ -17,28 +16,28 @@ export default async function PeopleSharingPage() {
     
     const sharingFeatures = [
         {
-            iconName: "Users",
+            icon: Users,
             title: "Family Sharing",
             description: "Manage your family group and shared subscriptions.",
             href: "/manage/people/family",
             show: canViewFamily,
         },
         {
-            iconName: "MailQuestion",
+            icon: MailQuestion,
             title: "Invitations",
             description: "Accept or reject requests from other users.",
             href: "/manage/people/invitations",
             show: canViewInvitations,
         },
         {
-            iconName: "Contact",
+            icon: Contact,
             title: "Contact Info Sharing",
             description: "Control how your contact information is shared.",
             href: "#",
             show: false, // Not implemented yet
         },
         {
-            iconName: "UserX",
+            icon: UserX,
             title: "Blocked Users",
             description: "See a list of people you've blocked.",
             href: "#",

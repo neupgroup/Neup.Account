@@ -1,14 +1,13 @@
 
-
 import Link from 'next/link';
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   Building,
   UserPlus,
-  BotMessageSquare,
+  Bot,
   Network
-} from 'lucide-react';
+} from '@/components/icons';
 import { getActiveAccountId, getPersonalAccountId } from '@/lib/auth-actions';
 import { getAccountType } from '@/lib/user';
 import { AccountList } from '@/app/auth/accounts/account-list';
@@ -24,7 +23,7 @@ import { SecondaryHeader } from '@/components/ui/secondary-header';
 const IndividualAccountFeatures = () => (
   <>
     <ListItem
-      icon={BotMessageSquare}
+      icon={Bot}
       title="Link WhatsApp Account"
       description="Connect your WhatsApp for notifications and services."
       href="/manage/accounts/whatsapp"
@@ -53,7 +52,7 @@ const BrandAccountFeatures = () => (
       href="/manage/accounts/branches"
     />
     <ListItem
-      icon={BotMessageSquare}
+      icon={Bot}
       title="Link WhatsApp Account"
       description="Connect a WhatsApp Business account for this brand."
       href="/manage/accounts/whatsapp"
@@ -63,7 +62,7 @@ const BrandAccountFeatures = () => (
 
 const BranchAccountFeatures = () => (
     <ListItem
-      icon={BotMessageSquare}
+      icon={Bot}
       title="Link WhatsApp Account"
       description="Connect a WhatsApp Business account for this branch."
       href="/manage/accounts/whatsapp"

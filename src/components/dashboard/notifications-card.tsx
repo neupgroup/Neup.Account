@@ -1,8 +1,7 @@
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { getNotifications, type Notification } from '@/actions/notifications';
-import Link from 'next/link';
-import { AlertTriangle, Bell, ChevronRight, Handshake, MessageSquareWarning, UserPlus } from '@/components/icons';
+import { AlertTriangle, Bell, Handshake, MessageSquareWarning, UserPlus } from '@/components/icons';
 import { SecondaryHeader } from '../ui/secondary-header';
 import { ListItem } from '../ui/list-item';
 

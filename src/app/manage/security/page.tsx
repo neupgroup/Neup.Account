@@ -1,25 +1,23 @@
 
-
 import React from "react";
-import {
-    Card,
-    CardContent,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { ListItem } from "@/components/ui/list-item";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 import { PrimaryHeader } from "@/components/ui/primary-header";
+import { KeyRound, ShieldCheck, FileLock2, Users, Smartphone, Mail, Laptop, Globe } from '@/components/icons';
+
 
 export default async function SecurityPage() {
 
     const signInMethods = [
         {
-            iconName: "KeyRound",
+            icon: KeyRound,
             title: "Password",
             description: "Change your password regularly to keep your account secure.",
             href: "/manage/security/password",
         },
         {
-            iconName: "ShieldCheck",
+            icon: ShieldCheck,
             title: "Authenticator App",
             description: "Use an app for an extra layer of security (2FA).",
             href: "/manage/security/totp",
@@ -28,25 +26,25 @@ export default async function SecurityPage() {
     
      const recoveryMethods = [
         {
-            iconName: "FileLock2",
+            icon: FileLock2,
             title: "Backup Codes",
             description: "Save codes to use if you lose access to your other recovery methods.",
             href: "/manage/security/backup",
         },
         {
-            iconName: "Users",
+            icon: Users,
             title: "Recovery Account",
             description: "Designate accounts that can help you recover yours.",
             href: "/manage/security/account",
         },
         {
-            iconName: "Smartphone",
+            icon: Smartphone,
             title: "Recovery Phone",
             description: "Add or update your recovery phone number.",
             href: "/manage/security/phone",
         },
         {
-            iconName: "Mail",
+            icon: Mail,
             title: "Recovery Email",
             description: "Add or update your recovery email address.",
             href: "/manage/security/email",
@@ -55,13 +53,13 @@ export default async function SecurityPage() {
     
      const securityChecks = [
         {
-            iconName: "Laptop",
+            icon: Laptop,
             title: "Your Devices",
             description: "See where you're signed in.",
             href: "/manage/security/devices",
         },
         {
-            iconName: "Globe",
+            icon: Globe,
             title: "Third-Party Apps",
             description: "Manage apps that have access to your account data.",
             href: "/manage/data",

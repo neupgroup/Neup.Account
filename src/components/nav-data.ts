@@ -1,11 +1,8 @@
 
-
 export type NavItem = {
     href: string;
     label: string;
     description: string;
-    iconName: string;
-    requiredPermissions: string[];
 }
 
 export type NavSection = {
@@ -73,7 +70,6 @@ export const navItems = {
         { href: "/auth/accounts", label: "Switch Account", description: "Switch between different NeupID accounts." },
         { href: "/auth/signout", label: "SignOut Account", description: "Sign out of your account." },
     ],
-    switchBackNav: { href: "/auth/switch", label: "Switch Back", description: "Return to your personal account view.", iconName: "SwitchBack", requiredPermissions: [] }
 };
 
 
@@ -103,27 +99,4 @@ export const allPermissionsMap: Record<string, string[]> = {
     "App Management": ["root.app.view"],
     "Site Configuration": ["root.payment_config.view", "root.errors.view"],
     "Branches": ['linked_accounts.brand.manage'],
-};
-
-export const navIcons: Record<string, string> = {
-    "Home": "Home",
-    "Personal Info": "PersonalInfo",
-    "Notifications": "Notifications",
-    "Password & Security": "PasswordAndSecurity",
-    "Linked Accounts": "LinkedAccounts",
-    "Data & Privacy": "DataAndPrivacy",
-    "Access & Control": "AccessAndControl",
-    "People & Sharing": "HeartHandshake",
-    "Payment & Subscription": "PaymentAndSubscription",
-    "Switch Account": "SwitchAccount",
-    "SignOut Account": "SignOutAccount",
-    "Switch Back": "ArrowLeft",
-    "Dashboard": "Dashboard",
-    "Account Management": "Users",
-    "Requests Management": "Clock",
-    "Permission Management": "PermissionManagement",
-    "App Management": "AppManagement",
-    "Site Configuration": "Wallet",
-    "BrandInfo": "UserCircle",
-    "Branches": "LinkedAccounts"
 };

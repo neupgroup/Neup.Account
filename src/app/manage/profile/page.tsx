@@ -1,6 +1,6 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { User, ShieldCheck, Heart, AtSign, Phone, FileText } from "lucide-react";
+import { UserCircle, ShieldCheck, HeartHandshake, AtSign, Contact, FileText } from "@/components/icons";
 import React from "react";
 import { checkPermissions } from "@/lib/user";
 import { notFound } from "next/navigation";
@@ -16,37 +16,37 @@ export default async function ProfilePage() {
 
     const profileFeatures = [
         {
-            iconName: "UserCircle",
+            icon: UserCircle,
             title: "Display Information",
             description: "Update your public display name and photo.",
             href: "/manage/profile/display",
         },
         {
-            iconName: "FileText",
+            icon: FileText,
             title: "Legal Name",
             description: "Manage your legal first, middle, and last name.",
             href: "/manage/profile/name",
         },
         {
-            iconName: "HeartHandshake",
+            icon: HeartHandshake,
             title: "Demographics",
             description: "Update your date of birth and gender.",
             href: "/manage/profile/demographics",
         },
         {
-            iconName: "AtSign",
+            icon: AtSign,
             title: "NeupID",
             description: "Manage your unique NeupIDs.",
             href: "/manage/profile/neupid",
         },
         {
-            iconName: "Contact",
+            icon: Contact,
             title: "Contact Information",
             description: "Manage your phone numbers and addresses.",
             href: "/manage/profile/contact",
         },
         {
-            iconName: "ShieldCheck",
+            icon: ShieldCheck,
             title: "KYC & Verification",
             description: "Submit documents to verify your identity.",
             href: "/manage/profile/documents",
