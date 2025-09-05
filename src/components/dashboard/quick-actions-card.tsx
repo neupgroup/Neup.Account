@@ -5,7 +5,7 @@ import { Laptop, ShieldCheck, Share2, FolderGit2, Building } from '@/components/
 import { getUserSessions } from '@/actions/security/sessions';
 import { getTotpStatus } from '@/actions/security/totp';
 import { getConnectedApplications } from '@/actions/data/applications';
-import { getAccessList } from '@/app/manage/access/actions';
+import { getAccessList } from '@/actions/manage/access';
 import { ListItem } from '../ui/list-item';
 import { getAccountType } from '@/lib/user';
 import { useSession } from '@/context/session-context';
