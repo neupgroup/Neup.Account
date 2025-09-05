@@ -8,7 +8,7 @@ import { doc, getDoc } from "firebase/firestore";
 import bcrypt from "bcryptjs";
 import { checkPermissions } from "@/lib/user";
 import { getActiveAccountId } from "@/lib/auth-actions";
-import { logoutActiveSession } from "../auth/logout";
+import { logoutActiveSession } from "../auth/signout";
 
 const formSchema = z.object({
     password: z.string().min(1, "Password is required to deactivate your account."),

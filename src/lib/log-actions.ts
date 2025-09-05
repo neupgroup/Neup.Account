@@ -3,7 +3,7 @@
 'use server';
 
 import { db } from './firebase';
-import { collection, addDoc, serverTimestamp, query, getDocs, orderBy, limit, DocumentData, getDoc, doc, limitToLast, startAfter, endBefore, where } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, query, getDocs, orderBy, limit, getDoc, doc, startAfter, where } from 'firebase/firestore';
 import { headers } from 'next/headers';
 import { getUserProfile } from './user';
 import { logError } from './logger';
@@ -29,7 +29,7 @@ export async function logActivity(
     geolocation?: string,
 ) {
     try {
-        const ip = ipAddress || headers().get('x-forwarded-for') || 'Unknown IP';
+        const ip = ipAddress || (await headers()).get('x-forwarded-for') || 'Unknown IP';
         
         const finalActorAccountId = actorAccountId || targetAccountId;
 
@@ -105,9 +105,9 @@ export async function getActivities({ startAfter: startAfterDocId, forCurrentUse
             const data = doc.data();
             const timestamp = data.timestamp?.toDate() || new Date();
 
-            const [actorProfile, neupidsSnapshot] = await Promise.all([
+            const [actorProfile, neupIdsSnapshot] = await Promise.all([
                 getUserProfile(data.actorAccountId),
-                 getDocs(query(collection(db, 'neupid'), where('for', '==', data.actorAccountId), limit(1)))
+                 getDocs(query(collection(db, 'neupId'), where('for', '==', data.actorAccountId), limit(1)))
             ]);
             
             const getDisplayName = (profile: any, fallbackId: string) => {
@@ -118,7 +118,7 @@ export async function getActivities({ startAfter: startAfterDocId, forCurrentUse
             return {
                 id: doc.id,
                 user: getDisplayName(actorProfile, data.actorAccountId),
-                neupId: neupidsSnapshot.docs[0]?.id || 'N/A',
+                neupId: neupIdsSnapshot.docs[0]?.id || 'N/A',
                 action: data.action,
                 status: data.status,
                 timestamp: timestamp.toLocaleString(),

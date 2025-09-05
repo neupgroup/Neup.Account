@@ -2,12 +2,10 @@
 
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { db } from './firebase';
-import { doc, getDoc, Timestamp } from 'firebase/firestore';
-import { logError } from './logger';
-import { getSessionCookies, setProfileCookies } from './cookies';
-import { getUserNeupIds, getUserProfile } from './user';
-import { logoutActiveSession } from '@/actions/auth/logout';
+import { db } from '@/lib/firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import { logError } from '@/lib/logger';
+import { getSessionCookies } from '@/lib/cookies';
 
 export type Session = {
   accountId: string;
@@ -18,7 +16,7 @@ export type Session = {
 const SESSION_DURATION_DAYS = 30;
 
 export async function hasActiveSessionCookies(): Promise<boolean> {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   return (
     cookieStore.has('auth_account_id') &&
     cookieStore.has('auth_session_id') &&

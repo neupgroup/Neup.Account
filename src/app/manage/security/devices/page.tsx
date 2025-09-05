@@ -14,7 +14,7 @@ import { checkPermissions } from "@/lib/user";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Ban } from "lucide-react";
 import { useState, useEffect } from "react";
-import type { UserSession } from "@/types";
+import type { Session } from "@/types";
 import { Skeleton } from "@/components/ui/skeleton";
 
 function DevicesPageSkeleton() {
@@ -41,7 +41,7 @@ function DevicesPageSkeleton() {
 
 export default function DevicesPage() {
     const [permissionState, setPermissionState] = useState<'loading' | 'granted' | 'denied'>('loading');
-    const [sessions, setSessions] = useState<UserSession[]>([]);
+    const [sessions, setSessions] = useState<Session[]>([]);
     const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
 
     useEffect(() => {

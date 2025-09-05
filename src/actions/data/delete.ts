@@ -9,7 +9,7 @@ import { db } from "@/lib/firebase";
 import { doc, getDoc, writeBatch, collection, serverTimestamp, updateDoc } from "firebase/firestore";
 import bcrypt from "bcryptjs";
 import { checkPermissions } from "@/lib/user";
-import { logoutActiveSession } from "../auth/logout";
+import { logoutActiveSession } from "../auth/signout";
 
 const formSchema = z.object({
     password: z.string().min(1, "Password is required to request deletion."),

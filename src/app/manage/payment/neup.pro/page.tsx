@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { getPaymentDetails } from "./actions";
+import { getPaymentDetails } from "../../../../actions/manage/payments/neup.pro";
 import Image from "next/image";
 import { Bot, Instagram, Linkedin, Ban } from "lucide-react";
 import { BackButton } from "@/components/ui/back-button";

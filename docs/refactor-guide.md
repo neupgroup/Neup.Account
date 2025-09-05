@@ -10,7 +10,7 @@ Follow these steps in order by providing the instruction for each step.
 
 **Instruction:** "Refactor Step 1: Centralize all Zod schemas into the `/src/schemas` directory."
 
-**Goal:** Move all Zod validation schemas, which are currently scattered across various `actions.ts` and page files, into a centralized `/src/schemas` directory. This creates a single source of truth for data validation.
+**Goal:** Move all Zod validation schemas, which are currently scattered across various `neup.pro.ts` and page files, into a centralized `/src/schemas` directory. This creates a single source of truth for data validation.
 
 **Tasks:**
 1. Create new schema files: `src/schemas/auth.ts`, `src/schemas/profile.ts`, `src/schemas/security.ts`.
@@ -34,13 +34,13 @@ Follow these steps in order by providing the instruction for each step.
 
 ### Step 3: Centralize Session and Authentication Actions
 
-**Instruction:** "Refactor Step 3: Centralize session and authentication actions into `lib/session.ts` and `lib/auth-actions.ts`."
+**Instruction:** "Refactor Step 3: Centralize session and authentication actions into `lib/session.ts` and `lib/auth-neup.pro.ts`."
 
 **Goal:** Separate cookie/session logic from higher-level authentication actions.
 
 **Tasks:**
 1. Move cookie-handling logic into `src/lib/session.ts`.
-2. Create `src/lib/auth-actions.ts` for functions that orchestrate authentication, such as `validateCurrentSession`, `getActiveAccountId`, and `getPersonalAccountId`.
+2. Create `src/lib/auth-neup.pro.ts` for functions that orchestrate authentication, such as `validateCurrentSession`, `getActiveAccountId`, and `getPersonalAccountId`.
 3. Refactor all files to import these functions from their new, logical locations.
 
 ---
@@ -65,8 +65,8 @@ Follow these steps in order by providing the instruction for each step.
 **Goal:** Consolidate scattered `root` server actions into a more organized structure.
 
 **Tasks:**
-1. Merge actions from `src/actions/root/permission/[id].ts` and `src/actions/root/permission/actions.ts` into a single `src/actions/root/permission.ts`.
-2. Merge actions from `src/actions/root/requests/neupid/actions.ts` into `src/actions/root/requests/neupid.ts`.
+1. Merge actions from `src/actions/root/permission/[id].ts` and `src/actions/root/permission/neup.pro.ts` into a single `src/actions/root/index.ts`.
+2. Merge actions from `src/actions/root/requests/neupid/neup.pro.ts` into `src/actions/root/requests/neupid.ts`.
 3. Update all related pages and components to use the consolidated action files.
 
 ---
@@ -78,7 +78,7 @@ Follow these steps in order by providing the instruction for each step.
 **Goal:** Improve developer experience by placing server actions used by only one page directly within that page's directory. This is the opposite of centralization and is done for code that is not reusable.
 
 **Tasks:**
-1. For pages like `/manage/security/email`, `/manage/people/family`, etc., ensure the `actions.ts` file resides within the same directory.
+1. For pages like `/manage/security/email`, `/manage/people/family`, etc., ensure the `neup.pro.ts` file resides within the same directory.
 2. Verify that no other part of the app incorrectly imports these non-reusable actions.
 
 ---
@@ -133,7 +133,7 @@ Follow these steps in order by providing the instruction for each step.
 3. Auto-format all `.ts` and `.tsx` files to ensure consistent style.
 
 
-src/app/manage/accounts/brand/create/actions.ts
+src/app/manage/accounts/brand/create/neup.pro.ts
 remove from here and move the file to actions page.
 
 src/app/manage/accounts/dependent/create/action.ts

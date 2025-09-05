@@ -6,7 +6,7 @@ import { collection, addDoc, getDocs, query, where, doc } from 'firebase/firesto
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { logError } from '@/lib/logger';
-import { checkAppIdExists } from '@/actions/root/permission';
+import { checkAppIdExists } from '@/actions/root/permission/index';
 import { checkPermissions } from '@/lib/user';
 
 const singlePermissionSchema = z.object({

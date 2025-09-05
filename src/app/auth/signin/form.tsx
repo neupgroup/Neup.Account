@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import React, { useState, useEffect, useContext, useTransition } from "react"
 import { useToast } from "@/hooks/use-toast"
-import { loginUser } from "@/actions/auth/login"
+import { loginUser } from "@/actions/auth/signin"
 import { validateNeupId } from "@/lib/user"
 import { cancelAccountDeletion } from "@/actions/data/delete"
 import NProgress from 'nprogress'

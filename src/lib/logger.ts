@@ -1,4 +1,3 @@
-
 'use server';
 
 import { db } from './firebase';
@@ -6,7 +5,6 @@ import { collection, addDoc, serverTimestamp, query, where, getDocs, updateDoc, 
 import { headers } from 'next/headers';
 import { getActiveAccountId } from './auth-actions';
 import crypto from 'crypto';
-
 
 type LogType = 'ai' | 'database' | 'validation' | 'auth' | 'unknown';
 type ReportType = 'auto' | 'submitted';
@@ -18,7 +16,7 @@ export async function logError(
     reportType: ReportType = 'auto'
 ) {
     let errorMessage: string;
-    const ip = headers().get('x-forwarded-for') || 'Unknown IP';
+    const ip = (await headers()).get('x-forwarded-for') || 'Unknown IP';
     const accountId = await getActiveAccountId();
 
     if (error instanceof Error) {

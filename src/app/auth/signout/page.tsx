@@ -3,7 +3,7 @@
 
 import { useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
-import { logoutActiveSession } from "@/actions/auth/logout"
+import { logoutActiveSession } from "@/actions/auth/signout"
 
 // This page handles the sign-out process.
 // It uses a client-side effect to call a server action,

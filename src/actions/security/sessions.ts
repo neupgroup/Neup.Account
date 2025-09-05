@@ -5,9 +5,9 @@ import { doc, collection, query, where, getDocs, updateDoc, writeBatch } from 'f
 import { getActiveAccountId, getActiveSession } from '@/lib/auth-actions';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
-import type { UserSession } from '@/types';
+import type { Session } from '@/types';
 
-export async function getUserSessions(): Promise<UserSession[]> {
+export async function getUserSessions(): Promise<Session[]> {
     try {
         const accountId = await getActiveAccountId();
         if (!accountId) {
@@ -18,7 +18,7 @@ export async function getUserSessions(): Promise<UserSession[]> {
         const q = query(sessionsRef, where('accountId', '==', accountId), where('isExpired', '==', false));
         const querySnapshot = await getDocs(q);
         
-        type SessionInternal = UserSession & { rawLastLoggedIn: Date };
+        type SessionInternal = Session & { rawLastLoggedIn: Date };
 
         const sessions: SessionInternal[] = querySnapshot.docs.map(doc => {
             const data = doc.data();
@@ -37,7 +37,7 @@ export async function getUserSessions(): Promise<UserSession[]> {
         sessions.sort((a, b) => b.rawLastLoggedIn.getTime() - a.rawLastLoggedIn.getTime());
         
         // This is a type-only change, so we can cast it.
-        return sessions as unknown as UserSession[];
+        return sessions as unknown as Session[];
         
     } catch (error) {
         await logError('database', error, `getUserSessions`);

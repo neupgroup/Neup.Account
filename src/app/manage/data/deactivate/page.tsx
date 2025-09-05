@@ -1,17 +1,9 @@
-
 "use client";
 
 import { useState, useTransition, useContext } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { deactivateAccount } from "@/actions/data/deactivate";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import {  Card, CardContent, CardFooter, CardHeader} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Loader2, PowerOff } from "@/components/icons";

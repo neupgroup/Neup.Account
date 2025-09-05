@@ -14,6 +14,7 @@ import {
   writeBatch,
   serverTimestamp,
   setDoc,
+  orderBy,
 } from 'firebase/firestore';
 import { getUserNeupIds, getUserProfile, getAccountType } from '@/lib/user';
 import { getPersonalAccountId } from '@/lib/auth-actions';
@@ -145,8 +146,8 @@ export async function updateUserPermissions(accountId: string, newPermissionIds:
             await updateDoc(permitDocRef, dataToSet);
         }
         
-        const adminId = await getPersonalAccountId();
-        await logActivity(accountId, `Permissions updated by admin ${adminId}`, 'Success', undefined, adminId);
+        const adminId = await getPersonalAccountId() ?? "";
+        await logActivity(accountId, `Permissions updated by root user ${adminId}`, 'Success', undefined, adminId);
         revalidatePath(`/manage/root/accounts/${accountId}/permissions`);
 
         return { success: true };

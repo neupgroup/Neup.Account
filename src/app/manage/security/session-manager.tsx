@@ -6,11 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Laptop, MapPin } from 'lucide-react';
 import { logoutSessionById, logoutAllOtherSessions } from '@/actions/security/sessions';
-import type { UserSession } from '@/types';
+import type { Session } from '@/types';
 import { useToast } from '@/hooks/use-toast';
 import { CardFooter } from '@/components/ui/card';
 
-export function SessionManager({ initialSessions, currentSessionId }: { initialSessions: UserSession[], currentSessionId: string | null }) {
+export function SessionManager({ initialSessions, currentSessionId }: { initialSessions: Session[], currentSessionId: string | null }) {
     const [sessions, setSessions] = useState(initialSessions);
     const [isPending, startTransition] = useTransition();
     const router = useRouter();

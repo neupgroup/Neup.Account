@@ -88,6 +88,7 @@ export async function getSystemErrors({
     }
 }
 
+// Function to get detailed error info.
 export async function getErrorDetails(id: string): Promise<SystemErrorDetails | null> {
     try {
         const errorRef = doc(db, 'error', id);

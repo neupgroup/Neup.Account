@@ -1,5 +1,3 @@
-
-
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -146,7 +144,7 @@ export async function impersonateUser(userId: string, neupId: string): Promise<{
     if (!adminId) return { success: false, error: 'Administrator not authenticated.' };
 
     try {
-        const headersList = headers();
+        const headersList = await headers();
         const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';
         const userAgent = headersList.get('user-agent') || 'Unknown User-Agent';
 
@@ -165,7 +163,7 @@ export async function impersonateUser(userId: string, neupId: string): Promise<{
             loginType: 'Impersonation',
         });
         
-        const cookieStore = cookies();
+        const cookieStore = await cookies();
         const cookieOptions = { path: '/', expires: expiresOn, sameSite: 'lax' as const, secure: true, httpOnly: true };
 
         cookieStore.set('auth_account_id', userId, cookieOptions);

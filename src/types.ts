@@ -1,6 +1,6 @@
 
 
-export type UserSession = {
+export type Session = {
   id: string;
   ipAddress: string;
   userAgent: string;
