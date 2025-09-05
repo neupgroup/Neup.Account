@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { AlertTriangle, X, Bell, Info } from '@/components/icons';
+import { AlertTriangle, X, Bell, MessageSquareWarning } from '@/components/icons';
 import type { AllNotifications, Notification } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -134,7 +134,7 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                         <CardContent className="divide-y p-0">
                             {notifications.other.map(item => (
                                 <div key={item.id} className="flex items-start gap-4 p-4">
-                                    <Info className="h-5 w-5 text-muted-foreground mt-0.5" />
+                                    <MessageSquareWarning className="h-5 w-5 text-muted-foreground mt-0.5" />
                                     <div className="flex-grow">
                                         <p className="text-sm">{item.message}</p>
                                         <p className="text-xs text-muted-foreground">{new Date(item.createdAt).toLocaleString()}</p>
