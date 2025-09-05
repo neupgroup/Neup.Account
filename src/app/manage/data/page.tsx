@@ -6,11 +6,11 @@ import { getConnectedApplications, type Application } from "@/actions/data/appli
 import { ListItem } from "@/components/ui/list-item";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 
-const ICON_MAP: Record<Application['icon'], React.ElementType> = {
-    'app-window': AppWindow,
-    'building': Building,
-    'bar-chart': BarChart,
-    'share-2': Share2,
+const ICON_MAP: Record<Application['icon'], string> = {
+    'app-window': "AppWindow",
+    'building': "Building",
+    'bar-chart': "BarChart",
+    'share-2': "Share2",
 };
 
 export default async function DataAndPrivacyPage() {
@@ -19,31 +19,31 @@ export default async function DataAndPrivacyPage() {
     
     const privacyFeatures = [
          {
-            icon: History,
+            iconName: "History",
             title: "Your Account Activity",
             description: "View a log of recent actions performed on your account.",
             href: "/manage/data/activity",
         },
         {
-            icon: FileText,
+            iconName: "FileText",
             title: "Agreed Terms",
             description: "Review terms and conditions you have agreed to.",
             href: "/manage/data/policies",
         },
         {
-            icon: Trash2,
+            iconName: "Trash2",
             title: "Delete Your Account",
             description: "Permanently delete your account and associated data.",
             href: "/manage/data/delete",
         },
         {
-            icon: PowerOff,
+            iconName: "PowerOff",
             title: "Deactivate Your Account",
             description: "Temporarily deactivate your account.",
             href: "/manage/data/deactivate",
         },
         {
-            icon: CalendarClock,
+            iconName: "CalendarClock",
             title: "Schedule Deletion (Materialization)",
             description: "Request data deletion after a period of inactivity.",
             href: "/manage/data/materialization",
@@ -80,7 +80,7 @@ export default async function DataAndPrivacyPage() {
                             {firstParty.map((app) => (
                                 <ListItem 
                                     key={app.id}
-                                    icon={ICON_MAP[app.icon] || AppWindow}
+                                    iconName={ICON_MAP[app.icon] || "AppWindow"}
                                     title={app.name}
                                     description={app.description}
                                     href={`/manage/data/1/${app.id}`} 
@@ -102,7 +102,7 @@ export default async function DataAndPrivacyPage() {
                             {thirdParty.map((app) => (
                                 <ListItem 
                                     key={app.id}
-                                    icon={ICON_MAP[app.icon] || Share2}
+                                    iconName={ICON_MAP[app.icon] || "Share2"}
                                     title={app.name}
                                     description={app.description}
                                     href={`/manage/data/3/${app.id}`} 
