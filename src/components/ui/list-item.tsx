@@ -1,79 +1,99 @@
-
 'use client';
 
+import React from 'react';
 import Link from 'next/link';
-import React, { useTransition } from 'react';
-import { ChevronRight, X, type LucideIcon } from '@/components/icons';
-import { Button } from './button';
-import { useToast } from '@/hooks/use-toast';
-import { markNotificationAsRead, type Notification } from '@/actions/notifications';
+import { 
+  KeyRound, 
+  ShieldCheck, 
+  FileLock2, 
+  Users, 
+  Smartphone, 
+  Mail, 
+  Laptop, 
+  Globe, 
+  UserCircle, 
+  FileText, 
+  HeartHandshake, 
+  AtSign, 
+  Contact, 
+  Building,
+  Bot,
+  UserPlus,
+  History,
+  Trash2,
+  PowerOff,
+  CalendarClock,
+  AppWindow,
+  Share2,
+  BarChart,
+  MailQuestion,
+  UserX,
+  CreditCard,
+  Wallet,
+  Gem
+} from '@/components/icons';
 
-type ListItemProps = {
-  href: string;
-  title: string;
-  description?: string;
-  icon: LucideIcon;
-  isExternal?: boolean;
-  notification?: Notification;
+// Icon mapping object
+const iconMap = {
+  KeyRound,
+  ShieldCheck,
+  FileLock2,
+  Users,
+  Smartphone,
+  Mail,
+  Laptop,
+  Globe,
+  UserCircle,
+  FileText,
+  HeartHandshake,
+  AtSign,
+  Contact,
+  Building,
+  Bot,
+  UserPlus,
+  History,
+  Trash2,
+  PowerOff,
+  CalendarClock,
+  AppWindow,
+  Share2,
+  BarChart,
+  MailQuestion,
+  UserX,
+  CreditCard,
+  Wallet,
+  Gem
 };
 
-export const ListItem = ({
-  href,
-  title,
-  description,
-  icon: Icon,
-  isExternal = false,
-  notification,
-}: ListItemProps) => {
-    const [isPending, startTransition] = useTransition();
-    const [isDismissed, setIsDismissed] = React.useState(false);
-    const { toast } = useToast();
+interface ListItemProps {
+  icon: string; // Now accepts string instead of component
+  title: string;
+  description: string;
+  href: string;
+}
 
-    const handleDismiss = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        if (!notification) return;
-
-        startTransition(async () => {
-            const result = await markNotificationAsRead(notification.id);
-            if(result.success) {
-                toast({ title: 'Notification dismissed' });
-                setIsDismissed(true);
-            } else {
-                toast({ variant: 'destructive', title: 'Error', description: 'Could not dismiss notification.' });
-            }
-        })
-    }
-
-    if (isDismissed) {
-        return null;
-    }
-
-    const isDismissible = notification && !notification.action.includes('request') && notification.persistence === 'dismissable';
-
+export function ListItem({ icon, title, description, href }: ListItemProps) {
+  // Get the icon component from the map
+  const IconComponent = iconMap[icon as keyof typeof iconMap];
 
   return (
-    <Link
-      href={href}
-      className="flex items-center gap-4 py-4 px-4 rounded-lg transition-colors hover:bg-muted/50"
-      target={isExternal ? '_blank' : '_self'}
-      rel={isExternal ? 'noopener noreferrer' : ''}
-    >
-      <Icon className="h-6 w-6 text-muted-foreground" />
-      <div className="flex-grow">
-        <p className="font-medium">{title}</p>
-        {description && (
-          <p className="text-sm text-muted-foreground">{description}</p>
+    <Link href={href} className="block p-4 hover:bg-gray-50 transition-colors">
+      <div className="flex items-center gap-3">
+        {IconComponent && (
+          <div className="flex-shrink-0">
+            <IconComponent className="w-5 h-5 text-gray-600" />
+          </div>
         )}
+        <div className="flex-1">
+          <h3 className="font-medium text-gray-900">{title}</h3>
+          <p className="text-sm text-gray-600 mt-1">{description}</p>
+        </div>
+        <div className="flex-shrink-0">
+          <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
       </div>
-      {isDismissible ? (
-         <Button onClick={handleDismiss} variant="ghost" size="icon" className="h-8 w-8 flex-shrink-0" disabled={isPending}>
-            <X className="h-5 w-5" />
-        </Button>
-      ) : (
-        <ChevronRight className="h-5 w-5 text-muted-foreground" />
-      )}
     </Link>
   );
-};
+}

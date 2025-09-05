@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import React, { useState, useEffect, useContext, useTransition } from "react"
 import { useToast } from "@/hooks/use-toast"
-import { loginUser } from "@/actions/auth/signin"
+import { initiateLogin } from "@/actions/auth/login"
 import { validateNeupId } from "@/lib/user"
 import { cancelAccountDeletion } from "@/actions/data/delete"
 import NProgress from 'nprogress'
@@ -97,21 +97,20 @@ export default function SigninForm() {
     startPasswordSubmit(async () => {
         NProgress.start();
         try {
-            const locationString = geo?.latitude && geo?.longitude ? `${geo.latitude},${geo.longitude}` : undefined;
-            const result = await loginUser({ neupId: neupId.toLowerCase(), password, geolocation: locationString });
+            const result = await initiateLogin({ neupId: neupId.toLowerCase(), password });
             
             if (result.success) {
-                setIsRedirecting(true);
-                router.push("/manage");
-                // router.refresh() will be triggered by NProgressEvents on navigation
-            } else if (result.error === 'pending_deletion') {
-                setShowDeletionDialog(true);
-                NProgress.done();
+                if (result.mfaRequired) {
+                    router.push("/auth/signin/mfa");
+                } else {
+                    setIsRedirecting(true);
+                    router.push("/manage");
+                }
             } else {
                 toast({
-                variant: "destructive",
-                title: "Sign In Failed",
-                description: result.error || "An unexpected error occurred.",
+                    variant: "destructive",
+                    title: "Sign In Failed",
+                    description: result.error || "An unexpected error occurred.",
                 });
                 NProgress.done();
             }

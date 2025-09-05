@@ -10,12 +10,23 @@ export default async function AccountDetailsPage({ params }: { params: { id: str
         notFound();
     }
     
-    // The param is now the accountId
     const userDetails = await getUserDetails(params.id);
 
     if (!userDetails) {
         notFound();
     }
 
-    return <UserDetailsClient initialUserDetails={userDetails} />;
+    const serializedDob = userDetails.profile.dob?.toString();
+
+    return (
+        <UserDetailsClient 
+            initialUserDetails={{
+                ...userDetails,
+                profile: {
+                    ...userDetails.profile,
+                    dob: serializedDob,
+                },
+            }}
+        />
+    );
 }

@@ -23,7 +23,7 @@ if (!ENCRYPTION_KEY || ENCRYPTION_KEY.length < 64) {
 
 // Basic encryption/decryption functions using Node.js crypto
 // In a production app, use a dedicated KMS for this.
-async function encrypt(text: string): Promise<string> {
+export async function encrypt(text: string): Promise<string> {
     const { subtle } = await import('crypto');
     const key = await subtle.importKey('raw', Buffer.from(ENCRYPTION_KEY, 'hex'), { name: 'AES-GCM' }, false, ['encrypt']);
     const iv = crypto.randomBytes(12);
@@ -32,7 +32,7 @@ async function encrypt(text: string): Promise<string> {
     return `${iv.toString('hex')}:${Buffer.from(encrypted).toString('hex')}`;
 }
 
-async function decrypt(encryptedText: string): Promise<string> {
+export async function decrypt(encryptedText: string): Promise<string> {
     const { subtle } = await import('crypto');
     const [ivHex, encryptedHex] = encryptedText.split(':');
     if (!ivHex || !encryptedHex) throw new Error('Invalid encrypted text format');

@@ -1,6 +1,5 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Wallet, History, Gem, CreditCard, Ban } from "@/components/icons";
 import React from "react";
 import { checkPermissions } from "@/lib/user";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -18,7 +17,7 @@ export default async function PaymentSubscriptionPage() {
 
     const features = [
         {
-            icon: CreditCard,
+            icon: "CreditCard",
             title: "Payment Methods",
             description: "Manage your saved payment methods.",
             href: "https://neupgroup.com/wallet/methods",
@@ -26,7 +25,7 @@ export default async function PaymentSubscriptionPage() {
             show: canViewMethods,
         },
         {
-            icon: History,
+            icon: "History",
             title: "Transactions History",
             description: "View your past purchases and transactions.",
             href: "https://neupgroup.com/wallet/history?source=neup",
@@ -34,7 +33,7 @@ export default async function PaymentSubscriptionPage() {
             show: canViewHistory,
         },
         {
-            icon: Wallet,
+            icon: "Wallet",
             title: "Subscriptions",
             description: "Manage your active subscriptions with Neup and third-parties.",
             href: "https://neupgroup.com/wallet/subscriptions",
@@ -42,7 +41,7 @@ export default async function PaymentSubscriptionPage() {
             show: canViewSubscriptions,
         },
         {
-            icon: Gem,
+            icon: "Gem",
             title: "Purchase Neup.Pro",
             description: "Upgrade your account to access premium features.",
             href: "/manage/payment/neup.pro",
