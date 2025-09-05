@@ -160,9 +160,7 @@ export async function getDelegatablePermissions(): Promise<Permission[]> {
     const managedAccountId = await getActiveAccountId();
     
     if (!managerId || !managedAccountId || managerId === managedAccountId) {
-        // This function is for when a personal account is managing another account.
-        // For self-permissions, the logic is simpler and doesn't require this complex check.
-        // Fallback to user's own permissions if not in a managing context.
+        // Fallback for self-permissions if not in a managing context.
         const selfPermitQuery = query(collection(db, 'permit'), where('account_id', '==', managerId), where('for_self', '==', true));
         const selfPermitSnapshot = await getDocs(selfPermitQuery);
         if (selfPermitSnapshot.empty) return [];
@@ -195,7 +193,7 @@ export async function getDelegatablePermissions(): Promise<Permission[]> {
         return allPermsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Permission)).filter(p => !p.name.startsWith('root.'));
     }
     
-    // Otherwise, they can only delegate the permissions they have been explicitly assigned for this managed account.
+    // Otherwise, they can only delegate the permissions they have been explicitly assigned.
     const assignedIds = permitData.permission || [];
     if (assignedIds.length === 0) return [];
     

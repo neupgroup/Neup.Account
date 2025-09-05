@@ -1,5 +1,5 @@
 
-import { checkPermissions } from '@/lib/user-actions';
+import { checkPermissions } from '@/lib/user';
 import { notFound } from 'next/navigation';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import { Ban } from '@/components/icons';

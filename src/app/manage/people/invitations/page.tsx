@@ -22,7 +22,7 @@ function InvitationCard({ invitation, onAction }: { invitation: Invitation, onAc
             return `${invitation.senderName} has invited you to join their family.`;
         }
         if (invitation.action === 'access_invitation') {
-            return `${invitation.senderName} wants to manage your account.`;
+            return `${invitation.senderName} wants you to help manage their account.`;
         }
         return 'You have a new request.';
     };

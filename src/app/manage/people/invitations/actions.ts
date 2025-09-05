@@ -1,3 +1,4 @@
+
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -106,9 +107,12 @@ export async function acceptRequest(requestId: string, notificationId: string): 
         
         batch.set(permitRef, {
             account_id: inviteeId,
-            target_id: requestData.sender_id,
+            target_account: requestData.sender_id,
             permission: [permId],
+            for_self: false,
             is_root: false,
+            full_access: false, // Delegated access is not full access
+            restrictions: [],
             created_on: serverTimestamp(),
             approved_on: serverTimestamp()
         });
