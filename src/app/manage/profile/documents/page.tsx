@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useTransition, useEffect, useRef } from 'react';
@@ -7,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useToast } from '@/hooks/use-toast';
 import { kycFormSchema, type KycFormValues } from '@/schemas/kyc';
-import { submitKyc } from './actions';
+import { submitKyc } from '@/actions/manage/profile/documents';
 import { getUserProfile } from '@/lib/user';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 
