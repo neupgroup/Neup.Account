@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from "next/link"
@@ -5,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
-import { type NavSection, navItems, navIcons, allPermissionsMap } from "./nav-data"
+import { type NavSection, navItems, allPermissionsMap } from "./nav-data"
 import { Skeleton } from "./ui/skeleton";
 import { useSession } from "@/context/session-context";
 
@@ -25,7 +26,6 @@ export function DashboardNav() {
         const navItemsWithPerms = (items: Omit<any, 'requiredPermissions' | 'iconName'>[]): any[] => {
             return items.map(item => ({
                 ...item,
-                iconName: navIcons[item.label] || "UserCircle",
                 requiredPermissions: allPermissionsMap[item.label] || []
             })).filter(item => hasAnyPermissionFor(item.requiredPermissions));
         };
@@ -48,9 +48,9 @@ export function DashboardNav() {
         
         if (isManaging) {
             config.push({ title: title || "Brand", items: [
-                { href: "/manage/home", label: "Dashboard", description: "Your central account management hub.", iconName: "Dashboard", requiredPermissions: [] },
-                { href: "/manage/profile", label: "Brand Info", description: "Manage brand profile.", iconName: "BrandInfo", requiredPermissions: ['profile.view'] },
-                { href: "/manage/accounts/branches", label: "Branches", description: "Manage brand branches.", iconName: "LinkedAccounts", requiredPermissions: ['linked_accounts.brand.manage'] },
+                { href: "/manage/home", label: "Dashboard", description: "Your central account management hub.", requiredPermissions: [] },
+                { href: "/manage/profile", label: "Brand Info", description: "Manage brand profile.", requiredPermissions: ['profile.view'] },
+                { href: "/manage/accounts/branches", label: "Branches", description: "Manage brand branches.", requiredPermissions: ['linked_accounts.brand.manage'] },
             ]});
              config.push({ title: "Account", items: visibleAccountNav });
 
