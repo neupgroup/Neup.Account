@@ -57,6 +57,12 @@ This is the most critical security step. Your application's **backend** must mak
 
 **Warning: This request must ONLY be made from your secure server environment. Never make this request from the user's browser, as it would expose your `appSecret`.**
 
+**As a best practice, store your application's secret key and other credentials in environment variables (e.g., in a `.env` file) or a secure key storage service, rather than hardcoding them in your application. For example:**
+- `NEUP_APP_ID=my-cool-app`
+- `NEUP_APP_SECRET=your_super_secret_key_here`
+- `NEUP_ACCOUNT_API_URL=https://neup.account.com`
+
+
 **Endpoint**: `/bridge/api/auth/verify`
 
 ### Request Body
