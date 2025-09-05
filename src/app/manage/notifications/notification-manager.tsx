@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState, useTransition, useEffect } from 'react';
@@ -84,16 +85,20 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                      <div className="space-y-3">
                         {notifications.sticky.map(warning => (
                              <div key={warning.id} className={cn(warningVariants({ noticeType: warning.noticeType }))}>
-                                <AlertTriangle className="h-4 w-4" />
-                                <div className="flex-1 ml-4">
-                                     <h5 className="mb-1 font-medium leading-none tracking-tight">Important Notice</h5>
-                                    <div className="text-sm [&_p]:leading-relaxed" dangerouslySetInnerHTML={{ __html: warning.message || "" }} />
+                                <div className="flex items-start justify-between gap-4">
+                                    <div className="flex items-start gap-3">
+                                        <AlertTriangle className="h-4 w-4" />
+                                        <div className="flex-1">
+                                            <h5 className="mb-1 font-medium leading-none tracking-tight">Important Notice</h5>
+                                            <div className="text-sm [&_p]:leading-relaxed" dangerouslySetInnerHTML={{ __html: warning.message || "" }} />
+                                        </div>
+                                    </div>
+                                    {canMarkAsRead && warning.persistence === 'dismissable' && (
+                                    <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0" onClick={() => handleDismiss(warning.id, 'sticky')} disabled={isPending} aria-label="Dismiss warning">
+                                        <X className="h-4 w-4" />
+                                    </Button>
+                                    )}
                                 </div>
-                                {canMarkAsRead && warning.persistence === 'dismissable' && (
-                                <Button variant="ghost" size="icon" className="absolute top-2 right-2 h-6 w-6" onClick={() => handleDismiss(warning.id, 'sticky')} disabled={isPending} aria-label="Dismiss warning">
-                                    <X className="h-4 w-4" />
-                                </Button>
-                                )}
                             </div>
                         ))}
                     </div>
@@ -133,13 +138,15 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                     <Card>
                         <CardContent className="divide-y p-0">
                             {notifications.other.map(item => (
-                                <div key={item.id} className="flex items-start gap-4 p-4">
-                                    <MessageSquareWarning className="h-5 w-5 text-muted-foreground mt-0.5" />
-                                    <div className="flex-grow">
-                                        <p className="text-sm">{item.message}</p>
-                                        <p className="text-xs text-muted-foreground">{new Date(item.createdAt).toLocaleString()}</p>
+                                <div key={item.id} className="flex items-start justify-between gap-4 p-4">
+                                    <div className="flex items-start gap-3">
+                                        <MessageSquareWarning className="h-5 w-5 text-muted-foreground mt-0.5" />
+                                        <div className="flex-grow">
+                                            <p className="text-sm">{item.message}</p>
+                                            <p className="text-xs text-muted-foreground">{new Date(item.createdAt).toLocaleString()}</p>
+                                        </div>
                                     </div>
-                                    <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => handleDismiss(item.id, 'other')} disabled={isPending}>
+                                    <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0" onClick={() => handleDismiss(item.id, 'other')} disabled={isPending}>
                                         <X className="h-4 w-4" />
                                     </Button>
                                 </div>
