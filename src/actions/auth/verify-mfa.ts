@@ -1,3 +1,4 @@
+
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -19,24 +20,24 @@ export async function verifyMfa(data: z.infer<typeof mfaSchema>): Promise<{ succ
     }
 
     const { token } = validation.data;
-    const tempAuthId = cookies().get('temp_auth_id')?.value;
+    const authRequestId = cookies().get('auth_request_id')?.value;
 
-    if (!tempAuthId) {
+    if (!authRequestId) {
         return { success: false, error: 'Authentication request not found. Please try again.' };
     }
 
-    const authRequestRef = doc(db, 'authentication_requests', tempAuthId);
+    const authRequestRef = doc(db, 'auth_requests', authRequestId);
     const authRequestDoc = await getDoc(authRequestRef);
 
     if (!authRequestDoc.exists() || authRequestDoc.data().expiresAt.toDate() < new Date()) {
-        cookies().delete('temp_auth_id');
+        cookies().delete('auth_request_id');
         return { success: false, error: 'Authentication request expired. Please try again.' };
     }
 
     const { accountId, status } = authRequestDoc.data();
 
     if (status !== 'pending_mfa') {
-        return { success: false, error: 'Invalid authentication request.' };
+        return { success: false, error: 'Invalid authentication request state.' };
     }
 
     const totpRef = doc(db, 'auth_totp', accountId);
@@ -58,8 +59,12 @@ export async function verifyMfa(data: z.infer<typeof mfaSchema>): Promise<{ succ
     }
 
     // MFA successful, update the request and create the user session
-    await updateDoc(authRequestRef, { status: 'completed' });
-    cookies().delete('temp_auth_id');
+    await updateDoc(authRequestRef, { 
+        status: 'completed',
+        'data.mfa_method': 'totp',
+        'data.mfa': 'authenticated',
+    });
+    cookies().delete('auth_request_id');
 
     const headersList = headers();
     const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';

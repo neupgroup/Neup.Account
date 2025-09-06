@@ -2,7 +2,7 @@
 'use server';
 
 import { db } from '@/lib/firebase';
-import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { cookies, headers } from 'next/headers';
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcryptjs';
@@ -46,18 +46,24 @@ export async function initiateLogin(data: z.infer<typeof loginFormSchema>): Prom
 
     const totpRef = doc(db, 'auth_totp', accountId);
     const totpDoc = await getDoc(totpRef);
+    
+    const requestId = uuidv4();
+    const authRequestRef = doc(db, 'auth_requests', requestId);
 
     if (totpDoc.exists()) {
-        const requestId = uuidv4();
-        const authRequestRef = doc(db, 'authentication_requests', requestId);
         await setDoc(authRequestRef, {
             accountId,
+            type: 'signin',
             status: 'pending_mfa',
+            data: {
+                neupid: lowerCaseNeupId,
+                password: 'authenticated',
+            },
             createdAt: serverTimestamp(),
             expiresAt: new Date(Date.now() + THREE_MINUTES_IN_MS),
         });
 
-        cookies().set('temp_auth_id', requestId, { httpOnly: true, secure: true, maxAge: 180 });
+        cookies().set('auth_request_id', requestId, { httpOnly: true, secure: true, maxAge: 180 });
 
         return { success: true, mfaRequired: true };
     } else {
