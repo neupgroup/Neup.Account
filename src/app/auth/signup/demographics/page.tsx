@@ -122,7 +122,7 @@ export default function DemographicsStepPage() {
                                 <RadioGroup
                                     onValueChange={field.onChange}
                                     value={field.value}
-                                    className="flex flex-col space-y-1"
+                                    className="flex flex-col"
                                 >
                                     <FormItem className="flex items-center space-x-3 space-y-0 rounded-md border border-transparent p-2 transition-colors hover:border-border data-[state=checked]:border-primary">
                                         <FormControl><RadioGroupItem value="male" /></FormControl>
