@@ -124,21 +124,21 @@ export default function DemographicsStepPage() {
                                     value={field.value}
                                     className="flex flex-col space-y-1"
                                 >
-                                    <FormItem className="flex items-center space-x-3 space-y-0">
+                                    <FormItem className="flex items-center space-x-3 space-y-0 rounded-md border border-transparent p-2 transition-colors hover:border-border data-[state=checked]:border-primary">
                                         <FormControl><RadioGroupItem value="male" /></FormControl>
-                                        <FormLabel className="font-normal">Male</FormLabel>
+                                        <FormLabel className="font-normal cursor-pointer">Male</FormLabel>
                                     </FormItem>
-                                    <FormItem className="flex items-center space-x-3 space-y-0">
+                                    <FormItem className="flex items-center space-x-3 space-y-0 rounded-md border border-transparent p-2 transition-colors hover:border-border data-[state=checked]:border-primary">
                                         <FormControl><RadioGroupItem value="female" /></FormControl>
-                                        <FormLabel className="font-normal">Female</FormLabel>
+                                        <FormLabel className="font-normal cursor-pointer">Female</FormLabel>
                                     </FormItem>
-                                    <FormItem className="flex items-center space-x-3 space-y-0">
+                                    <FormItem className="flex items-center space-x-3 space-y-0 rounded-md border border-transparent p-2 transition-colors hover:border-border data-[state=checked]:border-primary">
                                         <FormControl><RadioGroupItem value="prefer_not_to_say" /></FormControl>
-                                        <FormLabel className="font-normal">Prefer not to say</FormLabel>
+                                        <FormLabel className="font-normal cursor-pointer">Prefer not to say</FormLabel>
                                     </FormItem>
-                                    <FormItem className="flex items-center space-x-3 space-y-0">
+                                    <FormItem className="flex items-center space-x-3 space-y-0 rounded-md border border-transparent p-2 transition-colors hover:border-border data-[state=checked]:border-primary">
                                         <FormControl><RadioGroupItem value="custom" /></FormControl>
-                                        <FormLabel className="font-normal">Custom</FormLabel>
+                                        <FormLabel className="font-normal cursor-pointer">Custom</FormLabel>
                                     </FormItem>
                                 </RadioGroup>
                             </FormControl>
