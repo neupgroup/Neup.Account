@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,12 +14,16 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "@/components/icons";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 type FormData = z.infer<typeof nameSchema>;
 
 export default function NameStepPage() {
     const router = useRouter();
     const { toast } = useToast();
+    const [showMiddleName, setShowMiddleName] = useState(false);
+
     const form = useForm<FormData>({
         resolver: zodResolver(nameSchema),
         defaultValues: {
@@ -38,6 +42,9 @@ export default function NameStepPage() {
                     middleName: data.middleName || "",
                     lastName: data.lastName || "",
                 });
+                if (data.middleName) {
+                    setShowMiddleName(true);
+                }
             }
         }
         loadData();
@@ -66,13 +73,24 @@ export default function NameStepPage() {
                         <FormMessage />
                     </FormItem>
                 )} />
-                 <FormField control={form.control} name="middleName" render={({ field }) => (
-                    <FormItem>
-                        <FormLabel>Middle Name (Optional)</FormLabel>
-                        <FormControl><Input {...field} /></FormControl>
-                        <FormMessage />
-                    </FormItem>
-                )} />
+
+                {!showMiddleName && (
+                     <div className="flex items-center space-x-2">
+                        <Checkbox id="hasMiddleName" onCheckedChange={(checked) => setShowMiddleName(!!checked)} />
+                        <Label htmlFor="hasMiddleName" className="font-normal cursor-pointer">I have a middle name</Label>
+                    </div>
+                )}
+               
+                {showMiddleName && (
+                    <FormField control={form.control} name="middleName" render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Middle Name</FormLabel>
+                            <FormControl><Input {...field} /></FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )} />
+                )}
+                 
                  <FormField control={form.control} name="lastName" render={({ field }) => (
                     <FormItem>
                         <FormLabel>Last Name</FormLabel>
