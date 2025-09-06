@@ -46,7 +46,7 @@ export default function DemographicsStepPage() {
         async function loadData() {
             const { data } = await getSignupStepData();
             if (data) {
-                let formGender = data.gender || 'prefer_not_to_say';
+                let formGender = data.gender;
                 let formCustomGender = "";
                 if (data.gender?.startsWith('c.')) {
                     formCustomGender = data.gender.substring(2);
@@ -118,7 +118,7 @@ export default function DemographicsStepPage() {
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Gender</FormLabel>
-                            <FormControl className="!mt-4">
+                            <FormControl className="!mt-2">
                                 <RadioGroup onValueChange={field.onChange} value={field.value} className="flex flex-col gap-2">
                                     <FormItem>
                                         <RadioGroupItem value="male" id="gender-male" className="peer sr-only" />
