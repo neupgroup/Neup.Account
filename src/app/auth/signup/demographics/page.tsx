@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -116,18 +117,31 @@ export default function DemographicsStepPage() {
                         <FormItem className="space-y-3">
                             <FormLabel>Gender</FormLabel>
                             <FormControl>
-                                <RadioGroup onValueChange={field.onChange} value={field.value} className="grid grid-cols-2 gap-4">
-                                    <FormItem><RadioGroupItem value="male" id="gender-male" className="peer sr-only" /><Label htmlFor="gender-male" className="flex h-full cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary">Male</Label></FormItem>
-                                    <FormItem><RadioGroupItem value="female" id="gender-female" className="peer sr-only" /><Label htmlFor="gender-female" className="flex h-full cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary">Female</Label></FormItem>
-                                    <FormItem><RadioGroupItem value="prefer_not_to_say" id="gender-pnts" className="peer sr-only" /><Label htmlFor="gender-pnts" className="flex h-full cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary">Prefer not to say</Label></FormItem>
-                                    <FormItem>
-                                        <RadioGroupItem value="custom" id="gender-custom" className="peer sr-only" />
-                                        <Label htmlFor="gender-custom" className={cn("flex h-full cursor-pointer items-center justify-between rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground", field.value === 'custom' && "border-primary")}>
-                                            <span>Custom</span>
-                                            {field.value === 'custom' && (
-                                                <FormField control={form.control} name="customGender" render={({ field: customField }) => (<Input {...customField} placeholder="Specify" onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className="ml-2 h-8 w-auto flex-grow" />)} />
-                                            )}
-                                        </Label>
+                                <RadioGroup onValueChange={field.onChange} value={field.value} className="space-y-2">
+                                    <FormItem className="flex items-center space-x-3 space-y-0">
+                                        <FormControl><RadioGroupItem value="male" /></FormControl>
+                                        <FormLabel className="font-normal">Male</FormLabel>
+                                    </FormItem>
+                                    <FormItem className="flex items-center space-x-3 space-y-0">
+                                        <FormControl><RadioGroupItem value="female" /></FormControl>
+                                        <FormLabel className="font-normal">Female</FormLabel>
+                                    </FormItem>
+                                    <FormItem className="flex items-center space-x-3 space-y-0">
+                                        <FormControl><RadioGroupItem value="prefer_not_to_say" /></FormControl>
+                                        <FormLabel className="font-normal">Prefer not to say</FormLabel>
+                                    </FormItem>
+                                    <FormItem className="flex items-center space-x-3 space-y-0">
+                                        <FormControl><RadioGroupItem value="custom" /></FormControl>
+                                        <FormLabel className="font-normal">Custom</FormLabel>
+                                        {field.value === 'custom' && (
+                                            <FormField
+                                                control={form.control}
+                                                name="customGender"
+                                                render={({ field: customField }) => (
+                                                    <Input {...customField} placeholder="Specify" className="h-8" />
+                                                )}
+                                            />
+                                        )}
                                     </FormItem>
                                 </RadioGroup>
                             </FormControl>
