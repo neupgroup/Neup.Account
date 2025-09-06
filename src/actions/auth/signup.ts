@@ -1,3 +1,4 @@
+
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -10,11 +11,34 @@ import { checkNeupIdAvailability } from '@/lib/user';
 import { logError } from '@/lib/logger';
 import { registrationSchema } from '@/schemas/auth';
 import type { z } from 'zod';
+import { v4 as uuidv4 } from 'uuid';
+import { cookies } from 'next/headers';
+
+
+const THREE_MINUTES_IN_MS = 3 * 60 * 1000;
+
 
 async function isFirstUser() {
     const accountsCollection = collection(db, 'account');
     const accountsSnapshot = await getDocs(query(accountsCollection, limit(1)));
     return accountsSnapshot.empty;
+}
+
+export async function initializeSignup() {
+    const requestId = uuidv4();
+    const authRequestRef = doc(db, 'auth_requests', requestId);
+
+    await setDoc(authRequestRef, {
+        type: 'signup',
+        status: 'pending_personal_details',
+        data: {},
+        createdAt: serverTimestamp(),
+        expiresAt: new Date(Date.now() + THREE_MINUTES_IN_MS * 5), // 15 mins for signup
+    });
+
+    cookies().set('auth_request_id', requestId, { httpOnly: true, secure: true, maxAge: 900 });
+
+    return { success: true, requestId };
 }
 
 

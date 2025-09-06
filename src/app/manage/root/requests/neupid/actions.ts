@@ -1,3 +1,4 @@
+
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -5,16 +6,7 @@ import { collection, query, where, getDocs, doc, getDoc, updateDoc, setDoc } fro
 import { getUserProfile, getUserNeupIds, checkPermissions } from '@/lib/user';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
-
-export type PendingNeupIdRequest = {
-    id: string;
-    userFullName: string;
-    requestedNeupId: string;
-    requestDate: string;
-    status: string;
-    currentNeupIds: string[];
-    accountId: string;
-};
+import type { PendingNeupIdRequest } from '@/types';
 
 // Internal type to include raw date for sorting
 type PendingRequestInternal = PendingNeupIdRequest & {
@@ -28,7 +20,7 @@ export async function getPendingNeupIdRequests(): Promise<PendingNeupIdRequest[]
 
     try {
         const requestsRef = collection(db, 'requests');
-        const q = query(requestsRef, where('status', '==', 'pending'));
+        const q = query(requestsRef, where('action', '==', 'neupid_request'), where('status', '==', 'pending'));
         const querySnapshot = await getDocs(q);
 
         if (querySnapshot.empty) {
@@ -67,7 +59,7 @@ export async function getPendingNeupIdRequests(): Promise<PendingNeupIdRequest[]
         );
         const validRequests = requests.filter((request): request is PendingRequestInternal => request !== null);
         validRequests.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        
         return validRequests.map(({ createdAt, ...rest }) => rest);
 
     } catch (error) {
