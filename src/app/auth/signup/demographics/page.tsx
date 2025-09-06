@@ -125,21 +125,24 @@ export default function DemographicsStepPage() {
                                 <RadioGroup
                                     onValueChange={field.onChange}
                                     value={field.value}
-                                    className="flex flex-col space-y-1"
+                                    className="flex flex-row flex-wrap justify-between items-center"
                                 >
                                    {genderOptions.map(option => (
-                                        <FormItem key={option} className="flex items-center space-x-3 space-y-0">
+                                        <FormItem key={option} className="flex items-center space-x-2 space-y-0">
                                             <FormControl>
                                                 <Checkbox
                                                     checked={field.value === option.toLowerCase().replace(/\s/g, '_')}
                                                     onCheckedChange={(checked) => {
                                                         if(checked) {
                                                             field.onChange(option.toLowerCase().replace(/\s/g, '_'));
+                                                        } else {
+                                                            // Optional: uncheck if clicked again, though this is not standard radio behavior
+                                                            // field.onChange(undefined);
                                                         }
                                                     }}
                                                 />
                                             </FormControl>
-                                            <FormLabel className="font-normal">
+                                            <FormLabel className="font-normal cursor-pointer">
                                                 {option}
                                             </FormLabel>
                                         </FormItem>
