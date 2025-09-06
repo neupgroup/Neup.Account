@@ -20,7 +20,7 @@ export async function verifyMfa(data: z.infer<typeof mfaSchema>): Promise<{ succ
     }
 
     const { token } = validation.data;
-    const authRequestId = cookies().get('auth_request_id')?.value;
+    const authRequestId = cookies().get('temp_auth_id')?.value;
 
     if (!authRequestId) {
         return { success: false, error: 'Authentication request not found. Please try again.' };
@@ -30,7 +30,7 @@ export async function verifyMfa(data: z.infer<typeof mfaSchema>): Promise<{ succ
     const authRequestDoc = await getDoc(authRequestRef);
 
     if (!authRequestDoc.exists() || authRequestDoc.data().expiresAt.toDate() < new Date()) {
-        cookies().delete('auth_request_id');
+        cookies().delete('temp_auth_id');
         return { success: false, error: 'Authentication request expired. Please try again.' };
     }
 
@@ -64,7 +64,7 @@ export async function verifyMfa(data: z.infer<typeof mfaSchema>): Promise<{ succ
         'data.mfa_method': 'totp',
         'data.mfa': 'authenticated',
     });
-    cookies().delete('auth_request_id');
+    cookies().delete('temp_auth_id');
 
     const headersList = headers();
     const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';

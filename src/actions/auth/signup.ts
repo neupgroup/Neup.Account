@@ -49,14 +49,14 @@ async function getAuthRequest(
     !authRequestDoc.exists() ||
     authRequestDoc.data().expiresAt.toDate() < new Date()
   ) {
-    cookies().delete('auth_request_id');
+    cookies().delete('temp_auth_id');
     return null;
   }
   return { data: authRequestDoc.data(), ref: authRequestRef };
 }
 
 export async function getSignupStepData() {
-  const authRequestId = cookies().get('auth_request_id')?.value;
+  const authRequestId = cookies().get('temp_auth_id')?.value;
   if (!authRequestId) {
     return { success: false, data: null };
   }
@@ -68,7 +68,7 @@ export async function getSignupStepData() {
 }
 
 export async function submitNameStep(data: z.infer<typeof nameSchema>) {
-  const authRequestId = cookies().get('auth_request_id')?.value;
+  const authRequestId = cookies().get('temp_auth_id')?.value;
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };
 
@@ -97,7 +97,7 @@ export async function submitNameStep(data: z.infer<typeof nameSchema>) {
 export async function submitDemographicsStep(
   data: z.infer<typeof demographicsSchema>
 ) {
-  const authRequestId = cookies().get('auth_request_id')?.value;
+  const authRequestId = cookies().get('temp_auth_id')?.value;
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };
 
@@ -129,7 +129,7 @@ export async function submitDemographicsStep(
 }
 
 export async function submitContactStep(data: z.infer<typeof contactSchema>) {
-  const authRequestId = cookies().get('auth_request_id')?.value;
+  const authRequestId = cookies().get('temp_auth_id')?.value;
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };
 
@@ -157,7 +157,7 @@ export async function submitContactStep(data: z.infer<typeof contactSchema>) {
 }
 
 export async function submitOtpStep(data: z.infer<typeof otpSchema>) {
-  const authRequestId = cookies().get('auth_request_id')?.value;
+  const authRequestId = cookies().get('temp_auth_id')?.value;
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };
 
@@ -187,7 +187,7 @@ export async function submitOtpStep(data: z.infer<typeof otpSchema>) {
 }
 
 export async function submitNeupIdStep(data: z.infer<typeof neupidSchema>) {
-  const authRequestId = cookies().get('auth_request_id')?.value;
+  const authRequestId = cookies().get('temp_auth_id')?.value;
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };
 
@@ -221,7 +221,7 @@ export async function submitNeupIdStep(data: z.infer<typeof neupidSchema>) {
 export async function submitPasswordStep(
   data: z.infer<typeof passwordSchema>
 ) {
-  const authRequestId = cookies().get('auth_request_id')?.value;
+  const authRequestId = cookies().get('temp_auth_id')?.value;
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };
 
@@ -248,7 +248,7 @@ export async function submitPasswordStep(
 }
 
 export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
-  const authRequestId = cookies().get('auth_request_id')?.value;
+  const authRequestId = cookies().get('temp_auth_id')?.value;
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };
 
@@ -359,7 +359,7 @@ export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
 
     // Delete the auth request
     await updateDoc(request.ref, { status: 'completed' });
-    cookies().delete('auth_request_id');
+    cookies().delete('temp_auth_id');
 
     return { success: true };
   } catch (error) {

@@ -63,7 +63,7 @@ export async function initiateLogin(data: z.infer<typeof loginFormSchema>): Prom
             expiresAt: new Date(Date.now() + THREE_MINUTES_IN_MS),
         });
 
-        cookies().set('auth_request_id', requestId, { httpOnly: true, secure: true, maxAge: 180 });
+        cookies().set('temp_auth_id', requestId, { httpOnly: true, secure: true, maxAge: 180 });
 
         return { success: true, mfaRequired: true };
     } else {

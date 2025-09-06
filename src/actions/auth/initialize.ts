@@ -23,7 +23,7 @@ export async function initializeSignup() {
     expiresAt: expiresAt,
   });
 
-  cookies().set('auth_request_id', requestId, {
+  await cookies().set('temp_auth_id', requestId, {
     httpOnly: true,
     secure: true,
     maxAge: AUTH_REQUEST_EXPIRATION_MINUTES * 60,

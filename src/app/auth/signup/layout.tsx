@@ -1,3 +1,4 @@
+
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { doc, getDoc } from 'firebase/firestore';
@@ -15,7 +16,7 @@ const stepOrder = [
 ];
 
 async function getSignupStatus() {
-    const authRequestId = cookies().get('auth_request_id')?.value;
+    const authRequestId = cookies().get('temp_auth_id')?.value;
     if (!authRequestId) {
         return { valid: false, currentStepPath: '/auth/signup/name' };
     }
@@ -24,7 +25,7 @@ async function getSignupStatus() {
     const authRequestDoc = await getDoc(authRequestRef);
 
     if (!authRequestDoc.exists() || (authRequestDoc.data().expiresAt && authRequestDoc.data().expiresAt.toDate() < new Date())) {
-        cookies().delete('auth_request_id');
+        cookies().delete('temp_auth_id');
         return { valid: false, currentStepPath: '/auth/signup/name' };
     }
 
