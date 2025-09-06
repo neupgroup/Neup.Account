@@ -119,22 +119,22 @@ export default function DemographicsStepPage() {
                         <FormItem className="space-y-3">
                             <FormLabel>Gender</FormLabel>
                             <FormControl>
-                                <RadioGroup onValueChange={field.onChange} value={field.value} className="grid grid-cols-2 gap-4">
+                                <RadioGroup onValueChange={field.onChange} value={field.value} className="flex flex-col gap-2">
                                     <FormItem>
                                         <RadioGroupItem value="male" id="gender-male" className="peer sr-only" />
-                                        <Label htmlFor="gender-male" className="flex h-12 cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">Male</Label>
+                                        <Label htmlFor="gender-male" className="flex h-12 cursor-pointer items-center justify-start rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">Male</Label>
                                     </FormItem>
                                     <FormItem>
                                         <RadioGroupItem value="female" id="gender-female" className="peer sr-only" />
-                                        <Label htmlFor="gender-female" className="flex h-12 cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">Female</Label>
+                                        <Label htmlFor="gender-female" className="flex h-12 cursor-pointer items-center justify-start rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">Female</Label>
                                     </FormItem>
                                     <FormItem>
                                         <RadioGroupItem value="prefer_not_to_say" id="gender-pnts" className="peer sr-only" />
-                                        <Label htmlFor="gender-pnts" className="flex h-12 cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">Prefer not to say</Label>
+                                        <Label htmlFor="gender-pnts" className="flex h-12 cursor-pointer items-center justify-start rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">Prefer not to say</Label>
                                     </FormItem>
                                     <FormItem>
                                         <RadioGroupItem value="custom" id="gender-custom" className="peer sr-only" />
-                                        <Label htmlFor="gender-custom" className="flex h-12 cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">
+                                        <Label htmlFor="gender-custom" className="flex h-12 cursor-pointer items-center justify-start rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">
                                             <span>Custom</span>
                                         </Label>
                                     </FormItem>
@@ -168,7 +168,7 @@ export default function DemographicsStepPage() {
                     <FormItem className="flex flex-col">
                         <FormLabel>Date of birth</FormLabel>
                         <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-                            <div className="relative w-[240px]">
+                            <div className="relative w-full">
                                 <Input placeholder="YYYY-MM-DD or e.g. June 12 2002" value={dateInput} onChange={(e) => setDateInput(e.target.value)} onBlur={handleDateInputBlur} disabled={isParsingDate} className="pr-10"/>
                                 <PopoverTrigger asChild>
                                     <Button variant={"ghost"} size="icon" className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2" aria-label="Open calendar"><CalendarIcon className="h-4 w-4 opacity-50" /></Button>
