@@ -15,12 +15,20 @@ export async function middleware(request: NextRequest) {
     if (request.cookies.has('device_block')) {
         return NextResponse.redirect(new URL('/blocked', request.url));
     }
-
-    return NextResponse.next({
+    
+    const response = NextResponse.next({
         request: {
             headers: requestHeaders,
         }
     });
+
+    // Pass the current URL to the server components via a cookie
+    // This is useful for layouts to know the current path.
+    if(request.nextUrl.pathname) {
+        response.cookies.set('next-url', request.nextUrl.pathname);
+    }
+
+    return response;
 }
 
 export const config = {
