@@ -21,8 +21,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
-import { Calendar as CalendarIcon, Loader2 } from "@/components/icons";
+import { Calendar as CalendarIcon, Loader2, Check } from "@/components/icons";
 import { cn } from "@/lib/utils";
+import { Checkbox } from "@/components/ui/checkbox";
 
 type FormData = z.infer<typeof demographicsSchema>;
 
@@ -108,6 +109,8 @@ export default function DemographicsStepPage() {
     }
 
     const isSubmitting = form.formState.isSubmitting;
+    
+    const genderOptions = ["Male", "Female", "Prefer not to say", "Custom"];
 
     return (
         <Form {...form}>
@@ -122,32 +125,25 @@ export default function DemographicsStepPage() {
                                 <RadioGroup
                                     onValueChange={field.onChange}
                                     value={field.value}
-                                    className="flex flex-row flex-wrap gap-2"
+                                    className="flex flex-col space-y-1"
                                 >
-                                    <FormItem>
-                                        <RadioGroupItem value="male" id="gender-male" className="peer sr-only" />
-                                        <Label htmlFor="gender-male" className="flex h-10 cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover px-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">
-                                            Male
-                                        </Label>
-                                    </FormItem>
-                                     <FormItem>
-                                        <RadioGroupItem value="female" id="gender-female" className="peer sr-only" />
-                                        <Label htmlFor="gender-female" className="flex h-10 cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover px-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">
-                                            Female
-                                        </Label>
-                                    </FormItem>
-                                    <FormItem>
-                                        <RadioGroupItem value="prefer_not_to_say" id="gender-pnts" className="peer sr-only" />
-                                        <Label htmlFor="gender-pnts" className="flex h-10 cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover px-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">
-                                            Prefer not to say
-                                        </Label>
-                                    </FormItem>
-                                    <FormItem>
-                                        <RadioGroupItem value="custom" id="gender-custom" className="peer sr-only" />
-                                        <Label htmlFor="gender-custom" className="flex h-10 cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover px-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">
-                                            Custom
-                                        </Label>
-                                    </FormItem>
+                                   {genderOptions.map(option => (
+                                        <FormItem key={option} className="flex items-center space-x-3 space-y-0">
+                                            <FormControl>
+                                                <Checkbox
+                                                    checked={field.value === option.toLowerCase().replace(/\s/g, '_')}
+                                                    onCheckedChange={(checked) => {
+                                                        if(checked) {
+                                                            field.onChange(option.toLowerCase().replace(/\s/g, '_'));
+                                                        }
+                                                    }}
+                                                />
+                                            </FormControl>
+                                            <FormLabel className="font-normal">
+                                                {option}
+                                            </FormLabel>
+                                        </FormItem>
+                                   ))}
                                 </RadioGroup>
                             </FormControl>
                             <FormMessage />
@@ -199,7 +195,7 @@ export default function DemographicsStepPage() {
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Nationality</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <Select onValueChange={field.onChange} value={field.value}>
                                 <FormControl><SelectTrigger><SelectValue placeholder="Select nationality" /></SelectTrigger></FormControl>
                                 <SelectContent>
                                     <SelectItem value="american">American</SelectItem>
