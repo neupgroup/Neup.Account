@@ -122,23 +122,31 @@ export default function DemographicsStepPage() {
                                 <RadioGroup
                                     onValueChange={field.onChange}
                                     value={field.value}
-                                    className="flex flex-col"
+                                    className="flex flex-row flex-wrap gap-2"
                                 >
-                                    <FormItem className="flex items-center space-x-3 space-y-0 rounded-md border border-transparent p-2 transition-colors hover:border-border data-[state=checked]:border-primary">
-                                        <FormControl><RadioGroupItem value="male" /></FormControl>
-                                        <FormLabel className="font-normal cursor-pointer">Male</FormLabel>
+                                    <FormItem>
+                                        <RadioGroupItem value="male" id="gender-male" className="peer sr-only" />
+                                        <Label htmlFor="gender-male" className="flex h-10 cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover px-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">
+                                            Male
+                                        </Label>
                                     </FormItem>
-                                    <FormItem className="flex items-center space-x-3 space-y-0 rounded-md border border-transparent p-2 transition-colors hover:border-border data-[state=checked]:border-primary">
-                                        <FormControl><RadioGroupItem value="female" /></FormControl>
-                                        <FormLabel className="font-normal cursor-pointer">Female</FormLabel>
+                                     <FormItem>
+                                        <RadioGroupItem value="female" id="gender-female" className="peer sr-only" />
+                                        <Label htmlFor="gender-female" className="flex h-10 cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover px-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">
+                                            Female
+                                        </Label>
                                     </FormItem>
-                                    <FormItem className="flex items-center space-x-3 space-y-0 rounded-md border border-transparent p-2 transition-colors hover:border-border data-[state=checked]:border-primary">
-                                        <FormControl><RadioGroupItem value="prefer_not_to_say" /></FormControl>
-                                        <FormLabel className="font-normal cursor-pointer">Prefer not to say</FormLabel>
+                                    <FormItem>
+                                        <RadioGroupItem value="prefer_not_to_say" id="gender-pnts" className="peer sr-only" />
+                                        <Label htmlFor="gender-pnts" className="flex h-10 cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover px-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">
+                                            Prefer not to say
+                                        </Label>
                                     </FormItem>
-                                    <FormItem className="flex items-center space-x-3 space-y-0 rounded-md border border-transparent p-2 transition-colors hover:border-border data-[state=checked]:border-primary">
-                                        <FormControl><RadioGroupItem value="custom" /></FormControl>
-                                        <FormLabel className="font-normal cursor-pointer">Custom</FormLabel>
+                                    <FormItem>
+                                        <RadioGroupItem value="custom" id="gender-custom" className="peer sr-only" />
+                                        <Label htmlFor="gender-custom" className="flex h-10 cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover px-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">
+                                            Custom
+                                        </Label>
                                     </FormItem>
                                 </RadioGroup>
                             </FormControl>
