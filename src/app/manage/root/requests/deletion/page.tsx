@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useEffect, useState, useTransition } from 'react';
@@ -6,8 +7,8 @@ import {
   getDeletionRequests,
   approveAccountDeletion,
   cancelAccountDeletion,
-  type DeletionRequest,
 } from '@/actions/root/requests/deletion';
+import type { DeletionRequest } from '@/types';
 import { checkPermissions } from '@/lib/user';
 import { useToast } from '@/hooks/use-toast';
 import { BackButton } from '@/components/ui/back-button';

@@ -33,36 +33,10 @@ import {
   termsSchema,
 } from '@/schemas/signup';
 
-const AUTH_REQUEST_EXPIRATION_MINUTES = 15;
-
 async function isFirstUser() {
   const accountsCollection = collection(db, 'account');
   const accountsSnapshot = await getDocs(query(accountsCollection, limit(1)));
   return accountsSnapshot.empty;
-}
-
-export async function initializeSignup() {
-  const requestId = uuidv4();
-  const authRequestRef = doc(db, 'auth_requests', requestId);
-
-  const expiresAt = new Date();
-  expiresAt.setMinutes(expiresAt.getMinutes() + AUTH_REQUEST_EXPIRATION_MINUTES);
-
-  await setDoc(authRequestRef, {
-    type: 'signup',
-    status: 'pending_name',
-    data: {},
-    createdAt: serverTimestamp(),
-    expiresAt: expiresAt,
-  });
-
-  cookies().set('auth_request_id', requestId, {
-    httpOnly: true,
-    secure: true,
-    maxAge: AUTH_REQUEST_EXPIRATION_MINUTES * 60,
-  });
-
-  return { success: true, requestId };
 }
 
 async function getAuthRequest(
