@@ -116,9 +116,9 @@ export default function DemographicsStepPage() {
                     control={form.control}
                     name="gender"
                     render={({ field }) => (
-                        <FormItem className="space-y-3">
+                        <FormItem>
                             <FormLabel>Gender</FormLabel>
-                            <FormControl>
+                            <FormControl className="!mt-4">
                                 <RadioGroup onValueChange={field.onChange} value={field.value} className="flex flex-col gap-2">
                                     <FormItem>
                                         <RadioGroupItem value="male" id="gender-male" className="peer sr-only" />
