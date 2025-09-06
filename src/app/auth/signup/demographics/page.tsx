@@ -16,11 +16,8 @@ import { demographicsSchema } from "@/schemas/signup";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Label } from "@/components/ui/label";
 import { Calendar as CalendarIcon, Loader2, Check } from "@/components/icons";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -63,7 +60,6 @@ export default function DemographicsStepPage() {
                     dob: dobDate,
                     gender: formGender || undefined,
                     customGender: formCustomGender,
-                    nationality: data.nationality || undefined,
                 });
             }
         }
@@ -101,7 +97,7 @@ export default function DemographicsStepPage() {
         NProgress.start();
         const result = await submitDemographicsStep(data);
         if (result.success) {
-            router.push('/auth/signup/contact');
+            router.push('/auth/signup/nationality');
         } else {
             toast({ variant: 'destructive', title: 'Error', description: result.error });
             NProgress.done();
@@ -122,22 +118,15 @@ export default function DemographicsStepPage() {
                         <FormItem className="space-y-3">
                             <FormLabel>Gender</FormLabel>
                             <FormControl>
-                                <RadioGroup
-                                    onValueChange={field.onChange}
-                                    value={field.value}
-                                    className="flex flex-row flex-wrap justify-between items-center"
-                                >
+                                <div className="flex flex-row flex-wrap justify-between items-center">
                                    {genderOptions.map(option => (
-                                        <FormItem key={option} className="flex items-center space-x-2 space-y-0">
+                                        <FormItem key={option} className="flex items-center space-x-2">
                                             <FormControl>
                                                 <Checkbox
                                                     checked={field.value === option.toLowerCase().replace(/\s/g, '_')}
                                                     onCheckedChange={(checked) => {
                                                         if(checked) {
                                                             field.onChange(option.toLowerCase().replace(/\s/g, '_'));
-                                                        } else {
-                                                            // Optional: uncheck if clicked again, though this is not standard radio behavior
-                                                            // field.onChange(undefined);
                                                         }
                                                     }}
                                                 />
@@ -147,7 +136,7 @@ export default function DemographicsStepPage() {
                                             </FormLabel>
                                         </FormItem>
                                    ))}
-                                </RadioGroup>
+                                </div>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -190,26 +179,6 @@ export default function DemographicsStepPage() {
                         {isParsingDate && <FormMessage>Parsing date with AI...</FormMessage>}
                         <FormMessage />
                     </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="nationality"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Nationality</FormLabel>
-                            <Select onValueChange={field.onChange} value={field.value}>
-                                <FormControl><SelectTrigger><SelectValue placeholder="Select nationality" /></SelectTrigger></FormControl>
-                                <SelectContent>
-                                    <SelectItem value="american">American</SelectItem>
-                                    <SelectItem value="british">British</SelectItem>
-                                    <SelectItem value="canadian">Canadian</SelectItem>
-                                    <SelectItem value="australian">Australian</SelectItem>
-                                    <SelectItem value="other">Other</SelectItem>
-                                </SelectContent>
-                            </Select>
-                            <FormMessage />
-                        </FormItem>
                     )}
                 />
                 <Button type="submit" className="w-full" disabled={isSubmitting}>

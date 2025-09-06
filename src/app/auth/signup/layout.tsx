@@ -8,7 +8,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 const stepOrder = [
     { path: '/auth/signup/name', requiredField: null },
     { path: '/auth/signup/demographics', requiredField: 'firstName' },
-    { path: '/auth/signup/contact', requiredField: 'dob' },
+    { path: '/auth/signup/nationality', requiredField: 'dob' },
+    { path: '/auth/signup/contact', requiredField: 'nationality' },
     { path: '/auth/signup/otp', requiredField: 'phone' },
     { path: '/auth/signup/neupid', requiredField: 'phoneVerified' },
     { path: '/auth/signup/password', requiredField: 'neupId' },

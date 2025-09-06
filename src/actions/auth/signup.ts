@@ -25,6 +25,7 @@ import { cookies } from 'next/headers';
 import {
   nameSchema,
   demographicsSchema,
+  nationalitySchema,
   contactSchema,
   otpSchema,
   neupidSchema,
@@ -120,12 +121,39 @@ export async function submitDemographicsStep(
   await updateDoc(request.ref, {
     'data.dob': validation.data.dob,
     'data.gender': finalGender,
-    'data.nationality': validation.data.nationality,
-    status: 'pending_contact',
+    status: 'pending_nationality',
   });
 
   return { success: true };
 }
+
+export async function submitNationalityStep(
+    data: z.infer<typeof nationalitySchema>
+) {
+    const authRequestId = cookies().get('temp_auth_id')?.value;
+    if (!authRequestId)
+        return { success: false, error: 'Signup session not found.' };
+
+    const validation = nationalitySchema.safeParse(data);
+    if (!validation.success)
+        return {
+            success: false,
+            error: 'Invalid data.',
+            details: validation.error.flatten(),
+        };
+
+    const request = await getAuthRequest(authRequestId);
+    if (!request)
+        return { success: false, error: 'Signup session expired.' };
+
+    await updateDoc(request.ref, {
+        'data.nationality': validation.data.nationality,
+        status: 'pending_contact',
+    });
+
+    return { success: true };
+}
+
 
 export async function submitContactStep(data: z.infer<typeof contactSchema>) {
   const authRequestId = cookies().get('temp_auth_id')?.value;
