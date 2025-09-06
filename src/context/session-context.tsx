@@ -39,29 +39,24 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
     });
 
     const fetchData = async (forceRefresh = false) => {
-        // Always set loading to true when fetching
         setSessionState(s => ({ ...s, loading: true }));
 
-        // On initial load, try to load from sessionStorage
         if (!forceRefresh && typeof window !== 'undefined') {
             const cachedData = sessionStorage.getItem(SESSION_STORAGE_KEY);
             if (cachedData) {
                 try {
                     const parsedData = JSON.parse(cachedData);
-                    // A simple validation to ensure the cached data has what we need
                     if (parsedData.profile && parsedData.permissions && parsedData.accountId) {
                         setSessionState({ ...parsedData, loading: false, refetch: () => fetchData(true) });
                         return;
                     }
                 } catch (e) {
-                    // Cached data is invalid, clear it
                     sessionStorage.removeItem(SESSION_STORAGE_KEY);
                 }
             }
         }
         
         try {
-            // Validate server-side session cookies. Redirects on failure.
             await validateCurrentSession();
 
             const [activeId, personalId] = await Promise.all([
@@ -80,7 +75,14 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
                 getUserPermissions(activeId)
             ]);
             
-            const sessionProfile = profile ? { ...profile, neupId: neupIds[0] } : null;
+            const sessionProfile = profile 
+                ? { 
+                    ...profile, 
+                    neupId: neupIds[0],
+                    // @ts-ignore
+                    dob: profile.dob?.toDate?.().toISOString() || null,
+                } 
+                : null;
 
             const newState = {
                 loading: false,
@@ -93,14 +95,11 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 
             setSessionState({ ...newState, refetch: () => fetchData(true) });
             
-            // Save the new state to sessionStorage on the client
             if (typeof window !== 'undefined') {
                 sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(newState));
             }
 
         } catch (error) {
-            // Errors during session validation (like redirection) will be caught here.
-            // We just stop the loading process.
             if (typeof window !== 'undefined') {
                 sessionStorage.removeItem(SESSION_STORAGE_KEY);
             }

@@ -2,10 +2,11 @@
 
 import { db } from '@/lib/firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { authenticator } from 'otplib';
-import { decrypt } from '@/actions/security/totp'; // Assuming decrypt is exported from totp.ts
+import { decrypt } from '@/actions/security/totp';
 import { z } from 'zod';
+import { createAndSetSession } from '@/lib/session';
 
 const mfaSchema = z.object({
     token: z.string().length(6, "Your one-time password must be 6 characters."),
@@ -28,6 +29,7 @@ export async function verifyMfa(data: z.infer<typeof mfaSchema>): Promise<{ succ
     const authRequestDoc = await getDoc(authRequestRef);
 
     if (!authRequestDoc.exists() || authRequestDoc.data().expiresAt.toDate() < new Date()) {
+        cookies().delete('temp_auth_id');
         return { success: false, error: 'Authentication request expired. Please try again.' };
     }
 
@@ -59,8 +61,12 @@ export async function verifyMfa(data: z.infer<typeof mfaSchema>): Promise<{ succ
     await updateDoc(authRequestRef, { status: 'completed' });
     cookies().delete('temp_auth_id');
 
-    // You'll need to implement session creation here. This is where you would
-    // typically create a session cookie or JWT.
+    const headersList = headers();
+    const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';
+    const userAgent = headersList.get('user-agent') || 'Unknown User-Agent';
+    
+    // The geolocation is not passed here, so we pass undefined.
+    await createAndSetSession(accountId, 'Password + TOTP', ipAddress, userAgent);
 
     return { success: true };
 }

@@ -16,17 +16,17 @@ export default async function AccountDetailsPage({ params }: { params: { id: str
         notFound();
     }
 
-    const serializedDob = userDetails.profile.dob?.toString();
+    const serializableUserDetails = {
+        ...userDetails,
+        profile: {
+            ...userDetails.profile,
+            dob: userDetails.profile.dob ? new Date(userDetails.profile.dob.seconds * 1000).toISOString() : null,
+        },
+    };
 
     return (
         <UserDetailsClient 
-            initialUserDetails={{
-                ...userDetails,
-                profile: {
-                    ...userDetails.profile,
-                    dob: serializedDob,
-                },
-            }}
+            initialUserDetails={serializableUserDetails}
         />
     );
 }

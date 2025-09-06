@@ -68,8 +68,17 @@ export async function getUserProfile(
     const profileDoc = await getDoc(profileRef);
     if (profileDoc.exists()) {
       const data = profileDoc.data();
-      delete data.createdAt; // Remove non-serializable data
-      return { ...data, accountId: idToFetch } as UserProfile;
+      
+      // Manually convert Firestore Timestamps to ISO strings
+      const serializedData = {
+        ...data,
+        dob: data.dob?.toDate?.().toISOString() || null,
+        registeredOn: data.registeredOn?.toDate?.().toISOString() || null,
+      };
+
+      delete serializedData.createdAt; // Deprecated or internal field
+
+      return { ...serializedData, accountId: idToFetch } as UserProfile;
     }
     return null;
   } catch (error) {
