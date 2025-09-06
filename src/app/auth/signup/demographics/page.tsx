@@ -39,6 +39,8 @@ export default function DemographicsStepPage() {
             customGender: "",
         },
     });
+    
+    const genderValue = form.watch("gender");
 
     useEffect(() => {
         async function loadData() {
@@ -120,29 +122,20 @@ export default function DemographicsStepPage() {
                                 <RadioGroup onValueChange={field.onChange} value={field.value} className="grid grid-cols-2 gap-4">
                                     <FormItem>
                                         <RadioGroupItem value="male" id="gender-male" className="peer sr-only" />
-                                        <Label htmlFor="gender-male" className="flex h-full cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">Male</Label>
+                                        <Label htmlFor="gender-male" className="flex h-12 cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">Male</Label>
                                     </FormItem>
                                     <FormItem>
                                         <RadioGroupItem value="female" id="gender-female" className="peer sr-only" />
-                                        <Label htmlFor="gender-female" className="flex h-full cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">Female</Label>
+                                        <Label htmlFor="gender-female" className="flex h-12 cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">Female</Label>
                                     </FormItem>
                                     <FormItem>
                                         <RadioGroupItem value="prefer_not_to_say" id="gender-pnts" className="peer sr-only" />
-                                        <Label htmlFor="gender-pnts" className="flex h-full cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">Prefer not to say</Label>
+                                        <Label htmlFor="gender-pnts" className="flex h-12 cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">Prefer not to say</Label>
                                     </FormItem>
                                     <FormItem>
                                         <RadioGroupItem value="custom" id="gender-custom" className="peer sr-only" />
-                                        <Label htmlFor="gender-custom" className={cn("flex h-full cursor-pointer items-center justify-between rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary", field.value === 'custom' && "border-primary")}>
+                                        <Label htmlFor="gender-custom" className="flex h-12 cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">
                                             <span>Custom</span>
-                                            {field.value === 'custom' && (
-                                                <FormField
-                                                    control={form.control}
-                                                    name="customGender"
-                                                    render={({ field: customField }) => (
-                                                        <Input {...customField} placeholder="Specify" onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className="ml-2 h-8 w-auto flex-grow"/>
-                                                    )}
-                                                />
-                                            )}
                                         </Label>
                                     </FormItem>
                                 </RadioGroup>
@@ -151,6 +144,23 @@ export default function DemographicsStepPage() {
                         </FormItem>
                     )}
                 />
+                
+                {genderValue === 'custom' && (
+                    <FormField
+                        control={form.control}
+                        name="customGender"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Custom Gender</FormLabel>
+                                <FormControl>
+                                    <Input {...field} placeholder="Please specify" />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                )}
+
                  <FormField
                     control={form.control}
                     name="dob"
