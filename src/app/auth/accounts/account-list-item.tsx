@@ -98,8 +98,8 @@ export function AccountListItem({ account, mode }: { account: CombinedAccount, m
     };
 
     const handleClick = () => {
-        if (loading) return;
-        if (mode === 'link') {
+        if (loading || isSwitching) return;
+        if (mode === 'link' || finalAccount.expired) {
             router.push(`/auth/signin?neupId=${finalAccount.neupId}`);
         } else {
             handleSwitch(finalAccount);
@@ -122,7 +122,7 @@ export function AccountListItem({ account, mode }: { account: CombinedAccount, m
         <button
             onClick={handleClick}
             className="w-full text-left flex items-center justify-between p-4 group hover:bg-muted/50 transition-colors disabled:opacity-50"
-            disabled={isSwitching || (mode === 'link' && (finalAccount.isUnknown || finalAccount.expired))}
+            disabled={isSwitching || finalAccount.isUnknown}
         >
              <div className="flex items-center gap-4">
                 <Avatar>
@@ -132,7 +132,11 @@ export function AccountListItem({ account, mode }: { account: CombinedAccount, m
                 <div>
                     <p className="font-semibold">{finalAccount.displayName || 'Unknown Account'}</p>
                     <p className="text-xs text-muted-foreground mt-1">
-                        @{finalAccount.neupId} &bull; {getAccountType()}
+                         {finalAccount.expired ? (
+                            <span className="text-destructive">Session Expired</span>
+                        ) : (
+                           <>@{finalAccount.neupId} &bull; {getAccountType()}</>
+                        )}
                     </p>
                 </div>
             </div>
