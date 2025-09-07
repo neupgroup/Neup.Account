@@ -11,6 +11,7 @@ import { cancelAccountDeletion } from "@/actions/data/delete"
 import NProgress from 'nprogress'
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { loginUser } from '@/actions/auth/signin';
 
 import { Button } from "@/components/ui/button"
 import {
@@ -52,6 +53,7 @@ export default function SigninForm() {
   const [validationError, setValidationError] = useState<string | null>(null);
   const [isClient, setIsClient] = useState(false)
   const [showDeletionDialog, setShowDeletionDialog] = useState(false);
+  const [passwordFormEvent, setPasswordFormEvent] = useState<React.FormEvent<HTMLFormElement> | null>(null);
 
   useEffect(() => {
     setIsClient(true)
@@ -67,9 +69,6 @@ export default function SigninForm() {
   }, [neupIdFromQuery]);
 
   useEffect(() => {
-    // This removes the toast message for session expired,
-    // as it's now handled by the UrlErrorBanner.
-    // We just need to clean the URL.
     const error = searchParams.get('error');
     if (error === 'session_expired') {
       router.replace('/auth/signin', { scroll: false });
@@ -90,41 +89,37 @@ export default function SigninForm() {
         NProgress.done();
     });
   }
-
+  
   const handlePasswordSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setPasswordFormEvent(event);
     startPasswordSubmit(async () => {
         NProgress.start();
-        try {
-            const result = await initiateLogin({ neupId: neupId.toLowerCase(), password });
-            
-            if (result.success) {
-                if (result.mfaRequired) {
+        const locationString = geo?.latitude && geo?.longitude ? `${geo.latitude},${geo.longitude}` : undefined;
+        const loginData = { neupId: neupId.toLowerCase(), password, geolocation: locationString };
+        
+        const result = await loginUser(loginData);
+        if (result.success) {
+            const mfaResult = await initiateLogin(loginData);
+            if (mfaResult.success) {
+                if (mfaResult.mfaRequired) {
                     router.push("/auth/signin/mfa");
                 } else {
                     setIsRedirecting(true);
                     router.push("/manage");
                 }
             } else {
-                toast({
-                    variant: "destructive",
-                    title: "Sign In Failed",
-                    description: result.error || "An unexpected error occurred.",
-                });
-                NProgress.done();
+                toast({ variant: "destructive", title: "Sign In Failed", description: mfaResult.error });
             }
-        } catch (error) {
-            console.error("Sign In error:", error)
-            toast({
-                variant: "destructive",
-                title: "Sign In Failed",
-                description: "An unexpected error occurred. Please try again.",
-            });
-            NProgress.done();
+        } else if (result.error === 'pending_deletion') {
+            setShowDeletionDialog(true);
+        } else {
+            toast({ variant: "destructive", title: "Sign In Failed", description: result.error });
         }
+        NProgress.done();
     });
   }
-  
+
   const handleCancelDeletion = async () => {
     setShowDeletionDialog(false);
     startPasswordSubmit(async () => {
@@ -139,9 +134,10 @@ export default function SigninForm() {
         const result = await cancelAccountDeletion(accountId);
         if (result.success) {
             toast({ title: "Deletion Cancelled", description: "Your account deletion request has been cancelled. Welcome back!", className: "bg-accent text-accent-foreground" });
-            // Re-attempt login
-            const loginForm = document.getElementById("password-form") as HTMLFormElement;
-            if(loginForm) handlePasswordSubmit(new Event('submit') as any);
+            // Re-attempt login using the stored form event
+            if (passwordFormEvent) {
+                handlePasswordSubmit(passwordFormEvent);
+            }
         } else {
             toast({ variant: "destructive", title: "Error", description: result.error || "Could not cancel deletion." });
         }
