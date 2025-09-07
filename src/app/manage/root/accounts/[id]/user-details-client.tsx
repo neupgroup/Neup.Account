@@ -4,21 +4,20 @@
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UserDetails, UserActivityLog, UserPermissions } from '@/types';
-import { ProfileForm } from './profile-form'; // Changed import
+import { ProfileForm } from './profile-form'; 
 import { VerificationManager } from './verification-manager';
 import { ActivityList } from './activity/page'; 
-import { PermissionsForm } from './permissions/form';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from '@/components/icons';
 import { useRouter } from 'next/navigation';
+import { PermissionEditor } from './permissions/form';
+import { getMasterPermissions } from '@/actions/root/permission';
 
 interface UserDetailsClientProps {
     initialUserDetails: UserDetails;
-    initialActivity?: UserActivityLog[];
-    initialPermissions?: UserPermissions;
 }
 
-export function UserDetailsClient({ initialUserDetails, initialActivity, initialPermissions }: UserDetailsClientProps) {
+export function UserDetailsClient({ initialUserDetails }: UserDetailsClientProps) {
     const [userDetails, setUserDetails] = useState(initialUserDetails);
     const router = useRouter();
 
@@ -53,14 +52,10 @@ export function UserDetailsClient({ initialUserDetails, initialActivity, initial
                     <VerificationManager accountId={userDetails.accountId} />
                 </TabsContent>
                 <TabsContent value="activity">
-                    <ActivityList initialActivity={initialActivity} accountId={userDetails.accountId} />
+                    <ActivityList accountId={userDetails.accountId} />
                 </TabsContent>
                 <TabsContent value="permissions">
-                    <PermissionsForm 
-                        accountId={userDetails.accountId} 
-                        assignedPermissionSetIds={initialPermissions?.assignedPermissionSetIds || []} 
-                        restrictedPermissionSetIds={initialPermissions?.restrictedPermissionSetIds || []}                    
-                    />
+                    <p>Permissions management coming soon.</p>
                 </TabsContent>
             </Tabs>
         </div>
