@@ -1,40 +1,45 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
-import { 
-  KeyRound, 
-  ShieldCheck, 
-  FileLock2, 
-  Users, 
-  Smartphone, 
-  Mail, 
-  Laptop, 
-  Globe, 
-  UserCircle, 
-  FileText, 
-  HeartHandshake, 
-  AtSign, 
-  Contact, 
-  Building,
-  Bot,
-  UserPlus,
-  History,
-  Trash2,
-  PowerOff,
-  CalendarClock,
-  AppWindow,
-  Share2,
-  BarChart,
-  MailQuestion,
-  UserX,
-  CreditCard,
-  Wallet,
-  Gem
+import {
+    KeyRound,
+    ShieldCheck,
+    FileLock2,
+    Users,
+    Smartphone,
+    Mail,
+    Laptop,
+    Globe,
+    UserCircle,
+    FileText,
+    HeartHandshake,
+    AtSign,
+    Contact,
+    Building,
+    Bot,
+    UserPlus,
+    History,
+    Trash2,
+    PowerOff,
+    CalendarClock,
+    AppWindow,
+    Share2,
+    BarChart,
+    MailQuestion,
+    UserX,
+    CreditCard,
+    Wallet,
+    Gem,
+    ChevronRight,
+    List,
+    AlertTriangle,
+    Bug
 } from '@/components/icons';
+import type { Notification } from '@/types';
+import { cn } from '@/lib/utils';
+
 
 // Icon mapping object
-const iconMap = {
+const iconMap: { [key: string]: React.ElementType } = {
   KeyRound,
   ShieldCheck,
   FileLock2,
@@ -62,38 +67,48 @@ const iconMap = {
   UserX,
   CreditCard,
   Wallet,
-  Gem
+  Gem,
+  List,
+  AlertTriangle,
+  Bug,
 };
 
 interface ListItemProps {
-  icon: string; // Now accepts string instead of component
+  icon?: React.ElementType;
+  iconName?: string;
   title: string;
   description: string;
   href: string;
+  isExternal?: boolean;
+  notification?: Notification;
 }
 
-export function ListItem({ icon, title, description, href }: ListItemProps) {
-  // Get the icon component from the map
-  const IconComponent = iconMap[icon as keyof typeof iconMap];
+export function ListItem({ icon: Icon, iconName, title, description, href, isExternal = false, notification }: ListItemProps) {
+  // Use icon if provided, otherwise lookup iconName in the map
+  const IconComponent = Icon || (iconName ? iconMap[iconName] : null);
+
+  const linkContent = (
+    <div className="flex items-center gap-4 py-4 px-4">
+      {IconComponent && <IconComponent className="h-5 w-5 text-muted-foreground flex-shrink-0" />}
+      <div className="flex-grow">
+        <p className="font-medium text-foreground">{title}</p>
+        <p className="text-sm text-muted-foreground">{description}</p>
+      </div>
+       <ChevronRight className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+    </div>
+  );
+
+  if (isExternal) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" className="block hover:bg-muted/50 transition-colors">
+        {linkContent}
+      </a>
+    );
+  }
 
   return (
-    <Link href={href} className="block p-4 hover:bg-gray-50 transition-colors">
-      <div className="flex items-center gap-3">
-        {IconComponent && (
-          <div className="flex-shrink-0">
-            <IconComponent className="w-5 h-5 text-gray-600" />
-          </div>
-        )}
-        <div className="flex-1">
-          <h3 className="font-medium text-gray-900">{title}</h3>
-          <p className="text-sm text-gray-600 mt-1">{description}</p>
-        </div>
-        <div className="flex-shrink-0">
-          <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </div>
-      </div>
+    <Link href={href} className="block hover:bg-muted/50 transition-colors">
+      {linkContent}
     </Link>
   );
 }
