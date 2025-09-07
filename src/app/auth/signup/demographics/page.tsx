@@ -20,7 +20,7 @@ import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar as CalendarIcon, Loader2, Check } from "@/components/icons";
 import { cn } from "@/lib/utils";
-import { Checkbox } from "@/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 type FormData = z.infer<typeof demographicsSchema>;
 
@@ -117,26 +117,33 @@ export default function DemographicsStepPage() {
                     render={({ field }) => (
                         <FormItem className="space-y-3">
                             <FormLabel>Gender</FormLabel>
-                            <FormControl>
-                                <div className="flex flex-row flex-wrap justify-between items-center">
-                                   {genderOptions.map(option => (
-                                        <FormItem key={option} className="flex items-center space-x-2">
-                                            <FormControl>
-                                                <Checkbox
-                                                    checked={field.value === option.toLowerCase().replace(/\s/g, '_')}
-                                                    onCheckedChange={(checked) => {
-                                                        if(checked) {
-                                                            field.onChange(option.toLowerCase().replace(/\s/g, '_'));
-                                                        }
-                                                    }}
-                                                />
-                                            </FormControl>
-                                            <FormLabel className="font-normal cursor-pointer">
-                                                {option}
-                                            </FormLabel>
-                                        </FormItem>
-                                   ))}
-                                </div>
+                             <FormControl>
+                                <RadioGroup
+                                    onValueChange={field.onChange}
+                                    value={field.value}
+                                    className="block"
+                                >
+                                    <div className="border border-input rounded-lg overflow-hidden">
+                                    {genderOptions.map((option, index) => {
+                                        const value = option.toLowerCase().replace(/\s/g, '_');
+                                        return (
+                                            <FormItem key={value} className="flex items-center space-x-3 space-y-0 p-3 cursor-pointer hover:bg-muted/50 transition-colors data-[state=checked]:bg-accent data-[state=checked]:text-accent-foreground border-b border-input last:border-b-0">
+                                                <FormControl>
+                                                    <div className="relative flex items-center">
+                                                        <RadioGroupItem value={value} id={`gender-${value}`} className="peer sr-only" />
+                                                        <label htmlFor={`gender-${value}`} className="flex items-center cursor-pointer">
+                                                             <div className="w-5 h-5 border-2 border-primary rounded-sm flex-shrink-0 peer-data-[state=checked]:bg-primary peer-data-[state=checked]:text-white flex items-center justify-center">
+                                                                <Check className="h-4 w-4 text-white" />
+                                                            </div>
+                                                            <span className="ml-3 font-normal">{option}</span>
+                                                        </label>
+                                                    </div>
+                                                </FormControl>
+                                            </FormItem>
+                                        );
+                                    })}
+                                    </div>
+                                </RadioGroup>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
