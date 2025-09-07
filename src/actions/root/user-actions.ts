@@ -1,4 +1,5 @@
 
+
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -14,9 +15,20 @@ import { createNotification } from '../notifications';
 
 
 // --- Administrative Actions ---
+
+export const warningReasons = {
+    spam: "Spamming or Commercial Solicitation",
+    harassment: "Harassment or Bullying",
+    impersonation: "Impersonation",
+    hate_speech: "Hate Speech",
+    tos_violation: "Terms of Service Violation",
+    other: "Other Policy Violation"
+};
+
 const sendWarningSchema = z.object({
-    message: z.string().min(1, "Message cannot be empty"),
-    reason: z.string().min(1, "Reason cannot be empty"),
+    reasonKey: z.nativeEnum(warningReasons),
+    source: z.string().optional(),
+    remarks: z.string().min(1, "Remarks are required."),
     noticeType: z.enum(['general', 'success', 'warning', 'error']),
     persistence: z.enum(['dismissable', 'untildays', 'permanent']),
     days: z.number().optional(),
@@ -34,7 +46,7 @@ export async function sendWarning(userId: string, data: z.infer<typeof sendWarni
         return { success: false, error: "Invalid data submitted." };
     }
 
-    const { message, reason, noticeType, persistence, days } = validation.data;
+    const { reasonKey, source, remarks, noticeType, persistence, days } = validation.data;
     
     let expiresOn: Date | null = null;
     if (persistence === 'untildays' && days) {
@@ -48,6 +60,9 @@ export async function sendWarning(userId: string, data: z.infer<typeof sendWarni
         'warning': 'warning.sticky',
         'error': 'danger.sticky'
     };
+    
+    const reasonText = warningReasons[reasonKey];
+    const message = `Your account has received a warning for: <strong>${reasonText}</strong>. Please review our community guidelines.`;
 
     try {
         await createNotification({
@@ -56,12 +71,12 @@ export async function sendWarning(userId: string, data: z.infer<typeof sendWarni
             message,
             persistence,
             noticeType,
-            reason,
+            reason: remarks,
             expiresOn,
             sender_id: adminId,
         });
 
-        await logActivity(userId, `Admin sent warning: "${message}"`, 'Alert', undefined, adminId);
+        await logActivity(userId, `Admin sent warning for ${reasonText}`, 'Alert', undefined, adminId);
         return { success: true };
     } catch (error) {
         await logError('database', error, 'sendWarning');
@@ -69,11 +84,35 @@ export async function sendWarning(userId: string, data: z.infer<typeof sendWarni
     }
 }
 
+export const blockReasons = {
+    security_risk: {
+        reason: "Compromised Account / Security Risk",
+        message: "Your account has been temporarily blocked due to a potential security risk. Please contact support to resolve this issue."
+    },
+    payment_issue: {
+        reason: "Payment or Billing Issue",
+        message: "Your account access has been blocked due to a payment or billing issue. Please contact support."
+    },
+    tos_repeated: {
+        reason: "Repeated Terms of Service Violations",
+        message: "Your account has been blocked due to repeated violations of our Terms of Service."
+    },
+    illegal_activity: {
+        reason: "Illegal Activity",
+        message: "Your account has been permanently blocked due to illegal activity."
+    },
+    other: {
+        reason: "Other Policy Violation",
+        message: "Your account has been blocked for violating our policies. Please contact support for more information."
+    }
+};
+
 const blockServiceSchema = z.object({
     isPermanent: z.boolean(),
     durationInHours: z.number().optional(),
-    reason: z.string().min(1, "Reason is required"),
-    message: z.string().min(1, "Message is required"),
+    reasonKey: z.nativeEnum(blockReasons),
+    source: z.string().optional(),
+    remarks: z.string().min(1, "Remarks are required"),
 });
 
 export async function blockServiceAccess(userId: string, data: z.infer<typeof blockServiceSchema>): Promise<{success: boolean, error?: string}> {
@@ -88,7 +127,8 @@ export async function blockServiceAccess(userId: string, data: z.infer<typeof bl
         return { success: false, error: 'Invalid data submitted.' };
     }
     
-    const { isPermanent, durationInHours, reason, message } = validation.data;
+    const { isPermanent, durationInHours, reasonKey, source, remarks } = validation.data;
+    const { reason, message } = blockReasons[reasonKey];
     
     try {
         const accountRef = doc(db, 'account', userId);
@@ -106,6 +146,10 @@ export async function blockServiceAccess(userId: string, data: z.infer<typeof bl
             message,
             is_permanent: isPermanent,
             until: until,
+            source: source || null,
+            remarks: remarks,
+            blockedBy: adminId,
+            blockedOn: serverTimestamp()
         };
 
         await updateDoc(accountRef, { block: blockData });
@@ -114,7 +158,7 @@ export async function blockServiceAccess(userId: string, data: z.infer<typeof bl
         await createNotification({
             recipient_id: userId,
             action: 'danger.sticky',
-            message: `Your account access has been blocked. Reason: ${reason}`,
+            message,
             persistence: 'permanent',
             noticeType: 'error',
             sender_id: adminId,

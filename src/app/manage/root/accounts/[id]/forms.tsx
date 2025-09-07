@@ -1,11 +1,11 @@
 
 
-"use client";
+'use client';
 
 import { useState, useTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
-import { sendWarning, blockServiceAccess, unblockServiceAccess } from "@/actions/root/user-actions";
+import { sendWarning, blockServiceAccess, unblockServiceAccess, warningReasons, blockReasons } from "@/actions/root/user-actions";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,8 +22,9 @@ import { TertiaryHeader } from "@/components/ui/tertiary-header";
 
 
 const sendWarningSchema = z.object({
-    message: z.string().min(10, { message: "Message must be at least 10 characters." }),
-    reason: z.string().min(5, { message: "Reason must be at least 5 characters." }),
+    reasonKey: z.nativeEnum(warningReasons),
+    source: z.string().optional(),
+    remarks: z.string().min(1, { message: "Remarks are required to create an audit trail." }),
     noticeType: z.enum(['general', 'success', 'warning', 'error']),
     persistence: z.enum(['dismissable', 'untildays', 'permanent']),
     days: z.string().optional(),
@@ -47,8 +48,9 @@ export function SendWarningForm({ userId }: { userId: string }) {
      const form = useForm<SendWarningFormValues>({
         resolver: zodResolver(sendWarningSchema),
         defaultValues: {
-            message: "",
-            reason: "",
+            reasonKey: 'other',
+            source: "",
+            remarks: "",
             noticeType: 'general',
             persistence: 'dismissable',
             days: "7",
@@ -84,11 +86,29 @@ export function SendWarningForm({ userId }: { userId: string }) {
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(handleSend)}>
                         <CardContent className="space-y-4 pt-6">
-                            <FormField control={form.control} name="message" render={({ field }) => (
-                                <FormItem><FormLabel>Message (supports HTML)</FormLabel><FormControl><Textarea placeholder="e.g. <b>Alert:</b> Your recent activity violates our terms." {...field} /></FormControl><FormMessage /></FormItem>
+                            <FormField
+                                control={form.control}
+                                name="reasonKey"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Reason for Warning</FormLabel>
+                                        <Select onValueChange={field.onChange} value={field.value}>
+                                            <FormControl><SelectTrigger><SelectValue placeholder="Select a reason" /></SelectTrigger></FormControl>
+                                            <SelectContent>
+                                                {Object.entries(warningReasons).map(([key, value]) => (
+                                                    <SelectItem key={key} value={key}>{value}</SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField control={form.control} name="source" render={({ field }) => (
+                                <FormItem><FormLabel>Source (Optional)</FormLabel><FormControl><Input placeholder="e.g., Report ID, User ID, URL" {...field} /></FormControl><FormMessage /></FormItem>
                             )}/>
-                            <FormField control={form.control} name="reason" render={({ field }) => (
-                                <FormItem><FormLabel>Reason for Warning</FormLabel><FormControl><Input placeholder="e.g. Violation of TOS Section 4.2" {...field} /></FormControl><FormMessage /></FormItem>
+                            <FormField control={form.control} name="remarks" render={({ field }) => (
+                                <FormItem><FormLabel>Internal Remarks</FormLabel><FormControl><Textarea placeholder="e.g., User has been warned twice for spamming." {...field} /></FormControl><FormMessage /></FormItem>
                             )}/>
                              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 <FormField control={form.control} name="noticeType" render={({ field }) => (
@@ -143,8 +163,9 @@ export function SendWarningForm({ userId }: { userId: string }) {
 const blockServiceSchema = z.object({
     isPermanent: z.boolean().default(false),
     duration: z.string().optional(),
-    reason: z.string().min(5, { message: "Reason must be at least 5 characters." }),
-    message: z.string().min(10, { message: "Message to user must be at least 10 characters." }),
+    reasonKey: z.nativeEnum(blockReasons),
+    source: z.string().optional(),
+    remarks: z.string().min(1, { message: "Remarks are required for audit trail." }),
 }).superRefine((data, ctx) => {
     if (!data.isPermanent && (!data.duration || isNaN(parseInt(data.duration)) || parseInt(data.duration) <= 0)) {
         ctx.addIssue({ code: z.ZodIssueCode.custom, message: "A valid duration in hours is required.", path: ["duration"] });
@@ -160,7 +181,7 @@ export function BlockServiceAccessForm({ userId, currentBlock }: { userId: strin
 
     const form = useForm<BlockServiceFormValues>({
         resolver: zodResolver(blockServiceSchema),
-        defaultValues: { isPermanent: false, duration: '24', reason: '', message: '' }
+        defaultValues: { isPermanent: false, duration: '24', reasonKey: 'other', source: '', remarks: '' }
     });
     const isPermanent = form.watch("isPermanent");
     
@@ -175,8 +196,9 @@ export function BlockServiceAccessForm({ userId, currentBlock }: { userId: strin
             const result = await blockServiceAccess(userId, {
                 isPermanent: values.isPermanent,
                 durationInHours: values.isPermanent ? undefined : parseInt(values.duration || '0'),
-                reason: values.reason,
-                message: values.message,
+                reasonKey: values.reasonKey,
+                source: values.source,
+                remarks: values.remarks,
             });
             if (result.success) {
                 toast({ title: "Success", description: "User's service access has been blocked.", className: "bg-accent text-accent-foreground" });
@@ -213,6 +235,8 @@ export function BlockServiceAccessForm({ userId, currentBlock }: { userId: strin
                         <p>
                             <strong>Block Type:</strong> {currentBlock.is_permanent ? 'Permanent' : `Temporary (until ${formattedDate || '...'})`}
                         </p>
+                        <p><strong>Source:</strong> {currentBlock.source || 'N/A'}</p>
+                        <p><strong>Remarks:</strong> {currentBlock.remarks || 'N/A'}</p>
                     </CardContent>
                     <CardFooter>
                         <Button onClick={handleUnblock} disabled={isPending} variant="outline">
@@ -235,8 +259,27 @@ export function BlockServiceAccessForm({ userId, currentBlock }: { userId: strin
                 <Form {...form}>
                 <form onSubmit={form.handleSubmit(handleBlock)}>
                     <CardContent className="pt-6 space-y-4">
-                        <FormField control={form.control} name="reason" render={({ field }) => ( <FormItem><FormLabel>Reason for Block</FormLabel><FormControl><Input placeholder="e.g., Repeated TOS violations" {...field} /></FormControl><FormMessage /></FormItem>)}/>
-                        <FormField control={form.control} name="message" render={({ field }) => ( <FormItem><FormLabel>Message to User</FormLabel><FormControl><Textarea placeholder="Your account has been blocked due to..." {...field} /></FormControl><FormMessage /></FormItem>)}/>
+                        <FormField
+                            control={form.control}
+                            name="reasonKey"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Reason for Block</FormLabel>
+                                    <Select onValueChange={field.onChange} value={field.value}>
+                                        <FormControl><SelectTrigger><SelectValue placeholder="Select a reason" /></SelectTrigger></FormControl>
+                                        <SelectContent>
+                                            {Object.entries(blockReasons).map(([key, value]) => (
+                                                <SelectItem key={key} value={key}>{value.reason}</SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField control={form.control} name="source" render={({ field }) => ( <FormItem><FormLabel>Source (Optional)</FormLabel><FormControl><Input placeholder="e.g., Report ID, User ID, URL" {...field} /></FormControl><FormMessage /></FormItem>)}/>
+                        <FormField control={form.control} name="remarks" render={({ field }) => ( <FormItem><FormLabel>Internal Remarks</FormLabel><FormControl><Textarea placeholder="Provide details for the audit log..." {...field} /></FormControl><FormMessage /></FormItem>)}/>
+                        
                         <div className="flex items-center space-x-2">
                             <FormField control={form.control} name="isPermanent" render={({ field }) => (
                                 <FormItem className="flex flex-row items-center gap-2 space-y-0">
@@ -256,7 +299,7 @@ export function BlockServiceAccessForm({ userId, currentBlock }: { userId: strin
                         )}
                     </CardContent>
                     <CardFooter>
-                        <Button type="submit" disabled={isPending}>
+                        <Button type="submit" variant="destructive" disabled={isPending}>
                             {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                             Block User
                         </Button>
