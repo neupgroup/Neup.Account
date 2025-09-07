@@ -37,6 +37,8 @@ export type UserContacts = {
   secondaryPhone?: string;
   permanentLocation?: string;
   currentLocation?: string;
+  workLocation?: string;
+  otherLocation?: string;
 };
 
 // --- User Data Fetching ---

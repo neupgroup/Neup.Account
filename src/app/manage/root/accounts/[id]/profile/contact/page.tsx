@@ -2,7 +2,7 @@
 "use client"
 
 import { useEffect, useState } from 'react'
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
@@ -17,12 +17,15 @@ import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { BackButton } from '@/components/ui/back-button'
 import { PrimaryHeader } from '@/components/ui/primary-header'
+import { Separator } from '@/components/ui/separator'
 
 const contactFormSchema = z.object({
   primaryPhone: z.string().optional(),
   secondaryPhone: z.string().optional(),
   permanentLocation: z.string().optional(),
   currentLocation: z.string().optional(),
+  workLocation: z.string().optional(),
+  otherLocation: z.string().optional(),
 });
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
@@ -39,8 +42,15 @@ export default function RootUserContactPage({ params }: { params: { id: string }
             secondaryPhone: "",
             permanentLocation: "",
             currentLocation: "",
+            workLocation: "",
+            otherLocation: "",
         },
     });
+    
+    const watchPrimaryPhone = useWatch({ control: form.control, name: "primaryPhone" });
+    const watchPermanentLocation = useWatch({ control: form.control, name: "permanentLocation" });
+    const watchCurrentLocation = useWatch({ control: form.control, name: "currentLocation" });
+    const watchWorkLocation = useWatch({ control: form.control, name: "workLocation" });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -54,6 +64,8 @@ export default function RootUserContactPage({ params }: { params: { id: string }
                 secondaryPhone: contactsData.secondaryPhone || "",
                 permanentLocation: contactsData.permanentLocation || "",
                 currentLocation: contactsData.currentLocation || "",
+                workLocation: contactsData.workLocation || "",
+                otherLocation: contactsData.otherLocation || "",
             });
             setLoading(false);
         }
@@ -87,13 +99,28 @@ export default function RootUserContactPage({ params }: { params: { id: string }
                             <CardTitle>Contact Details</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-6">
-                            <div className="grid md:grid-cols-2 gap-6">
-                                <FormField control={form.control} name="primaryPhone" render={({ field }) => ( <FormItem><FormLabel>Primary Phone</FormLabel><FormControl><Input value={field.value ?? ''} onChange={field.onChange} /></FormControl><FormMessage /></FormItem> )} />
-                                <FormField control={form.control} name="secondaryPhone" render={({ field }) => ( <FormItem><FormLabel>Secondary Phone</FormLabel><FormControl><Input value={field.value ?? ''} onChange={field.onChange} /></FormControl><FormMessage /></FormItem> )} />
+                            <div className="space-y-2">
+                                <FormLabel>Phone</FormLabel>
+                                <FormField control={form.control} name="primaryPhone" render={({ field }) => ( <FormItem className="space-y-0"><FormControl><Input placeholder="Primary Phone" value={field.value ?? ''} onChange={field.onChange} className="border-b rounded-none border-x-0 border-t-0 focus-visible:ring-0 focus-visible:ring-offset-0 px-1" /></FormControl><FormMessage /></FormItem> )} />
+                                {!!watchPrimaryPhone && (
+                                    <FormField control={form.control} name="secondaryPhone" render={({ field }) => ( <FormItem className="space-y-0"><FormControl><Input placeholder="Secondary Phone" value={field.value ?? ''} onChange={field.onChange} className="border-b rounded-none border-x-0 border-t-0 focus-visible:ring-0 focus-visible:ring-offset-0 px-1" /></FormControl><FormMessage /></FormItem> )} />
+                                )}
                             </div>
-                            <div className="grid md:grid-cols-2 gap-6">
-                                <FormField control={form.control} name="permanentLocation" render={({ field }) => ( <FormItem><FormLabel>Permanent Location</FormLabel><FormControl><Input value={field.value ?? ''} onChange={field.onChange} /></FormControl><FormMessage /></FormItem> )} />
-                                <FormField control={form.control} name="currentLocation" render={({ field }) => ( <FormItem><FormLabel>Current Location</FormLabel><FormControl><Input value={field.value ?? ''} onChange={field.onChange} /></FormControl><FormMessage /></FormItem> )} />
+                            
+                            <Separator />
+
+                             <div className="space-y-2">
+                                <FormLabel>Location</FormLabel>
+                                 <FormField control={form.control} name="permanentLocation" render={({ field }) => ( <FormItem className="space-y-0"><FormControl><Input placeholder="Permanent Location" value={field.value ?? ''} onChange={field.onChange} className="border-b rounded-none border-x-0 border-t-0 focus-visible:ring-0 focus-visible:ring-offset-0 px-1" /></FormControl><FormMessage /></FormItem> )} />
+                                 {!!watchPermanentLocation && (
+                                     <FormField control={form.control} name="currentLocation" render={({ field }) => ( <FormItem className="space-y-0"><FormControl><Input placeholder="Current Location" value={field.value ?? ''} onChange={field.onChange} className="border-b rounded-none border-x-0 border-t-0 focus-visible:ring-0 focus-visible:ring-offset-0 px-1" /></FormControl><FormMessage /></FormItem> )} />
+                                 )}
+                                  {!!watchPermanentLocation && !!watchCurrentLocation && (
+                                     <FormField control={form.control} name="workLocation" render={({ field }) => ( <FormItem className="space-y-0"><FormControl><Input placeholder="Work Location" value={field.value ?? ''} onChange={field.onChange} className="border-b rounded-none border-x-0 border-t-0 focus-visible:ring-0 focus-visible:ring-offset-0 px-1" /></FormControl><FormMessage /></FormItem> )} />
+                                 )}
+                                  {!!watchPermanentLocation && !!watchCurrentLocation && !!watchWorkLocation && (
+                                     <FormField control={form.control} name="otherLocation" render={({ field }) => ( <FormItem className="space-y-0"><FormControl><Input placeholder="Other Location" value={field.value ?? ''} onChange={field.onChange} className="border-b rounded-none border-x-0 border-t-0 focus-visible:ring-0 focus-visible:ring-offset-0 px-1" /></FormControl><FormMessage /></FormItem> )} />
+                                 )}
                             </div>
                         </CardContent>
                     </Card>

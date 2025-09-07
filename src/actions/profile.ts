@@ -108,6 +108,9 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
         await updateOrCreateContact(batch, accountId, 'secondaryPhone', data.secondaryPhone, canModifyContact);
         await updateOrCreateContact(batch, accountId, 'permanentLocation', data.permanentLocation, canModifyContact);
         await updateOrCreateContact(batch, accountId, 'currentLocation', data.currentLocation, canModifyContact);
+        await updateOrCreateContact(batch, accountId, 'workLocation', data.workLocation, canModifyContact);
+        await updateOrCreateContact(batch, accountId, 'otherLocation', data.otherLocation, canModifyContact);
+
 
         await batch.commit();
         
