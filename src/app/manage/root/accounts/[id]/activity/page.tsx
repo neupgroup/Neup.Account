@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge"
-import { getActivities } from "@/actions/root/users";
+import { getActivity } from "@/actions/root/users";
 import { ChevronLeft, ChevronRight, Ban, MapPin } from "@/components/icons";
 import { BackButton } from "@/components/ui/back-button";
 import { checkPermissions } from "@/lib/user";
@@ -47,7 +47,7 @@ export function ActivityList({ initialActivity, accountId }: { initialActivity?:
              setCanView(hasPerm);
              if (hasPerm && !initialActivity) {
                 setLoading(true);
-                const fetchedLogs = await getActivities(accountId);
+                const fetchedLogs = await getActivity(accountId);
                 setLogs(fetchedLogs);
                 setLoading(false);
              } else {
