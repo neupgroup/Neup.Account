@@ -8,9 +8,10 @@ import { PrimaryHeader } from "@/components/ui/primary-header";
 
 
 export default async function PeopleSharingPage() {
-    const [canViewFamily, canViewInvitations] = await Promise.all([
+    const [canViewFamily, canViewInvitations, canBlockUsers] = await Promise.all([
         checkPermissions(['people.family.view']),
-        checkPermissions(['notification.read'])
+        checkPermissions(['notification.read']),
+        checkPermissions(['people.block_list.view', 'people.restrict_list.view'])
     ]);
     
     const sharingFeatures = [
@@ -38,9 +39,9 @@ export default async function PeopleSharingPage() {
         {
             icon: "UserX",
             title: "Blocked Users",
-            description: "See a list of people you've blocked.",
-            href: "#",
-            show: false, // Not implemented yet
+            description: "Manage users you have blocked or restricted.",
+            href: "/manage/people/blocked",
+            show: canBlockUsers,
         },
     ];
 
