@@ -7,9 +7,9 @@ import { doc, updateDoc, collection, addDoc, serverTimestamp, query, where, getD
 import { parseDate as parseDateWithAI } from "@/ai/flows/parse-date"
 import { logActivity } from "@/lib/log-actions"
 import { logError } from "@/lib/logger"
-import { checkPermissions, getUserNeupIds, getPersonalAccountId } from "@/lib/user"
+import { checkPermissions, getUserNeupIds, checkNeupIdAvailability } from "@/lib/user"
+import { getPersonalAccountId } from "@/lib/auth-actions";
 import { brandProfileFormSchema } from "@/schemas/profile"
-import { checkNeupIdAvailability } from "@/lib/user";
 
 
 async function updateOrCreateContact(batch: ReturnType<typeof writeBatch>, accountId: string, type: string, value: string | undefined, hasPermission: boolean) {
