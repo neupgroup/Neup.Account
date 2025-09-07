@@ -127,18 +127,16 @@ export default function DemographicsStepPage() {
                                     {genderOptions.map((option, index) => {
                                         const value = option.toLowerCase().replace(/\s/g, '_');
                                         return (
-                                            <FormItem key={value} className="flex items-center space-x-3 space-y-0 p-3 cursor-pointer hover:bg-muted/50 transition-colors data-[state=checked]:bg-accent data-[state=checked]:text-accent-foreground border-b border-input last:border-b-0">
-                                                <FormControl>
+                                            <FormItem key={value} className="m-0">
+                                                <Label htmlFor={`gender-${value}`} className="flex items-center space-x-3 space-y-0 p-3 cursor-pointer hover:bg-muted/50 transition-colors border-b border-input last:border-b-0 has-[input:checked]:bg-primary/10">
                                                     <div className="relative flex items-center">
                                                         <RadioGroupItem value={value} id={`gender-${value}`} className="peer sr-only" />
-                                                        <label htmlFor={`gender-${value}`} className="flex items-center cursor-pointer">
-                                                             <div className="w-5 h-5 border-2 border-primary rounded-sm flex-shrink-0 peer-data-[state=checked]:bg-primary peer-data-[state=checked]:text-white flex items-center justify-center">
-                                                                <Check className="h-4 w-4 text-white" />
-                                                            </div>
-                                                            <span className="ml-3 font-normal">{option}</span>
-                                                        </label>
+                                                            <div className="w-5 h-5 border-2 border-primary rounded-sm flex-shrink-0 peer-data-[state=checked]:bg-primary peer-data-[state=checked]:text-white flex items-center justify-center">
+                                                            <Check className="h-4 w-4 opacity-0 peer-data-[state=checked]:opacity-100" />
+                                                        </div>
                                                     </div>
-                                                </FormControl>
+                                                    <span className="ml-3 font-normal">{option}</span>
+                                                </Label>
                                             </FormItem>
                                         );
                                     })}
