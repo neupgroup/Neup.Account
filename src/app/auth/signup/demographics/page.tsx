@@ -21,6 +21,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar as CalendarIcon, Loader2, Check } from "@/components/icons";
 import { cn } from "@/lib/utils";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 
 type FormData = z.infer<typeof demographicsSchema>;
 
@@ -124,7 +125,7 @@ export default function DemographicsStepPage() {
                                     className="block"
                                 >
                                     <div className="border border-input rounded-lg overflow-hidden">
-                                    {genderOptions.map((option, index) => {
+                                    {genderOptions.map((option) => {
                                         const value = option.toLowerCase().replace(/\s/g, '_');
                                         return (
                                             <FormItem key={value} className="m-0">
