@@ -7,7 +7,7 @@ import { collection, query, where, getDocs, writeBatch, doc, serverTimestamp, ge
 import { checkPermissions, getUserProfile } from '@/lib/user';
 import { logError } from '@/lib/logger';
 import { switchToBrand as switchToBrandAction, switchToPersonal as switchToPersonalAction } from '@/lib/session';
-import { getActiveAccountId, getPersonalAccountId } from '@/lib/auth-actions';
+import { getPersonalAccountId } from '@/lib/auth-actions';
 import { z } from 'zod';
 import { headers } from 'next/headers';
 import { revalidatePath } from 'next/cache';

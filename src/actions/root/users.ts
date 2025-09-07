@@ -1,4 +1,3 @@
-
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -16,7 +15,7 @@ import {
   setDoc,
   orderBy,
 } from 'firebase/firestore';
-import { getUserNeupIds, getUserProfile, getAccountType } from '@/lib/user';
+import { getUserNeupIds, getUserProfile, getAccountType, checkPermissions } from '@/lib/user';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { revalidatePath } from 'next/cache';
 import { logActivity } from '@/lib/log-actions';
@@ -121,6 +120,11 @@ export async function getPermissions(accountId: string): Promise<UserPermissions
 }
 
 export async function updateUserPermissions(accountId: string, newPermissionIds: string[], newRestrictionIds: string[]): Promise<{success: boolean, error?: string}> {
+    const canUpdate = await checkPermissions(['root.permission.edit']);
+    if (!canUpdate) {
+        return { success: false, error: 'Permission denied.' };
+    }
+
     try {
         const permitQuery = query(collection(db, 'permit'), where('account_id', '==', accountId), where('for_self', '==', true), limit(1));
         const permitSnapshot = await getDocs(permitQuery);

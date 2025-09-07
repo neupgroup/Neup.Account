@@ -26,7 +26,7 @@ import { ChevronLeft, ChevronRight, Ban, MapPin } from "@/components/icons";
 import { BackButton } from "@/components/ui/back-button";
 import { checkPermissions } from "@/lib/user";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, use } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { UserActivityLog } from "@/types";
 
