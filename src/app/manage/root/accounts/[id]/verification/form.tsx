@@ -13,12 +13,12 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { grantVerification, revokeVerification } from '@/actions/root/verifications';
 import { CheckCircle2, Loader2, ShieldCheck, XCircle } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
 import { useSession } from '@/context/session-context';
 
 const grantSchema = z.object({
@@ -56,20 +56,20 @@ export function VerificationManager({ accountId }: { accountId: string }) {
     const { toast } = useToast();
     const { personalAccountId } = useSession();
 
-    const grantForm = useForm<z.infer<typeof grantSchema>>({ 
+    const grantForm = useForm<z.infer<typeof grantSchema>>({
         resolver: zodResolver(grantSchema),
         defaultValues: {
             category: '',
             reason: '',
         }
     });
-    const revokeForm = useForm<z.infer<typeof revokeSchema>>({ 
+    const revokeForm = useForm<z.infer<typeof revokeSchema>>({
         resolver: zodResolver(revokeSchema),
         defaultValues: {
             reason: '',
         }
     });
-    
+
     useEffect(() => {
         async function fetchDetails() {
             setLoading(true);
@@ -114,7 +114,7 @@ export function VerificationManager({ accountId }: { accountId: string }) {
             }
         });
     };
-    
+
     const handleRevoke = (data: z.infer<typeof revokeSchema>) => {
          startTransition(async () => {
             const result = await revokeVerification(accountId, data.reason);
@@ -129,7 +129,7 @@ export function VerificationManager({ accountId }: { accountId: string }) {
     }
 
     const isSelf = personalAccountId === accountId;
-    
+
     if (loading) {
         return <Skeleton className="h-48 w-full" />;
     }
@@ -174,7 +174,7 @@ export function VerificationManager({ accountId }: { accountId: string }) {
                                  <Button type="submit" variant="destructive" disabled={isPending}>
                                     {isPending ? <Loader2 className="animate-spin mr-2" /> : <XCircle className="mr-2" />}
                                     Revoke Verification
-                                </Button>
+                                 </Button>
                             </form>
                         </Form>
                     </CardContent>
@@ -201,22 +201,29 @@ export function VerificationManager({ accountId }: { accountId: string }) {
                                 control={grantForm.control}
                                 name="category"
                                 render={({ field }) => (
-                                    <FormItem>
+                                <FormItem className="space-y-3">
                                     <FormLabel>Verification Category</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                        <FormControl>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Select a category" />
-                                        </SelectTrigger>
-                                        </FormControl>
-                                        <SelectContent>
-                                            {verificationCategories.map(cat => (
-                                                <SelectItem key={cat} value={cat}>{cat}</SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
+                                    <FormControl>
+                                        <RadioGroup
+                                            onValueChange={field.onChange}
+                                            value={field.value}
+                                            className="grid grid-cols-2 gap-4"
+                                        >
+                                             {verificationCategories.map(cat => (
+                                                <FormItem key={cat}>
+                                                    <RadioGroupItem value={cat} id={cat.replace(/\s+/g, '-')} className="peer sr-only" />
+                                                    <Label
+                                                        htmlFor={cat.replace(/\s+/g, '-')}
+                                                        className="flex h-full cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary"
+                                                    >
+                                                        {cat}
+                                                    </Label>
+                                                </FormItem>
+                                             ))}
+                                        </RadioGroup>
+                                    </FormControl>
                                     <FormMessage />
-                                    </FormItem>
+                                </FormItem>
                                 )}
                             />
                             <FormField control={grantForm.control} name="reason" render={({ field }) => (
