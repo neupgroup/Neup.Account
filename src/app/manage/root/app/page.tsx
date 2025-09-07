@@ -18,7 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Plus, Search, ChevronRight } from "@/components/icons";
-import { getApps } from "@/actions/root/app";
+import { getApps } from "@/actions/root/app/actions";
 import type { Application } from '@/types';
 import Link from "next/link";
 import { useDebounce } from 'use-debounce';
