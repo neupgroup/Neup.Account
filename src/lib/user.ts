@@ -273,3 +273,19 @@ export async function checkNeupIdAvailability(neupId: string): Promise<{ availab
         return { available: false }; // Fail safe
     }
 }
+
+export async function isRootUser(accountId: string): Promise<boolean> {
+    if (!accountId) return false;
+    try {
+        const permitQuery = query(
+            collection(db, 'permit'),
+            where('account_id', '==', accountId),
+            where('is_root', '==', true)
+        );
+        const snapshot = await getDocs(permitQuery);
+        return !snapshot.empty;
+    } catch (error) {
+        await logError('database', error, `isRootUser check for ${accountId}`);
+        return false;
+    }
+}

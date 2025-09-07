@@ -10,16 +10,24 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Loader2, Trash2 } from 'lucide-react';
+import { Loader2, ShieldAlert, Trash2 } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { TertiaryHeader } from '@/components/ui/tertiary-header';
-import { approveAccountDeletion, cancelAccountDeletion, getDeletionStatus } from '@/actions/root/requests/deletion';
+import { approveAccountDeletion, cancelAccountDeletion, getDeletionStatus, requestAccountDeletionByAdmin } from '@/actions/root/requests/deletion';
 import { useRouter } from 'next/navigation';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
 type DeletionStatus = {
-    status: 'none' | 'pending' | 'deleted';
+    status: 'none' | 'pending' | 'deleted' | 'is_root';
     requestedAt?: string | null;
 };
+
+const requestByAdminSchema = z.object({
+  reason: z.string().min(10, "A reason of at least 10 characters is required."),
+});
+
+type RequestByAdminFormValues = z.infer<typeof requestByAdminSchema>;
+
 
 export function DeletionManager({ accountId }: { accountId: string }) {
     const [status, setStatus] = useState<DeletionStatus | null>(null);
@@ -28,13 +36,18 @@ export function DeletionManager({ accountId }: { accountId: string }) {
     const { toast } = useToast();
     const router = useRouter();
     
+    const form = useForm<RequestByAdminFormValues>({
+        resolver: zodResolver(requestByAdminSchema),
+    });
+    
+    const fetchStatus = async () => {
+        setLoading(true);
+        const deletionStatus = await getDeletionStatus(accountId);
+        setStatus(deletionStatus);
+        setLoading(false);
+    }
+
     useEffect(() => {
-        async function fetchStatus() {
-            setLoading(true);
-            const deletionStatus = await getDeletionStatus(accountId);
-            setStatus(deletionStatus);
-            setLoading(false);
-        }
         fetchStatus();
     }, [accountId]);
 
@@ -55,15 +68,46 @@ export function DeletionManager({ accountId }: { accountId: string }) {
             const result = await cancelAccountDeletion(accountId);
             if(result.success) {
                 toast({ title: 'Success', description: 'Account deletion request has been cancelled.' });
-                setStatus(s => s ? { ...s, status: 'none' } : null);
+                await fetchStatus();
             } else {
                 toast({ variant: 'destructive', title: 'Error', description: result.error });
             }
         });
     }
 
+    const handleAdminRequest = (data: RequestByAdminFormValues) => {
+        startTransition(async () => {
+            const result = await requestAccountDeletionByAdmin(accountId, data);
+            if (result.success) {
+                toast({ title: 'Success', description: 'Account deletion request has been submitted.' });
+                await fetchStatus();
+            } else {
+                toast({ variant: 'destructive', title: 'Error', description: result.error });
+            }
+        });
+    };
+
     if (loading) {
         return <Skeleton className="h-48 w-full" />;
+    }
+
+    if (status?.status === 'is_root') {
+        return (
+             <div className="grid gap-4">
+                <TertiaryHeader title="Manual Deletion" />
+                <Card>
+                     <CardHeader>
+                         <Alert variant="destructive">
+                            <ShieldAlert className="h-4 w-4" />
+                            <AlertTitle>Action Not Permitted</AlertTitle>
+                            <AlertDescription>
+                               Root user accounts cannot be deleted through this panel.
+                            </AlertDescription>
+                        </Alert>
+                    </CardHeader>
+                </Card>
+            </div>
+        )
     }
 
     if (status?.status === 'pending') {
@@ -104,22 +148,45 @@ export function DeletionManager({ accountId }: { accountId: string }) {
          )
      }
 
+    // Status is 'none'
     return (
         <div className="grid gap-4">
             <TertiaryHeader title="Manual Deletion" description="This action is irreversible and should only be taken in extreme circumstances."/>
             <Card>
-                <CardHeader>
-                    <Alert variant="destructive">
-                        <Trash2 className="h-4 w-4" />
-                        <AlertTitle>Warning</AlertTitle>
-                        <AlertDescription>
-                           This user has not requested deletion. Deleting this account manually will permanently erase all user data without a grace period.
-                        </AlertDescription>
-                    </Alert>
-                </CardHeader>
-                <CardContent>
-                   <p className="text-sm text-muted-foreground">To proceed, approve the request from the Deletion Requests page if the user has initiated it.</p>
-                </CardContent>
+                 <Form {...form}>
+                    <form onSubmit={form.handleSubmit(handleAdminRequest)}>
+                        <CardHeader>
+                            <Alert variant="destructive">
+                                <Trash2 className="h-4 w-4" />
+                                <AlertTitle>Warning</AlertTitle>
+                                <AlertDescription>
+                                This will schedule the user's account for deletion after the standard grace period. The user will be notified.
+                                </AlertDescription>
+                            </Alert>
+                        </CardHeader>
+                        <CardContent>
+                            <FormField
+                                control={form.control}
+                                name="reason"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Reason for Deletion</FormLabel>
+                                        <FormControl>
+                                            <Textarea placeholder="Provide a reason for this administrative action..." {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </CardContent>
+                        <CardFooter>
+                            <Button variant="destructive" type="submit" disabled={isPending}>
+                                {isPending ? <Loader2 className="animate-spin mr-2" /> : null}
+                                Request Deletion
+                            </Button>
+                        </CardFooter>
+                    </form>
+                </Form>
             </Card>
         </div>
     );

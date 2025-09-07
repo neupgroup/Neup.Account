@@ -10,13 +10,16 @@ import {
   doc,
   updateDoc,
   writeBatch,
+  serverTimestamp,
+  getDoc,
 } from 'firebase/firestore';
-import { getUserProfile, checkPermissions, getUserNeupIds } from '@/lib/user';
+import { getUserProfile, checkPermissions, getUserNeupIds, isRootUser } from '@/lib/user';
 import { logError } from '@/lib/logger';
 import { revalidatePath } from 'next/cache';
 import { deleteUserAccount } from '@/actions/root/user-actions';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { logActivity } from '@/lib/log-actions';
+import { z } from 'zod';
 
 export type DeletionRequest = {
   accountId: string;
@@ -24,6 +27,10 @@ export type DeletionRequest = {
   userNeupId: string;
   requestedAt: string;
 };
+
+const requestByAdminSchema = z.object({
+    reason: z.string().min(10, "A reason of at least 10 characters is required."),
+});
 
 export async function getDeletionRequests(): Promise<DeletionRequest[]> {
   const canView = await checkPermissions(['root.requests.view']);
@@ -76,8 +83,13 @@ export async function getDeletionRequests(): Promise<DeletionRequest[]> {
   }
 }
 
-export async function getDeletionStatus(accountId: string): Promise<{status: 'none' | 'pending' | 'deleted', requestedAt?: string | null}> {
+export async function getDeletionStatus(accountId: string): Promise<{status: 'none' | 'pending' | 'deleted' | 'is_root', requestedAt?: string | null}> {
     try {
+        const isTargetRoot = await isRootUser(accountId);
+        if (isTargetRoot) {
+            return { status: 'is_root' };
+        }
+
         const accountRef = doc(db, 'account', accountId);
         const accountDoc = await getDoc(accountRef);
 
@@ -163,10 +175,57 @@ export async function cancelAccountDeletion(
 
         await logActivity(accountId, 'Account Deletion Cancelled by Admin', 'Success', undefined, adminId);
         revalidatePath('/manage/root/requests/deletion');
-        revalidatePath(`/manage/root/accounts/${accountId}`);
+        revalidatePath(`/manage/root/accounts/${accountId}/deletion`);
         return { success: true };
     } catch (error) {
         await logError('database', error, `cancelAccountDeletion: ${accountId}`);
         return { success: false, error: 'Failed to cancel deletion request.' };
+    }
+}
+
+
+export async function requestAccountDeletionByAdmin(accountId: string, data: z.infer<typeof requestByAdminSchema>): Promise<{ success: boolean; error?: string; }> {
+    const canDelete = await checkPermissions(['root.account.delete']);
+    if (!canDelete) {
+        return { success: false, error: "Permission denied." };
+    }
+    
+    const adminId = await getPersonalAccountId();
+    if (!adminId) return { success: false, error: 'Administrator not authenticated.'};
+    
+    const validation = requestByAdminSchema.safeParse(data);
+    if (!validation.success) {
+        return { success: false, error: validation.error.flatten().fieldErrors.reason?.[0] };
+    }
+
+    try {
+        const isTargetRoot = await isRootUser(accountId);
+        if (isTargetRoot) {
+            return { success: false, error: "Root user accounts cannot be deleted this way." };
+        }
+
+        const accountRef = doc(db, 'account', accountId);
+        const batch = writeBatch(db);
+
+        batch.update(accountRef, { status: 'deletion_requested' });
+
+        const statusLogRef = doc(collection(db, 'account_status'));
+        batch.set(statusLogRef, {
+            account_id: accountId,
+            status: 'deletion_requested',
+            remarks: `Admin initiated deletion. Reason: ${validation.data.reason}`,
+            from_date: serverTimestamp(),
+            more_info: `Request initiated by admin: ${adminId}.`
+        });
+
+        await batch.commit();
+
+        await logActivity(accountId, "Account Deletion Requested by Admin", "Alert", undefined, adminId);
+        revalidatePath(`/manage/root/accounts/${accountId}/deletion`);
+        return { success: true };
+
+    } catch (error) {
+        await logError("database", error, `requestAccountDeletionByAdmin: ${accountId}`);
+        return { success: false, error: "An unexpected error occurred." };
     }
 }
