@@ -18,6 +18,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { grantVerification, revokeVerification } from '@/actions/root/verifications';
 import { CheckCircle2, Loader2, ShieldCheck, XCircle } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useSession } from '@/context/session-context';
 
 const grantSchema = z.object({
   category: z.string().min(3, "Category is required."),
@@ -36,11 +38,23 @@ type VerificationDetails = {
     reason?: string;
 };
 
+const verificationCategories = [
+    "Public Figure",
+    "Public Brand",
+    "Public Governmental Personnel",
+    "Government Organization",
+    "Community Leader",
+    "Content Creator",
+    "Official Partner",
+    "Other"
+];
+
 export function VerificationManager({ accountId }: { accountId: string }) {
     const [details, setDetails] = useState<VerificationDetails | null>(null);
     const [loading, setLoading] = useState(true);
     const [isPending, startTransition] = useTransition();
     const { toast } = useToast();
+    const { personalAccountId } = useSession();
 
     const grantForm = useForm<z.infer<typeof grantSchema>>({ 
         resolver: zodResolver(grantSchema),
@@ -113,9 +127,22 @@ export function VerificationManager({ accountId }: { accountId: string }) {
             }
         });
     }
+
+    const isSelf = personalAccountId === accountId;
     
     if (loading) {
         return <Skeleton className="h-48 w-full" />;
+    }
+
+    if (isSelf) {
+        return (
+            <Alert variant="destructive">
+                <AlertTitle>Action Not Permitted</AlertTitle>
+                <AlertDescription>
+                    Administrators cannot manage their own verification status.
+                </AlertDescription>
+            </Alert>
+        )
     }
 
     if (details?.status === 'approved') {
@@ -170,13 +197,28 @@ export function VerificationManager({ accountId }: { accountId: string }) {
                                     <AlertDescription>This user's verification was previously revoked.</AlertDescription>
                                 </Alert>
                             )}
-                            <FormField control={grantForm.control} name="category" render={({ field }) => (
-                                <FormItem>
+                            <FormField
+                                control={grantForm.control}
+                                name="category"
+                                render={({ field }) => (
+                                    <FormItem>
                                     <FormLabel>Verification Category</FormLabel>
-                                    <FormControl><Input placeholder="e.g., Public Figure, Official Brand" {...field} /></FormControl>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select a category" />
+                                        </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            {verificationCategories.map(cat => (
+                                                <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
                                     <FormMessage />
-                                </FormItem>
-                            )}/>
+                                    </FormItem>
+                                )}
+                            />
                             <FormField control={grantForm.control} name="reason" render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Reason for Verification</FormLabel>

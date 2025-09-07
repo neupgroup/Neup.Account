@@ -63,6 +63,10 @@ export async function grantVerification(accountId: string, data: z.infer<typeof 
     const adminId = await getPersonalAccountId();
     if (!adminId) return { success: false, error: 'Admin not authenticated.'};
 
+    if (adminId === accountId) {
+        return { success: false, error: 'Administrators cannot verify their own account.' };
+    }
+
     const validation = verificationActionSchema.safeParse(data);
     if (!validation.success) {
         return { success: false, error: validation.error.flatten().fieldErrors.reason?.[0] || validation.error.flatten().fieldErrors.category?.[0] };
