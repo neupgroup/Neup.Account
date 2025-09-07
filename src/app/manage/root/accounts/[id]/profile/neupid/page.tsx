@@ -1,0 +1,133 @@
+
+"use client"
+
+import { useEffect, useState } from 'react'
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+
+import { getUserNeupIds } from "@/lib/user"
+import { updateUserProfile } from "@/actions/profile"
+import { useToast } from "@/hooks/use-toast"
+
+import { Skeleton } from '@/components/ui/skeleton'
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form"
+import { Label } from '@/components/ui/label'
+import { Badge } from '@/components/ui/badge'
+import { BackButton } from '@/components/ui/back-button'
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '@/lib/firebase'
+import { PrimaryHeader } from '@/components/ui/primary-header'
+
+const neupidFormSchema = z.object({
+  newNeupIdRequest: z.string().optional(),
+});
+
+type NeupidFormValues = z.infer<typeof neupidFormSchema>;
+
+export default function RootUserNeupidPage({ params }: { params: { id: string } }) {
+    const [neupIds, setNeupIds] = useState<string[]>([]);
+    const [loading, setLoading] = useState(true);
+    const { toast } = useToast();
+    const [isPro, setIsPro] = useState(false);
+    const [userNeupId, setUserNeupId] = useState('');
+
+    const form = useForm<NeupidFormValues>({
+        resolver: zodResolver(neupidFormSchema),
+        defaultValues: { newNeupIdRequest: "" },
+    });
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const [neupIdsData, accountDoc] = await Promise.all([
+                getUserNeupIds(params.id),
+                getDoc(doc(db, 'account', params.id)),
+            ]);
+
+            setNeupIds(neupIdsData);
+            if (neupIdsData.length > 0) {
+                setUserNeupId(neupIdsData[0]);
+            }
+
+            if (accountDoc.exists()) {
+                setIsPro(accountDoc.data()?.pro === true);
+            }
+            setLoading(false);
+        }
+        fetchData();
+    }, [params.id]);
+
+    async function onSubmit(data: NeupidFormValues) {
+        const result = await updateUserProfile(params.id, {}, data.newNeupIdRequest);
+
+        if (result.success) {
+            toast({ title: "Success", description: "NeupID request sent successfully.", className: "bg-accent text-accent-foreground" });
+            form.reset({ newNeupIdRequest: "" });
+            if (data.newNeupIdRequest) {
+                setNeupIds(prev => [...prev, `${data.newNeupIdRequest} (pending)`])
+            }
+        } else {
+            toast({ variant: "destructive", title: "Error", description: result.error });
+        }
+    }
+    
+    const neupIdLimit = isPro ? 2 : 1;
+    const canRequestNeupId = neupIds.length < neupIdLimit;
+
+    if (loading) {
+        return <Skeleton className="h-64 w-full" />
+    }
+
+    return (
+        <div className="space-y-8">
+            <BackButton href={`/manage/root/accounts/${params.id}/profile`} />
+             <PrimaryHeader
+                title="NeupID Management"
+                description={`Manage unique identifiers for @${userNeupId}.`}
+            />
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>NeupID and Identities</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                            <div className="space-y-2">
+                                <Label>Associated NeupIDs</Label>
+                                <div className="flex flex-wrap gap-2">
+                                    {neupIds.map((id) => (
+                                        <Badge key={id} variant="secondary">{id}</Badge>
+                                    ))}
+                                </div>
+                            </div>
+                            {canRequestNeupId ? (
+                                <FormField control={form.control} name="newNeupIdRequest" render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Request New NeupID</FormLabel>
+                                        <FormControl><Input placeholder="Enter desired NeupID" value={field.value ?? ''} onChange={field.onChange} /></FormControl>
+                                        <FormDescription>Your request will be sent for admin approval. You can request up to {neupIdLimit} NeupIDs.</FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                )} />
+                            ) : (
+                                <FormItem>
+                                    <FormLabel>Request New NeupID</FormLabel>
+                                    <FormControl><Input placeholder="User has reached NeupID limit" disabled /></FormControl>
+                                    <FormDescription>User can upgrade to Pro to request more NeupIDs, or an admin can override.</FormDescription>
+                                </FormItem>
+                            )}
+                        </CardContent>
+                    </Card>
+                    <div className="flex justify-end">
+                        <Button type="submit" disabled={form.formState.isSubmitting || !canRequestNeupId}>
+                            {form.formState.isSubmitting ? "Sending Request..." : "Request NeupID"}
+                        </Button>
+                    </div>
+                </form>
+            </Form>
+        </div>
+    )
+}

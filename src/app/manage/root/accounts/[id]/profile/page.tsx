@@ -30,7 +30,30 @@ export default async function UserProfilePage({ params }: { params: { id: string
       description: "Manage the user's legal first, middle, and last name.",
       href: `/manage/root/accounts/${params.id}/profile/name`,
     },
-    // Add other links as needed, pointing to new pages
+    {
+        icon: "HeartHandshake",
+        title: "Demographics",
+        description: "Update the user's date of birth and gender.",
+        href: `/manage/root/accounts/${params.id}/profile/demographics`,
+    },
+    {
+        icon: "AtSign",
+        title: "NeupID",
+        description: "Manage the user's unique NeupIDs.",
+        href: `/manage/root/accounts/${params.id}/profile/neupid`,
+    },
+    {
+        icon: "Contact",
+        title: "Contact Information",
+        description: "Manage the user's phone numbers and addresses.",
+        href: `/manage/root/accounts/${params.id}/profile/contact`,
+    },
+    {
+        icon: "ShieldCheck",
+        title: "KYC & Verification",
+        description: "Submit or review documents to verify identity.",
+        href: `/manage/root/accounts/${params.id}/profile/documents`,
+    },
   ];
 
   return (
