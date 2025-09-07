@@ -5,7 +5,7 @@
 import { useState, useTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
-import { sendWarning, blockServiceAccess, unblockServiceAccess, warningReasons, blockReasons } from "@/actions/root/user-actions";
+import { sendWarning, blockServiceAccess, unblockServiceAccess } from "@/actions/root/user-actions";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,6 +20,14 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Switch } from "@/components/ui/switch";
 import { TertiaryHeader } from "@/components/ui/tertiary-header";
 
+export const warningReasons = {
+    spam: "Spamming or Commercial Solicitation",
+    harassment: "Harassment or Bullying",
+    impersonation: "Impersonation",
+    hate_speech: "Hate Speech",
+    tos_violation: "Terms of Service Violation",
+    other: "Other Policy Violation"
+};
 
 const sendWarningSchema = z.object({
     reasonKey: z.nativeEnum(warningReasons),
@@ -159,6 +167,29 @@ export function SendWarningForm({ userId }: { userId: string }) {
         </div>
     );
 }
+
+export const blockReasons = {
+    security_risk: {
+        reason: "Compromised Account / Security Risk",
+        message: "Your account has been temporarily blocked due to a potential security risk. Please contact support to resolve this issue."
+    },
+    payment_issue: {
+        reason: "Payment or Billing Issue",
+        message: "Your account access has been blocked due to a payment or billing issue. Please contact support."
+    },
+    tos_repeated: {
+        reason: "Repeated Terms of Service Violations",
+        message: "Your account has been blocked due to repeated violations of our Terms of Service."
+    },
+    illegal_activity: {
+        reason: "Illegal Activity",
+        message: "Your account has been permanently blocked due to illegal activity."
+    },
+    other: {
+        reason: "Other Policy Violation",
+        message: "Your account has been blocked for violating our policies. Please contact support for more information."
+    }
+};
 
 const blockServiceSchema = z.object({
     isPermanent: z.boolean().default(false),

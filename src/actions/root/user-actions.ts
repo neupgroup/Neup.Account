@@ -12,18 +12,10 @@ import { cookies, headers } from 'next/headers';
 import crypto from 'crypto';
 import { z } from 'zod';
 import { createNotification } from '../notifications';
+import { warningReasons, blockReasons } from '@/app/manage/root/accounts/[id]/forms';
 
 
 // --- Administrative Actions ---
-
-export const warningReasons = {
-    spam: "Spamming or Commercial Solicitation",
-    harassment: "Harassment or Bullying",
-    impersonation: "Impersonation",
-    hate_speech: "Hate Speech",
-    tos_violation: "Terms of Service Violation",
-    other: "Other Policy Violation"
-};
 
 const sendWarningSchema = z.object({
     reasonKey: z.nativeEnum(warningReasons),
@@ -83,29 +75,6 @@ export async function sendWarning(userId: string, data: z.infer<typeof sendWarni
         return { success: false, error: 'Could not send warning.' };
     }
 }
-
-export const blockReasons = {
-    security_risk: {
-        reason: "Compromised Account / Security Risk",
-        message: "Your account has been temporarily blocked due to a potential security risk. Please contact support to resolve this issue."
-    },
-    payment_issue: {
-        reason: "Payment or Billing Issue",
-        message: "Your account access has been blocked due to a payment or billing issue. Please contact support."
-    },
-    tos_repeated: {
-        reason: "Repeated Terms of Service Violations",
-        message: "Your account has been blocked due to repeated violations of our Terms of Service."
-    },
-    illegal_activity: {
-        reason: "Illegal Activity",
-        message: "Your account has been permanently blocked due to illegal activity."
-    },
-    other: {
-        reason: "Other Policy Violation",
-        message: "Your account has been blocked for violating our policies. Please contact support for more information."
-    }
-};
 
 const blockServiceSchema = z.object({
     isPermanent: z.boolean(),
@@ -337,6 +306,102 @@ export async function setProStatus(accountId: string, isPro: boolean, reason: st
         return { success: true };
     } catch (e) {
         await logError('database', e, `setProStatus for account ${accountId}`);
+        return { success: false, error: 'An unexpected error occurred.' };
+    }
+}
+
+export async function addNeupId(accountId: string, neupId: string): Promise<{ success: boolean; error?: string; }> {
+    const canModify = await checkPermissions(['root.account.edit_neupid']);
+    if (!canModify) return { success: false, error: 'Permission denied.' };
+    
+    const adminId = await getPersonalAccountId();
+    if (!adminId) return { success: false, error: 'Administrator not authenticated.' };
+
+    const lowerCaseNeupId = neupId.toLowerCase();
+
+    try {
+        const neupidRef = doc(db, 'neupid', lowerCaseNeupId);
+        const neupidDoc = await getDoc(neupidRef);
+        if (neupidDoc.exists()) {
+            return { success: false, error: 'This NeupID is already taken.' };
+        }
+
+        await setDoc(neupidRef, {
+            for: accountId,
+            is_primary: false,
+        });
+
+        await logActivity(accountId, `NeupID added by admin: ${lowerCaseNeupId}`, 'Success', undefined, adminId);
+        revalidatePath(`/manage/root/accounts/${accountId}/profile/neupid`);
+        return { success: true };
+    } catch (e) {
+        await logError('database', e, `addNeupId for account ${accountId}`);
+        return { success: false, error: 'An unexpected error occurred.' };
+    }
+}
+
+export async function removeNeupId(neupId: string): Promise<{ success: boolean; error?: string; }> {
+    const canModify = await checkPermissions(['root.account.edit_neupid']);
+    if (!canModify) return { success: false, error: 'Permission denied.' };
+    
+    const adminId = await getPersonalAccountId();
+    if (!adminId) return { success: false, error: 'Administrator not authenticated.' };
+
+    try {
+        const neupidRef = doc(db, 'neupid', neupId);
+        const neupidDoc = await getDoc(neupidRef);
+        if (!neupidDoc.exists()) {
+            return { success: false, error: 'NeupID not found.' };
+        }
+        
+        if (neupidDoc.data().is_primary) {
+            return { success: false, error: 'Cannot remove a primary NeupID. Set another as primary first.' };
+        }
+        
+        const accountId = neupidDoc.data().for;
+        await deleteDoc(neupidRef);
+
+        await logActivity(accountId, `NeupID removed by admin: ${neupId}`, 'Success', undefined, adminId);
+         revalidatePath(`/manage/root/accounts/${accountId}/profile/neupid`);
+        return { success: true };
+    } catch (e) {
+        await logError('database', e, `removeNeupId: ${neupId}`);
+        return { success: false, error: 'An unexpected error occurred.' };
+    }
+}
+
+export async function setPrimaryNeupId(accountId: string, newPrimaryNeupId: string): Promise<{ success: boolean; error?: string; }> {
+    const canModify = await checkPermissions(['root.account.edit_neupid']);
+    if (!canModify) return { success: false, error: 'Permission denied.' };
+    
+    const adminId = await getPersonalAccountId();
+    if (!adminId) return { success: false, error: 'Administrator not authenticated.' };
+
+    try {
+        const existingNeupIds = await getUserNeupIds(accountId);
+        if (!existingNeupIds.includes(newPrimaryNeupId)) {
+            return { success: false, error: 'This NeupID does not belong to the user.' };
+        }
+        
+        const batch = writeBatch(db);
+        
+        // Unset old primary
+        existingNeupIds.forEach(id => {
+            const docRef = doc(db, 'neupid', id);
+            batch.update(docRef, { is_primary: false });
+        });
+        
+        // Set new primary
+        const newPrimaryRef = doc(db, 'neupid', newPrimaryNeupId);
+        batch.update(newPrimaryRef, { is_primary: true });
+
+        await batch.commit();
+
+        await logActivity(accountId, `Primary NeupID set to: ${newPrimaryNeupId}`, 'Success', undefined, adminId);
+        revalidatePath(`/manage/root/accounts/${accountId}/profile/neupid`);
+        return { success: true };
+    } catch (e) {
+        await logError('database', e, `setPrimaryNeupId for account ${accountId}`);
         return { success: false, error: 'An unexpected error occurred.' };
     }
 }
