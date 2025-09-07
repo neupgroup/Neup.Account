@@ -7,8 +7,10 @@ import { doc, updateDoc, collection, addDoc, serverTimestamp, query, where, getD
 import { parseDate as parseDateWithAI } from "@/ai/flows/parse-date"
 import { logActivity } from "@/lib/log-actions"
 import { logError } from "@/lib/logger"
-import { checkPermissions, getUserNeupIds } from "@/lib/user"
+import { checkPermissions, getUserNeupIds, getPersonalAccountId } from "@/lib/user"
 import { brandProfileFormSchema } from "@/schemas/profile"
+import { checkNeupIdAvailability } from "@/lib/user";
+
 
 async function updateOrCreateContact(batch: ReturnType<typeof writeBatch>, accountId: string, type: string, value: string | undefined, hasPermission: boolean) {
     if (!hasPermission) return;
@@ -41,13 +43,14 @@ async function updateOrCreateContact(batch: ReturnType<typeof writeBatch>, accou
 }
 
 
-export async function updateUserProfile(accountId: string, data: Record<string, any>, newNeupIdRequest?: string, geolocation?: string) {
-    const [canModifyProfile, canModifyContact] = await Promise.all([
+export async function updateUserProfile(accountId: string, data: Record<string, any>, geolocation?: string) {
+    const [canModifyProfile, canModifyContact, canModifyNeupId] = await Promise.all([
         checkPermissions(['profile.modify']),
-        checkPermissions(['contact.modify', 'contact.add', 'contact.remove'])
+        checkPermissions(['contact.modify', 'contact.add', 'contact.remove']),
+        checkPermissions(['profile.neupid.add']),
     ]);
 
-    if (!canModifyProfile && !canModifyContact) {
+    if (!canModifyProfile && !canModifyContact && !canModifyNeupId) {
          return { success: false, error: "You do not have permission to update this profile." }
     }
 
@@ -77,40 +80,47 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
                 const profileRef = doc(db, 'profile', accountId);
                 batch.update(profileRef, profileData);
             }
-
-            if (newNeupIdRequest && newNeupIdRequest.trim().length > 0) {
-                const accountDoc = await getDoc(doc(db, 'account', accountId));
-                const accountData = accountDoc.data();
-                const existingNeupIds = await getUserNeupIds(accountId);
-                
-                const isPro = accountData?.pro === true;
-                const limit = isPro ? 2 : 1;
-
-                if (existingNeupIds.length >= limit) {
-                    return { success: false, error: `You have reached the limit of ${limit} NeupID(s) for your account.` };
-                }
-
-                const requestsRef = collection(db, 'requests');
-                const newRequestRef = doc(requestsRef);
-                const requestedNeupId = newNeupIdRequest.toLowerCase();
-                batch.set(newRequestRef, {
-                    action: 'neupid_request',
-                    accountId: accountId,
-                    requestedNeupId: requestedNeupId,
-                    status: 'pending',
-                    createdAt: serverTimestamp(),
-                });
-                await logActivity(accountId, `Requested New NeupID: ${requestedNeupId}`, 'Pending', undefined, undefined, geolocation);
-            }
         }
         
+        if (canModifyNeupId && data.newNeupIdRequest && data.newNeupIdRequest.trim().length > 0) {
+            const { available } = await checkNeupIdAvailability(data.newNeupIdRequest);
+            if (!available) {
+                return { success: false, error: "The requested NeupID is already taken." };
+            }
+            
+            const accountDoc = await getDoc(doc(db, 'account', accountId));
+            const accountData = accountDoc.data();
+            const existingNeupIds = await getUserNeupIds(accountId);
+            
+            const isPro = accountData?.pro === true;
+            const limit = isPro ? 2 : 1;
+
+            if (existingNeupIds.length >= limit) {
+                return { success: false, error: `You have reached the limit of ${limit} NeupID(s) for your account.` };
+            }
+
+            const requestsRef = collection(db, 'requests');
+            const newRequestRef = doc(requestsRef);
+            const requestedNeupId = data.newNeupIdRequest.toLowerCase();
+            const requesterId = await getPersonalAccountId();
+
+            batch.set(newRequestRef, {
+                action: 'neupid_request',
+                accountId: accountId,
+                requestedNeupId: requestedNeupId,
+                status: 'pending',
+                createdAt: serverTimestamp(),
+                requestor: requesterId,
+            });
+            await logActivity(accountId, `Requested New NeupID: ${requestedNeupId}`, 'Pending', undefined, geolocation);
+        }
+
         await updateOrCreateContact(batch, accountId, 'primaryPhone', data.primaryPhone, canModifyContact);
         await updateOrCreateContact(batch, accountId, 'secondaryPhone', data.secondaryPhone, canModifyContact);
         await updateOrCreateContact(batch, accountId, 'permanentLocation', data.permanentLocation, canModifyContact);
         await updateOrCreateContact(batch, accountId, 'currentLocation', data.currentLocation, canModifyContact);
         await updateOrCreateContact(batch, accountId, 'workLocation', data.workLocation, canModifyContact);
         await updateOrCreateContact(batch, accountId, 'otherLocation', data.otherLocation, canModifyContact);
-
 
         await batch.commit();
         

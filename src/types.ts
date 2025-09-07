@@ -263,3 +263,10 @@ export type BrandAccount = {
     logoUrl?: string;
     plan: string;
 };
+
+export type DeletionRequest = {
+  accountId: string;
+  userFullName: string;
+  userNeupId: string;
+  requestedAt: string;
+};
