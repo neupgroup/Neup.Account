@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useTransition } from 'react';
 import { notFound, useRouter } from 'next/navigation';
-import { getAppDetails, regenerateAppSecret } from '@/actions/root/app';
+import { getAppDetails, regenerateAppSecret } from '@/app/manage/root/app/actions';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -58,7 +58,7 @@ export default function ViewAppPage({ params }: { params: { slugid: string } }) 
             if (result.success && result.newSecret) {
                 setNewSecret(result.newSecret);
                 setShowSecret(true); // Show the new secret immediately
-                toast({ title: "New Secret Generated", description: "Your old secret is no longer valid." });
+                toast({ title: "New Secret Generated", description: "The old secret is no longer valid." });
             } else {
                 toast({ variant: 'destructive', title: 'Error', description: result.error });
             }
@@ -124,7 +124,7 @@ export default function ViewAppPage({ params }: { params: { slugid: string } }) 
                     </div>
                 </div>
             ) : (
-                <p className="text-sm text-muted-foreground">The app secret is hidden for security. You can regenerate it if you have lost it.</p>
+                <p className="text-sm text-muted-foreground">The app secret is hidden for security. You can generate or regenerate it if you have lost it.</p>
             )}
         </CardContent>
         <CardFooter>
@@ -132,14 +132,14 @@ export default function ViewAppPage({ params }: { params: { slugid: string } }) 
                 <AlertDialogTrigger asChild>
                     <Button variant="secondary" disabled={isPending}>
                         {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <RefreshCw className="mr-2 h-4 w-4" />}
-                        Regenerate Secret
+                        Generate / Regenerate Secret
                     </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                     <AlertDialogHeader>
                         <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                         <AlertDialogDescription>
-                            This will generate a new app secret. The old secret will be immediately invalidated and any applications using it will stop working until you update them. This action cannot be undone.
+                            This will generate a new app secret. Any existing secret will be immediately invalidated and any applications using it will stop working until you update them. This action cannot be undone.
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>

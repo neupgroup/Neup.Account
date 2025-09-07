@@ -1,4 +1,5 @@
 
+
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -9,7 +10,7 @@ import { logError } from '@/lib/logger';
 import crypto from 'crypto';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { logActivity } from '@/lib/log-actions';
-import { checkPermissions } from '@/lib/user-actions';
+import { checkPermissions } from '@/lib/user';
 import type { Application } from '@/types';
 
 const addAppSchema = z.object({
@@ -27,10 +28,15 @@ export async function getApps(searchQuery?: string): Promise<Application[]> {
         const q = query(appsCollection);
         const appsSnapshot = await getDocs(q);
 
-        let allApps = appsSnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-        } as Application));
+        let allApps = appsSnapshot.docs.map(doc => {
+             const data = doc.data();
+             // Never send the secret to the list page
+             delete data.appSecret;
+             return {
+                id: doc.id,
+                ...data
+            } as Application
+        });
 
         if (searchQuery) {
             const lowercasedQuery = searchQuery.toLowerCase();
@@ -98,14 +104,14 @@ export async function addApp(formData: FormData) {
     }
 
     const { id, name, description } = validation.data;
-    const appSecret = crypto.randomBytes(32).toString('hex');
 
     try {
         // We use setDoc here with a specific ID provided by the user
+        // The appSecret is NOT generated on creation. It must be generated from the details page.
         await setDoc(doc(db, 'applications', id), {
             name,
             description,
-            appSecret,
+            appSecret: null,
         });
         
         const adminId = await getPersonalAccountId();
