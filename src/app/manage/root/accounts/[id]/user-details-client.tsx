@@ -3,15 +3,13 @@
 
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UserDetails, UserActivityLog, UserPermissions } from '@/types';
+import { UserDetails } from '@/types';
 import { ProfileForm } from './profile-form'; 
 import { VerificationManager } from './verification-manager';
 import { ActivityList } from './activity/page'; 
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from '@/components/icons';
 import { useRouter } from 'next/navigation';
-import { PermissionEditor } from './permissions/form';
-import { getMasterPermissions } from '@/actions/root/permission';
 
 interface UserDetailsClientProps {
     initialUserDetails: UserDetails;
