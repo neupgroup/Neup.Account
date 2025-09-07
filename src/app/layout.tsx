@@ -4,6 +4,8 @@ import 'nprogress/nprogress.css';
 import { Toaster } from "@/components/ui/toaster"
 import { GeolocationProvider } from '@/context/geolocation-context';
 import { PageProgressBar } from '@/components/page-progress-bar';
+import { Suspense } from 'react';
+import { UrlErrorBanner } from '@/components/ui/url-error-banner';
 
 export const metadata: Metadata = {
   title: 'Neup.Account',
@@ -27,6 +29,9 @@ export default function RootLayout({
           <PageProgressBar />
           {children}
           <Toaster />
+          <Suspense>
+            <UrlErrorBanner />
+          </Suspense>
         </GeolocationProvider>
       </body>
     </html>

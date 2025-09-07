@@ -9,6 +9,8 @@ import { initiateLogin } from "@/actions/auth/login"
 import { validateNeupId } from "@/lib/user"
 import { cancelAccountDeletion } from "@/actions/data/delete"
 import NProgress from 'nprogress'
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 import { Button } from "@/components/ui/button"
 import {
@@ -65,17 +67,14 @@ export default function SigninForm() {
   }, [neupIdFromQuery]);
 
   useEffect(() => {
+    // This removes the toast message for session expired,
+    // as it's now handled by the UrlErrorBanner.
+    // We just need to clean the URL.
     const error = searchParams.get('error');
     if (error === 'session_expired') {
-      toast({
-        variant: "destructive",
-        title: "Session Expired",
-        description: "Your session has expired. Please sign in again.",
-      });
-      // A clean way to remove the error from the URL without a full page reload.
       router.replace('/auth/signin', { scroll: false });
     }
-  }, [searchParams, toast, router]);
+  }, [searchParams, router]);
 
   const handleNeupIdSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()

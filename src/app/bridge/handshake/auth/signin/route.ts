@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
     if (!authHandlerUrlString) {
         const errorUrl = new URL('/auth/start', request.url);
         errorUrl.searchParams.set('error', 'invalid_request');
-        errorUrl.searchParams.set('error_description', 'The required \'auth_handler\' parameter was not provided.');
+        errorUrl.searchParams.set('error_description', 'The required "auth_handler" parameter was not provided.');
         return NextResponse.redirect(errorUrl);
     }
     
@@ -39,9 +39,10 @@ export async function GET(request: NextRequest) {
         const session = await getActiveSession();
 
         if (!session) {
-            finalRedirectUrl.searchParams.set('error', 'unauthenticated');
-            finalRedirectUrl.searchParams.set('error_description', 'No active user session found.');
-            return NextResponse.redirect(finalRedirectUrl);
+            const errorUrl = new URL('/auth/start', request.url);
+            errorUrl.searchParams.set('error', 'unauthenticated');
+            errorUrl.searchParams.set('error_description', 'No active user session found. Please sign in to continue.');
+            return NextResponse.redirect(errorUrl);
         }
 
         const dependentKey = crypto.randomBytes(32).toString('hex');

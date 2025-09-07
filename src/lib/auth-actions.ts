@@ -68,7 +68,7 @@ export async function validateCurrentSession() {
   const session = await getActiveSession();
   
   if (!session) {
-    redirect('/auth/signout?error=session_expired');
+    redirect('/auth/signout?error=session_expired&error_description=Your session has expired. Please sign in again.');
   }
   
   return session;
