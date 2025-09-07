@@ -1,0 +1,26 @@
+import { notFound } from "next/navigation";
+import { getUserDetails } from "@/actions/root/users";
+import { BackButton } from "@/components/ui/back-button";
+import { PrimaryHeader } from "@/components/ui/primary-header";
+import { NeupProManager } from "./form";
+
+export default async function UserProPage({ params }: { params: { id: string } }) {
+    const userDetails = await getUserDetails(params.id);
+    if (!userDetails) {
+        notFound();
+    }
+    
+    return (
+        <div className="grid gap-8">
+            <div className="space-y-4">
+                <BackButton href={`/manage/root/accounts/${params.id}`} />
+                <PrimaryHeader
+                    title="Neup.Pro Management"
+                    description={`Activate or deactivate the Neup.Pro subscription for @${userDetails.neupId}.`}
+                />
+            </div>
+            
+            <NeupProManager accountId={userDetails.accountId} />
+        </div>
+    );
+}

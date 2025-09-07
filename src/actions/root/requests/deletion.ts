@@ -1,3 +1,4 @@
+
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -75,6 +76,35 @@ export async function getDeletionRequests(): Promise<DeletionRequest[]> {
   }
 }
 
+export async function getDeletionStatus(accountId: string): Promise<{status: 'none' | 'pending' | 'deleted', requestedAt?: string | null}> {
+    try {
+        const accountRef = doc(db, 'account', accountId);
+        const accountDoc = await getDoc(accountRef);
+
+        if (!accountDoc.exists()) {
+            return { status: 'deleted' };
+        }
+
+        const status = accountDoc.data().status;
+        if (status === 'deletion_requested') {
+            const statusQuery = query(
+                collection(db, 'account_status'),
+                where('account_id', '==', accountId),
+                where('status', '==', 'deletion_requested')
+            );
+            const statusSnapshot = await getDocs(statusQuery);
+            const requestedAt = statusSnapshot.docs[0]?.data().from_date?.toDate()?.toLocaleDateString() || null;
+            return { status: 'pending', requestedAt };
+        }
+
+        return { status: 'none' };
+    } catch (error) {
+        await logError('database', error, `getDeletionStatus for ${accountId}`);
+        return { status: 'none' };
+    }
+}
+
+
 export async function approveAccountDeletion(
   accountId: string
 ): Promise<{ success: boolean; error?: string }> {
@@ -88,6 +118,7 @@ export async function approveAccountDeletion(
         const result = await deleteUserAccount(accountId);
         if (result.success) {
             revalidatePath('/manage/root/requests/deletion');
+             revalidatePath(`/manage/root/accounts/${accountId}`);
             return { success: true };
         } else {
             return { success: false, error: result.error };
@@ -132,6 +163,7 @@ export async function cancelAccountDeletion(
 
         await logActivity(accountId, 'Account Deletion Cancelled by Admin', 'Success', undefined, adminId);
         revalidatePath('/manage/root/requests/deletion');
+        revalidatePath(`/manage/root/accounts/${accountId}`);
         return { success: true };
     } catch (error) {
         await logError('database', error, `cancelAccountDeletion: ${accountId}`);

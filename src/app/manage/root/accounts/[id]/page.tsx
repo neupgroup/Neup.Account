@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { ListItem } from '@/components/ui/list-item';
 import { getUserDetails } from '@/actions/root/users';
@@ -8,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { BackButton } from '@/components/ui/back-button';
 import { VerifiedBadge } from '@/components/verified-badge';
 
-const managementFeatures = (accountId: string) => [
+const accountManagementFeatures = (accountId: string) => [
   {
     icon: 'UserCircle',
     title: 'Profile Information',
@@ -27,13 +26,34 @@ const managementFeatures = (accountId: string) => [
     description: 'View a log of recent actions performed on this account.',
     href: `/manage/root/accounts/${accountId}/activity`,
   },
-  {
-    icon: 'AlertTriangle',
-    title: 'Administrative Actions',
-    description: 'Send warnings, block access, or take other admin actions.',
-    href: `/manage/root/accounts/${accountId}/notice`,
-  },
 ];
+
+const adminActions = (accountId: string) => [
+    {
+        icon: 'ShieldCheck',
+        title: 'Verification',
+        description: 'Manage the user\'s verified status.',
+        href: `/manage/root/accounts/${accountId}/verification`,
+    },
+    {
+        icon: 'Ban',
+        title: 'Bans & Warnings',
+        description: 'Send warnings, block access, or take other admin actions.',
+        href: `/manage/root/accounts/${accountId}/notice`,
+    },
+    {
+        icon: 'Trash2',
+        title: 'Deletion',
+        description: 'Manage the account deletion process.',
+        href: `/manage/root/accounts/${accountId}/deletion`,
+    },
+    {
+        icon: 'Gem',
+        title: 'Neup.Pro',
+        description: 'Activate or deactivate the user\'s Pro subscription.',
+        href: `/manage/root/accounts/${accountId}/pro`,
+    }
+]
 
 export default async function AccountDetailsPage({ params }: { params: { id: string } }) {
   const canView = await checkPermissions([
@@ -51,7 +71,8 @@ export default async function AccountDetailsPage({ params }: { params: { id: str
     notFound();
   }
 
-  const features = managementFeatures(params.id);
+  const features = accountManagementFeatures(params.id);
+  const adminFeatures = adminActions(params.id);
 
   return (
     <div className="grid gap-8">
@@ -74,7 +95,7 @@ export default async function AccountDetailsPage({ params }: { params: { id: str
               {userDetails.profile.displayName ||
                 `${userDetails.profile.firstName} ${userDetails.profile.lastName}`}
             </h1>
-            <VerifiedBadge accountId={params.id} />
+            <VerifiedBadge accountId={params.id} className="h-6 w-6" />
           </div>
           <p className="text-muted-foreground font-mono">
             @{userDetails.neupId}
@@ -95,6 +116,23 @@ export default async function AccountDetailsPage({ params }: { params: { id: str
           ))}
         </CardContent>
       </Card>
+      
+       <div className="space-y-2">
+            <h2 className="text-xl font-semibold tracking-tight">Administration Actions</h2>
+             <Card>
+                <CardContent className="divide-y p-0">
+                {adminFeatures.map((feature, index) => (
+                    <ListItem
+                    key={index}
+                    href={feature.href}
+                    icon={feature.icon}
+                    title={feature.title}
+                    description={feature.description}
+                    />
+                ))}
+                </CardContent>
+            </Card>
+        </div>
     </div>
   );
 }
