@@ -90,7 +90,7 @@ export const allPermissionsMap: Record<string, string[]> = {
         'data.materialization.view', 'data.materialization.modify', 'security.third_party.view', 'security.recent_activities.view'
     ],
     "Access & Control": ['security.third_party.view', 'security.third_party.add', 'security.third_party.remove'],
-    "People & Sharing": ['people.family.view', 'people.family.add', 'people.family.remove', 'people.family.partner.add', 'people.family.partner.remove'],
+    "People & Sharing": ['people.family.view', 'people.family.add', 'people.family.remove', 'people.family.partner.add', 'people.family.partner.remove', 'people.block_list.view', 'people.restrict_list.view'],
     "Payment & Subscription": ['payment.method.show', 'payment.transactions.show', 'payment.subscriptions.show', 'payment.purchase_neup_pro.view'],
     "Dashboard": ["root.dashboard.view"],
     "Account Management": ["root.account.search", "root.account.create_individual"],
@@ -99,4 +99,5 @@ export const allPermissionsMap: Record<string, string[]> = {
     "App Management": ["root.app.view"],
     "Site Configuration": ["root.payment_config.view", "root.errors.view"],
     "Branches": ['linked_accounts.brand.manage'],
+    "Blocked Users": ['people.block_list.view', 'people.restrict_list.view'],
 };
