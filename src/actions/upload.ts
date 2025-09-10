@@ -104,7 +104,14 @@ export async function uploadFile(
     
     if (!response.ok) {
         const errorText = await response.text();
-        await logError('unknown', `Upload API failed with status ${response.status}: ${errorText}`, 'file-upload');
+        const errorDetails = {
+            status: response.status,
+            statusText: response.statusText,
+            responseText: errorText,
+            requestData: { platform, userid: accountId, contentid: contentId, name },
+            fileInfo: { name: file.name, size: file.size, type: file.type }
+        };
+        await logError('unknown', new Error(`Upload API failed: ${JSON.stringify(errorDetails)}`), 'file-upload');
         return { success: false, error: `Upload failed: ${response.statusText}` };
     }
 
@@ -115,12 +122,22 @@ export async function uploadFile(
       const fullUrl = `https://neupgroup.com${result.url}`;
       return { success: true, url: fullUrl };
     } else {
-      await logError('unknown', `Upload API returned an error: ${result.message}`, 'file-upload');
+        const errorDetails = {
+            apiMessage: result.message,
+            requestData: { platform, userid: accountId, contentid: contentId, name },
+            fileInfo: { name: file.name, size: file.size, type: file.type }
+        };
+      await logError('unknown', new Error(`Upload API returned an error: ${JSON.stringify(errorDetails)}`), 'file-upload');
       return { success: false, error: result.message || "An unknown error occurred during upload." };
     }
 
   } catch (error: any) {
-    await logError('unknown', error, 'uploadFile-action');
+    const errorDetails = {
+        exception: error.message,
+        requestData: { platform, userid: accountId, contentid: contentId, name },
+        fileInfo: { name: file.name, size: file.size, type: file.type }
+    };
+    await logError('unknown', new Error(`Upload action failed: ${JSON.stringify(errorDetails)}`), 'uploadFile-action');
     return { success: false, error: 'An unexpected error occurred.' };
   }
 }
