@@ -7,7 +7,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 const stepOrder = [
     { path: '/auth/signup/name', requiredField: null },
-    { path: '/auth/signup/demographics', requiredField: 'firstName' },
+    { path: '/auth/signup/display-name', requiredField: 'firstName' },
+    { path: '/auth/signup/demographics', requiredField: 'displayName' },
     { path: '/auth/signup/nationality', requiredField: 'dob' },
     { path: '/auth/signup/contact', requiredField: 'nationality' },
     { path: '/auth/signup/otp', requiredField: 'phone' },
@@ -32,13 +33,19 @@ async function getSignupStatus() {
 
     const data = authRequestDoc.data()?.data || {};
     let currentStepPath = '/auth/signup/name';
-
+    let reachedRequired = true;
     for (const step of stepOrder) {
         if (step.requiredField && !data[step.requiredField]) {
+            reachedRequired = false;
             break;
         }
         currentStepPath = step.path;
     }
+    
+    if(!reachedRequired && currentStepPath === '/auth/signup/name' && data.firstName) {
+        currentStepPath = '/auth/signup/display-name';
+    }
+
 
     return { valid: true, currentStepPath };
 }
@@ -51,18 +58,13 @@ export default async function SignupLayout({
 }) {
   const { valid, currentStepPath } = await getSignupStatus();
   
-  // This is a dynamic check on the server for every request to a /signup/* page.
   const pathname = cookies().get('next-url')?.value || '/auth/signup/name';
 
   if (!valid) {
-    // If the cookie/request is invalid, force a redirect to the start page to generate a new one.
-    // This prevents loops if something goes wrong.
     if (pathname !== '/auth/signup') {
         redirect('/auth/signup');
     }
   } else {
-     // If the user is trying to access a page they haven't unlocked yet,
-     // redirect them to the last step they are allowed to be on.
      const currentStepIndex = stepOrder.findIndex(step => step.path === currentStepPath);
      const requestedStepIndex = stepOrder.findIndex(step => step.path === pathname);
      

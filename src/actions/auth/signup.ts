@@ -1,3 +1,4 @@
+
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -31,6 +32,7 @@ import {
   neupidSchema,
   passwordSchema,
   termsSchema,
+  displayNameSchema,
 } from '@/schemas/signup';
 
 async function isFirstUser() {
@@ -84,15 +86,38 @@ export async function submitNameStep(data: z.infer<typeof nameSchema>) {
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
+  const { firstName, lastName, middleName } = validation.data;
+  const defaultDisplayName = middleName ? `${firstName} ${middleName} ${lastName}` : `${firstName} ${lastName}`;
+
   await updateDoc(request.ref, {
-    'data.firstName': validation.data.firstName,
-    'data.middleName': validation.data.middleName,
-    'data.lastName': validation.data.lastName,
-    status: 'pending_demographics',
+    'data.firstName': firstName,
+    'data.middleName': middleName,
+    'data.lastName': lastName,
+    'data.displayName': defaultDisplayName, // Set default display name
+    status: 'pending_display_name',
   });
 
   return { success: true };
 }
+
+export async function submitDisplayNameStep(data: z.infer<typeof displayNameSchema>) {
+    const authRequestId = cookies().get('temp_auth_id')?.value;
+    if (!authRequestId) return { success: false, error: 'Signup session not found.' };
+
+    const validation = displayNameSchema.safeParse(data);
+    if (!validation.success) return { success: false, error: 'Invalid data.' };
+    
+    const request = await getAuthRequest(authRequestId);
+    if (!request) return { success: false, error: 'Signup session expired.' };
+
+    await updateDoc(request.ref, {
+        'data.displayName': validation.data.displayName,
+        status: 'pending_demographics',
+    });
+
+    return { success: true };
+}
+
 
 export async function submitDemographicsStep(
   data: z.infer<typeof demographicsSchema>
@@ -295,6 +320,7 @@ export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
     firstName,
     lastName,
     middleName,
+    displayName,
     dob,
     gender,
     nationality,
@@ -306,6 +332,7 @@ export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
   if (
     !firstName ||
     !lastName ||
+    !displayName ||
     !dob ||
     !gender ||
     !nationality ||
@@ -363,6 +390,7 @@ export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
       firstName,
       lastName,
       middleName: middleName || '',
+      displayName,
       dob,
       gender,
       nationality,

@@ -1,4 +1,5 @@
 
+
 'use server';
 
 import { z } from "zod"
@@ -7,10 +8,29 @@ import { doc, updateDoc, collection, addDoc, serverTimestamp, query, where, getD
 import { parseDate as parseDateWithAI } from "@/ai/flows/parse-date"
 import { logActivity } from "@/lib/log-actions"
 import { logError } from "@/lib/logger"
-import { checkPermissions, getUserNeupIds, checkNeupIdAvailability } from "@/lib/user"
+import { checkPermissions, getUserNeupIds, checkNeupIdAvailability, getUserProfile as fetchUserProfile } from "@/lib/user"
 import { getPersonalAccountId } from "@/lib/auth-actions";
 import { brandProfileFormSchema } from "@/schemas/profile"
 
+
+export async function getDisplayNameSuggestions(accountId: string): Promise<string[]> {
+    const profile = await fetchUserProfile(accountId);
+    if (!profile) return [];
+
+    const { firstName, middleName, lastName } = profile;
+    const suggestions = new Set<string>();
+
+    if (firstName && lastName) {
+        suggestions.add(`${firstName} ${lastName}`);
+        suggestions.add(`${lastName} ${firstName}`);
+    }
+    if (firstName && middleName && lastName) {
+        suggestions.add(`${firstName} ${middleName} ${lastName}`);
+        suggestions.add(`${lastName} ${middleName} ${firstName}`);
+    }
+    
+    return Array.from(suggestions);
+}
 
 async function updateOrCreateContact(batch: ReturnType<typeof writeBatch>, accountId: string, type: string, value: string | undefined, hasPermission: boolean) {
     if (!hasPermission) return;
@@ -72,10 +92,44 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
                 }
             }
 
+            // Auto-update display name if legal name changes
+            const hasNameChange = ['firstName', 'middleName', 'lastName'].some(key => data[key] !== undefined);
+            if (hasNameChange) {
+                const currentProfile = await fetchUserProfile(accountId);
+                const newFirstName = data.firstName ?? currentProfile?.firstName;
+                const newMiddleName = data.middleName ?? currentProfile?.middleName;
+                const newLastName = data.lastName ?? currentProfile?.lastName;
+                
+                let defaultDisplayName = `${newFirstName || ''} ${newLastName || ''}`.trim();
+                if (newMiddleName) {
+                    defaultDisplayName = `${newFirstName || ''} ${newMiddleName} ${newLastName || ''}`.trim();
+                }
+                 profileData.displayName = defaultDisplayName;
+            }
+
+
             if (profileData.dob instanceof Date) {
               profileData.dob = profileData.dob.toISOString();
             }
             
+            if (data.customDisplayNameRequest) {
+                 const requestsRef = collection(db, 'requests');
+                 const newRequestRef = doc(requestsRef);
+                 const requesterId = await getPersonalAccountId();
+                 batch.set(newRequestRef, {
+                    action: 'display_name_request',
+                    accountId: accountId,
+                    requestedDisplayName: data.customDisplayNameRequest,
+                    status: 'pending',
+                    createdAt: serverTimestamp(),
+                    requestor: requesterId,
+                });
+                await logActivity(accountId, `Requested Custom Display Name: ${data.customDisplayNameRequest}`, 'Pending', undefined, geolocation);
+                // Don't update the displayName in the profile directly
+                delete profileData.displayName;
+            }
+
+
             if(Object.keys(profileData).length > 0) {
                 const profileRef = doc(db, 'profile', accountId);
                 batch.update(profileRef, profileData);
@@ -126,7 +180,11 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
         
         await logActivity(accountId, 'Profile Update', 'Success', undefined, undefined, geolocation);
         
-        return { success: true, message: "Profile updated successfully." }
+        const message = data.customDisplayNameRequest 
+            ? "Your display name request has been submitted for review."
+            : "Profile updated successfully.";
+
+        return { success: true, message }
     } catch (error) {
         await logError('database', error, `updateUserProfile: ${accountId}`);
         if (error instanceof z.ZodError) {

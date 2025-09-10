@@ -1,9 +1,14 @@
+
 import { z } from "zod";
 
 export const nameSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   middleName: z.string().optional(),
   lastName: z.string().min(1, "Last name is required"),
+});
+
+export const displayNameSchema = z.object({
+    displayName: z.string().min(3, "Display name must be at least 3 characters."),
 });
 
 export const demographicsSchema = z.object({
