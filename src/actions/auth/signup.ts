@@ -391,6 +391,7 @@ export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
       lastName,
       middleName: middleName || '',
       displayName,
+      displayPhoto: "https://neupgroup.com/assets/avatar/user1.png",
       dob,
       gender,
       nationality,

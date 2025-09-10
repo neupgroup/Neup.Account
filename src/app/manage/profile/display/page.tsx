@@ -5,13 +5,14 @@ import { useEffect, useState, useTransition } from 'react'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
+import Image from 'next/image'
 
 import { updateUserProfile, getDisplayNameSuggestions } from "@/actions/profile"
 import { useToast } from "@/hooks/use-toast"
 
 import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form"
 import { Label } from '@/components/ui/label'
@@ -19,7 +20,9 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { useSession } from '@/context/session-context'
 import { BackButton } from '@/components/ui/back-button'
 import { cn } from '@/lib/utils'
-import { Check, Loader2 } from '@/components/icons'
+import { Check, Loader2, Upload, Send } from '@/components/icons'
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
+import { Separator } from '@/components/ui/separator'
 
 const displayFormSchema = z.object({
   displayPhoto: z.string().url("Please enter a valid URL.").optional().or(z.literal('')),
@@ -36,6 +39,14 @@ const displayFormSchema = z.object({
 });
 
 type DisplayFormValues = z.infer<typeof displayFormSchema>;
+
+const defaultAvatars = [
+    "https://neupgroup.com/assets/avatar/user1.png",
+    "https://neupgroup.com/assets/avatar/user2.png",
+    "https://neupgroup.com/assets/avatar/user3.png",
+    "https://neupgroup.com/assets/avatar/user4.png",
+];
+
 
 export default function DisplayInfoPage() {
     const [loading, setLoading] = useState(true);
@@ -96,6 +107,7 @@ export default function DisplayInfoPage() {
     }
     
     const selectedDisplayName = form.watch('selectedDisplayName');
+    const currentDisplayPhoto = form.watch('displayPhoto');
 
     if (loading) {
         return <Skeleton className="h-96 w-full" />
@@ -112,31 +124,80 @@ export default function DisplayInfoPage() {
                             <CardDescription>This information will be displayed publicly on your profile.</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-6">
-                             <div className="flex items-center gap-6">
-                                <div className="flex-shrink-0">
-                                    <Label>Photo</Label>
-                                    <Avatar className="h-24 w-24 mt-2 rounded-lg">
-                                        <AvatarImage src={form.watch('displayPhoto') || undefined} alt="Display Photo" data-ai-hint="person" />
-                                        <AvatarFallback className="rounded-lg">
-                                            {`${profile?.firstName?.[0] || ''}${profile?.lastName?.[0] || ''}`.toUpperCase()}
-                                        </AvatarFallback>
-                                    </Avatar>
-                                </div>
-                                <div className="flex-grow">
-                                     <FormField
-                                        control={form.control}
-                                        name="displayPhoto"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Photo URL</FormLabel>
-                                                <FormControl><Input placeholder="https://..." {...field} value={field.value ?? ''} /></FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
+                            <div className="space-y-2">
+                                <Label>Photo</Label>
+                                <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] items-center gap-4 rounded-lg border p-4">
+                                    <div className="flex flex-col items-center justify-center gap-2">
+                                        <p className="text-sm text-muted-foreground">Current</p>
+                                        <Avatar className="h-24 w-24 rounded-lg">
+                                            <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" />
+                                            <AvatarFallback className="rounded-lg text-3xl">
+                                                {`${profile?.firstName?.[0] || ''}${profile?.lastName?.[0] || ''}`.toUpperCase()}
+                                            </AvatarFallback>
+                                        </Avatar>
+                                    </div>
+
+                                    <div className="w-full">
+                                        <Carousel opts={{ align: "start", loop: true }} className="w-full">
+                                            <CarouselContent>
+                                                {defaultAvatars.map((avatarUrl, index) => (
+                                                    <CarouselItem key={index} className="basis-1/2 md:basis-1/3 lg:basis-1/4">
+                                                        <Button
+                                                            type="button"
+                                                            variant="ghost"
+                                                            className="p-0 h-auto w-full relative"
+                                                            onClick={() => form.setValue('displayPhoto', avatarUrl)}
+                                                        >
+                                                            <Image src={avatarUrl} alt={`Default Avatar ${index + 1}`} width={100} height={100} className="rounded-lg aspect-square object-cover"/>
+                                                            {currentDisplayPhoto === avatarUrl && (
+                                                                <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-lg">
+                                                                    <Check className="h-8 w-8 text-white" />
+                                                                </div>
+                                                            )}
+                                                        </Button>
+                                                    </CarouselItem>
+                                                ))}
+                                            </CarouselContent>
+                                            <CarouselPrevious className="hidden md:flex" />
+                                            <CarouselNext className="hidden md:flex" />
+                                        </Carousel>
+                                    </div>
+                                    
+                                     <div className="flex flex-col items-center justify-center gap-2">
+                                        <p className="text-sm text-muted-foreground">Custom</p>
+                                        <div className="w-full">
+                                            <FormField
+                                                control={form.control}
+                                                name="displayPhoto"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel className="sr-only">Photo URL</FormLabel>
+                                                        <div className="relative">
+                                                            <FormControl>
+                                                                <Input 
+                                                                    placeholder="Paste URL..." 
+                                                                    className="pr-10"
+                                                                    value={field.value !== null && defaultAvatars.includes(field.value) ? "" : field.value || ""}
+                                                                    onChange={(e) => {
+                                                                        field.onChange(e.target.value);
+                                                                    }}
+                                                                />
+                                                            </FormControl>
+                                                            <Button type="submit" size="icon" variant="ghost" className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2 text-muted-foreground">
+                                                                <Send/>
+                                                            </Button>
+                                                        </div>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             
+                            <Separator />
+
                             <FormField
                                 control={form.control}
                                 name="selectedDisplayName"
@@ -177,12 +238,12 @@ export default function DisplayInfoPage() {
                                 />
                             )}
                         </CardContent>
+                         <CardFooter>
+                            <Button type="submit" disabled={isPending}>
+                                {isPending ? <Loader2 className="animate-spin" /> : "Save Changes"}
+                            </Button>
+                        </CardFooter>
                     </Card>
-                    <div className="flex justify-end">
-                        <Button type="submit" disabled={isPending}>
-                            {isPending ? <Loader2 className="animate-spin" /> : "Save Changes"}
-                        </Button>
-                    </div>
                 </form>
             </Form>
         </div>
