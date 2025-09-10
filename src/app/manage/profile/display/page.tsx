@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import Image from 'next/image'
 
-import { updateUserProfile, getDisplayNameSuggestions } from "@/actions/profile"
+import { updateUserProfile, getDisplayNameSuggestions, getPastProfilePhotos } from "@/actions/profile"
 import { useToast } from "@/hooks/use-toast"
 import { uploadFile } from '@/actions/upload'
 
@@ -15,7 +15,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form"
 import { Label } from '@/components/ui/label'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { useSession } from '@/context/session-context'
@@ -53,6 +53,7 @@ export default function DisplayInfoPage() {
     const { toast } = useToast();
     const { profile, accountId, refetch: refetchSession } = useSession();
     const [nameSuggestions, setNameSuggestions] = useState<string[]>([]);
+    const [pastPhotos, setPastPhotos] = useState<string[]>([]);
     const [isPending, startTransition] = useTransition();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -66,7 +67,7 @@ export default function DisplayInfoPage() {
     });
 
     useEffect(() => {
-        if (profile) {
+        if (profile && accountId) {
             form.reset({
                 displayPhoto: profile.displayPhoto || "",
                 selectedDisplayName: profile.displayName || "",
@@ -74,8 +75,14 @@ export default function DisplayInfoPage() {
 
             const fetchSuggestions = async () => {
                 if (accountId) {
-                    const suggestions = await getDisplayNameSuggestions(accountId);
+                    const [suggestions, photos] = await Promise.all([
+                        getDisplayNameSuggestions(accountId),
+                        getPastProfilePhotos(accountId)
+                    ]);
                     setNameSuggestions(suggestions);
+                    // Combine past photos with defaults, ensuring no duplicates and respecting order
+                    const allPhotos = [...new Set([...photos, ...defaultAvatars])];
+                    setPastPhotos(allPhotos.slice(0, 4));
                 }
                 setLoading(false);
             }
@@ -88,13 +95,15 @@ export default function DisplayInfoPage() {
         if (!file || !accountId) return;
 
         startTransition(async () => {
-            const result = await uploadFile(file, "neup.account", `profile-photo-${accountId}`, file.name);
+            const contentId = `profile-photo-${accountId}-${Date.now()}`;
+            const result = await uploadFile(file, "neup.account", contentId, file.name, accountId);
             if(result.success && result.url) {
                 const updateResult = await updateUserProfile(accountId, { displayPhoto: result.url });
                 if(updateResult.success) {
                     toast({ title: "Success", description: "Profile photo updated.", className: "bg-accent text-accent-foreground" });
                     form.setValue('displayPhoto', result.url);
-                    refetchSession(); // Refetch session to update user nav
+                    setPastPhotos(prev => [result.url as string, ...prev].slice(0, 4));
+                    refetchSession();
                 } else {
                     toast({ variant: "destructive", title: "Error", description: updateResult.error });
                 }
@@ -122,7 +131,7 @@ export default function DisplayInfoPage() {
                 if(data.selectedDisplayName === 'custom') {
                     form.setValue('customDisplayName', '');
                 }
-                refetchSession(); // Refetch session to update user nav
+                refetchSession();
             } else {
                 toast({ variant: "destructive", title: "Error", description: result.error });
             }
@@ -162,16 +171,16 @@ export default function DisplayInfoPage() {
                                         <div>
                                             <p className="text-sm font-medium mb-2">Choose a default avatar</p>
                                             <div className="flex flex-wrap gap-2">
-                                                {defaultAvatars.map((avatarUrl) => (
+                                                {pastPhotos.map((avatarUrl, index) => (
                                                     <button
                                                         key={avatarUrl}
                                                         type="button"
                                                         className="relative h-16 w-16 rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                                                         onClick={() => form.setValue('displayPhoto', avatarUrl)}
                                                     >
-                                                        <Image src={avatarUrl} alt="Default Avatar" layout="fill" className="rounded-md object-cover" />
+                                                        <Image src={avatarUrl} alt={`Default Avatar ${index + 1}`} width={100} height={100} className="rounded-lg aspect-square object-cover"/>
                                                         {currentDisplayPhoto === avatarUrl && (
-                                                            <div className="absolute inset-0 bg-black/60 flex items-center justify-center rounded-md">
+                                                            <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-lg">
                                                                 <Check className="h-8 w-8 text-white" />
                                                             </div>
                                                         )}

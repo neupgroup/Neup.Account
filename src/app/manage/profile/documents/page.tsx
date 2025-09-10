@@ -146,8 +146,8 @@ export default function KycPage() {
                 toast({title: "Uploading files...", description: "Please wait while we upload your documents."});
 
                 const [docUploadResult, selfieUploadResult] = await Promise.all([
-                    uploadFile(data.documentPhoto, "neup.account", crypto.randomUUID(), data.documentPhoto.name),
-                    uploadFile(data.selfiePhoto, "neup.account", crypto.randomUUID(), data.selfiePhoto.name),
+                    uploadFile(data.documentPhoto, "neup.account", crypto.randomUUID(), data.documentPhoto.name, accountId),
+                    uploadFile(data.selfiePhoto, "neup.account", crypto.randomUUID(), data.selfiePhoto.name, accountId),
                 ]);
 
                 if (!docUploadResult.success || !selfieUploadResult.success || !docUploadResult.contentId || !selfieUploadResult.contentId) {

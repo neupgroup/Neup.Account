@@ -1,8 +1,10 @@
 
 'use server';
 
-import { getActiveAccountId } from '@/lib/auth-actions';
+import { getActiveAccountId, getPersonalAccountId } from '@/lib/auth-actions';
 import { logError } from '@/lib/logger';
+import { db } from '@/lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 // Make sure to set this in your environment variables
 const UPLOAD_URL = process.env.NEXT_PUBLIC_UPLOAD_URL || 'https://neupgroup.com/usercontent/bridge/api/upload.php';
@@ -61,13 +63,20 @@ export async function uploadFile(
   file: File,
   platform: string,
   contentId: string,
-  name?: string
+  name?: string,
+  forAccountId?: string,
 ): Promise<{ success: boolean; url?: string; error?: string; contentId?: string }> {
   
-  const accountId = await getActiveAccountId();
-  if (!accountId) {
+  const actorAccountId = await getPersonalAccountId();
+  if (!actorAccountId) {
     return { success: false, error: 'User not authenticated.' };
   }
+  
+  const targetAccountId = forAccountId || await getActiveAccountId();
+   if (!targetAccountId) {
+    return { success: false, error: 'Target account could not be determined.' };
+  }
+
 
   try {
     let fileToUpload = file;
@@ -85,7 +94,7 @@ export async function uploadFile(
     const formData = new FormData();
     formData.append('file', fileToUpload);
     formData.append('platform', platform);
-    formData.append('userid', accountId);
+    formData.append('userid', targetAccountId);
     formData.append('contentid', contentId);
     if (name) {
       formData.append('name', name);
@@ -102,7 +111,7 @@ export async function uploadFile(
             status: response.status,
             statusText: response.statusText,
             responseText: errorText,
-            requestData: { platform, userid: accountId, contentid: contentId, name },
+            requestData: { platform, userid: targetAccountId, contentid: contentId, name },
             fileInfo: { name: file.name, size: file.size, type: file.type }
         };
         await logError('unknown', new Error(`Upload API failed: ${JSON.stringify(errorDetails)}`), 'file-upload');
@@ -113,12 +122,26 @@ export async function uploadFile(
 
     if (result.success && result.url) {
       const fullUrl = `https://neupgroup.com${result.url}`;
+      
+      // Log successful upload to Firestore
+      await addDoc(collection(db, 'usercontent'), {
+        contentId,
+        platform,
+        uploaderId: actorAccountId,
+        forAccountId: targetAccountId,
+        url: fullUrl,
+        originalName: name,
+        fileType: file.type,
+        size: file.size,
+        uploadedAt: serverTimestamp(),
+      });
+
       return { success: true, url: fullUrl, contentId: contentId };
     } else if (result.success && !result.url) {
         const errorDetails = {
             apiMessage: "API returned success but no URL.",
             apiResponse: result,
-            requestData: { platform, userid: accountId, contentid: contentId, name },
+            requestData: { platform, userid: targetAccountId, contentid: contentId, name },
             fileInfo: { name: file.name, size: file.size, type: file.type }
         };
         await logError('unknown', new Error(`Upload API success with missing URL: ${JSON.stringify(errorDetails)}`), 'file-upload');
@@ -126,7 +149,7 @@ export async function uploadFile(
     } else {
         const errorDetails = {
             apiMessage: result.message,
-            requestData: { platform, userid: accountId, contentid: contentId, name },
+            requestData: { platform, userid: targetAccountId, contentid: contentId, name },
             fileInfo: { name: file.name, size: file.size, type: file.type }
         };
       await logError('unknown', new Error(`Upload API returned an error: ${JSON.stringify(errorDetails)}`), 'file-upload');
@@ -136,7 +159,7 @@ export async function uploadFile(
   } catch (error: any) {
     const errorDetails = {
         exception: error.message,
-        requestData: { platform, userid: accountId, contentid: contentId, name },
+        requestData: { platform, userid: targetAccountId, contentid: contentId, name },
         fileInfo: { name: file.name, size: file.size, type: file.type }
     };
     await logError('unknown', new Error(`Upload action failed: ${JSON.stringify(errorDetails)}`), 'uploadFile-action');

@@ -4,7 +4,7 @@
 
 import { z } from "zod"
 import { db } from "@/lib/firebase"
-import { doc, updateDoc, collection, addDoc, serverTimestamp, query, where, getDocs, writeBatch, getDoc } from "firebase/firestore"
+import { doc, updateDoc, collection, addDoc, serverTimestamp, query, where, getDocs, writeBatch, getDoc, orderBy, limit } from "firebase/firestore"
 import { parseDate as parseDateWithAI } from "@/ai/flows/parse-date"
 import { logActivity } from "@/lib/log-actions"
 import { logError } from "@/lib/logger"
@@ -31,6 +31,26 @@ export async function getDisplayNameSuggestions(accountId: string): Promise<stri
     
     return Array.from(suggestions);
 }
+
+export async function getPastProfilePhotos(accountId: string): Promise<string[]> {
+    try {
+        const contentRef = collection(db, 'usercontent');
+        const q = query(
+            contentRef,
+            where('forAccountId', '==', accountId),
+            where('platform', '==', 'neup.account'),
+            orderBy('uploadedAt', 'desc'),
+            limit(4) // Fetch the 4 most recent profile pictures
+        );
+        const querySnapshot = await getDocs(q);
+        const urls = querySnapshot.docs.map(doc => doc.data().url);
+        return urls;
+    } catch (error) {
+        await logError('database', error, `getPastProfilePhotos for ${accountId}`);
+        return [];
+    }
+}
+
 
 async function updateOrCreateContact(batch: ReturnType<typeof writeBatch>, accountId: string, type: string, value: string | undefined, hasPermission: boolean) {
     if (!hasPermission) return;
@@ -178,7 +198,7 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
 
         await batch.commit();
         
-        await logActivity(accountId, 'Profile Update', 'Success', undefined, undefined, geolocation);
+        await logActivity(accountId, 'Profile Update', 'Success', undefined, geolocation);
         
         const message = data.customDisplayNameRequest 
             ? "Your display name request has been submitted for review."
@@ -223,7 +243,7 @@ export async function updateBrandProfile(accountId: string, data: z.infer<typeof
 
         await updateDoc(profileRef, dataToUpdate);
 
-        await logActivity(accountId, 'Brand Profile Update', 'Success', undefined, undefined, geolocation);
+        await logActivity(accountId, 'Brand Profile Update', 'Success', undefined, geolocation);
 
         return { success: true, message: "Brand profile updated successfully." };
 
@@ -243,7 +263,7 @@ export async function parseDateString(dateString: string): Promise<{ success: bo
     }
 
     // Attempt local parsing first for YYYY-MM-DD or YYYY/MM/DD
-    const regex = /^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/;
+    const regex = /^(\d{4})[-/](\d{1,2})[-/](\d{1-2})$/;
     const match = dateString.match(regex);
     if (match) {
         const year = parseInt(match[1]);
