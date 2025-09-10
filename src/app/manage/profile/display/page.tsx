@@ -89,7 +89,7 @@ export default function DisplayInfoPage() {
         if (!file || !accountId) return;
 
         startTransition(async () => {
-            const result = await uploadFile(file, "neup-account", `profile-photo-${accountId}`);
+            const result = await uploadFile(file, "neup.account", `profile-photo-${accountId}`);
             if(result.success && result.url) {
                 const updateResult = await updateUserProfile(accountId, { displayPhoto: result.url });
                 if(updateResult.success) {
