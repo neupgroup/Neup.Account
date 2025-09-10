@@ -8,13 +8,13 @@ import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
 import { revalidatePath } from 'next/cache';
 
-// The data object received here already contains the URLs from the upload action.
-// The form values schema on the client validates the file types, this is just for data consistency.
 export type KycSubmissionData = {
     documentType: 'passport' | 'license' | 'national_id';
     documentId: string;
-    documentPhoto: string; // URL
-    selfiePhoto: string; // URL
+    documentPhotoUrl: string;
+    documentPhotoContentId: string;
+    selfiePhotoUrl: string;
+    selfiePhotoContentId: string;
 };
 
 
@@ -39,8 +39,10 @@ export async function submitKyc(accountId: string, data: KycSubmissionData): Pro
             submittedAt: serverTimestamp(),
             documentType: data.documentType,
             documentId: data.documentId,
-            documentPhotoUrl: data.documentPhoto,
-            selfiePhotoUrl: data.selfiePhoto,
+            documentPhotoUrl: data.documentPhotoUrl,
+            documentPhotoContentId: data.documentPhotoContentId,
+            selfiePhotoUrl: data.selfiePhotoUrl,
+            selfiePhotoContentId: data.selfiePhotoContentId,
         });
 
         await logActivity(accountId, 'KYC Submitted', 'Pending');

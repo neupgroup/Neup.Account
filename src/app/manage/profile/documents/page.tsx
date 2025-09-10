@@ -146,11 +146,11 @@ export default function KycPage() {
                 toast({title: "Uploading files...", description: "Please wait while we upload your documents."});
 
                 const [docUploadResult, selfieUploadResult] = await Promise.all([
-                    uploadFile(data.documentPhoto, "neup.account", `doc-${accountId}`),
-                    uploadFile(data.selfiePhoto, "neup.account", `selfie-${accountId}`),
+                    uploadFile(data.documentPhoto, "neup.account", crypto.randomUUID(), data.documentPhoto.name),
+                    uploadFile(data.selfiePhoto, "neup.account", crypto.randomUUID(), data.selfiePhoto.name),
                 ]);
 
-                if (!docUploadResult.success || !selfieUploadResult.success) {
+                if (!docUploadResult.success || !selfieUploadResult.success || !docUploadResult.contentId || !selfieUploadResult.contentId) {
                     toast({ variant: "destructive", title: "Upload Failed", description: docUploadResult.error || selfieUploadResult.error || "Could not upload files." });
                     return;
                 }
@@ -158,9 +158,12 @@ export default function KycPage() {
                 toast({title: "Upload complete!", description: "Submitting your information for review."});
 
                 const submissionData = {
-                    ...data,
-                    documentPhoto: docUploadResult.url,
-                    selfiePhoto: selfieUploadResult.url,
+                    documentType: data.documentType,
+                    documentId: data.documentId,
+                    documentPhotoUrl: docUploadResult.url as string,
+                    documentPhotoContentId: docUploadResult.contentId,
+                    selfiePhotoUrl: selfieUploadResult.url as string,
+                    selfiePhotoContentId: selfieUploadResult.contentId,
                 };
 
                 const result = await submitKyc(accountId, submissionData);

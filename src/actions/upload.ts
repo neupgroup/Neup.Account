@@ -62,7 +62,7 @@ export async function uploadFile(
   platform: string,
   contentId: string,
   name?: string
-): Promise<{ success: boolean; url?: string; error?: string }> {
+): Promise<{ success: boolean; url?: string; error?: string; contentId?: string }> {
   
   const accountId = await getActiveAccountId();
   if (!accountId) {
@@ -71,17 +71,11 @@ export async function uploadFile(
 
   try {
     let fileToUpload = file;
-    // Compress image if it's larger than 100KB and is an image type
-    if (file.type.startsWith('image/') && file.size > 100 * 1024) {
+    // This compression logic is not executed on the server, but is kept for potential client-side usage.
+    // The server action environment does not have access to browser APIs like FileReader or Image.
+    if (typeof window !== 'undefined' && file.type.startsWith('image/') && file.size > 100 * 1024) {
         try {
-            // This compression logic runs on the client before the server action is invoked.
-            // Since this is a server action, this code block will not execute as intended.
-            // A better approach is to perform compression in a client-side utility function
-            // before calling this server action. However, to contain the logic in one place
-            // as per the request, we will simulate the logic here.
-            // In a real scenario, you'd need a library like 'browser-image-compression'.
-            // For now, we will just pass the original file.
-            console.log(`File ${file.name} is an image over 100KB, but compression on the server is not implemented. Uploading original.`);
+            fileToUpload = await compressImage(file);
         } catch (e) {
             console.error("Compression failed, uploading original file.", e);
         }
@@ -118,9 +112,8 @@ export async function uploadFile(
     const result = await response.json();
 
     if (result.success) {
-      // Construct the full URL
       const fullUrl = `https://neupgroup.com${result.url}`;
-      return { success: true, url: fullUrl };
+      return { success: true, url: fullUrl, contentId: contentId };
     } else {
         const errorDetails = {
             apiMessage: result.message,
