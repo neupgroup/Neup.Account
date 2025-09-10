@@ -21,7 +21,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { useSession } from '@/context/session-context'
 import { BackButton } from '@/components/ui/back-button'
 import { cn } from '@/lib/utils'
-import { Check, Loader2, Upload, Send } from '@/components/icons'
+import { Check, Loader2, UploadCloud, Send } from '@/components/icons'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { Separator } from '@/components/ui/separator'
 
@@ -189,7 +189,7 @@ export default function DisplayInfoPage() {
                                     
                                      <div className="flex flex-col items-center justify-center gap-2">
                                         <Button type="button" onClick={() => fileInputRef.current?.click()} disabled={isPending}>
-                                            {isPending ? <Loader2 className="animate-spin mr-2"/> : <Upload className="mr-2"/>}
+                                            {isPending ? <Loader2 className="animate-spin mr-2"/> : <UploadCloud className="mr-2"/>}
                                             Upload Photo
                                         </Button>
                                          <Input 
