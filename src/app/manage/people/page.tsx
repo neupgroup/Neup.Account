@@ -5,6 +5,7 @@ import { checkPermissions } from "@/lib/user";
 import { ListItem } from "@/components/ui/list-item";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 import { PrimaryHeader } from "@/components/ui/primary-header";
+import { Users, MailQuestion, Contact, UserX } from "@/components/icons";
 
 
 export default async function PeopleSharingPage() {
@@ -16,28 +17,28 @@ export default async function PeopleSharingPage() {
     
     const sharingFeatures = [
         {
-            icon: "Users",
+            icon: Users,
             title: "Family Sharing",
             description: "Manage your family group and shared subscriptions.",
             href: "/manage/people/family",
             show: canViewFamily,
         },
         {
-            icon: "MailQuestion",
+            icon: MailQuestion,
             title: "Invitations",
             description: "Accept or reject requests from other users.",
             href: "/manage/people/invitations",
             show: canViewInvitations,
         },
         {
-            icon: "Contact",
+            icon: Contact,
             title: "Contact Info Sharing",
             description: "Control how your contact information is shared.",
             href: "#",
             show: false, // Not implemented yet
         },
         {
-            icon: "UserX",
+            icon: UserX,
             title: "Blocked Users",
             description: "Manage users you have blocked or restricted.",
             href: "/manage/people/blocked",
