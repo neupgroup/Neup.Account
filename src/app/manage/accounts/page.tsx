@@ -12,24 +12,25 @@ import { getDependentAccounts } from '@/actions/manage/accounts/dependent';
 import { cookies } from 'next/headers';
 import { ListItem } from '@/components/ui/list-item';
 import { SecondaryHeader } from '@/components/ui/secondary-header';
+import { Bot, Building, UserPlus, FolderGit2 } from '@/components/icons';
 
 
 const IndividualAccountFeatures = () => (
   <>
     <ListItem
-      icon="Bot"
+      icon={Bot}
       title="Link WhatsApp Account"
       description="Connect your WhatsApp for notifications and services."
       href="/manage/accounts/whatsapp"
     />
     <ListItem
-      icon="Building"
+      icon={Building}
       title="Manage Brand Accounts"
       description="Create or manage brand profiles for businesses or organizations."
       href="/manage/accounts/brand"
     />
     <ListItem
-      icon="UserPlus"
+      icon={UserPlus}
       title="Manage Dependent Accounts"
       description="Create and manage accounts for family members."
       href="/manage/accounts/dependent"
@@ -40,13 +41,13 @@ const IndividualAccountFeatures = () => (
 const BrandAccountFeatures = () => (
   <>
      <ListItem
-      icon="Network"
+      icon={FolderGit2}
       title="Manage Branches"
       description="Add or manage sub-brands and locations."
       href="/manage/accounts/branches"
     />
     <ListItem
-      icon="Bot"
+      icon={Bot}
       title="Link WhatsApp Account"
       description="Connect a WhatsApp Business account for this brand."
       href="/manage/accounts/whatsapp"
@@ -56,7 +57,7 @@ const BrandAccountFeatures = () => (
 
 const BranchAccountFeatures = () => (
     <ListItem
-      icon="Bot"
+      icon={Bot}
       title="Link WhatsApp Account"
       description="Connect a WhatsApp Business account for this branch."
       href="/manage/accounts/whatsapp"
