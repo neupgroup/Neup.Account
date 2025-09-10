@@ -15,14 +15,13 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Label } from '@/components/ui/label'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { useSession } from '@/context/session-context'
 import { BackButton } from '@/components/ui/back-button'
 import { cn } from '@/lib/utils'
 import { Check, Loader2, UploadCloud, Send } from '@/components/icons'
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { Separator } from '@/components/ui/separator'
 
 const displayFormSchema = z.object({
@@ -150,55 +149,50 @@ export default function DisplayInfoPage() {
                         <CardContent className="space-y-6">
                             <div className="space-y-2">
                                 <Label>Photo</Label>
-                                 <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] items-center gap-4 rounded-lg border p-4">
+                                <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] items-center gap-6 rounded-lg border p-4">
                                     <div className="flex flex-col items-center justify-center gap-2">
-                                        <p className="text-sm text-muted-foreground">Current</p>
-                                        <Avatar className="h-24 w-24 rounded-lg">
+                                        <Avatar className="h-28 w-28 rounded-lg">
                                             <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" />
                                             <AvatarFallback className="rounded-lg text-3xl">
                                                 {`${profile?.firstName?.[0] || ''}${profile?.lastName?.[0] || ''}`.toUpperCase()}
                                             </AvatarFallback>
                                         </Avatar>
                                     </div>
-
-                                    <div className="w-full">
-                                        <Carousel opts={{ align: "start", loop: true }} className="w-full">
-                                            <CarouselContent>
-                                                {defaultAvatars.map((avatarUrl, index) => (
-                                                    <CarouselItem key={index} className="basis-1/2 md:basis-1/3 lg:basis-1/4">
-                                                        <Button
-                                                            type="button"
-                                                            variant="ghost"
-                                                            className="p-0 h-auto w-full relative"
-                                                            onClick={() => form.setValue('displayPhoto', avatarUrl)}
-                                                        >
-                                                            <Image src={avatarUrl} alt={`Default Avatar ${index + 1}`} width={100} height={100} className="rounded-lg aspect-square object-cover"/>
-                                                            {currentDisplayPhoto === avatarUrl && (
-                                                                <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-lg">
-                                                                    <Check className="h-8 w-8 text-white" />
-                                                                </div>
-                                                            )}
-                                                        </Button>
-                                                    </CarouselItem>
+                                    <div className="space-y-4">
+                                        <div>
+                                            <p className="text-sm font-medium mb-2">Choose a default avatar</p>
+                                            <div className="flex flex-wrap gap-2">
+                                                {defaultAvatars.map((avatarUrl) => (
+                                                    <button
+                                                        key={avatarUrl}
+                                                        type="button"
+                                                        className="relative h-16 w-16 rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                                                        onClick={() => form.setValue('displayPhoto', avatarUrl)}
+                                                    >
+                                                        <Image src={avatarUrl} alt="Default Avatar" layout="fill" className="rounded-md object-cover" />
+                                                        {currentDisplayPhoto === avatarUrl && (
+                                                            <div className="absolute inset-0 bg-black/60 flex items-center justify-center rounded-md">
+                                                                <Check className="h-8 w-8 text-white" />
+                                                            </div>
+                                                        )}
+                                                    </button>
                                                 ))}
-                                            </CarouselContent>
-                                            <CarouselPrevious className="hidden md:flex" />
-                                            <CarouselNext className="hidden md:flex" />
-                                        </Carousel>
-                                    </div>
-                                    
-                                     <div className="flex flex-col items-center justify-center gap-2">
-                                        <Button type="button" onClick={() => fileInputRef.current?.click()} disabled={isPending}>
-                                            {isPending ? <Loader2 className="animate-spin mr-2"/> : <UploadCloud className="mr-2"/>}
-                                            Upload Photo
-                                        </Button>
-                                         <Input 
-                                            type="file" 
-                                            ref={fileInputRef} 
-                                            className="hidden" 
-                                            accept="image/*"
-                                            onChange={handleFileChange}
-                                        />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-medium mb-2">Or upload your own</p>
+                                            <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()} disabled={isPending}>
+                                                {isPending ? <Loader2 className="animate-spin mr-2"/> : <UploadCloud className="mr-2"/>}
+                                                Upload Photo
+                                            </Button>
+                                            <Input 
+                                                type="file" 
+                                                ref={fileInputRef} 
+                                                className="hidden" 
+                                                accept="image/*"
+                                                onChange={handleFileChange}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
