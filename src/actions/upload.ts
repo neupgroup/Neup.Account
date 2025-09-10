@@ -111,9 +111,18 @@ export async function uploadFile(
 
     const result = await response.json();
 
-    if (result.success) {
+    if (result.success && result.url) {
       const fullUrl = `https://neupgroup.com${result.url}`;
       return { success: true, url: fullUrl, contentId: contentId };
+    } else if (result.success && !result.url) {
+        const errorDetails = {
+            apiMessage: "API returned success but no URL.",
+            apiResponse: result,
+            requestData: { platform, userid: accountId, contentid: contentId, name },
+            fileInfo: { name: file.name, size: file.size, type: file.type }
+        };
+        await logError('unknown', new Error(`Upload API success with missing URL: ${JSON.stringify(errorDetails)}`), 'file-upload');
+        return { success: false, error: "Upload succeeded but the server did not return a valid URL." };
     } else {
         const errorDetails = {
             apiMessage: result.message,
