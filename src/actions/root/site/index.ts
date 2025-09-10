@@ -1,3 +1,4 @@
+
 'use server';
 
 import {db} from '@/lib/firebase';
@@ -14,6 +15,9 @@ const PAGE_SIZE_ERRORS = 10;
 export async function getSystemErrors(
     {startAfter: startAfterDocId}:{ startAfter?: string; }): Promise<{ errors: SystemError[]; hasNextPage: boolean; }> {
     try {
+        const canView = await checkPermissions(['root.errors.view']);
+        if (!canView) return { errors: [], hasNextPage: false };
+
         const errorsCollection = collection(db, 'error');
         let constraints = [];
         constraints.push(orderBy('timestamp', 'desc'));
@@ -61,6 +65,9 @@ export async function getSystemErrors(
 
 export async function getErrorDetails(id: string): Promise<SystemErrorDetails | null> {
     try {
+         const canView = await checkPermissions(['root.errors.view']);
+        if (!canView) return null;
+
         const errorRef = doc(db, 'error', id);
         const errorDoc = await getDoc(errorRef);
 
