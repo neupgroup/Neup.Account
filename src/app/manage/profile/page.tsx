@@ -1,9 +1,11 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import React from "react";
 import { checkPermissions } from "@/lib/user";
 import { notFound } from "next/navigation";
 import { ListItem } from "@/components/ui/list-item";
 import { PrimaryHeader } from "@/components/ui/primary-header";
+import { UserCircle, FileText, HeartHandshake, AtSign, Contact, ShieldCheck } from "@/components/icons";
 
 export default async function ProfilePage() {
     const canViewProfile = await checkPermissions(['profile.view']);
@@ -14,37 +16,37 @@ export default async function ProfilePage() {
 
     const profileFeatures = [
         {
-            icon: "UserCircle",
+            icon: UserCircle,
             title: "Display Information",
             description: "Update your public display name and photo.",
             href: "/manage/profile/display",
         },
         {
-            icon: "FileText",
+            icon: FileText,
             title: "Legal Name",
             description: "Manage your legal first, middle, and last name.",
             href: "/manage/profile/name",
         },
         {
-            icon: "HeartHandshake",
+            icon: HeartHandshake,
             title: "Demographics",
             description: "Update your date of birth and gender.",
             href: "/manage/profile/demographics",
         },
         {
-            icon: "AtSign",
+            icon: AtSign,
             title: "NeupID",
             description: "Manage your unique NeupIDs.",
             href: "/manage/profile/neupid",
         },
         {
-            icon: "Contact",
+            icon: Contact,
             title: "Contact Information",
             description: "Manage your phone numbers and addresses.",
             href: "/manage/profile/contact",
         },
         {
-            icon: "ShieldCheck",
+            icon: ShieldCheck,
             title: "KYC & Verification",
             description: "Submit documents to verify your identity.",
             href: "/manage/profile/documents",
