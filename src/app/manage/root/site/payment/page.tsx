@@ -1,4 +1,4 @@
-import { getPaymentDetails } from "@/actions/root/site/payment";
+import { getPaymentDetails } from "@/actions/root/site/payment/actions";
 import { PaymentDetailsForm } from "./form";
 import { checkPermissions } from "@/lib/user";
 import { notFound } from "next/navigation";
