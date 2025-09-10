@@ -4,43 +4,52 @@ import React from "react";
 import { getConnectedApplications } from "@/actions/data/applications";
 import { ListItem } from "@/components/ui/list-item";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
+import { History, FileText, Trash2, PowerOff, CalendarClock, AppWindow, Share2, type LucideIcon } from "@/components/icons";
 
 export default async function DataAndPrivacyPage() {
     
     const { firstParty, thirdParty } = await getConnectedApplications();
     
-    const privacyFeatures = [
+    const privacyFeatures: { icon: LucideIcon; title: string; description: string; href: string; }[] = [
          {
-            icon: "History",
+            icon: History,
             title: "Your Account Activity",
             description: "View a log of recent actions performed on your account.",
             href: "/manage/data/activity",
         },
         {
-            icon: "FileText",
+            icon: FileText,
             title: "Agreed Terms",
             description: "Review terms and conditions you have agreed to.",
             href: "/manage/data/policies",
         },
         {
-            icon: "Trash2",
+            icon: Trash2,
             title: "Delete Your Account",
             description: "Permanently delete your account and associated data.",
             href: "/manage/data/delete",
         },
         {
-            icon: "PowerOff",
+            icon: PowerOff,
             title: "Deactivate Your Account",
             description: "Temporarily deactivate your account.",
             href: "/manage/data/deactivate",
         },
         {
-            icon: "CalendarClock",
+            icon: CalendarClock,
             title: "Schedule Deletion (Materialization)",
             description: "Request data deletion after a period of inactivity.",
             href: "/manage/data/materialization",
         },
     ];
+
+    const appIconMap: Record<string, LucideIcon> = {
+        'app-window': AppWindow,
+        'building': AppWindow, // Placeholder
+        'bar-chart': AppWindow, // Placeholder
+        'share-2': Share2,
+    };
+
 
     return (
         <div className="grid gap-8">
@@ -72,7 +81,7 @@ export default async function DataAndPrivacyPage() {
                             {firstParty.map((app) => (
                                 <ListItem 
                                     key={app.id}
-                                    icon={app.icon || "AppWindow"}
+                                    icon={app.icon ? appIconMap[app.icon] : AppWindow}
                                     title={app.name}
                                     description={app.description}
                                     href={`/manage/data/1/${app.id}`} 
@@ -94,7 +103,7 @@ export default async function DataAndPrivacyPage() {
                             {thirdParty.map((app) => (
                                 <ListItem 
                                     key={app.id}
-                                    icon={app.icon || "Share2"}
+                                    icon={app.icon ? appIconMap[app.icon] : Share2}
                                     title={app.name}
                                     description={app.description}
                                     href={`/manage/data/3/${app.id}`} 
