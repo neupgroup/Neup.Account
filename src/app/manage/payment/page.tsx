@@ -6,6 +6,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ListItem } from "@/components/ui/list-item";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 import { PrimaryHeader } from "@/components/ui/primary-header";
+import { CreditCard, History, Wallet, Gem, Ban } from "@/components/icons";
 
 export default async function PaymentSubscriptionPage() {
     const [canViewMethods, canViewHistory, canViewSubscriptions, canViewNeupPro] = await Promise.all([
@@ -17,7 +18,7 @@ export default async function PaymentSubscriptionPage() {
 
     const features = [
         {
-            icon: "CreditCard",
+            icon: CreditCard,
             title: "Payment Methods",
             description: "Manage your saved payment methods.",
             href: "https://neupgroup.com/wallet/methods",
@@ -25,7 +26,7 @@ export default async function PaymentSubscriptionPage() {
             show: canViewMethods,
         },
         {
-            icon: "History",
+            icon: History,
             title: "Transactions History",
             description: "View your past purchases and transactions.",
             href: "https://neupgroup.com/wallet/history?source=neup",
@@ -33,7 +34,7 @@ export default async function PaymentSubscriptionPage() {
             show: canViewHistory,
         },
         {
-            icon: "Wallet",
+            icon: Wallet,
             title: "Subscriptions",
             description: "Manage your active subscriptions with Neup and third-parties.",
             href: "https://neupgroup.com/wallet/subscriptions",
@@ -41,7 +42,7 @@ export default async function PaymentSubscriptionPage() {
             show: canViewSubscriptions,
         },
         {
-            icon: "Gem",
+            icon: Gem,
             title: "Purchase Neup.Pro",
             description: "Upgrade your account to access premium features.",
             href: "/manage/payment/neup.pro",
@@ -63,7 +64,7 @@ export default async function PaymentSubscriptionPage() {
                     description="Review your payment settings and upgrade your plan."
                 />
                 <Card>
-                    <CardContent className="divide-y p-2">
+                    <CardContent className="divide-y p-0">
                         {visibleFeatures.length > 0 ? (
                             visibleFeatures.map((feature, index) => (
                                 <ListItem key={index} {...feature} />
