@@ -1,3 +1,4 @@
+
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -6,13 +7,18 @@ import { checkPermissions } from '@/lib/user';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
 import { revalidatePath } from 'next/cache';
-import type { KycFormValues } from '@/schemas/kyc';
 
-// In a real app, you would use a cloud storage service like Firebase Storage
-// and upload the files there, storing the URL in Firestore.
-// For this prototype, we'll just use placeholder Data URIs.
+// The data object received here already contains the URLs from the upload action.
+// The form values schema on the client validates the file types, this is just for data consistency.
+export type KycSubmissionData = {
+    documentType: 'passport' | 'license' | 'national_id';
+    documentId: string;
+    documentPhoto: string; // URL
+    selfiePhoto: string; // URL
+};
 
-export async function submitKyc(accountId: string, data: KycFormValues): Promise<{ success: boolean; error?: string }> {
+
+export async function submitKyc(accountId: string, data: KycSubmissionData): Promise<{ success: boolean; error?: string }> {
     const canSubmit = await checkPermissions(['profile.kyc.submit']);
     if (!canSubmit) {
         return { success: false, error: 'Permission denied.' };
@@ -27,18 +33,14 @@ export async function submitKyc(accountId: string, data: KycFormValues): Promise
             return { success: false, error: 'You already have a pending KYC submission.' };
         }
 
-        // Mock file upload - in real life, get download URLs from Firebase Storage
-        const documentPhotoUrl = data.documentPhoto instanceof File ? 'data:image/jpeg;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAE...' : data.documentPhoto;
-        const selfiePhotoUrl = typeof data.selfiePhoto === 'string' ? data.selfiePhoto : 'data:image/jpeg;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAE...';
-
         await addDoc(collection(db, 'kyc'), {
             accountId,
             status: 'pending',
             submittedAt: serverTimestamp(),
             documentType: data.documentType,
             documentId: data.documentId,
-            documentPhotoUrl,
-            selfiePhotoUrl,
+            documentPhotoUrl: data.documentPhoto,
+            selfiePhotoUrl: data.selfiePhoto,
         });
 
         await logActivity(accountId, 'KYC Submitted', 'Pending');

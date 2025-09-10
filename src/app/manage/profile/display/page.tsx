@@ -1,7 +1,7 @@
 
 "use client"
 
-import { useEffect, useState, useTransition } from 'react'
+import { useEffect, useState, useTransition, useRef } from 'react'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -9,6 +9,7 @@ import Image from 'next/image'
 
 import { updateUserProfile, getDisplayNameSuggestions } from "@/actions/profile"
 import { useToast } from "@/hooks/use-toast"
+import { uploadFile } from '@/actions/upload'
 
 import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from "@/components/ui/button"
@@ -51,9 +52,10 @@ const defaultAvatars = [
 export default function DisplayInfoPage() {
     const [loading, setLoading] = useState(true);
     const { toast } = useToast();
-    const { profile, accountId } = useSession();
+    const { profile, accountId, refetch: refetchSession } = useSession();
     const [nameSuggestions, setNameSuggestions] = useState<string[]>([]);
     const [isPending, startTransition] = useTransition();
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const form = useForm<DisplayFormValues>({
         resolver: zodResolver(displayFormSchema),
@@ -82,6 +84,27 @@ export default function DisplayInfoPage() {
         }
     }, [profile, accountId, form]);
 
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file || !accountId) return;
+
+        startTransition(async () => {
+            const result = await uploadFile(file, "neup-account", `profile-photo-${accountId}`);
+            if(result.success && result.url) {
+                const updateResult = await updateUserProfile(accountId, { displayPhoto: result.url });
+                if(updateResult.success) {
+                    toast({ title: "Success", description: "Profile photo updated.", className: "bg-accent text-accent-foreground" });
+                    form.setValue('displayPhoto', result.url);
+                    refetchSession(); // Refetch session to update user nav
+                } else {
+                    toast({ variant: "destructive", title: "Error", description: updateResult.error });
+                }
+            } else {
+                 toast({ variant: "destructive", title: "Upload Failed", description: result.error });
+            }
+        });
+    };
+
     async function onSubmit(data: DisplayFormValues) {
         if (!accountId) {
             toast({ variant: "destructive", title: "Error", description: "Not authenticated." });
@@ -100,6 +123,7 @@ export default function DisplayInfoPage() {
                 if(data.selectedDisplayName === 'custom') {
                     form.setValue('customDisplayName', '');
                 }
+                refetchSession(); // Refetch session to update user nav
             } else {
                 toast({ variant: "destructive", title: "Error", description: result.error });
             }
@@ -126,7 +150,7 @@ export default function DisplayInfoPage() {
                         <CardContent className="space-y-6">
                             <div className="space-y-2">
                                 <Label>Photo</Label>
-                                <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] items-center gap-4 rounded-lg border p-4">
+                                 <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] items-center gap-4 rounded-lg border p-4">
                                     <div className="flex flex-col items-center justify-center gap-2">
                                         <p className="text-sm text-muted-foreground">Current</p>
                                         <Avatar className="h-24 w-24 rounded-lg">
@@ -164,34 +188,17 @@ export default function DisplayInfoPage() {
                                     </div>
                                     
                                      <div className="flex flex-col items-center justify-center gap-2">
-                                        <p className="text-sm text-muted-foreground">Custom</p>
-                                        <div className="w-full">
-                                            <FormField
-                                                control={form.control}
-                                                name="displayPhoto"
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <FormLabel className="sr-only">Photo URL</FormLabel>
-                                                        <div className="relative">
-                                                            <FormControl>
-                                                                <Input 
-                                                                    placeholder="Paste URL..." 
-                                                                    className="pr-10"
-                                                                    value={field.value !== null && defaultAvatars.includes(field.value) ? "" : field.value || ""}
-                                                                    onChange={(e) => {
-                                                                        field.onChange(e.target.value);
-                                                                    }}
-                                                                />
-                                                            </FormControl>
-                                                            <Button type="submit" size="icon" variant="ghost" className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2 text-muted-foreground">
-                                                                <Send/>
-                                                            </Button>
-                                                        </div>
-                                                        <FormMessage />
-                                                    </FormItem>
-                                                )}
-                                            />
-                                        </div>
+                                        <Button type="button" onClick={() => fileInputRef.current?.click()} disabled={isPending}>
+                                            {isPending ? <Loader2 className="animate-spin mr-2"/> : <Upload className="mr-2"/>}
+                                            Upload Photo
+                                        </Button>
+                                         <Input 
+                                            type="file" 
+                                            ref={fileInputRef} 
+                                            className="hidden" 
+                                            accept="image/*"
+                                            onChange={handleFileChange}
+                                        />
                                     </div>
                                 </div>
                             </div>

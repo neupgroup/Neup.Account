@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useTransition, useEffect, useRef } from 'react';
@@ -7,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useToast } from '@/hooks/use-toast';
 import { kycFormSchema, type KycFormValues } from '@/schemas/kyc';
 import { submitKyc } from '@/actions/manage/profile/documents';
-import { getUserProfile } from '@/lib/user';
+import { uploadFile } from '@/actions/upload';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 
 import { Button } from '@/components/ui/button';
@@ -30,7 +31,25 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 
-function WebcamCapture({ onCapture }: { onCapture: (dataUrl: string) => void }) {
+// Helper function to convert dataURL to File object
+function dataURLtoFile(dataurl: string, filename: string): File {
+    const arr = dataurl.split(',');
+    const mimeMatch = arr[0].match(/:(.*?);/);
+    if (!mimeMatch) {
+        throw new Error('Invalid data URL');
+    }
+    const mime = mimeMatch[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+}
+
+
+function WebcamCapture({ onCapture }: { onCapture: (file: File) => void }) {
     const videoRef = useRef<HTMLVideoElement>(null);
     const [hasCameraPermission, setHasCameraPermission] = useState<boolean | null>(null);
     const {toast} = useToast();
@@ -56,6 +75,13 @@ function WebcamCapture({ onCapture }: { onCapture: (dataUrl: string) => void }) 
         };
 
         getCameraPermission();
+
+        return () => {
+             if (videoRef.current && videoRef.current.srcObject) {
+                const stream = videoRef.current.srcObject as MediaStream;
+                stream.getTracks().forEach(track => track.stop());
+            }
+        }
     }, [toast]);
     
     const handleCapture = () => {
@@ -65,13 +91,14 @@ function WebcamCapture({ onCapture }: { onCapture: (dataUrl: string) => void }) 
             canvas.height = videoRef.current.videoHeight;
             canvas.getContext('2d')?.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
             const dataUrl = canvas.toDataURL('image/jpeg');
-            onCapture(dataUrl);
+            const file = dataURLtoFile(dataUrl, 'selfie.jpg');
+            onCapture(file);
         }
     };
 
     return (
         <div className="space-y-2">
-            <video ref={videoRef} className="w-full aspect-video rounded-md bg-muted" autoPlay muted />
+            <video ref={videoRef} className="w-full aspect-video rounded-md bg-muted" autoPlay muted playsInline />
             {hasCameraPermission === false && (
                 <Alert variant="destructive">
                     <AlertTitle>Camera Access Required</AlertTitle>
@@ -115,11 +142,36 @@ export default function KycPage() {
         }
 
         startTransition(async () => {
-            const result = await submitKyc(accountId, data);
-            if (result.success) {
-                setIsSubmitted(true);
-            } else {
-                toast({ variant: 'destructive', title: 'Submission Failed', description: result.error });
+            try {
+                toast({title: "Uploading files...", description: "Please wait while we upload your documents."});
+
+                const [docUploadResult, selfieUploadResult] = await Promise.all([
+                    uploadFile(data.documentPhoto, "neup-account-kyc", `doc-${accountId}`),
+                    uploadFile(data.selfiePhoto, "neup-account-kyc", `selfie-${accountId}`),
+                ]);
+
+                if (!docUploadResult.success || !selfieUploadResult.success) {
+                    toast({ variant: "destructive", title: "Upload Failed", description: docUploadResult.error || selfieUploadResult.error || "Could not upload files." });
+                    return;
+                }
+
+                toast({title: "Upload complete!", description: "Submitting your information for review."});
+
+                const submissionData = {
+                    ...data,
+                    documentPhoto: docUploadResult.url,
+                    selfiePhoto: selfieUploadResult.url,
+                };
+
+                const result = await submitKyc(accountId, submissionData);
+                if (result.success) {
+                    setIsSubmitted(true);
+                } else {
+                    toast({ variant: 'destructive', title: 'Submission Failed', description: result.error });
+                }
+            } catch (e) {
+                console.error(e);
+                toast({ variant: 'destructive', title: 'Error', description: "An unexpected error occurred." });
             }
         });
     };
@@ -168,7 +220,7 @@ export default function KycPage() {
                             <FormField name="selfiePhoto" control={form.control} render={({ field }) => (
                                 <FormItem><FormLabel>Selfie</FormLabel>
                                     <FormControl>
-                                        <WebcamCapture onCapture={dataUrl => field.onChange(dataUrl)} />
+                                        <WebcamCapture onCapture={file => field.onChange(file)} />
                                     </FormControl>
                                 <FormMessage /></FormItem>
                             )} />
@@ -178,7 +230,7 @@ export default function KycPage() {
                     <div className="flex justify-end">
                         <AlertDialog>
                             <AlertDialogTrigger asChild>
-                                <Button type="button" disabled={isPending}>
+                                <Button type="button" disabled={isPending || !form.formState.isValid}>
                                     {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                                     Submit for Verification
                                 </Button>
@@ -190,7 +242,7 @@ export default function KycPage() {
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
                                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                    <AlertDialogAction onClick={() => form.handleSubmit(onSubmit)()}>
+                                    <AlertDialogAction onClick={form.handleSubmit(onSubmit)}>
                                         Yes, Submit
                                     </AlertDialogAction>
                                 </AlertDialogFooter>
