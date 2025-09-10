@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useTransition } from 'react';
+import React, { useEffect, useState, useTransition } from 'react';
 import { notFound, useRouter } from 'next/navigation';
 import { getAppDetails, regenerateAppSecret } from '../../actions';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
@@ -34,7 +34,8 @@ function AppDetailsSkeleton() {
     )
 }
 
-export default function ViewAppPage({ params }: { params: { slugid: string } }) {
+export default function ViewAppPage({ params: paramsProp }: { params: { slugid: string } }) {
+    const params = React.use(paramsProp);
     const [app, setApp] = useState<Application | null>(null);
     const [loading, setLoading] = useState(true);
     const [isPending, startTransition] = useTransition();
