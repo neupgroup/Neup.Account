@@ -61,6 +61,7 @@ export type Notification = {
   message?: string;
   persistence?: 'dismissable' | 'untildays' | 'permanent';
   noticeType?: 'general' | 'success' | 'warning' | 'error';
+  deletableOn?: string | null;
 };
 
 export type AllNotifications = {

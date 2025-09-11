@@ -1,6 +1,6 @@
 
 
-"use client";
+'use client';
 
 import { useState, useTransition, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -75,9 +75,10 @@ function getActionDetails(notification: Notification): { text: string, href: str
 const formatDate = (isoString: string) => {
     const notificationDate = new Date(isoString);
     const now = new Date();
-    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const yesterday = new Date(now);
+    yesterday.setDate(yesterday.getDate() - 1);
 
-    if (notificationDate >= startOfToday) {
+    if (notificationDate.toDateString() === now.toDateString() || notificationDate.toDateString() === yesterday.toDateString()) {
         return notificationDate.toLocaleString();
     } else {
         return notificationDate.toLocaleDateString();
@@ -87,27 +88,20 @@ const formatDate = (isoString: string) => {
 export function NotificationManager({ initialNotifications }: { initialNotifications: AllNotifications }) {
     const [notifications, setNotifications] = useState(initialNotifications);
     const [isPending, startTransition] = useTransition();
-    const [canMarkAsRead, setCanMarkAsRead] = useState(false);
     const [canDelete, setCanDelete] = useState(false);
     const { toast } = useToast();
     const router = useRouter();
 
     useEffect(() => {
         const verifyPermissions = async () => {
-            const [hasReadPerm, hasDeletePerm] = await Promise.all([
-                checkPermissions(['notification.read']),
-                checkPermissions(['notification.delete'])
-            ]);
-            setCanMarkAsRead(hasReadPerm);
+            const hasDeletePerm = await checkPermissions(['notification.delete']);
             setCanDelete(hasDeletePerm);
         };
         verifyPermissions();
     }, []);
 
     const handleLinkClick = async (id: string, href: string) => {
-        if(canMarkAsRead) {
-            await markNotificationAsRead(id);
-        }
+        await markNotificationAsRead(id);
         router.push(href);
     };
 
@@ -124,6 +118,11 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
     };
 
     const hasNotifications = notifications.sticky.length > 0 || notifications.requests.length > 0 || notifications.other.length > 0;
+    
+    const isDeletable = (notification: Notification) => {
+        return canDelete && notification.deletableOn;
+    }
+
 
     return (
         <div className="space-y-6">
@@ -141,7 +140,7 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                                             <div className="text-sm [&_p]:leading-relaxed" dangerouslySetInnerHTML={{ __html: warning.message || "" }} />
                                         </div>
                                     </div>
-                                    {canDelete && (
+                                    {warning.persistence === 'dismissable' && (
                                     <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0 -my-1 -mr-2 text-current" onClick={(e) => { e.preventDefault(); handleDelete(warning.id, 'sticky'); }} disabled={isPending} aria-label="Delete warning">
                                         <X className="h-4 w-4" />
                                     </Button>
@@ -178,7 +177,7 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                                             <p className="text-xs text-muted-foreground">{formatDate(request.createdAt)}</p>
                                         </div>
                                     </button>
-                                     {canDelete && (
+                                     {isDeletable(request) && (
                                      <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive" onClick={() => handleDelete(request.id, 'requests')} disabled={isPending}>
                                         <X className="h-4 w-4" />
                                         <span className="sr-only">Delete request</span>
@@ -212,7 +211,7 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                                                 <p className="text-xs text-muted-foreground">{formatDate(item.createdAt)}</p>
                                             </div>
                                         </button>
-                                        {canDelete && (
+                                        {isDeletable(item) && (
                                         <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0 -my-1 -mr-2 text-muted-foreground group-hover:text-destructive" onClick={(e) => { e.preventDefault(); handleDelete(item.id, 'other'); }} disabled={isPending}>
                                             <X className="h-4 w-4" />
                                             <span className="sr-only">Delete notification</span>

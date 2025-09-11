@@ -12,10 +12,25 @@ import type { Notification, AllNotifications, NotificationCreate } from '@/types
 
 export async function createNotification(data: NotificationCreate) {
     try {
+        const now = new Date();
+        let deletable_on: Date | null = null;
+        
+        const action = data.action;
+
+        if (action === 'informative.login') {
+            deletable_on = new Date(now.setDate(now.getDate() + 3));
+        } else if (action.startsWith('informative.security') || action.startsWith('security.')) {
+            deletable_on = new Date(now.setDate(now.getDate() + 7));
+        } else if (action.endsWith('_invitation')) {
+            deletable_on = new Date(now.setDate(now.getDate() + 1));
+        }
+
+
         await addDoc(collection(db, 'notifications'), {
             ...data,
             is_read: false,
             createdAt: serverTimestamp(),
+            deletable_on: deletable_on,
         });
     } catch (e) {
         await logError('database', e, `createNotification for ${data.recipient_id}`);
@@ -37,11 +52,11 @@ export async function getNotifications(): Promise<AllNotifications> {
 
     for (const notifDoc of querySnapshot.docs) {
         const notifData = notifDoc.data();
-        const baseNotification = {
+        const baseNotification: Omit<Notification, 'action'> = {
             id: notifDoc.id,
             isRead: notifData.is_read,
             createdAt: notifData.createdAt?.toDate().toISOString() || new Date().toISOString(),
-            action: notifData.action,
+            deletableOn: notifData.deletable_on?.toDate()?.toISOString() || null,
         };
 
         if (notifData.request_id) { // This is a request-based notification
@@ -57,6 +72,7 @@ export async function getNotifications(): Promise<AllNotifications> {
 
                 requests.push({
                     ...baseNotification,
+                    action: requestData.action,
                     requestId: notifData.request_id,
                     senderId: requestData.sender_id,
                     senderName: senderProfile?.displayName || `${senderProfile?.firstName} ${senderProfile?.lastName}`.trim() || 'A user',
@@ -72,6 +88,7 @@ export async function getNotifications(): Promise<AllNotifications> {
 
             sticky.push({
                 ...baseNotification,
+                action: notifData.action,
                 message: notifData.message,
                 persistence: notifData.persistence,
                 noticeType: notifData.noticeType,
@@ -80,6 +97,7 @@ export async function getNotifications(): Promise<AllNotifications> {
             // This is a normal, informative notification
              other.push({
                 ...baseNotification,
+                action: notifData.action,
                 message: notifData.message,
             });
         }
@@ -113,7 +131,7 @@ export async function markNotificationAsRead(notificationId: string): Promise<{ 
 }
 
 export async function deleteNotification(notificationId: string): Promise<{ success: boolean; error?: string; }> {
-     const canDelete = await checkPermissions(['notification.delete']);
+    const canDelete = await checkPermissions(['notification.delete']);
     if (!canDelete) return { success: false, error: "Permission denied." };
     
     try {
