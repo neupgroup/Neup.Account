@@ -1,5 +1,4 @@
 
-
 "use client"
 
 import { useEffect, useState, useTransition, useRef } from 'react'
@@ -14,17 +13,16 @@ import { uploadFile } from '@/actions/upload'
 
 import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from "@/components/ui/button"
-import { CardFooter } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form"
 import { Label } from '@/components/ui/label'
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { useSession } from '@/context/session-context'
 import { BackButton } from '@/components/ui/back-button'
 import { cn } from '@/lib/utils'
 import { Check, Loader2, UploadCloud, Send, RefreshCw } from '@/components/icons'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
-import { PrimaryHeader } from '@/components/ui/primary-header'
 
 const displayFormSchema = z.object({
   displayPhoto: z.string().url("Please enter a valid URL.").optional().or(z.literal('')),
@@ -142,17 +140,17 @@ export default function DisplayInfoPage() {
     return (
         <div className="space-y-8">
             <BackButton href="/manage/profile" />
-             <PrimaryHeader
-                title="Display Information"
-                description="This information will be displayed publicly on your profile."
-            />
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                    <div className="space-y-6">
-                        <div className="space-y-2">
-                            <Label>Photo</Label>
-                             <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] items-stretch gap-6">
-                                <Avatar className="h-auto w-full aspect-square rounded-lg">
+                    
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Display Image</CardTitle>
+                            <CardDescription>Update your public profile photo.</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                             <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] items-stretch gap-6 h-40">
+                                <Avatar className="h-full w-auto aspect-square rounded-lg">
                                     <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" className="object-cover" />
                                     <AvatarFallback className="rounded-lg text-3xl">
                                         {`${profile?.firstName?.[0] || ''}${profile?.lastName?.[0] || ''}`.toUpperCase()}
@@ -173,12 +171,12 @@ export default function DisplayInfoPage() {
                                         >
                                             <UploadCloud className="h-8 w-8 text-muted-foreground" />
                                             <p className="text-sm text-muted-foreground">
-                                                Upload Image by Selecting or dragging an image here
+                                                Drag and drop or
+                                                 <button type="button" className="text-primary underline ml-1" onClick={() => fileInputRef.current?.click()} disabled={isPending}>
+                                                    select a file
+                                                </button>
                                             </p>
-                                            <Button type="button" size="sm" variant="link" onClick={() => fileInputRef.current?.click()} disabled={isPending}>
-                                                {isPending ? 'Uploading...' : 'Select a file'}
-                                            </Button>
-                                            <p className="text-sm text-muted-foreground">or <button type="button" className="text-primary underline" onClick={() => setPhotoView('carousel')}>select an image from your previous images</button></p>
+                                            <p className="text-xs text-muted-foreground">or <button type="button" className="text-primary underline" onClick={() => setPhotoView('carousel')}>select from previous images</button></p>
                                             <Input 
                                                 type="file" 
                                                 ref={fileInputRef} 
@@ -211,7 +209,7 @@ export default function DisplayInfoPage() {
                                                 <CarouselPrevious />
                                                 <CarouselNext />
                                             </Carousel>
-                                             <button type="button" className="text-primary underline mt-4 p-0 h-auto flex items-center gap-2 mx-auto" onClick={() => setPhotoView('uploader')}>
+                                             <button type="button" className="text-primary underline mt-4 p-0 h-auto flex items-center gap-2 mx-auto text-sm" onClick={() => setPhotoView('uploader')}>
                                                 <RefreshCw className="h-4 w-4" />
                                                 Upload new photo
                                             </button>
@@ -219,57 +217,64 @@ export default function DisplayInfoPage() {
                                     )}
                                 </div>
                             </div>
-                        </div>
-                        
-                        <FormField
-                            control={form.control}
-                            name="selectedDisplayName"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Display Name Format</FormLabel>
-                                    <FormControl>
-                                        <div className="flex flex-wrap gap-2">
-                                            {nameSuggestions.map(name => (
-                                                <Button key={name} type="button" variant={field.value === name ? "default" : "secondary"} onClick={() => field.onChange(name)} className="relative">
-                                                    {field.value === name && <Check className="absolute -left-1 -top-1 h-4 w-4 bg-primary text-primary-foreground rounded-full p-0.5" />}
-                                                    {name}
-                                                </Button>
-                                            ))}
-                                             <Button type="button" variant={field.value === 'custom' ? "default" : "secondary"} onClick={() => field.onChange('custom')} className="relative">
-                                                {field.value === 'custom' && <Check className="absolute -left-1 -top-1 h-4 w-4 bg-primary text-primary-foreground rounded-full p-0.5" />}
-                                                Custom...
-                                            </Button>
-                                        </div>
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                        </CardContent>
+                    </Card>
 
-                         {selectedDisplayName === 'custom' && (
+                    <Card>
+                         <CardHeader>
+                            <CardTitle>Display Name</CardTitle>
+                            <CardDescription>Choose how your name appears on your profile.</CardDescription>
+                        </CardHeader>
+                        <CardContent>
                             <FormField
                                 control={form.control}
-                                name="customDisplayName"
+                                name="selectedDisplayName"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Custom Display Name</FormLabel>
-                                        <FormControl><Input {...field} placeholder="Enter your custom display name" /></FormControl>
-                                        <FormDescription>Your request will be sent for review.</FormDescription>
+                                        <FormLabel className="sr-only">Display Name Format</FormLabel>
+                                        <FormControl>
+                                            <div className="flex flex-wrap gap-2">
+                                                {nameSuggestions.map(name => (
+                                                    <Button key={name} type="button" variant={field.value === name ? "default" : "secondary"} onClick={() => field.onChange(name)} className="relative">
+                                                        {field.value === name && <Check className="absolute -left-1 -top-1 h-4 w-4 bg-primary text-primary-foreground rounded-full p-0.5" />}
+                                                        {name}
+                                                    </Button>
+                                                ))}
+                                                <Button type="button" variant={field.value === 'custom' ? "default" : "secondary"} onClick={() => field.onChange('custom')} className="relative">
+                                                    {field.value === 'custom' && <Check className="absolute -left-1 -top-1 h-4 w-4 bg-primary text-primary-foreground rounded-full p-0.5" />}
+                                                    Custom...
+                                                </Button>
+                                            </div>
+                                        </FormControl>
                                         <FormMessage />
                                     </FormItem>
                                 )}
                             />
-                        )}
-                    </div>
-                     <CardFooter className="px-0">
+
+                            {selectedDisplayName === 'custom' && (
+                                <FormField
+                                    control={form.control}
+                                    name="customDisplayName"
+                                    render={({ field }) => (
+                                        <FormItem className="mt-4">
+                                            <FormLabel>Custom Display Name</FormLabel>
+                                            <FormControl><Input {...field} placeholder="Enter your custom display name" /></FormControl>
+                                            <FormDescription>Your request will be sent for review.</FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            )}
+                        </CardContent>
+                    </Card>
+
+                     <div className="flex justify-end">
                         <Button type="submit" disabled={isPending}>
                             {isPending ? <Loader2 className="animate-spin" /> : "Save Changes"}
                         </Button>
-                    </CardFooter>
+                    </div>
                 </form>
             </Form>
         </div>
     )
 }
-
-    
