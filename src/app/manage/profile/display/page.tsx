@@ -21,8 +21,9 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { useSession } from '@/context/session-context'
 import { BackButton } from '@/components/ui/back-button'
 import { cn } from '@/lib/utils'
-import { Check, Loader2, UploadCloud, Send } from '@/components/icons'
+import { Check, Loader2, UploadCloud, Send, RefreshCw } from '@/components/icons'
 import { Separator } from '@/components/ui/separator'
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 
 const displayFormSchema = z.object({
   displayPhoto: z.string().url("Please enter a valid URL.").optional().or(z.literal('')),
@@ -40,14 +41,6 @@ const displayFormSchema = z.object({
 
 type DisplayFormValues = z.infer<typeof displayFormSchema>;
 
-const defaultAvatars = [
-    "https://neupgroup.com/assets/avatar/user1.png",
-    "https://neupgroup.com/assets/avatar/user2.png",
-    "https://neupgroup.com/assets/avatar/user3.png",
-    "https://neupgroup.com/assets/avatar/user4.png",
-];
-
-
 export default function DisplayInfoPage() {
     const [loading, setLoading] = useState(true);
     const { toast } = useToast();
@@ -56,6 +49,8 @@ export default function DisplayInfoPage() {
     const [pastPhotos, setPastPhotos] = useState<string[]>([]);
     const [isPending, startTransition] = useTransition();
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [photoView, setPhotoView] = useState<'uploader' | 'carousel'>('uploader');
+
 
     const form = useForm<DisplayFormValues>({
         resolver: zodResolver(displayFormSchema),
@@ -80,9 +75,7 @@ export default function DisplayInfoPage() {
                         getPastProfilePhotos(accountId)
                     ]);
                     setNameSuggestions(suggestions);
-                    // Combine past photos with defaults, ensuring no duplicates and respecting order
-                    const allPhotos = [...new Set([...photos, ...defaultAvatars])];
-                    setPastPhotos(allPhotos.slice(0, 4));
+                    setPastPhotos(photos);
                 }
                 setLoading(false);
             }
@@ -158,42 +151,34 @@ export default function DisplayInfoPage() {
                         <CardContent className="space-y-6">
                             <div className="space-y-2">
                                 <Label>Photo</Label>
-                                <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] items-center gap-6 rounded-lg border p-4">
-                                    <div className="flex flex-col items-center justify-center gap-2">
-                                        <Avatar className="h-28 w-28 rounded-lg">
-                                            <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" />
-                                            <AvatarFallback className="rounded-lg text-3xl">
-                                                {`${profile?.firstName?.[0] || ''}${profile?.lastName?.[0] || ''}`.toUpperCase()}
-                                            </AvatarFallback>
-                                        </Avatar>
-                                    </div>
-                                    <div className="space-y-4">
-                                        <div>
-                                            <p className="text-sm font-medium mb-2">Choose a default avatar</p>
-                                            <div className="flex flex-wrap gap-2">
-                                                {pastPhotos.map((avatarUrl, index) => (
-                                                    <button
-                                                        key={avatarUrl}
-                                                        type="button"
-                                                        className="relative h-16 w-16 rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                                                        onClick={() => form.setValue('displayPhoto', avatarUrl)}
-                                                    >
-                                                        <Image src={avatarUrl} alt={`Default Avatar ${index + 1}`} width={100} height={100} className="rounded-lg aspect-square object-cover"/>
-                                                        {currentDisplayPhoto === avatarUrl && (
-                                                            <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-lg">
-                                                                <Check className="h-8 w-8 text-white" />
-                                                            </div>
-                                                        )}
-                                                    </button>
-                                                ))}
-                                            </div>
+                                {photoView === 'uploader' ? (
+                                    <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] items-center gap-6 rounded-lg border p-4">
+                                        <div className="flex flex-col items-center justify-center gap-2">
+                                            <Avatar className="h-28 w-28 rounded-lg">
+                                                <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" />
+                                                <AvatarFallback className="rounded-lg text-3xl">
+                                                    {`${profile?.firstName?.[0] || ''}${profile?.lastName?.[0] || ''}`.toUpperCase()}
+                                                </AvatarFallback>
+                                            </Avatar>
                                         </div>
-                                        <div>
-                                            <p className="text-sm font-medium mb-2">Or upload your own</p>
-                                            <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()} disabled={isPending}>
-                                                {isPending ? <Loader2 className="animate-spin mr-2"/> : <UploadCloud className="mr-2"/>}
-                                                Upload Photo
+                                        <div 
+                                            className="relative flex flex-col items-center justify-center gap-2 p-8 border-2 border-dashed rounded-lg text-center"
+                                            onDragOver={(e) => e.preventDefault()}
+                                            onDrop={(e) => {
+                                                e.preventDefault();
+                                                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                                                    handleFileChange({ target: { files: e.dataTransfer.files } } as any);
+                                                }
+                                            }}
+                                        >
+                                            <UploadCloud className="h-8 w-8 text-muted-foreground" />
+                                            <p className="text-sm text-muted-foreground">
+                                                Upload image by selecting or dragging an image here.
+                                            </p>
+                                            <Button type="button" size="sm" variant="link" onClick={() => fileInputRef.current?.click()} disabled={isPending}>
+                                                {isPending ? 'Uploading...' : 'Select a file'}
                                             </Button>
+                                            <p className="text-sm text-muted-foreground">or <button type="button" className="text-primary underline" onClick={() => setPhotoView('carousel')}>select an image from your previous images</button></p>
                                             <Input 
                                                 type="file" 
                                                 ref={fileInputRef} 
@@ -203,7 +188,46 @@ export default function DisplayInfoPage() {
                                             />
                                         </div>
                                     </div>
-                                </div>
+                                ) : (
+                                    <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] items-center gap-6 rounded-lg border p-4">
+                                         <div className="flex flex-col items-center justify-center gap-2">
+                                            <Avatar className="h-28 w-28 rounded-lg">
+                                                <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" />
+                                                <AvatarFallback className="rounded-lg text-3xl">
+                                                    {`${profile?.firstName?.[0] || ''}${profile?.lastName?.[0] || ''}`.toUpperCase()}
+                                                </AvatarFallback>
+                                            </Avatar>
+                                        </div>
+                                         <div className="w-full">
+                                            <Carousel opts={{ align: "start" }} className="w-full max-w-sm mx-auto">
+                                                <CarouselContent>
+                                                    {pastPhotos.map((photo, index) => (
+                                                        <CarouselItem key={index} className="basis-1/3">
+                                                            <button
+                                                                type="button"
+                                                                className="relative p-1 aspect-square w-full rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                                                                onClick={() => form.setValue('displayPhoto', photo)}
+                                                            >
+                                                                <Image src={photo} alt={`Past Photo ${index + 1}`} layout="fill" objectFit="cover" className="rounded-md" />
+                                                                {currentDisplayPhoto === photo && (
+                                                                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-md">
+                                                                        <Check className="h-8 w-8 text-white" />
+                                                                    </div>
+                                                                )}
+                                                            </button>
+                                                        </CarouselItem>
+                                                    ))}
+                                                </CarouselContent>
+                                                <CarouselPrevious />
+                                                <CarouselNext />
+                                            </Carousel>
+                                            <Button type="button" variant="outline" size="sm" className="mt-4" onClick={() => setPhotoView('uploader')}>
+                                                <RefreshCw className="mr-2 h-4 w-4" />
+                                                Upload new photo
+                                            </Button>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                             
                             <Separator />
