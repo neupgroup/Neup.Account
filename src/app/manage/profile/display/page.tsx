@@ -221,7 +221,7 @@ export default function DisplayInfoPage() {
                                                 <CarouselPrevious />
                                                 <CarouselNext />
                                             </Carousel>
-                                            <Button type="button" variant="outline" size="sm" className="mt-4" onClick={() => setPhotoView('uploader')}>
+                                            <Button type="button" variant="link" className="mt-4 p-0 h-auto" onClick={() => setPhotoView('uploader')}>
                                                 <RefreshCw className="mr-2 h-4 w-4" />
                                                 Upload new photo
                                             </Button>
@@ -283,3 +283,5 @@ export default function DisplayInfoPage() {
         </div>
     )
 }
+
+    
