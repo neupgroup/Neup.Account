@@ -49,10 +49,8 @@ export async function NotificationsCard() {
         ...allNotifications.other
     ].filter(n => !n.isRead); // Only show unread notifications on the dashboard
     
-    const hasMoreThanThree = prioritizedNotifications.length > 3;
-    const notificationsToShow = hasMoreThanThree 
-        ? prioritizedNotifications.slice(0, 3) 
-        : prioritizedNotifications;
+    const showAllButton = prioritizedNotifications.length >= 3;
+    const notificationsToShow = prioritizedNotifications.slice(0, 3);
 
     if (prioritizedNotifications.length === 0) {
         return null;
@@ -78,12 +76,12 @@ export async function NotificationsCard() {
                             />
                         )
                     })}
-                     {hasMoreThanThree && (
+                     {showAllButton && (
                         <ListItem
                             href="/manage/notifications"
                             iconName="Bell"
                             title="See all notifications"
-                            description={`You have ${prioritizedNotifications.length - 3} more unread notifications.`}
+                            description={`You have ${prioritizedNotifications.length} total unread notifications.`}
                         />
                     )}
                 </CardContent>
