@@ -1,4 +1,5 @@
 
+
 "use client"
 
 import { useEffect, useState, useTransition, useRef } from 'react'
@@ -150,7 +151,7 @@ export default function DisplayInfoPage() {
                     <div className="space-y-6">
                         <div className="space-y-2">
                             <Label>Photo</Label>
-                            <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] items-center gap-6 rounded-lg border p-4">
+                            <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] items-center gap-6">
                                 <Avatar className="h-28 w-28 rounded-lg mx-auto md:mx-0">
                                     <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" />
                                     <AvatarFallback className="rounded-lg text-3xl">
@@ -209,10 +210,10 @@ export default function DisplayInfoPage() {
                                             <CarouselPrevious />
                                             <CarouselNext />
                                         </Carousel>
-                                        <Button type="button" variant="link" className="mt-4 p-0 h-auto" onClick={() => setPhotoView('uploader')}>
-                                            <RefreshCw className="mr-2 h-4 w-4" />
+                                        <button type="button" className="text-primary underline mt-4 p-0 h-auto flex items-center gap-2" onClick={() => setPhotoView('uploader')}>
+                                            <RefreshCw className="h-4 w-4" />
                                             Upload new photo
-                                        </Button>
+                                        </button>
                                     </div>
                                 )}
                             </div>
@@ -255,7 +256,8 @@ export default function DisplayInfoPage() {
                                         <FormMessage />
                                     </FormItem>
                                 )}
-                            )}
+                            />
+                        )}
                     </div>
                      <CardFooter className="px-0">
                         <Button type="submit" disabled={isPending}>
@@ -266,5 +268,4 @@ export default function DisplayInfoPage() {
             </Form>
         </div>
     )
-
-    
+}
