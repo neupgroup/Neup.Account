@@ -151,16 +151,16 @@ export default function DisplayInfoPage() {
                         <CardContent className="space-y-6">
                             <div className="space-y-2">
                                 <Label>Photo</Label>
-                                {photoView === 'uploader' ? (
-                                    <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] items-center gap-6 rounded-lg border p-4">
-                                        <div className="flex flex-col items-center justify-center gap-2">
-                                            <Avatar className="h-28 w-28 rounded-lg">
-                                                <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" />
-                                                <AvatarFallback className="rounded-lg text-3xl">
-                                                    {`${profile?.firstName?.[0] || ''}${profile?.lastName?.[0] || ''}`.toUpperCase()}
-                                                </AvatarFallback>
-                                            </Avatar>
-                                        </div>
+                                <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] items-center gap-6 rounded-lg border p-4">
+                                    <div className="flex flex-col items-center justify-center gap-2">
+                                        <Avatar className="h-28 w-28 rounded-lg">
+                                            <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" />
+                                            <AvatarFallback className="rounded-lg text-3xl">
+                                                {`${profile?.firstName?.[0] || ''}${profile?.lastName?.[0] || ''}`.toUpperCase()}
+                                            </AvatarFallback>
+                                        </Avatar>
+                                    </div>
+                                    {photoView === 'uploader' ? (
                                         <div 
                                             className="relative flex flex-col items-center justify-center gap-2 p-8 border-2 border-dashed rounded-lg text-center"
                                             onDragOver={(e) => e.preventDefault()}
@@ -173,7 +173,7 @@ export default function DisplayInfoPage() {
                                         >
                                             <UploadCloud className="h-8 w-8 text-muted-foreground" />
                                             <p className="text-sm text-muted-foreground">
-                                                Upload image by selecting or dragging an image here.
+                                                Upload Image by Selecting or dragging an image here
                                             </p>
                                             <Button type="button" size="sm" variant="link" onClick={() => fileInputRef.current?.click()} disabled={isPending}>
                                                 {isPending ? 'Uploading...' : 'Select a file'}
@@ -187,18 +187,8 @@ export default function DisplayInfoPage() {
                                                 onChange={handleFileChange}
                                             />
                                         </div>
-                                    </div>
-                                ) : (
-                                    <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] items-center gap-6 rounded-lg border p-4">
-                                         <div className="flex flex-col items-center justify-center gap-2">
-                                            <Avatar className="h-28 w-28 rounded-lg">
-                                                <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" />
-                                                <AvatarFallback className="rounded-lg text-3xl">
-                                                    {`${profile?.firstName?.[0] || ''}${profile?.lastName?.[0] || ''}`.toUpperCase()}
-                                                </AvatarFallback>
-                                            </Avatar>
-                                        </div>
-                                         <div className="w-full">
+                                    ) : (
+                                        <div className="w-full">
                                             <Carousel opts={{ align: "start" }} className="w-full max-w-sm mx-auto">
                                                 <CarouselContent>
                                                     {pastPhotos.map((photo, index) => (
@@ -226,8 +216,8 @@ export default function DisplayInfoPage() {
                                                 Upload new photo
                                             </Button>
                                         </div>
-                                    </div>
-                                )}
+                                    )}
+                                </div>
                             </div>
                             
                             <Separator />
