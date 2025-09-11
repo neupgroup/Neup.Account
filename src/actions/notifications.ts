@@ -95,7 +95,7 @@ export async function getNotifications(): Promise<AllNotifications> {
 }
 
 export async function markNotificationAsRead(notificationId: string): Promise<{ success: boolean }> {
-    const canMarkAsRead = await checkPermissions(['notification.mark_as_read']);
+    const canMarkAsRead = await checkPermissions(['notification.read']);
     if (!canMarkAsRead) return { success: false };
 
     try {

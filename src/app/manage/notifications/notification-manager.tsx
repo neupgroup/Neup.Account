@@ -13,7 +13,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { checkPermissions } from '@/lib/user';
 import { markNotificationAsRead, deleteNotification } from '@/actions/notifications';
-import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { cva } from 'class-variance-authority';
 import { TertiaryHeader } from '@/components/ui/tertiary-header';
@@ -77,14 +76,11 @@ const formatDate = (isoString: string) => {
     const notificationDate = new Date(isoString);
     const now = new Date();
     const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const startOfYesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
 
     if (notificationDate >= startOfToday) {
-        return notificationDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }); // e.g., 3:30 PM
-    } else if (notificationDate >= startOfYesterday) {
-        return 'Yesterday';
+        return notificationDate.toLocaleString();
     } else {
-        return notificationDate.toLocaleDateString(); // e.g., 8/15/2023
+        return notificationDate.toLocaleDateString();
     }
 };
 
@@ -99,7 +95,7 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
     useEffect(() => {
         const verifyPermissions = async () => {
             const [hasReadPerm, hasDeletePerm] = await Promise.all([
-                checkPermissions(['notification.mark_as_read']),
+                checkPermissions(['notification.read']),
                 checkPermissions(['notification.delete'])
             ]);
             setCanMarkAsRead(hasReadPerm);
@@ -182,10 +178,12 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                                             <p className="text-xs text-muted-foreground">{formatDate(request.createdAt)}</p>
                                         </div>
                                     </button>
+                                     {canDelete && (
                                      <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive" onClick={() => handleDelete(request.id, 'requests')} disabled={isPending}>
                                         <X className="h-4 w-4" />
                                         <span className="sr-only">Delete request</span>
                                     </Button>
+                                    )}
                                 </div>
                                 )
                             })}
@@ -214,10 +212,12 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                                                 <p className="text-xs text-muted-foreground">{formatDate(item.createdAt)}</p>
                                             </div>
                                         </button>
+                                        {canDelete && (
                                         <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0 -my-1 -mr-2 text-muted-foreground group-hover:text-destructive" onClick={(e) => { e.preventDefault(); handleDelete(item.id, 'other'); }} disabled={isPending}>
                                             <X className="h-4 w-4" />
                                             <span className="sr-only">Delete notification</span>
                                         </Button>
+                                        )}
                                     </div>
                                 )
                             })}

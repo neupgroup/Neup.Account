@@ -76,7 +76,7 @@ export const navItems = {
 export const allPermissionsMap: Record<string, string[]> = {
     "Home": [],
     "Personal Info": ['profile.view', 'profile.modify', 'contact.view', 'contact.add', 'contact.modify', 'contact.remove'],
-    "Notifications": ['notification.read'],
+    "Notifications": ['notification.read', 'notification.delete'],
     "Password & Security": [
         'security.pass.modify', 'security.totp.add', 'security.totp.remove', 'security.backup_codes.view', 
         'security.backup_codes.create', 'security.recovery_accounts.view', 'security.recovery_accounts.add', 
