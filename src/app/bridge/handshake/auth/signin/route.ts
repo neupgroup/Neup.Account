@@ -1,7 +1,8 @@
+
 import { NextResponse, type NextRequest } from 'next/server';
 import { getActiveSession } from '@/lib/auth-actions';
 import { db } from '@/lib/firebase';
-import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import crypto from 'crypto';
 import { logError } from '@/lib/logger';
 
@@ -34,8 +35,20 @@ export async function GET(request: NextRequest) {
         finalRedirectUrl.searchParams.set('error_description', 'An application ID (appId) must be provided.');
         return NextResponse.redirect(finalRedirectUrl);
     }
-
+    
     try {
+        // --- New Security Check ---
+        // 1. Verify the App ID exists and has a secret configured
+        const appRef = doc(db, 'applications', appId);
+        const appDoc = await getDoc(appRef);
+
+        if (!appDoc.exists() || !appDoc.data().appSecret) {
+            finalRedirectUrl.searchParams.set('error', 'invalid_app');
+            finalRedirectUrl.searchParams.set('error_description', 'The provided application ID is invalid or not fully configured.');
+            return NextResponse.redirect(finalRedirectUrl);
+        }
+        // --- End Security Check ---
+
         const session = await getActiveSession();
 
         if (!session) {
