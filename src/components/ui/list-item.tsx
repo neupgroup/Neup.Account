@@ -32,10 +32,11 @@ import {
     ChevronRight,
     List,
     AlertTriangle,
-    Bug
+    Bug,
+    Bell,
+    Handshake,
+    MessageSquareWarning,
 } from '@/components/icons';
-import type { Notification } from '@/types';
-import { cn } from '@/lib/utils';
 
 
 // Icon mapping object
@@ -71,6 +72,9 @@ const iconMap: { [key: string]: React.ElementType } = {
   List,
   AlertTriangle,
   Bug,
+  Bell,
+  Handshake,
+  MessageSquareWarning,
 };
 
 interface ListItemProps {
@@ -80,11 +84,9 @@ interface ListItemProps {
   description: string;
   href: string;
   isExternal?: boolean;
-  notification?: Notification;
 }
 
-export function ListItem({ icon: Icon, iconName, title, description, href, isExternal = false, notification }: ListItemProps) {
-  // Use icon if provided, otherwise lookup iconName in the map
+export function ListItem({ icon: Icon, iconName, title, description, href, isExternal = false }: ListItemProps) {
   const IconComponent = Icon || (iconName ? iconMap[iconName] : null);
 
   const linkContent = (

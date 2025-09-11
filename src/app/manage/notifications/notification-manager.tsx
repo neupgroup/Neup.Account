@@ -53,11 +53,11 @@ function getActionDetails(notification: Notification): { text: string, href: str
             break;
         case 'informative.login':
         case 'informative.logout':
+        case 'informative.unblock':
             href = '/manage/security/devices';
             icon = MessageSquareWarning;
             break;
         case 'informative.security':
-        case 'informative.unblock':
             href = '/manage/security';
             icon = MessageSquareWarning;
             break;
@@ -116,7 +116,7 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                                         </div>
                                     </div>
                                     {canMarkAsRead && warning.persistence === 'dismissable' && (
-                                    <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0 -my-1 -mr-2 text-current" onClick={() => handleDismiss(warning.id, 'sticky')} disabled={isPending} aria-label="Dismiss warning">
+                                    <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0 -my-1 -mr-2 text-current" onClick={(e) => { e.preventDefault(); handleDismiss(warning.id, 'sticky'); }} disabled={isPending} aria-label="Dismiss warning">
                                         <X className="h-4 w-4" />
                                     </Button>
                                     )}
@@ -138,7 +138,7 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                                 <Link 
                                     key={request.id} 
                                     href={href}
-                                    className="flex items-center justify-between p-4 rounded-md hover:bg-muted/50 first:pt-0 last:pb-0"
+                                    className="flex items-center justify-between p-4 group hover:bg-muted/50"
                                 >
                                     <div className="flex items-center gap-3 flex-grow">
                                         <Avatar className="h-10 w-10">
@@ -166,15 +166,15 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                             {notifications.other.map(item => {
                                 const { href, message, icon: Icon } = getActionDetails(item);
                                 return (
-                                    <Link key={item.id} href={href} className="flex items-start justify-between gap-4 p-4 hover:bg-muted/50 transition-colors">
-                                        <div className="flex items-start gap-3">
-                                            <Icon className="h-5 w-5 text-muted-foreground mt-0.5" />
+                                    <Link key={item.id} href={href} className="flex items-start justify-between gap-4 p-4 group hover:bg-muted/50">
+                                        <div className="flex items-center gap-3">
+                                            <Icon className="h-5 w-5 text-muted-foreground mt-0.5 flex-shrink-0" />
                                             <div className="flex-grow">
                                                 <p className="text-sm">{message}</p>
                                                 <p className="text-xs text-muted-foreground">{new Date(item.createdAt).toLocaleString()}</p>
                                             </div>
                                         </div>
-                                        <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0 -my-1 -mr-2 text-muted-foreground" onClick={(e) => { e.preventDefault(); handleDismiss(item.id, 'other'); }} disabled={isPending}>
+                                        <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0 -my-1 -mr-2 text-muted-foreground group-hover:text-foreground" onClick={(e) => { e.preventDefault(); handleDismiss(item.id, 'other'); }} disabled={isPending}>
                                             <X className="h-4 w-4" />
                                         </Button>
                                     </Link>

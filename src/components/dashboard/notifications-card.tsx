@@ -5,11 +5,11 @@ import { AlertTriangle, Bell, Handshake, MessageSquareWarning, UserPlus } from '
 import { SecondaryHeader } from '../ui/secondary-header';
 import { ListItem } from '../ui/list-item';
 
-function getNotificationDetails(notification: Notification): { icon: string, message: string, href: string } {
+function getNotificationDetails(notification: Notification): { iconName: string, message: string, href: string } {
     const defaultHref = '/manage/notifications';
     let href = defaultHref;
     let message = notification.message || 'You have a new notification.';
-    let icon = 'MessageSquareWarning';
+    let iconName = 'MessageSquareWarning';
 
     switch (notification.action) {
         case 'informative.login':
@@ -21,23 +21,23 @@ function getNotificationDetails(notification: Notification): { icon: string, mes
             href = '/manage/security';
             break;
         case 'access_invitation':
-            icon = 'Handshake';
+            iconName = 'Handshake';
             message = `${notification.senderName} wants you to manage their account.`;
             href = '/manage/people/invitations';
             break;
         case 'family_invitation':
-            icon = 'UserPlus';
+            iconName = 'UserPlus';
             message = `${notification.senderName} invited you to join their family.`;
             href = '/manage/people/invitations';
             break;
     }
     
     if (notification.action?.includes('sticky')) {
-        icon = 'AlertTriangle';
+        iconName = 'AlertTriangle';
         message = notification.message || 'An important notice was posted.';
     }
 
-    return { icon, message, href };
+    return { iconName, message, href };
 }
 
 export async function NotificationsCard() {
@@ -47,10 +47,10 @@ export async function NotificationsCard() {
         ...allNotifications.sticky,
         ...allNotifications.requests,
         ...allNotifications.other
-    ].filter(n => !n.isRead); // Only show unread notifications on the dashboard
+    ].filter(n => !n.isRead);
     
     const showAllButton = prioritizedNotifications.length >= 3;
-    const notificationsToShow = prioritizedNotifications.slice(0, 3);
+    const notificationsToShow = showAllButton ? prioritizedNotifications.slice(0, 3) : prioritizedNotifications;
 
     if (prioritizedNotifications.length === 0) {
         return null;
@@ -65,12 +65,12 @@ export async function NotificationsCard() {
             <Card>
                 <CardContent className="divide-y p-0">
                     {notificationsToShow.map(notification => {
-                        const { icon, message, href } = getNotificationDetails(notification);
+                        const { iconName, message, href } = getNotificationDetails(notification);
                         return (
                             <ListItem
                                 key={notification.id}
                                 href={href}
-                                iconName={icon}
+                                iconName={iconName}
                                 title={message}
                                 description={new Date(notification.createdAt).toLocaleString()}
                             />
