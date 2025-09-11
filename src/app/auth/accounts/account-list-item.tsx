@@ -32,7 +32,8 @@ export function AccountListItem({ account, mode }: { account: CombinedAccount, m
     useEffect(() => {
         async function fetchAccountDetails() {
             if (account.isBrand || account.isDependent || account.isUnknown) {
-                setDetails({});
+                // Details are already passed in for these types
+                setDetails({}); 
                 setLoading(false);
                 return;
             }

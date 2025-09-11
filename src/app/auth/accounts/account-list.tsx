@@ -17,6 +17,7 @@ type CombinedAccount = StoredAccount & {
 };
 
 const PAGE_SIZE = 10;
+const INCREMENT_SIZE = 8;
 
 export function AccountList({ 
     accounts, 
@@ -34,14 +35,18 @@ export function AccountList({
     }, [accounts, isPaginated]);
     
     if (accounts.length === 0) {
-        return null;
+        return (
+            <div className="p-4 text-center text-sm text-muted-foreground">
+                No other accounts to display.
+            </div>
+        );
     }
     
     const accountsToShow = accounts.slice(0, visibleCount);
     const canShowMore = isPaginated && visibleCount < accounts.length;
 
     const handleShowMore = () => {
-        setVisibleCount(prev => prev + PAGE_SIZE);
+        setVisibleCount(prev => Math.min(prev + INCREMENT_SIZE, accounts.length));
     }
 
     return (

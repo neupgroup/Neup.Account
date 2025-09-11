@@ -1,7 +1,6 @@
 
-import Link from 'next/link';
-import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
+import React from 'react';
 import { getActiveAccountId, getPersonalAccountId } from '@/lib/auth-actions';
 import { getAccountType } from '@/lib/user';
 import { AccountList } from '@/app/auth/accounts/account-list';
@@ -13,9 +12,10 @@ import { cookies } from 'next/headers';
 import { ListItem } from '@/components/ui/list-item';
 import { SecondaryHeader } from '@/components/ui/secondary-header';
 import { Bot, Building, UserPlus, FolderGit2 } from '@/components/icons';
+import { PrimaryHeader } from '@/components/ui/primary-header';
 
 
-const IndividualAccountFeatures = () => (
+const LinkAndCreateFeatures = () => (
   <>
     <ListItem
       icon={Bot}
@@ -25,43 +25,17 @@ const IndividualAccountFeatures = () => (
     />
     <ListItem
       icon={Building}
-      title="Manage Brand Accounts"
-      description="Create or manage brand profiles for businesses or organizations."
-      href="/manage/accounts/brand"
+      title="Create Brand Account"
+      description="Set up a new profile for a business or organization."
+      href="/manage/accounts/brand/create"
     />
     <ListItem
       icon={UserPlus}
-      title="Manage Dependent Accounts"
-      description="Create and manage accounts for family members."
-      href="/manage/accounts/dependent"
+      title="Create Dependent Account"
+      description="Create and manage an account for a family member."
+      href="/manage/accounts/dependent/create"
     />
   </>
-);
-
-const BrandAccountFeatures = () => (
-  <>
-     <ListItem
-      icon={FolderGit2}
-      title="Manage Branches"
-      description="Add or manage sub-brands and locations."
-      href="/manage/accounts/branches"
-    />
-    <ListItem
-      icon={Bot}
-      title="Link WhatsApp Account"
-      description="Connect a WhatsApp Business account for this brand."
-      href="/manage/accounts/whatsapp"
-    />
-  </>
-);
-
-const BranchAccountFeatures = () => (
-    <ListItem
-      icon={Bot}
-      title="Link WhatsApp Account"
-      description="Connect a WhatsApp Business account for this branch."
-      href="/manage/accounts/whatsapp"
-    />
 );
 
 
@@ -78,76 +52,79 @@ export default async function AccountsPage() {
 
   let accountsToShow = [];
 
-  if (isManaging && personalAccountId) {
-    // If managing, only show the primary account to switch back to.
-    const storedAccounts = await getStoredAccounts();
-    accountsToShow = storedAccounts.filter(acc => acc.accountId === personalAccountId);
-  } else {
-    // If on the primary account, show all stored accounts (excluding self) and brand/dependent accounts.
-    const [storedAccounts, brandAccounts, dependentAccounts] = await Promise.all([
+  // If managing, we don't need to show other accounts, just the management features.
+  // The primary logic for showing manageable accounts lives on the personal account dashboard.
+  if (!isManaging) {
+     const [storedAccounts, brandAccounts, dependentAccounts] = await Promise.all([
         getStoredAccounts(),
         getBrandAccounts(),
         getDependentAccounts(),
     ]);
 
-    const personalAccounts = storedAccounts.filter(acc => acc.accountId !== personalAccountId && !acc.isBrand);
-    
+    const otherPersonalAccounts = storedAccounts.filter(acc => acc.accountId !== personalAccountId && !acc.isBrand);
+
     const mappedBrandAccounts = brandAccounts.map(brand => ({
         accountId: brand.id,
-        sessionId: '', 
+        sessionId: '',
         sessionKey: '', 
         expired: false,
         isBrand: true,
         displayName: brand.name,
+        neupId: `brand`, // Placeholder
         displayPhoto: brand.logoUrl,
         plan: brand.plan,
     }));
 
     const mappedDependentAccounts = dependentAccounts.map(acc => ({
         accountId: acc.id,
-        sessionId: '', 
-        sessionKey: '', 
+        sessionId: '',
+        sessionKey: '',
         expired: false,
         displayName: acc.displayName,
         neupId: acc.neupId,
         displayPhoto: acc.displayPhoto,
+        isDependent: true,
     }));
     
-    accountsToShow = [...personalAccounts, ...mappedBrandAccounts, ...mappedDependentAccounts];
+    accountsToShow = [...otherPersonalAccounts, ...mappedBrandAccounts, ...mappedDependentAccounts];
   }
   
-  const renderFeatures = () => {
-    switch (accountType) {
-        case 'brand':
-            return <BrandAccountFeatures />;
-        case 'branch':
-            return <BranchAccountFeatures />;
-        case 'individual':
-        default:
-            return <IndividualAccountFeatures />;
-    }
-  }
-
-
   return (
-    <div className="grid gap-4">
-      <SecondaryHeader 
-        title="Manage Accounts"
+    <div className="grid gap-8">
+      <PrimaryHeader 
+        title="Accounts"
         description="Manage your connections, create new accounts, and switch between them."
       />
 
-      <Card>
-        <CardContent className="divide-y p-0">
-          {renderFeatures()}
-           <div className="p-0">
-             <AccountList 
-                accounts={accountsToShow} 
-                mode="switch"
-                isPaginated={!isManaging}
+       <div className="space-y-2">
+            <SecondaryHeader 
+                title="Link & Create Accounts"
+                description="Add new brand or dependent accounts to your profile."
             />
-           </div>
-        </CardContent>
-      </Card>
+            <Card>
+                <CardContent className="divide-y p-0">
+                    <LinkAndCreateFeatures />
+                </CardContent>
+            </Card>
+        </div>
+
+        {!isManaging && (
+            <div className="space-y-2">
+                <SecondaryHeader 
+                    title="Manage Accounts"
+                    description="Switch to another account you have access to."
+                />
+                <Card>
+                    <CardContent className="p-0">
+                        <AccountList 
+                            accounts={accountsToShow} 
+                            mode="switch"
+                            isPaginated={true}
+                        />
+                    </CardContent>
+                </Card>
+            </div>
+        )}
     </div>
   );
 }
