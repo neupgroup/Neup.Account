@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useState, useEffect, useTransition } from 'react';
@@ -65,9 +66,9 @@ async function processRequest(requestId: string, accountId: string, displayName:
     batch.update(requestRef, { status: approve ? 'approved' : 'rejected' });
 
     if (approve) {
-        // Update user's profile
-        const profileRef = doc(db, 'profile', accountId);
-        batch.update(profileRef, { displayName });
+        // Update user's account document
+        const accountRef = doc(db, 'account', accountId);
+        batch.update(accountRef, { displayName });
         await logActivity(accountId, `Display name change approved: ${displayName}`, "Success", undefined, adminId);
     } else {
         await logActivity(accountId, `Display name change rejected: ${displayName}`, "Failed", undefined, adminId);

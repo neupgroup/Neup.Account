@@ -358,7 +358,13 @@ export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
     const newAccountRef = doc(collection(db, 'account'));
     const accountId = newAccountRef.id;
 
-    batch.set(newAccountRef, { type: 'individual' });
+    batch.set(newAccountRef, { 
+        type: 'individual',
+        status: 'active',
+        verified: false,
+        displayName: displayName,
+        displayPhoto: "https://neupgroup.com/assets/avatar/user1.png"
+    });
 
     const permQuery = query(
       collection(db, 'permission'),
@@ -391,8 +397,6 @@ export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
       firstName,
       lastName,
       middleName: middleName || '',
-      displayName,
-      displayPhoto: "https://neupgroup.com/assets/avatar/user1.png",
       dob,
       gender,
       nationality,

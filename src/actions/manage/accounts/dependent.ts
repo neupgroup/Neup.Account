@@ -1,4 +1,5 @@
 
+
 'use server';
 
 import { z } from 'zod';
@@ -130,6 +131,10 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
 
         batch.set(newAccountRef, {
             type: 'dependent',
+            status: 'active',
+            verified: false,
+            displayName: `${rest.firstName} ${rest.lastName}`.trim(),
+            displayPhoto: null
         });
         
         const [guardianPermSnap, dependentPermSnap] = await Promise.all([

@@ -1,4 +1,5 @@
 
+
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -94,7 +95,7 @@ export async function getAllAccounts(
 
             return {
                 id: accountId,
-                name: profileData?.displayName || `${profileData?.firstName || ''} ${profileData?.lastName || ''}`.trim() || 'Unnamed Account',
+                name: accountData?.displayName || 'Unnamed Account',
                 createdAt: (profileData as any)?.createdAt?.toDate()?.toISOString() || new Date(0).toISOString(),
                 type: accountData.type || 'individual',
                 isRoot: rootPermitMap.has(accountId) || false,

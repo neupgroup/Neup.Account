@@ -100,17 +100,25 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
 
     try {
         const batch = writeBatch(db);
+        const accountRef = doc(db, 'account', accountId);
+        const profileRef = doc(db, 'profile', accountId);
 
         if (canModifyProfile) {
             const profileData: Record<string, any> = {};
+            const accountData: Record<string, any> = {};
 
             // List of valid profile fields to prevent unwanted data being written
-            const validProfileFields = ['firstName', 'middleName', 'lastName', 'displayName', 'displayPhoto', 'gender', 'dob'];
+            const validProfileFields = ['firstName', 'middleName', 'lastName', 'gender', 'dob'];
             for(const key of validProfileFields) {
                 if(data[key] !== undefined) {
                     profileData[key] = data[key];
                 }
             }
+            
+            // Handle displayName and displayPhoto which are now on the account doc
+            if(data.displayName !== undefined) accountData.displayName = data.displayName;
+            if(data.displayPhoto !== undefined) accountData.displayPhoto = data.displayPhoto;
+
 
             // Auto-update display name if legal name changes
             const hasNameChange = ['firstName', 'middleName', 'lastName'].some(key => data[key] !== undefined);
@@ -124,7 +132,7 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
                 if (newMiddleName) {
                     defaultDisplayName = `${newFirstName || ''} ${newMiddleName} ${newLastName || ''}`.trim();
                 }
-                 profileData.displayName = defaultDisplayName;
+                 accountData.displayName = defaultDisplayName;
             }
 
 
@@ -146,13 +154,14 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
                 });
                 await logActivity(accountId, `Requested Custom Display Name: ${data.customDisplayNameRequest}`, 'Pending', undefined, geolocation);
                 // Don't update the displayName in the profile directly
-                delete profileData.displayName;
+                delete accountData.displayName;
             }
 
-
             if(Object.keys(profileData).length > 0) {
-                const profileRef = doc(db, 'profile', accountId);
                 batch.update(profileRef, profileData);
+            }
+            if(Object.keys(accountData).length > 0) {
+                batch.update(accountRef, accountData);
             }
         }
         
@@ -221,27 +230,37 @@ export async function updateBrandProfile(accountId: string, data: z.infer<typeof
 
     try {
         const validatedData = brandProfileFormSchema.parse(data);
+        const accountRef = doc(db, 'account', accountId);
         const profileRef = doc(db, 'profile', accountId);
+        const batch = writeBatch(db);
         
-        const dataToUpdate: Partial<any> = {
+        // Data for the 'account' collection
+        const accountDataToUpdate: Partial<any> = {
             displayName: validatedData.displayName,
             displayPhoto: validatedData.displayPhoto,
+        };
+
+        // Data for the 'profile' collection
+        const profileDataToUpdate: Partial<any> = {
             isLegalEntity: validatedData.isLegalEntity,
         };
 
         if (validatedData.isLegalEntity) {
-            dataToUpdate.legalName = validatedData.legalName;
-            dataToUpdate.registrationId = validatedData.registrationId;
-            dataToUpdate.countryOfOrigin = validatedData.countryOfOrigin;
-            dataToUpdate.registeredOn = validatedData.registeredOn?.toISOString();
+            profileDataToUpdate.legalName = validatedData.legalName;
+            profileDataToUpdate.registrationId = validatedData.registrationId;
+            profileDataToUpdate.countryOfOrigin = validatedData.countryOfOrigin;
+            profileDataToUpdate.registeredOn = validatedData.registeredOn?.toISOString();
         } else {
-            dataToUpdate.legalName = null;
-            dataToUpdate.registrationId = null;
-            dataToUpdate.countryOfOrigin = null;
-            dataToUpdate.registeredOn = null;
+            profileDataToUpdate.legalName = null;
+            profileDataToUpdate.registrationId = null;
+            profileDataToUpdate.countryOfOrigin = null;
+            profileDataToUpdate.registeredOn = null;
         }
 
-        await updateDoc(profileRef, dataToUpdate);
+        batch.update(accountRef, accountDataToUpdate);
+        batch.update(profileRef, profileDataToUpdate);
+
+        await batch.commit();
 
         await logActivity(accountId, 'Brand Profile Update', 'Success', undefined, geolocation);
 
@@ -263,7 +282,7 @@ export async function parseDateString(dateString: string): Promise<{ success: bo
     }
 
     // Attempt local parsing first for YYYY-MM-DD or YYYY/MM/DD
-    const regex = /^(\d{4})[-/](\d{1,2})[-/](\d{1-2})$/;
+    const regex = /^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/;
     const match = dateString.match(regex);
     if (match) {
         const year = parseInt(match[1]);

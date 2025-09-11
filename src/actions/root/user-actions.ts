@@ -101,6 +101,7 @@ export async function blockServiceAccess(userId: string, data: z.infer<typeof bl
     
     try {
         const accountRef = doc(db, 'account', userId);
+        const batch = writeBatch(db);
         
         let until = null;
         if (!isPermanent && durationInHours) {
@@ -121,7 +122,19 @@ export async function blockServiceAccess(userId: string, data: z.infer<typeof bl
             blockedOn: serverTimestamp()
         };
 
-        await updateDoc(accountRef, { block: blockData });
+        batch.update(accountRef, { block: blockData, status: 'blocked' });
+
+        const statusLogRef = doc(collection(db, 'account_status'));
+        batch.set(statusLogRef, {
+            account_id: userId,
+            status: 'blocked',
+            remarks: `Admin blocked access. Reason: ${reason}. ${remarks}`,
+            from_date: serverTimestamp(),
+            more_info: `Request by admin: ${adminId}.`
+        });
+        
+        await batch.commit();
+
         await logActivity(userId, `Service access blocked. Reason: ${reason}`, 'Alert', undefined, adminId);
         
         await createNotification({
@@ -150,7 +163,21 @@ export async function unblockServiceAccess(userId: string): Promise<{success: bo
 
      try {
         const accountRef = doc(db, 'account', userId);
-        await updateDoc(accountRef, { block: null });
+        const batch = writeBatch(db);
+        
+        batch.update(accountRef, { block: null, status: 'active' });
+
+        const statusLogRef = doc(collection(db, 'account_status'));
+        batch.set(statusLogRef, {
+            account_id: userId,
+            status: 'active',
+            remarks: 'Service access restored by admin.',
+            from_date: serverTimestamp(),
+            more_info: `Request by admin: ${adminId}.`
+        });
+        
+        await batch.commit();
+
         await logActivity(userId, `Service access unblocked`, 'Success', undefined, adminId);
         
         await createNotification({

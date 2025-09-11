@@ -1,4 +1,5 @@
 
+
 'use server';
 
 import { db } from './firebase';
@@ -30,6 +31,8 @@ export type UserProfile = {
   countryOfOrigin?: string;
   registeredOn?: string; // ISO string
   accountId?: string; // Added for convenience
+  neupId?: string; // Added for convenience
+  verified?: boolean; // Added for convenience
 };
 
 export type UserContacts = {
@@ -47,11 +50,11 @@ export async function getAccountType(accountId?: string): Promise<string | null>
   const idToFetch = accountId || (await getActiveAccountId());
   if (!idToFetch) return null;
   try {
-    const typeRef = doc(db, 'account', idToFetch);
-    const typeDoc = await getDoc(typeRef);
-    if (typeDoc.exists()) {
+    const accountRef = doc(db, 'account', idToFetch);
+    const accountDoc = await getDoc(accountRef);
+    if (accountDoc.exists()) {
         // Return status if it exists, otherwise the type
-        return typeDoc.data().status || typeDoc.data().type || 'individual';
+        return accountDoc.data().status || accountDoc.data().type || 'individual';
     }
     return 'individual';
   } catch (error) {
@@ -66,21 +69,41 @@ export async function getUserProfile(
   const idToFetch = accountId || (await getActiveAccountId());
   if (!idToFetch) return null;
   try {
+    const accountRef = doc(db, 'account', idToFetch);
     const profileRef = doc(db, 'profile', idToFetch);
-    const profileDoc = await getDoc(profileRef);
+    
+    const [accountDoc, profileDoc] = await Promise.all([
+        getDoc(accountRef),
+        getDoc(profileRef)
+    ]);
+    
     if (profileDoc.exists()) {
-      const data = profileDoc.data();
+      const profileData = profileDoc.data();
+      const accountData = accountDoc.exists() ? accountDoc.data() : {};
       
+      const combinedData = {
+          ...profileData,
+          displayName: accountData.displayName || profileData.displayName,
+          displayPhoto: accountData.displayPhoto,
+          verified: accountData.verified || false,
+      };
+
       // Manually convert Firestore Timestamps to ISO strings
       const serializedData = {
-        ...data,
-        dob: data.dob?.toDate?.().toISOString() || null,
-        registeredOn: data.registeredOn?.toDate?.().toISOString() || null,
+        ...combinedData,
+        dob: combinedData.dob?.toDate?.().toISOString() || null,
+        registeredOn: combinedData.registeredOn?.toDate?.().toISOString() || null,
       };
 
       delete serializedData.createdAt; // Deprecated or internal field
 
-      return { ...serializedData, accountId: idToFetch } as UserProfile;
+      const neupIds = await getUserNeupIds(idToFetch);
+
+      return { 
+          ...serializedData, 
+          accountId: idToFetch,
+          neupId: neupIds[0] || null,
+        } as UserProfile;
     }
     return null;
   } catch (error) {
@@ -244,9 +267,9 @@ export async function validateNeupId(neupId: string): Promise<{ success: boolean
             return { success: false, error: "pending_deletion" };
         }
 
-        if (accountData.block?.status) {
+        if (accountData.status === 'blocked') {
              const block = accountData.block;
-             if (block.is_permanent || (block.until && block.until.toDate() > new Date())) {
+             if (block && (block.is_permanent || (block.until && block.until.toDate() > new Date()))) {
                 return { success: false, error: "This account has been blocked." };
              }
         }

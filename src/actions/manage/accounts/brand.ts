@@ -119,6 +119,10 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
 
         batch.set(newAccountRef, {
             type: 'brand',
+            status: 'active',
+            verified: false,
+            displayName: fullName,
+            displayPhoto: null
         });
 
         // Grant management permission to the creator by creating a permit document
@@ -149,7 +153,6 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
         batch.set(newNeupIdRef, { for: brandAccountId, is_primary: true });
 
         batch.set(doc(db, "profile", brandAccountId), {
-            displayName: fullName,
             legalName: legalName || null,
             registrationId: registrationId || null,
             servingAreas: servingAreas || null,
