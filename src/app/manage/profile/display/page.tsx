@@ -200,7 +200,7 @@ export default function DisplayInfoPage() {
                                                                     className="relative p-1 aspect-square w-full rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                                                                     onClick={() => form.setValue('displayPhoto', photo)}
                                                                 >
-                                                                    <Image src={photo} alt={`Past Photo ${index + 1}`} layout="fill" objectFit="cover" className="rounded-md" />
+                                                                    <Image src={photo} alt={`Past Photo ${index + 1}`} fill objectFit="cover" className="rounded-md" />
                                                                     {currentDisplayPhoto === photo && (
                                                                         <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-md">
                                                                             <Check className="h-8 w-8 text-white" />
@@ -241,7 +241,7 @@ export default function DisplayInfoPage() {
                                     name="selectedDisplayName"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel className="sr-only">Display Name Format</FormLabel>
+                                            <FormLabel>Display Name Format</FormLabel>
                                             <FormControl>
                                                 <div className="flex flex-wrap gap-2">
                                                     {nameSuggestions.map(name => (
