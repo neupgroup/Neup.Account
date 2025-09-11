@@ -1,4 +1,5 @@
 
+
 "use client"
 
 import { useEffect, useState, useTransition, useRef } from 'react'
@@ -13,10 +14,9 @@ import { uploadFile } from '@/actions/upload'
 
 import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form"
-import { Label } from '@/components/ui/label'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { useSession } from '@/context/session-context'
 import { BackButton } from '@/components/ui/back-button'
@@ -66,6 +66,7 @@ export default function DisplayInfoPage() {
             form.reset({
                 displayPhoto: profile.displayPhoto || "",
                 selectedDisplayName: profile.displayName || "",
+                customDisplayName: "",
             });
 
             const fetchSuggestions = async () => {
@@ -151,7 +152,7 @@ export default function DisplayInfoPage() {
                         />
                         <Card>
                             <CardContent className="pt-6">
-                                <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] items-start gap-6">
+                                <div className="grid md:grid-cols-[150px_1fr] items-start gap-6">
                                     <Avatar className="h-36 w-36 md:h-full md:w-full rounded-lg">
                                         <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" className="object-cover" />
                                         <AvatarFallback className="rounded-lg text-3xl">
@@ -229,7 +230,10 @@ export default function DisplayInfoPage() {
                             description="Choose how your name appears on your profile."
                         />
                         <Card>
-                            <CardContent className="pt-6">
+                            <CardContent className="pt-6 space-y-4">
+                                <div>
+                                    <h3 className="text-2xl font-semibold tracking-tight">{profile?.displayName}</h3>
+                                </div>
                                 <FormField
                                     control={form.control}
                                     name="selectedDisplayName"
@@ -270,18 +274,15 @@ export default function DisplayInfoPage() {
                                     />
                                 )}
                             </CardContent>
+                            <CardFooter className="border-t pt-4 mt-4">
+                                 <Button type="submit" disabled={isPending}>
+                                    {isPending ? <Loader2 className="animate-spin" /> : "Save Changes"}
+                                </Button>
+                            </CardFooter>
                         </Card>
-                    </div>
-
-                     <div className="flex justify-end">
-                        <Button type="submit" disabled={isPending}>
-                            {isPending ? <Loader2 className="animate-spin" /> : "Save Changes"}
-                        </Button>
                     </div>
                 </form>
             </Form>
         </div>
     )
 }
-
-    
