@@ -53,10 +53,12 @@ function getActionDetails(notification: Notification): { text: string, href: str
         case 'informative.login':
         case 'informative.logout':
         case 'informative.unblock':
+            text = notification.message || 'An update regarding your account sessions.';
             href = '/manage/security/devices';
             icon = MessageSquareWarning;
             break;
         case 'informative.security':
+            text = notification.message || 'A security update on your account.';
             href = '/manage/security';
             icon = MessageSquareWarning;
             break;
@@ -197,7 +199,7 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                     <Card>
                         <CardContent className="divide-y p-0">
                             {notifications.other.map(item => {
-                                const { href, message, icon: Icon } = getActionDetails(item);
+                                const { href, text: message, icon: Icon } = getActionDetails(item);
                                 return (
                                     <div key={item.id} className="flex items-start justify-between gap-4 p-4 group">
                                          <button 
