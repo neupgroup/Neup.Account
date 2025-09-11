@@ -7,12 +7,12 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { Alert } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { AlertTriangle, X, Bell, MessageSquareWarning, Users, Handshake } from '@/components/icons';
+import { AlertTriangle, X, Bell, MessageSquareWarning, Users, Handshake, type LucideIcon } from '@/components/icons';
 import type { AllNotifications, Notification } from '@/types';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { checkPermissions } from '@/lib/user';
-import { markNotificationAsRead } from '@/actions/notifications';
+import { markNotificationAsRead, deleteNotification } from '@/actions/notifications';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { cva } from 'class-variance-authority';
@@ -35,10 +35,10 @@ const warningVariants = cva(
   }
 )
 
-function getActionDetails(notification: Notification): { text: string, href: string, icon: React.ElementType } {
+function getActionDetails(notification: Notification): { text: string, href: string, icon: LucideIcon } {
     let text = notification.message || 'You have a new notification.';
     let href = '/manage/notifications';
-    let icon = Bell;
+    let icon: LucideIcon = MessageSquareWarning;
 
     switch (notification.action) {
         case 'family_invitation':
@@ -61,6 +61,9 @@ function getActionDetails(notification: Notification): { text: string, href: str
             href = '/manage/security';
             icon = MessageSquareWarning;
             break;
+        default:
+             icon = Bell;
+             break;
     }
 
     if (notification.action?.includes('sticky')) {
@@ -70,29 +73,56 @@ function getActionDetails(notification: Notification): { text: string, href: str
     return { text, href, icon };
 }
 
+const formatDate = (isoString: string) => {
+    const notificationDate = new Date(isoString);
+    const now = new Date();
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const startOfYesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+
+    if (notificationDate >= startOfToday) {
+        return notificationDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }); // e.g., 3:30 PM
+    } else if (notificationDate >= startOfYesterday) {
+        return 'Yesterday';
+    } else {
+        return notificationDate.toLocaleDateString(); // e.g., 8/15/2023
+    }
+};
+
 export function NotificationManager({ initialNotifications }: { initialNotifications: AllNotifications }) {
     const [notifications, setNotifications] = useState(initialNotifications);
     const [isPending, startTransition] = useTransition();
     const [canMarkAsRead, setCanMarkAsRead] = useState(false);
+    const [canDelete, setCanDelete] = useState(false);
     const { toast } = useToast();
     const router = useRouter();
 
     useEffect(() => {
-        const verifyPermission = async () => {
-            const hasPerm = await checkPermissions(['notification.mark_as_read']);
-            setCanMarkAsRead(hasPerm);
+        const verifyPermissions = async () => {
+            const [hasReadPerm, hasDeletePerm] = await Promise.all([
+                checkPermissions(['notification.mark_as_read']),
+                checkPermissions(['notification.delete'])
+            ]);
+            setCanMarkAsRead(hasReadPerm);
+            setCanDelete(hasDeletePerm);
         };
-        verifyPermission();
+        verifyPermissions();
     }, []);
 
-    const handleDismiss = (id: string, type: 'sticky' | 'other') => {
+    const handleLinkClick = async (id: string, href: string) => {
+        if(canMarkAsRead) {
+            await markNotificationAsRead(id);
+        }
+        router.push(href);
+    };
+
+    const handleDelete = (id: string, type: 'sticky' | 'other' | 'requests') => {
         startTransition(async () => {
-            const result = await markNotificationAsRead(id);
+            const result = await deleteNotification(id);
             if (result.success) {
-                toast({ title: 'Notification dismissed' });
+                toast({ title: 'Notification deleted' });
                 setNotifications(prev => ({ ...prev, [type]: prev[type].filter(item => item.id !== id) }));
             } else {
-                toast({ variant: 'destructive', title: 'Error', description: "Could not dismiss notification." });
+                toast({ variant: 'destructive', title: 'Error', description: result.error || "Could not delete notification." });
             }
         });
     };
@@ -115,8 +145,8 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                                             <div className="text-sm [&_p]:leading-relaxed" dangerouslySetInnerHTML={{ __html: warning.message || "" }} />
                                         </div>
                                     </div>
-                                    {canMarkAsRead && warning.persistence === 'dismissable' && (
-                                    <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0 -my-1 -mr-2 text-current" onClick={(e) => { e.preventDefault(); handleDismiss(warning.id, 'sticky'); }} disabled={isPending} aria-label="Dismiss warning">
+                                    {canDelete && (
+                                    <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0 -my-1 -mr-2 text-current" onClick={(e) => { e.preventDefault(); handleDelete(warning.id, 'sticky'); }} disabled={isPending} aria-label="Delete warning">
                                         <X className="h-4 w-4" />
                                     </Button>
                                     )}
@@ -133,24 +163,30 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                     <Card>
                         <CardContent className="divide-y p-0">
                             {notifications.requests.map(request => {
-                                const { text, href } = getActionDetails(request);
+                                const { text, href, icon: Icon } = getActionDetails(request);
                                 return (
-                                <Link 
+                                <div 
                                     key={request.id} 
-                                    href={href}
-                                    className="flex items-center justify-between p-4 group hover:bg-muted/50"
+                                    className="flex items-center justify-between p-4 group"
                                 >
-                                    <div className="flex items-center gap-3 flex-grow">
+                                    <button 
+                                        onClick={() => handleLinkClick(request.id, href)} 
+                                        className="flex items-center gap-3 flex-grow text-left hover:bg-muted/50 -m-4 p-4 rounded-l-md"
+                                        aria-label={`View request from ${request.senderName}`}
+                                    >
                                         <Avatar className="h-10 w-10">
                                             <AvatarFallback>{request.senderName?.charAt(0)}</AvatarFallback>
                                         </Avatar>
                                         <div>
                                             <p className="text-sm font-medium">{text}</p>
-                                            <p className="text-xs text-muted-foreground">{new Date(request.createdAt).toLocaleString()}</p>
+                                            <p className="text-xs text-muted-foreground">{formatDate(request.createdAt)}</p>
                                         </div>
-                                    </div>
-                                    <Button asChild variant="secondary" size="sm"><span >Review</span></Button>
-                                </Link>
+                                    </button>
+                                     <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive" onClick={() => handleDelete(request.id, 'requests')} disabled={isPending}>
+                                        <X className="h-4 w-4" />
+                                        <span className="sr-only">Delete request</span>
+                                    </Button>
+                                </div>
                                 )
                             })}
                         </CardContent>
@@ -166,25 +202,29 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                             {notifications.other.map(item => {
                                 const { href, message, icon: Icon } = getActionDetails(item);
                                 return (
-                                    <Link key={item.id} href={href} className="flex items-start justify-between gap-4 p-4 group hover:bg-muted/50">
-                                        <div className="flex items-center gap-3">
+                                    <div key={item.id} className="flex items-start justify-between gap-4 p-4 group">
+                                         <button 
+                                            onClick={() => handleLinkClick(item.id, href)} 
+                                            className="flex items-center gap-3 flex-grow text-left hover:bg-muted/50 -m-4 p-4 rounded-l-md"
+                                            aria-label={`View notification: ${message}`}
+                                        >
                                             <Icon className="h-5 w-5 text-muted-foreground mt-0.5 flex-shrink-0" />
                                             <div className="flex-grow">
                                                 <p className="text-sm">{message}</p>
-                                                <p className="text-xs text-muted-foreground">{new Date(item.createdAt).toLocaleString()}</p>
+                                                <p className="text-xs text-muted-foreground">{formatDate(item.createdAt)}</p>
                                             </div>
-                                        </div>
-                                        <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0 -my-1 -mr-2 text-muted-foreground group-hover:text-foreground" onClick={(e) => { e.preventDefault(); handleDismiss(item.id, 'other'); }} disabled={isPending}>
+                                        </button>
+                                        <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0 -my-1 -mr-2 text-muted-foreground group-hover:text-destructive" onClick={(e) => { e.preventDefault(); handleDelete(item.id, 'other'); }} disabled={isPending}>
                                             <X className="h-4 w-4" />
+                                            <span className="sr-only">Delete notification</span>
                                         </Button>
-                                    </Link>
+                                    </div>
                                 )
                             })}
                         </CardContent>
                     </Card>
                  </div>
             )}
-
 
             {!hasNotifications && (
                  <Card>
@@ -195,7 +235,6 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                     </CardContent>
                 </Card>
             )}
-
         </div>
     );
 }

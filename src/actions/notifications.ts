@@ -102,13 +102,27 @@ export async function markNotificationAsRead(notificationId: string): Promise<{ 
         const notifRef = doc(db, 'notifications', notificationId);
         const notifDoc = await getDoc(notifRef);
         if (notifDoc.exists()) {
-            if (notifDoc.data().persistence === 'dismissable' || !notifDoc.data().persistence) {
-                 await updateDoc(notifRef, { is_read: true });
-            }
+            await updateDoc(notifRef, { is_read: true });
         }
+        revalidatePath('/manage/notifications');
         return { success: true };
     } catch(error) {
         logError('database', error, 'markNotificationAsRead');
         return { success: false };
+    }
+}
+
+export async function deleteNotification(notificationId: string): Promise<{ success: boolean; error?: string; }> {
+     const canDelete = await checkPermissions(['notification.delete']);
+    if (!canDelete) return { success: false, error: "Permission denied." };
+    
+    try {
+        const notifRef = doc(db, 'notifications', notificationId);
+        await deleteDoc(notifRef);
+        revalidatePath('/manage/notifications');
+        return { success: true };
+    } catch (error) {
+        logError('database', error, 'deleteNotification');
+        return { success: false, error: "Could not delete notification." };
     }
 }
