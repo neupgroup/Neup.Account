@@ -18,10 +18,10 @@ import { PrimaryHeader } from '@/components/ui/primary-header';
 const LinkAndCreateFeatures = () => (
   <>
     <ListItem
-      icon={Bot}
-      title="Link WhatsApp Account"
-      description="Connect your WhatsApp for notifications and services."
-      href="/manage/accounts/whatsapp"
+      icon={FolderGit2}
+      title="Link Other Accounts"
+      description="Connect third-party platforms like WhatsApp."
+      href="/manage/accounts/link"
     />
     <ListItem
       icon={Building}
