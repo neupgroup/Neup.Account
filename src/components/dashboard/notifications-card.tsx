@@ -49,8 +49,10 @@ export async function NotificationsCard() {
         ...allNotifications.other
     ].filter(n => !n.isRead); // Only show unread notifications on the dashboard
     
-    const topThreeNotifications = prioritizedNotifications.slice(0, 3);
-    const hasMoreNotifications = prioritizedNotifications.length > 3;
+    const hasMoreThanThree = prioritizedNotifications.length > 3;
+    const notificationsToShow = hasMoreThanThree 
+        ? prioritizedNotifications.slice(0, 3) 
+        : prioritizedNotifications;
 
     if (prioritizedNotifications.length === 0) {
         return null;
@@ -64,7 +66,7 @@ export async function NotificationsCard() {
             />
             <Card>
                 <CardContent className="divide-y p-0">
-                    {topThreeNotifications.map(notification => {
+                    {notificationsToShow.map(notification => {
                         const { icon, message, href } = getNotificationDetails(notification);
                         return (
                             <ListItem
@@ -76,7 +78,7 @@ export async function NotificationsCard() {
                             />
                         )
                     })}
-                     {hasMoreNotifications && (
+                     {hasMoreThanThree && (
                         <ListItem
                             href="/manage/notifications"
                             iconName="Bell"
