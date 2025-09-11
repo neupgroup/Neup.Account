@@ -152,14 +152,13 @@ export default function DisplayInfoPage() {
                             <div className="space-y-2">
                                 <Label>Photo</Label>
                                 <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] items-center gap-6 rounded-lg border p-4">
-                                    <div className="flex flex-col items-center justify-center gap-2">
-                                        <Avatar className="h-28 w-28 rounded-lg">
-                                            <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" />
-                                            <AvatarFallback className="rounded-lg text-3xl">
-                                                {`${profile?.firstName?.[0] || ''}${profile?.lastName?.[0] || ''}`.toUpperCase()}
-                                            </AvatarFallback>
-                                        </Avatar>
-                                    </div>
+                                    <Avatar className="h-28 w-28 rounded-lg mx-auto md:mx-0">
+                                        <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" />
+                                        <AvatarFallback className="rounded-lg text-3xl">
+                                            {`${profile?.firstName?.[0] || ''}${profile?.lastName?.[0] || ''}`.toUpperCase()}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                    
                                     {photoView === 'uploader' ? (
                                         <div 
                                             className="relative flex flex-col items-center justify-center gap-2 p-8 border-2 border-dashed rounded-lg text-center"
@@ -273,5 +272,7 @@ export default function DisplayInfoPage() {
         </div>
     )
 }
+
+    
 
     
