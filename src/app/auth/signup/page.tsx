@@ -1,7 +1,8 @@
+
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { initializeSignup } from '@/actions/auth/initialize';
 
 // This component is an "invisible" entry point to the signup flow.
@@ -12,6 +13,7 @@ import { initializeSignup } from '@/actions/auth/initialize';
 
 export default function SignUpStartPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const signupInitialized = useRef(false);
 
   useEffect(() => {
@@ -21,7 +23,9 @@ export default function SignUpStartPage() {
       const startSignup = async () => {
         try {
           await initializeSignup();
-          router.push('/auth/signup/name');
+          const returnUrl = searchParams.get('return_url');
+          const redirectPath = returnUrl ? `/auth/signup/name?return_url=${encodeURIComponent(returnUrl)}` : '/auth/signup/name';
+          router.push(redirectPath);
         } catch (error) {
           console.error('Failed to initialize signup:', error);
           // Optional: handle error, e.g., show a toast notification
@@ -30,7 +34,7 @@ export default function SignUpStartPage() {
       };
       startSignup();
     }
-  }, [router]);
+  }, [router, searchParams]);
 
   // Render nothing visible to the user.
   // A loading state could be added here if initialization takes time.

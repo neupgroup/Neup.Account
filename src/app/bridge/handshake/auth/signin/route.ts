@@ -37,8 +37,7 @@ export async function GET(request: NextRequest) {
     }
     
     try {
-        // --- New Security Check ---
-        // 1. Verify the App ID exists and has a secret configured
+        // --- Security Check ---
         const appRef = doc(db, 'applications', appId);
         const appDoc = await getDoc(appRef);
 
@@ -47,15 +46,15 @@ export async function GET(request: NextRequest) {
             finalRedirectUrl.searchParams.set('error_description', 'The provided application ID is invalid or not fully configured.');
             return NextResponse.redirect(finalRedirectUrl);
         }
-        // --- End Security Check ---
 
         const session = await getActiveSession();
 
         if (!session) {
-            const errorUrl = new URL('/auth/start', request.url);
-            errorUrl.searchParams.set('error', 'unauthenticated');
-            errorUrl.searchParams.set('error_description', 'No active user session found. Please sign in to continue.');
-            return NextResponse.redirect(errorUrl);
+            // User is not logged in. Redirect to sign-in page, preserving the original request.
+            const returnUrl = request.nextUrl.pathname + '?' + searchParams.toString();
+            const signInUrl = new URL('/auth/start', request.url);
+            signInUrl.searchParams.set('return_url', returnUrl);
+            return NextResponse.redirect(signInUrl);
         }
 
         const dependentKey = crypto.randomBytes(32).toString('hex');

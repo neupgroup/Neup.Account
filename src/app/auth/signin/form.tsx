@@ -60,6 +60,7 @@ export default function SigninForm() {
   }, [])
 
   const neupIdFromQuery = searchParams.get("neupId");
+  const returnUrl = searchParams.get('return_url');
 
   useEffect(() => {
     if (neupIdFromQuery) {
@@ -71,9 +72,9 @@ export default function SigninForm() {
   useEffect(() => {
     const error = searchParams.get('error');
     if (error === 'session_expired') {
-      router.replace('/auth/signin', { scroll: false });
+      router.replace(returnUrl ? `/auth/signin?return_url=${encodeURIComponent(returnUrl)}` : '/auth/signin', { scroll: false });
     }
-  }, [searchParams, router]);
+  }, [searchParams, router, returnUrl]);
 
   const handleNeupIdSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -103,10 +104,12 @@ export default function SigninForm() {
             const mfaResult = await initiateLogin(loginData);
             if (mfaResult.success) {
                 if (mfaResult.mfaRequired) {
-                    router.push("/auth/signin/mfa");
+                    const mfaUrl = new URL(window.location.origin + "/auth/signin/mfa");
+                    if (returnUrl) mfaUrl.searchParams.set('return_url', returnUrl);
+                    router.push(mfaUrl.toString());
                 } else {
                     setIsRedirecting(true);
-                    router.push("/manage");
+                    router.push(returnUrl || "/manage");
                 }
             } else {
                 toast({ variant: "destructive", title: "Sign In Failed", description: mfaResult.error });
@@ -159,6 +162,16 @@ export default function SigninForm() {
     const value = e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '');
     setNeupId(value);
     if(validationError) setValidationError(null);
+  }
+  
+  const getSignupUrl = () => {
+    if (isClient) {
+      if (returnUrl) {
+        return `/auth/signup?return_url=${encodeURIComponent(returnUrl)}`;
+      }
+      return "/auth/signup";
+    }
+    return "/auth/signup";
   }
 
   return (
@@ -219,11 +232,9 @@ export default function SigninForm() {
                     </Button>
                     <div className="mt-4 text-left text-sm">
                         Don&apos;t have an Account?{" "}
-                        {isClient && 
-                            <Link href="/auth/signup" className="underline text-primary">
-                                <span>Sign Up</span>
-                            </Link>
-                        }
+                        <Link href={getSignupUrl()} className="underline text-primary">
+                            <span>Sign Up</span>
+                        </Link>
                     </div>
                 </form>
             )}

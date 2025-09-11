@@ -1,8 +1,9 @@
+
 "use client";
 
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import NProgress from 'nprogress';
@@ -19,6 +20,7 @@ type FormData = z.infer<typeof termsSchema>;
 
 export default function TermsStepPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const { toast } = useToast();
     const form = useForm<FormData>({
         resolver: zodResolver(termsSchema),
@@ -31,7 +33,8 @@ export default function TermsStepPage() {
         NProgress.start();
         const result = await submitTermsStep(data);
         if (result.success) {
-            router.push('/manage');
+            const returnUrl = searchParams.get('return_url');
+            router.push(returnUrl || '/manage');
         } else {
             toast({ variant: 'destructive', title: 'Error', description: result.error });
             NProgress.done();

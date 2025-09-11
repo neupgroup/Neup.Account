@@ -1,7 +1,7 @@
 
 "use client"
 
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useState, useTransition } from "react"
 import { useToast } from "@/hooks/use-toast"
 import { verifyMfa } from "@/actions/auth/verify-mfa"
@@ -21,9 +21,12 @@ import { Loader2 } from "@/components/icons"
 
 export default function MfaPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { toast } = useToast()
   const [token, setToken] = useState("")
   const [isSubmitting, startSubmit] = useTransition()
+  
+  const returnUrl = searchParams.get('return_url');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -33,7 +36,7 @@ export default function MfaPage() {
         const result = await verifyMfa({ token })
 
         if (result.success) {
-          router.push("/manage")
+          router.push(returnUrl || "/manage")
         } else {
           toast({
             variant: "destructive",
