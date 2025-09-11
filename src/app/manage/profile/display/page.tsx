@@ -24,6 +24,7 @@ import { cn } from '@/lib/utils'
 import { Check, Loader2, UploadCloud, RefreshCw } from '@/components/icons'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { SecondaryHeader } from '@/components/ui/secondary-header'
+import { Separator } from '@/components/ui/separator'
 
 const displayFormSchema = z.object({
   displayPhoto: z.string().url("Please enter a valid URL.").optional().or(z.literal('')),
@@ -234,6 +235,7 @@ export default function DisplayInfoPage() {
                                 <div>
                                     <h3 className="text-2xl font-semibold tracking-tight">{profile?.displayName}</h3>
                                 </div>
+                                <Separator />
                                 <FormField
                                     control={form.control}
                                     name="selectedDisplayName"
@@ -266,7 +268,7 @@ export default function DisplayInfoPage() {
                                         render={({ field }) => (
                                             <FormItem className="mt-4">
                                                 <FormLabel>Custom Display Name</FormLabel>
-                                                <FormControl><Input {...field} placeholder="Enter your custom display name" /></FormControl>
+                                                <FormControl><Input {...field} value={field.value || ''} placeholder="Enter your custom display name" /></FormControl>
                                                 <FormDescription>Your request will be sent for review.</FormDescription>
                                                 <FormMessage />
                                             </FormItem>
