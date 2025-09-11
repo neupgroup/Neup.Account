@@ -13,7 +13,7 @@ import { uploadFile } from '@/actions/upload'
 
 import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form"
 import { Label } from '@/components/ui/label'
@@ -21,7 +21,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { useSession } from '@/context/session-context'
 import { BackButton } from '@/components/ui/back-button'
 import { cn } from '@/lib/utils'
-import { Check, Loader2, UploadCloud, Send, RefreshCw } from '@/components/icons'
+import { Check, Loader2, UploadCloud, RefreshCw } from '@/components/icons'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 
 const displayFormSchema = z.object({
@@ -143,130 +143,130 @@ export default function DisplayInfoPage() {
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                     
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Display Image</CardTitle>
-                            <CardDescription>Update your public profile photo.</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                             <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] items-stretch gap-6 h-40">
-                                <Avatar className="h-full w-auto aspect-square rounded-lg">
-                                    <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" className="object-cover" />
-                                    <AvatarFallback className="rounded-lg text-3xl">
-                                        {`${profile?.firstName?.[0] || ''}${profile?.lastName?.[0] || ''}`.toUpperCase()}
-                                    </AvatarFallback>
-                                </Avatar>
-                                
-                                <div className="h-full">
-                                    {photoView === 'uploader' ? (
-                                        <div 
-                                            className="relative h-full flex flex-col items-center justify-center gap-2 p-4 border-2 border-dashed rounded-lg text-center"
-                                            onDragOver={(e) => e.preventDefault()}
-                                            onDrop={(e) => {
-                                                e.preventDefault();
-                                                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-                                                    handleFileChange({ target: { files: e.dataTransfer.files } } as any);
-                                                }
-                                            }}
-                                        >
-                                            <UploadCloud className="h-8 w-8 text-muted-foreground" />
-                                            <p className="text-sm text-muted-foreground">
-                                                Drag and drop or
-                                                 <button type="button" className="text-primary underline ml-1" onClick={() => fileInputRef.current?.click()} disabled={isPending}>
-                                                    select a file
-                                                </button>
-                                            </p>
-                                            <p className="text-xs text-muted-foreground">or <button type="button" className="text-primary underline" onClick={() => setPhotoView('carousel')}>select from previous images</button></p>
-                                            <Input 
-                                                type="file" 
-                                                ref={fileInputRef} 
-                                                className="hidden" 
-                                                accept="image/*"
-                                                onChange={handleFileChange}
-                                            />
-                                        </div>
-                                    ) : (
-                                        <div className="w-full h-full flex flex-col justify-center">
-                                            <Carousel opts={{ align: "start" }} className="w-full max-w-sm mx-auto">
-                                                <CarouselContent>
-                                                    {pastPhotos.map((photo, index) => (
-                                                        <CarouselItem key={index} className="basis-1/3">
-                                                            <button
-                                                                type="button"
-                                                                className="relative p-1 aspect-square w-full rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                                                                onClick={() => form.setValue('displayPhoto', photo)}
-                                                            >
-                                                                <Image src={photo} alt={`Past Photo ${index + 1}`} layout="fill" objectFit="cover" className="rounded-md" />
-                                                                {currentDisplayPhoto === photo && (
-                                                                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-md">
-                                                                        <Check className="h-8 w-8 text-white" />
-                                                                    </div>
-                                                                )}
-                                                            </button>
-                                                        </CarouselItem>
-                                                    ))}
-                                                </CarouselContent>
-                                                <CarouselPrevious />
-                                                <CarouselNext />
-                                            </Carousel>
-                                             <button type="button" className="text-primary underline mt-4 p-0 h-auto flex items-center gap-2 mx-auto text-sm" onClick={() => setPhotoView('uploader')}>
-                                                <RefreshCw className="h-4 w-4" />
-                                                Upload new photo
-                                            </button>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card>
-                         <CardHeader>
-                            <CardTitle>Display Name</CardTitle>
-                            <CardDescription>Choose how your name appears on your profile.</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <FormField
-                                control={form.control}
-                                name="selectedDisplayName"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className="sr-only">Display Name Format</FormLabel>
-                                        <FormControl>
-                                            <div className="flex flex-wrap gap-2">
-                                                {nameSuggestions.map(name => (
-                                                    <Button key={name} type="button" variant={field.value === name ? "default" : "secondary"} onClick={() => field.onChange(name)} className="relative">
-                                                        {field.value === name && <Check className="absolute -left-1 -top-1 h-4 w-4 bg-primary text-primary-foreground rounded-full p-0.5" />}
-                                                        {name}
-                                                    </Button>
-                                                ))}
-                                                <Button type="button" variant={field.value === 'custom' ? "default" : "secondary"} onClick={() => field.onChange('custom')} className="relative">
-                                                    {field.value === 'custom' && <Check className="absolute -left-1 -top-1 h-4 w-4 bg-primary text-primary-foreground rounded-full p-0.5" />}
-                                                    Custom...
-                                                </Button>
+                    <div className="space-y-2">
+                        <h2 className="text-xl font-semibold tracking-tight">Display Image</h2>
+                        <p className="text-sm text-muted-foreground">Update your public profile photo.</p>
+                        <Card>
+                            <CardContent className="pt-6">
+                                <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] items-stretch gap-6 h-40">
+                                    <Avatar className="h-full w-auto aspect-square rounded-lg">
+                                        <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" className="object-cover" />
+                                        <AvatarFallback className="rounded-lg text-3xl">
+                                            {`${profile?.firstName?.[0] || ''}${profile?.lastName?.[0] || ''}`.toUpperCase()}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                    
+                                    <div className="h-full">
+                                        {photoView === 'uploader' ? (
+                                            <div 
+                                                className="relative h-full flex flex-col items-center justify-center gap-2 p-4 border-2 border-dashed rounded-lg text-center"
+                                                onDragOver={(e) => e.preventDefault()}
+                                                onDrop={(e) => {
+                                                    e.preventDefault();
+                                                    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                                                        handleFileChange({ target: { files: e.dataTransfer.files } } as any);
+                                                    }
+                                                }}
+                                            >
+                                                <UploadCloud className="h-8 w-8 text-muted-foreground" />
+                                                <p className="text-sm text-muted-foreground">
+                                                    Drag and drop or
+                                                     <button type="button" className="text-primary underline ml-1" onClick={() => fileInputRef.current?.click()} disabled={isPending}>
+                                                        select a file
+                                                    </button>
+                                                </p>
+                                                <p className="text-xs text-muted-foreground">or <button type="button" className="text-primary underline" onClick={() => setPhotoView('carousel')}>select from previous images</button></p>
+                                                <Input 
+                                                    type="file" 
+                                                    ref={fileInputRef} 
+                                                    className="hidden" 
+                                                    accept="image/*"
+                                                    onChange={handleFileChange}
+                                                />
                                             </div>
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                                        ) : (
+                                            <div className="w-full h-full flex flex-col justify-center">
+                                                <Carousel opts={{ align: "start" }} className="w-full max-w-sm mx-auto">
+                                                    <CarouselContent>
+                                                        {pastPhotos.map((photo, index) => (
+                                                            <CarouselItem key={index} className="basis-1/3">
+                                                                <button
+                                                                    type="button"
+                                                                    className="relative p-1 aspect-square w-full rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                                                                    onClick={() => form.setValue('displayPhoto', photo)}
+                                                                >
+                                                                    <Image src={photo} alt={`Past Photo ${index + 1}`} layout="fill" objectFit="cover" className="rounded-md" />
+                                                                    {currentDisplayPhoto === photo && (
+                                                                        <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-md">
+                                                                            <Check className="h-8 w-8 text-white" />
+                                                                        </div>
+                                                                    )}
+                                                                </button>
+                                                            </CarouselItem>
+                                                        ))}
+                                                    </CarouselContent>
+                                                    <CarouselPrevious />
+                                                    <CarouselNext />
+                                                </Carousel>
+                                                 <button type="button" className="text-primary underline mt-4 p-0 h-auto flex items-center gap-2 mx-auto text-sm" onClick={() => setPhotoView('uploader')}>
+                                                    <RefreshCw className="h-4 w-4" />
+                                                    Upload new photo
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
 
-                            {selectedDisplayName === 'custom' && (
+                    <div className="space-y-2">
+                        <h2 className="text-xl font-semibold tracking-tight">Display Name</h2>
+                        <p className="text-sm text-muted-foreground">Choose how your name appears on your profile.</p>
+                        <Card>
+                            <CardContent className="pt-6">
                                 <FormField
                                     control={form.control}
-                                    name="customDisplayName"
+                                    name="selectedDisplayName"
                                     render={({ field }) => (
-                                        <FormItem className="mt-4">
-                                            <FormLabel>Custom Display Name</FormLabel>
-                                            <FormControl><Input {...field} placeholder="Enter your custom display name" /></FormControl>
-                                            <FormDescription>Your request will be sent for review.</FormDescription>
+                                        <FormItem>
+                                            <FormLabel className="sr-only">Display Name Format</FormLabel>
+                                            <FormControl>
+                                                <div className="flex flex-wrap gap-2">
+                                                    {nameSuggestions.map(name => (
+                                                        <Button key={name} type="button" variant={field.value === name ? "default" : "secondary"} onClick={() => field.onChange(name)} className="relative">
+                                                            {field.value === name && <Check className="absolute -left-1 -top-1 h-4 w-4 bg-primary text-primary-foreground rounded-full p-0.5" />}
+                                                            {name}
+                                                        </Button>
+                                                    ))}
+                                                    <Button type="button" variant={field.value === 'custom' ? "default" : "secondary"} onClick={() => field.onChange('custom')} className="relative">
+                                                        {field.value === 'custom' && <Check className="absolute -left-1 -top-1 h-4 w-4 bg-primary text-primary-foreground rounded-full p-0.5" />}
+                                                        Custom...
+                                                    </Button>
+                                                </div>
+                                            </FormControl>
                                             <FormMessage />
                                         </FormItem>
                                     )}
                                 />
-                            )}
-                        </CardContent>
-                    </Card>
+
+                                {selectedDisplayName === 'custom' && (
+                                    <FormField
+                                        control={form.control}
+                                        name="customDisplayName"
+                                        render={({ field }) => (
+                                            <FormItem className="mt-4">
+                                                <FormLabel>Custom Display Name</FormLabel>
+                                                <FormControl><Input {...field} placeholder="Enter your custom display name" /></FormControl>
+                                                <FormDescription>Your request will be sent for review.</FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                )}
+                            </CardContent>
+                        </Card>
+                    </div>
 
                      <div className="flex justify-end">
                         <Button type="submit" disabled={isPending}>
