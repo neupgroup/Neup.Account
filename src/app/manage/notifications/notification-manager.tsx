@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { AlertTriangle, X, Bell, MessageSquareWarning } from '@/components/icons';
+import { AlertTriangle, X, Bell, MessageSquareWarning, Users, Handshake } from '@/components/icons';
 import type { AllNotifications, Notification } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -35,17 +35,26 @@ const warningVariants = cva(
   }
 )
 
-function getActionText(action: string, senderName: string): string {
-    if (action === 'family_invitation') {
-        return `${senderName} has invited you to join their family.`;
+function getActionDetails(notification: Notification): { text: string, href: string, icon: React.ElementType } {
+    if (notification.action === 'family_invitation') {
+        return {
+            text: `${notification.senderName} has invited you to join their family.`,
+            href: '/manage/people/invitations',
+            icon: UserPlus
+        };
     }
-     if (action === 'neupid_request') {
-        return `${senderName} has requested a new NeupID.`;
+     if (notification.action === 'access_invitation') {
+        return {
+            text: `${notification.senderName} wants you to help manage their account.`,
+            href: '/manage/people/invitations',
+            icon: Handshake
+        };
     }
-    if (action === 'access_invitation') {
-        return `${senderName} wants you to help manage their account.`;
-    }
-    return 'You have a new request.';
+    return {
+        text: 'You have a new request.',
+        href: '/manage/notifications',
+        icon: Bell
+    };
 }
 
 export function NotificationManager({ initialNotifications }: { initialNotifications: AllNotifications }) {
@@ -110,10 +119,12 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                     <TertiaryHeader title="Action Required" />
                     <Card>
                         <CardContent className="divide-y p-0">
-                            {notifications.requests.map(request => (
+                            {notifications.requests.map(request => {
+                                const { text, href, icon: Icon } = getActionDetails(request);
+                                return (
                                 <Link 
                                     key={request.id} 
-                                    href="/manage/people/invitations" 
+                                    href={href}
                                     className="flex items-center justify-between p-4 rounded-md hover:bg-muted/50 first:pt-0 last:pb-0"
                                 >
                                     <div className="flex items-center gap-3 flex-grow">
@@ -121,12 +132,14 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                                             <AvatarFallback>{request.senderName?.charAt(0)}</AvatarFallback>
                                         </Avatar>
                                         <div>
-                                            <p className="text-sm font-medium">{getActionText(request.action, request.senderName || 'A user')}</p>
+                                            <p className="text-sm font-medium">{text}</p>
                                             <p className="text-xs text-muted-foreground">{new Date(request.createdAt).toLocaleString()}</p>
                                         </div>
                                     </div>
+                                    <Button asChild variant="secondary" size="sm"><span >Review</span></Button>
                                 </Link>
-                            ))}
+                                )
+                            })}
                         </CardContent>
                     </Card>
                  </div>
@@ -137,20 +150,23 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                     <TertiaryHeader title="For Your Information" />
                     <Card>
                         <CardContent className="divide-y p-0">
-                            {notifications.other.map(item => (
-                                <div key={item.id} className="flex items-start justify-between gap-4 p-4">
-                                    <div className="flex items-start gap-3">
-                                        <MessageSquareWarning className="h-5 w-5 text-muted-foreground mt-0.5" />
-                                        <div className="flex-grow">
-                                            <p className="text-sm">{item.message}</p>
-                                            <p className="text-xs text-muted-foreground">{new Date(item.createdAt).toLocaleString()}</p>
+                            {notifications.other.map(item => {
+                                const href = item.action.includes('login') ? '/manage/security/devices' : '/manage/security';
+                                return (
+                                    <Link key={item.id} href={href} className="flex items-start justify-between gap-4 p-4 hover:bg-muted/50 transition-colors">
+                                        <div className="flex items-start gap-3">
+                                            <MessageSquareWarning className="h-5 w-5 text-muted-foreground mt-0.5" />
+                                            <div className="flex-grow">
+                                                <p className="text-sm">{item.message}</p>
+                                                <p className="text-xs text-muted-foreground">{new Date(item.createdAt).toLocaleString()}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0 -my-1 -mr-2 text-muted-foreground" onClick={() => handleDismiss(item.id, 'other')} disabled={isPending}>
-                                        <X className="h-4 w-4" />
-                                    </Button>
-                                </div>
-                            ))}
+                                        <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0 -my-1 -mr-2 text-muted-foreground" onClick={(e) => { e.preventDefault(); handleDismiss(item.id, 'other'); }} disabled={isPending}>
+                                            <X className="h-4 w-4" />
+                                        </Button>
+                                    </Link>
+                                )
+                            })}
                         </CardContent>
                     </Card>
                  </div>

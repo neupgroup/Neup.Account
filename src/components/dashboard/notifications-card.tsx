@@ -5,17 +5,39 @@ import { AlertTriangle, Bell, Handshake, MessageSquareWarning, UserPlus } from '
 import { SecondaryHeader } from '../ui/secondary-header';
 import { ListItem } from '../ui/list-item';
 
-function getNotificationDetails(notification: Notification): { icon: string, message: string } {
-    if (notification.action.includes('sticky')) {
-        return { icon: 'AlertTriangle', message: notification.message || 'An important notice was posted.' };
+function getNotificationDetails(notification: Notification): { icon: string, message: string, href: string } {
+    const defaultHref = '/manage/notifications';
+    let href = defaultHref;
+    let message = notification.message || 'You have a new notification.';
+    let icon = 'MessageSquareWarning';
+
+    switch (notification.action) {
+        case 'informative.login':
+        case 'informative.logout':
+        case 'informative.unblock':
+            href = '/manage/security/devices';
+            break;
+        case 'informative.security':
+            href = '/manage/security';
+            break;
+        case 'access_invitation':
+            icon = 'Handshake';
+            message = `${notification.senderName} wants you to manage their account.`;
+            href = '/manage/people/invitations';
+            break;
+        case 'family_invitation':
+            icon = 'UserPlus';
+            message = `${notification.senderName} invited you to join their family.`;
+            href = '/manage/people/invitations';
+            break;
     }
-    if (notification.action === 'access_invitation') {
-        return { icon: 'Handshake', message: `${notification.senderName} wants you to manage their account.` };
+    
+    if (notification.action?.includes('sticky')) {
+        icon = 'AlertTriangle';
+        message = notification.message || 'An important notice was posted.';
     }
-    if (notification.action === 'family_invitation') {
-        return { icon: 'UserPlus', message: `${notification.senderName} invited you to their family.` };
-    }
-    return { icon: 'MessageSquareWarning', message: notification.message || 'You have a new notification.' };
+
+    return { icon, message, href };
 }
 
 export async function NotificationsCard() {
@@ -25,7 +47,7 @@ export async function NotificationsCard() {
         ...allNotifications.sticky,
         ...allNotifications.requests,
         ...allNotifications.other
-    ];
+    ].filter(n => !n.isRead); // Only show unread notifications on the dashboard
     
     const topThreeNotifications = prioritizedNotifications.slice(0, 3);
     const hasMoreNotifications = prioritizedNotifications.length > 3;
@@ -43,15 +65,10 @@ export async function NotificationsCard() {
             <Card>
                 <CardContent className="divide-y p-0">
                     {topThreeNotifications.map(notification => {
-                        const { icon, message } = getNotificationDetails(notification);
-                        let href = '/manage/notifications';
-                        if (notification.action.includes('invitation')) {
-                            href = '/manage/people/invitations';
-                        }
+                        const { icon, message, href } = getNotificationDetails(notification);
                         return (
                             <ListItem
                                 key={notification.id}
-                                notification={notification}
                                 href={href}
                                 iconName={icon}
                                 title={message}
