@@ -152,14 +152,14 @@ export default function DisplayInfoPage() {
                         <Card>
                             <CardContent className="pt-6">
                                 <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] items-start gap-6">
-                                    <Avatar className="h-24 w-24 md:h-full md:w-full rounded-lg">
+                                    <Avatar className="h-36 w-36 md:h-full md:w-full rounded-lg">
                                         <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" className="object-cover" />
                                         <AvatarFallback className="rounded-lg text-3xl">
                                             {`${profile?.firstName?.[0] || ''}${profile?.lastName?.[0] || ''}`.toUpperCase()}
                                         </AvatarFallback>
                                     </Avatar>
                                     
-                                    <div className="h-full">
+                                    <div className="h-36 md:h-full">
                                         {photoView === 'uploader' ? (
                                             <div 
                                                 className="relative h-full flex flex-col items-center justify-center gap-2 p-4 border-2 border-dashed rounded-lg text-center"
@@ -283,3 +283,5 @@ export default function DisplayInfoPage() {
         </div>
     )
 }
+
+    
