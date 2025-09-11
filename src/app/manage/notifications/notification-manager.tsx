@@ -5,11 +5,11 @@
 import { useState, useTransition, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Alert } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, X, Bell, MessageSquareWarning, Users, Handshake } from '@/components/icons';
 import type { AllNotifications, Notification } from '@/types';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { checkPermissions } from '@/lib/user';
 import { markNotificationAsRead } from '@/actions/notifications';
@@ -36,25 +36,38 @@ const warningVariants = cva(
 )
 
 function getActionDetails(notification: Notification): { text: string, href: string, icon: React.ElementType } {
-    if (notification.action === 'family_invitation') {
-        return {
-            text: `${notification.senderName} has invited you to join their family.`,
-            href: '/manage/people/invitations',
-            icon: UserPlus
-        };
+    let text = notification.message || 'You have a new notification.';
+    let href = '/manage/notifications';
+    let icon = Bell;
+
+    switch (notification.action) {
+        case 'family_invitation':
+            text = `${notification.senderName} has invited you to join their family.`;
+            href = '/manage/people/invitations';
+            icon = Users;
+            break;
+        case 'access_invitation':
+            text = `${notification.senderName} wants you to help manage their account.`;
+            href = '/manage/people/invitations';
+            icon = Handshake;
+            break;
+        case 'informative.login':
+        case 'informative.logout':
+            href = '/manage/security/devices';
+            icon = MessageSquareWarning;
+            break;
+        case 'informative.security':
+        case 'informative.unblock':
+            href = '/manage/security';
+            icon = MessageSquareWarning;
+            break;
     }
-     if (notification.action === 'access_invitation') {
-        return {
-            text: `${notification.senderName} wants you to help manage their account.`,
-            href: '/manage/people/invitations',
-            icon: Handshake
-        };
+
+    if (notification.action?.includes('sticky')) {
+        icon = AlertTriangle;
     }
-    return {
-        text: 'You have a new request.',
-        href: '/manage/notifications',
-        icon: Bell
-    };
+
+    return { text, href, icon };
 }
 
 export function NotificationManager({ initialNotifications }: { initialNotifications: AllNotifications }) {
@@ -120,7 +133,7 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                     <Card>
                         <CardContent className="divide-y p-0">
                             {notifications.requests.map(request => {
-                                const { text, href, icon: Icon } = getActionDetails(request);
+                                const { text, href } = getActionDetails(request);
                                 return (
                                 <Link 
                                     key={request.id} 
@@ -151,13 +164,13 @@ export function NotificationManager({ initialNotifications }: { initialNotificat
                     <Card>
                         <CardContent className="divide-y p-0">
                             {notifications.other.map(item => {
-                                const href = item.action.includes('login') ? '/manage/security/devices' : '/manage/security';
+                                const { href, message, icon: Icon } = getActionDetails(item);
                                 return (
                                     <Link key={item.id} href={href} className="flex items-start justify-between gap-4 p-4 hover:bg-muted/50 transition-colors">
                                         <div className="flex items-start gap-3">
-                                            <MessageSquareWarning className="h-5 w-5 text-muted-foreground mt-0.5" />
+                                            <Icon className="h-5 w-5 text-muted-foreground mt-0.5" />
                                             <div className="flex-grow">
-                                                <p className="text-sm">{item.message}</p>
+                                                <p className="text-sm">{message}</p>
                                                 <p className="text-xs text-muted-foreground">{new Date(item.createdAt).toLocaleString()}</p>
                                             </div>
                                         </div>
