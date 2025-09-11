@@ -148,8 +148,8 @@ export default function DisplayInfoPage() {
                         <p className="text-sm text-muted-foreground">Update your public profile photo.</p>
                         <Card>
                             <CardContent className="pt-6">
-                                <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] items-stretch gap-6 h-40">
-                                    <Avatar className="h-full w-auto aspect-square rounded-lg">
+                                <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] items-start gap-6">
+                                    <Avatar className="h-24 w-24 md:h-full md:w-full rounded-lg">
                                         <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" className="object-cover" />
                                         <AvatarFallback className="rounded-lg text-3xl">
                                             {`${profile?.firstName?.[0] || ''}${profile?.lastName?.[0] || ''}`.toUpperCase()}
@@ -221,7 +221,7 @@ export default function DisplayInfoPage() {
                     </div>
 
                     <div className="space-y-2">
-                        <h2 className="text-xl font-semibold tracking-tight">Display Name</h2>
+                         <h2 className="text-xl font-semibold tracking-tight">Display Name</h2>
                         <p className="text-sm text-muted-foreground">Choose how your name appears on your profile.</p>
                         <Card>
                             <CardContent className="pt-6">
