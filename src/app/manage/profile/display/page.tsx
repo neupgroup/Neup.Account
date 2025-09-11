@@ -14,17 +14,17 @@ import { uploadFile } from '@/actions/upload'
 
 import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
+import { CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form"
 import { Label } from '@/components/ui/label'
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { useSession } from '@/context/session-context'
 import { BackButton } from '@/components/ui/back-button'
 import { cn } from '@/lib/utils'
 import { Check, Loader2, UploadCloud, Send, RefreshCw } from '@/components/icons'
-import { Separator } from '@/components/ui/separator'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
+import { PrimaryHeader } from '@/components/ui/primary-header'
 
 const displayFormSchema = z.object({
   displayPhoto: z.string().url("Please enter a valid URL.").optional().or(z.literal('')),
@@ -142,80 +142,82 @@ export default function DisplayInfoPage() {
     return (
         <div className="space-y-8">
             <BackButton href="/manage/profile" />
+             <PrimaryHeader
+                title="Display Information"
+                description="This information will be displayed publicly on your profile."
+            />
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                    <CardHeader className="px-0">
-                        <CardTitle>Display Information</CardTitle>
-                        <CardDescription>This information will be displayed publicly on your profile.</CardDescription>
-                    </CardHeader>
                     <div className="space-y-6">
                         <div className="space-y-2">
                             <Label>Photo</Label>
-                            <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] items-center gap-6">
-                                <Avatar className="h-28 w-28 rounded-lg mx-auto md:mx-0">
-                                    <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" />
+                             <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] items-stretch gap-6">
+                                <Avatar className="h-auto w-full aspect-square rounded-lg">
+                                    <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" className="object-cover" />
                                     <AvatarFallback className="rounded-lg text-3xl">
                                         {`${profile?.firstName?.[0] || ''}${profile?.lastName?.[0] || ''}`.toUpperCase()}
                                     </AvatarFallback>
                                 </Avatar>
                                 
-                                {photoView === 'uploader' ? (
-                                    <div 
-                                        className="relative flex flex-col items-center justify-center gap-2 p-8 border-2 border-dashed rounded-lg text-center"
-                                        onDragOver={(e) => e.preventDefault()}
-                                        onDrop={(e) => {
-                                            e.preventDefault();
-                                            if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-                                                handleFileChange({ target: { files: e.dataTransfer.files } } as any);
-                                            }
-                                        }}
-                                    >
-                                        <UploadCloud className="h-8 w-8 text-muted-foreground" />
-                                        <p className="text-sm text-muted-foreground">
-                                            Upload Image by Selecting or dragging an image here
-                                        </p>
-                                        <Button type="button" size="sm" variant="link" onClick={() => fileInputRef.current?.click()} disabled={isPending}>
-                                            {isPending ? 'Uploading...' : 'Select a file'}
-                                        </Button>
-                                        <p className="text-sm text-muted-foreground">or <button type="button" className="text-primary underline" onClick={() => setPhotoView('carousel')}>select an image from your previous images</button></p>
-                                        <Input 
-                                            type="file" 
-                                            ref={fileInputRef} 
-                                            className="hidden" 
-                                            accept="image/*"
-                                            onChange={handleFileChange}
-                                        />
-                                    </div>
-                                ) : (
-                                    <div className="w-full">
-                                        <Carousel opts={{ align: "start" }} className="w-full max-w-sm mx-auto">
-                                            <CarouselContent>
-                                                {pastPhotos.map((photo, index) => (
-                                                    <CarouselItem key={index} className="basis-1/3">
-                                                        <button
-                                                            type="button"
-                                                            className="relative p-1 aspect-square w-full rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                                                            onClick={() => form.setValue('displayPhoto', photo)}
-                                                        >
-                                                            <Image src={photo} alt={`Past Photo ${index + 1}`} layout="fill" objectFit="cover" className="rounded-md" />
-                                                            {currentDisplayPhoto === photo && (
-                                                                <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-md">
-                                                                    <Check className="h-8 w-8 text-white" />
-                                                                </div>
-                                                            )}
-                                                        </button>
-                                                    </CarouselItem>
-                                                ))}
-                                            </CarouselContent>
-                                            <CarouselPrevious />
-                                            <CarouselNext />
-                                        </Carousel>
-                                        <button type="button" className="text-primary underline mt-4 p-0 h-auto flex items-center gap-2" onClick={() => setPhotoView('uploader')}>
-                                            <RefreshCw className="h-4 w-4" />
-                                            Upload new photo
-                                        </button>
-                                    </div>
-                                )}
+                                <div className="h-full">
+                                    {photoView === 'uploader' ? (
+                                        <div 
+                                            className="relative h-full flex flex-col items-center justify-center gap-2 p-4 border-2 border-dashed rounded-lg text-center"
+                                            onDragOver={(e) => e.preventDefault()}
+                                            onDrop={(e) => {
+                                                e.preventDefault();
+                                                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                                                    handleFileChange({ target: { files: e.dataTransfer.files } } as any);
+                                                }
+                                            }}
+                                        >
+                                            <UploadCloud className="h-8 w-8 text-muted-foreground" />
+                                            <p className="text-sm text-muted-foreground">
+                                                Upload Image by Selecting or dragging an image here
+                                            </p>
+                                            <Button type="button" size="sm" variant="link" onClick={() => fileInputRef.current?.click()} disabled={isPending}>
+                                                {isPending ? 'Uploading...' : 'Select a file'}
+                                            </Button>
+                                            <p className="text-sm text-muted-foreground">or <button type="button" className="text-primary underline" onClick={() => setPhotoView('carousel')}>select an image from your previous images</button></p>
+                                            <Input 
+                                                type="file" 
+                                                ref={fileInputRef} 
+                                                className="hidden" 
+                                                accept="image/*"
+                                                onChange={handleFileChange}
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className="w-full h-full flex flex-col justify-center">
+                                            <Carousel opts={{ align: "start" }} className="w-full max-w-sm mx-auto">
+                                                <CarouselContent>
+                                                    {pastPhotos.map((photo, index) => (
+                                                        <CarouselItem key={index} className="basis-1/3">
+                                                            <button
+                                                                type="button"
+                                                                className="relative p-1 aspect-square w-full rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                                                                onClick={() => form.setValue('displayPhoto', photo)}
+                                                            >
+                                                                <Image src={photo} alt={`Past Photo ${index + 1}`} layout="fill" objectFit="cover" className="rounded-md" />
+                                                                {currentDisplayPhoto === photo && (
+                                                                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-md">
+                                                                        <Check className="h-8 w-8 text-white" />
+                                                                    </div>
+                                                                )}
+                                                            </button>
+                                                        </CarouselItem>
+                                                    ))}
+                                                </CarouselContent>
+                                                <CarouselPrevious />
+                                                <CarouselNext />
+                                            </Carousel>
+                                             <button type="button" className="text-primary underline mt-4 p-0 h-auto flex items-center gap-2 mx-auto" onClick={() => setPhotoView('uploader')}>
+                                                <RefreshCw className="h-4 w-4" />
+                                                Upload new photo
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                         
@@ -269,3 +271,5 @@ export default function DisplayInfoPage() {
         </div>
     )
 }
+
+    
