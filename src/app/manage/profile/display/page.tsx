@@ -23,6 +23,7 @@ import { BackButton } from '@/components/ui/back-button'
 import { cn } from '@/lib/utils'
 import { Check, Loader2, UploadCloud, RefreshCw } from '@/components/icons'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
+import { SecondaryHeader } from '@/components/ui/secondary-header'
 
 const displayFormSchema = z.object({
   displayPhoto: z.string().url("Please enter a valid URL.").optional().or(z.literal('')),
@@ -144,8 +145,10 @@ export default function DisplayInfoPage() {
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                     
                     <div className="space-y-2">
-                        <h2 className="text-xl font-semibold tracking-tight">Display Image</h2>
-                        <p className="text-sm text-muted-foreground">Update your public profile photo.</p>
+                        <SecondaryHeader
+                            title="Display Image"
+                            description="Update your public profile photo."
+                        />
                         <Card>
                             <CardContent className="pt-6">
                                 <div className="grid grid-cols-1 md:grid-cols-[150px_1fr] items-start gap-6">
@@ -221,8 +224,10 @@ export default function DisplayInfoPage() {
                     </div>
 
                     <div className="space-y-2">
-                         <h2 className="text-xl font-semibold tracking-tight">Display Name</h2>
-                        <p className="text-sm text-muted-foreground">Choose how your name appears on your profile.</p>
+                         <SecondaryHeader
+                            title="Display Name"
+                            description="Choose how your name appears on your profile."
+                        />
                         <Card>
                             <CardContent className="pt-6">
                                 <FormField
