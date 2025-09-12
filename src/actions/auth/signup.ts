@@ -15,6 +15,7 @@ import {
   serverTimestamp,
   writeBatch,
   updateDoc,
+  deleteDoc,
 } from 'firebase/firestore';
 import bcrypt from 'bcryptjs';
 import { logActivity } from '@/lib/log-actions';
@@ -59,6 +60,10 @@ async function getAuthRequest(
     !authRequestDoc.exists() ||
     authRequestDoc.data().expiresAt.toDate() < new Date()
   ) {
+    // If the request is invalid or expired, clean it up.
+    if (authRequestDoc.exists()) {
+        await deleteDoc(authRequestRef);
+    }
     cookies().delete('temp_auth_id');
     return null;
   }
@@ -94,9 +99,9 @@ export async function submitNameStep(data: z.infer<typeof nameSchema>) {
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
-  const nameFirst = sanitizeName(validation.data.nameFirst);
-  const nameMiddle = sanitizeName(validation.data.nameMiddle);
-  const nameLast = sanitizeName(validation.data.nameLast);
+  const nameFirst = sanitizeName(validation.data.firstName);
+  const nameMiddle = sanitizeName(validation.data.middleName);
+  const nameLast = sanitizeName(validation.data.lastName);
   
   const defaultDisplayName = [nameFirst, nameMiddle, nameLast].filter(Boolean).join(' ');
 
@@ -122,7 +127,7 @@ export async function submitDisplayNameStep(data: z.infer<typeof displayNameSche
     if (!request) return { success: false, error: 'Signup session expired.' };
 
     await updateDoc(request.ref, {
-        'data.nameDisplay': sanitizeName(validation.data.nameDisplay),
+        'data.nameDisplay': sanitizeName(validation.data.displayName),
         status: 'pending_demographics',
     });
 
