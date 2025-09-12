@@ -65,6 +65,8 @@ export default function DisplayInfoPage() {
         defaultValues: { selectedDisplayName: "", customDisplayName: "" }
     });
     
+    const { formState: photoFormState } = photoForm;
+
     useEffect(() => {
         if (profile && accountId) {
             const fetchSuggestions = async () => {
@@ -109,7 +111,7 @@ export default function DisplayInfoPage() {
                 const updateResult = await updateUserProfile(accountId, { accountPhoto: result.url });
                 if(updateResult.success) {
                     toast({ title: "Success", description: "Profile photo updated.", className: "bg-accent text-accent-foreground" });
-                    photoForm.setValue('accountPhoto', result.url);
+                    photoForm.setValue('accountPhoto', result.url, { shouldDirty: true });
                     setPastPhotos(prev => [result.url as string, ...prev].slice(0, 4));
                     refetchSession();
                 } else {
@@ -127,6 +129,7 @@ export default function DisplayInfoPage() {
             const result = await updateUserProfile(accountId, { accountPhoto: data.accountPhoto });
             if (result.success) {
                 toast({ title: "Success", description: "Profile photo updated.", className: "bg-accent text-accent-foreground" });
+                photoForm.reset(data); // Resets the form's dirty state
                 refetchSession();
             } else {
                 toast({ variant: "destructive", title: "Error", description: result.error });
@@ -150,6 +153,7 @@ export default function DisplayInfoPage() {
                 if(data.selectedDisplayName !== 'custom') {
                     nameForm.setValue('customDisplayName', '');
                 }
+                nameForm.reset(data); // Resets the form's dirty state
                 refetchSession();
             } else {
                 toast({ variant: "destructive", title: "Error", description: result.error });
@@ -188,7 +192,7 @@ export default function DisplayInfoPage() {
                                     <div>
                                         {photoView === 'uploader' ? (
                                             <div 
-                                                className="relative min-h-48 flex flex-col items-center justify-center gap-2 p-4 border-2 border-dashed rounded-lg text-center"
+                                                className="relative min-h-48 h-full flex flex-col items-center justify-center gap-2 p-4 border-2 border-dashed rounded-lg text-center"
                                                 onDragOver={(e) => e.preventDefault()}
                                                 onDrop={(e) => {
                                                     e.preventDefault();
@@ -216,14 +220,14 @@ export default function DisplayInfoPage() {
                                                 />
                                             </div>
                                         ) : (
-                                             <div className="min-h-48 border-2 border-dashed rounded-lg p-4 flex flex-col justify-start">
-                                                <div className="flex-grow flex items-center gap-3 overflow-x-auto">
+                                             <div className="relative min-h-48 h-full flex flex-col justify-between border-2 border-dashed rounded-lg p-4">
+                                                <div className="flex items-center gap-3 overflow-x-auto pb-4">
                                                     {pastPhotos.map((photo, index) => (
                                                         <button
                                                             type="button"
                                                             key={index}
                                                             className="relative p-1 aspect-square w-24 h-24 flex-shrink-0 rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                                                            onClick={() => photoForm.setValue('accountPhoto', photo)}
+                                                            onClick={() => photoForm.setValue('accountPhoto', photo, { shouldDirty: true })}
                                                         >
                                                             <Image src={photo} alt={`Past Photo ${index + 1}`} fill objectFit="cover" className="rounded-md" />
                                                             {currentDisplayPhoto === photo && (
@@ -234,7 +238,7 @@ export default function DisplayInfoPage() {
                                                         </button>
                                                     ))}
                                                 </div>
-                                                 <button type="button" className="text-primary underline mt-2 p-0 h-auto self-start text-sm" onClick={() => setPhotoView('uploader')}>
+                                                 <button type="button" className="text-primary underline text-sm p-0 h-auto" onClick={() => setPhotoView('uploader')}>
                                                     Upload new photo
                                                 </button>
                                             </div>
@@ -242,9 +246,9 @@ export default function DisplayInfoPage() {
                                     </div>
                                 </div>
                             </CardContent>
-                             <CardFooter className="border-t pt-4 mt-4 flex justify-end">
-                                 <Button type="submit" disabled={isPhotoPending}>
-                                    {isPhotoPending ? <Loader2 className="animate-spin" /> : "Save Photo"}
+                             <CardFooter className="border-t pt-4 mt-4 flex justify-start">
+                                 <Button type="submit" disabled={isPhotoPending || !photoFormState.isDirty}>
+                                    {isPhotoPending ? <Loader2 className="animate-spin" /> : "Save"}
                                 </Button>
                             </CardFooter>
                         </Card>
@@ -305,9 +309,9 @@ export default function DisplayInfoPage() {
                                     />
                                 )}
                             </CardContent>
-                            <CardFooter className="border-t pt-4 mt-4 flex justify-end">
-                                 <Button type="submit" disabled={isNamePending}>
-                                    {isNamePending ? <Loader2 className="animate-spin" /> : "Save Name"}
+                            <CardFooter className="border-t pt-4 mt-4 flex justify-start">
+                                 <Button type="submit" disabled={isNamePending || !nameForm.formState.isDirty}>
+                                    {isNamePending ? <Loader2 className="animate-spin" /> : "Save"}
                                 </Button>
                             </CardFooter>
                         </Card>
