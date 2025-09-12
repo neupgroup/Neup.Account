@@ -63,6 +63,10 @@ export async function getUserProfile(
         dateEstablished: accountData.dateEstablished?.toDate?.().toISOString() || accountData.dateEstablished || null,
       };
 
+      if (!serializedData.accountPhoto) {
+        serializedData.accountPhoto = 'https://neupgroup.com/assets/user.png';
+      }
+
       // Ensure accountType is part of the returned profile
       serializedData.accountType = accountData.accountType || 'individual';
 
