@@ -18,10 +18,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Calendar } from "@/components/ui/calendar"
 import { Label } from '@/components/ui/label'
-import { Calendar as CalendarIcon, Loader2 } from "@/components/icons"
+import { Loader2 } from "@/components/icons"
 import { BackButton } from '@/components/ui/back-button'
 import { PrimaryHeader } from '@/components/ui/primary-header'
 
@@ -40,7 +38,6 @@ export default function RootUserDemographicsPage({ params }: { params: { id: str
 
     const [dateInput, setDateInput] = useState<string>('');
     const [isParsingDate, setIsParsingDate] = useState(false);
-    const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
     const form = useForm<DemographicsFormValues>({
         resolver: zodResolver(demographicsFormSchema),
@@ -179,24 +176,17 @@ export default function RootUserDemographicsPage({ params }: { params: { id: str
                                 render={({ field }) => (
                                 <FormItem className="flex flex-col">
                                     <FormLabel>Date of birth</FormLabel>
-                                    <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-                                        <div className="relative w-full max-w-[240px]">
-                                            <PopoverTrigger asChild>
-                                                <Input
-                                                    placeholder="YYYY-MM-DD or e.g. June 12 2002"
-                                                    value={dateInput}
-                                                    onChange={(e) => setDateInput(e.target.value)}
-                                                    onBlur={handleDateInputBlur}
-                                                    disabled={isParsingDate || form.formState.isSubmitting}
-                                                    className="pr-10"
-                                                />
-                                            </PopoverTrigger>
-                                            {isParsingDate && <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin" />}
-                                        </div>
-                                        <PopoverContent className="w-auto p-0" align="start">
-                                            <Calendar mode="single" selected={field.value} onSelect={(date) => { if (date) { field.onChange(date); setDateInput(format(date, 'yyyy-MM-dd')); form.clearErrors('dateBirth'); setIsPopoverOpen(false); } }} disabled={(date) => date > new Date() || date < new Date("1900-01-01")} initialFocus />
-                                        </PopoverContent>
-                                    </Popover>
+                                    <div className="relative w-full max-w-[240px]">
+                                        <Input
+                                            placeholder="YYYY-MM-DD or e.g. June 12 2002"
+                                            value={dateInput}
+                                            onChange={(e) => setDateInput(e.target.value)}
+                                            onBlur={handleDateInputBlur}
+                                            disabled={isParsingDate || form.formState.isSubmitting}
+                                            className="pr-10"
+                                        />
+                                        {isParsingDate && <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin" />}
+                                    </div>
                                     <FormMessage />
                                 </FormItem>
                                 )}

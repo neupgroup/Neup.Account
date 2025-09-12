@@ -41,7 +41,6 @@ export function IndividualProfileForm({ accountId }: { accountId: string }) {
 
     const [dateInput, setDateInput] = useState<string>('');
     const [isParsingDate, setIsParsingDate] = useState(false);
-    const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const [isPro, setIsPro] = useState(false);
 
 
@@ -289,37 +288,17 @@ export function IndividualProfileForm({ accountId }: { accountId: string }) {
                                 render={({ field }) => (
                                 <FormItem className="flex flex-col">
                                     <FormLabel>Date of birth</FormLabel>
-                                    <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-                                        <div className="relative w-full max-w-[240px]">
-                                             <PopoverTrigger asChild>
-                                                <Input
-                                                    placeholder="YYYY-MM-DD or e.g. June 12 2002"
-                                                    value={dateInput}
-                                                    onChange={(e) => setDateInput(e.target.value)}
-                                                    onBlur={handleDateInputBlur}
-                                                    disabled={isParsingDate}
-                                                    className="pr-10"
-                                                />
-                                            </PopoverTrigger>
-                                            {isParsingDate && <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin" />}
-                                        </div>
-                                        <PopoverContent className="w-auto p-0" align="start">
-                                            <Calendar
-                                                mode="single"
-                                                selected={field.value}
-                                                onSelect={(date) => {
-                                                    if (date) {
-                                                        field.onChange(date);
-                                                        setDateInput(format(date, 'yyyy-MM-dd'));
-                                                        form.clearErrors('dateBirth');
-                                                        setIsPopoverOpen(false);
-                                                    }
-                                                }}
-                                                disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
-                                                initialFocus
-                                            />
-                                        </PopoverContent>
-                                    </Popover>
+                                    <div className="relative w-full max-w-[240px]">
+                                        <Input
+                                            placeholder="YYYY-MM-DD or e.g. June 12 2002"
+                                            value={dateInput}
+                                            onChange={(e) => setDateInput(e.target.value)}
+                                            onBlur={handleDateInputBlur}
+                                            disabled={isParsingDate}
+                                            className="pr-10"
+                                        />
+                                        {isParsingDate && <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin" />}
+                                    </div>
                                     <FormMessage />
                                 </FormItem>
                              )} />

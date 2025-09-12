@@ -8,7 +8,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { format } from "date-fns"
-import { Calendar } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -22,7 +21,6 @@ import { Input } from "@/components/ui/input"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -36,12 +34,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Calendar as CalendarComponent } from "@/components/ui/calendar"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
 import { Checkbox } from "@/components/ui/checkbox"
 import { cn } from "@/lib/utils"
 import { useToast } from "@/hooks/use-toast"
@@ -63,7 +55,6 @@ export default function CreateDependentPage() {
 
     const [dateInput, setDateInput] = useState<string>('');
     const [isParsingDate, setIsParsingDate] = useState(false);
-    const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     
     useEffect(() => {
         async function verifyPermission() {
@@ -202,24 +193,17 @@ export default function CreateDependentPage() {
                                 render={({ field }) => (
                                 <FormItem className="flex flex-col">
                                     <FormLabel>Date of birth</FormLabel>
-                                    <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-                                        <div className="relative w-full max-w-[240px]">
-                                            <PopoverTrigger asChild>
-                                                <Input
-                                                    placeholder="YYYY-MM-DD or e.g. June 12 2002"
-                                                    value={dateInput}
-                                                    onChange={(e) => setDateInput(e.target.value)}
-                                                    onBlur={handleDateInputBlur}
-                                                    disabled={isParsingDate || isSubmitting}
-                                                    className="pr-10"
-                                                />
-                                            </PopoverTrigger>
-                                            {isParsingDate && <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin" />}
-                                        </div>
-                                        <PopoverContent className="w-auto p-0" align="start">
-                                            <CalendarComponent mode="single" selected={field.value} onSelect={(date) => { if (date) { field.onChange(date); setDateInput(format(date, 'yyyy-MM-dd')); form.clearErrors('dob'); setIsPopoverOpen(false); } }} disabled={(date) => date > new Date() || date < new Date("1900-01-01")} initialFocus />
-                                        </PopoverContent>
-                                    </Popover>
+                                    <div className="relative w-full max-w-[240px]">
+                                        <Input
+                                            placeholder="YYYY-MM-DD or e.g. June 12 2002"
+                                            value={dateInput}
+                                            onChange={(e) => setDateInput(e.target.value)}
+                                            onBlur={handleDateInputBlur}
+                                            disabled={isParsingDate || isSubmitting}
+                                            className="pr-10"
+                                        />
+                                        {isParsingDate && <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin" />}
+                                    </div>
                                     <FormMessage />
                                 </FormItem>
                                 )}

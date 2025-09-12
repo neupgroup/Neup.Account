@@ -30,7 +30,6 @@ export default function DemographicsStepPage() {
     const { toast } = useToast();
     const [dateInput, setDateInput] = useState<string>('');
     const [isParsingDate, setIsParsingDate] = useState(false);
-    const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
     const form = useForm<FormData>({
         resolver: zodResolver(demographicsSchema),
@@ -171,24 +170,17 @@ export default function DemographicsStepPage() {
                     render={({ field }) => (
                     <FormItem className="flex flex-col">
                         <FormLabel>Date of birth</FormLabel>
-                        <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
                             <div className="relative w-full">
-                                <PopoverTrigger asChild>
-                                    <Input
-                                        placeholder="YYYY-MM-DD or e.g. June 12 2002"
-                                        value={dateInput}
-                                        onChange={(e) => setDateInput(e.target.value)}
-                                        onBlur={handleDateInputBlur}
-                                        disabled={isParsingDate || isSubmitting}
-                                        className="pr-10"
-                                    />
-                                </PopoverTrigger>
+                                <Input
+                                    placeholder="YYYY-MM-DD or e.g. June 12 2002"
+                                    value={dateInput}
+                                    onChange={(e) => setDateInput(e.target.value)}
+                                    onBlur={handleDateInputBlur}
+                                    disabled={isParsingDate || isSubmitting}
+                                    className="pr-10"
+                                />
                                 {isParsingDate && <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin" />}
                             </div>
-                            <PopoverContent className="w-auto p-0" align="start">
-                                <CalendarComponent mode="single" selected={field.value} onSelect={(date) => { if (date) { field.onChange(date); setDateInput(format(date, 'yyyy-MM-dd')); form.clearErrors('dob'); setIsPopoverOpen(false); } }} disabled={(date) => date > new Date() || date < new Date("1900-01-01")} initialFocus />
-                            </PopoverContent>
-                        </Popover>
                         <FormMessage />
                     </FormItem>
                     )}
