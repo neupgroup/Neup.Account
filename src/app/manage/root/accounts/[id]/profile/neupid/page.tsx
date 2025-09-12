@@ -1,7 +1,7 @@
 
 "use client"
 
-import { useEffect, useState, useTransition } from 'react'
+import { useEffect, useState, useTransition, use } from 'react'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -36,7 +36,8 @@ const addNeupIdSchema = z.object({
 
 type AddNeupIdFormValues = z.infer<typeof addNeupIdSchema>;
 
-export default function RootUserNeupidPage({ params }: { params: { id: string } }) {
+export default function RootUserNeupidPage({ params: paramsProp }: { params: { id: string } }) {
+    const params = use(paramsProp);
     const [neupIds, setNeupIds] = useState<NeupId[]>([]);
     const [loading, setLoading] = useState(true);
     const { toast } = useToast();
