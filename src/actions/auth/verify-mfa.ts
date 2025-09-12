@@ -65,6 +65,7 @@ export async function verifyMfa(data: z.infer<typeof mfaSchema>): Promise<{ succ
         'data.mfa_method': 'totp',
         'data.mfa': 'authenticated',
     });
+    
     cookies().delete('temp_auth_id');
 
     const headersList = headers();
