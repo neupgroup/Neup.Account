@@ -51,6 +51,7 @@ import { Label } from "@/components/ui/label"
 import { parseDateString } from "@/actions/profile"
 import { BackButton } from "@/components/ui/back-button"
 import { checkPermissions } from "@/lib/user"
+import { Loader2 } from "@/components/icons"
 
 type FormData = z.infer<typeof dependentFormSchema>;
 
@@ -202,19 +203,23 @@ export default function CreateDependentPage() {
                                 <FormItem className="flex flex-col">
                                     <FormLabel>Date of birth</FormLabel>
                                     <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-                                        <div className="relative w-[240px]">
-                                                <Input placeholder="YYYY-MM-DD or e.g. June 12 2002" value={dateInput} onChange={(e) => setDateInput(e.target.value)} onBlur={handleDateInputBlur} disabled={isParsingDate} className="pr-10"/>
+                                        <div className="relative w-full max-w-[240px]">
                                             <PopoverTrigger asChild>
-                                                <Button variant={"ghost"} size="icon" className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2" aria-label="Open calendar">
-                                                    <Calendar className="h-4 w-4 opacity-50" />
-                                                </Button>
+                                                <Input
+                                                    placeholder="YYYY-MM-DD or e.g. June 12 2002"
+                                                    value={dateInput}
+                                                    onChange={(e) => setDateInput(e.target.value)}
+                                                    onBlur={handleDateInputBlur}
+                                                    disabled={isParsingDate || isSubmitting}
+                                                    className="pr-10"
+                                                />
                                             </PopoverTrigger>
+                                            {isParsingDate && <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin" />}
                                         </div>
                                         <PopoverContent className="w-auto p-0" align="start">
                                             <CalendarComponent mode="single" selected={field.value} onSelect={(date) => { if (date) { field.onChange(date); setDateInput(format(date, 'yyyy-MM-dd')); form.clearErrors('dob'); setIsPopoverOpen(false); } }} disabled={(date) => date > new Date() || date < new Date("1900-01-01")} initialFocus />
                                         </PopoverContent>
                                     </Popover>
-                                    {isParsingDate && <FormDescription>Parsing date with AI...</FormDescription>}
                                     <FormMessage />
                                 </FormItem>
                                 )}

@@ -28,6 +28,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { GeolocationContext } from '@/context/geolocation-context'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
+import { Loader2 } from '@/components/icons'
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
@@ -289,25 +290,18 @@ export function IndividualProfileForm({ accountId }: { accountId: string }) {
                                 <FormItem className="flex flex-col">
                                     <FormLabel>Date of birth</FormLabel>
                                     <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-                                        <div className="relative w-[240px]">
-                                             <Input
-                                                placeholder="YYYY-MM-DD or e.g. June 12 2002"
-                                                value={dateInput}
-                                                onChange={(e) => setDateInput(e.target.value)}
-                                                onBlur={handleDateInputBlur}
-                                                disabled={isParsingDate}
-                                                className="pr-10"
-                                            />
-                                            <PopoverTrigger asChild>
-                                                <Button
-                                                    variant={"ghost"}
-                                                    size="icon"
-                                                    className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2"
-                                                    aria-label="Open calendar"
-                                                >
-                                                    <CalendarIcon className="h-4 w-4 opacity-50" />
-                                                </Button>
+                                        <div className="relative w-full max-w-[240px]">
+                                             <PopoverTrigger asChild>
+                                                <Input
+                                                    placeholder="YYYY-MM-DD or e.g. June 12 2002"
+                                                    value={dateInput}
+                                                    onChange={(e) => setDateInput(e.target.value)}
+                                                    onBlur={handleDateInputBlur}
+                                                    disabled={isParsingDate}
+                                                    className="pr-10"
+                                                />
                                             </PopoverTrigger>
+                                            {isParsingDate && <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin" />}
                                         </div>
                                         <PopoverContent className="w-auto p-0" align="start">
                                             <Calendar
@@ -326,7 +320,6 @@ export function IndividualProfileForm({ accountId }: { accountId: string }) {
                                             />
                                         </PopoverContent>
                                     </Popover>
-                                    {isParsingDate && <FormDescription>Parsing date with AI...</FormDescription>}
                                     <FormMessage />
                                 </FormItem>
                              )} />
