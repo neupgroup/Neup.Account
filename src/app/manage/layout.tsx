@@ -27,7 +27,7 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
                         </div>
                     </div>
                 </header>
-                <div className="mx-auto grid w-full max-w-[1440px] lg:grid-cols-[320px_1fr]">
+                <div className="mx-auto grid w-full max-w-[1440px] lg:grid-cols-[280px_1fr]">
                     <aside className="hidden h-[calc(100vh-4rem)] flex-col border-r lg:sticky lg:top-16 lg:flex">
                         <div className="flex flex-1 flex-col overflow-y-auto p-4 space-y-4">
                             {[...Array(3)].map((_, i) => (
@@ -55,7 +55,7 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
                     <UserNav />
                 </div>
             </header>
-            <div className="mx-auto grid w-full max-w-[1440px] lg:grid-cols-[320px_1fr]">
+            <div className="mx-auto grid w-full max-w-[1440px] lg:grid-cols-[280px_1fr] xl:grid-cols-[320px_1fr]">
                 <aside className="hidden h-[calc(100vh-4rem)] flex-col border-r lg:sticky lg:top-16 lg:flex">
                     <div className="flex flex-1 flex-col overflow-y-auto p-4">
                         <DashboardNav />
