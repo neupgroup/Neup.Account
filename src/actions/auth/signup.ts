@@ -58,7 +58,7 @@ async function getAuthRequest(
 
   if (
     !authRequestDoc.exists() ||
-    authRequestDoc.data().expiresAt.toDate() < new Date()
+    (authRequestDoc.data().expiresAt && authRequestDoc.data().expiresAt.toDate() < new Date())
   ) {
     // If the request is invalid or expired, clean it up.
     if (authRequestDoc.exists()) {
@@ -155,7 +155,7 @@ export async function submitDemographicsStep(
     return { success: false, error: 'Signup session expired.' };
 
   await updateDoc(request.ref, {
-    'data.dateBirth': validation.data.dateBirth,
+    'data.dateBirth': validation.data.dob,
     'data.gender': validation.data.gender,
     'data.customGender': validation.data.customGender ? sanitizeName(validation.data.customGender) : null,
     status: 'pending_nationality',
@@ -433,7 +433,6 @@ export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
 
     // Delete the auth request
     await updateDoc(request.ref, { status: 'completed' });
-    cookies().delete('temp_auth_id');
 
     return { success: true };
   } catch (error) {

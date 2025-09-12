@@ -66,8 +66,6 @@ export async function verifyMfa(data: z.infer<typeof mfaSchema>): Promise<{ succ
         'data.mfa': 'authenticated',
     });
     
-    cookies().delete('temp_auth_id');
-
     const headersList = headers();
     const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';
     const userAgent = headersList.get('user-agent') || 'Unknown User-Agent';

@@ -11,6 +11,7 @@ import {
   Timestamp,
 } from 'firebase/firestore';
 import crypto from 'crypto';
+import { cookies } from 'next/headers';
 
 import { logError } from './logger';
 import type { Session, StoredAccount } from '@/types';
@@ -58,6 +59,9 @@ export async function createAndSetSession(
     };
 
     await setSessionCookies(newSession, expiresOn);
+    
+    // Once a full session is created, the temporary auth cookie is no longer needed.
+    cookies().delete('temp_auth_id');
     
     const { allAccounts: existingAccounts } = await getSessionCookies();
     
