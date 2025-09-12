@@ -1,4 +1,5 @@
 
+
 "use client"
 
 import { useEffect, useState, useTransition, useRef } from 'react'
@@ -138,35 +139,56 @@ export default function DisplayInfoPage() {
     };
 
     const onNameSubmit = (data: NameFormValues) => {
-        if (!accountId) {
-            toast({ variant: "destructive", title: "Error", description: "Not authenticated." });
+        if (!accountId || !profile) {
+            toast({ variant: "destructive", title: "Error", description: "Not authenticated or profile missing." });
             return;
         }
 
         startNameTransition(async () => {
             let payload: Record<string, any> = {};
+            let isApprovalNeeded = true;
+            
+            const sanitizedCustomName = data.customDisplayName?.trim().replace(/\s+/g, ' ') || '';
 
             if (data.selectedDisplayName === 'custom') {
-                const customName = data.customDisplayName?.trim() || '';
-                const isStandardFormat = nameSuggestions.some(suggestion => suggestion.toLowerCase() === customName.toLowerCase());
+                const lowerCustomName = sanitizedCustomName.toLowerCase();
 
+                // 1. Check if it's a case-insensitive match for a standard format.
+                const isStandardFormat = nameSuggestions.some(suggestion => suggestion.toLowerCase() === lowerCustomName);
                 if (isStandardFormat) {
-                    // It's a standard format, just with different casing. Save directly.
-                    payload = { nameDisplay: customName };
+                    payload = { nameDisplay: sanitizedCustomName };
+                    isApprovalNeeded = false;
                 } else {
-                    // It's a truly custom name, send for approval.
-                    payload = { customDisplayNameRequest: customName };
+                    // 2. Check if it's an extension of the current custom display name.
+                    const currentNameIsStandard = nameSuggestions.some(s => s.toLowerCase() === profile.nameDisplay?.toLowerCase());
+                    if (!currentNameIsStandard && profile.nameDisplay) {
+                        const nameParts = [profile.nameFirst, profile.nameMiddle, profile.nameLast].filter(Boolean).map(n => n!.toLowerCase());
+                        const currentCustomLower = profile.nameDisplay.toLowerCase();
+                        
+                        const isExtension = nameParts.some(part => lowerCustomName === `${currentCustomLower} ${part}`);
+                        if(isExtension) {
+                             payload = { nameDisplay: sanitizedCustomName };
+                             isApprovalNeeded = false;
+                        }
+                    }
                 }
+                
+                // 3. If not auto-approved by above logic, send for review.
+                if (isApprovalNeeded) {
+                    payload = { customDisplayNameRequest: sanitizedCustomName };
+                }
+
             } else {
                 // A standard format was selected.
                 payload = { nameDisplay: data.selectedDisplayName };
+                isApprovalNeeded = false;
             }
 
             const result = await updateUserProfile(accountId, payload);
 
             if (result.success) {
                 toast({ title: "Success", description: result.message, className: "bg-accent text-accent-foreground" });
-                if(data.selectedDisplayName !== 'custom') {
+                if(!isApprovalNeeded) {
                     nameForm.setValue('customDisplayName', '');
                 }
                 nameForm.reset(data); // Resets the form's dirty state

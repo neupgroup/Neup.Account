@@ -141,8 +141,17 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
             
             if (data.customDisplayNameRequest) {
                  const requestsRef = collection(db, 'requests');
-                 const newRequestRef = doc(requestsRef);
                  const requesterId = await getPersonalAccountId();
+
+                 // Cancel previous pending requests from the same user
+                 const q = query(requestsRef, where('action', '==', 'display_name_request'), where('accountId', '==', accountId), where('status', '==', 'pending'));
+                 const oldRequests = await getDocs(q);
+                 oldRequests.forEach(doc => {
+                    batch.update(doc.ref, { status: 'cancelled', remarks: 'Superseded by new request.' });
+                 });
+                 
+                 // Create new request
+                 const newRequestRef = doc(requestsRef);
                  batch.set(newRequestRef, {
                     action: 'display_name_request',
                     accountId: accountId,
