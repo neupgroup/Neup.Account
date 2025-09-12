@@ -1,10 +1,32 @@
+
+"use client";
+
 import Link from 'next/link';
+import { useTransition, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Loader2 } from '@/components/icons';
+import { useToast } from '@/hooks/use-toast';
 
 export default function ForgetPage() {
+  const [isPending, startTransition] = useTransition();
+  const { toast } = useToast();
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    startTransition(async () => {
+        // In a real application, you would call a server action here.
+        // For this demo, we'll just simulate a network request.
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        toast({
+            title: "Recovery Link Sent",
+            description: "If an account exists for that email, a recovery link has been sent.",
+        });
+    });
+  }
+
   return (
     <div className="flex min-h-screen items-start justify-center bg-card md:bg-background md:items-center">
       <Card className="mx-auto max-w-lg w-full border-0 shadow-none md:border md:shadow-sm">
@@ -18,13 +40,13 @@ export default function ForgetPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email Address</Label>
-              <Input id="email" type="email" placeholder="you@example.com" required />
+              <Input id="email" type="email" placeholder="you@example.com" required disabled={isPending} />
             </div>
-            <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
-              Send Recovery Link
+            <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isPending}>
+              {isPending ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending...</> : 'Send Recovery Link'}
             </Button>
           </form>
            <div className="mt-4 text-center text-sm">
@@ -38,3 +60,5 @@ export default function ForgetPage() {
     </div>
   );
 }
+
+    

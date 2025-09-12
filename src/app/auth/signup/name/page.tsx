@@ -70,14 +70,14 @@ export default function NameStepPage() {
                 <FormField control={form.control} name="firstName" render={({ field }) => (
                     <FormItem>
                         <FormLabel>First Name</FormLabel>
-                        <FormControl><Input {...field} /></FormControl>
+                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
                         <FormMessage />
                     </FormItem>
                 )} />
 
                 {!showMiddleName && (
                      <div className="flex items-center space-x-2">
-                        <Checkbox id="hasMiddleName" onCheckedChange={(checked) => setShowMiddleName(!!checked)} />
+                        <Checkbox id="hasMiddleName" onCheckedChange={(checked) => setShowMiddleName(!!checked)} disabled={isSubmitting} />
                         <Label htmlFor="hasMiddleName" className="font-normal cursor-pointer">I have a middle name</Label>
                     </div>
                 )}
@@ -86,7 +86,7 @@ export default function NameStepPage() {
                     <FormField control={form.control} name="middleName" render={({ field }) => (
                         <FormItem>
                             <FormLabel>Middle Name</FormLabel>
-                            <FormControl><Input {...field} /></FormControl>
+                            <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
                             <FormMessage />
                         </FormItem>
                     )} />
@@ -95,7 +95,7 @@ export default function NameStepPage() {
                  <FormField control={form.control} name="lastName" render={({ field }) => (
                     <FormItem>
                         <FormLabel>Last Name</FormLabel>
-                        <FormControl><Input {...field} /></FormControl>
+                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
                         <FormMessage />
                     </FormItem>
                 )} />
@@ -107,3 +107,5 @@ export default function NameStepPage() {
         </Form>
     );
 }
+
+    

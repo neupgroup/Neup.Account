@@ -30,8 +30,8 @@ export default function MfaPage() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    NProgress.start()
     startSubmit(async () => {
-      NProgress.start()
       try {
         const result = await verifyMfa({ token })
 
@@ -79,6 +79,7 @@ export default function MfaPage() {
                 autoFocus
                 value={token}
                 onChange={(e) => setToken(e.target.value)}
+                disabled={isSubmitting}
               />
             </div>
             <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting}>
@@ -90,3 +91,5 @@ export default function MfaPage() {
     </div>
   )
 }
+
+    

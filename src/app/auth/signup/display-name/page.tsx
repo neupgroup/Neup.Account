@@ -41,7 +41,7 @@ export default function DisplayNameStepPage() {
                     nameLast: data.nameLast
                 });
                 setNameSuggestions(suggestions);
-                form.setValue("displayName", data.nameDisplay || suggestions[0] || `${data.nameFirst} ${data.nameLast}`.trim());
+                form.setValue("displayName", data.nameDisplay || suggestions[0] || `${'\'\'\''}${data.nameFirst} ${data.nameLast}`.trim());
             }
             setLoading(false);
         }
@@ -78,7 +78,7 @@ export default function DisplayNameStepPage() {
                             <FormControl>
                                 <div className="flex flex-wrap gap-2">
                                     {nameSuggestions.map(name => (
-                                        <Button key={name} type="button" variant={field.value === name ? "default" : "secondary"} onClick={() => field.onChange(name)} className="relative">
+                                        <Button key={name} type="button" variant={field.value === name ? "default" : "secondary"} onClick={() => field.onChange(name)} className="relative" disabled={isSubmitting}>
                                             {field.value === name && <Check className="absolute -left-1 -top-1 h-4 w-4 bg-primary text-primary-foreground rounded-full p-0.5" />}
                                             {name}
                                         </Button>
@@ -98,3 +98,5 @@ export default function DisplayNameStepPage() {
         </Form>
     );
 }
+
+    

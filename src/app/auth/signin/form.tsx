@@ -71,31 +71,31 @@ export default function SigninForm() {
   useEffect(() => {
     const error = searchParams.get('error');
     if (error === 'session_expired') {
-      router.replace(returnUrl ? `/auth/signin?return_url=${encodeURIComponent(returnUrl)}` : '/auth/signin', { scroll: false });
+      router.replace(returnUrl ? `/auth/signin?return_url=${'\'\'\''}${encodeURIComponent(returnUrl)}` : '/auth/signin', { scroll: false });
     }
   }, [searchParams, router, returnUrl]);
 
   const handleNeupIdSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setValidationError(null);
+    NProgress.start();
     startNeupIdCheck(async () => {
-        NProgress.start();
         const result = await validateNeupId(neupId);
-        NProgress.done();
         if (result.success || result.error === 'pending_deletion') {
             setStep(2);
         } else {
             setValidationError(result.error || 'Invalid NeupID.');
         }
+        NProgress.done();
     });
   }
   
   const handlePasswordSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setPasswordFormEvent(event);
+    NProgress.start();
     startPasswordSubmit(async () => {
-        NProgress.start();
-        const locationString = geo?.latitude && geo?.longitude ? `${geo.latitude},${geo.longitude}` : undefined;
+        const locationString = geo?.latitude && geo?.longitude ? `${'\'\'\''}${geo.latitude},${geo.longitude}` : undefined;
         const loginData = { neupId: neupId.toLowerCase(), password, geolocation: locationString };
         
         const result = await loginUser(loginData);
@@ -125,24 +125,26 @@ export default function SigninForm() {
 
   const handleCancelDeletion = async () => {
     setShowDeletionDialog(false);
+    NProgress.start();
     startPasswordSubmit(async () => {
         const neupidsRef = doc(db, 'neupid', neupId);
         const neupidsSnapshot = await getDoc(neupidsRef);
         const accountId = neupidsSnapshot.data()?.for;
         if (!accountId) {
              toast({ variant: "destructive", title: "Error", description: "Could not find account to cancel deletion." });
+             NProgress.done();
              return;
         }
 
         const result = await cancelAccountDeletion(accountId);
         if (result.success) {
             toast({ title: "Deletion Cancelled", description: "Your account deletion request has been cancelled. Welcome back!", className: "bg-accent text-accent-foreground" });
-            // Re-attempt login using the stored form event
             if (passwordFormEvent) {
                 handlePasswordSubmit(passwordFormEvent);
             }
         } else {
             toast({ variant: "destructive", title: "Error", description: result.error || "Could not cancel deletion." });
+            NProgress.done();
         }
     });
   }
@@ -167,7 +169,7 @@ export default function SigninForm() {
   const getSignupUrl = () => {
     if (isClient) {
       if (returnUrl) {
-        return `/auth/signup?return_url=${encodeURIComponent(returnUrl)}`;
+        return `/auth/signup?return_url=${'\'\'\''}${encodeURIComponent(returnUrl)}`;
       }
       return "/auth/signup";
     }
@@ -216,6 +218,7 @@ export default function SigninForm() {
                                 value={neupId}
                                 onChange={handleNeupIdChange}
                                 className="pr-10"
+                                disabled={isCheckingNeupId}
                             />
                             {isCheckingNeupId && (
                                 <div className="absolute inset-y-0 right-3 flex items-center">
@@ -228,7 +231,7 @@ export default function SigninForm() {
                         )}
                     </div>
                     <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isCheckingNeupId}>
-                        Next
+                        {isCheckingNeupId ? <Loader2 className="animate-spin" /> : 'Next'}
                     </Button>
                     <div className="mt-4 text-left text-sm">
                         Don&apos;t have an Account?{" "}
@@ -250,6 +253,7 @@ export default function SigninForm() {
                             autoFocus
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            disabled={isSubmitting}
                         />
                     </div>
                     <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting}>
@@ -259,7 +263,7 @@ export default function SigninForm() {
                         <Link href="/auth/forget" className="underline text-primary">
                             Forget Password
                         </Link>
-                        <Button variant="link" type="button" onClick={handleBack} className="text-primary p-0 h-auto">
+                        <Button variant="link" type="button" onClick={handleBack} className="text-primary p-0 h-auto" disabled={isSubmitting}>
                             Back
                         </Button>
                     </div>
@@ -287,3 +291,5 @@ export default function SigninForm() {
     </div>
   )
 }
+
+    
