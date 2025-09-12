@@ -8,22 +8,23 @@ import { checkPermissions } from '@/lib/user';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { BackButton } from '@/components/ui/back-button';
 import { VerifiedBadge } from '@/components/verified-badge';
+import { UserCircle, ShieldCheck, History, Ban, Trash2, Gem } from '@/components/icons';
 
 const accountManagementFeatures = (accountId: string) => [
   {
-    icon: 'UserCircle',
+    icon: UserCircle,
     title: 'Profile Information',
     description: 'View and manage user profile details.',
     href: `/manage/root/accounts/${accountId}/profile`,
   },
   {
-    icon: 'ShieldCheck',
+    icon: ShieldCheck,
     title: 'Permissions',
     description: 'Assign or restrict permission sets for this user.',
     href: `/manage/root/accounts/${accountId}/permissions`,
   },
   {
-    icon: 'History',
+    icon: History,
     title: 'Account Activity',
     description: 'View a log of recent actions performed on this account.',
     href: `/manage/root/accounts/${accountId}/activity`,
@@ -32,25 +33,25 @@ const accountManagementFeatures = (accountId: string) => [
 
 const adminActions = (accountId: string) => [
     {
-        icon: 'ShieldCheck',
+        icon: ShieldCheck,
         title: 'Verification',
         description: 'Manage the user\'s verified status.',
         href: `/manage/root/accounts/${accountId}/verification`,
     },
     {
-        icon: 'Ban',
+        icon: Ban,
         title: 'Bans & Warnings',
         description: 'Send warnings, block access, or take other admin actions.',
         href: `/manage/root/accounts/${accountId}/notice`,
     },
     {
-        icon: 'Trash2',
+        icon: Trash2,
         title: 'Deletion',
         description: 'Manage the account deletion process.',
         href: `/manage/root/accounts/${accountId}/deletion`,
     },
     {
-        icon: 'Gem',
+        icon: Gem,
         title: 'Neup.Pro',
         description: 'Activate or deactivate the user\'s Pro subscription.',
         href: `/manage/root/accounts/${accountId}/pro`,
@@ -69,7 +70,7 @@ export default async function AccountDetailsPage({ params }: { params: { id: str
 
   const userDetails = await getUserDetails(params.id);
 
-  if (!userDetails) {
+  if (!userDetails || !userDetails.profile) {
     notFound();
   }
 
@@ -100,7 +101,7 @@ export default async function AccountDetailsPage({ params }: { params: { id: str
             {userDetails.profile.verified && <VerifiedBadge accountId={params.id} className="h-6 w-6" />}
           </div>
           <p className="text-muted-foreground font-mono">
-            @{userDetails.neupId}
+            @{userDetails.profile.neupIdPrimary}
           </p>
         </div>
       </div>
