@@ -10,29 +10,29 @@ import { logActivity } from "@/lib/log-actions"
 import { logError } from "@/lib/logger"
 import { checkPermissions, getUserNeupIds, checkNeupIdAvailability, getUserProfile as fetchUserProfile } from "@/lib/user"
 import { getPersonalAccountId } from "@/lib/auth-actions";
-import { brandProfileFormSchema } from "@/schemas/profile"
+import { brandProfileFormSchema } from "@/schemas/auth"
 
 
 export async function getDisplayNameSuggestions(accountId: string): Promise<string[]> {
     const profile = await fetchUserProfile(accountId);
     if (!profile) return [];
 
-    const { firstName, middleName, lastName } = profile;
+    const { nameFirst, nameMiddle, nameLast } = profile;
     const suggestions = new Set<string>();
 
-    if (firstName) {
-        suggestions.add(firstName);
+    if (nameFirst) {
+        suggestions.add(nameFirst);
     }
-    if (firstName && middleName) {
-        suggestions.add(`${firstName} ${middleName}`);
+    if (nameFirst && nameMiddle) {
+        suggestions.add(`${nameFirst} ${nameMiddle}`);
     }
-    if (firstName && lastName) {
-        suggestions.add(`${firstName} ${lastName}`);
-        suggestions.add(`${lastName} ${firstName}`);
+    if (nameFirst && nameLast) {
+        suggestions.add(`${nameFirst} ${nameLast}`);
+        suggestions.add(`${nameLast} ${nameFirst}`);
     }
-    if (firstName && middleName && lastName) {
-        suggestions.add(`${firstName} ${middleName} ${lastName}`);
-        suggestions.add(`${lastName} ${middleName} ${firstName}`);
+    if (nameFirst && nameMiddle && nameLast) {
+        suggestions.add(`${nameFirst} ${nameMiddle} ${nameLast}`);
+        suggestions.add(`${nameLast} ${nameMiddle} ${nameFirst}`);
     }
     
     return Array.from(suggestions);
@@ -112,7 +112,7 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
             const accountData: Record<string, any> = {};
 
             // List of valid profile fields to prevent unwanted data being written
-            const validAccountFields = ['firstName', 'middleName', 'lastName', 'gender', 'dob', 'displayName', 'displayPhoto'];
+            const validAccountFields = ['nameFirst', 'nameMiddle', 'nameLast', 'gender', 'customGender', 'dateBirth', 'nameDisplay', 'accountPhoto'];
             for(const key of validAccountFields) {
                 if(data[key] !== undefined) {
                     accountData[key] = data[key];
@@ -120,24 +120,23 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
             }
             
             // Auto-update display name if legal name changes
-            const hasNameChange = ['firstName', 'middleName', 'lastName'].some(key => data[key] !== undefined);
+            const hasNameChange = ['nameFirst', 'nameMiddle', 'nameLast'].some(key => data[key] !== undefined);
             if (hasNameChange) {
                 const currentProfile = await fetchUserProfile(accountId);
-                const newFirstName = data.firstName ?? currentProfile?.firstName;
-                const newMiddleName = data.middleName ?? currentProfile?.middleName;
-                const newLastName = data.lastName ?? currentProfile?.lastName;
+                const newFirstName = data.nameFirst ?? currentProfile?.nameFirst;
+                const newMiddleName = data.nameMiddle ?? currentProfile?.nameMiddle;
+                const newLastName = data.nameLast ?? currentProfile?.nameLast;
                 
                 let defaultDisplayName = `${newFirstName || ''} ${newLastName || ''}`.trim();
                 if (newMiddleName) {
                     defaultDisplayName = `${newFirstName || ''} ${newMiddleName} ${newLastName || ''}`.trim();
                 }
-                 accountData.displayName = defaultDisplayName;
+                 accountData.nameDisplay = defaultDisplayName;
             }
 
 
-            if (accountData.dob instanceof Date) {
-              accountData.birthDate = accountData.dob.toISOString();
-              delete accountData.dob;
+            if (accountData.dateBirth instanceof Date) {
+              accountData.dateBirth = accountData.dateBirth.toISOString();
             }
             
             if (data.customDisplayNameRequest) {
@@ -153,8 +152,8 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
                     requestor: requesterId,
                 });
                 await logActivity(accountId, `Requested Custom Display Name: ${data.customDisplayNameRequest}`, 'Pending', undefined, geolocation);
-                // Don't update the displayName in the profile directly
-                delete accountData.displayName;
+                // Don't update the nameDisplay in the profile directly
+                delete accountData.nameDisplay;
             }
 
             if(Object.keys(accountData).length > 0) {
@@ -231,21 +230,21 @@ export async function updateBrandProfile(accountId: string, data: z.infer<typeof
         
         // Data for the 'account' collection
         const accountDataToUpdate: Partial<any> = {
-            displayName: validatedData.displayName,
-            displayPhoto: validatedData.displayPhoto,
+            nameDisplay: validatedData.nameDisplay,
+            accountPhoto: validatedData.accountPhoto,
             isLegalEntity: validatedData.isLegalEntity,
         };
 
         if (validatedData.isLegalEntity) {
-            accountDataToUpdate.legalName = validatedData.legalName;
+            accountDataToUpdate.nameLegal = validatedData.nameLegal;
             accountDataToUpdate.registrationId = validatedData.registrationId;
             accountDataToUpdate.countryOfOrigin = validatedData.countryOfOrigin;
-            accountDataToUpdate.registeredOn = validatedData.registeredOn?.toISOString();
+            accountDataToUpdate.dateEstablished = validatedData.dateEstablished?.toISOString();
         } else {
-            accountDataToUpdate.legalName = null;
+            accountDataToUpdate.nameLegal = null;
             accountDataToUpdate.registrationId = null;
             accountDataToUpdate.countryOfOrigin = null;
-            accountDataToUpdate.registeredOn = null;
+            accountDataToUpdate.dateEstablished = null;
         }
 
         await updateDoc(accountRef, accountDataToUpdate);
