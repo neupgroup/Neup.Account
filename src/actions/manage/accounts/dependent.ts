@@ -116,17 +116,12 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
             return { success: false, error: 'This NeupID is already taken.' };
         }
 
-        let finalGender = profileData.gender;
-        if (profileData.gender === 'custom') {
-            finalGender = `c.${profileData.customGender?.trim() || 'custom'}`;
-        }
-        
         const batch = writeBatch(db);
 
         const newAccountRef = doc(collection(db, 'account'));
         const dependentAccountId = newAccountRef.id;
         
-        const { customGender, neupId: _n, ...restOfProfile } = profileData;
+        const { neupId: _n, ...restOfProfile } = profileData;
 
         batch.set(newAccountRef, {
             accountType: 'dependent',
@@ -136,7 +131,6 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
             accountPhoto: null,
             neupIdPrimary: neupId,
             ...restOfProfile,
-            gender: finalGender,
             dateBirth: profileData.dateBirth.toISOString(),
             dateCreated: serverTimestamp()
         });

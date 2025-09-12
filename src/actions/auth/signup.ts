@@ -94,7 +94,7 @@ export async function submitNameStep(data: z.infer<typeof nameSchema>) {
     'data.nameFirst': nameFirst,
     'data.nameMiddle': nameMiddle,
     'data.nameLast': nameLast,
-    'data.nameDisplay': defaultDisplayName, // Set default display name
+    'data.nameDisplay': defaultDisplayName,
     status: 'pending_display_name',
   });
 
@@ -139,14 +139,10 @@ export async function submitDemographicsStep(
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
-  let finalGender = validation.data.gender;
-  if (validation.data.gender === 'custom') {
-    finalGender = `c.${validation.data.customGender?.trim() || 'custom'}`;
-  }
-
   await updateDoc(request.ref, {
     'data.dateBirth': validation.data.dateBirth,
-    'data.gender': finalGender,
+    'data.gender': validation.data.gender,
+    'data.customGender': validation.data.customGender,
     status: 'pending_nationality',
   });
 
@@ -324,6 +320,7 @@ export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
     nameDisplay,
     dateBirth,
     gender,
+    customGender,
     nationality,
     phone,
     neupId,
@@ -366,9 +363,10 @@ export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
         accountPhoto: "https://neupgroup.com/assets/avatar/user1.png",
         nameFirst,
         nameLast,
-        nameMiddle: nameMiddle || '',
-        dateBirth,
+        nameMiddle: nameMiddle || null,
+        dateBirth: dateBirth,
         gender,
+        customGender: customGender || null,
         nationality,
         neupIdPrimary: neupId,
         dateCreated: serverTimestamp(),

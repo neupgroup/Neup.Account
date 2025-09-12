@@ -9,7 +9,7 @@ import { CalendarIcon } from "lucide-react"
 
 import { getUserProfile, type UserProfile } from "@/lib/user"
 import { updateBrandProfile } from "@/actions/profile"
-import { brandProfileFormSchema } from "@/schemas/profile"
+import { brandProfileFormSchema } from "@/schemas/auth"
 import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
@@ -37,10 +37,10 @@ export function BrandProfileForm({ accountId }: { accountId: string }) {
     const form = useForm<BrandFormValues>({
         resolver: zodResolver(brandProfileFormSchema),
         defaultValues: {
-            displayName: "",
-            displayPhoto: "",
+            nameDisplay: "",
+            accountPhoto: "",
             isLegalEntity: false,
-            legalName: "",
+            nameLegal: "",
             registrationId: "",
             countryOfOrigin: "",
         },
@@ -57,13 +57,13 @@ export function BrandProfileForm({ accountId }: { accountId: string }) {
 
                 if (profileData) {
                     form.reset({
-                        displayName: profileData.displayName || "",
-                        displayPhoto: profileData.displayPhoto || "",
+                        nameDisplay: profileData.nameDisplay || "",
+                        accountPhoto: profileData.accountPhoto || "",
                         isLegalEntity: profileData.isLegalEntity || false,
-                        legalName: profileData.legalName || "",
+                        nameLegal: profileData.nameLegal || "",
                         registrationId: profileData.registrationId || "",
                         countryOfOrigin: profileData.countryOfOrigin || "",
-                        registeredOn: profileData.registeredOn ? new Date(profileData.registeredOn) : undefined,
+                        dateEstablished: profileData.dateEstablished ? new Date(profileData.dateEstablished) : undefined,
                     });
                 } else {
                     setError("Could not load brand profile data.");
@@ -123,16 +123,16 @@ export function BrandProfileForm({ accountId }: { accountId: string }) {
                             <div className="flex-shrink-0">
                                 <Label>Logo</Label>
                                 <Avatar className="h-24 w-24 mt-2 rounded-lg">
-                                    <AvatarImage src={form.watch('displayPhoto') || undefined} alt="Brand Logo" data-ai-hint="logo" />
+                                    <AvatarImage src={form.watch('accountPhoto') || undefined} alt="Brand Logo" data-ai-hint="logo" />
                                     <AvatarFallback className="rounded-lg">
-                                        {form.watch('displayName')?.[0]?.toUpperCase() || 'B'}
+                                        {form.watch('nameDisplay')?.[0]?.toUpperCase() || 'B'}
                                     </AvatarFallback>
                                 </Avatar>
                             </div>
                             <div className="flex-grow space-y-4">
                                 <FormField
                                     control={form.control}
-                                    name="displayName"
+                                    name="nameDisplay"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Display Name</FormLabel>
@@ -143,7 +143,7 @@ export function BrandProfileForm({ accountId }: { accountId: string }) {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name="displayPhoto"
+                                    name="accountPhoto"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Logo URL</FormLabel>
@@ -183,7 +183,7 @@ export function BrandProfileForm({ accountId }: { accountId: string }) {
                             <div className="grid md:grid-cols-2 gap-4 pt-4">
                                 <FormField
                                     control={form.control}
-                                    name="legalName"
+                                    name="nameLegal"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Legal Name</FormLabel>
@@ -226,10 +226,10 @@ export function BrandProfileForm({ accountId }: { accountId: string }) {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name="registeredOn"
+                                    name="dateEstablished"
                                     render={({ field }) => (
                                         <FormItem className="flex flex-col">
-                                            <FormLabel>Registered On</FormLabel>
+                                            <FormLabel>Established On</FormLabel>
                                             <Popover>
                                                 <PopoverTrigger asChild>
                                                     <FormControl>
