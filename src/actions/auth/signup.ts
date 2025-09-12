@@ -365,7 +365,7 @@ export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
         accountStatus: 'active',
         verified: false,
         nameDisplay: nameDisplay,
-        accountPhoto: "https://neupgroup.com/assets/user.png",
+        accountPhoto: null,
         nameFirst,
         nameLast,
         nameMiddle: nameMiddle || null,
