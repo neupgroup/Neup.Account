@@ -62,12 +62,6 @@ export default function DisplayInfoPage() {
 
     useEffect(() => {
         if (profile && accountId) {
-            form.reset({
-                accountPhoto: profile.accountPhoto || "",
-                selectedDisplayName: profile.nameDisplay || "",
-                customDisplayName: "",
-            });
-
             const fetchSuggestions = async () => {
                 if (accountId) {
                     const [suggestions, photos] = await Promise.all([
@@ -76,6 +70,21 @@ export default function DisplayInfoPage() {
                     ]);
                     setNameSuggestions(suggestions);
                     setPastPhotos(photos);
+
+                    const currentName = profile.nameDisplay || '';
+                    if (suggestions.includes(currentName)) {
+                        form.reset({
+                            accountPhoto: profile.accountPhoto || "",
+                            selectedDisplayName: currentName,
+                            customDisplayName: "",
+                        });
+                    } else {
+                         form.reset({
+                            accountPhoto: profile.accountPhoto || "",
+                            selectedDisplayName: 'custom',
+                            customDisplayName: currentName,
+                        });
+                    }
                 }
                 setLoading(false);
             }
@@ -115,13 +124,13 @@ export default function DisplayInfoPage() {
         startTransition(async () => {
              const result = await updateUserProfile(accountId, { 
                 accountPhoto: data.accountPhoto,
-                nameDisplay: data.selectedDisplayName === 'custom' ? undefined : data.selectedDisplayName,
-                customDisplayNameRequest: data.selectedDisplayName === 'custom' ? data.customDisplayName : undefined,
+                nameDisplay: data.selectedDisplayName === 'custom' ? data.customDisplayName : data.selectedDisplayName,
+                customDisplayNameRequest: data.selectedDisplayName === 'custom',
              });
 
             if (result.success) {
                 toast({ title: "Success", description: result.message, className: "bg-accent text-accent-foreground" });
-                if(data.selectedDisplayName === 'custom') {
+                if(data.selectedDisplayName !== 'custom') {
                     form.setValue('customDisplayName', '');
                 }
                 refetchSession();
@@ -230,7 +239,7 @@ export default function DisplayInfoPage() {
                                     <h3 className="text-2xl font-semibold tracking-tight">{profile?.nameDisplay}</h3>
                                 </div>
                                 <Separator />
-                                <FormField
+                                 <FormField
                                     control={form.control}
                                     name="selectedDisplayName"
                                     render={({ field }) => (

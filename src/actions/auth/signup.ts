@@ -36,6 +36,13 @@ import {
   displayNameSchema,
 } from '@/schemas/signup';
 
+// Helper to sanitize name fields
+const sanitizeName = (name: string | undefined | null): string => {
+    if (!name) return '';
+    return name.trim().replace(/\s+/g, ' ');
+};
+
+
 async function isFirstUser() {
   const accountsCollection = collection(db, 'account');
   const accountsSnapshot = await getDocs(query(accountsCollection, limit(1)));
@@ -87,8 +94,11 @@ export async function submitNameStep(data: z.infer<typeof nameSchema>) {
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
-  const { nameFirst, nameLast, nameMiddle } = validation.data;
-  const defaultDisplayName = nameMiddle ? `${nameFirst} ${nameMiddle} ${nameLast}` : `${nameFirst} ${nameLast}`;
+  const nameFirst = sanitizeName(validation.data.nameFirst);
+  const nameMiddle = sanitizeName(validation.data.nameMiddle);
+  const nameLast = sanitizeName(validation.data.nameLast);
+  
+  const defaultDisplayName = [nameFirst, nameMiddle, nameLast].filter(Boolean).join(' ');
 
   await updateDoc(request.ref, {
     'data.nameFirst': nameFirst,
@@ -112,7 +122,7 @@ export async function submitDisplayNameStep(data: z.infer<typeof displayNameSche
     if (!request) return { success: false, error: 'Signup session expired.' };
 
     await updateDoc(request.ref, {
-        'data.nameDisplay': validation.data.nameDisplay,
+        'data.nameDisplay': sanitizeName(validation.data.nameDisplay),
         status: 'pending_demographics',
     });
 
@@ -142,7 +152,7 @@ export async function submitDemographicsStep(
   await updateDoc(request.ref, {
     'data.dateBirth': validation.data.dateBirth,
     'data.gender': validation.data.gender,
-    'data.customGender': validation.data.customGender,
+    'data.customGender': validation.data.customGender ? sanitizeName(validation.data.customGender) : null,
     status: 'pending_nationality',
   });
 
