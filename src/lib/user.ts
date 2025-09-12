@@ -1,5 +1,4 @@
 
-
 'use server';
 
 import { db } from './firebase';
@@ -32,6 +31,7 @@ export type UserProfile = {
   dateEstablished?: string; // ISO string
   neupIdPrimary?: string; // Added for convenience
   verified?: boolean; // Added for convenience
+  accountType?: string;
 };
 
 export type UserContacts = {
@@ -44,22 +44,6 @@ export type UserContacts = {
 };
 
 // --- User Data Fetching ---
-
-export async function getAccountType(accountId?: string): Promise<string | null> {
-  const idToFetch = accountId || (await getActiveAccountId());
-  if (!idToFetch) return null;
-  try {
-    const accountRef = doc(db, 'account', idToFetch);
-    const accountDoc = await getDoc(accountRef);
-    if (accountDoc.exists()) {
-        return accountDoc.data().accountStatus || accountDoc.data().accountType || 'individual';
-    }
-    return 'individual';
-  } catch (error) {
-    await logError('database', error, `getAccountType: ${idToFetch}`);
-    return null;
-  }
-}
 
 export async function getUserProfile(
   accountId?: string
@@ -77,10 +61,10 @@ export async function getUserProfile(
         ...accountData,
         dateBirth: accountData.dateBirth?.toDate?.().toISOString() || accountData.dateBirth || null,
         dateEstablished: accountData.dateEstablished?.toDate?.().toISOString() || accountData.dateEstablished || null,
-        dateCreated: accountData.dateCreated?.toDate?.().toISOString() || null,
       };
 
-      delete (serializedData as any).dateCreated;
+      // Ensure accountType is part of the returned profile
+      serializedData.accountType = accountData.accountType || 'individual';
 
       return serializedData;
     }
@@ -90,6 +74,12 @@ export async function getUserProfile(
     return null;
   }
 }
+
+export async function getAccountType(accountId?: string): Promise<string | null> {
+    const profile = await getUserProfile(accountId);
+    return profile?.accountType || null;
+}
+
 
 export async function getUserContacts(
   accountId?: string

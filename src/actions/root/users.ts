@@ -17,7 +17,7 @@ import {
   setDoc,
   orderBy,
 } from 'firebase/firestore';
-import { getUserNeupIds, getUserProfile as fetchUserProfile, checkPermissions, getAccountType } from '@/lib/user';
+import { getUserNeupIds, getUserProfile as fetchUserProfile, checkPermissions } from '@/lib/user';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { revalidatePath } from 'next/cache';
 import { logActivity } from '@/lib/log-actions';
@@ -39,12 +39,7 @@ export type UserDetailsLimited = {
 export async function getUserDetails(
   accountId: string
 ): Promise<UserDetails | null> {
-  const [profile, accountType, neupIds] = await Promise.all([
-    fetchUserProfile(accountId),
-    getAccountType(accountId),
-    getUserNeupIds(accountId)
-  ]);
-
+  const profile = await fetchUserProfile(accountId);
 
   if (!profile) {
     return null;
@@ -52,9 +47,9 @@ export async function getUserDetails(
 
   return {
     accountId,
-    neupId: neupIds.find(id => id === profile.neupIdPrimary) || neupIds[0] || 'N/A',
+    neupId: profile.neupIdPrimary || 'N/A',
     profile,
-    accountType: accountType || 'individual',
+    accountType: profile.accountType || 'individual',
   };
 }
 
