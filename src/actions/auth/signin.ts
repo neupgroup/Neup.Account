@@ -1,3 +1,4 @@
+
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -64,7 +65,7 @@ export async function loginUser(data: z.infer<typeof loginFormSchema>) {
         await createNotification({
             recipient_id: accountId,
             action: 'informative.login',
-            message: `Your account was just accessed from a new device. IP: ${ipAddress}.`,
+            message: `Your account was signed in from a new device.`,
         });
 
 

@@ -233,7 +233,7 @@ export async function impersonateUser(userId: string, neupId: string): Promise<{
         await createNotification({
             recipient_id: userId,
             action: 'warning.sticky',
-            message: `A root user has accessed your account using an impersonation session.`,
+            message: `Your account was inspected by a superuser.`,
             persistence: 'permanent',
             noticeType: 'warning',
             sender_id: adminId,

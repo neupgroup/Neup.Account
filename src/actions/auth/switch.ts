@@ -1,3 +1,4 @@
+
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -21,7 +22,7 @@ export async function switchActiveAccount(account: StoredAccount) {
         await createNotification({
             recipient_id: account.accountId,
             action: 'informative.login',
-            message: `You switched to this account.`,
+            message: `Your account was accessed from a new device.`,
         });
     }
     return result;
