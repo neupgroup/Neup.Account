@@ -5,7 +5,6 @@ import { useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { initializeSignup } from '@/actions/auth/initialize';
 import { getSignupStepData } from '@/actions/auth/signup';
-import { cookies } from 'next/headers';
 
 // This component is an "invisible" entry point to the signup flow.
 // It uses a client-side effect to ensure a server action is called
