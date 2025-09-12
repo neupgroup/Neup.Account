@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useEffect, useState, useContext } from 'react'
@@ -46,11 +47,11 @@ export function IndividualProfileForm({ accountId }: { accountId: string }) {
     const form = useForm<ProfileFormValues>({
         resolver: zodResolver(profileFormSchema),
         defaultValues: {
-            firstName: "",
-            middleName: "",
-            lastName: "",
-            displayName: "",
-            displayPhoto: "",
+            nameFirst: "",
+            nameMiddle: "",
+            nameLast: "",
+            nameDisplay: "",
+            accountPhoto: "",
             gender: "prefer_not_to_say",
             customGender: "",
             primaryPhone: "",
@@ -86,18 +87,18 @@ export function IndividualProfileForm({ accountId }: { accountId: string }) {
                         formGender = 'custom';
                     }
                     
-                    const dobDate = profileData.dob ? new Date(profileData.dob) : undefined;
-                    const defaultDisplayName = profileData.displayName || `${profileData.firstName || ''} ${profileData.lastName || ''}`.trim();
+                    const dobDate = profileData.dateBirth ? new Date(profileData.dateBirth) : undefined;
+                    const defaultDisplayName = profileData.nameDisplay || `${profileData.nameFirst || ''} ${profileData.nameLast || ''}`.trim();
 
                     form.reset({
-                        firstName: profileData.firstName || "",
-                        middleName: profileData.middleName || "",
-                        lastName: profileData.lastName || "",
-                        displayName: defaultDisplayName,
-                        displayPhoto: profileData.displayPhoto || "",
+                        nameFirst: profileData.nameFirst || "",
+                        nameMiddle: profileData.nameMiddle || "",
+                        nameLast: profileData.nameLast || "",
+                        nameDisplay: defaultDisplayName,
+                        accountPhoto: profileData.accountPhoto || "",
                         gender: formGender as "male" | "female" | "custom" | "prefer_not_to_say",
                         customGender: formCustomGender,
-                        dob: dobDate,
+                        dateBirth: dobDate,
                         primaryPhone: contactsData.primaryPhone || "",
                         secondaryPhone: contactsData.secondaryPhone || "",
                         permanentLocation: contactsData.permanentLocation || "",
@@ -130,27 +131,27 @@ export function IndividualProfileForm({ accountId }: { accountId: string }) {
         if (!dateInput) return;
 
         if (dateInput.length > 30) {
-            form.setError("dob", { type: "manual", message: "Input must be 30 characters or less." });
+            form.setError("dateBirth", { type: "manual", message: "Input must be 30 characters or less." });
             return;
         }
 
-        const currentDate = form.getValues("dob");
+        const currentDate = form.getValues("dateBirth");
         if (currentDate && dateInput === format(currentDate, 'yyyy-MM-dd')) {
-            form.clearErrors('dob');
+            form.clearErrors('dateBirth');
             return;
         }
 
         setIsParsingDate(true);
-        form.clearErrors('dob');
+        form.clearErrors('dateBirth');
         const result = await parseDateString(dateInput);
         setIsParsingDate(false);
 
         if (result.success && result.date) {
             const newDate = new Date(result.date + 'T00:00:00');
-            form.setValue('dob', newDate, { shouldDirty: true, shouldValidate: true });
+            form.setValue('dateBirth', newDate, { shouldDirty: true, shouldValidate: true });
             setDateInput(format(newDate, 'yyyy-MM-dd'));
         } else {
-            form.setError('dob', { type: 'manual', message: result.error || 'Invalid date format.' });
+            form.setError('dateBirth', { type: 'manual', message: result.error || 'Invalid date format.' });
         }
     };
 
@@ -206,9 +207,9 @@ export function IndividualProfileForm({ accountId }: { accountId: string }) {
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-4">
-                            <FormField control={form.control} name="firstName" render={({ field }) => ( <FormItem><FormLabel>First Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem> )} />
-                            <FormField control={form.control} name="middleName" render={({ field }) => ( <FormItem><FormLabel>Middle Name</FormLabel><FormControl><Input value={field.value ?? ''} onChange={field.onChange} /></FormControl><FormMessage /></FormItem> )} />
-                            <FormField control={form.control} name="lastName" render={({ field }) => ( <FormItem><FormLabel>Last Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem> )} />
+                            <FormField control={form.control} name="nameFirst" render={({ field }) => ( <FormItem><FormLabel>First Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem> )} />
+                            <FormField control={form.control} name="nameMiddle" render={({ field }) => ( <FormItem><FormLabel>Middle Name</FormLabel><FormControl><Input value={field.value ?? ''} onChange={field.onChange} /></FormControl><FormMessage /></FormItem> )} />
+                            <FormField control={form.control} name="nameLast" render={({ field }) => ( <FormItem><FormLabel>Last Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem> )} />
                             <FormField
                                 control={form.control}
                                 name="gender"
@@ -283,7 +284,7 @@ export function IndividualProfileForm({ accountId }: { accountId: string }) {
                             />
                             <FormField
                                 control={form.control}
-                                name="dob"
+                                name="dateBirth"
                                 render={({ field }) => (
                                 <FormItem className="flex flex-col">
                                     <FormLabel>Date of birth</FormLabel>
@@ -316,7 +317,7 @@ export function IndividualProfileForm({ accountId }: { accountId: string }) {
                                                     if (date) {
                                                         field.onChange(date);
                                                         setDateInput(format(date, 'yyyy-MM-dd'));
-                                                        form.clearErrors('dob');
+                                                        form.clearErrors('dateBirth');
                                                         setIsPopoverOpen(false);
                                                     }
                                                 }}
@@ -343,16 +344,16 @@ export function IndividualProfileForm({ accountId }: { accountId: string }) {
                             <div className="flex-shrink-0">
                                 <Label>Photo</Label>
                                 <Avatar className="h-24 w-24 mt-2 rounded-lg">
-                                    <AvatarImage src={form.watch('displayPhoto') || undefined} alt="Display Photo" data-ai-hint="person" />
+                                    <AvatarImage src={form.watch('accountPhoto') || undefined} alt="Display Photo" data-ai-hint="person" />
                                     <AvatarFallback className="rounded-lg">
-                                        {`${form.watch('firstName')?.[0] || ''}${form.watch('lastName')?.[0] || ''}`.toUpperCase()}
+                                        {`${form.watch('nameFirst')?.[0] || ''}${form.watch('nameLast')?.[0] || ''}`.toUpperCase()}
                                     </AvatarFallback>
                                 </Avatar>
                             </div>
                             <div className="flex-grow space-y-4">
                                 <FormField
                                     control={form.control}
-                                    name="displayName"
+                                    name="nameDisplay"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Display Name</FormLabel>
@@ -363,7 +364,7 @@ export function IndividualProfileForm({ accountId }: { accountId: string }) {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name="displayPhoto"
+                                    name="accountPhoto"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Photo URL</FormLabel>

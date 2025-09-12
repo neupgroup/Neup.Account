@@ -28,7 +28,7 @@ import { PrimaryHeader } from '@/components/ui/primary-header'
 const demographicsFormSchema = z.object({
     gender: z.enum(["male", "female", "custom", "prefer_not_to_say"]),
     customGender: z.string().optional(),
-    dob: z.date({ required_error: "A date of birth is required." }).optional(),
+    dateBirth: z.date({ required_error: "A date of birth is required." }).optional(),
 });
 
 type DemographicsFormValues = z.infer<typeof demographicsFormSchema>;
@@ -61,14 +61,14 @@ export default function RootUserDemographicsPage({ params }: { params: { id: str
                     formCustomGender = formGender.substring(2);
                     formGender = 'custom';
                 }
-                const dobDate = profileData.dob ? new Date(profileData.dob) : undefined;
+                const dobDate = profileData.dateBirth ? new Date(profileData.dateBirth) : undefined;
                 if (dobDate) {
                      setDateInput(format(dobDate, 'yyyy-MM-dd'));
                 }
                 form.reset({
                     gender: formGender as "male" | "female" | "custom" | "prefer_not_to_say",
                     customGender: formCustomGender,
-                    dob: dobDate,
+                    dateBirth: dobDate,
                 });
             }
             setLoading(false);
@@ -79,27 +79,27 @@ export default function RootUserDemographicsPage({ params }: { params: { id: str
     const handleDateInputBlur = async () => {
         if (!dateInput) return;
         if (dateInput.length > 30) {
-            form.setError("dob", { type: "manual", message: "Input must be 30 characters or less." });
+            form.setError("dateBirth", { type: "manual", message: "Input must be 30 characters or less." });
             return;
         }
 
-        const currentDate = form.getValues("dob");
+        const currentDate = form.getValues("dateBirth");
         if (currentDate && dateInput === format(currentDate, 'yyyy-MM-dd')) {
-            form.clearErrors('dob');
+            form.clearErrors('dateBirth');
             return;
         }
 
         setIsParsingDate(true);
-        form.clearErrors('dob');
+        form.clearErrors('dateBirth');
         const result = await parseDateString(dateInput);
         setIsParsingDate(false);
 
         if (result.success && result.date) {
             const newDate = new Date(result.date + 'T00:00:00');
-            form.setValue('dob', newDate, { shouldDirty: true, shouldValidate: true });
+            form.setValue('dateBirth', newDate, { shouldDirty: true, shouldValidate: true });
             setDateInput(format(newDate, 'yyyy-MM-dd'));
         } else {
-            form.setError('dob', { type: 'manual', message: result.error || 'Invalid date format.' });
+            form.setError('dateBirth', { type: 'manual', message: result.error || 'Invalid date format.' });
         }
     };
 
@@ -132,7 +132,7 @@ export default function RootUserDemographicsPage({ params }: { params: { id: str
             <BackButton href={`/manage/root/accounts/${params.id}/profile`} />
             <PrimaryHeader
                 title="Demographics"
-                description={`Update gender and date of birth for @${profile.neupId}.`}
+                description={`Update gender and date of birth for @${profile.neupIdPrimary}.`}
             />
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -175,7 +175,7 @@ export default function RootUserDemographicsPage({ params }: { params: { id: str
                             />
                             <FormField
                                 control={form.control}
-                                name="dob"
+                                name="dateBirth"
                                 render={({ field }) => (
                                 <FormItem className="flex flex-col">
                                     <FormLabel>Date of birth</FormLabel>
@@ -189,7 +189,7 @@ export default function RootUserDemographicsPage({ params }: { params: { id: str
                                             </PopoverTrigger>
                                         </div>
                                         <PopoverContent className="w-auto p-0" align="start">
-                                            <Calendar mode="single" selected={field.value} onSelect={(date) => { if (date) { field.onChange(date); setDateInput(format(date, 'yyyy-MM-dd')); form.clearErrors('dob'); setIsPopoverOpen(false); } }} disabled={(date) => date > new Date() || date < new Date("1900-01-01")} initialFocus />
+                                            <Calendar mode="single" selected={field.value} onSelect={(date) => { if (date) { field.onChange(date); setDateInput(format(date, 'yyyy-MM-dd')); form.clearErrors('dateBirth'); setIsPopoverOpen(false); } }} disabled={(date) => date > new Date() || date < new Date("1900-01-01")} initialFocus />
                                         </PopoverContent>
                                     </Popover>
                                     {isParsingDate && <FormMessage>Parsing date with AI...</FormMessage>}

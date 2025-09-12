@@ -21,8 +21,8 @@ import { BackButton } from '@/components/ui/back-button'
 import { PrimaryHeader } from '@/components/ui/primary-header'
 
 const displayFormSchema = z.object({
-  displayName: z.string().optional(),
-  displayPhoto: z.string().url("Please enter a valid URL.").optional().or(z.literal('')),
+  nameDisplay: z.string().optional(),
+  accountPhoto: z.string().url("Please enter a valid URL.").optional().or(z.literal('')),
 });
 
 type DisplayFormValues = z.infer<typeof displayFormSchema>;
@@ -35,8 +35,8 @@ export default function RootUserDisplayPage({ params }: { params: { id: string }
     const form = useForm<DisplayFormValues>({
         resolver: zodResolver(displayFormSchema),
         defaultValues: {
-            displayName: "",
-            displayPhoto: "",
+            nameDisplay: "",
+            accountPhoto: "",
         },
     });
 
@@ -46,8 +46,8 @@ export default function RootUserDisplayPage({ params }: { params: { id: string }
             if (profileData) {
                 setProfile(profileData);
                 form.reset({
-                    displayName: profileData.displayName || "",
-                    displayPhoto: profileData.displayPhoto || "",
+                    nameDisplay: profileData.nameDisplay || "",
+                    accountPhoto: profileData.accountPhoto || "",
                 });
             }
             setLoading(false);
@@ -77,7 +77,7 @@ export default function RootUserDisplayPage({ params }: { params: { id: string }
             <BackButton href={`/manage/root/accounts/${params.id}/profile`} />
             <PrimaryHeader
                 title="Display Information"
-                description={`Update the public display name and photo for @${profile.neupId}.`}
+                description={`Update the public display name and photo for @${profile.neupIdPrimary}.`}
             />
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -90,16 +90,16 @@ export default function RootUserDisplayPage({ params }: { params: { id: string }
                                 <div className="flex-shrink-0">
                                     <Label>Photo</Label>
                                     <Avatar className="h-24 w-24 mt-2 rounded-lg">
-                                        <AvatarImage src={form.watch('displayPhoto') || undefined} alt="Display Photo" data-ai-hint="person" />
+                                        <AvatarImage src={form.watch('accountPhoto') || undefined} alt="Display Photo" data-ai-hint="person" />
                                         <AvatarFallback className="rounded-lg">
-                                            {`${profile?.firstName?.[0] || ''}${profile?.lastName?.[0] || ''}`.toUpperCase()}
+                                            {`${profile?.nameFirst?.[0] || ''}${profile?.nameLast?.[0] || ''}`.toUpperCase()}
                                         </AvatarFallback>
                                     </Avatar>
                                 </div>
                                 <div className="flex-grow space-y-4">
                                     <FormField
                                         control={form.control}
-                                        name="displayName"
+                                        name="nameDisplay"
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel>Display Name</FormLabel>
@@ -110,7 +110,7 @@ export default function RootUserDisplayPage({ params }: { params: { id: string }
                                     />
                                     <FormField
                                         control={form.control}
-                                        name="displayPhoto"
+                                        name="accountPhoto"
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel>Photo URL</FormLabel>

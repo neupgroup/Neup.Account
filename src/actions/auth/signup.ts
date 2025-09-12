@@ -87,14 +87,14 @@ export async function submitNameStep(data: z.infer<typeof nameSchema>) {
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
-  const { firstName, lastName, middleName } = validation.data;
-  const defaultDisplayName = middleName ? `${firstName} ${middleName} ${lastName}` : `${firstName} ${lastName}`;
+  const { nameFirst, nameLast, nameMiddle } = validation.data;
+  const defaultDisplayName = nameMiddle ? `${nameFirst} ${nameMiddle} ${nameLast}` : `${nameFirst} ${nameLast}`;
 
   await updateDoc(request.ref, {
-    'data.firstName': firstName,
-    'data.middleName': middleName,
-    'data.lastName': lastName,
-    'data.displayName': defaultDisplayName, // Set default display name
+    'data.nameFirst': nameFirst,
+    'data.nameMiddle': nameMiddle,
+    'data.nameLast': nameLast,
+    'data.nameDisplay': defaultDisplayName, // Set default display name
     status: 'pending_display_name',
   });
 
@@ -112,7 +112,7 @@ export async function submitDisplayNameStep(data: z.infer<typeof displayNameSche
     if (!request) return { success: false, error: 'Signup session expired.' };
 
     await updateDoc(request.ref, {
-        'data.displayName': validation.data.displayName,
+        'data.nameDisplay': validation.data.nameDisplay,
         status: 'pending_demographics',
     });
 
@@ -145,7 +145,7 @@ export async function submitDemographicsStep(
   }
 
   await updateDoc(request.ref, {
-    'data.dob': validation.data.dob,
+    'data.dateBirth': validation.data.dateBirth,
     'data.gender': finalGender,
     status: 'pending_nationality',
   });
@@ -318,11 +318,11 @@ export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
     return { success: false, error: 'Signup session expired.' };
 
   const {
-    firstName,
-    lastName,
-    middleName,
-    displayName,
-    dob,
+    nameFirst,
+    nameLast,
+    nameMiddle,
+    nameDisplay,
+    dateBirth,
     gender,
     nationality,
     phone,
@@ -331,10 +331,10 @@ export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
   } = request.data.data;
 
   if (
-    !firstName ||
-    !lastName ||
-    !displayName ||
-    !dob ||
+    !nameFirst ||
+    !nameLast ||
+    !nameDisplay ||
+    !dateBirth ||
     !gender ||
     !nationality ||
     !phone ||
@@ -362,16 +362,16 @@ export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
         accountType: 'individual',
         accountStatus: 'active',
         verified: false,
-        displayName: displayName,
-        displayPhoto: "https://neupgroup.com/assets/avatar/user1.png",
-        firstName,
-        lastName,
-        middleName: middleName || '',
-        birthDate: dob,
+        nameDisplay: nameDisplay,
+        accountPhoto: "https://neupgroup.com/assets/avatar/user1.png",
+        nameFirst,
+        nameLast,
+        nameMiddle: nameMiddle || '',
+        dateBirth,
         gender,
         nationality,
-        neupId, // Primary NeupID
-        createdAt: serverTimestamp(),
+        neupIdPrimary: neupId,
+        dateCreated: serverTimestamp(),
     });
 
     const permQuery = query(

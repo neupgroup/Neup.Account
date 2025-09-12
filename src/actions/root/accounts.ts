@@ -11,8 +11,8 @@ import type { UserStats } from '@/types';
 export type AccountListItem = {
     id: string; // accountId
     name: string;
-    createdAt: string;
-    type: string;
+    dateCreated: string;
+    accountType: string;
     isRoot: boolean;
 };
 
@@ -36,8 +36,8 @@ export async function getUserStats(): Promise<UserStats> {
         
         let signedUpToday = 0;
         accountsSnapshot.forEach(doc => {
-            const createdAt = doc.data().createdAt;
-            if (createdAt && createdAt.toDate() > twentyFourHoursAgo.toDate()) {
+            const dateCreated = doc.data().dateCreated;
+            if (dateCreated && dateCreated.toDate() > twentyFourHoursAgo.toDate()) {
                 signedUpToday++;
             }
         });
@@ -83,9 +83,9 @@ export async function getAllAccounts(
 
             return {
                 id: accountId,
-                name: accountData?.displayName || 'Unnamed Account',
-                createdAt: accountData.createdAt?.toDate?.()?.toISOString() || new Date(0).toISOString(),
-                type: accountData.accountType || 'individual',
+                name: accountData?.nameDisplay || 'Unnamed Account',
+                dateCreated: accountData.dateCreated?.toDate?.()?.toISOString() || new Date(0).toISOString(),
+                accountType: accountData.accountType || 'individual',
                 isRoot: rootPermitMap.has(accountId) || false,
             };
         });
@@ -96,7 +96,7 @@ export async function getAllAccounts(
             allAccounts = allAccounts.filter(acc =>
                 acc.name.toLowerCase().includes(lowercasedQuery) ||
                 acc.id.toLowerCase().includes(lowercasedQuery) ||
-                acc.type.toLowerCase().includes(lowercasedQuery)
+                acc.accountType.toLowerCase().includes(lowercasedQuery)
             );
         }
 
@@ -108,7 +108,7 @@ export async function getAllAccounts(
             if (aValue === null || aValue === undefined) return 1;
             if (bValue === null || bValue === undefined) return -1;
             
-            if (sortKey === 'createdAt') {
+            if (sortKey === 'dateCreated') {
                 const dateA = new Date(aValue as string).getTime();
                 const dateB = new Date(bValue as string).getTime();
                 if (dateA < dateB) return sortDirection === 'asc' ? -1 : 1;
@@ -129,7 +129,7 @@ export async function getAllAccounts(
         return {
             accounts: paginatedAccounts.map(acc => ({
                 ...acc,
-                createdAt: new Date(acc.createdAt).toLocaleDateString()
+                dateCreated: new Date(acc.dateCreated).toLocaleDateString()
             })),
             hasNextPage: endIndex < allAccounts.length,
         };

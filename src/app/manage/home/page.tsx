@@ -1,3 +1,4 @@
+
 import { checkPermissions } from '@/lib/user';
 import { notFound } from 'next/navigation';
 import { DashboardHeader } from '@/components/dashboard/dashboard-header';

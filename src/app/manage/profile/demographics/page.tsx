@@ -29,7 +29,7 @@ import { BackButton } from '@/components/ui/back-button'
 const demographicsFormSchema = z.object({
     gender: z.enum(["male", "female", "custom", "prefer_not_to_say"]),
     customGender: z.string().optional(),
-    dob: z.date({ required_error: "A date of birth is required." }).optional(),
+    dateBirth: z.date({ required_error: "A date of birth is required." }).optional(),
 });
 
 type DemographicsFormValues = z.infer<typeof demographicsFormSchema>;
@@ -61,7 +61,7 @@ export default function DemographicsPage() {
                 formGender = 'custom';
             }
             
-            const dobDate = profile.birthDate ? new Date(profile.birthDate) : undefined;
+            const dobDate = profile.dateBirth ? new Date(profile.dateBirth) : undefined;
             if (dobDate) {
                  setDateInput(format(dobDate, 'yyyy-MM-dd'));
             }
@@ -69,7 +69,7 @@ export default function DemographicsPage() {
             form.reset({
                 gender: formGender as "male" | "female" | "custom" | "prefer_not_to_say",
                 customGender: formCustomGender,
-                dob: dobDate,
+                dateBirth: dobDate,
             });
             setLoading(false);
         }
@@ -78,27 +78,27 @@ export default function DemographicsPage() {
     const handleDateInputBlur = async () => {
         if (!dateInput) return;
         if (dateInput.length > 30) {
-            form.setError("dob", { type: "manual", message: "Input must be 30 characters or less." });
+            form.setError("dateBirth", { type: "manual", message: "Input must be 30 characters or less." });
             return;
         }
 
-        const currentDate = form.getValues("dob");
+        const currentDate = form.getValues("dateBirth");
         if (currentDate && dateInput === format(currentDate, 'yyyy-MM-dd')) {
-            form.clearErrors('dob');
+            form.clearErrors('dateBirth');
             return;
         }
 
         setIsParsingDate(true);
-        form.clearErrors('dob');
+        form.clearErrors('dateBirth');
         const result = await parseDateString(dateInput);
         setIsParsingDate(false);
 
         if (result.success && result.date) {
             const newDate = new Date(result.date + 'T00:00:00');
-            form.setValue('dob', newDate, { shouldDirty: true, shouldValidate: true });
+            form.setValue('dateBirth', newDate, { shouldDirty: true, shouldValidate: true });
             setDateInput(format(newDate, 'yyyy-MM-dd'));
         } else {
-            form.setError('dob', { type: 'manual', message: result.error || 'Invalid date format.' });
+            form.setError('dateBirth', { type: 'manual', message: result.error || 'Invalid date format.' });
         }
     };
 
@@ -151,7 +151,10 @@ export default function DemographicsPage() {
                                             <FormItem><RadioGroupItem value="prefer_not_to_say" id="gender-pnts" className="peer sr-only" /><Label htmlFor="gender-pnts" className="flex h-full cursor-pointer items-center justify-center rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary">Prefer not to say</Label></FormItem>
                                             <FormItem>
                                                 <RadioGroupItem value="custom" id="gender-custom" className="peer sr-only" />
-                                                <Label htmlFor="gender-custom" className={cn( "flex h-full cursor-pointer items-center justify-between rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground", field.value === 'custom' && "border-primary" )}>
+                                                <Label
+                                                    htmlFor="gender-custom"
+                                                    className={cn( "flex h-full cursor-pointer items-center justify-between rounded-md border-2 border-muted bg-popover p-4 font-normal hover:bg-accent hover:text-accent-foreground", field.value === 'custom' && "border-primary" )}
+                                                >
                                                     <span>Custom</span>
                                                     {field.value === 'custom' && (
                                                         <FormField
@@ -172,7 +175,7 @@ export default function DemographicsPage() {
                             />
                             <FormField
                                 control={form.control}
-                                name="dob"
+                                name="dateBirth"
                                 render={({ field }) => (
                                 <FormItem className="flex flex-col">
                                     <FormLabel>Date of birth</FormLabel>
@@ -186,7 +189,7 @@ export default function DemographicsPage() {
                                             </PopoverTrigger>
                                         </div>
                                         <PopoverContent className="w-auto p-0" align="start">
-                                            <Calendar mode="single" selected={field.value} onSelect={(date) => { if (date) { field.onChange(date); setDateInput(format(date, 'yyyy-MM-dd')); form.clearErrors('dob'); setIsPopoverOpen(false); } }} disabled={(date) => date > new Date() || date < new Date("1900-01-01")} initialFocus />
+                                            <Calendar mode="single" selected={field.value} onSelect={(date) => { if (date) { field.onChange(date); setDateInput(format(date, 'yyyy-MM-dd')); form.clearErrors('dateBirth'); setIsPopoverOpen(false); } }} disabled={(date) => date > new Date() || date < new Date("1900-01-01")} initialFocus />
                                         </PopoverContent>
                                     </Popover>
                                     {isParsingDate && <FormMessage>Parsing date with AI...</FormMessage>}

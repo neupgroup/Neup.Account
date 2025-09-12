@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
-import { getUserProfile } from "@/lib/user"
 import { updateUserProfile } from "@/actions/profile"
 import { useToast } from "@/hooks/use-toast"
 
@@ -18,12 +17,13 @@ import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { BackButton } from '@/components/ui/back-button'
 import { PrimaryHeader } from '@/components/ui/primary-header'
+import { getUserProfile } from '@/lib/user'
 
 
 const nameFormSchema = z.object({
-  firstName: z.string().min(1, "First name is required"),
-  middleName: z.string().optional(),
-  lastName: z.string().min(1, "Last name is required"),
+  nameFirst: z.string().min(1, "First name is required"),
+  nameMiddle: z.string().optional(),
+  nameLast: z.string().min(1, "Last name is required"),
 });
 
 type NameFormValues = z.infer<typeof nameFormSchema>;
@@ -36,9 +36,9 @@ export default function RootUserNamePage({ params }: { params: { id: string } })
     const form = useForm<NameFormValues>({
         resolver: zodResolver(nameFormSchema),
         defaultValues: {
-            firstName: "",
-            middleName: "",
-            lastName: "",
+            nameFirst: "",
+            nameMiddle: "",
+            nameLast: "",
         },
     });
 
@@ -48,9 +48,9 @@ export default function RootUserNamePage({ params }: { params: { id: string } })
             if(profileData) {
                 setProfile(profileData);
                 form.reset({
-                    firstName: profileData.firstName || "",
-                    middleName: profileData.middleName || "",
-                    lastName: profileData.lastName || "",
+                    nameFirst: profileData.nameFirst || "",
+                    nameMiddle: profileData.nameMiddle || "",
+                    nameLast: profileData.nameLast || "",
                 });
             }
             setLoading(false);
@@ -80,7 +80,7 @@ export default function RootUserNamePage({ params }: { params: { id: string } })
             <BackButton href={`/manage/root/accounts/${params.id}/profile`} />
              <PrimaryHeader
                 title="Legal Name"
-                description={`Update the legal name for @${profile.neupId}.`}
+                description={`Update the legal name for @${profile.neupIdPrimary}.`}
             />
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -89,9 +89,9 @@ export default function RootUserNamePage({ params }: { params: { id: string } })
                             <CardTitle>Legal Name</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
-                            <FormField control={form.control} name="firstName" render={({ field }) => ( <FormItem><FormLabel>First Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem> )} />
-                            <FormField control={form.control} name="middleName" render={({ field }) => ( <FormItem><FormLabel>Middle Name</FormLabel><FormControl><Input value={field.value ?? ''} onChange={field.onChange} /></FormControl><FormMessage /></FormItem> )} />
-                            <FormField control={form.control} name="lastName" render={({ field }) => ( <FormItem><FormLabel>Last Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem> )} />
+                            <FormField control={form.control} name="nameFirst" render={({ field }) => ( <FormItem><FormLabel>First Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem> )} />
+                            <FormField control={form.control} name="nameMiddle" render={({ field }) => ( <FormItem><FormLabel>Middle Name</FormLabel><FormControl><Input value={field.value ?? ''} onChange={field.onChange} /></FormControl><FormMessage /></FormItem> )} />
+                            <FormField control={form.control} name="nameLast" render={({ field }) => ( <FormItem><FormLabel>Last Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem> )} />
                         </CardContent>
                     </Card>
                      <div className="flex justify-end">

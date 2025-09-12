@@ -69,8 +69,8 @@ export async function getBrandAccounts(): Promise<BrandAccount[]> {
 
                 return {
                     id: brandAccountId,
-                    name: profile.displayName || 'Unnamed Brand',
-                    logoUrl: profile.displayPhoto,
+                    name: profile.nameDisplay || 'Unnamed Brand',
+                    logoUrl: profile.accountPhoto,
                     plan: "Business" // Placeholder for plan
                 };
             })
@@ -100,7 +100,7 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
         return { success: false, error: "Invalid data provided.", details: validation.error.flatten() };
     }
 
-    const { fullName, legalName, registrationId, headOfficeLocation, servingAreas } = validation.data;
+    const { nameBrand, nameLegal, registrationId, headOfficeLocation, servingAreas } = validation.data;
     const neupId = validation.data.neupId.toLowerCase();
     const ipAddress = headers().get('x-forwarded-for') || 'Unknown IP';
 
@@ -121,12 +121,13 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
             accountType: 'brand',
             accountStatus: 'active',
             verified: false,
-            displayName: fullName,
-            displayPhoto: null,
-            legalName: legalName || null,
+            nameDisplay: nameBrand,
+            nameBrand: nameBrand,
+            accountPhoto: null,
+            nameLegal: nameLegal || null,
             registrationId: registrationId || null,
             servingAreas: servingAreas || null,
-            createdAt: serverTimestamp(),
+            dateCreated: serverTimestamp(),
         });
 
         // Grant management permission to the creator by creating a permit document

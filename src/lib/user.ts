@@ -17,21 +17,20 @@ import { getActiveAccountId, getPersonalAccountId } from './auth-actions';
 
 // --- Types ---
 export type UserProfile = {
-  firstName?: string;
-  middleName?: string;
-  lastName?: string;
-  displayName?: string;
-  displayPhoto?: string;
+  nameFirst?: string;
+  nameMiddle?: string;
+  nameLast?: string;
+  nameDisplay?: string;
+  accountPhoto?: string;
   gender?: string; // 'male', 'female', 'prefer_not_to_say', 'c.custom'
-  birthDate?: string; // ISO string
+  dateBirth?: string; // ISO string
   nationality?: string;
   isLegalEntity?: boolean;
-  legalName?: string;
+  nameLegal?: string;
   registrationId?: string;
   countryOfOrigin?: string;
-  registeredOn?: string; // ISO string
-  accountId?: string; // Added for convenience
-  neupId?: string; // Added for convenience
+  dateEstablished?: string; // ISO string
+  neupIdPrimary?: string; // Added for convenience
   verified?: boolean; // Added for convenience
 };
 
@@ -76,12 +75,12 @@ export async function getUserProfile(
       
       const serializedData: UserProfile = {
         ...accountData,
-        birthDate: accountData.birthDate?.toDate?.().toISOString() || accountData.birthDate || null,
-        registeredOn: accountData.registeredOn?.toDate?.().toISOString() || accountData.registeredOn || null,
-        createdAt: accountData.createdAt?.toDate?.().toISOString() || null,
+        dateBirth: accountData.dateBirth?.toDate?.().toISOString() || accountData.dateBirth || null,
+        dateEstablished: accountData.dateEstablished?.toDate?.().toISOString() || accountData.dateEstablished || null,
+        dateCreated: accountData.dateCreated?.toDate?.().toISOString() || null,
       };
 
-      delete (serializedData as any).createdAt;
+      delete (serializedData as any).dateCreated;
 
       return serializedData;
     }

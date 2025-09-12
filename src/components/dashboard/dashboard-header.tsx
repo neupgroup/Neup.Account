@@ -44,16 +44,16 @@ export function DashboardHeader() {
         )
     }
 
-    const greetingName = isManaging ? profile.displayName : profile.firstName;
+    const greetingName = isManaging ? profile.nameDisplay : profile.nameFirst;
 
 
     return (
         <div className="space-y-4">
             <div className="flex items-center gap-4">
                  <Avatar className="h-16 w-16 rounded-lg">
-                    <AvatarImage src={profile?.displayPhoto} alt={profile?.displayName} data-ai-hint="person" />
+                    <AvatarImage src={profile?.accountPhoto} alt={profile?.nameDisplay} data-ai-hint="person" />
                     <AvatarFallback className="rounded-lg text-xl">
-                        {`${profile?.displayName?.[0] || ''}`.toUpperCase()}
+                        {`${profile?.nameDisplay?.[0] || ''}`.toUpperCase()}
                     </AvatarFallback>
                 </Avatar>
                 <div>

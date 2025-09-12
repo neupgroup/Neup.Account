@@ -1,4 +1,5 @@
 
+
 import { notFound } from 'next/navigation';
 import { Card, CardContent } from '@/components/ui/card';
 import { ListItem } from '@/components/ui/list-item';
@@ -81,20 +82,20 @@ export default async function AccountDetailsPage({ params }: { params: { id: str
       <div className="flex items-center gap-4">
         <Avatar className="h-16 w-16">
           <AvatarImage
-            src={userDetails.profile.displayPhoto}
-            alt={userDetails.profile.displayName}
+            src={userDetails.profile.accountPhoto}
+            alt={userDetails.profile.nameDisplay}
             data-ai-hint="person"
           />
           <AvatarFallback className="text-xl">
-            {userDetails.profile.firstName?.[0] ?? ''}
-            {userDetails.profile.lastName?.[0] ?? ''}
+            {userDetails.profile.nameFirst?.[0] ?? ''}
+            {userDetails.profile.nameLast?.[0] ?? ''}
           </AvatarFallback>
         </Avatar>
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold tracking-tight">
-              {userDetails.profile.displayName ||
-                `${userDetails.profile.firstName} ${userDetails.profile.lastName}`}
+              {userDetails.profile.nameDisplay ||
+                `${userDetails.profile.nameFirst} ${userDetails.profile.nameLast}`}
             </h1>
             {userDetails.profile.verified && <VerifiedBadge accountId={params.id} className="h-6 w-6" />}
           </div>

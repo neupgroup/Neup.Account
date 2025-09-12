@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useForm } from 'react-hook-form';
@@ -25,11 +26,11 @@ import { Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const profileFormSchema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  middleName: z.string().optional(),
-  lastName: z.string().min(1, 'Last name is required'),
-  displayName: z.string().optional(),
-  dob: z.string().min(1, 'Date of birth is required'),
+  nameFirst: z.string().min(1, 'First name is required'),
+  nameMiddle: z.string().optional(),
+  nameLast: z.string().min(1, 'Last name is required'),
+  nameDisplay: z.string().optional(),
+  dateBirth: z.string().min(1, 'Date of birth is required'),
   nationality: z.string().min(1, 'Nationality is required'),
   gender: z.string().min(1, 'Gender is required'),
 });
@@ -49,7 +50,7 @@ export function ProfileForm({ profile, accountId }: ProfileFormProps) {
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
       ...profile,
-      dob: profile.dob ? new Date(profile.dob).toISOString().split('T')[0] : '',
+      dateBirth: profile.dateBirth ? new Date(profile.dateBirth).toISOString().split('T')[0] : '',
     },
   });
 
@@ -73,7 +74,7 @@ export function ProfileForm({ profile, accountId }: ProfileFormProps) {
           <CardContent className="grid md:grid-cols-2 gap-4">
             <FormField
               control={form.control}
-              name="displayName"
+              name="nameDisplay"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Display Name</FormLabel>
@@ -86,7 +87,7 @@ export function ProfileForm({ profile, accountId }: ProfileFormProps) {
             />
             <FormField
               control={form.control}
-              name="firstName"
+              name="nameFirst"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>First Name</FormLabel>
@@ -99,7 +100,7 @@ export function ProfileForm({ profile, accountId }: ProfileFormProps) {
             />
              <FormField
               control={form.control}
-              name="middleName"
+              name="nameMiddle"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Middle Name</FormLabel>
@@ -112,7 +113,7 @@ export function ProfileForm({ profile, accountId }: ProfileFormProps) {
             />
             <FormField
               control={form.control}
-              name="lastName"
+              name="nameLast"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Last Name</FormLabel>
@@ -125,7 +126,7 @@ export function ProfileForm({ profile, accountId }: ProfileFormProps) {
             />
             <FormField
               control={form.control}
-              name="dob"
+              name="dateBirth"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Date of Birth</FormLabel>

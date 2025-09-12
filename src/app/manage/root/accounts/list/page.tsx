@@ -38,7 +38,7 @@ function AccountsListPageComponent() {
 
     // Component state initialized from URL search params
     const [filter, setFilter] = useState(searchParams.get('q') || '');
-    const [sortKey, setSortKey] = useState<SortKey>((searchParams.get('sort') as SortKey) || 'createdAt');
+    const [sortKey, setSortKey] = useState<SortKey>((searchParams.get('sort') as SortKey) || 'dateCreated');
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>((searchParams.get('dir') as 'asc' | 'desc') || 'desc');
     const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
     
@@ -52,7 +52,7 @@ function AccountsListPageComponent() {
                 debouncedFilter,
                 page,
                 10, // Page size
-                sortKey || 'createdAt',
+                sortKey || 'dateCreated',
                 sortDirection
             );
             setAccounts(accounts);
@@ -129,13 +129,13 @@ function AccountsListPageComponent() {
                                     </Button>
                                 </TableHead>
                                 <TableHead>
-                                     <Button variant="ghost" onClick={() => handleSort('createdAt')}>
-                                        Created On {renderSortArrow('createdAt')}
+                                     <Button variant="ghost" onClick={() => handleSort('dateCreated')}>
+                                        Created On {renderSortArrow('dateCreated')}
                                     </Button>
                                 </TableHead>
                                 <TableHead>
-                                    <Button variant="ghost" onClick={() => handleSort('type')}>
-                                        Type {renderSortArrow('type')}
+                                    <Button variant="ghost" onClick={() => handleSort('accountType')}>
+                                        Type {renderSortArrow('accountType')}
                                     </Button>
                                 </TableHead>
                                 <TableHead>
@@ -161,8 +161,8 @@ function AccountsListPageComponent() {
                                             </Link>
                                             <p className="text-xs text-muted-foreground font-mono">{acc.id}</p>
                                         </TableCell>
-                                        <TableCell>{acc.createdAt}</TableCell>
-                                        <TableCell><Badge variant="outline">{acc.type}</Badge></TableCell>
+                                        <TableCell>{acc.dateCreated}</TableCell>
+                                        <TableCell><Badge variant="outline">{acc.accountType}</Badge></TableCell>
                                         <TableCell>{acc.isRoot ? 'Yes' : 'No'}</TableCell>
                                     </TableRow>
                                 ))

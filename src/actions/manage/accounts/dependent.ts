@@ -17,9 +17,9 @@ import { checkPermissions, getUserProfile, getUserNeupIds } from '@/lib/user';
 
 export type DependentAccount = {
     id: string;
-    displayName: string;
+    nameDisplay: string;
     neupId: string;
-    displayPhoto?: string;
+    accountPhoto?: string;
 };
 
 export async function getDependentAccounts(): Promise<DependentAccount[]> {
@@ -72,9 +72,9 @@ export async function getDependentAccounts(): Promise<DependentAccount[]> {
 
                 return {
                     id: accountId,
-                    displayName: profile.displayName || `${profile.firstName} ${profile.lastName}`.trim(),
-                    neupId: profile.neupId || 'N/A',
-                    displayPhoto: profile.displayPhoto,
+                    nameDisplay: profile.nameDisplay || `${profile.nameFirst} ${profile.nameLast}`.trim(),
+                    neupId: profile.neupIdPrimary || 'N/A',
+                    accountPhoto: profile.accountPhoto,
                 };
             })
         );
@@ -132,13 +132,13 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
             accountType: 'dependent',
             accountStatus: 'active',
             verified: false,
-            displayName: `${profileData.firstName} ${profileData.lastName}`.trim(),
-            displayPhoto: null,
-            neupId,
+            nameDisplay: `${profileData.nameFirst} ${profileData.nameLast}`.trim(),
+            accountPhoto: null,
+            neupIdPrimary: neupId,
             ...restOfProfile,
             gender: finalGender,
-            birthDate: profileData.dob.toISOString(),
-            createdAt: serverTimestamp()
+            dateBirth: profileData.dateBirth.toISOString(),
+            dateCreated: serverTimestamp()
         });
         
         const [guardianPermSnap, dependentPermSnap] = await Promise.all([

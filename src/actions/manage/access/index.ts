@@ -1,3 +1,4 @@
+
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -28,7 +29,7 @@ export type Invitation = {
     grantedBy: {
         name: string;
         neupId: string;
-        displayPhoto?: string;
+        accountPhoto?: string;
     };
     grantedOn: string;
 }
@@ -64,10 +65,10 @@ export async function getAccessList(accountId: string): Promise<UserAccess[]> {
         return {
           permitId: doc.id,
           userId: data.account_id,
-          displayName:
-            userProfile.displayName ||
-            `${userProfile.firstName} ${userProfile.lastName}`.trim(),
-          displayPhoto: userProfile.displayPhoto,
+          nameDisplay:
+            userProfile.nameDisplay ||
+            `${userProfile.nameFirst} ${userProfile.nameLast}`.trim(),
+          accountPhoto: userProfile.accountPhoto,
           permissions: data.permission || [],
           status: 'approved',
         };
@@ -109,12 +110,12 @@ export async function getAccessDetails(permitId: string): Promise<AccessDetails 
             permitId: permitDoc.id,
             grantedTo: {
                 id: data.account_id,
-                name: grantedToProfile.displayName || `${grantedToProfile.firstName} ${grantedToProfile.lastName}`.trim(),
+                name: grantedToProfile.nameDisplay || `${grantedToProfile.nameFirst} ${grantedToProfile.nameLast}`.trim(),
                 neupId: grantedToNeupIds[0] || 'N/A'
             },
             grantedBy: {
                 id: data.target_account,
-                name: grantedByProfile.displayName || `${grantedByProfile.firstName} ${grantedByProfile.lastName}`.trim()
+                name: grantedByProfile.nameDisplay || `${grantedByProfile.nameFirst} ${grantedByProfile.nameLast}`.trim()
             },
             grantedOn: data.created_on?.toDate().toLocaleString() || new Date().toLocaleString(),
             permissions: data.permission || []
@@ -300,14 +301,14 @@ export async function grantAccessByNeupId(formData: FormData, geolocation?: stri
             sender_id: ownerAccountId,
             recipient_id: targetAccountId,
             status: 'pending',
-            createdAt: serverTimestamp(),
+            dateCreated: serverTimestamp(),
         });
         
         await addDoc(collection(db, 'notifications'), {
             recipient_id: targetAccountId,
             request_id: requestRef.id,
             is_read: false,
-            createdAt: serverTimestamp()
+            dateCreated: serverTimestamp()
         });
 
 

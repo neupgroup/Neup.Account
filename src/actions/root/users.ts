@@ -16,7 +16,7 @@ import {
   setDoc,
   orderBy,
 } from 'firebase/firestore';
-import { getUserNeupIds, getUserProfile, checkPermissions } from '@/lib/user';
+import { getUserNeupIds, getUserProfile, checkPermissions, getAccountType } from '@/lib/user';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { revalidatePath } from 'next/cache';
 import { logActivity } from '@/lib/log-actions';
@@ -32,7 +32,7 @@ import type {
 export type UserDetailsLimited = {
   accountId: string;
   neupId: string;
-  displayName: string;
+  nameDisplay: string;
 };
 
 export async function getUserDetails(
@@ -47,28 +47,10 @@ export async function getUserDetails(
 
   return {
     accountId,
-    neupId: profile.neupId || 'N/A',
+    neupId: profile.neupIdPrimary || 'N/A',
     profile,
     accountType: accountType || 'individual',
   };
-}
-
-export async function getAccountType(accountId?: string): Promise<string | null> {
-  const idToFetch = accountId || await getActiveAccountId();
-  if (!idToFetch) return null;
-  try {
-      const typeRef = doc(db, 'account', idToFetch);
-      const typeDoc = await getDoc(typeRef);
-
-      if (typeDoc.exists()) {
-          return typeDoc.data().accountType || 'individual'; // default to individual if type is missing
-      }
-      return 'individual';
-
-  } catch (error) {
-      console.error('Error in getAccountType:', error);
-      return null;
-  }
 }
 
 export async function getAccountDetails(accountId: string) {
