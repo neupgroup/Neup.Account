@@ -6,7 +6,6 @@ import { db } from '@/lib/firebase';
 import { collection, getDocs, query, where, Timestamp } from 'firebase/firestore';
 import { logError } from '@/lib/logger';
 import { checkPermissions } from '@/lib/user';
-import type { UserProfile } from '@/lib/user';
 import type { UserStats } from '@/types';
 
 export type AccountListItem = {
@@ -30,17 +29,13 @@ export async function getUserStats(): Promise<UserStats> {
         const twentyFourHoursAgo = Timestamp.fromMillis(Date.now() - 24 * 60 * 60 * 1000);
         
         const accountsCollection = collection(db, 'account');
-        const profilesCollection = collection(db, 'profile');
 
-        const [accountsSnapshot, profilesSnapshot] = await Promise.all([
-            getDocs(accountsCollection),
-            getDocs(profilesCollection)
-        ]);
+        const accountsSnapshot = await getDocs(accountsCollection);
 
         const totalUsers = accountsSnapshot.size;
         
         let signedUpToday = 0;
-        profilesSnapshot.forEach(doc => {
+        accountsSnapshot.forEach(doc => {
             const createdAt = doc.data().createdAt;
             if (createdAt && createdAt.toDate() > twentyFourHoursAgo.toDate()) {
                 signedUpToday++;
@@ -72,16 +67,10 @@ export async function getAllAccounts(
     }
 
     try {
-        const [accountSnapshot, profileSnapshot, permitSnapshot] = await Promise.all([
+        const [accountSnapshot, permitSnapshot] = await Promise.all([
             getDocs(collection(db, 'account')),
-            getDocs(collection(db, 'profile')),
             getDocs(query(collection(db, 'permit'), where('is_root', '==', true)))
         ]);
-
-        const profileMap = new Map<string, UserProfile>();
-        profileSnapshot.forEach(doc => {
-            profileMap.set(doc.id, doc.data() as UserProfile);
-        });
 
         const rootPermitMap = new Map<string, boolean>();
         permitSnapshot.forEach(doc => {
@@ -91,13 +80,12 @@ export async function getAllAccounts(
         let allAccounts: AccountListItem[] = accountSnapshot.docs.map(doc => {
             const accountId = doc.id;
             const accountData = doc.data();
-            const profileData = profileMap.get(accountId);
 
             return {
                 id: accountId,
                 name: accountData?.displayName || 'Unnamed Account',
-                createdAt: (profileData as any)?.createdAt?.toDate()?.toISOString() || new Date(0).toISOString(),
-                type: accountData.type || 'individual',
+                createdAt: accountData.createdAt?.toDate?.()?.toISOString() || new Date(0).toISOString(),
+                type: accountData.accountType || 'individual',
                 isRoot: rootPermitMap.has(accountId) || false,
             };
         });

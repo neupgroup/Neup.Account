@@ -51,7 +51,7 @@ export async function getBrandAccounts(): Promise<BrandAccount[]> {
         const brandAccountsQuery = query(
             accountRef, 
             where('__name__', 'in', managedAccountIds), 
-            where('type', '==', 'brand')
+            where('accountType', '==', 'brand')
         );
         
         const querySnapshot = await getDocs(brandAccountsQuery);
@@ -118,11 +118,15 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
         const brandAccountId = newAccountRef.id;
 
         batch.set(newAccountRef, {
-            type: 'brand',
-            status: 'active',
+            accountType: 'brand',
+            accountStatus: 'active',
             verified: false,
             displayName: fullName,
-            displayPhoto: null
+            displayPhoto: null,
+            legalName: legalName || null,
+            registrationId: registrationId || null,
+            servingAreas: servingAreas || null,
+            createdAt: serverTimestamp(),
         });
 
         // Grant management permission to the creator by creating a permit document
@@ -151,13 +155,6 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
 
         const newNeupIdRef = doc(db, 'neupid', neupId);
         batch.set(newNeupIdRef, { for: brandAccountId, is_primary: true });
-
-        batch.set(doc(db, "profile", brandAccountId), {
-            legalName: legalName || null,
-            registrationId: registrationId || null,
-            servingAreas: servingAreas || null,
-            createdAt: serverTimestamp(),
-        });
         
         if (headOfficeLocation) {
              const newContactRef = doc(collection(db, 'contact'));

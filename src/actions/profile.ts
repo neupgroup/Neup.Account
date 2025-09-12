@@ -23,16 +23,13 @@ export async function getDisplayNameSuggestions(accountId: string): Promise<stri
     if (firstName) {
         suggestions.add(firstName);
     }
-    
+    if (firstName && middleName) {
+        suggestions.add(`${firstName} ${middleName}`);
+    }
     if (firstName && lastName) {
         suggestions.add(`${firstName} ${lastName}`);
         suggestions.add(`${lastName} ${firstName}`);
     }
-
-    if (firstName && middleName) {
-        suggestions.add(`${firstName} ${middleName}`);
-    }
-    
     if (firstName && middleName && lastName) {
         suggestions.add(`${firstName} ${middleName} ${lastName}`);
         suggestions.add(`${lastName} ${middleName} ${firstName}`);
@@ -110,25 +107,18 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
     try {
         const batch = writeBatch(db);
         const accountRef = doc(db, 'account', accountId);
-        const profileRef = doc(db, 'profile', accountId);
 
         if (canModifyProfile) {
-            const profileData: Record<string, any> = {};
             const accountData: Record<string, any> = {};
 
             // List of valid profile fields to prevent unwanted data being written
-            const validProfileFields = ['firstName', 'middleName', 'lastName', 'gender', 'dob'];
-            for(const key of validProfileFields) {
+            const validAccountFields = ['firstName', 'middleName', 'lastName', 'gender', 'dob', 'displayName', 'displayPhoto'];
+            for(const key of validAccountFields) {
                 if(data[key] !== undefined) {
-                    profileData[key] = data[key];
+                    accountData[key] = data[key];
                 }
             }
             
-            // Handle displayName and displayPhoto which are now on the account doc
-            if(data.displayName !== undefined) accountData.displayName = data.displayName;
-            if(data.displayPhoto !== undefined) accountData.displayPhoto = data.displayPhoto;
-
-
             // Auto-update display name if legal name changes
             const hasNameChange = ['firstName', 'middleName', 'lastName'].some(key => data[key] !== undefined);
             if (hasNameChange) {
@@ -145,8 +135,9 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
             }
 
 
-            if (profileData.dob instanceof Date) {
-              profileData.dob = profileData.dob.toISOString();
+            if (accountData.dob instanceof Date) {
+              accountData.birthDate = accountData.dob.toISOString();
+              delete accountData.dob;
             }
             
             if (data.customDisplayNameRequest) {
@@ -166,9 +157,6 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
                 delete accountData.displayName;
             }
 
-            if(Object.keys(profileData).length > 0) {
-                batch.update(profileRef, profileData);
-            }
             if(Object.keys(accountData).length > 0) {
                 batch.update(accountRef, accountData);
             }
@@ -240,36 +228,27 @@ export async function updateBrandProfile(accountId: string, data: z.infer<typeof
     try {
         const validatedData = brandProfileFormSchema.parse(data);
         const accountRef = doc(db, 'account', accountId);
-        const profileRef = doc(db, 'profile', accountId);
-        const batch = writeBatch(db);
         
         // Data for the 'account' collection
         const accountDataToUpdate: Partial<any> = {
             displayName: validatedData.displayName,
             displayPhoto: validatedData.displayPhoto,
-        };
-
-        // Data for the 'profile' collection
-        const profileDataToUpdate: Partial<any> = {
             isLegalEntity: validatedData.isLegalEntity,
         };
 
         if (validatedData.isLegalEntity) {
-            profileDataToUpdate.legalName = validatedData.legalName;
-            profileDataToUpdate.registrationId = validatedData.registrationId;
-            profileDataToUpdate.countryOfOrigin = validatedData.countryOfOrigin;
-            profileDataToUpdate.registeredOn = validatedData.registeredOn?.toISOString();
+            accountDataToUpdate.legalName = validatedData.legalName;
+            accountDataToUpdate.registrationId = validatedData.registrationId;
+            accountDataToUpdate.countryOfOrigin = validatedData.countryOfOrigin;
+            accountDataToUpdate.registeredOn = validatedData.registeredOn?.toISOString();
         } else {
-            profileDataToUpdate.legalName = null;
-            profileDataToUpdate.registrationId = null;
-            profileDataToUpdate.countryOfOrigin = null;
-            profileDataToUpdate.registeredOn = null;
+            accountDataToUpdate.legalName = null;
+            accountDataToUpdate.registrationId = null;
+            accountDataToUpdate.countryOfOrigin = null;
+            accountDataToUpdate.registeredOn = null;
         }
 
-        batch.update(accountRef, accountDataToUpdate);
-        batch.update(profileRef, profileDataToUpdate);
-
-        await batch.commit();
+        await updateDoc(accountRef, accountDataToUpdate);
 
         await logActivity(accountId, 'Brand Profile Update', 'Success', undefined, geolocation);
 

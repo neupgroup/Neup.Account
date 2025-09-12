@@ -35,16 +35,13 @@ export async function getPendingVerificationRequests(): Promise<VerificationRequ
                 const data = doc.data();
                 const accountId = data.accountId;
 
-                const [profile, neupIds] = await Promise.all([
-                    getUserProfile(accountId),
-                    getUserNeupIds(accountId)
-                ]);
+                const profile = await getUserProfile(accountId);
 
                 return {
                     id: doc.id,
                     accountId,
                     fullName: profile?.displayName || `${profile?.firstName} ${profile?.lastName}`.trim() || 'Unknown User',
-                    neupId: neupIds[0] || 'N/A',
+                    neupId: profile?.neupId || 'N/A',
                     requestedAt: data.requestedAt?.toDate()?.toLocaleDateString() || 'N/A',
                     status: data.status,
                 };

@@ -1,3 +1,4 @@
+
 import { notFound } from 'next/navigation';
 import { Card, CardContent } from '@/components/ui/card';
 import { ListItem } from '@/components/ui/list-item';
@@ -95,7 +96,7 @@ export default async function AccountDetailsPage({ params }: { params: { id: str
               {userDetails.profile.displayName ||
                 `${userDetails.profile.firstName} ${userDetails.profile.lastName}`}
             </h1>
-            <VerifiedBadge accountId={params.id} className="h-6 w-6" />
+            {userDetails.profile.verified && <VerifiedBadge accountId={params.id} className="h-6 w-6" />}
           </div>
           <p className="text-muted-foreground font-mono">
             @{userDetails.neupId}

@@ -1,4 +1,5 @@
 
+
 "use client"
 
 import { useEffect, useState } from 'react'
@@ -7,7 +8,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { format } from "date-fns"
 
-import { getUserProfile } from "@/lib/user"
 import { updateUserProfile, parseDateString } from "@/actions/profile"
 import { useToast } from "@/hooks/use-toast"
 import { cn } from '@/lib/utils'
@@ -61,7 +61,7 @@ export default function DemographicsPage() {
                 formGender = 'custom';
             }
             
-            const dobDate = profile.dob ? new Date(profile.dob) : undefined;
+            const dobDate = profile.birthDate ? new Date(profile.birthDate) : undefined;
             if (dobDate) {
                  setDateInput(format(dobDate, 'yyyy-MM-dd'));
             }
@@ -108,19 +108,13 @@ export default function DemographicsPage() {
             toast({ variant: "destructive", title: "Error", description: "Not authenticated." });
             return;
         }
-
-        const currentProfile = await getUserProfile(accountId);
-        if (!currentProfile) {
-             toast({ variant: "destructive", title: "Error", description: "Could not load profile." });
-            return;
-        }
         
         let finalGender = data.gender;
         if (data.gender === 'custom') {
             finalGender = `c.${data.customGender?.trim() || 'custom'}`;
         }
 
-        const result = await updateUserProfile(accountId, { ...currentProfile, ...data, gender: finalGender });
+        const result = await updateUserProfile(accountId, { ...data, gender: finalGender });
 
         if (result.success) {
             toast({ title: "Success", description: "Demographics updated successfully.", className: "bg-accent text-accent-foreground" });

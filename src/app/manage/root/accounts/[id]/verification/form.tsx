@@ -51,6 +51,7 @@ const verificationCategories = [
 
 export function VerificationManager({ accountId }: { accountId: string }) {
     const [details, setDetails] = useState<VerificationDetails | null>(null);
+    const [isVerified, setIsVerified] = useState<boolean>(false);
     const [loading, setLoading] = useState(true);
     const [isPending, startTransition] = useTransition();
     const { toast } = useToast();
@@ -73,10 +74,17 @@ export function VerificationManager({ accountId }: { accountId: string }) {
     useEffect(() => {
         async function fetchDetails() {
             setLoading(true);
+            const accountRef = doc(db, 'account', accountId);
             const verificationRef = doc(db, 'verifications', accountId);
-            const docSnap = await getDoc(verificationRef);
-            if (docSnap.exists()) {
-                const data = docSnap.data();
+            const [accountSnap, verificationSnap] = await Promise.all([
+                getDoc(accountRef),
+                getDoc(verificationRef)
+            ]);
+
+            setIsVerified(accountSnap.exists() && accountSnap.data().verified === true);
+            
+            if (verificationSnap.exists()) {
+                const data = verificationSnap.data();
                 setDetails({
                     status: data.status,
                     category: data.category,
@@ -108,6 +116,7 @@ export function VerificationManager({ accountId }: { accountId: string }) {
                         verifiedAt: newData.verifiedAt?.toDate().toLocaleString(),
                     });
                 }
+                setIsVerified(true);
                 grantForm.reset();
             } else {
                 toast({ variant: 'destructive', title: 'Error', description: result.error });
@@ -121,6 +130,7 @@ export function VerificationManager({ accountId }: { accountId: string }) {
             if (result.success) {
                 toast({ title: 'Success', description: 'User verification has been revoked.'});
                 setDetails(d => d ? { ...d, status: 'revoked' } : null);
+                setIsVerified(false);
                 revokeForm.reset();
             } else {
                 toast({ variant: 'destructive', title: 'Error', description: result.error });
@@ -145,7 +155,7 @@ export function VerificationManager({ accountId }: { accountId: string }) {
         )
     }
 
-    if (details?.status === 'approved') {
+    if (isVerified) {
         return (
             <div className="grid gap-4">
                 <TertiaryHeader title="Verification Status" />
@@ -155,7 +165,7 @@ export function VerificationManager({ accountId }: { accountId: string }) {
                             <CheckCircle2 className="h-4 w-4 !text-green-500" />
                             <AlertTitle>Account Verified</AlertTitle>
                             <AlertDescription>
-                                Verified as <strong>{details.category}</strong> on {details.verifiedAt}.
+                                Verified as <strong>{details?.category}</strong> on {details?.verifiedAt}.
                             </AlertDescription>
                         </Alert>
                     </CardHeader>

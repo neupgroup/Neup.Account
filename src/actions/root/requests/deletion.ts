@@ -1,4 +1,5 @@
 
+
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -40,7 +41,7 @@ export async function getDeletionRequests(): Promise<DeletionRequest[]> {
     const accountsRef = collection(db, 'account');
     const q = query(
       accountsRef,
-      where('status', '==', 'deletion_requested')
+      where('accountStatus', '==', 'deletion_requested')
     );
     const querySnapshot = await getDocs(q);
 
@@ -51,10 +52,7 @@ export async function getDeletionRequests(): Promise<DeletionRequest[]> {
     const requests = await Promise.all(
       querySnapshot.docs.map(async (docSnap) => {
         const accountId = docSnap.id;
-        const [profile, neupIds] = await Promise.all([
-          getUserProfile(accountId),
-          getUserNeupIds(accountId),
-        ]);
+        const profile = await getUserProfile(accountId);
 
         // Attempt to get the request date from the account_status collection
         const statusQuery = query(
@@ -71,7 +69,7 @@ export async function getDeletionRequests(): Promise<DeletionRequest[]> {
             profile?.displayName ||
             `${profile?.firstName} ${profile?.lastName}`.trim() ||
             'Unknown User',
-          userNeupId: neupIds[0] || 'N/A',
+          userNeupId: profile?.neupId || 'N/A',
           requestedAt,
         };
       })
@@ -97,7 +95,7 @@ export async function getDeletionStatus(accountId: string): Promise<{status: 'no
             return { status: 'deleted' };
         }
 
-        const status = accountDoc.data().status;
+        const status = accountDoc.data().accountStatus;
         if (status === 'deletion_requested') {
             const statusQuery = query(
                 collection(db, 'account_status'),
@@ -154,7 +152,7 @@ export async function cancelAccountDeletion(
     try {
         const batch = writeBatch(db);
         const accountRef = doc(db, 'account', accountId);
-        batch.update(accountRef, { status: 'active' });
+        batch.update(accountRef, { accountStatus: 'active' });
 
         // Find and update the status log
         const statusQuery = query(
@@ -207,7 +205,7 @@ export async function requestAccountDeletionByAdmin(accountId: string, data: z.i
         const accountRef = doc(db, 'account', accountId);
         const batch = writeBatch(db);
 
-        batch.update(accountRef, { status: 'deletion_requested' });
+        batch.update(accountRef, { accountStatus: 'deletion_requested' });
 
         const statusLogRef = doc(collection(db, 'account_status'));
         batch.set(statusLogRef, {
@@ -215,7 +213,7 @@ export async function requestAccountDeletionByAdmin(accountId: string, data: z.i
             status: 'deletion_requested',
             remarks: `Admin initiated deletion. Reason: ${validation.data.reason}`,
             from_date: serverTimestamp(),
-            more_info: `Request initiated by admin: ${adminId}.`
+            more_info: `Request by admin: ${adminId}.`
         });
 
         await batch.commit();

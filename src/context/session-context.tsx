@@ -1,13 +1,14 @@
 
+
 "use client";
 
 import { createContext, useState, useEffect, type ReactNode, useContext } from 'react';
-import { type UserProfile, getUserNeupIds, getUserPermissions, getUserProfile as fetchUserProfile } from '@/lib/user';
+import { type UserProfile, getUserPermissions, getUserProfile as fetchUserProfile } from '@/lib/user';
 import { getActiveAccountId, getPersonalAccountId, validateCurrentSession } from '@/lib/auth-actions';
 
 type SessionState = {
     loading: boolean;
-    profile: (UserProfile & { neupId?: string }) | null;
+    profile: UserProfile | null;
     permissions: string[] | null;
     accountId: string | null;
     personalAccountId: string | null;
@@ -69,24 +70,14 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
                 return;
             }
 
-            const [profile, neupIds, permissions] = await Promise.all([
+            const [profile, permissions] = await Promise.all([
                 fetchUserProfile(activeId),
-                getUserNeupIds(activeId),
                 getUserPermissions(activeId)
             ]);
-            
-            const sessionProfile = profile 
-                ? { 
-                    ...profile, 
-                    neupId: neupIds[0],
-                    // @ts-ignore
-                    dob: profile.dob?.toDate?.().toISOString() || null,
-                } 
-                : null;
 
             const newState = {
                 loading: false,
-                profile: sessionProfile,
+                profile,
                 permissions,
                 accountId: activeId,
                 personalAccountId: personalId,

@@ -1,4 +1,5 @@
 
+
 "use client"
 
 import { useEffect, useState } from 'react'
@@ -6,7 +7,6 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
-import { getUserProfile } from "@/lib/user"
 import { updateUserProfile } from "@/actions/profile"
 import { useToast } from "@/hooks/use-toast"
 
@@ -57,13 +57,7 @@ export default function NamePage() {
             return;
         }
 
-        const currentProfile = await getUserProfile(accountId);
-        if (!currentProfile) {
-             toast({ variant: "destructive", title: "Error", description: "Could not load profile." });
-            return;
-        }
-
-        const result = await updateUserProfile(accountId, { ...currentProfile, ...data });
+        const result = await updateUserProfile(accountId, data);
 
         if (result.success) {
             toast({ title: "Success", description: "Name updated successfully.", className: "bg-accent text-accent-foreground" });

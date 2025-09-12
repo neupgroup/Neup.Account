@@ -55,7 +55,7 @@ export async function getDependentAccounts(): Promise<DependentAccount[]> {
 
         // Fetch account details for only those that are dependent accounts
         const accountRef = collection(db, 'account');
-        const dependentAccountsQuery = query(accountRef, where('__name__', 'in', dependentAccountIds), where('type', '==', 'dependent'));
+        const dependentAccountsQuery = query(accountRef, where('__name__', 'in', dependentAccountIds), where('accountType', '==', 'dependent'));
         
         const querySnapshot = await getDocs(dependentAccountsQuery);
 
@@ -66,17 +66,14 @@ export async function getDependentAccounts(): Promise<DependentAccount[]> {
         const dependentAccounts = await Promise.all(
             querySnapshot.docs.map(async (doc) => {
                 const accountId = doc.id;
-                const [profile, neupIds] = await Promise.all([
-                    getUserProfile(accountId),
-                    getUserNeupIds(accountId)
-                ]);
+                const profile = await getUserProfile(accountId);
 
                 if (!profile) return null;
 
                 return {
                     id: accountId,
                     displayName: profile.displayName || `${profile.firstName} ${profile.lastName}`.trim(),
-                    neupId: neupIds[0] || 'N/A',
+                    neupId: profile.neupId || 'N/A',
                     displayPhoto: profile.displayPhoto,
                 };
             })
@@ -107,8 +104,8 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
         return { success: false, error: "Invalid data provided.", details: validation.error.flatten() };
     }
 
-    const { password, ...rest } = validation.data;
-    const neupId = rest.neupId.toLowerCase();
+    const { password, agreement, ...profileData } = validation.data;
+    const neupId = profileData.neupId.toLowerCase();
     const ipAddress = headers().get('x-forwarded-for') || 'Unknown IP';
 
     try {
@@ -119,22 +116,29 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
             return { success: false, error: 'This NeupID is already taken.' };
         }
 
-        let finalGender = rest.gender;
-        if (rest.gender === 'custom') {
-            finalGender = `c.${rest.customGender?.trim() || 'custom'}`;
+        let finalGender = profileData.gender;
+        if (profileData.gender === 'custom') {
+            finalGender = `c.${profileData.customGender?.trim() || 'custom'}`;
         }
         
         const batch = writeBatch(db);
 
         const newAccountRef = doc(collection(db, 'account'));
         const dependentAccountId = newAccountRef.id;
+        
+        const { customGender, neupId: _n, ...restOfProfile } = profileData;
 
         batch.set(newAccountRef, {
-            type: 'dependent',
-            status: 'active',
+            accountType: 'dependent',
+            accountStatus: 'active',
             verified: false,
-            displayName: `${rest.firstName} ${rest.lastName}`.trim(),
-            displayPhoto: null
+            displayName: `${profileData.firstName} ${profileData.lastName}`.trim(),
+            displayPhoto: null,
+            neupId,
+            ...restOfProfile,
+            gender: finalGender,
+            birthDate: profileData.dob.toISOString(),
+            createdAt: serverTimestamp()
         });
         
         const [guardianPermSnap, dependentPermSnap] = await Promise.all([
@@ -178,15 +182,6 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
 
         const hashedPassword = await bcrypt.hash(password, 10);
         batch.set(doc(db, 'auth_password', dependentAccountId), { pass: hashedPassword, passwordLastChanged: serverTimestamp() });
-        
-        const { agreement: _a, gender, customGender, neupId: _n, ...profileData } = rest;
-        
-        batch.set(doc(db, "profile", dependentAccountId), { 
-            ...profileData, 
-            dob: profileData.dob.toISOString(),
-            gender: finalGender, 
-            createdAt: serverTimestamp() 
-        });
         
         await batch.commit();
         

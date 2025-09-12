@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState, useTransition, useContext, useEffect } from "react";
@@ -20,7 +21,7 @@ import { Label } from "@/components/ui/label";
 import { BackButton } from "@/components/ui/back-button";
 import { GeolocationContext } from "@/context/geolocation-context";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
-import { getAccountType } from "@/lib/user"; // We can reuse this to get account status
+import { getAccountType } from "@/lib/user";
 import { getActiveAccountId } from "@/lib/auth-actions";
 import { useRouter } from "next/navigation";
 
@@ -38,7 +39,7 @@ export default function DeleteAccountPage() {
     async function checkAccountStatus() {
         const accountId = await getActiveAccountId();
         if (accountId) {
-            const status = await getAccountType(accountId); // Reusing this as it reads the account doc
+            const status = await getAccountType(accountId);
             if (status === 'deletion_requested') {
                 setIsRequested(true);
             }

@@ -359,11 +359,19 @@ export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
     const accountId = newAccountRef.id;
 
     batch.set(newAccountRef, { 
-        type: 'individual',
-        status: 'active',
+        accountType: 'individual',
+        accountStatus: 'active',
         verified: false,
         displayName: displayName,
-        displayPhoto: "https://neupgroup.com/assets/avatar/user1.png"
+        displayPhoto: "https://neupgroup.com/assets/avatar/user1.png",
+        firstName,
+        lastName,
+        middleName: middleName || '',
+        birthDate: dob,
+        gender,
+        nationality,
+        neupId, // Primary NeupID
+        createdAt: serverTimestamp(),
     });
 
     const permQuery = query(
@@ -393,15 +401,7 @@ export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
       pass: password,
       passwordLastChanged: serverTimestamp(),
     });
-    batch.set(doc(db, 'profile', accountId), {
-      firstName,
-      lastName,
-      middleName: middleName || '',
-      dob,
-      gender,
-      nationality,
-      createdAt: serverTimestamp(),
-    });
+
     batch.set(doc(db, 'contact', `primaryPhone_${accountId}`), {
       account_id: accountId,
       contact_type: 'primaryPhone',

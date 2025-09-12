@@ -23,7 +23,7 @@ export type UserProfile = {
   displayName?: string;
   displayPhoto?: string;
   gender?: string; // 'male', 'female', 'prefer_not_to_say', 'c.custom'
-  dob?: string; // ISO string
+  birthDate?: string; // ISO string
   nationality?: string;
   isLegalEntity?: boolean;
   legalName?: string;
@@ -53,8 +53,7 @@ export async function getAccountType(accountId?: string): Promise<string | null>
     const accountRef = doc(db, 'account', idToFetch);
     const accountDoc = await getDoc(accountRef);
     if (accountDoc.exists()) {
-        // Return status if it exists, otherwise the type
-        return accountDoc.data().status || accountDoc.data().type || 'individual';
+        return accountDoc.data().accountStatus || accountDoc.data().accountType || 'individual';
     }
     return 'individual';
   } catch (error) {
@@ -70,40 +69,21 @@ export async function getUserProfile(
   if (!idToFetch) return null;
   try {
     const accountRef = doc(db, 'account', idToFetch);
-    const profileRef = doc(db, 'profile', idToFetch);
+    const accountDoc = await getDoc(accountRef);
     
-    const [accountDoc, profileDoc] = await Promise.all([
-        getDoc(accountRef),
-        getDoc(profileRef)
-    ]);
-    
-    if (profileDoc.exists()) {
-      const profileData = profileDoc.data();
-      const accountData = accountDoc.exists() ? accountDoc.data() : {};
+    if (accountDoc.exists()) {
+      const accountData = accountDoc.data();
       
-      const combinedData = {
-          ...profileData,
-          displayName: accountData.displayName || profileData.displayName,
-          displayPhoto: accountData.displayPhoto,
-          verified: accountData.verified || false,
+      const serializedData: UserProfile = {
+        ...accountData,
+        birthDate: accountData.birthDate?.toDate?.().toISOString() || accountData.birthDate || null,
+        registeredOn: accountData.registeredOn?.toDate?.().toISOString() || accountData.registeredOn || null,
+        createdAt: accountData.createdAt?.toDate?.().toISOString() || null,
       };
 
-      // Manually convert Firestore Timestamps to ISO strings
-      const serializedData = {
-        ...combinedData,
-        dob: combinedData.dob?.toDate?.().toISOString() || null,
-        registeredOn: combinedData.registeredOn?.toDate?.().toISOString() || null,
-      };
+      delete (serializedData as any).createdAt;
 
-      delete serializedData.createdAt; // Deprecated or internal field
-
-      const neupIds = await getUserNeupIds(idToFetch);
-
-      return { 
-          ...serializedData, 
-          accountId: idToFetch,
-          neupId: neupIds[0] || null,
-        } as UserProfile;
+      return serializedData;
     }
     return null;
   } catch (error) {
@@ -259,15 +239,15 @@ export async function validateNeupId(neupId: string): Promise<{ success: boolean
         }
 
         const accountData = accountDoc.data();
-        if (accountData.type === 'brand' || accountData.type === 'branch') {
+        if (accountData.accountType === 'brand' || accountData.accountType === 'branch') {
              return { success: false, error: "Brand accounts can't be signed in." };
         }
         
-        if (accountData.status === 'deletion_requested') {
+        if (accountData.accountStatus === 'deletion_requested') {
             return { success: false, error: "pending_deletion" };
         }
 
-        if (accountData.status === 'blocked') {
+        if (accountData.accountStatus === 'blocked') {
              const block = accountData.block;
              if (block && (block.is_permanent || (block.until && block.until.toDate() > new Date()))) {
                 return { success: false, error: "This account has been blocked." };
