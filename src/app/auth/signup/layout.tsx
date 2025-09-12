@@ -6,21 +6,21 @@ import { db } from '@/lib/firebase';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const stepOrder = [
-    { path: '/auth/signup/name', requiredField: null },
-    { path: '/auth/signup/display-name', requiredField: 'firstName' },
-    { path: '/auth/signup/demographics', requiredField: 'displayName' },
-    { path: '/auth/signup/nationality', requiredField: 'dob' },
-    { path: '/auth/signup/contact', requiredField: 'nationality' },
-    { path: '/auth/signup/otp', requiredField: 'phone' },
-    { path: '/auth/signup/neupid', requiredField: 'phoneVerified' },
-    { path: '/auth/signup/password', requiredField: 'neupId' },
-    { path: '/auth/signup/terms', requiredField: 'password' },
+    { path: '/auth/signup/name', status: 'pending_name' },
+    { path: '/auth/signup/display-name', status: 'pending_display_name'},
+    { path: '/auth/signup/demographics', status: 'pending_demographics' },
+    { path: '/auth/signup/nationality', status: 'pending_nationality' },
+    { path: '/auth/signup/contact', status: 'pending_contact' },
+    { path: '/auth/signup/otp', status: 'pending_otp' },
+    { path: '/auth/signup/neupid', status: 'pending_neupid' },
+    { path: '/auth/signup/password', status: 'pending_password' },
+    { path: '/auth/signup/terms', status: 'pending_terms' },
 ];
 
 async function getSignupStatus() {
     const authRequestId = cookies().get('temp_auth_id')?.value;
     if (!authRequestId) {
-        return { valid: false, currentStepPath: '/auth/signup/name' };
+        return { valid: false, currentStepPath: '/auth/signup' };
     }
 
     const authRequestRef = doc(db, 'auth_requests', authRequestId);
@@ -28,24 +28,13 @@ async function getSignupStatus() {
 
     if (!authRequestDoc.exists() || (authRequestDoc.data().expiresAt && authRequestDoc.data().expiresAt.toDate() < new Date())) {
         cookies().delete('temp_auth_id');
-        return { valid: false, currentStepPath: '/auth/signup/name' };
+        return { valid: false, currentStepPath: '/auth/signup' };
     }
 
-    const data = authRequestDoc.data()?.data || {};
-    let currentStepPath = '/auth/signup/name';
-    let reachedRequired = true;
-    for (const step of stepOrder) {
-        if (step.requiredField && !data[step.requiredField]) {
-            reachedRequired = false;
-            break;
-        }
-        currentStepPath = step.path;
-    }
+    const status = authRequestDoc.data()?.status || 'pending_name';
+    const currentStep = stepOrder.find(s => s.status === status);
     
-    if(!reachedRequired && currentStepPath === '/auth/signup/name' && data.firstName) {
-        currentStepPath = '/auth/signup/display-name';
-    }
-
+    const currentStepPath = currentStep ? currentStep.path : '/auth/signup';
 
     return { valid: true, currentStepPath };
 }
@@ -58,9 +47,15 @@ export default async function SignupLayout({
 }) {
   const { valid, currentStepPath } = await getSignupStatus();
   
-  const pathname = cookies().get('next-url')?.value || '/auth/signup/name';
+  // Use a more reliable way to get the current pathname
+  const headersList = cookies();
+  const nextUrl = headersList.get('next-url')?.value || '/';
+  const pathname = nextUrl.startsWith('/auth/signup') ? nextUrl : '/auth/signup';
+
 
   if (!valid) {
+    // If the session is invalid, any attempt to access a signup sub-page
+    // should redirect to the entry point to start over.
     if (pathname !== '/auth/signup') {
         redirect('/auth/signup');
     }
@@ -68,8 +63,15 @@ export default async function SignupLayout({
      const currentStepIndex = stepOrder.findIndex(step => step.path === currentStepPath);
      const requestedStepIndex = stepOrder.findIndex(step => step.path === pathname);
      
+     // If the user tries to access a future step they haven't reached, redirect them back.
      if(requestedStepIndex > currentStepIndex) {
          redirect(currentStepPath);
+     }
+     
+     // If the user lands on the base signup page but has a valid session,
+     // send them to their current step.
+     if (pathname === '/auth/signup') {
+        redirect(currentStepPath);
      }
   }
 
