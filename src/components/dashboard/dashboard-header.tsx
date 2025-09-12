@@ -51,7 +51,7 @@ export function DashboardHeader() {
         <div className="space-y-4">
             <div className="flex items-center gap-4">
                  <Avatar className="h-16 w-16 rounded-lg">
-                    <AvatarImage src={profile?.accountPhoto} alt={profile?.nameDisplay} data-ai-hint="person" />
+                    <AvatarImage src={profile?.accountPhoto || "https://neupgroup.com/assets/user.png"} alt={profile?.nameDisplay} data-ai-hint="person" />
                     <AvatarFallback className="rounded-lg text-xl">
                         {`${profile?.nameDisplay?.[0] || ''}`.toUpperCase()}
                     </AvatarFallback>

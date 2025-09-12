@@ -38,7 +38,7 @@ export function UserNav() {
         )}
       </div>
       <Avatar className="h-9 w-9">
-        <AvatarImage src={profile.accountPhoto || undefined} alt={profile.nameDisplay || ''} data-ai-hint="person logo" />
+        <AvatarImage src={profile.accountPhoto || "https://neupgroup.com/assets/user.png"} alt={profile.nameDisplay || ''} data-ai-hint="person logo" />
         <AvatarFallback>{getInitials()}</AvatarFallback>
       </Avatar>
     </div>
