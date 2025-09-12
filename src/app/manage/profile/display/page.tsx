@@ -79,9 +79,9 @@ export default function DisplayInfoPage() {
                     setPastPhotos(photos);
 
                     const currentName = profile.nameDisplay || '';
-                     if (suggestions.includes(currentName)) {
+                     if (suggestions.map(s => s.toLowerCase()).includes(currentName.toLowerCase())) {
                         nameForm.reset({
-                            selectedDisplayName: currentName,
+                            selectedDisplayName: suggestions.find(s => s.toLowerCase() === currentName.toLowerCase()) || currentName,
                             customDisplayName: "",
                         });
                     } else {
@@ -144,9 +144,25 @@ export default function DisplayInfoPage() {
         }
 
         startNameTransition(async () => {
-             const result = await updateUserProfile(accountId, { 
-                nameDisplay: data.selectedDisplayName === 'custom' ? data.customDisplayName : data.selectedDisplayName
-             });
+            let payload: Record<string, any> = {};
+
+            if (data.selectedDisplayName === 'custom') {
+                const customName = data.customDisplayName?.trim() || '';
+                const isStandardFormat = nameSuggestions.some(suggestion => suggestion.toLowerCase() === customName.toLowerCase());
+
+                if (isStandardFormat) {
+                    // It's a standard format, just with different casing. Save directly.
+                    payload = { nameDisplay: customName };
+                } else {
+                    // It's a truly custom name, send for approval.
+                    payload = { customDisplayNameRequest: customName };
+                }
+            } else {
+                // A standard format was selected.
+                payload = { nameDisplay: data.selectedDisplayName };
+            }
+
+            const result = await updateUserProfile(accountId, payload);
 
             if (result.success) {
                 toast({ title: "Success", description: result.message, className: "bg-accent text-accent-foreground" });
