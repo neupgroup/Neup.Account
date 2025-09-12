@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useEffect, useState } from "react";
@@ -54,7 +55,7 @@ export default function NameStepPage() {
         NProgress.start();
         const result = await submitNameStep(data);
         if (result.success) {
-            router.push('/auth/signup/demographics');
+            router.push('/auth/signup/display-name');
         } else {
             toast({ variant: 'destructive', title: 'Error', description: result.error });
             NProgress.done();

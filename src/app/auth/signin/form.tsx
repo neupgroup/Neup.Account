@@ -49,7 +49,6 @@ export default function SigninForm() {
   const [isCheckingNeupId, startNeupIdCheck] = useTransition();
   const [isSubmitting, startPasswordSubmit] = useTransition();
 
-  const [isRedirecting, setIsRedirecting] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
   const [isClient, setIsClient] = useState(false)
   const [showDeletionDialog, setShowDeletionDialog] = useState(false);
@@ -82,12 +81,12 @@ export default function SigninForm() {
     startNeupIdCheck(async () => {
         NProgress.start();
         const result = await validateNeupId(neupId);
+        NProgress.done();
         if (result.success || result.error === 'pending_deletion') {
             setStep(2);
         } else {
             setValidationError(result.error || 'Invalid NeupID.');
         }
-        NProgress.done();
     });
   }
   
@@ -108,18 +107,19 @@ export default function SigninForm() {
                     if (returnUrl) mfaUrl.searchParams.set('return_url', returnUrl);
                     router.push(mfaUrl.toString());
                 } else {
-                    setIsRedirecting(true);
                     router.push(returnUrl || "/manage");
                 }
             } else {
                 toast({ variant: "destructive", title: "Sign In Failed", description: mfaResult.error });
+                NProgress.done();
             }
         } else if (result.error === 'pending_deletion') {
             setShowDeletionDialog(true);
+            NProgress.done();
         } else {
             toast({ variant: "destructive", title: "Sign In Failed", description: result.error });
+            NProgress.done();
         }
-        NProgress.done();
     });
   }
 
@@ -252,7 +252,7 @@ export default function SigninForm() {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting || isRedirecting}>
+                    <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting}>
                         {isSubmitting ? <Loader2 className="animate-spin" /> : 'Sign In'}
                     </Button>
                     <div className="flex justify-between items-center text-sm">

@@ -33,10 +33,15 @@ export default function DisplayNameStepPage() {
         async function loadData() {
             setLoading(true);
             const { data } = await getSignupStepData();
-            if (data && data.firstName) {
-                const suggestions = await getDisplayNameSuggestions(data);
+            if (data && data.nameFirst) {
+                // Assuming getDisplayNameSuggestions can work with the partial data
+                const suggestions = await getDisplayNameSuggestions({
+                    nameFirst: data.nameFirst,
+                    nameMiddle: data.nameMiddle,
+                    nameLast: data.nameLast
+                });
                 setNameSuggestions(suggestions);
-                form.setValue("displayName", data.displayName || suggestions[0]);
+                form.setValue("displayName", data.nameDisplay || suggestions[0] || `${data.nameFirst} ${data.nameLast}`.trim());
             }
             setLoading(false);
         }

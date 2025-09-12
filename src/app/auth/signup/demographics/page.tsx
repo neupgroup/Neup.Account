@@ -52,7 +52,7 @@ export default function DemographicsStepPage() {
                     formGender = 'custom';
                 }
 
-                const dobDate = data.dob ? new Date(data.dob) : undefined;
+                const dobDate = data.dateBirth ? new Date(data.dateBirth) : undefined;
                 if (dobDate) {
                     setDateInput(format(dobDate, 'yyyy-MM-dd'));
                 }
