@@ -1,4 +1,5 @@
 
+
 import { redirect } from 'next/navigation';
 import { cookies, headers } from 'next/headers';
 import { doc, getDoc } from 'firebase/firestore';
@@ -7,7 +8,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 const stepOrder = [
     { path: '/auth/signup/name', status: 'pending_name' },
-    { path: '/auth/signup/display-name', status: 'pending_display_name'},
     { path: '/auth/signup/demographics', status: 'pending_demographics' },
     { path: '/auth/signup/nationality', status: 'pending_nationality' },
     { path: '/auth/signup/contact', status: 'pending_contact' },

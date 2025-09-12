@@ -110,30 +110,11 @@ export async function submitNameStep(data: z.infer<typeof nameSchema>) {
     'data.nameMiddle': nameMiddle,
     'data.nameLast': nameLast,
     'data.nameDisplay': defaultDisplayName,
-    status: 'pending_display_name',
+    status: 'pending_demographics',
   });
 
   return { success: true };
 }
-
-export async function submitDisplayNameStep(data: z.infer<typeof displayNameSchema>) {
-    const authRequestId = cookies().get('temp_auth_id')?.value;
-    if (!authRequestId) return { success: false, error: 'Signup session not found.' };
-
-    const validation = displayNameSchema.safeParse(data);
-    if (!validation.success) return { success: false, error: 'Invalid data.' };
-    
-    const request = await getAuthRequest(authRequestId);
-    if (!request) return { success: false, error: 'Signup session expired.' };
-
-    await updateDoc(request.ref, {
-        'data.nameDisplay': sanitizeName(validation.data.displayName),
-        status: 'pending_demographics',
-    });
-
-    return { success: true };
-}
-
 
 export async function submitDemographicsStep(
   data: z.infer<typeof demographicsSchema>
@@ -332,7 +313,6 @@ export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
     nameFirst,
     nameLast,
     nameMiddle,
-    nameDisplay,
     dateBirth,
     gender,
     customGender,
@@ -341,6 +321,8 @@ export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
     neupId,
     password,
   } = request.data.data;
+  
+  const nameDisplay = [nameFirst, nameMiddle, nameLast].filter(Boolean).join(' ');
 
   if (
     !nameFirst ||

@@ -55,7 +55,7 @@ export default function NameStepPage() {
         NProgress.start();
         const result = await submitNameStep(data);
         if (result.success) {
-            router.push('/auth/signup/display-name');
+            router.push('/auth/signup/demographics');
         } else {
             toast({ variant: 'destructive', title: 'Error', description: result.error });
             NProgress.done();
