@@ -15,7 +15,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form"
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { useSession } from '@/context/session-context'
 import { BackButton } from '@/components/ui/back-button'
@@ -77,7 +77,7 @@ export default function DisplayInfoPage() {
                     setPastPhotos(photos);
 
                     const currentName = profile.nameDisplay || '';
-                    if (suggestions.includes(currentName)) {
+                     if (suggestions.includes(currentName)) {
                         nameForm.reset({
                             selectedDisplayName: currentName,
                             customDisplayName: "",
@@ -142,8 +142,7 @@ export default function DisplayInfoPage() {
 
         startNameTransition(async () => {
              const result = await updateUserProfile(accountId, { 
-                nameDisplay: data.selectedDisplayName === 'custom' ? data.customDisplayName : data.selectedDisplayName,
-                customDisplayNameRequest: data.selectedDisplayName === 'custom',
+                nameDisplay: data.selectedDisplayName === 'custom' ? data.customDisplayName : data.selectedDisplayName
              });
 
             if (result.success) {
