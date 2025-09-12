@@ -15,7 +15,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { useSession } from '@/context/session-context'
 import { BackButton } from '@/components/ui/back-button'
@@ -24,8 +24,11 @@ import { Check, Loader2, UploadCloud } from '@/components/icons'
 import { SecondaryHeader } from '@/components/ui/secondary-header'
 import { Separator } from '@/components/ui/separator'
 
-const displayFormSchema = z.object({
+const photoFormSchema = z.object({
   accountPhoto: z.string().url("Please enter a valid URL.").optional().or(z.literal('')),
+});
+
+const nameFormSchema = z.object({
   selectedDisplayName: z.string().min(1, "Please select a display name format."),
   customDisplayName: z.string().optional(),
 }).superRefine((data, ctx) => {
@@ -38,7 +41,8 @@ const displayFormSchema = z.object({
     }
 });
 
-type DisplayFormValues = z.infer<typeof displayFormSchema>;
+type PhotoFormValues = z.infer<typeof photoFormSchema>;
+type NameFormValues = z.infer<typeof nameFormSchema>;
 
 export default function DisplayInfoPage() {
     const [loading, setLoading] = useState(true);
@@ -46,20 +50,21 @@ export default function DisplayInfoPage() {
     const { profile, accountId, refetch: refetchSession } = useSession();
     const [nameSuggestions, setNameSuggestions] = useState<string[]>([]);
     const [pastPhotos, setPastPhotos] = useState<string[]>([]);
-    const [isPending, startTransition] = useTransition();
+    const [isPhotoPending, startPhotoTransition] = useTransition();
+    const [isNamePending, startNameTransition] = useTransition();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [photoView, setPhotoView] = useState<'uploader' | 'carousel'>('uploader');
 
-
-    const form = useForm<DisplayFormValues>({
-        resolver: zodResolver(displayFormSchema),
-        defaultValues: {
-            accountPhoto: "",
-            selectedDisplayName: "",
-            customDisplayName: "",
-        },
+    const photoForm = useForm<PhotoFormValues>({
+        resolver: zodResolver(photoFormSchema),
+        defaultValues: { accountPhoto: "" }
     });
 
+    const nameForm = useForm<NameFormValues>({
+        resolver: zodResolver(nameFormSchema),
+        defaultValues: { selectedDisplayName: "", customDisplayName: "" }
+    });
+    
     useEffect(() => {
         if (profile && accountId) {
             const fetchSuggestions = async () => {
@@ -73,37 +78,38 @@ export default function DisplayInfoPage() {
 
                     const currentName = profile.nameDisplay || '';
                     if (suggestions.includes(currentName)) {
-                        form.reset({
-                            accountPhoto: profile.accountPhoto || "",
+                        nameForm.reset({
                             selectedDisplayName: currentName,
                             customDisplayName: "",
                         });
                     } else {
-                         form.reset({
-                            accountPhoto: profile.accountPhoto || "",
+                         nameForm.reset({
                             selectedDisplayName: 'custom',
                             customDisplayName: currentName,
                         });
                     }
+                    photoForm.reset({
+                        accountPhoto: profile.accountPhoto || "",
+                    });
                 }
                 setLoading(false);
             }
             fetchSuggestions();
         }
-    }, [profile, accountId, form]);
+    }, [profile, accountId, nameForm, photoForm]);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (!file || !accountId) return;
 
-        startTransition(async () => {
+        startPhotoTransition(async () => {
             const contentId = `profile-photo-${accountId}-${Date.now()}`;
             const result = await uploadFile(file, "neup.account", contentId, file.name, accountId);
             if(result.success && result.url) {
                 const updateResult = await updateUserProfile(accountId, { accountPhoto: result.url });
                 if(updateResult.success) {
                     toast({ title: "Success", description: "Profile photo updated.", className: "bg-accent text-accent-foreground" });
-                    form.setValue('accountPhoto', result.url);
+                    photoForm.setValue('accountPhoto', result.url);
                     setPastPhotos(prev => [result.url as string, ...prev].slice(0, 4));
                     refetchSession();
                 } else {
@@ -114,16 +120,28 @@ export default function DisplayInfoPage() {
             }
         });
     };
+    
+    const onPhotoSubmit = (data: PhotoFormValues) => {
+        if (!accountId) return;
+        startPhotoTransition(async () => {
+            const result = await updateUserProfile(accountId, { accountPhoto: data.accountPhoto });
+            if (result.success) {
+                toast({ title: "Success", description: "Profile photo updated.", className: "bg-accent text-accent-foreground" });
+                refetchSession();
+            } else {
+                toast({ variant: "destructive", title: "Error", description: result.error });
+            }
+        });
+    };
 
-    async function onSubmit(data: DisplayFormValues) {
+    const onNameSubmit = (data: NameFormValues) => {
         if (!accountId) {
             toast({ variant: "destructive", title: "Error", description: "Not authenticated." });
             return;
         }
 
-        startTransition(async () => {
+        startNameTransition(async () => {
              const result = await updateUserProfile(accountId, { 
-                accountPhoto: data.accountPhoto,
                 nameDisplay: data.selectedDisplayName === 'custom' ? data.customDisplayName : data.selectedDisplayName,
                 customDisplayNameRequest: data.selectedDisplayName === 'custom',
              });
@@ -131,7 +149,7 @@ export default function DisplayInfoPage() {
             if (result.success) {
                 toast({ title: "Success", description: result.message, className: "bg-accent text-accent-foreground" });
                 if(data.selectedDisplayName !== 'custom') {
-                    form.setValue('customDisplayName', '');
+                    nameForm.setValue('customDisplayName', '');
                 }
                 refetchSession();
             } else {
@@ -140,8 +158,8 @@ export default function DisplayInfoPage() {
         });
     }
     
-    const selectedDisplayName = form.watch('selectedDisplayName');
-    const currentDisplayPhoto = form.watch('accountPhoto');
+    const selectedDisplayName = nameForm.watch('selectedDisplayName');
+    const currentDisplayPhoto = photoForm.watch('accountPhoto');
 
     if (loading) {
         return <Skeleton className="h-96 w-full" />
@@ -150,14 +168,14 @@ export default function DisplayInfoPage() {
     return (
         <div className="space-y-8">
             <BackButton href="/manage/profile" />
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                    
-                    <div className="space-y-2">
-                        <SecondaryHeader
-                            title="Display Image"
-                            description="Update your public profile photo."
-                        />
+
+            <div className="space-y-2">
+                <SecondaryHeader
+                    title="Display Image"
+                    description="Update your public profile photo."
+                />
+                <Form {...photoForm}>
+                    <form onSubmit={photoForm.handleSubmit(onPhotoSubmit)}>
                         <Card>
                             <CardContent className="pt-6">
                                 <div className="grid md:grid-cols-[150px_1fr] items-start gap-6">
@@ -171,7 +189,7 @@ export default function DisplayInfoPage() {
                                     <div>
                                         {photoView === 'uploader' ? (
                                             <div 
-                                                className="relative h-48 flex flex-col items-center justify-center gap-2 p-4 border-2 border-dashed rounded-lg text-center"
+                                                className="relative min-h-48 flex flex-col items-center justify-center gap-2 p-4 border-2 border-dashed rounded-lg text-center"
                                                 onDragOver={(e) => e.preventDefault()}
                                                 onDrop={(e) => {
                                                     e.preventDefault();
@@ -183,7 +201,7 @@ export default function DisplayInfoPage() {
                                                 <UploadCloud className="h-8 w-8 text-muted-foreground" />
                                                 <p className="text-sm text-muted-foreground">
                                                     Drag and drop or
-                                                     <button type="button" className="text-primary underline ml-1" onClick={() => fileInputRef.current?.click()} disabled={isPending}>
+                                                     <button type="button" className="text-primary underline ml-1" onClick={() => fileInputRef.current?.click()} disabled={isPhotoPending}>
                                                         select a file
                                                     </button>
                                                 </p>
@@ -199,14 +217,14 @@ export default function DisplayInfoPage() {
                                                 />
                                             </div>
                                         ) : (
-                                             <div className="h-48 border-2 border-dashed rounded-lg p-4 flex flex-col justify-start">
+                                             <div className="min-h-48 border-2 border-dashed rounded-lg p-4 flex flex-col justify-start">
                                                 <div className="flex-grow flex items-center gap-3 overflow-x-auto">
                                                     {pastPhotos.map((photo, index) => (
                                                         <button
                                                             type="button"
                                                             key={index}
                                                             className="relative p-1 aspect-square w-24 h-24 flex-shrink-0 rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                                                            onClick={() => form.setValue('accountPhoto', photo)}
+                                                            onClick={() => photoForm.setValue('accountPhoto', photo)}
                                                         >
                                                             <Image src={photo} alt={`Past Photo ${index + 1}`} fill objectFit="cover" className="rounded-md" />
                                                             {currentDisplayPhoto === photo && (
@@ -225,22 +243,31 @@ export default function DisplayInfoPage() {
                                     </div>
                                 </div>
                             </CardContent>
+                             <CardFooter className="border-t pt-4 mt-4 flex justify-end">
+                                 <Button type="submit" disabled={isPhotoPending}>
+                                    {isPhotoPending ? <Loader2 className="animate-spin" /> : "Save Photo"}
+                                </Button>
+                            </CardFooter>
                         </Card>
-                    </div>
+                    </form>
+                </Form>
+            </div>
 
-                    <div className="space-y-2">
-                         <SecondaryHeader
-                            title="Display Name"
-                            description="Choose how your name appears on your profile."
-                        />
+            <div className="space-y-2">
+                 <SecondaryHeader
+                    title="Display Name"
+                    description="Choose how your name appears on your profile."
+                />
+                <Form {...nameForm}>
+                    <form onSubmit={nameForm.handleSubmit(onNameSubmit)}>
                         <Card>
                             <CardContent className="pt-6 space-y-4">
                                 <div>
                                     <h3 className="text-2xl font-semibold tracking-tight">{profile?.nameDisplay}</h3>
                                 </div>
                                 <Separator />
-                                 <FormField
-                                    control={form.control}
+                                <FormField
+                                    control={nameForm.control}
                                     name="selectedDisplayName"
                                     render={({ field }) => (
                                         <FormItem>
@@ -266,7 +293,7 @@ export default function DisplayInfoPage() {
 
                                 {selectedDisplayName === 'custom' && (
                                     <FormField
-                                        control={form.control}
+                                        control={nameForm.control}
                                         name="customDisplayName"
                                         render={({ field }) => (
                                             <FormItem className="mt-4">
@@ -279,17 +306,15 @@ export default function DisplayInfoPage() {
                                     />
                                 )}
                             </CardContent>
-                            <CardFooter className="border-t pt-4 mt-4">
-                                 <Button type="submit" disabled={isPending}>
-                                    {isPending ? <Loader2 className="animate-spin" /> : "Save Changes"}
+                            <CardFooter className="border-t pt-4 mt-4 flex justify-end">
+                                 <Button type="submit" disabled={isNamePending}>
+                                    {isNamePending ? <Loader2 className="animate-spin" /> : "Save Name"}
                                 </Button>
                             </CardFooter>
                         </Card>
-                    </div>
-                </form>
-            </Form>
+                    </form>
+                </Form>
+            </div>
         </div>
     )
-
-    
 }
