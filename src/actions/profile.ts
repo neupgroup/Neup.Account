@@ -20,10 +20,19 @@ export async function getDisplayNameSuggestions(accountId: string): Promise<stri
     const { firstName, middleName, lastName } = profile;
     const suggestions = new Set<string>();
 
+    if (firstName) {
+        suggestions.add(firstName);
+    }
+    
     if (firstName && lastName) {
         suggestions.add(`${firstName} ${lastName}`);
         suggestions.add(`${lastName} ${firstName}`);
     }
+
+    if (firstName && middleName) {
+        suggestions.add(`${firstName} ${middleName}`);
+    }
+    
     if (firstName && middleName && lastName) {
         suggestions.add(`${firstName} ${middleName} ${lastName}`);
         suggestions.add(`${lastName} ${middleName} ${firstName}`);
