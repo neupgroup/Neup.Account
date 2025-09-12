@@ -1,6 +1,6 @@
 
 import { redirect } from 'next/navigation';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -47,11 +47,9 @@ export default async function SignupLayout({
 }) {
   const { valid, currentStepPath } = await getSignupStatus();
   
-  // Use a more reliable way to get the current pathname
-  const headersList = cookies();
-  const nextUrl = headersList.get('next-url')?.value || '/';
-  const pathname = nextUrl.startsWith('/auth/signup') ? nextUrl : '/auth/signup';
-
+  const headersList = headers();
+  // Use the 'x-next-pathname' header set by the middleware for a reliable path.
+  const pathname = headersList.get('x-next-pathname') || '/';
 
   if (!valid) {
     // If the session is invalid, any attempt to access a signup sub-page
