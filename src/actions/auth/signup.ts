@@ -135,10 +135,18 @@ export async function submitDemographicsStep(
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
+  let finalGender = validation.data.gender;
+  let finalCustomGender = validation.data.customGender;
+
+  if (finalGender === 'custom' && (!finalCustomGender || finalCustomGender.trim() === '')) {
+    finalGender = 'prefer_not_to_say';
+    finalCustomGender = null;
+  }
+
   await updateDoc(request.ref, {
     'data.dateBirth': validation.data.dob,
-    'data.gender': validation.data.gender,
-    'data.customGender': validation.data.customGender ? sanitizeName(validation.data.customGender) : null,
+    'data.gender': finalGender,
+    'data.customGender': finalCustomGender ? sanitizeName(finalCustomGender) : null,
     status: 'pending_nationality',
   });
 
