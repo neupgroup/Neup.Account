@@ -1,5 +1,4 @@
 
-
 "use client"
 
 import { useEffect, useState, useTransition, useRef } from 'react'
@@ -22,7 +21,6 @@ import { useSession } from '@/context/session-context'
 import { BackButton } from '@/components/ui/back-button'
 import { cn } from '@/lib/utils'
 import { Check, Loader2, UploadCloud, RefreshCw } from '@/components/icons'
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { SecondaryHeader } from '@/components/ui/secondary-header'
 import { Separator } from '@/components/ui/separator'
 
@@ -154,17 +152,17 @@ export default function DisplayInfoPage() {
                         <Card>
                             <CardContent className="pt-6">
                                 <div className="grid md:grid-cols-[150px_1fr] items-start gap-6">
-                                    <Avatar className="h-36 w-36 md:h-full md:w-full rounded-lg">
+                                    <Avatar className="h-36 w-36 rounded-lg">
                                         <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" className="object-cover" />
                                         <AvatarFallback className="rounded-lg text-3xl">
                                             {`${profile?.firstName?.[0] || ''}${profile?.lastName?.[0] || ''}`.toUpperCase()}
                                         </AvatarFallback>
                                     </Avatar>
                                     
-                                    <div className="h-36 md:h-full">
+                                    <div>
                                         {photoView === 'uploader' ? (
                                             <div 
-                                                className="relative h-full flex flex-col items-center justify-center gap-2 p-4 border-2 border-dashed rounded-lg text-center"
+                                                className="relative h-48 flex flex-col items-center justify-center gap-2 p-4 border-2 border-dashed rounded-lg text-center"
                                                 onDragOver={(e) => e.preventDefault()}
                                                 onDrop={(e) => {
                                                     e.preventDefault();
@@ -180,7 +178,9 @@ export default function DisplayInfoPage() {
                                                         select a file
                                                     </button>
                                                 </p>
-                                                <p className="text-xs text-muted-foreground">or <button type="button" className="text-primary underline" onClick={() => setPhotoView('carousel')}>select from previous images</button></p>
+                                                {pastPhotos.length > 0 && (
+                                                    <p className="text-xs text-muted-foreground">or <button type="button" className="text-primary underline" onClick={() => setPhotoView('carousel')}>select from previous images</button></p>
+                                                )}
                                                 <Input 
                                                     type="file" 
                                                     ref={fileInputRef} 
@@ -190,31 +190,25 @@ export default function DisplayInfoPage() {
                                                 />
                                             </div>
                                         ) : (
-                                            <div className="w-full h-full flex flex-col justify-center">
-                                                <Carousel opts={{ align: "start" }} className="w-full max-w-sm mx-auto">
-                                                    <CarouselContent>
-                                                        {pastPhotos.map((photo, index) => (
-                                                            <CarouselItem key={index} className="basis-1/3">
-                                                                <button
-                                                                    type="button"
-                                                                    className="relative p-1 aspect-square w-full rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                                                                    onClick={() => form.setValue('displayPhoto', photo)}
-                                                                >
-                                                                    <Image src={photo} alt={`Past Photo ${index + 1}`} fill objectFit="cover" className="rounded-md" />
-                                                                    {currentDisplayPhoto === photo && (
-                                                                        <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-md">
-                                                                            <Check className="h-8 w-8 text-white" />
-                                                                        </div>
-                                                                    )}
-                                                                </button>
-                                                            </CarouselItem>
-                                                        ))}
-                                                    </CarouselContent>
-                                                    <CarouselPrevious />
-                                                    <CarouselNext />
-                                                </Carousel>
-                                                 <button type="button" className="text-primary underline mt-4 p-0 h-auto flex items-center gap-2 mx-auto text-sm" onClick={() => setPhotoView('uploader')}>
-                                                    <RefreshCw className="h-4 w-4" />
+                                            <div className="h-48 border-2 border-dashed rounded-lg p-4 flex flex-col justify-start">
+                                                <div className="flex-grow flex items-center gap-3 overflow-x-auto">
+                                                    {pastPhotos.map((photo, index) => (
+                                                        <button
+                                                            type="button"
+                                                            key={index}
+                                                            className="relative p-1 aspect-square w-24 h-24 flex-shrink-0 rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                                                            onClick={() => form.setValue('displayPhoto', photo)}
+                                                        >
+                                                            <Image src={photo} alt={`Past Photo ${index + 1}`} fill objectFit="cover" className="rounded-md" />
+                                                            {currentDisplayPhoto === photo && (
+                                                                <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-md">
+                                                                    <Check className="h-8 w-8 text-white" />
+                                                                </div>
+                                                            )}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                                 <button type="button" className="text-primary underline mt-2 p-0 h-auto self-start text-sm" onClick={() => setPhotoView('uploader')}>
                                                     Upload new photo
                                                 </button>
                                             </div>
@@ -268,7 +262,7 @@ export default function DisplayInfoPage() {
                                         render={({ field }) => (
                                             <FormItem className="mt-4">
                                                 <FormLabel>Custom Display Name</FormLabel>
-                                                <FormControl><Input {...field} value={field.value || ''} placeholder="Enter your custom display name" /></FormControl>
+                                                <FormControl><Input {...field} value={field.value ?? ''} placeholder="Enter your custom display name" /></FormControl>
                                                 <FormDescription>Your request will be sent for review.</FormDescription>
                                                 <FormMessage />
                                             </FormItem>
@@ -287,4 +281,5 @@ export default function DisplayInfoPage() {
             </Form>
         </div>
     )
-}
+
+    
