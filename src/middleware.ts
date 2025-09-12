@@ -3,9 +3,11 @@
 import { NextResponse, userAgent } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+const MOBILE_BREAKPOINT = 1024;
+
 export async function middleware(request: NextRequest) {
-    const { device } = userAgent(request);
-    const isMobile = device.type === 'mobile' || device.type === 'tablet';
+    const viewport = request.headers.get('x-viewport-width');
+    const isMobile = viewport ? parseInt(viewport, 10) < MOBILE_BREAKPOINT : userAgent(request).device.type === 'mobile';
 
     const requestHeaders = new Headers(request.headers);
     requestHeaders.set('x-next-pathname', request.nextUrl.pathname);

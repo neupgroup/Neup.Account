@@ -5,12 +5,12 @@ export default function ManagePage() {
   return (
     <>
       {/* Mobile-only Navigation View - Always render MobileNav for small screens */}
-      <div className="md:hidden">
+      <div className="lg:hidden">
         <MobileNav />
       </div>
 
       {/* Desktop View - Renders the home page content */}
-      <div className="hidden md:block">
+      <div className="hidden lg:block">
         <HomePage />
       </div>
     </>
