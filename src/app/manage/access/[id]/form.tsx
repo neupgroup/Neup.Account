@@ -4,7 +4,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
-import { removeAccess, updatePermissions } from "../actions";
+import { removeAccess, updatePermissions } from "@/actions/manage/access";
 import {
   Card,
   CardContent,
@@ -27,7 +27,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import type { Permission } from "../../root/permission/actions";
+import type { Permission } from "@/types";
 import { Loader2 } from "@/components/icons";
 
 export function AccessManagementForm({

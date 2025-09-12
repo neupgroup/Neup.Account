@@ -22,7 +22,7 @@ export default async function AccountsPage() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="p-0">
-                    <AccountList accounts={storedAccounts} />
+                    <AccountList accounts={storedAccounts} mode="switch" />
                 </CardContent>
                 <CardFooter className="flex flex-col items-start gap-4 p-4 border-t">
                     <Link

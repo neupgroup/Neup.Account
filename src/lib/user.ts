@@ -16,20 +16,22 @@ import { getActiveAccountId, getPersonalAccountId } from './auth-actions';
 
 // --- Types ---
 export type UserProfile = {
-  firstName?: string;
-  middleName?: string;
-  lastName?: string;
-  displayName?: string;
-  displayPhoto?: string;
+  nameFirst?: string;
+  nameMiddle?: string;
+  nameLast?: string;
+  nameDisplay?: string;
+  accountPhoto?: string;
   gender?: string; // 'male', 'female', 'prefer_not_to_say', 'c.custom'
-  dob?: string; // ISO string
+  dateBirth?: string; // ISO string
   nationality?: string;
   isLegalEntity?: boolean;
-  legalName?: string;
+  nameLegal?: string;
   registrationId?: string;
   countryOfOrigin?: string;
-  registeredOn?: string; // ISO string
-  accountId?: string; // Added for convenience
+  dateEstablished?: string; // ISO string
+  neupIdPrimary?: string; // Added for convenience
+  verified?: boolean; // Added for convenience
+  accountType?: string;
 };
 
 export type UserContacts = {
@@ -37,26 +39,11 @@ export type UserContacts = {
   secondaryPhone?: string;
   permanentLocation?: string;
   currentLocation?: string;
+  workLocation?: string;
+  otherLocation?: string;
 };
 
 // --- User Data Fetching ---
-
-export async function getAccountType(accountId?: string): Promise<string | null> {
-  const idToFetch = accountId || (await getActiveAccountId());
-  if (!idToFetch) return null;
-  try {
-    const typeRef = doc(db, 'account', idToFetch);
-    const typeDoc = await getDoc(typeRef);
-    if (typeDoc.exists()) {
-        // Return status if it exists, otherwise the type
-        return typeDoc.data().status || typeDoc.data().type || 'individual';
-    }
-    return 'individual';
-  } catch (error) {
-    await logError('database', error, `getAccountType: ${idToFetch}`);
-    return null;
-  }
-}
 
 export async function getUserProfile(
   accountId?: string
@@ -64,12 +51,26 @@ export async function getUserProfile(
   const idToFetch = accountId || (await getActiveAccountId());
   if (!idToFetch) return null;
   try {
-    const profileRef = doc(db, 'profile', idToFetch);
-    const profileDoc = await getDoc(profileRef);
-    if (profileDoc.exists()) {
-      const data = profileDoc.data();
-      delete data.createdAt; // Remove non-serializable data
-      return { ...data, accountId: idToFetch } as UserProfile;
+    const accountRef = doc(db, 'account', idToFetch);
+    const accountDoc = await getDoc(accountRef);
+    
+    if (accountDoc.exists()) {
+      const accountData = accountDoc.data();
+      
+      const serializedData: UserProfile = {
+        ...accountData,
+        dateBirth: accountData.dateBirth?.toDate?.().toISOString() || accountData.dateBirth || null,
+        dateEstablished: accountData.dateEstablished?.toDate?.().toISOString() || accountData.dateEstablished || null,
+      };
+
+      if (!serializedData.accountPhoto) {
+        serializedData.accountPhoto = 'https://neupgroup.com/assets/user.png';
+      }
+
+      // Ensure accountType is part of the returned profile
+      serializedData.accountType = accountData.accountType || 'individual';
+
+      return serializedData;
     }
     return null;
   } catch (error) {
@@ -77,6 +78,12 @@ export async function getUserProfile(
     return null;
   }
 }
+
+export async function getAccountType(accountId?: string): Promise<string | null> {
+    const profile = await getUserProfile(accountId);
+    return profile?.accountType || null;
+}
+
 
 export async function getUserContacts(
   accountId?: string
@@ -225,17 +232,17 @@ export async function validateNeupId(neupId: string): Promise<{ success: boolean
         }
 
         const accountData = accountDoc.data();
-        if (accountData.type === 'brand' || accountData.type === 'branch') {
+        if (accountData.accountType === 'brand' || accountData.accountType === 'branch') {
              return { success: false, error: "Brand accounts can't be signed in." };
         }
         
-        if (accountData.status === 'deletion_requested') {
+        if (accountData.accountStatus === 'deletion_requested') {
             return { success: false, error: "pending_deletion" };
         }
 
-        if (accountData.block?.status) {
+        if (accountData.accountStatus === 'blocked') {
              const block = accountData.block;
-             if (block.is_permanent || (block.until && block.until.toDate() > new Date())) {
+             if (block && (block.is_permanent || (block.until && block.until.toDate() > new Date()))) {
                 return { success: false, error: "This account has been blocked." };
              }
         }
@@ -260,5 +267,21 @@ export async function checkNeupIdAvailability(neupId: string): Promise<{ availab
     } catch (error) {
         await logError('database', error, `checkNeupIdAvailability: ${lowerNeupId}`);
         return { available: false }; // Fail safe
+    }
+}
+
+export async function isRootUser(accountId: string): Promise<boolean> {
+    if (!accountId) return false;
+    try {
+        const permitQuery = query(
+            collection(db, 'permit'),
+            where('account_id', '==', accountId),
+            where('is_root', '==', true)
+        );
+        const snapshot = await getDocs(permitQuery);
+        return !snapshot.empty;
+    } catch (error) {
+        await logError('database', error, `isRootUser check for ${accountId}`);
+        return false;
     }
 }

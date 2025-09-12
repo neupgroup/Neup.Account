@@ -1,13 +1,61 @@
+
+
 'use server';
 
 import { z } from "zod"
 import { db } from "@/lib/firebase"
-import { doc, updateDoc, collection, addDoc, serverTimestamp, query, where, getDocs, writeBatch, getDoc } from "firebase/firestore"
+import { doc, updateDoc, collection, addDoc, serverTimestamp, query, where, getDocs, writeBatch, getDoc, orderBy, limit } from "firebase/firestore"
 import { parseDate as parseDateWithAI } from "@/ai/flows/parse-date"
 import { logActivity } from "@/lib/log-actions"
 import { logError } from "@/lib/logger"
-import { checkPermissions, getUserNeupIds } from "@/lib/user"
-import { profileFormSchema, brandProfileFormSchema } from "@/schemas/profile"
+import { checkPermissions, getUserNeupIds, checkNeupIdAvailability, getUserProfile as fetchUserProfile } from "@/lib/user"
+import { getPersonalAccountId } from "@/lib/auth-actions";
+import { brandProfileFormSchema } from "@/schemas/auth"
+
+
+export async function getDisplayNameSuggestions(accountId: string): Promise<string[]> {
+    const profile = await fetchUserProfile(accountId);
+    if (!profile) return [];
+
+    const { nameFirst, nameMiddle, nameLast } = profile;
+    const suggestions = new Set<string>();
+
+    if (nameFirst) {
+        suggestions.add(nameFirst);
+    }
+    if (nameFirst && nameMiddle) {
+        suggestions.add(`${nameFirst} ${nameMiddle}`);
+    }
+    if (nameFirst && nameLast) {
+        suggestions.add(`${nameFirst} ${nameLast}`);
+        suggestions.add(`${nameLast} ${nameFirst}`);
+    }
+    if (nameFirst && nameMiddle && nameLast) {
+        suggestions.add(`${nameFirst} ${nameMiddle} ${nameLast}`);
+        suggestions.add(`${nameLast} ${nameMiddle} ${nameFirst}`);
+    }
+    
+    return Array.from(suggestions);
+}
+
+export async function getPastProfilePhotos(accountId: string): Promise<string[]> {
+    try {
+        const contentRef = collection(db, 'usercontent');
+        const q = query(
+            contentRef,
+            where('forAccountId', '==', accountId),
+            where('platform', '==', 'neup.account'),
+            orderBy('uploadedAt', 'desc'),
+            limit(4) // Fetch the 4 most recent profile pictures
+        );
+        const querySnapshot = await getDocs(q);
+        const urls = querySnapshot.docs.map(doc => doc.data().url);
+        return urls;
+    } catch (error) {
+        await logError('database', error, `getPastProfilePhotos for ${accountId}`);
+        return [];
+    }
+}
 
 
 async function updateOrCreateContact(batch: ReturnType<typeof writeBatch>, accountId: string, type: string, value: string | undefined, hasPermission: boolean) {
@@ -41,13 +89,14 @@ async function updateOrCreateContact(batch: ReturnType<typeof writeBatch>, accou
 }
 
 
-export async function updateUserProfile(accountId: string, data: z.infer<typeof profileFormSchema>, geolocation?: string) {
-    const [canModifyProfile, canModifyContact] = await Promise.all([
+export async function updateUserProfile(accountId: string, data: Record<string, any>, geolocation?: string) {
+    const [canModifyProfile, canModifyContact, canModifyNeupId] = await Promise.all([
         checkPermissions(['profile.modify']),
-        checkPermissions(['contact.modify', 'contact.add', 'contact.remove'])
+        checkPermissions(['contact.modify', 'contact.add', 'contact.remove']),
+        checkPermissions(['profile.neupid.add']),
     ]);
 
-    if (!canModifyProfile && !canModifyContact) {
+    if (!canModifyProfile && !canModifyContact && !canModifyNeupId) {
          return { success: false, error: "You do not have permission to update this profile." }
     }
 
@@ -56,80 +105,120 @@ export async function updateUserProfile(accountId: string, data: z.infer<typeof 
     }
 
     try {
-        const validatedData = profileFormSchema.parse(data)
-        
         const batch = writeBatch(db);
+        const accountRef = doc(db, 'account', accountId);
 
         if (canModifyProfile) {
-            let finalGender = validatedData.gender;
-            if (validatedData.gender === 'custom') {
-                if (validatedData.customGender && validatedData.customGender.trim().length > 0) {
-                    finalGender = `c.${validatedData.customGender.trim()}`;
-                } else {
-                    finalGender = 'prefer_not_to_say';
+            const accountData: Record<string, any> = {};
+
+            // List of valid profile fields to prevent unwanted data being written
+            const validAccountFields = ['nameFirst', 'nameMiddle', 'nameLast', 'gender', 'customGender', 'dateBirth', 'nameDisplay', 'accountPhoto'];
+            for(const key of validAccountFields) {
+                if(data[key] !== undefined) {
+                    accountData[key] = data[key];
                 }
             }
             
-            const { 
-                newNeupIdRequest, 
-                gender, 
-                customGender, 
-                primaryPhone,
-                secondaryPhone,
-                permanentLocation,
-                currentLocation,
-                ...profileData 
-            } = validatedData
-
-            const profileRef = doc(db, 'profile', accountId);
-
-            const dataToSave: Record<string, any> = {
-                ...profileData,
-                gender: finalGender,
-            };
-
-            if (profileData.dob) {
-              dataToSave.dob = profileData.dob.toISOString();
-            }
-            
-            batch.update(profileRef, dataToSave);
-
-             if (newNeupIdRequest && newNeupIdRequest.trim().length > 0) {
-                const accountDoc = await getDoc(doc(db, 'account', accountId));
-                const accountData = accountDoc.data();
-                const existingNeupIds = await getUserNeupIds(accountId);
+            // Auto-update display name if legal name changes
+            const hasNameChange = ['nameFirst', 'nameMiddle', 'nameLast'].some(key => data[key] !== undefined);
+            if (hasNameChange) {
+                const currentProfile = await fetchUserProfile(accountId);
+                const newFirstName = data.nameFirst ?? currentProfile?.nameFirst;
+                const newMiddleName = data.nameMiddle ?? currentProfile?.nameMiddle;
+                const newLastName = data.nameLast ?? currentProfile?.nameLast;
                 
-                const isPro = accountData?.pro === true;
-                const limit = isPro ? 2 : 1;
-
-                if (existingNeupIds.length >= limit) {
-                    return { success: false, error: `You have reached the limit of ${limit} NeupID(s) for your account.` };
+                let defaultDisplayName = `${newFirstName || ''} ${newLastName || ''}`.trim();
+                if (newMiddleName) {
+                    defaultDisplayName = `${newFirstName || ''} ${newMiddleName} ${newLastName || ''}`.trim();
                 }
+                 accountData.nameDisplay = defaultDisplayName;
+            }
 
-                const requestsRef = collection(db, 'requests');
-                const newRequestRef = doc(requestsRef);
-                const requestedNeupId = newNeupIdRequest.toLowerCase();
-                batch.set(newRequestRef, {
-                    action: 'neupid_request',
+
+            if (accountData.dateBirth instanceof Date) {
+              accountData.dateBirth = accountData.dateBirth.toISOString();
+            }
+            
+            if (data.customDisplayNameRequest) {
+                 const requestsRef = collection(db, 'requests');
+                 const requesterId = await getPersonalAccountId();
+
+                 // Cancel previous pending requests from the same user
+                 const q = query(requestsRef, where('action', '==', 'display_name_request'), where('accountId', '==', accountId), where('status', '==', 'pending'));
+                 const oldRequests = await getDocs(q);
+                 oldRequests.forEach(doc => {
+                    batch.update(doc.ref, { status: 'cancelled', remarks: 'Superseded by new request.' });
+                 });
+                 
+                 // Create new request
+                 const newRequestRef = doc(requestsRef);
+                 batch.set(newRequestRef, {
+                    action: 'display_name_request',
                     accountId: accountId,
-                    requestedNeupId: requestedNeupId,
+                    requestedDisplayName: data.customDisplayNameRequest,
                     status: 'pending',
                     createdAt: serverTimestamp(),
+                    requestor: requesterId,
                 });
-                await logActivity(accountId, `Requested New NeupID: ${requestedNeupId}`, 'Pending', undefined, undefined, geolocation);
+                await logActivity(accountId, `Requested Custom Display Name: ${data.customDisplayNameRequest}`, 'Pending', undefined, geolocation);
+                // Don't update the nameDisplay in the profile directly
+                delete accountData.nameDisplay;
+            }
+
+            if(Object.keys(accountData).length > 0) {
+                batch.update(accountRef, accountData);
             }
         }
         
-        await updateOrCreateContact(batch, accountId, 'primaryPhone', validatedData.primaryPhone, canModifyContact);
-        await updateOrCreateContact(batch, accountId, 'secondaryPhone', validatedData.secondaryPhone, canModifyContact);
-        await updateOrCreateContact(batch, accountId, 'permanentLocation', validatedData.permanentLocation, canModifyContact);
-        await updateOrCreateContact(batch, accountId, 'currentLocation', validatedData.currentLocation, canModifyContact);
+        if (canModifyNeupId && data.newNeupIdRequest && data.newNeupIdRequest.trim().length > 0) {
+            const { available } = await checkNeupIdAvailability(data.newNeupIdRequest);
+            if (!available) {
+                return { success: false, error: "The requested NeupID is already taken." };
+            }
+            
+            const accountDoc = await getDoc(doc(db, 'account', accountId));
+            const accountData = accountDoc.data();
+            const existingNeupIds = await getUserNeupIds(accountId);
+            
+            const isPro = accountData?.pro === true;
+            const limit = isPro ? 2 : 1;
+
+            if (existingNeupIds.length >= limit) {
+                return { success: false, error: `You have reached the limit of ${limit} NeupID(s) for your account.` };
+            }
+
+            const requestsRef = collection(db, 'requests');
+            const newRequestRef = doc(requestsRef);
+            const requestedNeupId = data.newNeupIdRequest.toLowerCase();
+            const requesterId = await getPersonalAccountId();
+
+            batch.set(newRequestRef, {
+                action: 'neupid_request',
+                accountId: accountId,
+                requestedNeupId: requestedNeupId,
+                status: 'pending',
+                createdAt: serverTimestamp(),
+                requestor: requesterId,
+            });
+            await logActivity(accountId, `Requested New NeupID: ${requestedNeupId}`, 'Pending', undefined, geolocation);
+        }
+
+        await updateOrCreateContact(batch, accountId, 'primaryPhone', data.primaryPhone, canModifyContact);
+        await updateOrCreateContact(batch, accountId, 'secondaryPhone', data.secondaryPhone, canModifyContact);
+        await updateOrCreateContact(batch, accountId, 'permanentLocation', data.permanentLocation, canModifyContact);
+        await updateOrCreateContact(batch, accountId, 'currentLocation', data.currentLocation, canModifyContact);
+        await updateOrCreateContact(batch, accountId, 'workLocation', data.workLocation, canModifyContact);
+        await updateOrCreateContact(batch, accountId, 'otherLocation', data.otherLocation, canModifyContact);
 
         await batch.commit();
         
-        await logActivity(accountId, 'Profile Update', 'Success', undefined, undefined, geolocation);
+        await logActivity(accountId, 'Profile Update', 'Success', undefined, geolocation);
         
-        return { success: true, message: "Profile updated successfully." }
+        const message = data.customDisplayNameRequest 
+            ? "Your display name request has been submitted for review."
+            : "Profile updated successfully.";
+
+        return { success: true, message }
     } catch (error) {
         await logError('database', error, `updateUserProfile: ${accountId}`);
         if (error instanceof z.ZodError) {
@@ -146,29 +235,30 @@ export async function updateBrandProfile(accountId: string, data: z.infer<typeof
 
     try {
         const validatedData = brandProfileFormSchema.parse(data);
-        const profileRef = doc(db, 'profile', accountId);
+        const accountRef = doc(db, 'account', accountId);
         
-        const dataToUpdate: Partial<any> = {
-            displayName: validatedData.displayName,
-            displayPhoto: validatedData.displayPhoto,
+        // Data for the 'account' collection
+        const accountDataToUpdate: Partial<any> = {
+            nameDisplay: validatedData.nameDisplay,
+            accountPhoto: validatedData.accountPhoto,
             isLegalEntity: validatedData.isLegalEntity,
         };
 
         if (validatedData.isLegalEntity) {
-            dataToUpdate.legalName = validatedData.legalName;
-            dataToUpdate.registrationId = validatedData.registrationId;
-            dataToUpdate.countryOfOrigin = validatedData.countryOfOrigin;
-            dataToUpdate.registeredOn = validatedData.registeredOn?.toISOString();
+            accountDataToUpdate.nameLegal = validatedData.nameLegal;
+            accountDataToUpdate.registrationId = validatedData.registrationId;
+            accountDataToUpdate.countryOfOrigin = validatedData.countryOfOrigin;
+            accountDataToUpdate.dateEstablished = validatedData.dateEstablished?.toISOString();
         } else {
-            dataToUpdate.legalName = null;
-            dataToUpdate.registrationId = null;
-            dataToUpdate.countryOfOrigin = null;
-            dataToUpdate.registeredOn = null;
+            accountDataToUpdate.nameLegal = null;
+            accountDataToUpdate.registrationId = null;
+            accountDataToUpdate.countryOfOrigin = null;
+            accountDataToUpdate.dateEstablished = null;
         }
 
-        await updateDoc(profileRef, dataToUpdate);
+        await updateDoc(accountRef, accountDataToUpdate);
 
-        await logActivity(accountId, 'Brand Profile Update', 'Success', undefined, undefined, geolocation);
+        await logActivity(accountId, 'Brand Profile Update', 'Success', undefined, geolocation);
 
         return { success: true, message: "Brand profile updated successfully." };
 

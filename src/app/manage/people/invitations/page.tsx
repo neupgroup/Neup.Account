@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useTransition } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { getInvitations, acceptRequest, rejectRequest } from './actions';
+import { getInvitations, acceptRequest, rejectRequest } from '@/actions/manage/people/invitations';
 import type { Invitation } from '@/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -22,7 +22,7 @@ function InvitationCard({ invitation, onAction }: { invitation: Invitation, onAc
             return `${invitation.senderName} has invited you to join their family.`;
         }
         if (invitation.action === 'access_invitation') {
-            return `${invitation.senderName} wants to manage your account.`;
+            return `${invitation.senderName} wants you to help manage their account.`;
         }
         return 'You have a new request.';
     };

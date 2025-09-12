@@ -41,7 +41,7 @@ export async function requestAccountDeletion(data: z.infer<typeof formSchema>, g
         getDoc(authRef)
     ]);
     
-    if (accountDoc.exists() && accountDoc.data().status === 'deletion_requested') {
+    if (accountDoc.exists() && accountDoc.data().accountStatus === 'deletion_requested') {
         return { success: false, error: "Your account is already scheduled for deletion." };
     }
 
@@ -58,7 +58,7 @@ export async function requestAccountDeletion(data: z.infer<typeof formSchema>, g
     const batch = writeBatch(db);
 
     // Update the status in the account document
-    batch.update(accountRef, { status: 'deletion_requested' });
+    batch.update(accountRef, { accountStatus: 'deletion_requested' });
 
     // Create a log in the new account_status collection
     const statusLogRef = doc(collection(db, 'account_status'));
@@ -87,7 +87,7 @@ export async function requestAccountDeletion(data: z.infer<typeof formSchema>, g
 export async function cancelAccountDeletion(accountId: string): Promise<{ success: boolean; error?: string }> {
     try {
         const accountRef = doc(db, 'account', accountId);
-        await updateDoc(accountRef, { status: 'active' });
+        await updateDoc(accountRef, { accountStatus: 'active' });
 
         await logActivity(accountId, "Account Deletion Cancelled", "Success");
         return { success: true };

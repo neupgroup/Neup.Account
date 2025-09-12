@@ -3,14 +3,6 @@
 
 import { useEffect, useState, useTransition, useCallback } from 'react';
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
-import {
     Card,
     CardContent,
     CardHeader,

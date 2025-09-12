@@ -1,11 +1,8 @@
 
-
 export type NavItem = {
     href: string;
     label: string;
     description: string;
-    iconName: string;
-    requiredPermissions: string[];
 }
 
 export type NavSection = {
@@ -73,14 +70,13 @@ export const navItems = {
         { href: "/auth/accounts", label: "Switch Account", description: "Switch between different NeupID accounts." },
         { href: "/auth/signout", label: "SignOut Account", description: "Sign out of your account." },
     ],
-    switchBackNav: { href: "/auth/switch", label: "Switch Back", description: "Return to your personal account view.", iconName: "SwitchBack", requiredPermissions: [] }
 };
 
 
 export const allPermissionsMap: Record<string, string[]> = {
     "Home": [],
     "Personal Info": ['profile.view', 'profile.modify', 'contact.view', 'contact.add', 'contact.modify', 'contact.remove'],
-    "Notifications": ['notification.read'],
+    "Notifications": ['notification.read', 'notification.delete'],
     "Password & Security": [
         'security.pass.modify', 'security.totp.add', 'security.totp.remove', 'security.backup_codes.view', 
         'security.backup_codes.create', 'security.recovery_accounts.view', 'security.recovery_accounts.add', 
@@ -94,7 +90,7 @@ export const allPermissionsMap: Record<string, string[]> = {
         'data.materialization.view', 'data.materialization.modify', 'security.third_party.view', 'security.recent_activities.view'
     ],
     "Access & Control": ['security.third_party.view', 'security.third_party.add', 'security.third_party.remove'],
-    "People & Sharing": ['people.family.view', 'people.family.add', 'people.family.remove', 'people.family.partner.add', 'people.family.partner.remove'],
+    "People & Sharing": ['people.family.view', 'people.family.add', 'people.family.remove', 'people.family.partner.add', 'people.family.partner.remove', 'people.block_list.view', 'people.restrict_list.view'],
     "Payment & Subscription": ['payment.method.show', 'payment.transactions.show', 'payment.subscriptions.show', 'payment.purchase_neup_pro.view'],
     "Dashboard": ["root.dashboard.view"],
     "Account Management": ["root.account.search", "root.account.create_individual"],
@@ -103,27 +99,5 @@ export const allPermissionsMap: Record<string, string[]> = {
     "App Management": ["root.app.view"],
     "Site Configuration": ["root.payment_config.view", "root.errors.view"],
     "Branches": ['linked_accounts.brand.manage'],
-};
-
-export const navIcons: Record<string, string> = {
-    "Home": "Home",
-    "Personal Info": "PersonalInfo",
-    "Notifications": "Notifications",
-    "Password & Security": "PasswordAndSecurity",
-    "Linked Accounts": "LinkedAccounts",
-    "Data & Privacy": "DataAndPrivacy",
-    "Access & Control": "AccessAndControl",
-    "People & Sharing": "HeartHandshake",
-    "Payment & Subscription": "PaymentAndSubscription",
-    "Switch Account": "SwitchAccount",
-    "SignOut Account": "SignOutAccount",
-    "Switch Back": "ArrowLeft",
-    "Dashboard": "Dashboard",
-    "Account Management": "Users",
-    "Requests Management": "Clock",
-    "Permission Management": "PermissionManagement",
-    "App Management": "AppManagement",
-    "Site Configuration": "Wallet",
-    "BrandInfo": "UserCircle",
-    "Branches": "LinkedAccounts"
+    "Blocked Users": ['people.block_list.view', 'people.restrict_list.view'],
 };

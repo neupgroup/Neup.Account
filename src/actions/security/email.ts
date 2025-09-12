@@ -9,6 +9,7 @@ import { revalidatePath } from 'next/cache';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { checkPermissions } from '@/lib/user';
 import { emailFormSchema } from '@/schemas/security';
+import { createNotification } from '../notifications';
 
 const CONTACT_TYPE = 'recoveryEmail';
 
@@ -68,6 +69,13 @@ export async function addRecoveryEmail(data: z.infer<typeof emailFormSchema>): P
             value: email,
         });
         await logActivity(accountId, 'Added Recovery Email', 'Success');
+        
+        await createNotification({
+            recipient_id: accountId,
+            action: 'informative.security',
+            message: `A new recovery email (${email}) was added to your account.`,
+        });
+        
         revalidatePath('/manage/security/email');
         return { success: true };
 
@@ -90,6 +98,13 @@ export async function removeRecoveryEmail(): Promise<{ success: boolean; error?:
         const contactRef = getDocRef(accountId);
         await deleteDoc(contactRef);
         await logActivity(accountId, 'Removed Recovery Email', 'Success');
+        
+        await createNotification({
+            recipient_id: accountId,
+            action: 'informative.security',
+            message: `Your recovery email has been removed.`,
+        });
+
         revalidatePath('/manage/security/email');
         return { success: true };
     } catch (error) {

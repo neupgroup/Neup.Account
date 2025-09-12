@@ -1,23 +1,18 @@
-
-
 import React from "react";
-import {
-    Card,
-    CardContent,
-} from "@/components/ui/card";
-import {
-    KeyRound,
-    Smartphone,
-    Mail,
-    ShieldCheck,
-    Laptop,
-    Globe,
-    Users,
-    FileLock2
-} from "@/components/icons";
+import { Card, CardContent } from "@/components/ui/card";
 import { ListItem } from "@/components/ui/list-item";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 import { PrimaryHeader } from "@/components/ui/primary-header";
+import {
+    KeyRound,
+    ShieldCheck,
+    FileLock2,
+    Users,
+    Smartphone,
+    Mail,
+    Laptop,
+    Globe,
+} from '@/components/icons';
 
 export default async function SecurityPage() {
 
@@ -74,10 +69,9 @@ export default async function SecurityPage() {
             icon: Globe,
             title: "Third-Party Apps",
             description: "Manage apps that have access to your account data.",
-            href: "#",
+            href: "/manage/data",
         },
     ];
-
 
     return (
         <div className="grid gap-8">

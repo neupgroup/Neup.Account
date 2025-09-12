@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
@@ -19,13 +20,14 @@ import {
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge"
-import { getActivities, ActivityLog } from "@/lib/log-actions"
+import { getActivities } from "@/lib/log-actions"
 import { ChevronLeft, ChevronRight, Ban } from "@/components/icons";
 import { BackButton } from "@/components/ui/back-button";
 import { checkPermissions } from "@/lib/user";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { useEffect, useState, useCallback, use } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import type { UserActivityLog } from "@/types";
 
 const statusVariantMap: { [key: string]: "default" | "destructive" | "secondary" } = {
     Success: "default",
@@ -37,7 +39,7 @@ const statusVariantMap: { [key: string]: "default" | "destructive" | "secondary"
 function DataActivityPageComponent({ after }: { after?: string }) {
     const [canView, setCanView] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [logs, setLogs] = useState<ActivityLog[]>([]);
+    const [logs, setLogs] = useState<UserActivityLog[]>([]);
     const [page, setPage] = useState(1);
     const [pageHistory, setPageHistory] = useState<(string | undefined)[]>([undefined]); // History of 'after' IDs
     const [hasNextPage, setHasNextPage] = useState(false);

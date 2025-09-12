@@ -12,16 +12,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useState, useContext } from "react";
+import { useState, useContext, useTransition } from "react";
 import { BackButton } from "@/components/ui/back-button";
 import { GeolocationContext } from "@/context/geolocation-context";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
+import { Loader2 } from "@/components/icons";
 
 type ChangePasswordFormValues = z.infer<typeof changePasswordSchema>;
 
 export default function ChangePasswordPage() {
     const { toast } = useToast();
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSubmitting, startTransition] = useTransition();
     const geo = useContext(GeolocationContext);
 
     const form = useForm<ChangePasswordFormValues>({
@@ -33,21 +34,21 @@ export default function ChangePasswordPage() {
     });
 
     async function onSubmit(data: ChangePasswordFormValues) {
-        setIsSubmitting(true);
-        const locationString = geo?.latitude && geo?.longitude ? `${geo.latitude},${geo.longitude}` : undefined;
-        const result = await changePassword(data, locationString);
+        startTransition(async () => {
+            const locationString = geo?.latitude && geo?.longitude ? `${'\'\'\''}${geo.latitude},${geo.longitude}` : undefined;
+            const result = await changePassword(data, locationString);
 
-        if (result.success) {
-            toast({ title: "Success", description: result.message, className: "bg-accent text-accent-foreground" });
-            form.reset();
-        } else {
-             let description = result.error;
-            if (result.details) {
-                description = Object.values(result.details.fieldErrors).flat().join(' | ');
+            if (result.success) {
+                toast({ title: "Success", description: result.message, className: "bg-accent text-accent-foreground" });
+                form.reset();
+            } else {
+                 let description = result.error;
+                if (result.details) {
+                    description = Object.values(result.details.fieldErrors).flat().join(' | ');
+                }
+                toast({ variant: "destructive", title: "Error", description: description || "An error occurred." });
             }
-            toast({ variant: "destructive", title: "Error", description: description || "An error occurred." });
-        }
-        setIsSubmitting(false);
+        });
     }
 
     return (
@@ -75,7 +76,7 @@ export default function ChangePasswordPage() {
                                         <FormItem>
                                             <FormLabel>Current Password</FormLabel>
                                             <FormControl>
-                                                <Input type="password" {...field} />
+                                                <Input type="password" {...field} disabled={isSubmitting} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -88,7 +89,7 @@ export default function ChangePasswordPage() {
                                         <FormItem>
                                             <FormLabel>New Password</FormLabel>
                                             <FormControl>
-                                                <Input type="password" {...field} />
+                                                <Input type="password" {...field} disabled={isSubmitting} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -97,7 +98,7 @@ export default function ChangePasswordPage() {
                             </CardContent>
                             <CardFooter>
                                 <Button type="submit" disabled={isSubmitting}>
-                                    {isSubmitting ? "Updating..." : "Update Password"}
+                                    {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Updating...</> : "Update Password"}
                                 </Button>
                             </CardFooter>
                         </form>
@@ -107,3 +108,5 @@ export default function ChangePasswordPage() {
         </div>
     );
 }
+
+    

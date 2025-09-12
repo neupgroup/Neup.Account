@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useEffect, useState, useContext } from 'react'
@@ -5,11 +6,10 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
 
 import { getUserProfile, type UserProfile } from "@/lib/user"
 import { updateBrandProfile } from "@/actions/profile"
-import { brandProfileFormSchema } from "@/schemas/profile"
+import { brandProfileFormSchema } from "@/schemas/auth"
 import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
@@ -18,29 +18,30 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Calendar } from "@/components/ui/calendar"
 import { Label } from '@/components/ui/label'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { GeolocationContext } from '@/context/geolocation-context'
+import { Loader2 } from '@/components/icons'
 
 type BrandFormValues = z.infer<typeof brandProfileFormSchema>;
 
-export function BrandProfileForm({ accountId }: { accountId: string }) {
+export function BrandProfileForm({ accountId, children }: { accountId: string, children: React.ReactNode }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const { toast } = useToast();
     const geo = useContext(GeolocationContext);
+    const [dateInput, setDateInput] = useState<string>('');
+    const [isParsingDate, setIsParsingDate] = useState(false);
 
     const form = useForm<BrandFormValues>({
         resolver: zodResolver(brandProfileFormSchema),
         defaultValues: {
-            displayName: "",
-            displayPhoto: "",
+            nameDisplay: "",
+            accountPhoto: "",
             isLegalEntity: false,
-            legalName: "",
+            nameLegal: "",
             registrationId: "",
             countryOfOrigin: "",
         },
@@ -56,14 +57,18 @@ export function BrandProfileForm({ accountId }: { accountId: string }) {
                 const profileData = await getUserProfile(accountId);
 
                 if (profileData) {
+                    const estDate = profileData.dateEstablished ? new Date(profileData.dateEstablished) : undefined;
+                    if(estDate) {
+                        setDateInput(format(estDate, 'yyyy-MM-dd'));
+                    }
                     form.reset({
-                        displayName: profileData.displayName || "",
-                        displayPhoto: profileData.displayPhoto || "",
+                        nameDisplay: profileData.nameDisplay || "",
+                        accountPhoto: profileData.accountPhoto || "",
                         isLegalEntity: profileData.isLegalEntity || false,
-                        legalName: profileData.legalName || "",
+                        nameLegal: profileData.nameLegal || "",
                         registrationId: profileData.registrationId || "",
                         countryOfOrigin: profileData.countryOfOrigin || "",
-                        registeredOn: profileData.registeredOn ? new Date(profileData.registeredOn) : undefined,
+                        dateEstablished: estDate,
                     });
                 } else {
                     setError("Could not load brand profile data.");
@@ -78,7 +83,7 @@ export function BrandProfileForm({ accountId }: { accountId: string }) {
 
         fetchData();
     }, [accountId, form]);
-
+    
     async function onSubmit(data: BrandFormValues) {
         const locationString = geo?.latitude && geo?.longitude ? `${geo.latitude},${geo.longitude}` : undefined;
         const result = await updateBrandProfile(accountId, data, locationString);
@@ -123,16 +128,16 @@ export function BrandProfileForm({ accountId }: { accountId: string }) {
                             <div className="flex-shrink-0">
                                 <Label>Logo</Label>
                                 <Avatar className="h-24 w-24 mt-2 rounded-lg">
-                                    <AvatarImage src={form.watch('displayPhoto') || undefined} alt="Brand Logo" data-ai-hint="logo" />
+                                    <AvatarImage src={form.watch('accountPhoto') || undefined} alt="Brand Logo" data-ai-hint="logo" />
                                     <AvatarFallback className="rounded-lg">
-                                        {form.watch('displayName')?.[0]?.toUpperCase() || 'B'}
+                                        {form.watch('nameDisplay')?.[0]?.toUpperCase() || 'B'}
                                     </AvatarFallback>
                                 </Avatar>
                             </div>
                             <div className="flex-grow space-y-4">
                                 <FormField
                                     control={form.control}
-                                    name="displayName"
+                                    name="nameDisplay"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Display Name</FormLabel>
@@ -143,7 +148,7 @@ export function BrandProfileForm({ accountId }: { accountId: string }) {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name="displayPhoto"
+                                    name="accountPhoto"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Logo URL</FormLabel>
@@ -183,7 +188,7 @@ export function BrandProfileForm({ accountId }: { accountId: string }) {
                             <div className="grid md:grid-cols-2 gap-4 pt-4">
                                 <FormField
                                     control={form.control}
-                                    name="legalName"
+                                    name="nameLegal"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Legal Name</FormLabel>
@@ -224,40 +229,24 @@ export function BrandProfileForm({ accountId }: { accountId: string }) {
                                         </FormItem>
                                     )}
                                 />
-                                <FormField
+                                 <FormField
                                     control={form.control}
-                                    name="registeredOn"
-                                    render={({ field }) => (
-                                        <FormItem className="flex flex-col">
-                                            <FormLabel>Registered On</FormLabel>
-                                            <Popover>
-                                                <PopoverTrigger asChild>
-                                                    <FormControl>
-                                                        <Button
-                                                            variant={"outline"}
-                                                            className={cn("w-full pl-3 text-left font-normal", !field.value && "text-muted-foreground")}
-                                                        >
-                                                            {field.value ? (
-                                                                format(field.value, "PPP")
-                                                            ) : (
-                                                                <span>Pick a date</span>
-                                                            )}
-                                                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                                        </Button>
-                                                    </FormControl>
-                                                </PopoverTrigger>
-                                                <PopoverContent className="w-auto p-0" align="start">
-                                                    <Calendar
-                                                        mode="single"
-                                                        selected={field.value}
-                                                        onSelect={field.onChange}
-                                                        disabled={(date) => date > new Date()}
-                                                        initialFocus
-                                                    />
-                                                </PopoverContent>
-                                            </Popover>
-                                            <FormMessage />
-                                        </FormItem>
+                                    name="dateEstablished"
+                                    render={() => (
+                                    <FormItem className="flex flex-col">
+                                        <FormLabel>Established On</FormLabel>
+                                        <div className="relative w-full">
+                                            <Input
+                                                placeholder="YYYY-MM-DD or e.g. June 12 2002"
+                                                value={dateInput}
+                                                onChange={(e) => setDateInput(e.target.value)}
+                                                disabled={isParsingDate}
+                                                className="pr-10"
+                                            />
+                                            {isParsingDate && <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin" />}
+                                        </div>
+                                        <FormMessage />
+                                    </FormItem>
                                     )}
                                 />
                             </div>

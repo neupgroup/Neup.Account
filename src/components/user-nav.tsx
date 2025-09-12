@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -9,8 +10,8 @@ export function UserNav() {
   const { profile, loading } = useSession();
 
   const getInitials = () => {
-    if (!profile?.displayName) return 'U';
-    const nameParts = profile.displayName.split(' ');
+    if (!profile?.nameDisplay) return 'U';
+    const nameParts = profile.nameDisplay.split(' ');
     const first = nameParts[0]?.[0] || '';
     const last = nameParts.length > 1 ? nameParts[nameParts.length - 1]?.[0] : '';
     return `${first}${last}`.toUpperCase();
@@ -31,13 +32,13 @@ export function UserNav() {
   return (
     <div className="relative h-8 flex items-center justify-end gap-2 p-0">
       <div className="text-right">
-        <p className="text-sm font-medium">{profile.displayName}</p>
-        {profile.neupId && (
-          <p className="text-xs text-muted-foreground font-mono">@{profile.neupId}</p>
+        <p className="text-sm font-medium">{profile.nameDisplay}</p>
+        {profile.neupIdPrimary && (
+          <p className="text-xs text-muted-foreground font-mono">@{profile.neupIdPrimary}</p>
         )}
       </div>
       <Avatar className="h-9 w-9">
-        <AvatarImage src={profile.displayPhoto || undefined} alt={profile.displayName || ''} data-ai-hint="person logo" />
+        <AvatarImage src={profile.accountPhoto || "https://neupgroup.com/assets/user.png"} alt={profile.nameDisplay || ''} data-ai-hint="person logo" />
         <AvatarFallback>{getInitials()}</AvatarFallback>
       </Avatar>
     </div>

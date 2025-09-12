@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -13,34 +14,42 @@ type VerificationDetails = {
 };
 
 export function VerifiedBadge({ accountId, className }: { accountId: string, className?: string }) {
-    const [verification, setVerification] = useState<VerificationDetails | null>(null);
+    const [isVerified, setIsVerified] = useState<boolean>(false);
+    const [verificationDetails, setVerificationDetails] = useState<VerificationDetails | null>(null);
 
     useEffect(() => {
         if (!accountId) return;
 
         const checkVerification = async () => {
-            const verificationRef = doc(db, 'verifications', accountId);
+            const accountRef = doc(db, 'account', accountId);
             try {
-                const docSnap = await getDoc(verificationRef);
-                if (docSnap.exists() && docSnap.data().status === 'approved') {
-                    const data = docSnap.data();
-                    setVerification({
-                        category: data.category,
-                        verifiedAt: data.verifiedAt?.toDate().toLocaleDateString() || 'N/A',
-                    });
+                const docSnap = await getDoc(accountRef);
+                if (docSnap.exists() && docSnap.data().verified === true) {
+                    setIsVerified(true);
+                    
+                    const verificationRef = doc(db, 'verifications', accountId);
+                    const verificationSnap = await getDoc(verificationRef);
+                     if (verificationSnap.exists()) {
+                         const data = verificationSnap.data();
+                         setVerificationDetails({
+                            category: data.category,
+                            verifiedAt: data.verifiedAt?.toDate().toLocaleDateString() || 'N/A',
+                        });
+                     }
+
                 } else {
-                    setVerification(null);
+                    setIsVerified(false);
                 }
             } catch (error) {
                 console.error("Error fetching verification status:", error);
-                setVerification(null);
+                setIsVerified(false);
             }
         };
 
         checkVerification();
     }, [accountId]);
 
-    if (!verification) {
+    if (!isVerified) {
         return null;
     }
 
@@ -50,12 +59,14 @@ export function VerifiedBadge({ accountId, className }: { accountId: string, cla
                 <TooltipTrigger asChild>
                     <CheckCircle2 className={cn("h-6 w-6 text-primary fill-blue-100", className)} />
                 </TooltipTrigger>
-                <TooltipContent>
-                    <p className="font-semibold">Verified as {verification.category}</p>
-                    <p className="text-xs text-muted-foreground">
-                        Date: {verification.verifiedAt}
-                    </p>
-                </TooltipContent>
+                {verificationDetails && (
+                    <TooltipContent>
+                        <p className="font-semibold">Verified as {verificationDetails.category}</p>
+                        <p className="text-xs text-muted-foreground">
+                            Date: {verificationDetails.verifiedAt}
+                        </p>
+                    </TooltipContent>
+                )}
             </Tooltip>
         </TooltipProvider>
     );

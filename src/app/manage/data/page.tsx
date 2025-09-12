@@ -1,23 +1,16 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { AppWindow, Share2, Building, BarChart, FileText, Trash2, PowerOff, CalendarClock, History } from "@/components/icons";
 import React from "react";
-import { getConnectedApplications, type Application } from "@/actions/data/applications";
+import { getConnectedApplications } from "@/actions/data/applications";
 import { ListItem } from "@/components/ui/list-item";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
-
-const ICON_MAP: Record<Application['icon'], React.ElementType> = {
-    'app-window': AppWindow,
-    'building': Building,
-    'bar-chart': BarChart,
-    'share-2': Share2,
-};
+import { History, FileText, Trash2, PowerOff, CalendarClock, AppWindow, Share2, type LucideIcon } from "@/components/icons";
 
 export default async function DataAndPrivacyPage() {
     
     const { firstParty, thirdParty } = await getConnectedApplications();
     
-    const privacyFeatures = [
+    const privacyFeatures: { icon: LucideIcon; title: string; description: string; href: string; }[] = [
          {
             icon: History,
             title: "Your Account Activity",
@@ -50,6 +43,14 @@ export default async function DataAndPrivacyPage() {
         },
     ];
 
+    const appIconMap: Record<string, LucideIcon> = {
+        'app-window': AppWindow,
+        'building': AppWindow, // Placeholder
+        'bar-chart': AppWindow, // Placeholder
+        'share-2': Share2,
+    };
+
+
     return (
         <div className="grid gap-8">
             <div>
@@ -80,7 +81,7 @@ export default async function DataAndPrivacyPage() {
                             {firstParty.map((app) => (
                                 <ListItem 
                                     key={app.id}
-                                    icon={ICON_MAP[app.icon] || AppWindow}
+                                    icon={app.icon ? appIconMap[app.icon] : AppWindow}
                                     title={app.name}
                                     description={app.description}
                                     href={`/manage/data/1/${app.id}`} 
@@ -102,7 +103,7 @@ export default async function DataAndPrivacyPage() {
                             {thirdParty.map((app) => (
                                 <ListItem 
                                     key={app.id}
-                                    icon={ICON_MAP[app.icon] || Share2}
+                                    icon={app.icon ? appIconMap[app.icon] : Share2}
                                     title={app.name}
                                     description={app.description}
                                     href={`/manage/data/3/${app.id}`} 

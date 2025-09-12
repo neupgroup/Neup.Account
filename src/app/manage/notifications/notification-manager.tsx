@@ -1,119 +1,136 @@
-"use client";
+
+
+'use client';
 
 import { useState, useTransition, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { AlertTriangle, X, Bell } from '@/components/icons';
-import type { AllNotifications } from '@/types';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { checkPermissions } from '@/lib/user';
-import { markNotificationAsRead } from '@/actions/notifications';
-import Link from 'next/link';
+import { AlertTriangle, X, Bell, type LucideIcon, Handshake, UserPlus, MessageSquareWarning } from '@/components/icons';
+import type { AllNotifications, Notification } from '@/types';
+import { Card, CardContent } from '@/components/ui/card';
+import { markNotificationAsRead, deleteNotification } from '@/actions/notifications';
+import { cn } from '@/lib/utils';
+import { cva } from 'class-variance-authority';
+import { ListItem } from '@/components/ui/list-item';
 
-function getActionText(action: string, senderName: string): string {
-    if (action === 'family_invitation') {
-        return `${senderName} has invited you to join their family.`;
+const warningVariants = cva(
+  "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4",
+  {
+    variants: {
+      noticeType: {
+        general: "bg-blue-50 border-blue-200 text-blue-800 [&>svg]:text-blue-500",
+        success: "bg-green-50 border-green-200 text-green-800 [&>svg]:text-green-500",
+        warning: "bg-orange-50 border-orange-200 text-orange-800 [&>svg]:text-orange-500",
+        error: "bg-destructive/10 border-destructive/20 text-destructive [&>svg]:text-destructive",
+      },
+    },
+    defaultVariants: {
+      noticeType: "general",
+    },
+  }
+)
+
+function getNotificationDetails(notification: Notification): { iconName: string; message: string; href: string } {
+    const defaultHref = '/manage/notifications';
+    let href = defaultHref;
+    let message = notification.message || 'You have a new notification.';
+    let iconName = 'MessageSquareWarning';
+
+    switch (notification.action) {
+        case 'informative.login':
+        case 'informative.logout':
+        case 'informative.unblock':
+            href = '/manage/security/devices';
+            break;
+        case 'informative.security':
+            href = '/manage/security';
+            break;
+        case 'access_invitation':
+            iconName = 'Handshake';
+            message = `${notification.senderName} wants you to manage their account.`;
+            href = '/manage/people/invitations';
+            break;
+        case 'family_invitation':
+            iconName = 'UserPlus';
+            message = `${notification.senderName} invited you to join their family.`;
+            href = '/manage/people/invitations';
+            break;
     }
-     if (action === 'neupid_request') {
-        return `${senderName} has requested a new NeupID.`;
+    
+    if (notification.action?.includes('sticky')) {
+        iconName = 'AlertTriangle';
+        message = notification.message || 'An important notice was posted.';
     }
-    if (action === 'access_invitation') {
-        return `${senderName} wants you to help manage their account.`;
-    }
-    return 'You have a new request.';
+
+    return { iconName, message, href };
 }
+
+
+const formatDate = (isoString: string) => {
+    const notificationDate = new Date(isoString);
+    const now = new Date();
+    const seconds = Math.floor((now.getTime() - notificationDate.getTime()) / 1000);
+
+    if (seconds < 60) return "just now";
+    
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return `${minutes} min${minutes > 1 ? 's' : ''} ago`;
+
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+
+    const days = Math.floor(hours / 24);
+    if (days < 7) return `${days} day${days > 1 ? 's' : ''} ago`;
+
+    const weeks = Math.floor(days / 7);
+    if (weeks < 4) return `${weeks} week${weeks > 1 ? 's' : ''} ago`;
+
+    const months = Math.floor(days / 30);
+    if (months < 12) return `${months} month${months > 1 ? 's' : ''} ago`;
+
+    const years = Math.floor(days / 365);
+    return `${years} year${years > 1 ? 's' : ''} ago`;
+};
+
 
 export function NotificationManager({ initialNotifications }: { initialNotifications: AllNotifications }) {
     const [notifications, setNotifications] = useState(initialNotifications);
-    const [isPending, startTransition] = useTransition();
-    const [canMarkAsRead, setCanMarkAsRead] = useState(false);
-    const { toast } = useToast();
-    const router = useRouter();
+    
+    const allNotifications = [
+        ...notifications.sticky,
+        ...notifications.requests,
+        ...notifications.other
+    ];
 
-    useEffect(() => {
-        const verifyPermission = async () => {
-            const hasPerm = await checkPermissions(['notification.mark_as_read']);
-            setCanMarkAsRead(hasPerm);
-        };
-        verifyPermission();
-    }, []);
-
-    const handleDismissWarning = (id: string) => {
-        startTransition(async () => {
-            const result = await markNotificationAsRead(id);
-            if (result.success) {
-                toast({ title: 'Notification dismissed' });
-                setNotifications(prev => ({ ...prev, sticky: prev.sticky.filter(item => item.id !== id) }));
-            } else {
-                toast({ variant: 'destructive', title: 'Error', description: "Could not dismiss warning." });
-            }
-        });
-    };
-
-    const hasNotifications = notifications.sticky.length > 0 || notifications.requests.length > 0;
+    if (allNotifications.length === 0) {
+        return (
+             <Card>
+                <CardContent className="p-8 text-center text-muted-foreground">
+                    <Bell className="mx-auto h-12 w-12 mb-4" />
+                    <h3 className="text-lg font-semibold">All caught up!</h3>
+                    <p>You have no new notifications.</p>
+                </CardContent>
+            </Card>
+        )
+    }
 
     return (
-        <div className="space-y-6">
-            {notifications.sticky.length > 0 && (
-                <Card>
-                    <CardHeader><CardTitle className="flex items-center gap-2"><AlertTriangle className="text-destructive"/> Warnings</CardTitle></CardHeader>
-                    <CardContent className="space-y-3">
-                        {notifications.sticky.map(warning => (
-                             <Alert key={warning.id} variant="destructive" className="relative pr-10">
-                                <AlertTriangle className="h-4 w-4" />
-                                <AlertTitle>Important Notice</AlertTitle>
-                                <AlertDescription>
-                                    {warning.message}
-                                </AlertDescription>
-                                {canMarkAsRead && warning.persistence === 'dismissable' && (
-                                <Button variant="ghost" size="icon" className="absolute top-2 right-2 h-6 w-6" onClick={() => handleDismissWarning(warning.id)} disabled={isPending} aria-label="Dismiss warning">
-                                    <X className="h-4 w-4" />
-                                </Button>
-                                )}
-                            </Alert>
-                        ))}
-                    </CardContent>
-                </Card>
-            )}
-
-            {notifications.requests.length > 0 && (
-                 <Card>
-                    <CardHeader><CardTitle className="flex items-center gap-2"><Bell /> Requests</CardTitle></CardHeader>
-                    <CardContent className="space-y-3 divide-y">
-                         {notifications.requests.map(request => (
-                            <Link 
-                                key={request.id} 
-                                href="/manage/people/invitations" 
-                                className="flex items-center justify-between p-4 rounded-md hover:bg-muted/50 first:pt-0 last:pb-0"
-                            >
-                                <div className="flex items-center gap-3 flex-grow">
-                                    <Avatar className="h-10 w-10">
-                                        <AvatarFallback>{request.senderName?.charAt(0)}</AvatarFallback>
-                                    </Avatar>
-                                    <div>
-                                        <p className="text-sm font-medium">{getActionText(request.action, request.senderName || 'A user')}</p>
-                                        <p className="text-xs text-muted-foreground">{new Date(request.createdAt).toLocaleString()}</p>
-                                    </div>
-                                </div>
-                            </Link>
-                        ))}
-                    </CardContent>
-                </Card>
-            )}
-
-            {!hasNotifications && (
-                 <Card>
-                    <CardContent className="p-8 text-center text-muted-foreground">
-                        <Bell className="mx-auto h-12 w-12 mb-4" />
-                        <h3 className="text-lg font-semibold">All caught up!</h3>
-                        <p>You have no new notifications.</p>
-                    </CardContent>
-                </Card>
-            )}
-
-        </div>
+        <Card>
+            <CardContent className="divide-y p-0">
+                {allNotifications.map(notification => {
+                    const { iconName, message, href } = getNotificationDetails(notification);
+                    return (
+                        <ListItem
+                            key={notification.id}
+                            href={href}
+                            iconName={iconName}
+                            title={message}
+                            description={formatDate(notification.createdAt)}
+                        />
+                    )
+                })}
+            </CardContent>
+        </Card>
     );
 }

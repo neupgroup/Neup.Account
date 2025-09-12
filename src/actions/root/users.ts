@@ -1,4 +1,5 @@
 
+
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -16,7 +17,7 @@ import {
   setDoc,
   orderBy,
 } from 'firebase/firestore';
-import { getUserNeupIds, getUserProfile, getAccountType } from '@/lib/user';
+import { getUserNeupIds, getUserProfile as fetchUserProfile, checkPermissions } from '@/lib/user';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { revalidatePath } from 'next/cache';
 import { logActivity } from '@/lib/log-actions';
@@ -32,17 +33,13 @@ import type {
 export type UserDetailsLimited = {
   accountId: string;
   neupId: string;
-  displayName: string;
+  nameDisplay: string;
 };
 
 export async function getUserDetails(
   accountId: string
 ): Promise<UserDetails | null> {
-  const [profile, neupIds, accountType] = await Promise.all([
-    getUserProfile(accountId),
-    getUserNeupIds(accountId),
-    getAccountType(accountId),
-  ]);
+  const profile = await fetchUserProfile(accountId);
 
   if (!profile) {
     return null;
@@ -50,9 +47,9 @@ export async function getUserDetails(
 
   return {
     accountId,
-    neupId: neupIds[0] || 'N/A',
+    neupId: profile.neupIdPrimary || 'N/A',
     profile,
-    accountType: accountType || 'individual',
+    accountType: profile.accountType || 'individual',
   };
 }
 
@@ -121,6 +118,11 @@ export async function getPermissions(accountId: string): Promise<UserPermissions
 }
 
 export async function updateUserPermissions(accountId: string, newPermissionIds: string[], newRestrictionIds: string[]): Promise<{success: boolean, error?: string}> {
+    const canUpdate = await checkPermissions(['root.permission.edit']);
+    if (!canUpdate) {
+        return { success: false, error: 'Permission denied.' };
+    }
+
     try {
         const permitQuery = query(collection(db, 'permit'), where('account_id', '==', accountId), where('for_self', '==', true), limit(1));
         const permitSnapshot = await getDocs(permitQuery);

@@ -1,4 +1,5 @@
 
+
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -34,16 +35,13 @@ export async function getPendingVerificationRequests(): Promise<VerificationRequ
                 const data = doc.data();
                 const accountId = data.accountId;
 
-                const [profile, neupIds] = await Promise.all([
-                    getUserProfile(accountId),
-                    getUserNeupIds(accountId)
-                ]);
+                const profile = await getUserProfile(accountId);
 
                 return {
                     id: doc.id,
                     accountId,
-                    fullName: profile ? `${profile.firstName} ${profile.lastName}`.trim() : 'Unknown User',
-                    neupId: neupIds[0] || 'N/A',
+                    fullName: profile?.displayName || `${profile?.firstName} ${profile?.lastName}`.trim() || 'Unknown User',
+                    neupId: profile?.neupId || 'N/A',
                     requestedAt: data.requestedAt?.toDate()?.toLocaleDateString() || 'N/A',
                     status: data.status,
                 };
@@ -62,6 +60,10 @@ export async function grantVerification(accountId: string, data: z.infer<typeof 
     
     const adminId = await getPersonalAccountId();
     if (!adminId) return { success: false, error: 'Admin not authenticated.'};
+
+    if (adminId === accountId) {
+        return { success: false, error: 'Administrators cannot verify their own account.' };
+    }
 
     const validation = verificationActionSchema.safeParse(data);
     if (!validation.success) {

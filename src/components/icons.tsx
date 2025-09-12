@@ -31,7 +31,6 @@ import {
     UserPlus,
     UploadCloud,
     FilePlus,
-    BadgeX,
     MessageSquareWarning,
     LogIn,
     MapPin,
@@ -83,6 +82,8 @@ import {
     Send,
     List,
     ArrowUpDown,
+    AtSign,
+    Camera,
 } from "lucide-react";
 
 export {
@@ -117,7 +118,6 @@ export {
     UserPlus,
     UploadCloud,
     FilePlus,
-    BadgeX,
     MessageSquareWarning,
     LogIn,
     MapPin,
@@ -169,4 +169,6 @@ export {
     Send,
     List,
     ArrowUpDown,
+    AtSign,
+    Camera,
 };

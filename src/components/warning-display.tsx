@@ -101,17 +101,19 @@ export function WarningDisplay() {
         <div className="space-y-4 mb-4">
             {warnings.map(warning => (
                 <div key={warning.id} className={cn(warningVariants({ noticeType: warning.noticeType }))}>
-                     <div className="flex items-start">
-                        <AlertTriangle className="h-4 w-4" />
-                        <div className="ml-3 flex-1">
-                             <h5 className="mb-1 font-medium leading-none tracking-tight">Important Notice</h5>
-                            <div className="text-sm [&_p]:leading-relaxed" dangerouslySetInnerHTML={{ __html: warning.message || "" }} />
+                     <div className="flex items-start justify-between gap-4">
+                        <div className="flex items-start gap-3">
+                             <AlertTriangle className="h-4 w-4" />
+                            <div className="flex-1">
+                                <h5 className="mb-1 font-medium leading-none tracking-tight">Important Notice</h5>
+                                <div className="text-sm [&_p]:leading-relaxed" dangerouslySetInnerHTML={{ __html: warning.message || "" }} />
+                            </div>
                         </div>
                         {warning.persistence === 'dismissable' && (
                              <Button
                                 variant="ghost"
                                 size="icon"
-                                className="h-6 w-6 -mt-1 -mr-2 flex-shrink-0"
+                                className="h-6 w-6 flex-shrink-0"
                                 onClick={() => handleDismiss(warning.id)}
                                 disabled={isPending}
                                 aria-label="Dismiss warning"

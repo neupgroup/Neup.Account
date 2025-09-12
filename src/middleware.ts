@@ -3,9 +3,11 @@
 import { NextResponse, userAgent } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+const MOBILE_BREAKPOINT = 1024;
+
 export async function middleware(request: NextRequest) {
-    const { device } = userAgent(request);
-    const isMobile = device.type === 'mobile' || device.type === 'tablet';
+    const viewport = request.headers.get('x-viewport-width');
+    const isMobile = viewport ? parseInt(viewport, 10) < MOBILE_BREAKPOINT : userAgent(request).device.type === 'mobile';
 
     const requestHeaders = new Headers(request.headers);
     requestHeaders.set('x-next-pathname', request.nextUrl.pathname);
@@ -15,12 +17,20 @@ export async function middleware(request: NextRequest) {
     if (request.cookies.has('device_block')) {
         return NextResponse.redirect(new URL('/blocked', request.url));
     }
-
-    return NextResponse.next({
+    
+    const response = NextResponse.next({
         request: {
             headers: requestHeaders,
         }
     });
+
+    // Pass the current URL to the server components via a cookie
+    // This is useful for layouts to know the current path.
+    if(request.nextUrl.pathname) {
+        response.cookies.set('next-url', request.nextUrl.pathname);
+    }
+
+    return response;
 }
 
 export const config = {

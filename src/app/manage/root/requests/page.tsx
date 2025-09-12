@@ -6,6 +6,7 @@ import React from "react";
 import { checkPermissions } from "@/lib/user";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ListItem } from "@/components/ui/list-item";
+import { UserCircle } from "lucide-react";
 
 export default async function RequestsManagementPage() {
     const canView = await checkPermissions(['root.requests.view']);
@@ -28,6 +29,12 @@ export default async function RequestsManagementPage() {
             title: "NeupID Approvals",
             description: "Approve or deny requests for new NeupIDs from existing users.",
             href: "/manage/root/requests/neupid",
+        },
+         {
+            icon: UserCircle,
+            title: "Display Name Requests",
+            description: "Review and approve custom display names requested by users.",
+            href: "/manage/root/requests/display-name",
         },
         {
             icon: ShieldCheck,

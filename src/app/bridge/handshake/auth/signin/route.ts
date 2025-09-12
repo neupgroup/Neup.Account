@@ -1,7 +1,8 @@
+
 import { NextResponse, type NextRequest } from 'next/server';
 import { getActiveSession } from '@/lib/auth-actions';
 import { db } from '@/lib/firebase';
-import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import crypto from 'crypto';
 import { logError } from '@/lib/logger';
 
@@ -15,7 +16,7 @@ export async function GET(request: NextRequest) {
     if (!authHandlerUrlString) {
         const errorUrl = new URL('/auth/start', request.url);
         errorUrl.searchParams.set('error', 'invalid_request');
-        errorUrl.searchParams.set('error_description', 'The required \'auth_handler\' parameter was not provided.');
+        errorUrl.searchParams.set('error_description', 'The required "auth_handler" parameter was not provided.');
         return NextResponse.redirect(errorUrl);
     }
     
@@ -34,14 +35,26 @@ export async function GET(request: NextRequest) {
         finalRedirectUrl.searchParams.set('error_description', 'An application ID (appId) must be provided.');
         return NextResponse.redirect(finalRedirectUrl);
     }
-
+    
     try {
+        // --- Security Check ---
+        const appRef = doc(db, 'applications', appId);
+        const appDoc = await getDoc(appRef);
+
+        if (!appDoc.exists() || !appDoc.data().appSecret) {
+            finalRedirectUrl.searchParams.set('error', 'invalid_app');
+            finalRedirectUrl.searchParams.set('error_description', 'The provided application ID is invalid or not fully configured.');
+            return NextResponse.redirect(finalRedirectUrl);
+        }
+
         const session = await getActiveSession();
 
         if (!session) {
-            finalRedirectUrl.searchParams.set('error', 'unauthenticated');
-            finalRedirectUrl.searchParams.set('error_description', 'No active user session found.');
-            return NextResponse.redirect(finalRedirectUrl);
+            // User is not logged in. Redirect to sign-in page, preserving the original request.
+            const returnUrl = request.nextUrl.pathname + '?' + searchParams.toString();
+            const signInUrl = new URL('/auth/start', request.url);
+            signInUrl.searchParams.set('return_url', returnUrl);
+            return NextResponse.redirect(signInUrl);
         }
 
         const dependentKey = crypto.randomBytes(32).toString('hex');

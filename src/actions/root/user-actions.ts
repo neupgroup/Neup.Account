@@ -1,20 +1,26 @@
+
+
 'use server';
 
 import { db } from '@/lib/firebase';
-import { doc, updateDoc, addDoc, collection, serverTimestamp, deleteDoc, writeBatch, query, where, getDocs, getDoc } from 'firebase/firestore';
+import { doc, updateDoc, addDoc, collection, serverTimestamp, deleteDoc, writeBatch, query, where, getDocs, getDoc, setDoc } from 'firebase/firestore';
 import { logError } from '@/lib/logger';
-import { checkPermissions } from '@/lib/user';
+import { checkPermissions, getUserNeupIds } from '@/lib/user';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { logActivity } from '@/lib/log-actions';
 import { cookies, headers } from 'next/headers';
 import crypto from 'crypto';
 import { z } from 'zod';
+import { createNotification } from '../notifications';
+import { warningReasons, blockReasons } from '@/app/manage/root/accounts/[id]/forms';
 
 
 // --- Administrative Actions ---
+
 const sendWarningSchema = z.object({
-    message: z.string().min(1, "Message cannot be empty"),
-    reason: z.string().min(1, "Reason cannot be empty"),
+    reasonKey: z.nativeEnum(warningReasons),
+    source: z.string().optional(),
+    remarks: z.string().min(1, "Remarks are required."),
     noticeType: z.enum(['general', 'success', 'warning', 'error']),
     persistence: z.enum(['dismissable', 'untildays', 'permanent']),
     days: z.number().optional(),
@@ -32,7 +38,7 @@ export async function sendWarning(userId: string, data: z.infer<typeof sendWarni
         return { success: false, error: "Invalid data submitted." };
     }
 
-    const { message, reason, noticeType, persistence, days } = validation.data;
+    const { reasonKey, source, remarks, noticeType, persistence, days } = validation.data;
     
     let expiresOn: Date | null = null;
     if (persistence === 'untildays' && days) {
@@ -46,22 +52,23 @@ export async function sendWarning(userId: string, data: z.infer<typeof sendWarni
         'warning': 'warning.sticky',
         'error': 'danger.sticky'
     };
+    
+    const reasonText = warningReasons[reasonKey];
+    const message = `Your account has received a warning for: <strong>${reasonText}</strong>. Please review our community guidelines.`;
 
     try {
-        await addDoc(collection(db, 'notifications'), {
+        await createNotification({
             recipient_id: userId,
             action: actionTypeMap[noticeType],
             message,
             persistence,
             noticeType,
-            reason,
+            reason: remarks,
             expiresOn,
-            is_read: false,
-            createdAt: serverTimestamp(),
             sender_id: adminId,
         });
 
-        await logActivity(userId, `Admin sent warning: "${message}"`, 'Alert', undefined, adminId);
+        await logActivity(userId, `Admin sent warning for ${reasonText}`, 'Alert', undefined, adminId);
         return { success: true };
     } catch (error) {
         await logError('database', error, 'sendWarning');
@@ -72,8 +79,9 @@ export async function sendWarning(userId: string, data: z.infer<typeof sendWarni
 const blockServiceSchema = z.object({
     isPermanent: z.boolean(),
     durationInHours: z.number().optional(),
-    reason: z.string().min(1, "Reason is required"),
-    message: z.string().min(1, "Message is required"),
+    reasonKey: z.nativeEnum(blockReasons),
+    source: z.string().optional(),
+    remarks: z.string().min(1, "Remarks are required"),
 });
 
 export async function blockServiceAccess(userId: string, data: z.infer<typeof blockServiceSchema>): Promise<{success: boolean, error?: string}> {
@@ -88,10 +96,12 @@ export async function blockServiceAccess(userId: string, data: z.infer<typeof bl
         return { success: false, error: 'Invalid data submitted.' };
     }
     
-    const { isPermanent, durationInHours, reason, message } = validation.data;
+    const { isPermanent, durationInHours, reasonKey, source, remarks } = validation.data;
+    const { reason, message } = blockReasons[reasonKey];
     
     try {
         const accountRef = doc(db, 'account', userId);
+        const batch = writeBatch(db);
         
         let until = null;
         if (!isPermanent && durationInHours) {
@@ -106,10 +116,36 @@ export async function blockServiceAccess(userId: string, data: z.infer<typeof bl
             message,
             is_permanent: isPermanent,
             until: until,
+            source: source || null,
+            remarks: remarks,
+            blockedBy: adminId,
+            blockedOn: serverTimestamp()
         };
 
-        await updateDoc(accountRef, { block: blockData });
+        batch.update(accountRef, { block: blockData, accountStatus: 'blocked' });
+
+        const statusLogRef = doc(collection(db, 'account_status'));
+        batch.set(statusLogRef, {
+            account_id: userId,
+            status: 'blocked',
+            remarks: `Admin blocked access. Reason: ${reason}. ${remarks}`,
+            from_date: serverTimestamp(),
+            more_info: `Request by admin: ${adminId}.`
+        });
+        
+        await batch.commit();
+
         await logActivity(userId, `Service access blocked. Reason: ${reason}`, 'Alert', undefined, adminId);
+        
+        await createNotification({
+            recipient_id: userId,
+            action: 'danger.sticky',
+            message,
+            persistence: 'permanent',
+            noticeType: 'error',
+            sender_id: adminId,
+        });
+
         return { success: true };
     } catch (error) {
         await logError('database', error, 'blockServiceAccess');
@@ -127,8 +163,30 @@ export async function unblockServiceAccess(userId: string): Promise<{success: bo
 
      try {
         const accountRef = doc(db, 'account', userId);
-        await updateDoc(accountRef, { block: null });
+        const batch = writeBatch(db);
+        
+        batch.update(accountRef, { block: null, accountStatus: 'active' });
+
+        const statusLogRef = doc(collection(db, 'account_status'));
+        batch.set(statusLogRef, {
+            account_id: userId,
+            status: 'active',
+            remarks: 'Service access restored by admin.',
+            from_date: serverTimestamp(),
+            more_info: `Request by admin: ${adminId}.`
+        });
+        
+        await batch.commit();
+
         await logActivity(userId, `Service access unblocked`, 'Success', undefined, adminId);
+        
+        await createNotification({
+            recipient_id: userId,
+            action: 'informative.unblock',
+            message: 'Your account access has been restored.',
+            sender_id: adminId,
+        });
+
         return { success: true };
     } catch (error) {
         await logError('database', error, 'unblockServiceAccess');
@@ -171,6 +229,15 @@ export async function impersonateUser(userId: string, neupId: string): Promise<{
         cookieStore.set('auth_session_key', sessionKey, cookieOptions);
         
         await logActivity(userId, `Admin impersonation started by ${adminId}`, 'Alert', undefined, adminId);
+        
+        await createNotification({
+            recipient_id: userId,
+            action: 'warning.sticky',
+            message: `Your account was inspected by a superuser.`,
+            persistence: 'permanent',
+            noticeType: 'warning',
+            sender_id: adminId,
+        });
 
         return { success: true };
     } catch(error) {
@@ -196,7 +263,6 @@ export async function deleteUserAccount(userId: string): Promise<{ success: bool
 
         // --- Documents to delete by direct reference ---
         batch.delete(doc(db, 'account', userId));
-        batch.delete(doc(db, 'profile', userId));
         batch.delete(doc(db, 'auth_password', userId));
         // Delete TOTP if it exists
         const totpRef = doc(db, 'auth_totp', userId);
@@ -240,4 +306,32 @@ export async function deleteUserAccount(userId: string): Promise<{ success: bool
     }
 }
 
+export async function setProStatus(accountId: string, isPro: boolean, reason: string): Promise<{ success: boolean; error?: string }> {
+    const canModify = await checkPermissions(['root.account.edit_pro_status']);
+    if (!canModify) return { success: false, error: 'Permission denied.' };
+    
+    const adminId = await getPersonalAccountId();
+    if (!adminId) return { success: false, error: 'Administrator not authenticated.' };
 
+    try {
+        const accountRef = doc(db, 'account', accountId);
+        await updateDoc(accountRef, { pro: isPro });
+
+        const action = isPro ? 'Activated Neup.Pro' : 'Deactivated Neup.Pro';
+        await logActivity(accountId, `${action} by admin. Reason: ${reason}`, 'Success', undefined, adminId);
+        
+        await createNotification({
+            recipient_id: accountId,
+            action: isPro ? 'success.sticky' : 'warning.sticky',
+            message: `Your Neup.Pro status has been ${isPro ? 'activated' : 'deactivated'} by an administrator.`,
+            persistence: 'dismissable',
+            noticeType: isPro ? 'success' : 'warning',
+            sender_id: adminId,
+        });
+        
+        return { success: true };
+    } catch (e) {
+        await logError('database', e, `setProStatus for account ${accountId}`);
+        return { success: false, error: 'An unexpected error occurred.' };
+    }
+}

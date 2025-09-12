@@ -12,6 +12,7 @@ import { logError } from '@/lib/logger';
 import { z } from 'zod';
 import crypto from 'crypto';
 import { totpEnableSchema, totpDisableSchema } from '@/schemas/security';
+import { createNotification } from '../notifications';
 
 // We need a consistent secret for encryption. STORE THIS IN A SECURE VAULT.
 // For this example, it's in an environment variable.
@@ -22,7 +23,7 @@ if (!ENCRYPTION_KEY || ENCRYPTION_KEY.length < 64) {
 
 // Basic encryption/decryption functions using Node.js crypto
 // In a production app, use a dedicated KMS for this.
-async function encrypt(text: string): Promise<string> {
+export async function encrypt(text: string): Promise<string> {
     const { subtle } = await import('crypto');
     const key = await subtle.importKey('raw', Buffer.from(ENCRYPTION_KEY, 'hex'), { name: 'AES-GCM' }, false, ['encrypt']);
     const iv = crypto.randomBytes(12);
@@ -31,7 +32,7 @@ async function encrypt(text: string): Promise<string> {
     return `${iv.toString('hex')}:${Buffer.from(encrypted).toString('hex')}`;
 }
 
-async function decrypt(encryptedText: string): Promise<string> {
+export async function decrypt(encryptedText: string): Promise<string> {
     const { subtle } = await import('crypto');
     const [ivHex, encryptedHex] = encryptedText.split(':');
     if (!ivHex || !encryptedHex) throw new Error('Invalid encrypted text format');
@@ -99,6 +100,13 @@ export async function verifyAndEnableTotp(data: z.infer<typeof totpEnableSchema>
         const totpRef = doc(db, 'auth_totp', accountId);
         await setDoc(totpRef, { secret: encryptedSecret, createdAt: serverTimestamp() });
         await logActivity(accountId, 'TOTP Enabled', 'Success');
+        
+        await createNotification({
+            recipient_id: accountId,
+            action: 'informative.security',
+            message: 'Two-factor authentication (2FA) has been enabled on your account.',
+        });
+
         return { success: true };
     } catch(error) {
         await logError('database', error, `verifyAndEnableTotp: ${accountId}`);
@@ -138,6 +146,13 @@ export async function disableTotp(data: z.infer<typeof totpDisableSchema>): Prom
         await deleteDoc(totpRef);
 
         await logActivity(accountId, 'TOTP Disabled', 'Success');
+        
+        await createNotification({
+            recipient_id: accountId,
+            action: 'informative.security',
+            message: 'Two-factor authentication (2FA) has been disabled on your account.',
+        });
+
         return { success: true };
 
     } catch(error) {

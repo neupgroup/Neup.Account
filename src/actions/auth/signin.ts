@@ -1,3 +1,4 @@
+
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -10,6 +11,7 @@ import { createAndSetSession } from '@/lib/session';
 import { logError } from '@/lib/logger';
 import { validateNeupId } from '@/lib/user';
 import { loginFormSchema } from '@/schemas/auth';
+import { createNotification } from '@/actions/notifications';
 
 
 export async function loginUser(data: z.infer<typeof loginFormSchema>) {
@@ -60,6 +62,12 @@ export async function loginUser(data: z.infer<typeof loginFormSchema>) {
 
         await logActivity(accountId, 'Login', 'Success', ipAddress, undefined, geolocation);
         await createAndSetSession(accountId, 'Password', ipAddress, userAgent, geolocation);
+        await createNotification({
+            recipient_id: accountId,
+            action: 'informative.login',
+            message: `Your account was signed in from a new device.`,
+        });
+
 
         return { success: true };
     } catch (error) {

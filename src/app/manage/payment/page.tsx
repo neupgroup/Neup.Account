@@ -1,13 +1,12 @@
 
-
 import { Card, CardContent } from "@/components/ui/card";
-import { Wallet, History, Gem, CreditCard, Ban } from "@/components/icons";
 import React from "react";
 import { checkPermissions } from "@/lib/user";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ListItem } from "@/components/ui/list-item";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 import { PrimaryHeader } from "@/components/ui/primary-header";
+import { CreditCard, History, Wallet, Gem, Ban } from "@/components/icons";
 
 export default async function PaymentSubscriptionPage() {
     const [canViewMethods, canViewHistory, canViewSubscriptions, canViewNeupPro] = await Promise.all([
@@ -65,7 +64,7 @@ export default async function PaymentSubscriptionPage() {
                     description="Review your payment settings and upgrade your plan."
                 />
                 <Card>
-                    <CardContent className="divide-y p-2">
+                    <CardContent className="divide-y p-0">
                         {visibleFeatures.length > 0 ? (
                             visibleFeatures.map((feature, index) => (
                                 <ListItem key={index} {...feature} />

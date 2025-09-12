@@ -1,18 +1,18 @@
 
-
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, Contact, UserX, MailQuestion } from "@/components/icons";
 import React from "react";
 import { checkPermissions } from "@/lib/user";
 import { ListItem } from "@/components/ui/list-item";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 import { PrimaryHeader } from "@/components/ui/primary-header";
+import { Users, MailQuestion, Contact, UserX } from "@/components/icons";
 
 
 export default async function PeopleSharingPage() {
-    const [canViewFamily, canViewInvitations] = await Promise.all([
+    const [canViewFamily, canViewInvitations, canBlockUsers] = await Promise.all([
         checkPermissions(['people.family.view']),
-        checkPermissions(['notification.read'])
+        checkPermissions(['notification.read']),
+        checkPermissions(['people.block_list.view', 'people.restrict_list.view'])
     ]);
     
     const sharingFeatures = [
@@ -40,9 +40,9 @@ export default async function PeopleSharingPage() {
         {
             icon: UserX,
             title: "Blocked Users",
-            description: "See a list of people you've blocked.",
-            href: "#",
-            show: false, // Not implemented yet
+            description: "Manage users you have blocked or restricted.",
+            href: "/manage/people/blocked",
+            show: canBlockUsers,
         },
     ];
 

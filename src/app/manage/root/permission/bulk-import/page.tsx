@@ -1,8 +1,15 @@
 
 import { BackButton } from "@/components/ui/back-button";
 import { BulkImportForm } from "./form";
+import { checkPermissions } from "@/lib/user";
+import { notFound } from "next/navigation";
 
-export default function BulkImportPage() {
+export default async function BulkImportPage() {
+    const canImport = await checkPermissions(['root.permission.bulk_import']);
+    if (!canImport) {
+        notFound();
+    }
+
     return (
         <div className="grid gap-8">
             <BackButton href="/manage/root/permission" />

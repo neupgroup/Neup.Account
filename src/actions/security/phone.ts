@@ -9,6 +9,7 @@ import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { checkPermissions } from '@/lib/user';
+import { createNotification } from '../notifications';
 
 const CONTACT_TYPE = 'recoveryPhone';
 
@@ -68,6 +69,13 @@ export async function addRecoveryPhone(data: z.infer<typeof phoneFormSchema>): P
             value: phone,
         });
         await logActivity(accountId, 'Added Recovery Phone', 'Success');
+        
+        await createNotification({
+            recipient_id: accountId,
+            action: 'informative.security',
+            message: `A new recovery phone (${phone}) was added to your account.`,
+        });
+
         revalidatePath('/manage/security/phone');
         return { success: true };
 
@@ -90,6 +98,13 @@ export async function removeRecoveryPhone(): Promise<{ success: boolean; error?:
         const contactRef = getDocRef(accountId);
         await deleteDoc(contactRef);
         await logActivity(accountId, 'Removed Recovery Phone', 'Success');
+        
+        await createNotification({
+            recipient_id: accountId,
+            action: 'informative.security',
+            message: `Your recovery phone number has been removed.`,
+        });
+
         revalidatePath('/manage/security/phone');
         return { success: true };
     } catch (error) {

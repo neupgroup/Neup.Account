@@ -11,6 +11,7 @@ import {
   Timestamp,
 } from 'firebase/firestore';
 import crypto from 'crypto';
+import { cookies } from 'next/headers';
 
 import { logError } from './logger';
 import type { Session, StoredAccount } from '@/types';
@@ -59,14 +60,13 @@ export async function createAndSetSession(
 
     await setSessionCookies(newSession, expiresOn);
     
-    // We no longer set profile cookies here. This is handled client-side.
-
+    // Once a full session is created, the temporary auth cookie is no longer needed.
+    cookies().delete('temp_auth_id');
+    
     const { allAccounts: existingAccounts } = await getSessionCookies();
     
-    // Fetch NeupID for the stored account object
     const neupIds = await getUserNeupIds(accountId);
     const primaryNeupId = neupIds[0];
-
 
     const newStoredAccount: StoredAccount = {
       accountId: accountId,
@@ -74,15 +74,16 @@ export async function createAndSetSession(
       sessionKey: sessionKey,
       expired: false,
       neupId: primaryNeupId,
+      active: true, // This is the currently active account
     };
     
     let accountFound = false;
     const allAccounts = existingAccounts.map((acc) => {
-      if (acc.accountId === accountId) {
-        accountFound = true;
-        return newStoredAccount;
-      }
-      return acc;
+        if (acc.accountId === accountId) {
+            accountFound = true;
+            return newStoredAccount; // Update existing account
+        }
+        return { ...acc, active: false }; // Mark all other accounts as inactive
     });
 
     if (!accountFound) {
@@ -92,8 +93,6 @@ export async function createAndSetSession(
     await setStoredAccountsCookie(allAccounts);
   } catch (error) {
     await logError('auth', error, `createAndSetSession for ${accountId}`);
-    // If session creation fails, we should not proceed.
-    // This is a critical error.
     throw new Error('Failed to create session.');
   }
 }
@@ -112,14 +111,14 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
 
   const validatedAccounts = await Promise.all(
     storedAccounts.map(async (account) => {
-      if (account.expired) return account;
-      if (!account.sessionId) return { ...account, expired: true };
+      if (account.expired) return { ...account, active: false };
+      if (!account.sessionId) return { ...account, expired: true, active: false };
 
       try {
         const sessionRef = doc(db, 'session', account.sessionId);
         const sessionDoc = await getDoc(sessionRef);
 
-        if (!sessionDoc.exists()) return { ...account, expired: true };
+        if (!sessionDoc.exists()) return { ...account, expired: true, active: false };
 
         const sessionData = sessionDoc.data();
         const dbExpiresOn = sessionData.expiresOn?.toDate();
@@ -131,10 +130,19 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
           sessionData.accountId !== account.accountId ||
           sessionData.auth_session_key !== account.sessionKey;
 
-        return { ...account, expired: isInvalid };
+        if (isInvalid) {
+            return { ...account, expired: true, active: false };
+        }
+
+        // If the session is valid, we need to check if it's the active one
+        const { accountId: activeAccountId } = await getSessionCookies();
+        const isActive = account.accountId === activeAccountId;
+
+        return { ...account, expired: false, active: isActive };
+
       } catch (e) {
         await logError('database', e, 'getValidatedStoredAccounts');
-        return { ...account, expired: true };
+        return { ...account, expired: true, active: false };
       }
     })
   );
@@ -168,6 +176,14 @@ export async function switchToAccount(account: StoredAccount) {
             sessionKey: account.sessionKey,
         }, expiresOn);
         
+        // Update the active flag in the stored accounts cookie
+        const { allAccounts: existingAccounts } = await getSessionCookies();
+        const updatedAccounts = existingAccounts.map(acc => ({
+            ...acc,
+            active: acc.accountId === account.accountId
+        }));
+        await setStoredAccountsCookie(updatedAccounts);
+
         return { success: true };
     } catch (error) {
         await logError('database', error, `switchActiveAccount: ${account.accountId}`);

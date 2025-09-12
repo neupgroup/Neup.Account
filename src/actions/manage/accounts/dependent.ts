@@ -1,4 +1,5 @@
 
+
 'use server';
 
 import { z } from 'zod';
@@ -12,14 +13,13 @@ import { revalidatePath } from 'next/cache';
 import bcrypt from 'bcryptjs';
 import { dependentFormSchema } from '@/schemas/dependent';
 import { checkPermissions, getUserProfile, getUserNeupIds } from '@/lib/user';
-import type { UserProfile } from '@/lib/user';
 
 
 export type DependentAccount = {
     id: string;
-    displayName: string;
+    nameDisplay: string;
     neupId: string;
-    displayPhoto?: string;
+    accountPhoto?: string;
 };
 
 export async function getDependentAccounts(): Promise<DependentAccount[]> {
@@ -55,7 +55,7 @@ export async function getDependentAccounts(): Promise<DependentAccount[]> {
 
         // Fetch account details for only those that are dependent accounts
         const accountRef = collection(db, 'account');
-        const dependentAccountsQuery = query(accountRef, where('__name__', 'in', dependentAccountIds), where('type', '==', 'dependent'));
+        const dependentAccountsQuery = query(accountRef, where('__name__', 'in', dependentAccountIds), where('accountType', '==', 'dependent'));
         
         const querySnapshot = await getDocs(dependentAccountsQuery);
 
@@ -66,18 +66,15 @@ export async function getDependentAccounts(): Promise<DependentAccount[]> {
         const dependentAccounts = await Promise.all(
             querySnapshot.docs.map(async (doc) => {
                 const accountId = doc.id;
-                const [profile, neupIds] = await Promise.all([
-                    getUserProfile(accountId),
-                    getUserNeupIds(accountId)
-                ]);
+                const profile = await getUserProfile(accountId);
 
                 if (!profile) return null;
 
                 return {
                     id: accountId,
-                    displayName: profile.displayName || `${profile.firstName} ${profile.lastName}`.trim(),
-                    neupId: neupIds[0] || 'N/A',
-                    displayPhoto: profile.displayPhoto,
+                    nameDisplay: profile.nameDisplay || `${profile.nameFirst} ${profile.nameLast}`.trim(),
+                    neupId: profile.neupIdPrimary || 'N/A',
+                    accountPhoto: profile.accountPhoto,
                 };
             })
         );
@@ -107,8 +104,8 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
         return { success: false, error: "Invalid data provided.", details: validation.error.flatten() };
     }
 
-    const { password, ...rest } = validation.data;
-    const neupId = rest.neupId.toLowerCase();
+    const { password, agreement, ...profileData } = validation.data;
+    const neupId = profileData.neupId.toLowerCase();
     const ipAddress = headers().get('x-forwarded-for') || 'Unknown IP';
 
     try {
@@ -119,18 +116,23 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
             return { success: false, error: 'This NeupID is already taken.' };
         }
 
-        let finalGender = rest.gender;
-        if (rest.gender === 'custom') {
-            finalGender = `c.${rest.customGender?.trim() || 'custom'}`;
-        }
-        
         const batch = writeBatch(db);
 
         const newAccountRef = doc(collection(db, 'account'));
         const dependentAccountId = newAccountRef.id;
+        
+        const { neupId: _n, ...restOfProfile } = profileData;
 
         batch.set(newAccountRef, {
-            type: 'dependent',
+            accountType: 'dependent',
+            accountStatus: 'active',
+            verified: false,
+            nameDisplay: `${profileData.nameFirst} ${profileData.nameLast}`.trim(),
+            accountPhoto: null,
+            neupIdPrimary: neupId,
+            ...restOfProfile,
+            dateBirth: profileData.dateBirth.toISOString(),
+            dateCreated: serverTimestamp()
         });
         
         const [guardianPermSnap, dependentPermSnap] = await Promise.all([
@@ -175,19 +177,10 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
         const hashedPassword = await bcrypt.hash(password, 10);
         batch.set(doc(db, 'auth_password', dependentAccountId), { pass: hashedPassword, passwordLastChanged: serverTimestamp() });
         
-        const { agreement: _a, gender, customGender, neupId: _n, ...profileData } = rest;
-        
-        batch.set(doc(db, "profile", dependentAccountId), { 
-            ...profileData, 
-            dob: profileData.dob.toISOString(),
-            gender: finalGender, 
-            createdAt: serverTimestamp() 
-        });
-        
         await batch.commit();
         
         await logActivity(guardianAccountId, `Created Dependent Account: ${neupId}`, 'Success', ipAddress, undefined, geolocation);
-        revalidatePath('/manage/accounts');
+        revalidatePath('/manage/accounts/dependent');
 
         return { success: true, dependentId: dependentAccountId };
 

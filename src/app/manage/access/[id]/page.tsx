@@ -1,5 +1,5 @@
 
-import { getAccessDetails, getDelegatablePermissions } from "../actions";
+import { getAccessDetails, getDelegatablePermissions } from "@/actions/manage/access";
 import { notFound } from "next/navigation";
 import {
   Card,

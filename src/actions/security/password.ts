@@ -10,6 +10,7 @@ import { checkPermissions } from '@/lib/user';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
 import { changePasswordSchema } from '@/schemas/security';
+import { createNotification } from '../notifications';
 
 export async function changePassword(data: z.infer<typeof changePasswordSchema>, geolocation?: string) {
     const hasPermission = await checkPermissions(['security.pass.modify']);
@@ -52,6 +53,12 @@ export async function changePassword(data: z.infer<typeof changePasswordSchema>,
         });
         
         await logActivity(accountId, 'Password Change', 'Success', undefined, undefined, geolocation);
+        
+        await createNotification({
+            recipient_id: accountId,
+            action: 'informative.security',
+            message: 'Your password was changed successfully.',
+        });
 
         return { success: true, message: "Password updated successfully." };
 

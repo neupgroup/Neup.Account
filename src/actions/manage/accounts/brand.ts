@@ -7,7 +7,7 @@ import { collection, query, where, getDocs, writeBatch, doc, serverTimestamp, ge
 import { checkPermissions, getUserProfile } from '@/lib/user';
 import { logError } from '@/lib/logger';
 import { switchToBrand as switchToBrandAction, switchToPersonal as switchToPersonalAction } from '@/lib/session';
-import { getActiveAccountId, getPersonalAccountId } from '@/lib/auth-actions';
+import { getPersonalAccountId } from '@/lib/auth-actions';
 import { z } from 'zod';
 import { headers } from 'next/headers';
 import { revalidatePath } from 'next/cache';
@@ -51,7 +51,7 @@ export async function getBrandAccounts(): Promise<BrandAccount[]> {
         const brandAccountsQuery = query(
             accountRef, 
             where('__name__', 'in', managedAccountIds), 
-            where('type', '==', 'brand')
+            where('accountType', '==', 'brand')
         );
         
         const querySnapshot = await getDocs(brandAccountsQuery);
@@ -69,8 +69,8 @@ export async function getBrandAccounts(): Promise<BrandAccount[]> {
 
                 return {
                     id: brandAccountId,
-                    name: profile.displayName || 'Unnamed Brand',
-                    logoUrl: profile.displayPhoto,
+                    name: profile.nameDisplay || 'Unnamed Brand',
+                    logoUrl: profile.accountPhoto,
                     plan: "Business" // Placeholder for plan
                 };
             })
@@ -100,7 +100,7 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
         return { success: false, error: "Invalid data provided.", details: validation.error.flatten() };
     }
 
-    const { fullName, legalName, registrationId, headOfficeLocation, servingAreas } = validation.data;
+    const { nameBrand, nameLegal, registrationId, headOfficeLocation, servingAreas } = validation.data;
     const neupId = validation.data.neupId.toLowerCase();
     const ipAddress = headers().get('x-forwarded-for') || 'Unknown IP';
 
@@ -118,7 +118,16 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
         const brandAccountId = newAccountRef.id;
 
         batch.set(newAccountRef, {
-            type: 'brand',
+            accountType: 'brand',
+            accountStatus: 'active',
+            verified: false,
+            nameDisplay: nameBrand,
+            nameBrand: nameBrand,
+            accountPhoto: null,
+            nameLegal: nameLegal || null,
+            registrationId: registrationId || null,
+            servingAreas: servingAreas || null,
+            dateCreated: serverTimestamp(),
         });
 
         // Grant management permission to the creator by creating a permit document
@@ -147,14 +156,6 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
 
         const newNeupIdRef = doc(db, 'neupid', neupId);
         batch.set(newNeupIdRef, { for: brandAccountId, is_primary: true });
-
-        batch.set(doc(db, "profile", brandAccountId), {
-            displayName: fullName,
-            legalName: legalName || null,
-            registrationId: registrationId || null,
-            servingAreas: servingAreas || null,
-            createdAt: serverTimestamp(),
-        });
         
         if (headOfficeLocation) {
              const newContactRef = doc(collection(db, 'contact'));

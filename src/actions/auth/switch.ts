@@ -1,5 +1,4 @@
 
-
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -10,6 +9,7 @@ import { headers } from 'next/headers';
 import { switchToAccount as switchToAccountAction, switchToBrand as switchToBrandAction, switchToPersonal as switchToPersonalAction, switchToDependent as switchToDependentAction } from '@/lib/session';
 import type { StoredAccount } from '@/types';
 import { getSessionCookies, setStoredAccountsCookie } from '@/lib/cookies';
+import { createNotification } from '../notifications';
 
 export async function getStoredAccounts(): Promise<StoredAccount[]> {
     return getValidatedStoredAccounts();
@@ -19,6 +19,11 @@ export async function switchActiveAccount(account: StoredAccount) {
     const result = await switchToAccountAction(account);
     if(result.success) {
         await logActivity(account.accountId, `Switched to account: ${account.neupId}`);
+        await createNotification({
+            recipient_id: account.accountId,
+            action: 'informative.login',
+            message: `Your account was accessed from a new device.`,
+        });
     }
     return result;
 }
@@ -37,6 +42,12 @@ export async function logoutStoredSession(sessionId: string): Promise<{ success:
         const accountId = sessionDoc.data().accountId;
         await updateDoc(sessionRef, { isExpired: true });
         await logActivity(accountId, 'Signout', 'Success', ipAddress);
+        await createNotification({
+            recipient_id: accountId,
+            action: 'informative.logout',
+            message: `A session was logged out.`,
+        });
+
 
         const { allAccounts } = await getSessionCookies();
         if (allAccounts.length > 0) {

@@ -5,10 +5,13 @@ import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import React, { useState, useEffect, useContext, useTransition } from "react"
 import { useToast } from "@/hooks/use-toast"
-import { loginUser } from "@/actions/auth/signin"
+import { initiateLogin } from "@/actions/auth/login"
 import { validateNeupId } from "@/lib/user"
 import { cancelAccountDeletion } from "@/actions/data/delete"
 import NProgress from 'nprogress'
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import { loginUser } from '@/actions/auth/signin';
 
 import { Button } from "@/components/ui/button"
 import {
@@ -46,16 +49,17 @@ export default function SigninForm() {
   const [isCheckingNeupId, startNeupIdCheck] = useTransition();
   const [isSubmitting, startPasswordSubmit] = useTransition();
 
-  const [isRedirecting, setIsRedirecting] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
   const [isClient, setIsClient] = useState(false)
   const [showDeletionDialog, setShowDeletionDialog] = useState(false);
+  const [passwordFormEvent, setPasswordFormEvent] = useState<React.FormEvent<HTMLFormElement> | null>(null);
 
   useEffect(() => {
     setIsClient(true)
   }, [])
 
   const neupIdFromQuery = searchParams.get("neupId");
+  const returnUrl = searchParams.get('return_url');
 
   useEffect(() => {
     if (neupIdFromQuery) {
@@ -67,21 +71,15 @@ export default function SigninForm() {
   useEffect(() => {
     const error = searchParams.get('error');
     if (error === 'session_expired') {
-      toast({
-        variant: "destructive",
-        title: "Session Expired",
-        description: "Your session has expired. Please sign in again.",
-      });
-      // A clean way to remove the error from the URL without a full page reload.
-      router.replace('/auth/signin', { scroll: false });
+      router.replace(returnUrl ? `/auth/signin?return_url=${'\'\'\''}${encodeURIComponent(returnUrl)}` : '/auth/signin', { scroll: false });
     }
-  }, [searchParams, toast, router]);
+  }, [searchParams, router, returnUrl]);
 
   const handleNeupIdSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setValidationError(null);
+    NProgress.start();
     startNeupIdCheck(async () => {
-        NProgress.start();
         const result = await validateNeupId(neupId);
         if (result.success || result.error === 'pending_deletion') {
             setStep(2);
@@ -91,61 +89,62 @@ export default function SigninForm() {
         NProgress.done();
     });
   }
-
+  
   const handlePasswordSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setPasswordFormEvent(event);
+    NProgress.start();
     startPasswordSubmit(async () => {
-        NProgress.start();
-        try {
-            const locationString = geo?.latitude && geo?.longitude ? `${geo.latitude},${geo.longitude}` : undefined;
-            const result = await loginUser({ neupId: neupId.toLowerCase(), password, geolocation: locationString });
-            
-            if (result.success) {
-                setIsRedirecting(true);
-                router.push("/manage");
-                // router.refresh() will be triggered by NProgressEvents on navigation
-            } else if (result.error === 'pending_deletion') {
-                setShowDeletionDialog(true);
-                NProgress.done();
+        const locationString = geo?.latitude && geo?.longitude ? `${'\'\'\''}${geo.latitude},${geo.longitude}` : undefined;
+        const loginData = { neupId: neupId.toLowerCase(), password, geolocation: locationString };
+        
+        const result = await loginUser(loginData);
+        if (result.success) {
+            const mfaResult = await initiateLogin(loginData);
+            if (mfaResult.success) {
+                if (mfaResult.mfaRequired) {
+                    const mfaUrl = new URL(window.location.origin + "/auth/signin/mfa");
+                    if (returnUrl) mfaUrl.searchParams.set('return_url', returnUrl);
+                    router.push(mfaUrl.toString());
+                } else {
+                    router.push(returnUrl || "/manage");
+                }
             } else {
-                toast({
-                variant: "destructive",
-                title: "Sign In Failed",
-                description: result.error || "An unexpected error occurred.",
-                });
+                toast({ variant: "destructive", title: "Sign In Failed", description: mfaResult.error });
                 NProgress.done();
             }
-        } catch (error) {
-            console.error("Sign In error:", error)
-            toast({
-                variant: "destructive",
-                title: "Sign In Failed",
-                description: "An unexpected error occurred. Please try again.",
-            });
+        } else if (result.error === 'pending_deletion') {
+            setShowDeletionDialog(true);
+            NProgress.done();
+        } else {
+            toast({ variant: "destructive", title: "Sign In Failed", description: result.error });
             NProgress.done();
         }
     });
   }
-  
+
   const handleCancelDeletion = async () => {
     setShowDeletionDialog(false);
+    NProgress.start();
     startPasswordSubmit(async () => {
         const neupidsRef = doc(db, 'neupid', neupId);
         const neupidsSnapshot = await getDoc(neupidsRef);
         const accountId = neupidsSnapshot.data()?.for;
         if (!accountId) {
              toast({ variant: "destructive", title: "Error", description: "Could not find account to cancel deletion." });
+             NProgress.done();
              return;
         }
 
         const result = await cancelAccountDeletion(accountId);
         if (result.success) {
             toast({ title: "Deletion Cancelled", description: "Your account deletion request has been cancelled. Welcome back!", className: "bg-accent text-accent-foreground" });
-            // Re-attempt login
-            const loginForm = document.getElementById("password-form") as HTMLFormElement;
-            if(loginForm) handlePasswordSubmit(new Event('submit') as any);
+            if (passwordFormEvent) {
+                handlePasswordSubmit(passwordFormEvent);
+            }
         } else {
             toast({ variant: "destructive", title: "Error", description: result.error || "Could not cancel deletion." });
+            NProgress.done();
         }
     });
   }
@@ -165,6 +164,16 @@ export default function SigninForm() {
     const value = e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '');
     setNeupId(value);
     if(validationError) setValidationError(null);
+  }
+  
+  const getSignupUrl = () => {
+    if (isClient) {
+      if (returnUrl) {
+        return `/auth/signup?return_url=${'\'\'\''}${encodeURIComponent(returnUrl)}`;
+      }
+      return "/auth/signup";
+    }
+    return "/auth/signup";
   }
 
   return (
@@ -209,6 +218,7 @@ export default function SigninForm() {
                                 value={neupId}
                                 onChange={handleNeupIdChange}
                                 className="pr-10"
+                                disabled={isCheckingNeupId}
                             />
                             {isCheckingNeupId && (
                                 <div className="absolute inset-y-0 right-3 flex items-center">
@@ -221,15 +231,13 @@ export default function SigninForm() {
                         )}
                     </div>
                     <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isCheckingNeupId}>
-                        Next
+                        {isCheckingNeupId ? <Loader2 className="animate-spin" /> : 'Next'}
                     </Button>
                     <div className="mt-4 text-left text-sm">
                         Don&apos;t have an Account?{" "}
-                        {isClient && 
-                            <Link href="/auth/signup" className="underline text-primary">
-                                <span>Sign Up</span>
-                            </Link>
-                        }
+                        <Link href={getSignupUrl()} className="underline text-primary">
+                            <span>Sign Up</span>
+                        </Link>
                     </div>
                 </form>
             )}
@@ -245,16 +253,17 @@ export default function SigninForm() {
                             autoFocus
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            disabled={isSubmitting}
                         />
                     </div>
-                    <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting || isRedirecting}>
+                    <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting}>
                         {isSubmitting ? <Loader2 className="animate-spin" /> : 'Sign In'}
                     </Button>
                     <div className="flex justify-between items-center text-sm">
                         <Link href="/auth/forget" className="underline text-primary">
                             Forget Password
                         </Link>
-                        <Button variant="link" type="button" onClick={handleBack} className="text-primary p-0 h-auto">
+                        <Button variant="link" type="button" onClick={handleBack} className="text-primary p-0 h-auto" disabled={isSubmitting}>
                             Back
                         </Button>
                     </div>
@@ -282,3 +291,5 @@ export default function SigninForm() {
     </div>
   )
 }
+
+    

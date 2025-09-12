@@ -1,6 +1,6 @@
+
 'use client';
 
-import Link from "next/link";
 import React, { useMemo } from "react";
 import {
     Card,
@@ -25,27 +25,26 @@ import {
     ShieldCheck,
     Clock,
 } from "@/components/icons";
-import { type NavSection, navItems, navIcons, allPermissionsMap } from "./nav-data";
+import { type NavSection, navItems, allPermissionsMap } from "./nav-data";
 import { NotificationBell } from "./warning-display";
 import { ListItem } from "./ui/list-item";
 import { useSession } from "@/context/session-context";
 import { Skeleton } from "./ui/skeleton";
 
-
 const iconMap: { [key: string]: LucideIcon | React.ElementType } = {
     Home: Home,
-    "PersonalInfo": UserCircle,
-    "Notifications": NotificationBell,
-    "PasswordAndSecurity": Key,
-    "LinkedAccounts": Combine,
-    "DataAndPrivacy": Database,
-    "AccessAndControl": FolderGit2,
-    "PeopleAndSharing": HeartHandshake,
-    "PaymentAndSubscription": Gem,
-    "SwitchAccount": Users,
-    "SignOutAccount": LogOut,
-    "SwitchBack": ArrowLeft,
-    "Dashboard": Home,
+    PersonalInfo: UserCircle,
+    Notifications: NotificationBell,
+    PasswordAndSecurity: Key,
+    LinkedAccounts: Combine,
+    DataAndPrivacy: Database,
+    AccessAndControl: FolderGit2,
+    PeopleAndSharing: HeartHandshake,
+    PaymentAndSubscription: Gem,
+    SwitchAccount: Users,
+    SignOutAccount: LogOut,
+    SwitchBack: ArrowLeft,
+    Dashboard: Home,
     "Account Management": Users,
     "Requests Management": Clock,
     "PermissionManagement": ShieldCheck,
@@ -53,8 +52,7 @@ const iconMap: { [key: string]: LucideIcon | React.ElementType } = {
     "SystemErrors": AlertTriangle,
     "PaymentDetails": Wallet,
     "BrandInfo": UserCircle,
-    UserCircle: UserCircle, // Fallback
-}
+};
 
 export function MobileNav() {
     const { permissions, isManaging, profile, loading } = useSession();
@@ -68,10 +66,10 @@ export function MobileNav() {
             return requiredPermissions.some(p => userPermissionSet.has(p));
         };
 
-        const navItemsWithPerms = (items: Omit<any, 'requiredPermissions' | 'iconName'>[]): any[] => {
+        const navItemsWithPerms = (items: Omit<any, 'requiredPermissions' | 'icon'>[]): any[] => {
             return items.map(item => ({
                 ...item,
-                iconName: navIcons[item.label] || "UserCircle",
+                icon: iconMap[item.label.replace(/\s/g, '')] || UserCircle,
                 requiredPermissions: allPermissionsMap[item.label] || []
             })).filter(item => hasAnyPermissionFor(item.requiredPermissions));
         };
@@ -92,9 +90,9 @@ export function MobileNav() {
         
         if (isManaging) {
             config.push({ title: profile?.displayName || "Brand", items: [
-                { href: "/manage/home", label: "Dashboard", description: "Your central account management hub.", iconName: "Dashboard", requiredPermissions: [] },
-                { href: "/manage/profile", label: "Brand Info", description: "Manage brand profile.", iconName: "BrandInfo", requiredPermissions: ['profile.view'] },
-                { href: "/manage/accounts/branches", label: "Branches", description: "Manage brand branches.", iconName: "LinkedAccounts", requiredPermissions: ['linked_accounts.brand.manage'] },
+                { href: "/manage/home", label: "Dashboard", description: "Your central account management hub.", icon: Home, requiredPermissions: [] },
+                { href: "/manage/profile", label: "Brand Info", description: "Manage brand profile.", icon: iconMap['BrandInfo'], requiredPermissions: ['profile.view'] },
+                { href: "/manage/accounts/branches", label: "Branches", description: "Manage brand branches.", icon: iconMap['LinkedAccounts'], requiredPermissions: ['linked_accounts.brand.manage'] },
             ]});
              config.push({ title: "Account", items: visibleAccountNav });
         } else {
@@ -143,7 +141,7 @@ export function MobileNav() {
                      <Card>
                         <CardContent className="divide-y p-0">
                            {section.items.map((item, index) => (
-                               <ListItem key={index} href={item.href} title={item.label} description={item.description} icon={iconMap[item.iconName] || UserCircle} />
+                               <ListItem key={index} href={item.href} title={item.label} description={item.description} icon={item.icon} />
                             ))}
                         </CardContent>
                     </Card>
