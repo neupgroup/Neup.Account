@@ -20,12 +20,12 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { useSession } from '@/context/session-context'
 import { BackButton } from '@/components/ui/back-button'
 import { cn } from '@/lib/utils'
-import { Check, Loader2, UploadCloud, RefreshCw } from '@/components/icons'
+import { Check, Loader2, UploadCloud } from '@/components/icons'
 import { SecondaryHeader } from '@/components/ui/secondary-header'
 import { Separator } from '@/components/ui/separator'
 
 const displayFormSchema = z.object({
-  displayPhoto: z.string().url("Please enter a valid URL.").optional().or(z.literal('')),
+  accountPhoto: z.string().url("Please enter a valid URL.").optional().or(z.literal('')),
   selectedDisplayName: z.string().min(1, "Please select a display name format."),
   customDisplayName: z.string().optional(),
 }).superRefine((data, ctx) => {
@@ -54,7 +54,7 @@ export default function DisplayInfoPage() {
     const form = useForm<DisplayFormValues>({
         resolver: zodResolver(displayFormSchema),
         defaultValues: {
-            displayPhoto: "",
+            accountPhoto: "",
             selectedDisplayName: "",
             customDisplayName: "",
         },
@@ -63,8 +63,8 @@ export default function DisplayInfoPage() {
     useEffect(() => {
         if (profile && accountId) {
             form.reset({
-                displayPhoto: profile.displayPhoto || "",
-                selectedDisplayName: profile.displayName || "",
+                accountPhoto: profile.accountPhoto || "",
+                selectedDisplayName: profile.nameDisplay || "",
                 customDisplayName: "",
             });
 
@@ -91,10 +91,10 @@ export default function DisplayInfoPage() {
             const contentId = `profile-photo-${accountId}-${Date.now()}`;
             const result = await uploadFile(file, "neup.account", contentId, file.name, accountId);
             if(result.success && result.url) {
-                const updateResult = await updateUserProfile(accountId, { displayPhoto: result.url });
+                const updateResult = await updateUserProfile(accountId, { accountPhoto: result.url });
                 if(updateResult.success) {
                     toast({ title: "Success", description: "Profile photo updated.", className: "bg-accent text-accent-foreground" });
-                    form.setValue('displayPhoto', result.url);
+                    form.setValue('accountPhoto', result.url);
                     setPastPhotos(prev => [result.url as string, ...prev].slice(0, 4));
                     refetchSession();
                 } else {
@@ -114,8 +114,8 @@ export default function DisplayInfoPage() {
 
         startTransition(async () => {
              const result = await updateUserProfile(accountId, { 
-                displayPhoto: data.displayPhoto,
-                displayName: data.selectedDisplayName === 'custom' ? undefined : data.selectedDisplayName,
+                accountPhoto: data.accountPhoto,
+                nameDisplay: data.selectedDisplayName === 'custom' ? undefined : data.selectedDisplayName,
                 customDisplayNameRequest: data.selectedDisplayName === 'custom' ? data.customDisplayName : undefined,
              });
 
@@ -132,7 +132,7 @@ export default function DisplayInfoPage() {
     }
     
     const selectedDisplayName = form.watch('selectedDisplayName');
-    const currentDisplayPhoto = form.watch('displayPhoto');
+    const currentDisplayPhoto = form.watch('accountPhoto');
 
     if (loading) {
         return <Skeleton className="h-96 w-full" />
@@ -155,7 +155,7 @@ export default function DisplayInfoPage() {
                                     <Avatar className="h-36 w-36 rounded-lg">
                                         <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" className="object-cover" />
                                         <AvatarFallback className="rounded-lg text-3xl">
-                                            {`${profile?.firstName?.[0] || ''}${profile?.lastName?.[0] || ''}`.toUpperCase()}
+                                            {`${profile?.nameFirst?.[0] || ''}${profile?.nameLast?.[0] || ''}`.toUpperCase()}
                                         </AvatarFallback>
                                     </Avatar>
                                     
@@ -190,14 +190,14 @@ export default function DisplayInfoPage() {
                                                 />
                                             </div>
                                         ) : (
-                                            <div className="h-48 border-2 border-dashed rounded-lg p-4 flex flex-col justify-start">
+                                             <div className="h-48 border-2 border-dashed rounded-lg p-4 flex flex-col justify-start">
                                                 <div className="flex-grow flex items-center gap-3 overflow-x-auto">
                                                     {pastPhotos.map((photo, index) => (
                                                         <button
                                                             type="button"
                                                             key={index}
                                                             className="relative p-1 aspect-square w-24 h-24 flex-shrink-0 rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                                                            onClick={() => form.setValue('displayPhoto', photo)}
+                                                            onClick={() => form.setValue('accountPhoto', photo)}
                                                         >
                                                             <Image src={photo} alt={`Past Photo ${index + 1}`} fill objectFit="cover" className="rounded-md" />
                                                             {currentDisplayPhoto === photo && (
@@ -227,7 +227,7 @@ export default function DisplayInfoPage() {
                         <Card>
                             <CardContent className="pt-6 space-y-4">
                                 <div>
-                                    <h3 className="text-2xl font-semibold tracking-tight">{profile?.displayName}</h3>
+                                    <h3 className="text-2xl font-semibold tracking-tight">{profile?.nameDisplay}</h3>
                                 </div>
                                 <Separator />
                                 <FormField
@@ -283,3 +283,4 @@ export default function DisplayInfoPage() {
     )
 
     
+}
