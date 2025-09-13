@@ -1,7 +1,6 @@
+'use client';
 
-"use client";
-
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,26 +20,36 @@ type FormData = z.infer<typeof contactSchema>;
 export default function ContactStepPage() {
     const router = useRouter();
     const { toast } = useToast();
+    const [authRequestId, setAuthRequestId] = useState<string | null>(null);
+
     const form = useForm<FormData>({
         resolver: zodResolver(contactSchema),
         defaultValues: {
             phone: "",
         },
     });
-
+    
     useEffect(() => {
+        const id = sessionStorage.getItem('temp_auth_id');
+        if (!id) {
+            router.push('/auth/signup');
+            return;
+        }
+        setAuthRequestId(id);
+
         async function loadData() {
-            const { data } = await getSignupStepData();
-            if (data && data.phone) {
+            const { data } = await getSignupStepData(id);
+            if (data?.phone) {
                 form.setValue("phone", data.phone);
             }
         }
         loadData();
-    }, [form]);
+    }, [router, form]);
 
     const onSubmit = async (data: FormData) => {
+        if (!authRequestId) return;
         NProgress.start();
-        const result = await submitContactStep(data);
+        const result = await submitContactStep(authRequestId, data);
         if (result.success) {
             router.push('/auth/signup/otp');
         } else {

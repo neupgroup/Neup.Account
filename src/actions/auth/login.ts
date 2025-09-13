@@ -1,38 +1,79 @@
-
 'use server';
 
 import { db } from '@/lib/firebase';
-import { doc, getDoc, setDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
-import { cookies, headers } from 'next/headers';
-import { v4 as uuidv4 } from 'uuid';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { headers } from 'next/headers';
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
-import { loginFormSchema } from '@/schemas/auth';
 import { createAndSetSession } from '@/lib/session';
+import { validateNeupId } from '@/lib/user';
+import { getAuthRequest, extendAuthRequest } from './utils';
 
-const THREE_MINUTES_IN_MS = 3 * 60 * 1000;
+const neupIdSchema = z.object({
+    neupId: z.string().min(1, "NeupID is required."),
+    authRequestId: z.string(),
+});
 
-export async function initiateLogin(data: z.infer<typeof loginFormSchema>): Promise<{ success: boolean; mfaRequired: boolean; error?: string }> {
-    const validation = loginFormSchema.safeParse(data);
+const passwordSchema = z.object({
+    password: z.string().min(1, "Password is required."),
+    authRequestId: z.string(),
+});
+
+export async function submitNeupId(data: z.infer<typeof neupIdSchema>) {
+    const validation = neupIdSchema.safeParse(data);
+    if (!validation.success) {
+        return { success: false, error: 'Invalid input.' };
+    }
+
+    const { neupId, authRequestId } = validation.data;
+    const lowerCaseNeupId = neupId.toLowerCase();
+
+    const request = await getAuthRequest(authRequestId);
+    if (!request) {
+        return { success: false, error: 'Your session has expired. Please try again.' };
+    }
+
+    const validationResult = await validateNeupId(lowerCaseNeupId);
+     if (!validationResult.success && validationResult.error !== 'pending_deletion') {
+        return { success: false, error: validationResult.error || 'Invalid NeupID.' };
+    }
+
+    const neupIdRef = doc(db, 'neupid', lowerCaseNeupId);
+    const neupIdDoc = await getDoc(neupIdRef);
+    const accountId = neupIdDoc.data()?.for;
+
+    if (!accountId) {
+        return { success: false, error: "Account mapping is missing." };
+    }
+
+    await updateDoc(request.ref, {
+        'data.neupId': lowerCaseNeupId,
+        'data.isPendingDeletion': validationResult.error === 'pending_deletion',
+        accountId: accountId,
+        status: 'pending_password',
+    });
+    
+    await extendAuthRequest(request.ref);
+
+    return { success: true };
+}
+
+
+export async function submitPassword(data: z.infer<typeof passwordSchema>): Promise<{ success: boolean; mfaRequired: boolean; error?: string; isPendingDeletion?: boolean }> {
+    const validation = passwordSchema.safeParse(data);
     if (!validation.success) {
         return { success: false, mfaRequired: false, error: 'Invalid input.' };
     }
 
-    const { neupId, password } = validation.data;
-    const lowerCaseNeupId = neupId.toLowerCase();
+    const { password, authRequestId } = validation.data;
 
-    const neupIdRef = doc(db, 'neupid', lowerCaseNeupId);
-    const neupIdDoc = await getDoc(neupIdRef);
-
-    if (!neupIdDoc.exists()) {
-        return { success: false, mfaRequired: false, error: "Invalid credentials." };
+    const request = await getAuthRequest(authRequestId);
+    if (!request || !request.data.accountId) {
+        return { success: false, mfaRequired: false, error: 'Your session has expired. Please try again.' };
     }
 
-    const accountId = neupIdDoc.data().for;
-    if (!accountId) {
-        return { success: false, mfaRequired: false, error: "Account mapping is missing." };
-    }
-
+    const { accountId, data: { isPendingDeletion } } = request.data;
+    
     const authRef = doc(db, 'auth_password', accountId);
     const authDoc = await getDoc(authRef);
     if (!authDoc.exists()) {
@@ -44,27 +85,18 @@ export async function initiateLogin(data: z.infer<typeof loginFormSchema>): Prom
         return { success: false, mfaRequired: false, error: "Invalid credentials." };
     }
 
+    if (isPendingDeletion) {
+        return { success: true, mfaRequired: false, isPendingDeletion: true };
+    }
+
     const totpRef = doc(db, 'auth_totp', accountId);
     const totpDoc = await getDoc(totpRef);
-    
-    const requestId = uuidv4();
-    const authRequestRef = doc(db, 'auth_requests', requestId);
 
     if (totpDoc.exists()) {
-        await setDoc(authRequestRef, {
-            accountId,
-            type: 'signin',
+        await updateDoc(request.ref, {
             status: 'pending_mfa',
-            data: {
-                neupid: lowerCaseNeupId,
-                password: 'authenticated',
-            },
-            createdAt: serverTimestamp(),
-            expiresAt: new Date(Date.now() + THREE_MINUTES_IN_MS),
         });
-
-        cookies().set('temp_auth_id', requestId, { httpOnly: true, secure: true, maxAge: 180 });
-
+        await extendAuthRequest(request.ref);
         return { success: true, mfaRequired: true };
     } else {
         const headersList = headers();
@@ -73,6 +105,8 @@ export async function initiateLogin(data: z.infer<typeof loginFormSchema>): Prom
         
         // The geolocation is not passed here, so we pass undefined.
         await createAndSetSession(accountId, 'Password', ipAddress, userAgent);
+        
+        await updateDoc(request.ref, { status: 'completed' });
 
         return { success: true, mfaRequired: false };
     }

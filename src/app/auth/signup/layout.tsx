@@ -1,7 +1,5 @@
-
-
 import { redirect } from 'next/navigation';
-import { cookies, headers } from 'next/headers';
+import { headers } from 'next/headers';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,8 +15,7 @@ const stepOrder = [
     { path: '/auth/signup/terms', status: 'pending_terms' },
 ];
 
-async function getSignupStatus() {
-    const authRequestId = cookies().get('temp_auth_id')?.value;
+async function getSignupStatus(authRequestId: string | null) {
     if (!authRequestId) {
         return { valid: false, currentStepPath: '/auth/signup' };
     }
@@ -27,7 +24,6 @@ async function getSignupStatus() {
     const authRequestDoc = await getDoc(authRequestRef);
 
     if (!authRequestDoc.exists() || (authRequestDoc.data().expiresAt && authRequestDoc.data().expiresAt.toDate() < new Date())) {
-        cookies().delete('temp_auth_id');
         return { valid: false, currentStepPath: '/auth/signup' };
     }
 
@@ -45,33 +41,12 @@ export default async function SignupLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { valid, currentStepPath } = await getSignupStatus();
-  
   const headersList = headers();
   // Use the 'x-next-pathname' header set by the middleware for a reliable path.
   const pathname = headersList.get('x-next-pathname') || '/';
 
-  if (!valid) {
-    // If the session is invalid, any attempt to access a signup sub-page
-    // should redirect to the entry point to start over.
-    if (pathname !== '/auth/signup') {
-        redirect('/auth/signup');
-    }
-  } else {
-     const currentStepIndex = stepOrder.findIndex(step => step.path === currentStepPath);
-     const requestedStepIndex = stepOrder.findIndex(step => step.path === pathname);
-     
-     // If the user tries to access a future step they haven't reached, redirect them back.
-     if(requestedStepIndex > currentStepIndex) {
-         redirect(currentStepPath);
-     }
-     
-     // If the user lands on the base signup page but has a valid session,
-     // send them to their current step.
-     if (pathname === '/auth/signup') {
-        redirect(currentStepPath);
-     }
-  }
+  // We can't access sessionStorage on the server, so validation must happen
+  // on the client side within each page. This layout provides the structure.
 
   return (
      <div className="flex min-h-screen items-start justify-center bg-card md:bg-background py-12 md:items-center md:py-0">

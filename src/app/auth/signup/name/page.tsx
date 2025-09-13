@@ -1,5 +1,4 @@
-
-"use client"
+'use client';
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -24,6 +23,7 @@ export default function NameStepPage() {
     const router = useRouter();
     const { toast } = useToast();
     const [showMiddleName, setShowMiddleName] = useState(false);
+    const [authRequestId, setAuthRequestId] = useState<string | null>(null);
 
     const form = useForm<FormData>({
         resolver: zodResolver(nameSchema),
@@ -35,25 +35,33 @@ export default function NameStepPage() {
     });
 
     useEffect(() => {
+        const id = sessionStorage.getItem('temp_auth_id');
+        if (!id) {
+            router.push('/auth/signup');
+            return;
+        }
+        setAuthRequestId(id);
+
         async function loadData() {
-            const { data } = await getSignupStepData();
+            const { data } = await getSignupStepData(id);
             if (data) {
                 form.reset({
-                    firstName: data.firstName || "",
-                    middleName: data.middleName || "",
-                    lastName: data.lastName || "",
+                    firstName: data.nameFirst || "",
+                    middleName: data.nameMiddle || "",
+                    lastName: data.nameLast || "",
                 });
-                if (data.middleName) {
+                if (data.nameMiddle) {
                     setShowMiddleName(true);
                 }
             }
         }
         loadData();
-    }, [form]);
+    }, [router, form]);
 
     const onSubmit = async (data: FormData) => {
+        if (!authRequestId) return;
         NProgress.start();
-        const result = await submitNameStep(data);
+        const result = await submitNameStep(authRequestId, data);
         if (result.success) {
             router.push('/auth/signup/demographics');
         } else {
@@ -107,5 +115,3 @@ export default function NameStepPage() {
         </Form>
     );
 }
-
-    

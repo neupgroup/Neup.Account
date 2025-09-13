@@ -1,5 +1,4 @@
-
-"use client";
+'use client';
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -16,9 +15,7 @@ import { demographicsSchema } from "@/schemas/signup";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Calendar as CalendarComponent } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Calendar as CalendarIcon, Loader2, Check } from "@/components/icons";
+import { Loader2, Check } from "@/components/icons";
 import { cn } from "@/lib/utils";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -30,6 +27,7 @@ export default function DemographicsStepPage() {
     const { toast } = useToast();
     const [dateInput, setDateInput] = useState<string>('');
     const [isParsingDate, setIsParsingDate] = useState(false);
+    const [authRequestId, setAuthRequestId] = useState<string | null>(null);
 
     const form = useForm<FormData>({
         resolver: zodResolver(demographicsSchema),
@@ -39,18 +37,21 @@ export default function DemographicsStepPage() {
     });
     
     const genderValue = form.watch("gender");
-
+    
     useEffect(() => {
+        const id = sessionStorage.getItem('temp_auth_id');
+        if (!id) {
+            router.push('/auth/signup');
+            return;
+        }
+        setAuthRequestId(id);
+
         async function loadData() {
-            const { data } = await getSignupStepData();
+            const { data } = await getSignupStepData(id);
             if (data) {
                 let formGender = data.gender;
-                let formCustomGender = "";
-                if (data.gender?.startsWith('c.')) {
-                    formCustomGender = data.gender.substring(2);
-                    formGender = 'custom';
-                }
-
+                let formCustomGender = data.customGender || "";
+                
                 const dobDate = data.dateBirth ? new Date(data.dateBirth) : undefined;
                 if (dobDate) {
                     setDateInput(format(dobDate, 'yyyy-MM-dd'));
@@ -64,7 +65,7 @@ export default function DemographicsStepPage() {
             }
         }
         loadData();
-    }, [form]);
+    }, [router, form]);
 
     const handleDateInputBlur = async () => {
         if (!dateInput) return;
@@ -94,8 +95,9 @@ export default function DemographicsStepPage() {
     };
 
     const onSubmit = async (data: FormData) => {
+        if (!authRequestId) return;
         NProgress.start();
-        const result = await submitDemographicsStep(data);
+        const result = await submitDemographicsStep(authRequestId, data);
         if (result.success) {
             router.push('/auth/signup/nationality');
         } else {
