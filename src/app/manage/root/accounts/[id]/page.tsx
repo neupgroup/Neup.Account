@@ -87,10 +87,7 @@ export default async function AccountDetailsPage({ params }: { params: { id: str
             alt={userDetails.profile.nameDisplay}
             data-ai-hint="person"
           />
-          <AvatarFallback className="text-xl">
-            {userDetails.profile.nameFirst?.[0] ?? ''}
-            {userDetails.profile.nameLast?.[0] ?? ''}
-          </AvatarFallback>
+          <AvatarFallback />
         </Avatar>
         <div>
           <div className="flex items-center gap-2">

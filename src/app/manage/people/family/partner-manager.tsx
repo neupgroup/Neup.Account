@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState, useTransition, useRef } from 'react';
@@ -30,7 +31,7 @@ function PartnerDisplay({ familyId, partner, onRemove, onTogglePrivacy }: { fami
                 <div className="flex items-center gap-4">
                     <Avatar>
                         <AvatarImage src={partner.displayPhoto} alt={partner.displayName} data-ai-hint="person" />
-                        <AvatarFallback>{partner.displayName?.charAt(0).toUpperCase()}</AvatarFallback>
+                        <AvatarFallback />
                     </Avatar>
                     <div>
                         <p className="font-medium">{partner.displayName}</p>

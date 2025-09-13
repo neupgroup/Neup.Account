@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useEffect, useState, useTransition } from 'react';
@@ -56,7 +57,7 @@ export function AccountListItem({ account, mode }: { account: CombinedAccount, m
                     setDetails({
                         displayName: profile?.displayName || `${profile?.firstName} ${profile?.lastName}`.trim(),
                         neupId: neupIds[0] || 'N/A',
-                        displayPhoto: profile?.displayPhoto
+                        displayPhoto: profile?.accountPhoto
                     });
                 }
             } catch (e) {
@@ -128,7 +129,7 @@ export function AccountListItem({ account, mode }: { account: CombinedAccount, m
              <div className="flex items-center gap-4">
                 <Avatar>
                     <AvatarImage src={finalAccount.displayPhoto} data-ai-hint={finalAccount.isBrand ? 'logo' : 'person'} />
-                    <AvatarFallback>{finalAccount.displayName?.charAt(0).toUpperCase() || 'U'}</AvatarFallback>
+                    <AvatarFallback />
                 </Avatar>
                 <div>
                     <p className="font-semibold">{finalAccount.displayName || 'Unknown Account'}</p>

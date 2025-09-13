@@ -222,9 +222,7 @@ export default function DisplayInfoPage() {
                                 <div className="grid md:grid-cols-[150px_1fr] items-start gap-6">
                                     <Avatar className="h-36 w-36 rounded-lg">
                                         <AvatarImage src={currentDisplayPhoto || undefined} alt="Current Display Photo" data-ai-hint="person" className="object-cover" />
-                                        <AvatarFallback className="rounded-lg text-3xl">
-                                            {`${profile?.nameFirst?.[0] || ''}${profile?.nameLast?.[0] || ''}`.toUpperCase()}
-                                        </AvatarFallback>
+                                        <AvatarFallback className="rounded-lg" />
                                     </Avatar>
                                     
                                     <div>

@@ -36,7 +36,7 @@ function MemberItem({ familyId, member, onRemove }: { familyId: string, member: 
             <div className="flex items-center gap-4">
                 <Avatar>
                     <AvatarImage src={member.displayPhoto} alt={member.displayName} data-ai-hint="person" />
-                    <AvatarFallback>{member.displayName?.charAt(0).toUpperCase()}</AvatarFallback>
+                    <AvatarFallback />
                 </Avatar>
                 <div>
                     <p className="font-medium">{member.displayName}</p>

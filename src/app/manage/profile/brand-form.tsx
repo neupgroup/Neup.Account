@@ -1,4 +1,5 @@
 
+
 "use client"
 
 import { useEffect, useState, useContext } from 'react'
@@ -129,9 +130,7 @@ export function BrandProfileForm({ accountId, children }: { accountId: string, c
                                 <Label>Logo</Label>
                                 <Avatar className="h-24 w-24 mt-2 rounded-lg">
                                     <AvatarImage src={form.watch('accountPhoto') || undefined} alt="Brand Logo" data-ai-hint="logo" />
-                                    <AvatarFallback className="rounded-lg">
-                                        {form.watch('nameDisplay')?.[0]?.toUpperCase() || 'B'}
-                                    </AvatarFallback>
+                                    <AvatarFallback className="rounded-lg" />
                                 </Avatar>
                             </div>
                             <div className="flex-grow space-y-4">
