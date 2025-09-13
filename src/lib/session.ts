@@ -75,13 +75,11 @@ export async function createAndSetSession(
       sessionKey: sessionKey,
       expired: false,
       neupId: primaryNeupId,
-      active: true, // This is the currently active account
     };
     
-    // Remove any previous sessions for this accountId and set all other accounts to inactive.
+    // Remove any previous sessions for this accountId and add the new one.
     const filteredAccounts = existingAccounts
-        .filter(acc => acc.accountId !== accountId)
-        .map(acc => ({ ...acc, active: false }));
+        .filter(acc => acc.accountId !== accountId);
 
     const allAccounts = [...filteredAccounts, newStoredAccount];
     
@@ -132,7 +130,6 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
             return { ...account, expired: true, active: false };
         }
 
-        // The session from the cookie is the source of truth for "active" status
         const isActive = account.accountId === activeAccountId;
 
         return { ...account, expired: false, active: isActive };
@@ -166,20 +163,15 @@ export async function switchToAccount(account: StoredAccount) {
             return { success: false, error: 'Invalid or expired session.' };
         }
 
+        // Clear any managing cookies to ensure we are back to a personal account context
         await clearManagingCookie();
+        
+        // Set the primary session cookies to the new account's details
         await setSessionCookies({
             accountId: account.accountId,
             sessionId: account.sessionId,
             sessionKey: account.sessionKey,
         }, expiresOn);
-        
-        // Update the active flag in the stored accounts cookie
-        const { allAccounts: existingAccounts } = await getSessionCookies();
-        const updatedAccounts = existingAccounts.map(acc => ({
-            ...acc,
-            active: acc.accountId === account.accountId
-        }));
-        await setStoredAccountsCookie(updatedAccounts);
 
         return { success: true };
     } catch (error) {

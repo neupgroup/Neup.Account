@@ -1,9 +1,10 @@
 
+
 'use server';
 
 import { cookies } from 'next/headers';
 import type { StoredAccount } from '@/types';
-import {Session} from "@/lib/auth-actions";
+import type {Session} from "@/lib/auth-actions";
 
 
 /**
@@ -113,4 +114,9 @@ export async function clearSessionCookies() {
     cookieStore.delete('auth_session_id');
     cookieStore.delete('auth_session_key');
     cookieStore.delete('auth_managing');
+    
+    // Also remove old, unnecessary cookies if they exist
+    cookieStore.delete('auth_permit');
+    cookieStore.delete('profile_name');
+    cookieStore.delete('profile_neupid');
 }
