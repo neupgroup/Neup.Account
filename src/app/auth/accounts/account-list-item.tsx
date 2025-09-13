@@ -72,12 +72,6 @@ export function AccountListItem({ account, mode }: { account: CombinedAccount, m
 
     const finalAccount = { ...account, ...details };
 
-    const getAccountType = () => {
-        if(finalAccount.isBrand) return "Brand";
-        if(finalAccount.isDependent) return "Dependent";
-        return "Individual";
-    }
-
     const handleSwitch = (acc: CombinedAccount) => {
         startSwitchTransition(async () => {
             let result;
@@ -133,15 +127,16 @@ export function AccountListItem({ account, mode }: { account: CombinedAccount, m
                 </Avatar>
                 <div>
                     <p className="font-semibold">{finalAccount.displayName || 'Unknown Account'}</p>
-                    {finalAccount.expired ? (
-                        <p className="text-xs text-destructive">
-                            Session Expired
-                        </p>
-                    ) : (
+                    <div className="flex items-center gap-2">
                         <p className="text-xs text-muted-foreground mt-1">
-                           @{finalAccount.neupId} &bull; {getAccountType()}
+                           @{finalAccount.neupId}
                         </p>
-                    )}
+                        {finalAccount.expired && (
+                            <p className="text-xs text-destructive mt-1">
+                                (Expired)
+                            </p>
+                        )}
+                    </div>
                 </div>
             </div>
             {isSwitching ? <Loader2 className="h-5 w-5 animate-spin" /> : <ChevronRight className="h-5 w-5 text-muted-foreground" />}
