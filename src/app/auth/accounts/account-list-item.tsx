@@ -74,7 +74,7 @@ export function AccountListItem({ account, mode }: { account: CombinedAccount, m
         }
 
         fetchAccountDetails();
-    }, [account]);
+    }, [account.accountId, account.isBrand, account.isDependent, account.isUnknown]);
 
     const finalAccount = { ...account, ...details };
 
