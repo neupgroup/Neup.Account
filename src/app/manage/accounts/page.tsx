@@ -1,9 +1,9 @@
 
+
 import { Card, CardContent } from '@/components/ui/card';
 import React from 'react';
 import { getActiveAccountId, getPersonalAccountId } from '@/lib/auth-actions';
 import { getAccountType } from '@/lib/user';
-import { AccountList } from '@/app/auth/accounts/account-list';
 import { notFound } from 'next/navigation';
 import { getStoredAccounts } from '@/lib/session';
 import { getBrandAccounts } from '@/actions/manage/accounts/brand';
@@ -13,6 +13,7 @@ import { ListItem } from '@/components/ui/list-item';
 import { SecondaryHeader } from '@/components/ui/secondary-header';
 import { Bot, Building, UserPlus, FolderGit2 } from '@/components/icons';
 import { PrimaryHeader } from '@/components/ui/primary-header';
+import { AccountListItem } from '@/app/auth/accounts/account-list-item';
 
 
 const LinkAndCreateFeatures = () => (
@@ -115,12 +116,10 @@ export default async function AccountsPage() {
                     description="Switch to another account you have access to."
                 />
                 <Card>
-                    <CardContent className="p-0">
-                        <AccountList 
-                            accounts={accountsToShow} 
-                            mode="switch"
-                            isPaginated={true}
-                        />
+                    <CardContent className="p-0 divide-y">
+                        {accountsToShow.map((acc: any) => (
+                           <AccountListItem key={acc.accountId} account={acc} mode="switch" />
+                        ))}
                     </CardContent>
                 </Card>
             </div>
