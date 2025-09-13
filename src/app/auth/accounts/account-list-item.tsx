@@ -24,7 +24,11 @@ type CombinedAccount = StoredAccount & {
 };
 
 export function AccountListItem({ account, mode }: { account: CombinedAccount, mode: 'link' | 'switch' }) {
-    const [details, setDetails] = useState<Partial<CombinedAccount>>({});
+    const [details, setDetails] = useState<Partial<CombinedAccount>>({
+        displayName: account.displayName,
+        neupId: account.neupId,
+        displayPhoto: account.displayPhoto,
+    });
     const [loading, setLoading] = useState(true);
     const [isSwitching, startSwitchTransition] = useTransition();
     const router = useRouter();
@@ -32,13 +36,12 @@ export function AccountListItem({ account, mode }: { account: CombinedAccount, m
 
     useEffect(() => {
         async function fetchAccountDetails() {
+            setLoading(true);
             if (account.isBrand || account.isDependent || account.isUnknown) {
-                // Details are already passed in for these types
-                setDetails({}); 
                 setLoading(false);
                 return;
             }
-            
+
             if (!account.accountId) {
                 setDetails({ isUnknown: true, displayName: 'Unknown Account', neupId: 'unknown' });
                 setLoading(false);
@@ -51,14 +54,17 @@ export function AccountListItem({ account, mode }: { account: CombinedAccount, m
                     getUserNeupIds(account.accountId)
                 ]);
 
-                if (!profile) {
-                    setDetails({ isUnknown: true, displayName: 'Unknown Account', neupId: 'unknown' });
-                } else {
-                    setDetails({
-                        displayName: profile?.displayName || `${profile?.firstName} ${profile?.lastName}`.trim(),
+                if (profile) {
+                     setDetails({
+                        displayName: profile.nameDisplay || `${profile.nameFirst} ${profile.nameLast}`.trim(),
                         neupId: neupIds[0] || 'N/A',
-                        displayPhoto: profile?.accountPhoto
+                        displayPhoto: profile.accountPhoto
                     });
+                } else {
+                     setDetails({
+                        displayName: 'Unknown Account',
+                        neupId: neupIds[0] || 'N/A',
+                     });
                 }
             } catch (e) {
                 setDetails({ isUnknown: true, displayName: 'Error Loading', neupId: 'error' });
@@ -126,7 +132,7 @@ export function AccountListItem({ account, mode }: { account: CombinedAccount, m
                     <AvatarFallback />
                 </Avatar>
                 <div>
-                    <p className="font-semibold">{finalAccount.displayName || 'Unknown Account'}</p>
+                    <p className="font-semibold">{finalAccount.displayName || 'Unnamed Account'}</p>
                     <div className="flex items-center gap-2">
                         <p className="text-xs text-muted-foreground mt-1">
                            @{finalAccount.neupId}
