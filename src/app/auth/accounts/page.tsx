@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { getValidatedStoredAccounts } from '@/lib/session';
@@ -20,16 +21,13 @@ export default async function AccountsPage() {
                        Continue to NeupID Group Products and Services
                     </CardDescription>
                 </CardHeader>
-                <CardContent className="p-0">
-                   <div className="divide-y divide-border">
-                        {storedAccounts.map((acc) => (
-                            <AccountListItem 
-                                key={acc.accountId || `unknown-${Math.random()}`} 
-                                account={acc}
-                                mode="switch" 
-                            />
-                        ))}
-                    </div>
+                <CardContent className="space-y-4">
+                    {storedAccounts.map((acc) => (
+                        <AccountListItem 
+                            key={acc.accountId || `unknown-${Math.random()}`} 
+                            account={acc}
+                        />
+                    ))}
                 </CardContent>
                 <CardFooter className="flex flex-col items-start gap-2 p-4 border-t">
                     <Link
