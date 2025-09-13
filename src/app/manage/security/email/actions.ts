@@ -1,7 +1,8 @@
+
 'use server';
 
 import { db } from '@/lib/firebase';
-import { doc, getDoc, setDoc, deleteDoc, collection } from 'firebase/firestore';
+import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
@@ -96,3 +97,5 @@ export async function removeRecoveryEmail(): Promise<{ success: boolean; error?:
         return { success: false, error: "An unexpected error occurred." };
     }
 }
+
+    

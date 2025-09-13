@@ -6,7 +6,7 @@ import Link from "next/link";
 import { PartnerManager } from "./partner-manager";
 import { BackButton } from "@/components/ui/back-button";
 import { getPersonalAccountId } from "@/lib/auth-actions";
-import { getUserProfile, checkPermissions } from "@/lib/user-actions";
+import { getUserProfile, checkPermissions } from "@/lib/user";
 import { notFound } from "next/navigation";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 
@@ -41,7 +41,7 @@ export default async function FamilySharingPage() {
                     const isOwner = group.createdBy === personalId;
                     const canAddMoreFamily = group.members.filter(m => !m.hidden).length < 5;
                     const ownerProfile = await getUserProfile(group.createdBy);
-                    const ownerName = ownerProfile?.displayName || `${ownerProfile?.firstName} ${ownerProfile?.lastName}`.trim() || 'A User';
+                    const ownerName = ownerProfile?.nameDisplay || `${ownerProfile?.nameFirst} ${ownerProfile?.nameLast}`.trim() || 'A User';
 
                     return (
                         <div key={group.id} className="space-y-2">
@@ -87,3 +87,5 @@ export default async function FamilySharingPage() {
         </div>
     );
 }
+
+    

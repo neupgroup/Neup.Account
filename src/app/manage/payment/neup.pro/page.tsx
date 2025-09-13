@@ -1,10 +1,10 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { getPaymentDetails } from "../../../../actions/manage/payments/neup.pro";
+import { getPaymentDetails } from "@/actions/manage/payments/neup.pro";
 import Image from "next/image";
 import { Bot, Instagram, Linkedin, Ban } from "lucide-react";
 import { BackButton } from "@/components/ui/back-button";
-import { checkPermissions } from "@/lib/user-actions";
+import { checkPermissions } from "@/lib/user";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { notFound } from "next/navigation";
 
@@ -108,3 +108,5 @@ export default async function NeupProPage() {
         </div>
     );
 }
+
+    

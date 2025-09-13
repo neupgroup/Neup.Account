@@ -1,5 +1,4 @@
 
-
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -9,7 +8,7 @@ import { logError } from '@/lib/logger';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { getPersonalAccountId } from '@/lib/auth-actions';
-import { checkPermissions } from '@/lib/user-actions';
+import { checkPermissions } from '@/lib/user';
 import { phoneFormSchema } from '@/schemas/security';
 
 const CONTACT_TYPE = 'recoveryPhone';
@@ -99,3 +98,5 @@ export async function removeRecoveryPhone(): Promise<{ success: boolean; error?:
         return { success: false, error: "An unexpected error occurred." };
     }
 }
+
+    

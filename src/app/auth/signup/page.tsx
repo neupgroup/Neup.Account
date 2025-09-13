@@ -52,3 +52,5 @@ export default function SignUpStartPage() {
   // A loading state could be added here if initialization takes time.
   return null;
 }
+
+    

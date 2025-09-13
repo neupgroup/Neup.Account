@@ -1,5 +1,4 @@
 
-
 "use server"
 
 import { db } from './firebase';
@@ -208,3 +207,5 @@ export async function checkPermissions(requiredPermissions: string[]): Promise<b
 
     return requiredPermissions.every(p => userPermissionSet.has(p));
 }
+
+    
