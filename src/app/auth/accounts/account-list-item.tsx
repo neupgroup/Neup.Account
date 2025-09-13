@@ -99,16 +99,16 @@ export function AccountListItem({ account, mode }: { account: CombinedAccount, m
         });
     };
 
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
         // Prevent click if it's on a button inside
-        if ((e.target as HTMLElement).closest('button[data-action-button]')) {
+        if ((e.target as HTMLElement).closest('button')) {
             return;
         }
 
         if (loading || isSwitching) return;
         
         if (mode === 'link' || finalAccount.expired) {
-            router.push(`/auth/signin?neupId=${finalAccount.neupId}`);
+             router.push(`/auth/signin?neupId=${finalAccount.neupId}`);
         } else {
             handleSwitch(finalAccount);
         }
@@ -130,10 +130,13 @@ export function AccountListItem({ account, mode }: { account: CombinedAccount, m
     }
 
     return (
-        <button
+        <div
             onClick={handleClick}
-            className="w-full text-left flex items-center justify-between p-4 group hover:bg-muted/50 transition-colors disabled:opacity-50"
-            disabled={isSwitching || finalAccount.isUnknown}
+            className="w-full text-left flex items-center justify-between p-4 group hover:bg-muted/50 transition-colors cursor-pointer"
+            aria-disabled={isSwitching || finalAccount.isUnknown}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleClick(e as any); }}
         >
              <div className="flex items-center gap-4">
                 <Avatar>
@@ -157,6 +160,6 @@ export function AccountListItem({ account, mode }: { account: CombinedAccount, m
             <div data-action-button="true">
                 <AccountActions account={finalAccount} />
             </div>
-        </button>
+        </div>
     );
 }
