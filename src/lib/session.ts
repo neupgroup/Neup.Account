@@ -69,16 +69,20 @@ export async function createAndSetSession(
     const neupIds = await getUserNeupIds(accountId);
     const primaryNeupId = neupIds[0];
 
+    // Mark all other accounts as inactive
+    const updatedExistingAccounts = existingAccounts.map(acc => ({ ...acc, active: false }));
+
     const newStoredAccount: StoredAccount = {
       accountId: accountId,
       sessionId: newSessionDocRef.id,
       sessionKey: sessionKey,
       expired: false,
       neupId: primaryNeupId,
+      active: true, // This new session is the active one
     };
     
     // Remove any previous sessions for this accountId and add the new one.
-    const filteredAccounts = existingAccounts
+    const filteredAccounts = updatedExistingAccounts
         .filter(acc => acc.accountId !== accountId);
 
     const allAccounts = [...filteredAccounts, newStoredAccount];
@@ -172,6 +176,14 @@ export async function switchToAccount(account: StoredAccount) {
             sessionId: account.sessionId,
             sessionKey: account.sessionKey,
         }, expiresOn);
+        
+        const { allAccounts } = await getSessionCookies();
+        const updatedAccounts = allAccounts.map(acc => ({
+            ...acc,
+            active: acc.accountId === account.accountId
+        }));
+        await setStoredAccountsCookie(updatedAccounts);
+
 
         return { success: true };
     } catch (error) {
