@@ -1,9 +1,8 @@
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { getValidatedStoredAccounts } from '@/lib/session';
-import { AccountList } from './account-list';
 import { ChevronRight } from '@/components/icons';
+import { AccountListItem } from './account-list-item';
 
 
 export default async function AccountsPage() {
@@ -22,7 +21,15 @@ export default async function AccountsPage() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="p-0">
-                    <AccountList accounts={storedAccounts} mode="switch" />
+                   <div className="divide-y divide-border">
+                        {storedAccounts.map((acc) => (
+                            <AccountListItem 
+                                key={acc.accountId || `unknown-${Math.random()}`} 
+                                account={acc}
+                                mode="switch" 
+                            />
+                        ))}
+                    </div>
                 </CardContent>
                 <CardFooter className="flex flex-col items-start gap-2 p-4 border-t">
                     <Link
