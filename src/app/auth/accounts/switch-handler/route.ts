@@ -1,6 +1,6 @@
 
 import { NextResponse, type NextRequest } from 'next/server';
-import { switchActiveAccount } from '@/actions/auth/switch';
+import { switchToAccount } from '@/lib/session';
 import { getStoredAccounts } from '@/lib/session';
 
 export async function GET(request: NextRequest) {
@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
          return NextResponse.redirect(new URL('/auth/accounts?error=session_not_found', request.url));
     }
 
-    const result = await switchActiveAccount(accountToSwitch);
+    const result = await switchToAccount(accountToSwitch);
 
     if (result.success) {
         return NextResponse.redirect(new URL('/manage', request.url));
