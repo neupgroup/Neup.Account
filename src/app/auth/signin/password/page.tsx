@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -69,6 +70,7 @@ export default function PasswordPage() {
           if (returnUrl) mfaUrl.searchParams.set('return_url', returnUrl);
           router.push(mfaUrl.toString());
         } else {
+          sessionStorage.clear();
           router.push(returnUrl || '/manage');
         }
       } else {
@@ -96,8 +98,13 @@ export default function PasswordPage() {
             // Re-attempt login after cancellation
             const loginResult = await submitPassword({ password, authRequestId });
              if (loginResult.success && !loginResult.isPendingDeletion) {
-                if(loginResult.mfaRequired) router.push(returnUrl ? `/auth/signin/mfa?return_url=${returnUrl}` : '/auth/signin/mfa');
-                else router.push(returnUrl || '/manage');
+                if(loginResult.mfaRequired) {
+                  router.push(returnUrl ? `/auth/signin/mfa?return_url=${returnUrl}` : '/auth/signin/mfa');
+                }
+                else {
+                  sessionStorage.clear();
+                  router.push(returnUrl || '/manage');
+                }
             } else {
                 toast({ variant: "destructive", title: "Sign In Failed", description: loginResult.error });
                 NProgress.done();

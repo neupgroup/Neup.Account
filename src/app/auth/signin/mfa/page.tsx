@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -40,7 +41,7 @@ function MfaForm() {
         const result = await verifyMfa({ token, authRequestId });
 
         if (result.success) {
-          sessionStorage.removeItem('temp_auth_id');
+          sessionStorage.clear();
           router.push(returnUrl || '/manage');
         } else {
           toast({

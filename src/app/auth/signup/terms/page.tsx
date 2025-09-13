@@ -46,6 +46,7 @@ export default function TermsStepPage() {
         NProgress.start();
         const result = await submitTermsStep(authRequestId, data);
         if (result.success) {
+            sessionStorage.clear();
             const returnUrl = searchParams.get('return_url');
             router.push(returnUrl || '/manage');
         } else {

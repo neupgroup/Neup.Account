@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useTransition, useEffect } from 'react';
@@ -33,6 +34,7 @@ export function SwitchAccountButton({ account }: { account: CombinedAccount }) {
 
             if (result.success) {
                 toast({ title: "Success", description: "Switched account successfully." });
+                sessionStorage.clear();
                 router.push('/manage');
                 router.refresh();
             } else {
