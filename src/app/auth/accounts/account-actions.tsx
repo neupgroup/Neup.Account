@@ -49,7 +49,7 @@ export function AccountActions({ account }: { account: StoredAccount }) {
                     {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Remove"}
                 </Button>
             ) : (
-                <Button variant="link" size="sm" onClick={handleSignOut} disabled={isPending} className="p-0 h-auto ml-2">
+                <Button variant="link" size="sm" onClick={handleSignOut} disabled={isPending} className="p-0 h-auto ml-2 text-muted-foreground hover:text-foreground">
                     {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Sign Out"}
                 </Button>
             )}
