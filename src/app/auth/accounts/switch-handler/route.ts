@@ -2,6 +2,9 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { switchToAccount } from '@/lib/session';
 import { getStoredAccounts } from '@/lib/session';
+import { revalidatePath } from 'next/cache';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
@@ -21,7 +24,12 @@ export async function GET(request: NextRequest) {
     const result = await switchToAccount(accountToSwitch);
 
     if (result.success) {
-        return NextResponse.redirect(new URL('/manage', request.url));
+        const manageUrl = new URL('/manage', request.url);
+        // Force a full redirect and page refresh by using a standard redirect response
+        // instead of Next.js's internal routing. This ensures the layout re-renders with new session data.
+        const response = NextResponse.redirect(manageUrl);
+        revalidatePath('/manage', 'layout');
+        return response;
     } else {
         const errorUrl = new URL('/auth/accounts', request.url);
         errorUrl.searchParams.set('error', 'switch_failed');
