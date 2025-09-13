@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 import { getUserProfile, getUserNeupIds } from '@/lib/user';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { switchActiveAccount, switchToBrand, switchToDependent } from '@/actions/auth/switch';
 import { ChevronRight, Loader2 } from '@/components/icons';
@@ -57,7 +56,7 @@ export function AccountListItem({ account, mode }: { account: CombinedAccount, m
                 if (profile) {
                      setDetails({
                         displayName: profile.nameDisplay || `${profile.nameFirst} ${profile.nameLast}`.trim(),
-                        neupId: neupIds[0] || 'N/A',
+                        neupId: neupIds.find(id => profile.neupIdPrimary === id) || neupIds[0] || 'N/A',
                         displayPhoto: profile.accountPhoto
                     });
                 } else {

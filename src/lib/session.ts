@@ -1,4 +1,5 @@
 
+
 'use server';
 
 import { db } from './firebase';
@@ -77,20 +78,14 @@ export async function createAndSetSession(
       active: true, // This is the currently active account
     };
     
-    let accountFound = false;
-    const allAccounts = existingAccounts.map((acc) => {
-        if (acc.accountId === accountId) {
-            accountFound = true;
-            return newStoredAccount; // Update existing account
-        }
-        return { ...acc, active: false }; // Mark all other accounts as inactive
-    });
+    // Remove any previous sessions for this accountId before adding the new one.
+    const filteredAccounts = existingAccounts.filter(acc => acc.accountId !== accountId);
 
-    if (!accountFound) {
-      allAccounts.push(newStoredAccount);
-    }
-
+    const allAccounts = filteredAccounts.map((acc) => ({ ...acc, active: false }));
+    allAccounts.push(newStoredAccount);
+    
     await setStoredAccountsCookie(allAccounts);
+
   } catch (error) {
     await logError('auth', error, `createAndSetSession for ${accountId}`);
     throw new Error('Failed to create session.');
