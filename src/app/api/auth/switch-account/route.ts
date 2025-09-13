@@ -1,7 +1,6 @@
 
 import { NextResponse, type NextRequest } from 'next/server';
-import { switchToAccount } from '@/lib/session';
-import { getStoredAccounts } from '@/lib/session';
+import { switchToAccount, getStoredAccounts } from '@/lib/session';
 import { revalidatePath } from 'next/cache';
 
 export const dynamic = 'force-dynamic';
@@ -25,10 +24,8 @@ export async function GET(request: NextRequest) {
 
     if (result.success) {
         const manageUrl = new URL('/manage', request.url);
-        // Force a full redirect and page refresh by using a standard redirect response
-        // instead of Next.js's internal routing. This ensures the layout re-renders with new session data.
-        const response = NextResponse.redirect(manageUrl);
         revalidatePath('/manage', 'layout');
+        const response = NextResponse.redirect(manageUrl);
         return response;
     } else {
         const errorUrl = new URL('/auth/accounts', request.url);

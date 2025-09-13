@@ -1,12 +1,13 @@
 
 "use client";
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { useEffect, useState, useTransition } from 'react';
 import { getUserProfile } from '@/lib/user';
-import { ChevronRight } from '@/components/icons';
 import type { StoredAccount } from '@/types';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { ChevronRight } from '@/components/icons';
 
 type CombinedAccount = StoredAccount & {
     displayName?: string;
@@ -19,6 +20,7 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
         neupId: account.neupId,
     });
     const [loading, setLoading] = useState(true);
+    const router = useRouter();
 
     useEffect(() => {
         let isMounted = true;
@@ -35,7 +37,7 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
                 const profile = await getUserProfile(account.accountId);
                 if (isMounted) {
                     setDetails({
-                        displayName: profile?.nameDisplay || 'Unnamed Account',
+                        displayName: profile?.nameDisplay || `Account ${account.accountId.substring(0,6)}`,
                         neupId: account.neupId || profile?.neupIdPrimary || 'N/A'
                     });
                 }
@@ -54,7 +56,7 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
         return () => {
             isMounted = false;
         };
-    }, [account.accountId, account.neupId, account.isUnknown]);
+    }, [account.accountId]);
 
     const finalAccount = { ...account, ...details };
 
@@ -72,7 +74,7 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
     
     const href = finalAccount.expired 
         ? `/auth/signin?neupId=${finalAccount.neupId}` 
-        : `/auth/accounts/switch-handler?sessionId=${finalAccount.sessionId}`;
+        : `/auth/switch/handler?sessionId=${finalAccount.sessionId}`;
 
     return (
         <Link
