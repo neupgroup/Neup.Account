@@ -11,6 +11,7 @@ import { useToast } from '@/hooks/use-toast';
 import { switchActiveAccount, switchToBrand, switchToDependent } from '@/actions/auth/switch';
 import { ChevronRight, Loader2 } from '@/components/icons';
 import type { StoredAccount } from '@/types';
+import { AccountActions } from './account-actions';
 
 type CombinedAccount = StoredAccount & {
     displayName?: string;
@@ -98,8 +99,14 @@ export function AccountListItem({ account, mode }: { account: CombinedAccount, m
         });
     };
 
-    const handleClick = () => {
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        // Prevent click if it's on a button inside
+        if ((e.target as HTMLElement).closest('button[data-action-button]')) {
+            return;
+        }
+
         if (loading || isSwitching) return;
+        
         if (mode === 'link' || finalAccount.expired) {
             router.push(`/auth/signin?neupId=${finalAccount.neupId}`);
         } else {
@@ -109,12 +116,15 @@ export function AccountListItem({ account, mode }: { account: CombinedAccount, m
     
     if (loading) {
         return (
-             <div className="flex items-center gap-4 p-4">
-                <Skeleton className="h-10 w-10 rounded-full" />
-                <div className="space-y-2">
-                   <Skeleton className="h-4 w-32" />
-                   <Skeleton className="h-3 w-24" />
+             <div className="flex items-center justify-between p-4">
+                <div className="flex items-center gap-4">
+                    <Skeleton className="h-10 w-10 rounded-full" />
+                    <div className="space-y-2">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-3 w-24" />
+                    </div>
                 </div>
+                 <Skeleton className="h-8 w-20" />
             </div>
         )
     }
@@ -144,7 +154,9 @@ export function AccountListItem({ account, mode }: { account: CombinedAccount, m
                     </div>
                 </div>
             </div>
-            {isSwitching ? <Loader2 className="h-5 w-5 animate-spin" /> : <ChevronRight className="h-5 w-5 text-muted-foreground" />}
+            <div data-action-button="true">
+                <AccountActions account={finalAccount} />
+            </div>
         </button>
     );
 }

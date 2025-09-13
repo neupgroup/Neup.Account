@@ -24,13 +24,14 @@ export default async function AccountsPage() {
                 <CardContent className="p-0">
                     <AccountList accounts={storedAccounts} mode="switch" />
                 </CardContent>
-                <CardFooter className="flex flex-col items-start gap-4 p-4 border-t">
+                <CardFooter className="flex flex-col items-start gap-2 p-4 border-t">
                     <Link
                       href="/auth/signin"
                       className="flex w-full items-center justify-between p-3 rounded-lg hover:bg-muted/50 transition-colors"
                     >
                       <div>
                         <h3 className="font-semibold">Use another account</h3>
+                        <p className="text-sm text-muted-foreground">Sign in to a different account</p>
                       </div>
                       <ChevronRight className="h-5 w-5 text-muted-foreground" />
                     </Link>
@@ -40,6 +41,7 @@ export default async function AccountsPage() {
                     >
                       <div>
                         <h3 className="font-semibold">Create a Neup.Account</h3>
+                         <p className="text-sm text-muted-foreground">Set up a new, secure account</p>
                       </div>
                       <ChevronRight className="h-5 w-5 text-muted-foreground" />
                     </Link>
