@@ -1,5 +1,4 @@
 
-
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -17,7 +16,7 @@ import {
 } from 'firebase/firestore';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { logError } from '@/lib/logger';
-import { getUserProfile, checkPermissions } from '@/lib/user-actions';
+import { getUserProfile, checkPermissions } from '@/lib/user';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
@@ -72,9 +71,9 @@ export async function getRecoveryAccounts(): Promise<RecoveryAccount[]> {
           recoveryNeupId: data.recoveryNeupId,
           displayName:
             profile?.displayName ||
-            `${profile?.firstName} ${profile?.lastName}`.trim() ||
+            `${profile?.nameFirst} ${profile?.nameLast}`.trim() ||
             data.recoveryNeupId,
-          displayPhoto: profile?.displayPhoto,
+          displayPhoto: profile?.accountPhoto,
           status: data.status || 'pending',
         };
       })
@@ -177,10 +176,10 @@ export async function addRecoveryAccount(
       recoveryAccountId,
       recoveryNeupId: neupId,
       displayName:
-        profile?.displayName ||
-        `${profile?.firstName} ${profile?.lastName}`.trim() ||
+        profile?.nameDisplay ||
+        `${profile?.nameFirst} ${profile?.nameLast}`.trim() ||
         neupId,
-      displayPhoto: profile?.displayPhoto,
+      displayPhoto: profile?.accountPhoto,
       status: 'pending',
     };
 
@@ -221,3 +220,5 @@ export async function removeRecoveryAccount(
     return { success: false, error: 'An unexpected error occurred.' };
   }
 }
+
+    
