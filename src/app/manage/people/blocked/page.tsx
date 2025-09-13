@@ -159,7 +159,7 @@ function UserListManager({
                                 <div className="flex items-center gap-4">
                                 <Avatar>
                                     <AvatarImage src={user.displayPhoto} alt={user.displayName} data-ai-hint="person" />
-                                    <AvatarFallback>{user.displayName?.charAt(0).toUpperCase()}</AvatarFallback>
+                                    <AvatarFallback />
                                 </Avatar>
                                 <div>
                                     <p className="font-medium">{user.displayName}</p>

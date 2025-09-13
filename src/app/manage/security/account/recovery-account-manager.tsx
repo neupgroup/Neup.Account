@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState, useTransition, useRef } from 'react';
@@ -32,7 +33,7 @@ function AccountItem({ account, onRemove }: { account: RecoveryAccount, onRemove
             <div className="flex items-center gap-4">
                 <Avatar>
                     <AvatarImage src={account.displayPhoto} alt={account.displayName} data-ai-hint="person" />
-                    <AvatarFallback>{account.displayName?.charAt(0).toUpperCase()}</AvatarFallback>
+                    <AvatarFallback />
                 </Avatar>
                 <div>
                     <p className="font-medium">{account.displayName}</p>

@@ -1,6 +1,6 @@
+'use client';
 
-"use client";
-
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,16 +20,28 @@ type FormData = z.infer<typeof passwordSchema>;
 export default function PasswordStepPage() {
     const router = useRouter();
     const { toast } = useToast();
+    const [authRequestId, setAuthRequestId] = useState<string | null>(null);
+
     const form = useForm<FormData>({
         resolver: zodResolver(passwordSchema),
         defaultValues: {
             password: "",
         },
     });
+    
+    useEffect(() => {
+        const id = sessionStorage.getItem('temp_auth_id');
+        if (!id) {
+            router.push('/auth/signup');
+            return;
+        }
+        setAuthRequestId(id);
+    }, [router]);
 
     const onSubmit = async (data: FormData) => {
+        if (!authRequestId) return;
         NProgress.start();
-        const result = await submitPasswordStep(data);
+        const result = await submitPasswordStep(authRequestId, data);
         if (result.success) {
             router.push('/auth/signup/terms');
         } else {

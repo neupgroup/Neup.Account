@@ -1,5 +1,4 @@
 
-
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -15,7 +14,6 @@ import {
   serverTimestamp,
   writeBatch,
   updateDoc,
-  deleteDoc,
 } from 'firebase/firestore';
 import bcrypt from 'bcryptjs';
 import { logActivity } from '@/lib/log-actions';
@@ -23,8 +21,7 @@ import { headers } from 'next/headers';
 import { createAndSetSession } from '@/lib/session';
 import { logError } from '@/lib/logger';
 import type { z } from 'zod';
-import { v4 as uuidv4 } from 'uuid';
-import { cookies } from 'next/headers';
+import { getAuthRequest, extendAuthRequest } from './utils';
 import {
   nameSchema,
   demographicsSchema,
@@ -34,7 +31,6 @@ import {
   neupidSchema,
   passwordSchema,
   termsSchema,
-  displayNameSchema,
 } from '@/schemas/signup';
 
 // Helper to sanitize name fields
@@ -50,28 +46,7 @@ async function isFirstUser() {
   return accountsSnapshot.empty;
 }
 
-async function getAuthRequest(
-  id: string
-): Promise<{ data: any; ref: any } | null> {
-  const authRequestRef = doc(db, 'auth_requests', id);
-  const authRequestDoc = await getDoc(authRequestRef);
-
-  if (
-    !authRequestDoc.exists() ||
-    (authRequestDoc.data().expiresAt && authRequestDoc.data().expiresAt.toDate() < new Date())
-  ) {
-    // If the request is invalid or expired, clean it up.
-    if (authRequestDoc.exists()) {
-        await deleteDoc(authRequestRef);
-    }
-    cookies().delete('temp_auth_id');
-    return null;
-  }
-  return { data: authRequestDoc.data(), ref: authRequestRef };
-}
-
-export async function getSignupStepData() {
-  const authRequestId = cookies().get('temp_auth_id')?.value;
+export async function getSignupStepData(authRequestId: string) {
   if (!authRequestId) {
     return { success: false, data: null };
   }
@@ -82,8 +57,7 @@ export async function getSignupStepData() {
   return { success: true, data: request.data.data };
 }
 
-export async function submitNameStep(data: z.infer<typeof nameSchema>) {
-  const authRequestId = cookies().get('temp_auth_id')?.value;
+export async function submitNameStep(authRequestId: string, data: z.infer<typeof nameSchema>) {
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };
 
@@ -102,24 +76,19 @@ export async function submitNameStep(data: z.infer<typeof nameSchema>) {
   const nameFirst = sanitizeName(validation.data.firstName);
   const nameMiddle = sanitizeName(validation.data.middleName);
   const nameLast = sanitizeName(validation.data.lastName);
-  
-  const defaultDisplayName = [nameFirst, nameMiddle, nameLast].filter(Boolean).join(' ');
 
   await updateDoc(request.ref, {
     'data.nameFirst': nameFirst,
     'data.nameMiddle': nameMiddle,
     'data.nameLast': nameLast,
-    'data.nameDisplay': defaultDisplayName,
     status: 'pending_demographics',
   });
+  await extendAuthRequest(request.ref);
 
   return { success: true };
 }
 
-export async function submitDemographicsStep(
-  data: z.infer<typeof demographicsSchema>
-) {
-  const authRequestId = cookies().get('temp_auth_id')?.value;
+export async function submitDemographicsStep(authRequestId: string, data: z.infer<typeof demographicsSchema>) {
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };
 
@@ -140,7 +109,7 @@ export async function submitDemographicsStep(
 
   if (finalGender === 'custom' && (!finalCustomGender || finalCustomGender.trim() === '')) {
     finalGender = 'prefer_not_to_say';
-    finalCustomGender = null;
+    finalCustomGender = undefined;
   }
 
   await updateDoc(request.ref, {
@@ -149,14 +118,12 @@ export async function submitDemographicsStep(
     'data.customGender': finalCustomGender ? sanitizeName(finalCustomGender) : null,
     status: 'pending_nationality',
   });
+  await extendAuthRequest(request.ref);
 
   return { success: true };
 }
 
-export async function submitNationalityStep(
-    data: z.infer<typeof nationalitySchema>
-) {
-    const authRequestId = cookies().get('temp_auth_id')?.value;
+export async function submitNationalityStep(authRequestId: string, data: z.infer<typeof nationalitySchema>) {
     if (!authRequestId)
         return { success: false, error: 'Signup session not found.' };
 
@@ -176,13 +143,13 @@ export async function submitNationalityStep(
         'data.nationality': validation.data.nationality,
         status: 'pending_contact',
     });
+    await extendAuthRequest(request.ref);
 
     return { success: true };
 }
 
 
-export async function submitContactStep(data: z.infer<typeof contactSchema>) {
-  const authRequestId = cookies().get('temp_auth_id')?.value;
+export async function submitContactStep(authRequestId: string, data: z.infer<typeof contactSchema>) {
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };
 
@@ -205,12 +172,12 @@ export async function submitContactStep(data: z.infer<typeof contactSchema>) {
     'data.phone': validation.data.phone,
     status: 'pending_otp',
   });
+  await extendAuthRequest(request.ref);
 
   return { success: true };
 }
 
-export async function submitOtpStep(data: z.infer<typeof otpSchema>) {
-  const authRequestId = cookies().get('temp_auth_id')?.value;
+export async function submitOtpStep(authRequestId: string, data: z.infer<typeof otpSchema>) {
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };
 
@@ -235,12 +202,12 @@ export async function submitOtpStep(data: z.infer<typeof otpSchema>) {
     'data.phoneVerified': true,
     status: 'pending_neupid',
   });
+  await extendAuthRequest(request.ref);
 
   return { success: true };
 }
 
-export async function submitNeupIdStep(data: z.infer<typeof neupidSchema>) {
-  const authRequestId = cookies().get('temp_auth_id')?.value;
+export async function submitNeupIdStep(authRequestId: string, data: z.infer<typeof neupidSchema>) {
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };
 
@@ -267,14 +234,12 @@ export async function submitNeupIdStep(data: z.infer<typeof neupidSchema>) {
     'data.neupId': neupId,
     status: 'pending_password',
   });
+  await extendAuthRequest(request.ref);
 
   return { success: true };
 }
 
-export async function submitPasswordStep(
-  data: z.infer<typeof passwordSchema>
-) {
-  const authRequestId = cookies().get('temp_auth_id')?.value;
+export async function submitPasswordStep(authRequestId: string, data: z.infer<typeof passwordSchema>) {
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };
 
@@ -296,12 +261,12 @@ export async function submitPasswordStep(
     'data.password': hashedPassword,
     status: 'pending_terms',
   });
+  await extendAuthRequest(request.ref);
 
   return { success: true };
 }
 
-export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
-  const authRequestId = cookies().get('temp_auth_id')?.value;
+export async function submitTermsStep(authRequestId: string, data: z.infer<typeof termsSchema>) {
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };
 
@@ -335,7 +300,6 @@ export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
   if (
     !nameFirst ||
     !nameLast ||
-    !nameDisplay ||
     !dateBirth ||
     !gender ||
     !nationality ||
@@ -421,7 +385,7 @@ export async function submitTermsStep(data: z.infer<typeof termsSchema>) {
     );
     await createAndSetSession(accountId, 'Registration', ipAddress, userAgent);
 
-    // Delete the auth request
+    // Mark the auth request as completed
     await updateDoc(request.ref, { status: 'completed' });
 
     return { success: true };

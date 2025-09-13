@@ -23,6 +23,7 @@ export type UserProfile = {
   accountPhoto?: string;
   gender?: string; // 'male', 'female', 'prefer_not_to_say', 'c.custom'
   dateBirth?: string; // ISO string
+  dateCreated?: string; // ISO string
   nationality?: string;
   isLegalEntity?: boolean;
   nameLegal?: string;
@@ -59,6 +60,7 @@ export async function getUserProfile(
       
       const serializedData: UserProfile = {
         ...accountData,
+        dateCreated: accountData.dateCreated?.toDate?.().toISOString() || accountData.dateCreated || null,
         dateBirth: accountData.dateBirth?.toDate?.().toISOString() || accountData.dateBirth || null,
         dateEstablished: accountData.dateEstablished?.toDate?.().toISOString() || accountData.dateEstablished || null,
       };

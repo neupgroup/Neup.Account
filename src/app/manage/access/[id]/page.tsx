@@ -44,9 +44,7 @@ export default async function AccessDetailsPage({
       <div className="flex items-center gap-4">
           <Avatar className="h-12 w-12">
             <AvatarImage src={details.grantedTo.name} data-ai-hint="person" />
-            <AvatarFallback>
-              {details.grantedTo.name.charAt(0).toUpperCase()}
-            </AvatarFallback>
+            <AvatarFallback />
           </Avatar>
           <div>
             <h1 className="text-2xl font-bold tracking-tight">

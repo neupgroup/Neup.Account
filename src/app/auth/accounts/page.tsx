@@ -1,9 +1,9 @@
+
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { getValidatedStoredAccounts } from '@/lib/session';
-import { AccountList } from './account-list';
 import { ChevronRight } from '@/components/icons';
+import { AccountListItem } from './account-list-item';
 
 
 export default async function AccountsPage() {
@@ -21,25 +21,22 @@ export default async function AccountsPage() {
                        Continue to NeupID Group Products and Services
                     </CardDescription>
                 </CardHeader>
-                <CardContent className="p-0">
-                    <AccountList accounts={storedAccounts} mode="switch" />
+                <CardContent className="space-y-4">
+                    {storedAccounts.map((acc) => (
+                        <AccountListItem 
+                            key={acc.accountId || `unknown-${Math.random()}`} 
+                            account={acc}
+                        />
+                    ))}
                 </CardContent>
-                <CardFooter className="flex flex-col items-start gap-4 p-4 border-t">
+                <CardFooter className="flex flex-col items-start gap-2 p-4 border-t">
                     <Link
-                      href="/auth/signin"
+                      href="/auth/start"
                       className="flex w-full items-center justify-between p-3 rounded-lg hover:bg-muted/50 transition-colors"
                     >
                       <div>
-                        <h3 className="font-semibold">Use another account</h3>
-                      </div>
-                      <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                    </Link>
-                    <Link
-                      href="/auth/signup"
-                      className="flex w-full items-center justify-between p-3 rounded-lg hover:bg-muted/50 transition-colors"
-                    >
-                      <div>
-                        <h3 className="font-semibold">Create a Neup.Account</h3>
+                        <h3 className="font-semibold">Use other Neup Account</h3>
+                        <p className="text-sm text-muted-foreground">Sign Up or Sign In for a Neup Account.</p>
                       </div>
                       <ChevronRight className="h-5 w-5 text-muted-foreground" />
                     </Link>

@@ -1,7 +1,8 @@
 
-"use client";
+'use client';
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,6 +23,8 @@ export default function TermsStepPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const { toast } = useToast();
+    const [authRequestId, setAuthRequestId] = useState<string | null>(null);
+
     const form = useForm<FormData>({
         resolver: zodResolver(termsSchema),
         defaultValues: {
@@ -29,10 +32,21 @@ export default function TermsStepPage() {
         },
     });
 
+    useEffect(() => {
+        const id = sessionStorage.getItem('temp_auth_id');
+        if (!id) {
+            router.push('/auth/signup');
+            return;
+        }
+        setAuthRequestId(id);
+    }, [router]);
+
     const onSubmit = async (data: FormData) => {
+        if (!authRequestId) return;
         NProgress.start();
-        const result = await submitTermsStep(data);
+        const result = await submitTermsStep(authRequestId, data);
         if (result.success) {
+            sessionStorage.clear();
             const returnUrl = searchParams.get('return_url');
             router.push(returnUrl || '/manage');
         } else {

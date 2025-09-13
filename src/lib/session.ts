@@ -1,4 +1,5 @@
 
+
 'use server';
 
 import { db } from './firebase';
@@ -61,12 +62,15 @@ export async function createAndSetSession(
     await setSessionCookies(newSession, expiresOn);
     
     // Once a full session is created, the temporary auth cookie is no longer needed.
-    cookies().delete('temp_auth_id');
+    sessionStorage.removeItem('temp_auth_id');
     
     const { allAccounts: existingAccounts } = await getSessionCookies();
     
     const neupIds = await getUserNeupIds(accountId);
     const primaryNeupId = neupIds[0];
+
+    // Mark all other accounts as inactive
+    const updatedExistingAccounts = existingAccounts.map(acc => ({ ...acc, active: false }));
 
     const newStoredAccount: StoredAccount = {
       accountId: accountId,
@@ -74,23 +78,17 @@ export async function createAndSetSession(
       sessionKey: sessionKey,
       expired: false,
       neupId: primaryNeupId,
-      active: true, // This is the currently active account
+      active: true, // This new session is the active one
     };
     
-    let accountFound = false;
-    const allAccounts = existingAccounts.map((acc) => {
-        if (acc.accountId === accountId) {
-            accountFound = true;
-            return newStoredAccount; // Update existing account
-        }
-        return { ...acc, active: false }; // Mark all other accounts as inactive
-    });
+    // Remove any previous sessions for this accountId and add the new one.
+    const filteredAccounts = updatedExistingAccounts
+        .filter(acc => acc.accountId !== accountId);
 
-    if (!accountFound) {
-      allAccounts.push(newStoredAccount);
-    }
-
+    const allAccounts = [...filteredAccounts, newStoredAccount];
+    
     await setStoredAccountsCookie(allAccounts);
+
   } catch (error) {
     await logError('auth', error, `createAndSetSession for ${accountId}`);
     throw new Error('Failed to create session.');
@@ -108,6 +106,8 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
   if (storedAccounts.length === 0) {
     return [];
   }
+
+  const { accountId: activeAccountId } = await getSessionCookies();
 
   const validatedAccounts = await Promise.all(
     storedAccounts.map(async (account) => {
@@ -134,8 +134,6 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
             return { ...account, expired: true, active: false };
         }
 
-        // If the session is valid, we need to check if it's the active one
-        const { accountId: activeAccountId } = await getSessionCookies();
         const isActive = account.accountId === activeAccountId;
 
         return { ...account, expired: false, active: isActive };
@@ -169,20 +167,23 @@ export async function switchToAccount(account: StoredAccount) {
             return { success: false, error: 'Invalid or expired session.' };
         }
 
+        // Clear any managing cookies to ensure we are back to a personal account context
         await clearManagingCookie();
+        
+        // Set the primary session cookies to the new account's details
         await setSessionCookies({
             accountId: account.accountId,
             sessionId: account.sessionId,
             sessionKey: account.sessionKey,
         }, expiresOn);
         
-        // Update the active flag in the stored accounts cookie
-        const { allAccounts: existingAccounts } = await getSessionCookies();
-        const updatedAccounts = existingAccounts.map(acc => ({
+        const { allAccounts } = await getSessionCookies();
+        const updatedAccounts = allAccounts.map(acc => ({
             ...acc,
             active: acc.accountId === account.accountId
         }));
         await setStoredAccountsCookie(updatedAccounts);
+
 
         return { success: true };
     } catch (error) {

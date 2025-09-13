@@ -2,146 +2,128 @@
 "use client";
 
 import { useEffect, useState, useTransition } from 'react';
-import { useRouter } from 'next/navigation';
-import { getUserProfile, getUserNeupIds } from '@/lib/user';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
-import { switchActiveAccount, switchToBrand, switchToDependent } from '@/actions/auth/switch';
-import { ChevronRight, Loader2 } from '@/components/icons';
+import { getUserProfile } from '@/lib/user';
 import type { StoredAccount } from '@/types';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { ChevronRight } from '@/components/icons';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { AccountActions } from './account-actions';
 
 type CombinedAccount = StoredAccount & {
     displayName?: string;
-    neupId?: string;
     displayPhoto?: string;
-    isBrand?: boolean;
-    isDependent?: boolean;
-    plan?: string;
     isUnknown?: boolean;
 };
 
-export function AccountListItem({ account, mode }: { account: CombinedAccount, mode: 'link' | 'switch' }) {
-    const [details, setDetails] = useState<Partial<CombinedAccount>>({});
+export function AccountListItem({ account }: { account: CombinedAccount }) {
+    const [details, setDetails] = useState<Partial<CombinedAccount>>({
+        displayName: account.displayName,
+        neupId: account.neupId,
+        displayPhoto: account.isBrand ? 'https://neupgroup.com/assets/brand.png' : 'https://neupgroup.com/assets/user.png',
+    });
     const [loading, setLoading] = useState(true);
     const [isSwitching, startSwitchTransition] = useTransition();
     const router = useRouter();
-    const { toast } = useToast();
 
     useEffect(() => {
+        let isMounted = true;
         async function fetchAccountDetails() {
-            if (account.isBrand || account.isDependent || account.isUnknown) {
-                // Details are already passed in for these types
-                setDetails({}); 
-                setLoading(false);
-                return;
-            }
-            
-            if (!account.accountId) {
-                setDetails({ isUnknown: true, displayName: 'Unknown Account', neupId: 'unknown' });
-                setLoading(false);
+            if (!account.accountId || account.isUnknown) {
+                if (isMounted) {
+                    setDetails({ isUnknown: true, displayName: 'Unknown Account', neupId: 'unknown', displayPhoto: 'https://neupgroup.com/assets/user.png' });
+                    setLoading(false);
+                }
                 return;
             }
 
             try {
-                const [profile, neupIds] = await Promise.all([
-                    getUserProfile(account.accountId),
-                    getUserNeupIds(account.accountId)
-                ]);
-
-                if (!profile) {
-                    setDetails({ isUnknown: true, displayName: 'Unknown Account', neupId: 'unknown' });
-                } else {
+                const profile = await getUserProfile(account.accountId);
+                if (isMounted) {
                     setDetails({
-                        displayName: profile?.displayName || `${profile?.firstName} ${profile?.lastName}`.trim(),
-                        neupId: neupIds[0] || 'N/A',
-                        displayPhoto: profile?.displayPhoto
+                        displayName: profile?.nameDisplay || `Account ${account.accountId.substring(0,6)}`,
+                        neupId: account.neupId || profile?.neupIdPrimary || 'N/A',
+                        displayPhoto: profile?.accountPhoto || (profile?.accountType === 'brand' ? 'https://neupgroup.com/assets/brand.png' : 'https://neupgroup.com/assets/user.png'),
                     });
                 }
             } catch (e) {
-                setDetails({ isUnknown: true, displayName: 'Error Loading', neupId: 'error' });
+                if (isMounted) {
+                    setDetails({ isUnknown: true, displayName: 'Error Loading', neupId: 'error', displayPhoto: 'https://neupgroup.com/assets/user.png' });
+                }
             } finally {
-                setLoading(false);
+                if (isMounted) {
+                    setLoading(false);
+                }
             }
         }
 
         fetchAccountDetails();
-    }, [account]);
+        return () => {
+            isMounted = false;
+        };
+    }, [account.accountId, account.isUnknown, account.neupId, account.isBrand]);
 
     const finalAccount = { ...account, ...details };
 
-    const getAccountType = () => {
-        if(finalAccount.isBrand) return "Brand";
-        if(finalAccount.isDependent) return "Dependent";
-        return "Individual";
-    }
+    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        // Prevent navigation if the click is on a button inside AccountActions
+        if ((e.target as HTMLElement).closest('[data-action-button]')) {
+            return;
+        }
 
-    const handleSwitch = (acc: CombinedAccount) => {
-        startSwitchTransition(async () => {
-            let result;
-            if (acc.isBrand) {
-                result = await switchToBrand(acc.accountId);
-            } else if (acc.isDependent) {
-                 result = await switchToDependent(acc.accountId);
-            } else {
-                result = await switchActiveAccount(acc);
-            }
-
-            if (result.success) {
-                toast({ title: "Success", description: "Switched account successfully." });
-                router.push('/manage');
-                router.refresh();
-            } else {
-                toast({ variant: "destructive", title: "Error", description: result.error });
-            }
+        startSwitchTransition(() => {
+            const href = finalAccount.expired 
+                ? `/auth/signin?neupId=${finalAccount.neupId}` 
+                : `/auth/switch/handler?sessionId=${finalAccount.sessionId}`;
+            router.push(href);
         });
     };
 
-    const handleClick = () => {
-        if (loading || isSwitching) return;
-        if (mode === 'link' || finalAccount.expired) {
-            router.push(`/auth/signin?neupId=${finalAccount.neupId}`);
-        } else {
-            handleSwitch(finalAccount);
-        }
-    };
-    
     if (loading) {
         return (
-             <div className="flex items-center gap-4 p-4">
-                <Skeleton className="h-10 w-10 rounded-full" />
-                <div className="space-y-2">
-                   <Skeleton className="h-4 w-32" />
-                   <Skeleton className="h-3 w-24" />
+            <div className="flex w-full items-center justify-between p-4 border rounded-lg">
+                <div className="flex items-center gap-4">
+                    <Skeleton className="h-10 w-10 rounded-full" />
+                    <div className="space-y-2">
+                        <Skeleton className="h-5 w-32" />
+                        <Skeleton className="h-4 w-24" />
+                    </div>
                 </div>
+                <Skeleton className="h-5 w-5" />
             </div>
-        )
+        );
     }
 
     return (
-        <button
+        <div
             onClick={handleClick}
-            className="w-full text-left flex items-center justify-between p-4 group hover:bg-muted/50 transition-colors disabled:opacity-50"
-            disabled={isSwitching || finalAccount.isUnknown}
+            className="w-full flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer"
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleClick(e as any);
+                }
+            }}
         >
-             <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4">
                 <Avatar>
-                    <AvatarImage src={finalAccount.displayPhoto} data-ai-hint={finalAccount.isBrand ? 'logo' : 'person'} />
-                    <AvatarFallback>{finalAccount.displayName?.charAt(0).toUpperCase() || 'U'}</AvatarFallback>
+                    <AvatarImage src={finalAccount.displayPhoto} alt={finalAccount.displayName} />
+                    <AvatarFallback />
                 </Avatar>
                 <div>
-                    <p className="font-semibold">{finalAccount.displayName || 'Unknown Account'}</p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                         {finalAccount.expired ? (
-                            <span className="text-destructive">Session Expired</span>
-                        ) : (
-                           <>@{finalAccount.neupId} &bull; {getAccountType()}</>
-                        )}
-                    </p>
+                    <h3 className="font-semibold">{finalAccount.displayName}</h3>
+                    <div className="flex items-center gap-2">
+                        <p className="text-sm text-muted-foreground">
+                            @{finalAccount.neupId}
+                        </p>
+                        <AccountActions account={finalAccount} />
+                    </div>
                 </div>
             </div>
-            {isSwitching ? <Loader2 className="h-5 w-5 animate-spin" /> : <ChevronRight className="h-5 w-5 text-muted-foreground" />}
-        </button>
+            <ChevronRight className="h-5 w-5 text-muted-foreground" />
+        </div>
     );
 }

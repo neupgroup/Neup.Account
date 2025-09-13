@@ -1,17 +1,18 @@
-
 'use server';
 
 import { db } from '@/lib/firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { cookies, headers } from 'next/headers';
+import { headers } from 'next/headers';
 import { authenticator } from 'otplib';
 import { decrypt } from '@/actions/security/totp';
 import { z } from 'zod';
 import { createAndSetSession } from '@/lib/session';
 import { logActivity } from '@/lib/log-actions';
+import { getAuthRequest } from './utils';
 
 const mfaSchema = z.object({
     token: z.string().length(6, "Your one-time password must be 6 characters."),
+    authRequestId: z.string(),
 });
 
 export async function verifyMfa(data: z.infer<typeof mfaSchema>): Promise<{ success: boolean; error?: string }> {
@@ -20,23 +21,14 @@ export async function verifyMfa(data: z.infer<typeof mfaSchema>): Promise<{ succ
         return { success: false, error: validation.error.flatten().fieldErrors.token?.[0] };
     }
 
-    const { token } = validation.data;
-    const authRequestId = cookies().get('temp_auth_id')?.value;
-
-    if (!authRequestId) {
-        return { success: false, error: 'Authentication request not found. Please try again.' };
+    const { token, authRequestId } = validation.data;
+    
+    const request = await getAuthRequest(authRequestId);
+    if (!request || !request.data.accountId) {
+        return { success: false, error: 'Your session has expired. Please try again.' };
     }
 
-    const authRequestRef = doc(db, 'auth_requests', authRequestId);
-    const authRequestDoc = await getDoc(authRequestRef);
-
-    if (!authRequestDoc.exists() || authRequestDoc.data().expiresAt.toDate() < new Date()) {
-        cookies().delete('temp_auth_id');
-        return { success: false, error: 'Authentication request expired. Please try again.' };
-    }
-
-    const { accountId, status } = authRequestDoc.data();
-
+    const { accountId, status } = request.data;
     if (status !== 'pending_mfa') {
         return { success: false, error: 'Invalid authentication request state.' };
     }
@@ -60,7 +52,7 @@ export async function verifyMfa(data: z.infer<typeof mfaSchema>): Promise<{ succ
     }
 
     // MFA successful, update the request and create the user session
-    await updateDoc(authRequestRef, { 
+    await updateDoc(request.ref, { 
         status: 'completed',
         'data.mfa_method': 'totp',
         'data.mfa': 'authenticated',

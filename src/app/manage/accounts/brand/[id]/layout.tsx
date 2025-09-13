@@ -1,4 +1,5 @@
 
+
 import { notFound } from 'next/navigation';
 import { getUserProfile, checkPermissions } from '@/lib/user';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -28,7 +29,7 @@ export default async function BrandManagementLayout({
          <div className="flex items-center gap-4">
             <Avatar className="h-12 w-12">
                 <AvatarImage src={brandProfile.displayPhoto} alt={brandProfile.displayName} data-ai-hint="logo" />
-                <AvatarFallback>{brandProfile.displayName?.charAt(0) ?? 'B'}</AvatarFallback>
+                <AvatarFallback />
             </Avatar>
             <div>
                 <h2 className="text-xl font-bold tracking-tight">{brandProfile.displayName}</h2>

@@ -1,7 +1,6 @@
+'use client';
 
-"use client";
-
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,23 +21,33 @@ type FormData = z.infer<typeof nationalitySchema>;
 export default function NationalityStepPage() {
     const router = useRouter();
     const { toast } = useToast();
+    const [authRequestId, setAuthRequestId] = useState<string | null>(null);
+
     const form = useForm<FormData>({
         resolver: zodResolver(nationalitySchema),
     });
 
     useEffect(() => {
+        const id = sessionStorage.getItem('temp_auth_id');
+        if (!id) {
+            router.push('/auth/signup');
+            return;
+        }
+        setAuthRequestId(id);
+
         async function loadData() {
-            const { data } = await getSignupStepData();
-            if (data && data.nationality) {
+            const { data } = await getSignupStepData(id);
+            if (data?.nationality) {
                 form.setValue("nationality", data.nationality);
             }
         }
         loadData();
-    }, [form]);
+    }, [router, form]);
 
     const onSubmit = async (data: FormData) => {
+        if (!authRequestId) return;
         NProgress.start();
-        const result = await submitNationalityStep(data);
+        const result = await submitNationalityStep(authRequestId, data);
         if (result.success) {
             router.push('/auth/signup/contact');
         } else {

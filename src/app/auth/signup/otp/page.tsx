@@ -1,6 +1,6 @@
+'use client';
 
-"use client";
-
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,6 +20,8 @@ type FormData = z.infer<typeof otpSchema>;
 export default function OtpStepPage() {
     const router = useRouter();
     const { toast } = useToast();
+    const [authRequestId, setAuthRequestId] = useState<string | null>(null);
+
     const form = useForm<FormData>({
         resolver: zodResolver(otpSchema),
         defaultValues: {
@@ -27,9 +29,19 @@ export default function OtpStepPage() {
         },
     });
 
+    useEffect(() => {
+        const id = sessionStorage.getItem('temp_auth_id');
+        if (!id) {
+            router.push('/auth/signup');
+            return;
+        }
+        setAuthRequestId(id);
+    }, [router]);
+
     const onSubmit = async (data: FormData) => {
+        if (!authRequestId) return;
         NProgress.start();
-        const result = await submitOtpStep(data);
+        const result = await submitOtpStep(authRequestId, data);
         if (result.success) {
             router.push('/auth/signup/neupid');
         } else {

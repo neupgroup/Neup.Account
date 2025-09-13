@@ -9,14 +9,6 @@ import { useSession } from '@/context/session-context';
 export function UserNav() {
   const { profile, loading } = useSession();
 
-  const getInitials = () => {
-    if (!profile?.nameDisplay) return 'U';
-    const nameParts = profile.nameDisplay.split(' ');
-    const first = nameParts[0]?.[0] || '';
-    const last = nameParts.length > 1 ? nameParts[nameParts.length - 1]?.[0] : '';
-    return `${first}${last}`.toUpperCase();
-  };
-
   if (loading || !profile) {
     return (
         <div className="flex items-center gap-2">
@@ -39,7 +31,7 @@ export function UserNav() {
       </div>
       <Avatar className="h-9 w-9">
         <AvatarImage src={profile.accountPhoto || "https://neupgroup.com/assets/user.png"} alt={profile.nameDisplay || ''} data-ai-hint="person logo" />
-        <AvatarFallback>{getInitials()}</AvatarFallback>
+        <AvatarFallback />
       </Avatar>
     </div>
   );
