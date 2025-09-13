@@ -133,13 +133,15 @@ export function AccountListItem({ account, mode }: { account: CombinedAccount, m
                 </Avatar>
                 <div>
                     <p className="font-semibold">{finalAccount.displayName || 'Unknown Account'}</p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                         {finalAccount.expired ? (
-                            <span className="text-destructive">Session Expired</span>
-                        ) : (
-                           <>@{finalAccount.neupId} &bull; {getAccountType()}</>
-                        )}
-                    </p>
+                    {finalAccount.expired ? (
+                        <p className="text-xs text-destructive">
+                            Session Expired
+                        </p>
+                    ) : (
+                        <p className="text-xs text-muted-foreground mt-1">
+                           @{finalAccount.neupId} &bull; {getAccountType()}
+                        </p>
+                    )}
                 </div>
             </div>
             {isSwitching ? <Loader2 className="h-5 w-5 animate-spin" /> : <ChevronRight className="h-5 w-5 text-muted-foreground" />}
