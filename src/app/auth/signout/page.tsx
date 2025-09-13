@@ -1,11 +1,11 @@
 
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { logoutActiveSession } from "@/actions/auth/signout"
 
-export default function SignOutPage() {
+function SignOut() {
     const router = useRouter()
     const searchParams = useSearchParams()
     const formRef = useRef<HTMLFormElement>(null)
@@ -32,7 +32,7 @@ export default function SignOutPage() {
         } finally {
             const errorParam = searchParams.get('error');
             const errorDescParam = searchParams.get('error_description');
-            
+
             let redirectUrl = "/";
             if (errorParam) {
                 redirectUrl = `/auth/signin?error=${errorParam}&error_description=${errorDescParam || 'Please sign in again.'}`;
@@ -47,5 +47,13 @@ export default function SignOutPage() {
         <form ref={formRef} action={handleSignOut} className="hidden">
             <button type="submit">Signing out...</button>
         </form>
+    )
+}
+
+export default function SignOutPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <SignOut />
+        </Suspense>
     )
 }
