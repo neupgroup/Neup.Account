@@ -1,0 +1,58 @@
+
+"use client";
+
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import type { StoredAccount } from "@/types";
+import { logoutStoredSession, removeStoredAccount } from "@/actions/auth/switch";
+import { useToast } from "@/hooks/use-toast";
+import { Loader2 } from "@/components/icons";
+
+export function AccountActions({ account }: { account: StoredAccount }) {
+    const [isPending, startTransition] = useTransition();
+    const router = useRouter();
+    const { toast } = useToast();
+    
+    if (account.isUnknown) return null;
+
+    const handleSignOut = () => {
+        startTransition(async () => {
+            if (!account.sessionId) return;
+            const result = await logoutStoredSession(account.sessionId);
+            if (result.success) {
+                toast({ title: "Session Expired", description: "You have been signed out of this account." });
+            } else {
+                toast({ variant: "destructive", title: "Error", description: result.error });
+            }
+            router.refresh();
+        });
+    };
+
+    const handleRemove = () => {
+        startTransition(async () => {
+            const result = await removeStoredAccount(account.accountId);
+            if (result.success) {
+                toast({ title: "Account Removed", description: "The account has been removed from this device." });
+            } else {
+                toast({ variant: "destructive", title: "Error", description: result.error });
+            }
+             router.refresh();
+        });
+    };
+
+    return (
+        <div data-action-button="true">
+            <span className="text-muted-foreground">&bull;</span>
+            {account.expired ? (
+                <Button variant="link" size="sm" onClick={handleRemove} disabled={isPending} className="p-0 h-auto ml-2 text-destructive">
+                    {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Remove"}
+                </Button>
+            ) : (
+                <Button variant="link" size="sm" onClick={handleSignOut} disabled={isPending} className="p-0 h-auto ml-2">
+                    {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Sign Out"}
+                </Button>
+            )}
+        </div>
+    );
+}
