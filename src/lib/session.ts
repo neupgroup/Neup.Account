@@ -62,7 +62,7 @@ export async function createAndSetSession(
     await setSessionCookies(newSession, expiresOn);
     
     // Once a full session is created, the temporary auth cookie is no longer needed.
-    cookies().delete('temp_auth_id');
+    sessionStorage.removeItem('temp_auth_id');
     
     const { allAccounts: existingAccounts } = await getSessionCookies();
     
@@ -78,11 +78,12 @@ export async function createAndSetSession(
       active: true, // This is the currently active account
     };
     
-    // Remove any previous sessions for this accountId before adding the new one.
-    const filteredAccounts = existingAccounts.filter(acc => acc.accountId !== accountId);
+    // Remove any previous sessions for this accountId and set all other accounts to inactive.
+    const filteredAccounts = existingAccounts
+        .filter(acc => acc.accountId !== accountId)
+        .map(acc => ({ ...acc, active: false }));
 
-    const allAccounts = filteredAccounts.map((acc) => ({ ...acc, active: false }));
-    allAccounts.push(newStoredAccount);
+    const allAccounts = [...filteredAccounts, newStoredAccount];
     
     await setStoredAccountsCookie(allAccounts);
 
@@ -103,6 +104,8 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
   if (storedAccounts.length === 0) {
     return [];
   }
+
+  const { accountId: activeAccountId } = await getSessionCookies();
 
   const validatedAccounts = await Promise.all(
     storedAccounts.map(async (account) => {
@@ -129,8 +132,7 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
             return { ...account, expired: true, active: false };
         }
 
-        // If the session is valid, we need to check if it's the active one
-        const { accountId: activeAccountId } = await getSessionCookies();
+        // The session from the cookie is the source of truth for "active" status
         const isActive = account.accountId === activeAccountId;
 
         return { ...account, expired: false, active: isActive };

@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from "next/link";
@@ -45,7 +46,6 @@ export default function TermsStepPage() {
         NProgress.start();
         const result = await submitTermsStep(authRequestId, data);
         if (result.success) {
-            sessionStorage.removeItem('temp_auth_id');
             const returnUrl = searchParams.get('return_url');
             router.push(returnUrl || '/manage');
         } else {
