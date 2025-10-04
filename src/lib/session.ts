@@ -61,9 +61,6 @@ export async function createAndSetSession(
 
     await setSessionCookies(newSession, expiresOn);
     
-    // Once a full session is created, the temporary auth cookie is no longer needed.
-    sessionStorage.removeItem('temp_auth_id');
-    
     const { allAccounts: existingAccounts } = await getSessionCookies();
     
     const neupIds = await getUserNeupIds(accountId);
