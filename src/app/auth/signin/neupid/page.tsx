@@ -75,11 +75,9 @@ export default function NeupIdPage() {
   };
   
   const getSignupUrl = () => {
-    let url = '/auth/signup';
-    if (returnUrl) {
-      url += `?return_url=${encodeURIComponent(returnUrl)}`;
-    }
-    return url;
+    const url = new URL(window.location.origin + '/auth/signup');
+    if (returnUrl) url.searchParams.set('return_url', returnUrl);
+    return url.toString();
   };
 
   return (
