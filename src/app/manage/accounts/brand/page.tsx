@@ -2,8 +2,8 @@
 import { getBrandAccounts } from "@/actions/manage/accounts/brand";
 import { notFound } from "next/navigation";
 import { getPersonalAccountId } from "@/lib/auth-actions";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { AccountList } from "@/app/auth/accounts/account-list";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { AccountListItem } from "@/app/auth/accounts/account-list-item";
 import { Button } from "@/components/ui/button";
 import { Plus } from "@/components/icons";
 import Link from "next/link";
@@ -25,7 +25,7 @@ export default async function BrandAccountsPage() {
         expired: false,
         isBrand: true,
         displayName: brand.name,
-        neupId: brand.id.substring(0, 8), // Placeholder
+        neupId: `brand`, // Placeholder
         displayPhoto: brand.logoUrl,
         plan: brand.plan,
     }));
@@ -46,13 +46,14 @@ export default async function BrandAccountsPage() {
                         description="A list of all brand accounts you manage. Select one to manage it."
                     />
                 </CardHeader>
-                <CardContent className="p-0">
+                <CardContent className="p-0 divide-y">
                     {mappedBrandAccounts.length > 0 ? (
-                        <AccountList 
-                            accounts={mappedBrandAccounts} 
-                            mode="switch"
-                            isPaginated={true}
-                        />
+                        mappedBrandAccounts.map(acc => (
+                            <AccountListItem 
+                                key={acc.accountId}
+                                account={acc}
+                            />
+                        ))
                     ) : (
                         <div className="flex flex-col items-center justify-center text-center p-8 gap-4">
                             <Building className="h-12 w-12 text-muted-foreground/50" />

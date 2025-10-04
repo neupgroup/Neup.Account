@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { getDependentAccounts } from "@/actions/manage/accounts/dependent";
 import { User, Plus } from "lucide-react";
 import { notFound } from "next/navigation";
-import { AccountList } from "@/app/auth/accounts/account-list";
+import { AccountListItem } from "@/app/auth/accounts/account-list-item";
 import { BackButton } from "@/components/ui/back-button";
 import { checkPermissions } from "@/lib/user";
 
@@ -52,13 +52,11 @@ export default async function DependentAccountsPage() {
                         </CardDescription>
                     </div>
                 </CardHeader>
-                <CardContent className="p-0">
+                <CardContent className="p-0 divide-y">
                    {mappedAccounts.length > 0 ? (
-                        <AccountList 
-                            accounts={mappedAccounts} 
-                            mode="switch"
-                            isPaginated={true}
-                        />
+                        mappedAccounts.map(acc => (
+                           <AccountListItem key={acc.accountId} account={acc} />
+                        ))
                     ) : (
                         <div className="flex flex-col items-center justify-center text-center p-8 gap-4">
                             <User className="h-12 w-12 text-muted-foreground/50" />
