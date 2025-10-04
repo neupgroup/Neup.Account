@@ -1,4 +1,4 @@
-name: Upload & Build App (Low RAM)
+name: Upload & Build App (Runner build, keep server .env)
 
 on:
   workflow_dispatch:
@@ -6,51 +6,99 @@ on:
 jobs:
   upload-build:
     runs-on: ubuntu-latest
+    env:
+      # these are copied from secrets so they're easy to reference in scripts
+      DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      PM2_PROCESS_NAME: ${{ secrets.PM2_PROCESS_NAME }}
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Setup SSH Key
+      - name: Setup Node.js (for build on runner)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Setup SSH agent (safe handling of multiline private key)
+        uses: webfactory/ssh-agent@v0.8.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add server to known_hosts
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: Install rsync on Runner
+      - name: Install rsync on runner
         run: sudo apt-get update && sudo apt-get install -y rsync
 
-      - name: Rsync Source Code (keep server .env)
+      - name: Install deps & build on runner (avoids heavy server builds)
+        working-directory: ${{ github.workspace }}
+        run: |
+          npm ci
+          export NODE_OPTIONS="--max_old_space_size=3072"
+          npm run build
+
+      - name: Rsync code + build artifacts to server (keep server .env)
         run: |
           rsync -avz --delete \
             --exclude 'node_modules' \
-            --exclude '.pm2' \
             --exclude '.env' \
-            --exclude '.ssh' \
-            --exclude 'keys' \
-            --exclude '.next' \
+            --exclude '.git' \
+            --exclude '.next/cache' \
             --exclude 'dist' \
-            $GITHUB_WORKSPACE/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}
+            --exclude '.pm2' \
+            --exclude 'keys' \
+            "$GITHUB_WORKSPACE/" "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}"
 
-      - name: Build App on Server (Low RAM, use server .env)
+      - name: Upload .env to server if you provided DEPLOY_ENV_FILE (optional)
+        if: ${{ secrets.DEPLOY_ENV_FILE != '' }}
+        run: |
+          # Use printf to preserve newlines. Pipe directly to remote to avoid issues with echo and special chars.
+          printf '%s' "${{ secrets.DEPLOY_ENV_FILE }}" | ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cat > '${{ secrets.DEPLOY_PATH }}/.env' && chmod 600 '${{ secrets.DEPLOY_PATH }}/.env'"
+
+      - name: Install prod deps on server & restart app
         run: |
           ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-            cd ${{ secrets.DEPLOY_PATH }}
+            set -euo pipefail
 
-            # Check if .env exists
-            if [ ! -f .env ]; then
-              echo "⚠️ .env file not found on server! Build may fail."
+            cd "${{ secrets.DEPLOY_PATH }}" || { echo "ERROR: deploy path not found: ${{ secrets.DEPLOY_PATH }}"; exit 1; }
+
+            # Ensure .env exists: prefer existing .env, then uploaded DEPLOY_ENV_FILE (if used),
+            # then .env.example, otherwise create a minimal fallback .env
+            if [ -f .env ]; then
+              echo "✅ Using existing .env"
+            elif [ -f .env.example ]; then
+              cp .env.example .env
+              echo "⚠️ .env not found — copied .env.example to .env (edit if needed)"
             else
-              echo "✅ Using existing server .env"
+              echo "⚠️ .env not found and no .env.example. Creating minimal .env"
+              cat > .env <<'ENV'
+NODE_ENV=production
+PORT=3000
+ENV
+              chmod 600 .env
             fi
 
-            echo "📦 Installing dependencies (3GB heap)..."
-            export NODE_OPTIONS="--max_old_space_size=3072"
+            echo "📦 Installing production dependencies (npm ci --production)..."
             npm ci --production
 
-            echo "🏗️ Building the app with server .env..."
-            # Load server .env variables for build
-            export $(grep -v '^#' .env | xargs)
-            npm run build
+            # Restart with PM2 if installed, otherwise background-start as fallback.
+            PM2_NAME="${{ secrets.PM2_PROCESS_NAME }}"
+            if [ -z "$PM2_NAME" ]; then
+              PM2_NAME="app"
+            fi
+
+            if command -v pm2 >/dev/null 2>&1; then
+              echo "🔁 Restarting via pm2 (process: $PM2_NAME)..."
+              pm2 describe "$PM2_NAME" >/dev/null 2>&1 && pm2 reload "$PM2_NAME" || pm2 start npm --name "$PM2_NAME" -- start
+            else
+              echo "pm2 not found. Launching app with nohup as fallback (you should install pm2 for better process management)."
+              nohup npm start >/dev/null 2>&1 &
+            fi
+
+            echo "✅ Deployment finished."
           EOF
