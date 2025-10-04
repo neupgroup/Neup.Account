@@ -1,4 +1,4 @@
-name: Upload & Build App (Runner build, keep server .env)
+name: Upload & Build App (Low RAM)
 
 on:
   workflow_dispatch:
@@ -6,87 +6,51 @@ on:
 jobs:
   upload-build:
     runs-on: ubuntu-latest
-    env:
-      DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
-      SSH_USER: ${{ secrets.SSH_USER }}
-      SSH_HOST: ${{ secrets.SSH_HOST }}
-      PM2_PROCESS_NAME: ${{ secrets.PM2_PROCESS_NAME }}
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-      - name: Setup Node.js (for build on runner)
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - name: Setup SSH agent
-        uses: webfactory/ssh-agent@v0.8.1
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Add server to known_hosts
+      - name: Setup SSH Key
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Install rsync on runner
+      - name: Install rsync on Runner
         run: sudo apt-get update && sudo apt-get install -y rsync
 
-      - name: Install deps & build on runner
-        run: |
-          npm ci
-          export NODE_OPTIONS="--max_old_space_size=3072"
-          npm run build
-
-      - name: Rsync code + build artifacts to server (keep server .env)
+      - name: Rsync Source Code (keep server .env)
         run: |
           rsync -avz --delete \
             --exclude 'node_modules' \
-            --exclude '.env' \
-            --exclude '.git' \
-            --exclude '.next/cache' \
-            --exclude 'dist' \
             --exclude '.pm2' \
+            --exclude '.env' \
+            --exclude '.ssh' \
             --exclude 'keys' \
-            "$GITHUB_WORKSPACE/" "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}"
+            --exclude '.next' \
+            --exclude 'dist' \
+            $GITHUB_WORKSPACE/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}
 
-      - name: Upload .env to server if provided
-        if: ${{ secrets.DEPLOY_ENV_FILE && secrets.DEPLOY_ENV_FILE != '' }}
-        run: |
-          printf '%s' "${{ secrets.DEPLOY_ENV_FILE }}" | ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cat > '${{ secrets.DEPLOY_PATH }}/.env' && chmod 600 '${{ secrets.DEPLOY_PATH }}/.env'"
-
-      - name: Install prod deps on server & restart app
+      - name: Build App on Server (Low RAM, use server .env)
         run: |
           ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-            set -euo pipefail
+            cd ${{ secrets.DEPLOY_PATH }}
 
-            cd "${{ secrets.DEPLOY_PATH }}" || { echo "❌ ERROR: deploy path not found: ${{ secrets.DEPLOY_PATH }}"; exit 1; }
-
+            # Check if .env exists
             if [ ! -f .env ]; then
-              echo "❌ ERROR: .env file does not exist on server and no DEPLOY_ENV_FILE was provided."
-              echo "ℹ️  Deployment aborted. Upload a valid .env file to the server or set DEPLOY_ENV_FILE secret."
-              exit 1
+              echo "⚠️ .env file not found on server! Build may fail."
+            else
+              echo "✅ Using existing server .env"
             fi
 
-            echo "✅ Using existing .env"
-
-            echo "📦 Installing production dependencies (npm ci --production)..."
+            echo "📦 Installing dependencies (3GB heap)..."
+            export NODE_OPTIONS="--max_old_space_size=3072"
             npm ci --production
 
-            PM2_NAME="${{ secrets.PM2_PROCESS_NAME }}"
-            if [ -z "$PM2_NAME" ]; then
-              PM2_NAME="app"
-            fi
-
-            if command -v pm2 >/dev/null 2>&1; then
-              echo "🔁 Restarting via pm2 (process: $PM2_NAME)..."
-              pm2 describe "$PM2_NAME" >/dev/null 2>&1 && pm2 reload "$PM2_NAME" || pm2 start npm --name "$PM2_NAME" -- start
-            else
-              echo "pm2 not found. Launching app with nohup as fallback."
-              nohup npm start >/dev/null 2>&1 &
-            fi
-
-            echo "✅ Deployment finished."
+            echo "🏗️ Building the app with server .env..."
+            # Load server .env variables for build
+            export $(grep -v '^#' .env | xargs)
+            npm run build
           EOF
