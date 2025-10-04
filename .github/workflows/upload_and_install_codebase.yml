@@ -7,7 +7,6 @@ jobs:
   upload-build:
     runs-on: ubuntu-latest
     env:
-      # these are copied from secrets so they're easy to reference in scripts
       DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
       SSH_USER: ${{ secrets.SSH_USER }}
       SSH_HOST: ${{ secrets.SSH_HOST }}
@@ -22,7 +21,7 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Setup SSH agent (safe handling of multiline private key)
+      - name: Setup SSH agent
         uses: webfactory/ssh-agent@v0.8.1
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -35,8 +34,7 @@ jobs:
       - name: Install rsync on runner
         run: sudo apt-get update && sudo apt-get install -y rsync
 
-      - name: Install deps & build on runner (avoids heavy server builds)
-        working-directory: ${{ github.workspace }}
+      - name: Install deps & build on runner
         run: |
           npm ci
           export NODE_OPTIONS="--max_old_space_size=3072"
@@ -54,10 +52,9 @@ jobs:
             --exclude 'keys' \
             "$GITHUB_WORKSPACE/" "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}"
 
-      - name: Upload .env to server if you provided DEPLOY_ENV_FILE (optional)
-        if: ${{ secrets.DEPLOY_ENV_FILE != '' }}
+      - name: Upload .env to server if provided
+        if: ${{ secrets.DEPLOY_ENV_FILE && secrets.DEPLOY_ENV_FILE != '' }}
         run: |
-          # Use printf to preserve newlines. Pipe directly to remote to avoid issues with echo and special chars.
           printf '%s' "${{ secrets.DEPLOY_ENV_FILE }}" | ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cat > '${{ secrets.DEPLOY_PATH }}/.env' && chmod 600 '${{ secrets.DEPLOY_PATH }}/.env'"
 
       - name: Install prod deps on server & restart app
@@ -65,28 +62,19 @@ jobs:
           ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=10 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
             set -euo pipefail
 
-            cd "${{ secrets.DEPLOY_PATH }}" || { echo "ERROR: deploy path not found: ${{ secrets.DEPLOY_PATH }}"; exit 1; }
+            cd "${{ secrets.DEPLOY_PATH }}" || { echo "❌ ERROR: deploy path not found: ${{ secrets.DEPLOY_PATH }}"; exit 1; }
 
-            # Ensure .env exists: prefer existing .env, then uploaded DEPLOY_ENV_FILE (if used),
-            # then .env.example, otherwise create a minimal fallback .env
-            if [ -f .env ]; then
-              echo "✅ Using existing .env"
-            elif [ -f .env.example ]; then
-              cp .env.example .env
-              echo "⚠️ .env not found — copied .env.example to .env (edit if needed)"
-            else
-              echo "⚠️ .env not found and no .env.example. Creating minimal .env"
-              cat > .env <<'ENV'
-NODE_ENV=production
-PORT=3000
-ENV
-              chmod 600 .env
+            if [ ! -f .env ]; then
+              echo "❌ ERROR: .env file does not exist on server and no DEPLOY_ENV_FILE was provided."
+              echo "ℹ️  Deployment aborted. Upload a valid .env file to the server or set DEPLOY_ENV_FILE secret."
+              exit 1
             fi
+
+            echo "✅ Using existing .env"
 
             echo "📦 Installing production dependencies (npm ci --production)..."
             npm ci --production
 
-            # Restart with PM2 if installed, otherwise background-start as fallback.
             PM2_NAME="${{ secrets.PM2_PROCESS_NAME }}"
             if [ -z "$PM2_NAME" ]; then
               PM2_NAME="app"
@@ -96,7 +84,7 @@ ENV
               echo "🔁 Restarting via pm2 (process: $PM2_NAME)..."
               pm2 describe "$PM2_NAME" >/dev/null 2>&1 && pm2 reload "$PM2_NAME" || pm2 start npm --name "$PM2_NAME" -- start
             else
-              echo "pm2 not found. Launching app with nohup as fallback (you should install pm2 for better process management)."
+              echo "pm2 not found. Launching app with nohup as fallback."
               nohup npm start >/dev/null 2>&1 &
             fi
 
