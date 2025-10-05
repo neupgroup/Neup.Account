@@ -1,8 +1,9 @@
+
 'use client';
 
 import Link from 'next/link';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import React, { useState, useEffect, useTransition } from 'react';
+import React, { useState, useEffect, useTransition, Suspense } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { submitNeupId } from '@/actions/auth/login';
 import { getSignupStepData } from '@/actions/auth/signup';
@@ -14,10 +15,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Loader2 } from '@/components/icons';
 
-export default function NeupIdPage() {
+function NeupIdPageComponent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const pathname = usePathname();
   const { toast } = useToast();
 
   const [neupId, setNeupId] = useState('');
@@ -75,7 +75,7 @@ export default function NeupIdPage() {
   };
   
   const getSignupUrl = () => {
-    const url = new URL(window.location.origin + '/auth/signup');
+    const url = new URL('/auth/signup', window.location.origin);
     if (returnUrl) url.searchParams.set('return_url', returnUrl);
     return url.toString();
   };
@@ -131,4 +131,12 @@ export default function NeupIdPage() {
       </Card>
     </div>
   );
+}
+
+export default function NeupIdPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <NeupIdPageComponent />
+        </Suspense>
+    );
 }
