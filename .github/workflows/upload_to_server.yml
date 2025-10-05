@@ -1,0 +1,50 @@
+name: Upload App to Server
+
+on:
+  workflow_dispatch:
+    inputs:
+      OVERRIDE_NEXT_CONFIG:
+        description: 'Type "yes" to overwrite next.config.ts on server'
+        required: false
+        default: 'no'
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Install rsync on Runner
+        run: sudo apt-get update && sudo apt-get install -y rsync
+
+      - name: Rsync Source Code (keep server .env, handle next.config.ts)
+        run: |
+          # Default exclude patterns
+          EXCLUDES="--exclude 'node_modules' --exclude '.pm2' --exclude '.env' --exclude '.ssh' --exclude 'keys' --exclude '.next' --exclude 'dist'"
+          
+          # Handle next.config.ts separately
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "test -f ${{ secrets.DEPLOY_PATH }}/next.config.ts"
+          if [ $? -eq 0 ]; then
+            echo "⚠️ next.config.ts exists on server."
+            if [ "${{ github.event.inputs.OVERRIDE_NEXT_CONFIG }}" = "yes" ]; then
+              echo "✅ Overwriting next.config.ts on server as requested."
+              rsync -avz $GITHUB_WORKSPACE/next.config.ts ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}/next.config.ts
+            else
+              echo "⛔ Keeping existing next.config.ts on server."
+            fi
+          else
+            echo "✅ No existing next.config.ts on server, uploading."
+            rsync -avz $GITHUB_WORKSPACE/next.config.ts ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}/next.config.ts
+          fi
+
+          # Sync rest of the code excluding next.config.ts
+          rsync -avz --delete $EXCLUDES --exclude 'next.config.ts' $GITHUB_WORKSPACE/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}
