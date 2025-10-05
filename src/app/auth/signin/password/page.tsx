@@ -1,8 +1,9 @@
+
 'use client';
 
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useState, useEffect, useTransition, Suspense } from 'react';
+import React, { useState, useEffect, useContext, useTransition } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { submitPassword } from '@/actions/auth/login';
 import { getSignupStepData } from '@/actions/auth/signup';
@@ -16,7 +17,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Loader2 } from '@/components/icons';
 
-function Password() {
+export default function PasswordPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { toast } = useToast();
@@ -181,12 +182,4 @@ function Password() {
       </AlertDialog>
     </div>
   );
-}
-
-export default function PasswordPage() {
-  return (
-    <Suspense fallback={null}>
-      <Password />
-    </Suspense>
-  )
 }
