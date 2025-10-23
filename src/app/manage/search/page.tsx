@@ -72,8 +72,13 @@ function SearchSkeleton() {
     );
 }
 
+type Props = {
+    searchParams?: {
+        q?: string;
+    }
+}
 
-export default function SearchPage({ searchParams }: { searchParams?: { q?: string } }) {
+export default function SearchPage({ searchParams }: Props) {
     const query = searchParams?.q || '';
 
     return (

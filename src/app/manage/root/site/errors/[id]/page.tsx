@@ -1,3 +1,4 @@
+
 import { notFound } from "next/navigation";
 import { getErrorDetails } from "@/actions/root/site";
 import type { SystemErrorDetails } from "@/types";
@@ -17,8 +18,13 @@ const InfoItem = ({ label, value }: { label: string, value: React.ReactNode }) =
     </div>
 );
 
+type Props = {
+    params: {
+      id: string;
+    }
+};
 
-export default async function ErrorDetailsPage({ params }: { params: { id: string } }) {
+export default async function ErrorDetailsPage({ params }: Props) {
     const error = await getErrorDetails(params.id);
 
     if (!error) {
