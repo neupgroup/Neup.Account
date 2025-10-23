@@ -1,20 +1,19 @@
-
-
 'use server';
 
-import { z } from "zod"
-import { db } from "@/lib/firebase"
-import { doc, updateDoc, collection, addDoc, serverTimestamp, query, where, getDocs, writeBatch, getDoc, orderBy, limit } from "firebase/firestore"
-import { parseDate as parseDateWithAI } from "@/ai/flows/parse-date"
-import { logActivity } from "@/lib/log-actions"
-import { logError } from "@/lib/logger"
-import { checkPermissions, getUserNeupIds, checkNeupIdAvailability, getUserProfile as fetchUserProfile } from "@/lib/user"
-import { getPersonalAccountId } from "@/lib/auth-actions";
-import { brandProfileFormSchema } from "@/schemas/auth"
+import { db } from "@/lib/firebase";
+import { doc, updateDoc, serverTimestamp, collection, query, where, orderBy, limit, getDocs, writeBatch, getDoc } from 'firebase/firestore';
+import { getPersonalAccountId } from '@/lib/auth-actions';
+import { logError } from '@/lib/logger';
+import { revalidatePath } from 'next/cache';
+import { z } from 'zod';
+import { brandProfileFormSchema } from '@/schemas/auth';
+import { getUserProfile, checkPermissions, checkNeupIdAvailability, getUserNeupIds } from '@/lib/user';
+import { logActivity } from '@/lib/log-actions';
+import { parseDateWithAI } from '@/ai/flows/parse-date';
 
 
 export async function getDisplayNameSuggestions(accountId: string): Promise<string[]> {
-    const profile = await fetchUserProfile(accountId);
+    const profile = await getUserProfile(accountId);
     if (!profile) return [];
 
     const { nameFirst, nameMiddle, nameLast } = profile;
@@ -46,10 +45,10 @@ export async function getPastProfilePhotos(accountId: string): Promise<string[]>
             where('forAccountId', '==', accountId),
             where('platform', '==', 'neup.account'),
             orderBy('uploadedAt', 'desc'),
-            limit(4) // Fetch the 4 most recent profile pictures
+            limit(4)
         );
         const querySnapshot = await getDocs(q);
-        const urls = querySnapshot.docs.map(doc => doc.data().url);
+        const urls = querySnapshot.docs.map((docSnap) => (docSnap.data() as any).url as string);
         return urls;
     } catch (error) {
         await logError('database', error, `getPastProfilePhotos for ${accountId}`);
@@ -67,7 +66,6 @@ async function updateOrCreateContact(batch: ReturnType<typeof writeBatch>, accou
 
     if (value && value.trim().length > 0) {
         if (snapshot.empty) {
-            // Create new contact
             const newContactRef = doc(contactsRef);
             batch.set(newContactRef, {
                 account_id: accountId,
@@ -75,12 +73,10 @@ async function updateOrCreateContact(batch: ReturnType<typeof writeBatch>, accou
                 value: value
             });
         } else {
-            // Update existing contact
             const existingDocRef = snapshot.docs[0].ref;
             batch.update(existingDocRef, { value: value });
         }
     } else {
-        // Delete contact if value is empty/undefined
         if (!snapshot.empty) {
             const existingDocRef = snapshot.docs[0].ref;
             batch.delete(existingDocRef);
@@ -110,19 +106,16 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
 
         if (canModifyProfile) {
             const accountData: Record<string, any> = {};
-
-            // List of valid profile fields to prevent unwanted data being written
             const validAccountFields = ['nameFirst', 'nameMiddle', 'nameLast', 'gender', 'customGender', 'dateBirth', 'nameDisplay', 'accountPhoto'];
             for(const key of validAccountFields) {
                 if(data[key] !== undefined) {
                     accountData[key] = data[key];
                 }
             }
-            
-            // Auto-update display name if legal name changes
+
             const hasNameChange = ['nameFirst', 'nameMiddle', 'nameLast'].some(key => data[key] !== undefined);
             if (hasNameChange) {
-                const currentProfile = await fetchUserProfile(accountId);
+                const currentProfile = await getUserProfile(accountId);
                 const newFirstName = data.nameFirst ?? currentProfile?.nameFirst;
                 const newMiddleName = data.nameMiddle ?? currentProfile?.nameMiddle;
                 const newLastName = data.nameLast ?? currentProfile?.nameLast;
@@ -131,9 +124,8 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
                 if (newMiddleName) {
                     defaultDisplayName = `${newFirstName || ''} ${newMiddleName} ${newLastName || ''}`.trim();
                 }
-                 accountData.nameDisplay = defaultDisplayName;
+                accountData.nameDisplay = defaultDisplayName;
             }
-
 
             if (accountData.dateBirth instanceof Date) {
               accountData.dateBirth = accountData.dateBirth.toISOString();
@@ -143,14 +135,17 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
                  const requestsRef = collection(db, 'requests');
                  const requesterId = await getPersonalAccountId();
 
-                 // Cancel previous pending requests from the same user
-                 const q = query(requestsRef, where('action', '==', 'display_name_request'), where('accountId', '==', accountId), where('status', '==', 'pending'));
+                 const q = query(
+                    requestsRef,
+                    where('action', '==', 'display_name_request'),
+                    where('accountId', '==', accountId),
+                    where('status', '==', 'pending')
+                 );
                  const oldRequests = await getDocs(q);
-                 oldRequests.forEach(doc => {
-                    batch.update(doc.ref, { status: 'cancelled', remarks: 'Superseded by new request.' });
+                 oldRequests.forEach((docSnap) => {
+                    batch.update(docSnap.ref, { status: 'cancelled', remarks: 'Superseded by new request.' });
                  });
                  
-                 // Create new request
                  const newRequestRef = doc(requestsRef);
                  batch.set(newRequestRef, {
                     action: 'display_name_request',
@@ -161,7 +156,6 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
                     requestor: requesterId,
                 });
                 await logActivity(accountId, `Requested Custom Display Name: ${data.customDisplayNameRequest}`, 'Pending', undefined, geolocation);
-                // Don't update the nameDisplay in the profile directly
                 delete accountData.nameDisplay;
             }
 
@@ -228,46 +222,35 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
     }
 }
 
-export async function updateBrandProfile(accountId: string, data: z.infer<typeof brandProfileFormSchema>, geolocation?: string) {
-    if (!accountId) {
-        return { success: false, error: "Brand account not authenticated." };
+export async function updateBrandProfile(accountId: string, data: z.infer<typeof brandProfileFormSchema>, locationString?: string) {
+    const personalAccountId = await getPersonalAccountId();
+    if (!personalAccountId) {
+        return { success: false, error: "User not authenticated." };
+    }
+
+    const validation = brandProfileFormSchema.safeParse(data);
+    if (!validation.success) {
+        return { success: false, error: "Invalid data provided.", details: validation.error.flatten() };
     }
 
     try {
-        const validatedData = brandProfileFormSchema.parse(data);
         const accountRef = doc(db, 'account', accountId);
-        
-        // Data for the 'account' collection
-        const accountDataToUpdate: Partial<any> = {
-            nameDisplay: validatedData.nameDisplay,
-            accountPhoto: validatedData.accountPhoto,
-            isLegalEntity: validatedData.isLegalEntity,
+        const updateData: any = {
+            ...validation.data,
+            updatedAt: serverTimestamp(),
         };
 
-        if (validatedData.isLegalEntity) {
-            accountDataToUpdate.nameLegal = validatedData.nameLegal;
-            accountDataToUpdate.registrationId = validatedData.registrationId;
-            accountDataToUpdate.countryOfOrigin = validatedData.countryOfOrigin;
-            accountDataToUpdate.dateEstablished = validatedData.dateEstablished?.toISOString();
-        } else {
-            accountDataToUpdate.nameLegal = null;
-            accountDataToUpdate.registrationId = null;
-            accountDataToUpdate.countryOfOrigin = null;
-            accountDataToUpdate.dateEstablished = null;
+        if (locationString) {
+            updateData.lastLocation = locationString;
         }
 
-        await updateDoc(accountRef, accountDataToUpdate);
-
-        await logActivity(accountId, 'Brand Profile Update', 'Success', undefined, geolocation);
-
+        await updateDoc(accountRef, updateData);
+        revalidatePath('/manage/profile');
+        
         return { success: true, message: "Brand profile updated successfully." };
-
     } catch (error) {
-        await logError('database', error, `updateBrandProfile: ${accountId}`);
-        if (error instanceof z.ZodError) {
-            return { success: false, error: "Validation failed.", details: error.flatten() };
-        }
-        return { success: false, error: "An unexpected error occurred while updating the brand profile." };
+        await logError('database', error, 'updateBrandProfile');
+        return { success: false, error: 'An unexpected error occurred while updating your profile.' };
     }
 }
 
@@ -277,7 +260,6 @@ export async function parseDateString(dateString: string): Promise<{ success: bo
         return { success: false, date: null, error: "Date input is too long (max 30 characters)." };
     }
 
-    // Attempt local parsing first for YYYY-MM-DD or YYYY/MM/DD
     const regex = /^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/;
     const match = dateString.match(regex);
     if (match) {
@@ -293,7 +275,6 @@ export async function parseDateString(dateString: string): Promise<{ success: bo
         }
     }
 
-    // If local parsing fails, call AI
     try {
         const result = await parseDateWithAI(dateString);
         if (result.parsedDate !== 'invalid') {

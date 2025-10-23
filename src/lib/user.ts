@@ -1,4 +1,3 @@
-
 'use server';
 
 import { db } from './firebase';
@@ -20,6 +19,7 @@ export type UserProfile = {
   nameMiddle?: string;
   nameLast?: string;
   nameDisplay?: string;
+  displayName?: string;
   accountPhoto?: string;
   gender?: string; // 'male', 'female', 'prefer_not_to_say', 'c.custom'
   dateBirth?: string; // ISO string

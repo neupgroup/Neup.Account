@@ -21,3 +21,8 @@ export const totpEnableSchema = z.object({
 export const totpDisableSchema = z.object({
     password: z.string().min(1, "Password is required."),
 });
+
+export const securityQuestionSchema = z.object({
+    question: z.string(),
+    answer: z.string(),
+});

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useTransition, use } from 'react'
+import React, { useEffect, useState, useTransition, use } from 'react'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -36,13 +36,7 @@ const addNeupIdSchema = z.object({
 type AddNeupIdFormValues = z.infer<typeof addNeupIdSchema>;
 
 export default function RootUserNeupidPage({ params }: { params: Promise<{ id: string }> }) {
-    const [resolvedParams, setResolvedParams] = useState<{ id: string } | null>(null);
-
-    useEffect(() => {
-        params.then(setResolvedParams);
-    }, [params]);
-
-    const params = use(resolvedParams);
+    const resolvedParams = use(params);
     const [neupIds, setNeupIds] = useState<NeupId[]>([]);
     const [loading, setLoading] = useState(true);
     const { toast } = useToast();
@@ -67,13 +61,13 @@ export default function RootUserNeupidPage({ params }: { params: Promise<{ id: s
         
         neupIdDetails.sort((a, b) => (b.isPrimary ? 1 : -1));
         setNeupIds(neupIdDetails);
-        setUserNeupId(neupIdDetails.find(n => n.isPrimary)?.id || neupIdDetails[0]?.id || params.id);
+        setUserNeupId(neupIdDetails.find(n => n.isPrimary)?.id || neupIdDetails[0]?.id || resolvedParams.id);
         setLoading(false);
     }
     
     useEffect(() => {
         fetchNeupIds();
-    }, [params.id]);
+    }, [resolvedParams.id]);
 
     async function handleAdd(data: AddNeupIdFormValues) {
         startTransition(async () => {
@@ -83,7 +77,7 @@ export default function RootUserNeupidPage({ params }: { params: Promise<{ id: s
                 return;
             }
 
-            const result = await addNeupId(params.id, data.newNeupId);
+            const result = await addNeupId(resolvedParams.id, data.newNeupId);
             if (result.success) {
                 toast({ title: "Success", description: "NeupID added.", className: "bg-accent text-accent-foreground" });
                 form.reset();
@@ -108,7 +102,7 @@ export default function RootUserNeupidPage({ params }: { params: Promise<{ id: s
 
     async function handleSetPrimary(neupIdToSet: string) {
         startTransition(async () => {
-            const result = await setPrimaryNeupId(params.id, neupIdToSet);
+            const result = await setPrimaryNeupId(resolvedParams.id, neupIdToSet);
             if (result.success) {
                 toast({ title: "Success", description: "Primary NeupID updated." });
                 await fetchNeupIds();
@@ -124,7 +118,7 @@ export default function RootUserNeupidPage({ params }: { params: Promise<{ id: s
 
     return (
         <div className="space-y-8">
-            <BackButton href={`/manage/root/accounts/${params.id}/profile`} />
+            <BackButton href={`/manage/root/accounts/${resolvedParams.id}/profile`} />
              <PrimaryHeader
                 title="NeupID Management"
                 description={`Manage unique identifiers for @${userNeupId}.`}

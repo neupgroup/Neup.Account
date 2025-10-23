@@ -10,7 +10,7 @@ import { cookies, headers } from 'next/headers';
 import crypto from 'crypto';
 import { z } from 'zod';
 import { createNotification } from '../notifications';
-import { warningReasons, blockReasons } from '@/app/manage/root/accounts/[id]/forms';
+import { warningReasons } from '@/app/manage/root/accounts/[id]/forms';
 
 
 // --- Administrative Actions ---
@@ -62,7 +62,7 @@ export async function sendWarning(userId: string, data: z.infer<typeof sendWarni
             persistence,
             noticeType,
             reason: remarks,
-            expiresOn,
+            expiresOn: expiresOn || undefined,
             sender_id: adminId,
         });
 
@@ -75,8 +75,23 @@ export async function sendWarning(userId: string, data: z.infer<typeof sendWarni
 }
 
 const blockReasons = {
-    security_risk: { reason: "Compromised Account / Security Risk", message: "..." },
-    // ... other reasons
+    security_risk: { reason: "Compromised Account / Security Risk", message: "Your account has been temporarily blocked due to a potential security risk." },
+    payment_issue: {
+        reason: "Payment or Billing Issue",
+        message: "Your account access has been blocked due to a payment or billing issue. Please contact support."
+    },
+    tos_repeated: {
+        reason: "Repeated Terms of Service Violations",
+        message: "Your account has been blocked due to repeated violations of our Terms of Service."
+    },
+    illegal_activity: {
+        reason: "Illegal Activity",
+        message: "Your account has been permanently blocked due to illegal activity."
+    },
+    other: {
+        reason: "Other Policy Violation",
+        message: "Your account has been blocked for violating our policies. Please contact support for more information."
+    }
 } as const;
 
 const blockServiceSchema = z.object({
@@ -100,7 +115,7 @@ export async function blockServiceAccess(userId: string, data: z.infer<typeof bl
     }
     
     const { isPermanent, durationInHours, reasonKey, source, remarks } = validation.data;
-    const { reason, message } = blockReasons[reasonKey];
+    const { reason, message } = blockReasons[reasonKey as keyof typeof blockReasons];
     
     try {
         const accountRef = doc(db, 'account', userId);

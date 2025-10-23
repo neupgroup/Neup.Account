@@ -49,7 +49,7 @@ export default async function AccountsPage() {
   const isManaging = !!cookieStore.get('auth_managing')?.value;
   const personalAccountId = await getPersonalAccountId();
 
-  let accountsToShow = [];
+  let accountsToShow: any[] = [];
 
   // If managing, we don't need to show other accounts, just the management features.
   // The primary logic for showing manageable accounts lives on the personal account dashboard.
@@ -116,7 +116,7 @@ export default async function AccountsPage() {
                 <Card>
                     <CardContent className="p-0 divide-y">
                         {accountsToShow.map((acc: any) => (
-                           <AccountListItem key={acc.accountId} account={acc} mode="switch" />
+                           <AccountListItem key={acc.accountId} account={acc} />
                         ))}
                     </CardContent>
                 </Card>

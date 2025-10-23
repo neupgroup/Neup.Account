@@ -26,7 +26,7 @@ if (!ENCRYPTION_KEY || ENCRYPTION_KEY.length < 64) {
 // In a production app, use a dedicated KMS for this.
 export async function encrypt(text: string): Promise<string> {
     const { subtle } = await import('crypto');
-    const key = await subtle.importKey('raw', Buffer.from(ENCRYPTION_KEY, 'hex'), { name: 'AES-GCM' }, false, ['encrypt']);
+    const key = await subtle.importKey('raw', Buffer.from(ENCRYPTION_KEY!, 'hex'), { name: 'AES-GCM' }, false, ['encrypt']);
     const iv = crypto.randomBytes(12);
     const encoded = new TextEncoder().encode(text);
     const encrypted = await subtle.encrypt({ name: 'AES-GCM', iv }, key, encoded);
@@ -38,7 +38,7 @@ export async function decrypt(encryptedText: string): Promise<string> {
     const [ivHex, encryptedHex] = encryptedText.split(':');
     if (!ivHex || !encryptedHex) throw new Error('Invalid encrypted text format');
     
-    const key = await subtle.importKey('raw', Buffer.from(ENCRYPTION_KEY, 'hex'), { name: 'AES-GCM' }, false, ['decrypt']);
+    const key = await subtle.importKey('raw', Buffer.from(ENCRYPTION_KEY!, 'hex'), { name: 'AES-GCM' }, false, ['decrypt']);
     const iv = Buffer.from(ivHex, 'hex');
     const encrypted = Buffer.from(encryptedHex, 'hex');
     
@@ -88,7 +88,7 @@ export async function verifyAndEnableTotp(data: z.infer<typeof totpEnableSchema>
     const accountId = await getActiveAccountId();
     if (!accountId) return { success: false, error: 'User not authenticated' };
     
-    const isValid = authenticator.verify({ token, secret, window: 4 });
+    const isValid = authenticator.verify({ token, secret } as any);
     
     if (!isValid) {
         return { success: false, error: 'Invalid token. Please check your device time and try again.' };

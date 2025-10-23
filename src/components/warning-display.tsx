@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useTransition } from 'react';
-import { getNotifications, markNotificationAsRead, type Notification } from '@/actions/notifications';
+import { getNotifications, markNotificationAsRead } from '@/actions/notifications';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, X, Bell } from '@/components/icons';
@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 import { Skeleton } from './ui/skeleton';
 import { usePathname } from 'next/navigation';
 import { cva, type VariantProps } from 'class-variance-authority';
-import type { Notification } from '@/types';
+import type { Notification as NotificationType } from '@/types';
 
 export function NotificationBell({ className }: { className?: string}) {
     const [hasNotifications, setHasNotifications] = useState(false);
@@ -66,14 +66,14 @@ const warningVariants = cva(
 )
 
 export function WarningDisplay() {
-    const [warnings, setWarnings] = useState<Notification[]>([]);
+    const [warnings, setWarnings] = useState<NotificationType[]>([]);
     const [loading, setLoading] = useState(true);
     const [isPending, startTransition] = useTransition();
 
     useEffect(() => {
         const fetchWarnings = async () => {
             const { sticky } = await getNotifications();
-            setWarnings(sticky);
+            setWarnings(sticky as NotificationType[]);
             setLoading(false);
         };
 

@@ -9,11 +9,12 @@ export default async function BrandManagementLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const resolvedParams = await params;
   const [canManageBrand, brandProfile] = await Promise.all([
     checkPermissions(['linked_accounts.brand.manage']),
-    getUserProfile(params.id)
+    getUserProfile(resolvedParams.id)
   ]);
   
   if (!canManageBrand || !brandProfile) {
@@ -34,7 +35,7 @@ export default async function BrandManagementLayout({
                 <p className="text-sm text-muted-foreground">Brand Management</p>
             </div>
         </div>
-        <BrandNav brandId={params.id} />
+        <BrandNav brandId={resolvedParams.id} />
       </div>
       <div className="w-full">
         {children}

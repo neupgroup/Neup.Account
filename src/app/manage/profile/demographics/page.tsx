@@ -109,7 +109,7 @@ export default function DemographicsPage() {
         
         let finalGender = data.gender;
         if (data.gender === 'custom') {
-            finalGender = `c.${data.customGender?.trim() || 'custom'}` as `c.${string}`;
+            finalGender = `c.${data.customGender?.trim() || 'custom'}` as any;
         }
 
         const result = await updateUserProfile(accountId, { ...data, gender: finalGender });

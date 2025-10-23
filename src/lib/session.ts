@@ -16,7 +16,7 @@ import { logError } from './logger';
 import type { Session, StoredAccount } from '@/types';
 import { setSessionCookies, setStoredAccountsCookie, getSessionCookies, clearManagingCookie, setManagingCookie } from './cookies';
 import { getUserNeupIds } from './user';
-import { import } from './auth-actions';
+import { getActiveAccountId, getPersonalAccountId, validateCurrentSession } from './auth-actions';
 
 // --- Constants ---
 const SESSION_DURATION_DAYS = 30;
@@ -52,7 +52,7 @@ export async function createAndSetSession(
 
     const newSessionDocRef = await addDoc(collection(db, 'session'), sessionData);
 
-    const newSession: import("./auth-actions").Session = {
+    const newSession = {
       accountId: accountId,
       sessionId: newSessionDocRef.id,
       sessionKey: sessionKey,
@@ -68,7 +68,7 @@ export async function createAndSetSession(
     // Mark all other accounts as inactive
     const updatedExistingAccounts = existingAccounts.map(acc => ({ ...acc, active: false }));
 
-    const newStoredAccount: StoredAccount = {
+    const newStoredAccount: StoredAccount & { active: boolean } = {
       accountId: accountId,
       sessionId: newSessionDocRef.id,
       sessionKey: sessionKey,
@@ -98,23 +98,23 @@ export async function getStoredAccounts(): Promise<StoredAccount[]> {
 }
 
 export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
-  const storedAccounts = await getStoredAccounts();
-  if (storedAccounts.length === 0) {
+  const { allAccounts } = await getSessionCookies();
+  if (allAccounts.length === 0) {
     return [];
   }
 
   const { accountId: activeAccountId } = await getSessionCookies();
 
   const validatedAccounts = await Promise.all(
-    storedAccounts.map(async (account) => {
-      if (account.expired) return { ...account, active: false };
-      if (!account.sessionId) return { ...account, expired: true, active: false };
+    allAccounts.map(async (account) => {
+      if (account.expired) return account;
+      if (!account.sessionId) return { ...account, expired: true };
 
       try {
         const sessionRef = doc(db, 'session', account.sessionId);
         const sessionDoc = await getDoc(sessionRef);
 
-        if (!sessionDoc.exists()) return { ...account, expired: true, active: false };
+        if (!sessionDoc.exists()) return { ...account, expired: true };
 
         const sessionData = sessionDoc.data();
         const dbExpiresOn = sessionData.expiresOn?.toDate();
@@ -127,16 +127,14 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
           sessionData.auth_session_key !== account.sessionKey;
 
         if (isInvalid) {
-            return { ...account, expired: true, active: false };
+            return { ...account, expired: true };
         }
 
-        const isActive = account.accountId === activeAccountId;
-
-        return { ...account, expired: false, active: isActive };
+        return account;
 
       } catch (e) {
         await logError('database', e, 'getValidatedStoredAccounts');
-        return { ...account, expired: true, active: false };
+        return { ...account, expired: true };
       }
     })
   );

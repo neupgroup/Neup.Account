@@ -35,13 +35,7 @@ function AppDetailsSkeleton() {
 }
 
 export default function ViewAppPage({ params }: { params: Promise<{ slugid: string }> }) {
-    const [resolvedParams, setResolvedParams] = useState<{ slugid: string } | null>(null);
-
-    useEffect(() => {
-        params.then(setResolvedParams);
-    }, [params]);
-
-    const params = React.use(resolvedParams);
+    const resolvedParams = React.use(params);
     const [app, setApp] = useState<Application | null>(null);
     const [loading, setLoading] = useState(true);
     const [isPending, startTransition] = useTransition();

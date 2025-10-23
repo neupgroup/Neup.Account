@@ -64,12 +64,12 @@ export async function getAccessList(accountId: string): Promise<UserAccess[]> {
         return {
           permitId: doc.id,
           userId: data.account_id,
-          nameDisplay:
+          displayName:
             userProfile.nameDisplay ||
             `${userProfile.nameFirst} ${userProfile.nameLast}`.trim(),
           accountPhoto: userProfile.accountPhoto,
           permissions: data.permission || [],
-          status: 'approved',
+          status: 'approved' as const,
         };
       })
     );

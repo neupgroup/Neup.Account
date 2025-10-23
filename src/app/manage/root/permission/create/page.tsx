@@ -6,7 +6,7 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useDebounce } from 'use-debounce';
-import { addPermission, checkAppIdExists, type Permission } from '@/actions/root/permission';
+import { addPermission, checkAppIdExists } from '@/actions/root/permission';
 import type { Permission } from '@/types';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
@@ -48,9 +48,9 @@ export default function CreatePermissionPage() {
         defaultValues: { name: '', app_id: '', access: [], description: '' }
     });
     
-    const { fields, append, remove } = useFieldArray({
+    const { fields, append, remove } = useFieldArray<FormValues>({
         control: form.control,
-        name: "access"
+        name: "access",
     });
     
     const appIdValue = form.watch("app_id");
@@ -238,7 +238,7 @@ export default function CreatePermissionPage() {
                                         <p className="text-sm text-muted-foreground">{perm.description}</p>
                                         <p className="text-xs font-mono text-muted-foreground mt-1">{perm.app_id}</p>
                                         <div className="flex flex-wrap gap-1 mt-2">
-                                            {perm.access.map(a => (
+                                            {perm.access.map((a: any) => (
                                                 <Badge key={a} variant="secondary">{a}</Badge>
                                             ))}
                                         </div>

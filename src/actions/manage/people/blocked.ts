@@ -14,7 +14,9 @@ import { logError } from '@/lib/logger';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
-const neupIdSchema = z.string().min(3, 'NeupID must be at least 3 characters.');
+const neupIdSchema = z.object({
+  neupId: z.string().min(3, 'NeupID must be at least 3 characters.'),
+});
 
 export type BlockedUser = {
   accountId: string;
@@ -88,7 +90,7 @@ export async function getRestrictedUsers(): Promise<BlockedUser[]> {
 
 // Unified function to add a user to a list
 async function addUserToList(neupId: string, type: 'blockList' | 'restrictList'): Promise<{ success: boolean; error?: string; }> {
-  const validation = neupIdSchema.safeParse(neupId);
+  const validation = neupIdSchema.safeParse({ neupId });
   if (!validation.success) {
     return { success: false, error: validation.error.flatten().fieldErrors.neupId?.[0] || 'Invalid input' };
   }

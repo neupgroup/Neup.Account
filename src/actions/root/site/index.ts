@@ -18,7 +18,7 @@ export async function getSystemErrors(
         if (!canView) return { errors: [], hasNextPage: false };
 
         const errorsCollection = collection(db, 'error');
-        let constraints = [];
+        let constraints: any[] = [];
         constraints.push(orderBy('timestamp', 'desc'));
 
         if (startAfterDocId) {
@@ -120,7 +120,7 @@ export async function getReportedBugs({startAfter: startAfterDocId}: { startAfte
 
     try {
         const bugsCollection = collection(db, 'error');
-        const constraints = [
+        const constraints: any[] = [
             where('reportType', '==', 'submitted'),
             orderBy('timestamp', 'desc'),
         ];
@@ -147,8 +147,9 @@ export async function getReportedBugs({startAfter: startAfterDocId}: { startAfte
 
             return {
                 id: doc.id,
-                reportedBy: reporterProfile?.displayName || data.reported_by || 'Anonymous',
+                reportedBy: reporterProfile?.nameDisplay || data.reported_by || 'Anonymous',
                 title: data.context,
+                description: data.message,
                 createdAt: data.timestamp?.toDate().toLocaleString() || 'N/A',
                 status: data.status || 'new',
             };
@@ -179,7 +180,7 @@ export async function getBugDetails(id: string): Promise<BugReportDetails | null
 
         return {
             id: bugDoc.id,
-            reportedBy: reporterProfile?.displayName || 'Anonymous',
+            reportedBy: reporterProfile?.nameDisplay || 'Anonymous',
             reporterId: data.reported_by,
             title: data.context,
             description: data.message,

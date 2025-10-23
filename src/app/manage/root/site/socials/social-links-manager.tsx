@@ -49,7 +49,7 @@ export function SocialLinksManager({ initialLinks }: { initialLinks: SocialLink[
         startTransition(async () => {
             const result = await addSocialLink(formData);
             if (result.success && result.newLink) {
-                setLinks(prev => [...prev, result.newLink]);
+                setLinks(prev => [...prev, result.newLink!]);
                 form.reset();
                 toast({ title: 'Success', description: 'Social link added.', className: 'bg-accent text-accent-foreground' });
             } else {

@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useMemo } from "react";
@@ -84,15 +83,15 @@ export function MobileNav() {
         const visibleManagementNav = navItemsWithPerms(navItems.managementNav);
         const visibleAccountNav = navItemsWithPerms(accountNavItems);
         
-        const primaryNeupId = profile?.neupId ? `@${profile.neupId}` : 'Neup.Account';
+        const primaryNeupId = profile?.neupIdPrimary ? `@${profile.neupIdPrimary}` : 'Neup.Account';
 
         const config: NavSection[] = [];
         
         if (isManaging) {
-            config.push({ title: profile?.displayName || "Brand", items: [
-                { href: "/manage/home", label: "Dashboard", description: "Your central account management hub.", icon: Home, requiredPermissions: [] },
-                { href: "/manage/profile", label: "Brand Info", description: "Manage brand profile.", icon: iconMap['BrandInfo'], requiredPermissions: ['profile.view'] },
-                { href: "/manage/accounts/branches", label: "Branches", description: "Manage brand branches.", icon: iconMap['LinkedAccounts'], requiredPermissions: ['linked_accounts.brand.manage'] },
+            config.push({ title: profile?.nameDisplay || "Brand", items: [
+                { href: "/manage/home", label: "Dashboard", description: "Your central account management hub.", icon: Home },
+                { href: "/manage/profile", label: "Brand Info", description: "Manage brand profile.", icon: iconMap['BrandInfo'] },
+                { href: "/manage/accounts/branches", label: "Branches", description: "Manage brand branches.", icon: iconMap['LinkedAccounts'] },
             ]});
              config.push({ title: "Account", items: visibleAccountNav });
         } else {
@@ -141,7 +140,7 @@ export function MobileNav() {
                      <Card>
                         <CardContent className="divide-y p-0">
                            {section.items.map((item, index) => (
-                               <ListItem key={index} href={item.href} title={item.label} description={item.description} icon={item.icon} />
+                               <ListItem key={index} href={item.href} title={item.label} description={item.description} icon={(item as any).icon} />
                             ))}
                         </CardContent>
                     </Card>

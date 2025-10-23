@@ -54,7 +54,7 @@ function DataActivityPageComponent({ after }: { after?: string }) {
 
         setLoading(true);
         const { logs, hasNextPage: newHasNextPage } = await getActivities({ startAfter });
-        setLogs(logs as UserActivityLog[]);
+        setLogs(logs as any[]);
         setHasNextPage(newHasNextPage);
         setLoading(false);
     }, []);

@@ -6,8 +6,38 @@ import { getPersonalAccountId } from '@/lib/auth-actions';
 import { logError } from '@/lib/logger';
 import { revalidatePath } from 'next/cache';
 import { checkPermissions, getUserProfile } from '@/lib/user';
-import type { Notification, AllNotifications, NotificationCreate } from '@/types';
 
+export type Notification = {
+    id: string;
+    isRead: boolean;
+    createdAt: string;
+    deletableOn?: string | null;
+    action: string;
+    message?: string;
+    persistence?: 'dismissable' | 'untildays' | 'permanent';
+    noticeType?: 'general' | 'success' | 'warning' | 'error';
+    requestId?: string;
+    senderId?: string;
+    senderName?: string;
+    senderNeupId?: string;
+};
+
+export type AllNotifications = {
+    sticky: Notification[];
+    requests: Notification[];
+    other: Notification[];
+};
+
+export type NotificationCreate = {
+    recipient_id: string;
+    action: string;
+    message?: string;
+    persistence?: string;
+    noticeType?: string;
+    reason?: string;
+    expiresOn?: Date;
+    sender_id?: string;
+};
 
 export async function createNotification(data: NotificationCreate) {
     try {

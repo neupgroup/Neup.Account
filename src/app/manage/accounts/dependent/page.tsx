@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import {
     Card,
@@ -28,9 +27,9 @@ export default async function DependentAccountsPage() {
         sessionId: '', 
         sessionKey: '', 
         expired: false,
-        displayName: acc.displayName,
-        neupId: acc.neupId,
-        displayPhoto: acc.displayPhoto,
+        displayName: acc.nameDisplay || '',
+        neupId: acc.neupId || '',
+        displayPhoto: acc.accountPhoto || '',
         isDependent: true,
     }));
 

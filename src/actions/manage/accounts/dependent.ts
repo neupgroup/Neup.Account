@@ -15,8 +15,8 @@ import { checkPermissions, getUserProfile, getUserNeupIds } from '@/lib/user';
 
 export type DependentAccount = {
     id: string;
-    nameDisplay: string;
-    neupId: string;
+    nameDisplay?: string;
+    neupId?: string;
     accountPhoto?: string;
 };
 

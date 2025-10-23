@@ -1,7 +1,5 @@
 import { z } from 'zod';
-import { registrationSchema } from '@/schemas/auth';
 import { Timestamp } from 'firebase/firestore';
-
 
 // --- Base Types ---
 export type ApiResponse<T = any> = {
@@ -27,9 +25,10 @@ export type StoredAccount = {
     active: boolean; // Add active flag
 };
 
-export type RegistrationData = z.infer<typeof registrationSchema>;
-export type ProfileData = z.infer<typeof profileSchema>;
-export type SecurityQuestionData = z.infer<typeof securityQuestionSchema>;
+// Temporary types until schemas are created
+export type RegistrationData = any;
+export type ProfileData = any;
+export type SecurityQuestionData = any;
 
 // --- User & Profile ---
 
@@ -39,36 +38,12 @@ export type NeupId = {
     isPrimary: boolean;
 }
 
-export type UserProfile = {
-    neupId: string;
-    firstName: string;
-    middleName?: string;
-    lastName: string;
-    dob: string; // Should be a string in YYYY-MM-DD format
-    gender: string;
-    nationality: string;
-    contact?: {
-        email?: string;
-        phone?: string;
-    };
-    address?: {
-        street?: string;
-        city?: string;
-        state?: string;
-        zip?: string;
-        country?: string;
-    };
-    createdAt?: Timestamp;
-    updatedAt?: Timestamp;
-};
-
-
 // --- Root & Management ---
 
 export interface UserDetails {
     accountId: string;
     neupId: string;
-    profile: UserProfile;
+    profile: any;
     linkedBrands: any[];
     linkedDependents: any[];
     security: {
@@ -83,11 +58,19 @@ export interface UserActivityLog {
     id: string;
     timestamp: string;
     ipAddress?: string;
-    activityType: string;
+    activityType?: string;
     details?: string;
     status: 'Success' | 'Failure' | 'Pending';
 }
 
+export interface Permission {
+    id: string;
+    name: string;
+    app_id: string;
+    access: string[];
+    description: string;
+    intended_for: string;
+}
 
 export interface PermissionSet {
     id: string;
@@ -99,4 +82,70 @@ export interface PermissionSet {
 export interface UserPermissions {
     assignedPermissionSetIds: string[];
     restrictedPermissionSetIds: string[];
+}
+
+export interface SystemError {
+    id: string;
+    type: string;
+    context: string;
+    message: string;
+    timestamp: string;
+    status: string;
+}
+
+export interface SystemErrorDetails extends SystemError {
+    fullError: string;
+    user?: {
+        name: string;
+        neupId: string;
+    };
+    ipAddress?: string;
+    geolocation?: string;
+    reproSteps?: string;
+    solution?: string;
+    solvedBy?: string;
+    problemLevel?: string;
+}
+
+export interface BugReport {
+    id: string;
+    reportedBy: string;
+    title: string;
+    description: string;
+    createdAt: string;
+    status: string;
+}
+
+export interface BugReportDetails extends BugReport {
+    reporterId?: string;
+}
+
+export interface UserAccess {
+    permitId: string;
+    userId: string;
+    displayName: string;
+    accountPhoto?: string;
+    permissions: string[];
+    status: 'pending' | 'approved' | 'rejected';
+}
+
+export interface AccessDetails {
+    permitId: string;
+    grantedTo: {
+        id: string;
+        name: string;
+        neupId: string;
+    };
+    grantedBy: {
+        id: string;
+        name: string;
+    };
+    grantedOn: string;
+    permissions: string[];
+}
+
+export interface Application {
+    id: string;
+    name: string;
+    description: string;
 }

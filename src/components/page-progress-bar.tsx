@@ -18,7 +18,7 @@ function NProgressEvents() {
 export function PageProgressBar() {
   useEffect(() => {
     // Configure NProgress
-    NProgress.configure({ showSpinner: false });
+    NProgress.configure({ showSpinner: false, minimum: 0.1 });
 
     const handleAnchorClick = (event: MouseEvent) => {
       const anchorElement = event.currentTarget as HTMLAnchorElement;
@@ -57,7 +57,7 @@ export function PageProgressBar() {
     mutationObserver.observe(document.body, { childList: true, subtree: true });
 
     // Initial run
-    handleMutation();
+    handleMutation([], mutationObserver);
 
     // We don't need to return a cleanup function that removes listeners,
     // as the component mounts only once and we want the listeners to persist.

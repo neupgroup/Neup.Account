@@ -47,9 +47,9 @@ export function DashboardNav() {
         
         if (isManaging) {
             config.push({ title: title || "Brand", items: [
-                { href: "/manage/home", label: "Dashboard", description: "Your central account management hub.", requiredPermissions: [] },
-                { href: "/manage/profile", label: "Brand Info", description: "Manage brand profile.", requiredPermissions: ['profile.view'] },
-                { href: "/manage/accounts/branches", label: "Branches", description: "Manage brand branches.", requiredPermissions: ['linked_accounts.brand.manage'] },
+                { href: "/manage/home", label: "Dashboard", description: "Your central account management hub." },
+                { href: "/manage/profile", label: "Brand Info", description: "Manage brand profile." },
+                { href: "/manage/accounts/branches", label: "Branches", description: "Manage brand branches." },
             ]});
              config.push({ title: "Account", items: visibleAccountNav });
 

@@ -1,35 +1,46 @@
+"use client";
 
+import { useState, useEffect } from 'react';
+import { getNotifications, markNotificationAsRead, deleteNotification } from '@/actions/notifications';
+import type { Notification, AllNotifications } from '@/types';
+import { NotificationManager } from '@/app/manage/notifications/notification-manager';
+import { Skeleton } from '@/components/ui/skeleton';
 
-import { checkPermissions } from '@/lib/user';
-import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
-import { Ban } from '@/components/icons';
-import { getNotifications } from '@/actions/notifications';
-import { NotificationManager } from './notification-manager';
-import { PrimaryHeader } from '@/components/ui/primary-header';
+export default function NotificationsPage() {
+    const [notifications, setNotifications] = useState<AllNotifications | null>(null);
+    const [loading, setLoading] = useState(true);
 
-export default async function NotificationsPage() {
-    const canRead = await checkPermissions(['notification.read']);
+    useEffect(() => {
+        const fetchNotifications = async () => {
+            const fetchedNotifications = await getNotifications();
+            setNotifications(fetchedNotifications as AllNotifications);
+            setLoading(false);
+        };
 
-    if (!canRead) {
+        fetchNotifications();
+    }, []);
+
+    if (loading || !notifications) {
         return (
-             <Alert variant="destructive">
-                <Ban className="h-4 w-4" />
-                <AlertTitle>Permission Denied</AlertTitle>
-                <AlertDescription>
-                    You do not have permission to view notifications.
-                </AlertDescription>
-            </Alert>
+            <div className="space-y-4">
+                <Skeleton className="h-8 w-48" />
+                <div className="space-y-2">
+                    {[...Array(3)].map((_, i) => (
+                        <Skeleton key={i} className="h-20 w-full" />
+                    ))}
+                </div>
+            </div>
         );
     }
-    
-    const notifications = await getNotifications();
-    
+
     return (
-        <div className="grid gap-8">
-             <PrimaryHeader
-                title="Notifications"
-                description="Review warnings, invitations, and other account alerts."
-             />
+        <div className="space-y-6">
+            <div>
+                <h1 className="text-3xl font-bold tracking-tight">Notifications</h1>
+                <p className="text-muted-foreground">
+                    Manage your account notifications and alerts.
+                </p>
+            </div>
             <NotificationManager initialNotifications={notifications} />
         </div>
     );

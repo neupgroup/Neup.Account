@@ -32,7 +32,8 @@ import { createBrandAccount } from "@/actions/manage/accounts/brand"
 import { Textarea } from "@/components/ui/textarea"
 import { CheckCircle2, XCircle, Loader2 } from "@/components/icons"
 import { BackButton } from "@/components/ui/back-button"
-import { brandCreationSchema, checkNeupIdAvailability } from "@/schemas/auth"
+import { brandCreationSchema } from "@/schemas/auth"
+import { checkNeupIdAvailability } from "@/lib/user"
 import { SecondaryHeader } from "@/components/ui/secondary-header"
 
 type FormData = z.infer<typeof brandCreationSchema>;
@@ -49,7 +50,7 @@ export default function CreateBrandPage() {
         defaultValues: {
             nameBrand: "",
             isLegalEntity: false,
-            legalName: "",
+            nameLegal: "",
             registrationId: "",
             hasHeadOffice: false,
             headOfficeLocation: "",
@@ -157,7 +158,7 @@ export default function CreateBrandPage() {
                                 )} />
                                 {isLegalEntity && (
                                     <>
-                                        <FormField control={form.control} name="legalName" render={({ field }) => ( <FormItem><FormLabel>Legal Name</FormLabel><FormControl><Input placeholder="Stark Industries, LLC" {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem> )} />
+                                        <FormField control={form.control} name="nameLegal" render={({ field }) => ( <FormItem><FormLabel>Legal Name</FormLabel><FormControl><Input placeholder="Stark Industries, LLC" {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem> )} />
                                         <FormField control={form.control} name="registrationId" render={({ field }) => ( <FormItem><FormLabel>Registration ID (Optional)</FormLabel><FormControl><Input placeholder="e.g., Business Registration Number" {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem> )} />
                                     </>
                                 )}

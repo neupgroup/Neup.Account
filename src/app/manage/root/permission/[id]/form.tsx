@@ -7,7 +7,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useToast } from '@/hooks/use-toast';
 import { updatePermissionSet, deletePermissionSet } from '@/actions/root/permission';
-import { type Permission, checkPermissionNameExists } from '@/actions/root/permission';
+import { checkPermissionNameExists } from '@/actions/root/permission';
+import type { Permission } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -29,7 +30,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { useDebounce } from 'use-debounce';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import type { Permission } from '@/types';
 
 const editPermissionSchema = z.object({
     name: z.string().min(3, { message: "Set name must be at least 3 characters." }),

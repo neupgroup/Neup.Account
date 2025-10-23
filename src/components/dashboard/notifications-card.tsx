@@ -1,11 +1,10 @@
 import { Card, CardContent } from '@/components/ui/card';
-import { getNotifications, type Notification } from '@/actions/notifications';
-import { AlertTriangle, Bell, Handshake, MessageSquareWarning, UserPlus } from '@/components/icons';
-import { SecondaryHeader } from '../ui/secondary-header';
-import { ListItem } from '../ui/list-item';
-import type { Notification } from '@/types';
+import { getNotifications } from '@/actions/notifications';
+import { ListItem } from '@/components/ui/list-item';
+import { SecondaryHeader } from '@/components/ui/secondary-header';
+import type { Notification as NotificationType } from '@/types';
 
-function getNotificationDetails(notification: Notification): { iconName: string, message: string, href: string } {
+function getNotificationDetails(notification: NotificationType): { iconName: string, message: string, href: string } {
     const defaultHref = '/manage/notifications';
     let href = defaultHref;
     let message = notification.message || 'You have a new notification.';
@@ -92,7 +91,7 @@ export async function NotificationsCard() {
             <Card>
                 <CardContent className="divide-y p-0">
                     {notificationsToShow.map(notification => {
-                        const { iconName, message, href } = getNotificationDetails(notification);
+                        const { iconName, message, href } = getNotificationDetails(notification as NotificationType);
                         return (
                             <ListItem
                                 key={notification.id}

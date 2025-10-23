@@ -69,16 +69,16 @@ export async function getRecoveryAccounts(): Promise<RecoveryAccount[]> {
           recoveryAccountId: data.recoveryAccountId,
           recoveryNeupId: data.recoveryNeupId,
           displayName:
-            profile?.displayName ||
+            profile?.nameDisplay ||
             `${profile?.nameFirst} ${profile?.nameLast}`.trim() ||
             data.recoveryNeupId,
           displayPhoto: profile?.accountPhoto,
-          status: data.status || 'pending',
+          status: data.status || 'pending' as const,
         };
       })
     );
 
-    recoveryContacts.sort((a, b) => statusOrder[a.status] - statusOrder[b.status]);
+    recoveryContacts.sort((a: RecoveryAccount, b: RecoveryAccount) => statusOrder[a.status] - statusOrder[b.status]);
 
     return recoveryContacts;
   } catch (error) {
@@ -179,7 +179,7 @@ export async function addRecoveryAccount(
         `${profile?.nameFirst || ''} ${profile?.nameLast || ''}`.trim() ||
         neupId,
       displayPhoto: profile?.accountPhoto,
-      status: 'pending',
+      status: 'pending' as const,
     };
 
     revalidatePath('/manage/security/account');

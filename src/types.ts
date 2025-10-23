@@ -1,5 +1,3 @@
-
-
 export type Session = {
   id: string;
   ipAddress: string;
@@ -16,6 +14,7 @@ export type StoredAccount = {
   expired: boolean;
   neupId?: string;
   isBrand?: boolean;
+  isUnknown?: boolean;
 };
 
 export type Application = {

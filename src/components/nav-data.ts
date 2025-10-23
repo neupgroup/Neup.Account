@@ -1,8 +1,8 @@
-
 export type NavItem = {
     href: string;
     label: string;
     description: string;
+    icon?: React.ElementType;
 }
 
 export type NavSection = {

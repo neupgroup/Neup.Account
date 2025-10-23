@@ -1,5 +1,3 @@
-
-
 'use server';
 
 import { db } from './firebase';
@@ -107,12 +105,12 @@ export async function getActivities({ startAfter: startAfterDocId, forCurrentUse
 
             const [actorProfile, neupIdsSnapshot] = await Promise.all([
                 getUserProfile(data.actorAccountId),
-                 getDocs(query(collection(db, 'neupId'), where('for', '==', data.actorAccountId), limit(1)))
+                 getDocs(query(collection(db, 'neupid'), where('for', '==', data.actorAccountId), limit(1)))
             ]);
             
             const getDisplayName = (profile: any, fallbackId: string) => {
                 if (!profile) return fallbackId;
-                return profile.displayName || `${profile.firstName || ''} ${profile.lastName || ''}`.trim() || fallbackId;
+                return profile.nameDisplay || profile.displayName || `${profile.nameFirst || ''} ${profile.nameLast || ''}`.trim() || fallbackId;
             }
 
             return {
