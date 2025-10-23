@@ -1,4 +1,3 @@
-
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -41,7 +40,7 @@ export async function getPendingNeupIdRequests(): Promise<PendingNeupIdRequest[]
                     getUserNeupIds(accountId)
                 ]);
 
-                const userFullName = profile ? `${profile.firstName} ${profile.lastName}`.trim() : 'Unknown User';
+                const userFullName = profile ? `${profile.nameFirst || ''} ${profile.nameLast || ''}`.trim() : 'Unknown User';
                 
                 const createdAt = data.createdAt?.toDate() || new Date();
 
@@ -92,7 +91,7 @@ export async function getNeupIdRequestDetails(id: string): Promise<PendingNeupId
             getUserNeupIds(accountId)
         ]);
 
-        const userFullName = profile ? `${profile.firstName} ${profile.lastName}`.trim() : 'Unknown User';
+        const userFullName = profile ? `${profile.nameFirst || ''} ${profile.nameLast || ''}`.trim() : 'Unknown User';
         const createdAt = data.createdAt?.toDate() || new Date();
 
         return {

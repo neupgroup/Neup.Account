@@ -1,4 +1,3 @@
-
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -75,7 +74,7 @@ export async function getAccessList(accountId: string): Promise<UserAccess[]> {
       })
     );
 
-    const validUsers = accessList.filter((user): user is UserAccess => user !== null);
+    const validUsers = accessList.filter((user): user is NonNullable<typeof user> => user !== null);
 
     return validUsers;
 

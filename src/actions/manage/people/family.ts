@@ -170,10 +170,10 @@ async function fetchFamilyGroups(): Promise<FamilyGroup[]> {
               accountId: member.accountId,
               neupId: neupids.docs[0]?.id || 'N/A',
               displayName:
-                profile?.displayName ||
-                `${profile?.firstName} ${profile?.lastName}`.trim() ||
+                profile?.nameDisplay ||
+                `${profile?.nameFirst || ''} ${profile?.nameLast || ''}`.trim() ||
                 'Unknown User',
-              displayPhoto: profile?.displayPhoto,
+              displayPhoto: profile?.accountPhoto,
               status: 'approved',
               hidden: member.hidden,
               addedBy: member.addedBy,

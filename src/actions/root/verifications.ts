@@ -1,5 +1,3 @@
-
-
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -40,8 +38,8 @@ export async function getPendingVerificationRequests(): Promise<VerificationRequ
                 return {
                     id: doc.id,
                     accountId,
-                    fullName: profile?.displayName || `${profile?.firstName} ${profile?.lastName}`.trim() || 'Unknown User',
-                    neupId: profile?.neupId || 'N/A',
+                    fullName: profile?.nameDisplay || `${profile?.nameFirst || ''} ${profile?.nameLast || ''}`.trim() || 'Unknown User',
+                    neupId: profile?.neupIdPrimary || 'N/A',
                     requestedAt: data.requestedAt?.toDate()?.toLocaleDateString() || 'N/A',
                     status: data.status,
                 };

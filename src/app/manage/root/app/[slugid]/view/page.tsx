@@ -34,8 +34,14 @@ function AppDetailsSkeleton() {
     )
 }
 
-export default function ViewAppPage({ params: paramsProp }: { params: { slugid: string } }) {
-    const params = React.use(paramsProp);
+export default function ViewAppPage({ params }: { params: Promise<{ slugid: string }> }) {
+    const [resolvedParams, setResolvedParams] = useState<{ slugid: string } | null>(null);
+
+    useEffect(() => {
+        params.then(setResolvedParams);
+    }, [params]);
+
+    const params = React.use(resolvedParams);
     const [app, setApp] = useState<Application | null>(null);
     const [loading, setLoading] = useState(true);
     const [isPending, startTransition] = useTransition();
@@ -45,17 +51,17 @@ export default function ViewAppPage({ params: paramsProp }: { params: { slugid: 
 
     useEffect(() => {
         const fetchDetails = async () => {
-            const data = await getAppDetails(params.slugid);
+            const data = await getAppDetails(resolvedParams?.slugid || '');
             if (!data) notFound();
             setApp(data);
             setLoading(false);
         };
         fetchDetails();
-    }, [params.slugid]);
+    }, [resolvedParams?.slugid]);
 
     const handleRegenerate = () => {
         startTransition(async () => {
-            const result = await regenerateAppSecret(params.slugid);
+            const result = await regenerateAppSecret(resolvedParams?.slugid || '');
             if (result.success && result.newSecret) {
                 setNewSecret(result.newSecret);
                 setShowSecret(true); // Show the new secret immediately

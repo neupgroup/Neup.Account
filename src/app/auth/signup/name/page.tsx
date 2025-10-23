@@ -43,7 +43,7 @@ export default function NameStepPage() {
         setAuthRequestId(id);
 
         async function loadData() {
-            const { data } = await getSignupStepData(id);
+            const { data } = await getSignupStepData(id || '');
             if (data) {
                 form.reset({
                     firstName: data.nameFirst || "",
@@ -89,7 +89,7 @@ export default function NameStepPage() {
                         <Label htmlFor="hasMiddleName" className="font-normal cursor-pointer">I have a middle name</Label>
                     </div>
                 )}
-               
+
                 {showMiddleName && (
                     <FormField control={form.control} name="middleName" render={({ field }) => (
                         <FormItem>
@@ -99,7 +99,7 @@ export default function NameStepPage() {
                         </FormItem>
                     )} />
                 )}
-                 
+
                  <FormField control={form.control} name="lastName" render={({ field }) => (
                     <FormItem>
                         <FormLabel>Last Name</FormLabel>

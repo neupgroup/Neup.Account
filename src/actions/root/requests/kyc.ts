@@ -35,7 +35,7 @@ export async function getPendingKycRequests(): Promise<KycRequest[]> {
                 return {
                     id: doc.id,
                     accountId,
-                    userFullName: profile ? `${profile.firstName} ${profile.lastName}`.trim() : 'Unknown User',
+                    userFullName: profile ? `${profile.nameFirst || ''} ${profile.nameLast || ''}`.trim() : 'Unknown User',
                     userNeupId: neupIds[0] || 'N/A',
                     documentType: data.documentType,
                     submittedAt: data.submittedAt?.toDate()?.toLocaleDateString() || 'N/A',

@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
@@ -56,7 +54,7 @@ function DataActivityPageComponent({ after }: { after?: string }) {
 
         setLoading(true);
         const { logs, hasNextPage: newHasNextPage } = await getActivities({ startAfter });
-        setLogs(logs);
+        setLogs(logs as UserActivityLog[]);
         setHasNextPage(newHasNextPage);
         setLoading(false);
     }, []);

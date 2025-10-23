@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
             success: true,
             user: {
                 accountId: accountId,
-                displayName: userProfile.displayName || `${userProfile.firstName} ${userProfile.lastName}`,
+                displayName: userProfile?.nameDisplay || `${userProfile?.nameFirst || ''} ${userProfile?.nameLast || ''}`,
                 neupId: userNeupIds[0] || null,
             },
         });

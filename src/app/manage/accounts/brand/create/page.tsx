@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
@@ -45,10 +44,10 @@ export default function CreateBrandPage() {
     
     const [neupIdStatus, setNeupIdStatus] = useState<'idle' | 'checking' | 'available' | 'unavailable'>('idle');
 
-    const form = useForm<FormData>({
+    const form = useForm<z.infer<typeof brandCreationSchema>>({
         resolver: zodResolver(brandCreationSchema),
         defaultValues: {
-            fullName: "",
+            nameBrand: "",
             isLegalEntity: false,
             legalName: "",
             registrationId: "",
@@ -144,7 +143,7 @@ export default function CreateBrandPage() {
                         />
                          <Card>
                             <CardContent className="space-y-6 pt-6">
-                                <FormField control={form.control} name="fullName" render={({ field }) => ( <FormItem><FormLabel>Full Name</FormLabel><FormControl><Input placeholder="Stark Industries" {...field} /></FormControl><FormMessage /></FormItem> )} />
+                                <FormField control={form.control} name="nameBrand" render={({ field }) => ( <FormItem><FormLabel>Full Name</FormLabel><FormControl><Input placeholder="Stark Industries" {...field} /></FormControl><FormMessage /></FormItem> )} />
                                 <FormField control={form.control} name="isLegalEntity" render={({ field }) => (
                                     <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 cursor-pointer">
                                         <FormControl>

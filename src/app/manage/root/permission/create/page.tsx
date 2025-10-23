@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useRef, useTransition, useState, useEffect, useCallback } from 'react';
@@ -8,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useDebounce } from 'use-debounce';
 import { addPermission, checkAppIdExists, type Permission } from '@/actions/root/permission';
+import type { Permission } from '@/types';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -40,6 +40,7 @@ export default function CreatePermissionPage() {
     const [appIdStatus, setAppIdStatus] = useState<'idle' | 'checking' | 'exists' | 'not_found'>('idle');
     const [recentlyAdded, setRecentlyAdded] = useState<Permission[]>([]);
     const [permissionInput, setPermissionInput] = useState('');
+
 
 
     const form = useForm<FormValues>({
@@ -93,7 +94,7 @@ export default function CreatePermissionPage() {
         startTransition(async () => {
             const result = await addPermission(formData);
             if (result.success) {
-                toast({ title: "Success", description: result.message, className: "bg-accent text-accent-foreground" });
+                toast({ title: "Success", description: "Permission set added successfully.", className: "bg-accent text-accent-foreground" });
                 if (result.newPermission) {
                     setRecentlyAdded(prev => [result.newPermission!, ...prev]);
                 }

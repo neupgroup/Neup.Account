@@ -1,4 +1,3 @@
-
 'use server';
 
 import {db} from '@/lib/firebase';
@@ -80,8 +79,8 @@ export async function getErrorDetails(id: string): Promise<SystemErrorDetails | 
         if (data.accountId) {
             const userProfile = await getUserProfile(data.accountId);
             user = {
-                name: userProfile?.displayName || 'Unknown User',
-                neupId: userProfile?.neupId || 'N/A'
+                name: userProfile?.nameDisplay || 'Unknown User',
+                neupId: userProfile?.neupIdPrimary || 'N/A'
             }
         }
 

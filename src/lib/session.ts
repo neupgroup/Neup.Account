@@ -1,5 +1,3 @@
-
-
 'use server';
 
 import { db } from './firebase';
@@ -18,6 +16,7 @@ import { logError } from './logger';
 import type { Session, StoredAccount } from '@/types';
 import { setSessionCookies, setStoredAccountsCookie, getSessionCookies, clearManagingCookie, setManagingCookie } from './cookies';
 import { getUserNeupIds } from './user';
+import { import } from './auth-actions';
 
 // --- Constants ---
 const SESSION_DURATION_DAYS = 30;
@@ -53,7 +52,7 @@ export async function createAndSetSession(
 
     const newSessionDocRef = await addDoc(collection(db, 'session'), sessionData);
 
-    const newSession: Session = {
+    const newSession: import("./auth-actions").Session = {
       accountId: accountId,
       sessionId: newSessionDocRef.id,
       sessionKey: sessionKey,

@@ -38,7 +38,7 @@ export default function ContactStepPage() {
         setAuthRequestId(id);
 
         async function loadData() {
-            const { data } = await getSignupStepData(id);
+            const { data } = await getSignupStepData(id || '');
             if (data?.phone) {
                 form.setValue("phone", data.phone);
             }

@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState } from 'react';
@@ -29,7 +28,7 @@ export function UserDetailsClient({ initialUserDetails }: UserDetailsClientProps
                 <Button variant="ghost" size="icon" onClick={handleBack}>
                     <ArrowLeft className="h-5 w-5" />
                 </Button>
-                <h1 className="text-2xl font-bold ml-2">{userDetails.profile.firstName} {userDetails.profile.lastName}</h1>
+                <h1 className="text-2xl font-bold ml-2">{userDetails.profile.nameFirst || ''} {userDetails.profile.nameLast || ''}</h1>
             </div>
 
             <Tabs defaultValue="profile">

@@ -36,7 +36,7 @@ export async function getInvitations(): Promise<Invitation[]> {
                 requestId: notifData.request_id,
                 action: requestData.action,
                 senderId: requestData.sender_id,
-                senderName: senderProfile?.displayName || `${senderProfile?.firstName} ${senderProfile?.lastName}`.trim() || 'A user',
+                senderName: senderProfile?.nameDisplay || `${senderProfile?.nameFirst || ''} ${senderProfile?.nameLast || ''}`.trim() || 'A user',
                 senderNeupId: senderNeupIds.docs[0]?.id || 'N/A',
                 createdAt: notifData.createdAt?.toDate().toISOString() || new Date().toISOString(),
             });

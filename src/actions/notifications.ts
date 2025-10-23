@@ -1,4 +1,3 @@
-
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -75,7 +74,7 @@ export async function getNotifications(): Promise<AllNotifications> {
                     action: requestData.action,
                     requestId: notifData.request_id,
                     senderId: requestData.sender_id,
-                    senderName: senderProfile?.displayName || `${senderProfile?.firstName} ${senderProfile?.lastName}`.trim() || 'A user',
+                    senderName: senderProfile?.nameDisplay || `${senderProfile?.nameFirst || ''} ${senderProfile?.nameLast || ''}`.trim() || 'A user',
                     senderNeupId: senderNeupIds.docs[0]?.id || 'N/A',
                 });
             }

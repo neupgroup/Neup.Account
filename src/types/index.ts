@@ -1,6 +1,5 @@
-
 import { z } from 'zod';
-import { registrationSchema, profileSchema, securityQuestionSchema } from '@/schemas/auth';
+import { registrationSchema } from '@/schemas/auth';
 import { Timestamp } from 'firebase/firestore';
 
 

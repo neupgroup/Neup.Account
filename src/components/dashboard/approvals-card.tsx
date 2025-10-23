@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -44,7 +43,7 @@ export async function ApprovalsCard() {
                                 <UserCheck className="h-5 w-5 text-muted-foreground" />
                                 <div>
                                     <p className="text-sm font-medium">{req.senderName}</p>
-                                    <p className="text-xs text-muted-foreground">{getActionText(req.action, req.senderName)}</p>
+                                    <p className="text-xs text-muted-foreground">{getActionText(req.action, req.senderName || '')}</p>
                                 </div>
                             </div>
                             <Button asChild variant="secondary" size="sm">

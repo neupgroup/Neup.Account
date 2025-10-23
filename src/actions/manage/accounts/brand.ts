@@ -1,5 +1,3 @@
-
-
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -76,7 +74,7 @@ export async function getBrandAccounts(): Promise<BrandAccount[]> {
             })
         );
         
-        return brandAccounts.filter((account): account is BrandAccount => account !== null);
+        return brandAccounts.filter((account): account is NonNullable<typeof account> => account !== null);
 
     } catch (error) {
         await logError('database', error, 'getBrandAccounts');
@@ -102,7 +100,7 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
 
     const { nameBrand, nameLegal, registrationId, headOfficeLocation, servingAreas } = validation.data;
     const neupId = validation.data.neupId.toLowerCase();
-    const ipAddress = headers().get('x-forwarded-for') || 'Unknown IP';
+    const ipAddress = (await headers()).get('x-forwarded-for') || 'Unknown IP';
 
     try {
         const neupidsRef = collection(db, 'neupid');

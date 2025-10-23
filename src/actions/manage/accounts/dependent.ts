@@ -1,5 +1,3 @@
-
-
 'use server';
 
 import { z } from 'zod';
@@ -79,7 +77,7 @@ export async function getDependentAccounts(): Promise<DependentAccount[]> {
             })
         );
         
-        return dependentAccounts.filter((account): account is DependentAccount => account !== null);
+        return dependentAccounts.filter((account): account is NonNullable<typeof account> => account !== null);
 
     } catch (error) {
         await logError('database', error, 'getDependentAccounts');
@@ -106,7 +104,7 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
 
     const { password, agreement, ...profileData } = validation.data;
     const neupId = profileData.neupId.toLowerCase();
-    const ipAddress = headers().get('x-forwarded-for') || 'Unknown IP';
+    const ipAddress = (await headers()).get('x-forwarded-for') || 'Unknown IP';
 
     try {
         const neupidsRef = collection(db, 'neupid');
@@ -127,11 +125,11 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
             accountType: 'dependent',
             accountStatus: 'active',
             verified: false,
-            nameDisplay: `${profileData.nameFirst} ${profileData.nameLast}`.trim(),
+            nameDisplay: `${profileData.firstName} ${profileData.lastName}`.trim(),
             accountPhoto: null,
             neupIdPrimary: neupId,
             ...restOfProfile,
-            dateBirth: profileData.dateBirth.toISOString(),
+            dateBirth: profileData.dob.toISOString(),
             dateCreated: serverTimestamp()
         });
         

@@ -1,4 +1,3 @@
-
 import { notFound } from 'next/navigation';
 import { getApplicationDetails } from '@/actions/data/applications';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
@@ -39,7 +38,7 @@ export default async function AppDataAccessPage({ params }: { params: { appId: s
                     <div>
                         <h3 className="font-semibold mb-2">Data Accessed from NeupID</h3>
                         <div className="space-y-2 rounded-md border p-4">
-                            {app.dataAccessed.map((dataPoint, index) => (
+                            {app.dataAccessed?.map((dataPoint, index) => (
                                 <div key={index} className="flex items-center gap-3">
                                     <Check className="h-5 w-5 text-primary" />
                                     <span className="text-sm">{dataPoint}</span>

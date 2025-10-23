@@ -1,4 +1,3 @@
-
 'use client';
 
 import Link from "next/link"
@@ -40,8 +39,8 @@ export function DashboardNav() {
         const visibleManagementNav = navItemsWithPerms(navItems.managementNav);
         const visibleAccountNav = navItemsWithPerms(accountNavItems);
         
-        const primaryNeupId = profile?.neupId ? `@${profile.neupId}` : 'Neup.Account';
-        const title = isManaging ? profile?.displayName : primaryNeupId;
+        const primaryNeupId = profile?.neupIdPrimary ? `@${profile.neupIdPrimary}` : 'Neup.Account';
+        const title = isManaging ? profile?.nameDisplay : primaryNeupId;
 
 
         const config: NavSection[] = [];
@@ -69,6 +68,7 @@ export function DashboardNav() {
         return config;
 
     }, [permissions, isManaging, profile, loading]);
+
 
 
     if (loading || !navConfig) {

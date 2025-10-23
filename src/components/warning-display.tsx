@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { useEffect, useState, useTransition } from 'react';
@@ -11,6 +9,7 @@ import { cn } from '@/lib/utils';
 import { Skeleton } from './ui/skeleton';
 import { usePathname } from 'next/navigation';
 import { cva, type VariantProps } from 'class-variance-authority';
+import type { Notification } from '@/types';
 
 export function NotificationBell({ className }: { className?: string}) {
     const [hasNotifications, setHasNotifications] = useState(false);

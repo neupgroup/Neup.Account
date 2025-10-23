@@ -47,7 +47,7 @@ export default function DemographicsStepPage() {
         setAuthRequestId(id);
 
         async function loadData() {
-            const { data } = await getSignupStepData(id);
+            const { data } = await getSignupStepData(id || '');
             if (data) {
                 let formGender = data.gender;
                 let formCustomGender = data.customGender || "";

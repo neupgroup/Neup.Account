@@ -1,4 +1,3 @@
-
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -67,8 +66,8 @@ async function getList(type: 'blockList' | 'restrictList'): Promise<BlockedUser[
       return {
         accountId: blockedAccountId,
         neupId: neupIds[0] || 'N/A',
-        displayName: profile?.displayName || `${profile?.firstName} ${profile?.lastName}`.trim() || 'Unknown User',
-        displayPhoto: profile?.displayPhoto,
+        displayName: profile?.nameDisplay || `${profile?.nameFirst || ''} ${profile?.nameLast || ''}`.trim() || 'Unknown User',
+        displayPhoto: profile?.accountPhoto,
       };
     });
 
@@ -91,7 +90,7 @@ export async function getRestrictedUsers(): Promise<BlockedUser[]> {
 async function addUserToList(neupId: string, type: 'blockList' | 'restrictList'): Promise<{ success: boolean; error?: string; }> {
   const validation = neupIdSchema.safeParse(neupId);
   if (!validation.success) {
-    return { success: false, error: validation.error.flatten().fieldErrors[0] };
+    return { success: false, error: validation.error.flatten().fieldErrors.neupId?.[0] || 'Invalid input' };
   }
 
   const ownerAccountId = await getPersonalAccountId();

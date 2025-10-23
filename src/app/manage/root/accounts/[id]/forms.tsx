@@ -1,5 +1,3 @@
-
-
 'use client';
 
 import { useState, useTransition, useEffect } from "react";
@@ -169,10 +167,7 @@ export function SendWarningForm({ userId }: { userId: string }) {
 }
 
 export const blockReasons = {
-    security_risk: {
-        reason: "Compromised Account / Security Risk",
-        message: "Your account has been temporarily blocked due to a potential security risk. Please contact support to resolve this issue."
-    },
+    security_risk: { reason: "Compromised Account / Security Risk", message: "Your account has been temporarily blocked due to a potential security risk." },
     payment_issue: {
         reason: "Payment or Billing Issue",
         message: "Your account access has been blocked due to a payment or billing issue. Please contact support."
@@ -189,12 +184,12 @@ export const blockReasons = {
         reason: "Other Policy Violation",
         message: "Your account has been blocked for violating our policies. Please contact support for more information."
     }
-};
+} as const;
 
 const blockServiceSchema = z.object({
+    reasonKey: z.enum(['security_risk', 'payment_issue', 'tos_repeated', 'illegal_activity', 'other'] as const),
     isPermanent: z.boolean().default(false),
     duration: z.string().optional(),
-    reasonKey: z.nativeEnum(blockReasons),
     source: z.string().optional(),
     remarks: z.string().min(1, { message: "Remarks are required for audit trail." }),
 }).superRefine((data, ctx) => {
@@ -296,7 +291,7 @@ export function BlockServiceAccessForm({ userId, currentBlock }: { userId: strin
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Reason for Block</FormLabel>
-                                    <Select onValueChange={field.onChange} value={field.value}>
+                                    <Select onValueChange={(value) => field.onChange(value)} value={String(field.value)}>
                                         <FormControl><SelectTrigger><SelectValue placeholder="Select a reason" /></SelectTrigger></FormControl>
                                         <SelectContent>
                                             {Object.entries(blockReasons).map(([key, value]) => (

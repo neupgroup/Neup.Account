@@ -1,4 +1,3 @@
-
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -9,7 +8,7 @@ import { logError } from '@/lib/logger';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { logActivity } from '@/lib/log-actions';
 import { checkPermissions } from '@/lib/user';
-import type { Permission } from '@/actions/root/permission';
+import type { Permission } from '@/types';
 
 const editPermissionSchema = z.object({
     name: z.string().min(3, { message: "Set name must be at least 3 characters." }),
@@ -94,5 +93,3 @@ export async function deletePermission(id: string): Promise<{ success: boolean; 
         return { success: false, error: "Failed to delete permission set." };
     }
 }
-
-    

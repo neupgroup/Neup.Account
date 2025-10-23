@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useEffect, useState } from 'react'
@@ -101,10 +100,11 @@ export default function RootUserDemographicsPage({ params }: { params: { id: str
     };
 
 
+
     async function onSubmit(data: DemographicsFormValues) {
         let finalGender = data.gender;
         if (data.gender === 'custom') {
-            finalGender = `c.${data.customGender?.trim() || 'custom'}`;
+            finalGender = `c.${data.customGender?.trim() || 'custom'}` as `c.${string}`;
         }
 
         const result = await updateUserProfile(params.id, { ...data, gender: finalGender });

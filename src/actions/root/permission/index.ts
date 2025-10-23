@@ -163,7 +163,8 @@ export async function addPermission(
 
     return {
       success: true,
-      message: 'Permission set added successfully.',
+      error: undefined,
+      details: undefined,
       newPermission,
     };
   } catch (error) {

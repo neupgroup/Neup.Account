@@ -13,6 +13,7 @@ import { z } from 'zod';
 import crypto from 'crypto';
 import { totpEnableSchema, totpDisableSchema } from '@/schemas/security';
 import { createNotification } from '../notifications';
+import { createHash, randomBytes } from 'crypto';
 
 // We need a consistent secret for encryption. STORE THIS IN A SECURE VAULT.
 // For this example, it's in an environment variable.
@@ -87,9 +88,7 @@ export async function verifyAndEnableTotp(data: z.infer<typeof totpEnableSchema>
     const accountId = await getActiveAccountId();
     if (!accountId) return { success: false, error: 'User not authenticated' };
     
-    const isValid = authenticator.check(token, secret, {
-        window: 4, // Allow a 2-minute time drift (4 steps * 30 seconds)
-    });
+    const isValid = authenticator.verify({ token, secret, window: 4 });
     
     if (!isValid) {
         return { success: false, error: 'Invalid token. Please check your device time and try again.' };

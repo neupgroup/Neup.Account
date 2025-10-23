@@ -1,4 +1,3 @@
-
 'use client';
 
 import { usePathname, useSearchParams } from 'next/navigation';
@@ -58,7 +57,7 @@ export function PageProgressBar() {
     mutationObserver.observe(document.body, { childList: true, subtree: true });
 
     // Initial run
-    handleMutation([]);
+    handleMutation();
 
     // We don't need to return a cleanup function that removes listeners,
     // as the component mounts only once and we want the listeners to persist.

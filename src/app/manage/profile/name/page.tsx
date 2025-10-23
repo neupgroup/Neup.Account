@@ -1,5 +1,3 @@
-
-
 "use client"
 
 import { useEffect, useState } from 'react'
@@ -43,9 +41,9 @@ export default function NamePage() {
     useEffect(() => {
         if (profile) {
             form.reset({
-                firstName: profile.firstName || "",
-                middleName: profile.middleName || "",
-                lastName: profile.lastName || "",
+                firstName: profile?.nameFirst || "",
+                middleName: profile?.nameMiddle || "",
+                lastName: profile?.nameLast || "",
             });
             setLoading(false);
         }

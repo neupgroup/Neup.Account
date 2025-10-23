@@ -1,5 +1,3 @@
-
-
 import { Card, CardContent } from '@/components/ui/card';
 import React from 'react';
 import { getActiveAccountId, getPersonalAccountId } from '@/lib/auth-actions';
@@ -47,7 +45,7 @@ export default async function AccountsPage() {
   }
 
   const accountType = await getAccountType(accountId);
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const isManaging = !!cookieStore.get('auth_managing')?.value;
   const personalAccountId = await getPersonalAccountId();
 
@@ -81,9 +79,9 @@ export default async function AccountsPage() {
         sessionId: '',
         sessionKey: '',
         expired: false,
-        displayName: acc.displayName,
+        displayName: acc.nameDisplay,
+        displayPhoto: acc.accountPhoto,
         neupId: acc.neupId,
-        displayPhoto: acc.displayPhoto,
         isDependent: true,
     }));
     

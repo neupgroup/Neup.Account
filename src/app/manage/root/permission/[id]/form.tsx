@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useTransition, useEffect, useCallback, useRef } from 'react';
@@ -30,7 +29,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { useDebounce } from 'use-debounce';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-
+import type { Permission } from '@/types';
 
 const editPermissionSchema = z.object({
     name: z.string().min(3, { message: "Set name must be at least 3 characters." }),

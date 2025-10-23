@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useEffect, useState, useTransition, use } from 'react'
@@ -36,8 +35,14 @@ const addNeupIdSchema = z.object({
 
 type AddNeupIdFormValues = z.infer<typeof addNeupIdSchema>;
 
-export default function RootUserNeupidPage({ params: paramsProp }: { params: { id: string } }) {
-    const params = use(paramsProp);
+export default function RootUserNeupidPage({ params }: { params: Promise<{ id: string }> }) {
+    const [resolvedParams, setResolvedParams] = useState<{ id: string } | null>(null);
+
+    useEffect(() => {
+        params.then(setResolvedParams);
+    }, [params]);
+
+    const params = use(resolvedParams);
     const [neupIds, setNeupIds] = useState<NeupId[]>([]);
     const [loading, setLoading] = useState(true);
     const { toast } = useToast();
@@ -51,7 +56,7 @@ export default function RootUserNeupidPage({ params: paramsProp }: { params: { i
 
     const fetchNeupIds = async () => {
         setLoading(true);
-        const neupIdStrings = await fetchUserNeupIds(params.id);
+        const neupIdStrings = await fetchUserNeupIds(resolvedParams?.id || '');
         const neupIdDetails = await Promise.all(
             neupIdStrings.map(async (id) => {
                 const docRef = doc(db, 'neupid', id);

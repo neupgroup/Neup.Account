@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useEffect, useState, useTransition } from 'react';
@@ -90,8 +89,8 @@ export function VerificationManager({ accountId }: { accountId: string }) {
                 const newData = docSnap.data();
                 setDetails({
                     status: 'approved',
-                    category: newData.category,
-                    verifiedAt: newData.verifiedAt?.toDate().toLocaleString(),
+                    category: newData?.category,
+                    verifiedAt: newData?.verifiedAt?.toDate().toLocaleString(),
                 });
                 grantForm.reset();
             } else {

@@ -99,7 +99,7 @@ export async function submitPassword(data: z.infer<typeof passwordSchema>): Prom
         await extendAuthRequest(request.ref);
         return { success: true, mfaRequired: true };
     } else {
-        const headersList = headers();
+        const headersList = await headers();
         const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';
         const userAgent = headersList.get('user-agent') || 'Unknown User-Agent';
         

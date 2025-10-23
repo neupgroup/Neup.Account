@@ -1,4 +1,3 @@
-
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -177,7 +176,7 @@ export async function addRecoveryAccount(
       recoveryNeupId: neupId,
       displayName:
         profile?.nameDisplay ||
-        `${profile?.nameFirst} ${profile?.nameLast}`.trim() ||
+        `${profile?.nameFirst || ''} ${profile?.nameLast || ''}`.trim() ||
         neupId,
       displayPhoto: profile?.accountPhoto,
       status: 'pending',
@@ -220,5 +219,3 @@ export async function removeRecoveryAccount(
     return { success: false, error: 'An unexpected error occurred.' };
   }
 }
-
-    

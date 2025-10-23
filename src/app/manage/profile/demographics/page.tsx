@@ -1,5 +1,3 @@
-
-
 "use client"
 
 import { useEffect, useState } from 'react'
@@ -102,6 +100,7 @@ export default function DemographicsPage() {
     };
 
 
+
     async function onSubmit(data: DemographicsFormValues) {
         if (!accountId) {
             toast({ variant: "destructive", title: "Error", description: "Not authenticated." });
@@ -110,7 +109,7 @@ export default function DemographicsPage() {
         
         let finalGender = data.gender;
         if (data.gender === 'custom') {
-            finalGender = `c.${data.customGender?.trim() || 'custom'}`;
+            finalGender = `c.${data.customGender?.trim() || 'custom'}` as `c.${string}`;
         }
 
         const result = await updateUserProfile(accountId, { ...data, gender: finalGender });

@@ -1,5 +1,3 @@
-
-
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -53,7 +51,7 @@ export async function sendWarning(userId: string, data: z.infer<typeof sendWarni
         'error': 'danger.sticky'
     };
     
-    const reasonText = warningReasons[reasonKey];
+    const reasonText = warningReasons[reasonKey as keyof typeof warningReasons];
     const message = `Your account has received a warning for: <strong>${reasonText}</strong>. Please review our community guidelines.`;
 
     try {
@@ -76,10 +74,15 @@ export async function sendWarning(userId: string, data: z.infer<typeof sendWarni
     }
 }
 
+const blockReasons = {
+    security_risk: { reason: "Compromised Account / Security Risk", message: "..." },
+    // ... other reasons
+} as const;
+
 const blockServiceSchema = z.object({
+    reasonKey: z.enum(['security_risk', 'payment_issue', 'tos_repeated', 'illegal_activity', 'other'] as const),
     isPermanent: z.boolean(),
     durationInHours: z.number().optional(),
-    reasonKey: z.nativeEnum(blockReasons),
     source: z.string().optional(),
     remarks: z.string().min(1, "Remarks are required"),
 });

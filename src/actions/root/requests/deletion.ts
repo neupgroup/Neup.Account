@@ -1,5 +1,3 @@
-
-
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -66,10 +64,10 @@ export async function getDeletionRequests(): Promise<DeletionRequest[]> {
         return {
           accountId,
           userFullName:
-            profile?.displayName ||
-            `${profile?.firstName} ${profile?.lastName}`.trim() ||
+            profile?.nameDisplay ||
+            `${profile?.nameFirst || ''} ${profile?.nameLast || ''}`.trim() ||
             'Unknown User',
-          userNeupId: profile?.neupId || 'N/A',
+          userNeupId: profile?.neupIdPrimary || 'N/A',
           requestedAt,
         };
       })

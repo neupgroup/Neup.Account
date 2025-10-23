@@ -38,7 +38,7 @@ export default function NeupidStepPage() {
         setAuthRequestId(id);
 
         async function loadData() {
-            const { data } = await getSignupStepData(id);
+            const { data } = await getSignupStepData(id || '');
             if (data?.neupId) {
                 form.setValue("neupId", data.neupId);
             }

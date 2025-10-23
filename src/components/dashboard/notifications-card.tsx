@@ -1,9 +1,9 @@
-
 import { Card, CardContent } from '@/components/ui/card';
 import { getNotifications, type Notification } from '@/actions/notifications';
 import { AlertTriangle, Bell, Handshake, MessageSquareWarning, UserPlus } from '@/components/icons';
 import { SecondaryHeader } from '../ui/secondary-header';
 import { ListItem } from '../ui/list-item';
+import type { Notification } from '@/types';
 
 function getNotificationDetails(notification: Notification): { iconName: string, message: string, href: string } {
     const defaultHref = '/manage/notifications';

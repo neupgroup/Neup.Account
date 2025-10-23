@@ -1,13 +1,11 @@
-
-
 'use server';
 
 import { db } from '@/lib/firebase';
 import { doc, getDoc, setDoc, deleteDoc, collection } from 'firebase/firestore';
-import { getPersonalAccountId } from '@/actions/auth/session';
+import { getPersonalAccountId } from '@/lib/auth-actions';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
-import { emailFormSchema } from './schema';
+import { emailFormSchema } from '@/schemas/security';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { checkPermissions } from '@/lib/user-actions';

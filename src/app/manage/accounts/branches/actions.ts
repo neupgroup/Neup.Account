@@ -48,7 +48,7 @@ export async function createBranchAccount(data: z.infer<typeof formSchema>, geol
 
     const { name, location } = validation.data;
     const neupIdSubdomain = validation.data.neupIdSubdomain.toLowerCase();
-    const ipAddress = headers().get('x-forwarded-for') || 'Unknown IP';
+    const ipAddress = (await headers()).get('x-forwarded-for') || 'Unknown IP';
     
     try {
         const parentNeupIds = await getUserNeupIds(parentBrandId);
@@ -179,14 +179,14 @@ export async function getBranches(brandId: string): Promise<BranchAccount[]> {
 
                 return {
                     id: branchAccountId,
-                    name: profile.displayName || 'Unnamed Branch',
+                    name: profile?.nameDisplay || 'Unnamed Branch',
                     neupId: neupIds[0] || 'N/A',
                     location: location,
                 };
             })
         );
         
-        return branchAccounts.filter((account): account is BranchAccount => account !== null);
+        return branchAccounts.filter((account): account is NonNullable<typeof account> => account !== null);
 
     } catch (error) {
         await logError('database', error, `getBranches for ${brandId}`);

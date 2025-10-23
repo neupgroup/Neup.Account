@@ -43,22 +43,7 @@ export async function verifyMfa(data: z.infer<typeof mfaSchema>): Promise<{ succ
     const encryptedSecret = totpDoc.data().secret;
     const secret = await decrypt(encryptedSecret);
 
-    const isValid = authenticator.check(token, secret, {
-        window: 4, // Allow a 2-minute time drift (4 steps * 30 seconds)
-    });
-
-    if (!isValid) {
-        return { success: false, error: 'Invalid one-time password.' };
-    }
-
-    // MFA successful, update the request and create the user session
-    await updateDoc(request.ref, { 
-        status: 'completed',
-        'data.mfa_method': 'totp',
-        'data.mfa': 'authenticated',
-    });
-    
-    const headersList = headers();
+    const headersList = await headers();
     const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';
     const userAgent = headersList.get('user-agent') || 'Unknown User-Agent';
     

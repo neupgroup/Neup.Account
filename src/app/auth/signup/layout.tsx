@@ -41,7 +41,7 @@ export default async function SignupLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const headersList = headers();
+  const headersList = await headers();
   // Use the 'x-next-pathname' header set by the middleware for a reliable path.
   const pathname = headersList.get('x-next-pathname') || '/';
 

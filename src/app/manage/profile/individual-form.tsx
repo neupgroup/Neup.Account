@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useEffect, useState, useContext } from 'react'
@@ -154,6 +153,7 @@ export function IndividualProfileForm({ accountId }: { accountId: string }) {
             form.setError('dateBirth', { type: 'manual', message: result.error || 'Invalid date format.' });
         }
     };
+
 
 
     async function onSubmit(data: ProfileFormValues) {

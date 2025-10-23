@@ -1,5 +1,3 @@
-
-
 'use client';
 
 import { useState, useEffect, useTransition } from 'react';
@@ -44,7 +42,7 @@ async function getRequests(): Promise<DisplayNameRequest[]> {
       return {
         id: docSnap.id,
         accountId: data.accountId,
-        userFullName: profile?.displayName || `${profile?.firstName} ${profile?.lastName}`.trim() || 'Unknown',
+        userFullName: profile?.nameDisplay || `${profile?.nameFirst || ''} ${profile?.nameLast || ''}`.trim() || 'Unknown',
         requestedDisplayName: data.requestedDisplayName,
         createdAt: data.createdAt.toDate().toLocaleString(),
       };

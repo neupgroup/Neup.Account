@@ -1,13 +1,13 @@
-
 import { BackButton } from "@/components/ui/back-button";
 
-export default function AppDetailsLayout({
+export default async function Layout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { slugid: string };
+  params: Promise<{ slugid: string }>;
 }) {
+  const { slugid } = await params;
 
   return (
     <div className="grid gap-6">

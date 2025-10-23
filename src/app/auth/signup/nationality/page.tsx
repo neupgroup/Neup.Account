@@ -36,7 +36,7 @@ export default function NationalityStepPage() {
         setAuthRequestId(id);
 
         async function loadData() {
-            const { data } = await getSignupStepData(id);
+            const { data } = await getSignupStepData(id || '');
             if (data?.nationality) {
                 form.setValue("nationality", data.nationality);
             }
