@@ -1,7 +1,9 @@
 
 
+
 export type Session = {
   id: string;
+  accountId: string;
   ipAddress: string;
   userAgent: string;
   lastLoggedIn: string;

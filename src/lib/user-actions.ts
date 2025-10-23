@@ -1,4 +1,5 @@
 
+
 "use server"
 
 import { db } from './firebase';
@@ -7,20 +8,23 @@ import { logError } from './logger';
 import { getActiveAccountId as getActiveAccountIdFromServer, getPersonalAccountId as getPersonalAccountIdFromServer } from './auth-actions';
 
 export type UserProfile = {
-    firstName?: string;
-    middleName?: string;
-    lastName?: string;
-    displayName?: string;
-    displayPhoto?: string;
-    gender?: string; // Can be 'male', 'female', 'prefer_not_to_say', or 'c.customvalue'
-    dob?: string; // This will be an ISO string from Firestore
+    nameFirst?: string;
+    nameMiddle?: string;
+    nameLast?: string;
+    nameDisplay?: string;
+    accountPhoto?: string;
+    gender?: string; // 'male', 'female', 'prefer_not_to_say', 'c.custom'
+    dateBirth?: string; // ISO string
+    dateCreated?: string; // ISO string
     nationality?: string;
-    neupId?: string;
     isLegalEntity?: boolean;
-    legalName?: string;
+    nameLegal?: string;
     registrationId?: string;
     countryOfOrigin?: string;
-    registeredOn?: string; // ISO string
+    dateEstablished?: string; // ISO string
+    neupIdPrimary?: string; // Added for convenience
+    verified?: boolean; // Added for convenience
+    accountType?: string;
 };
 
 export type UserContacts = {
