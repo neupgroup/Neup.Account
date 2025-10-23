@@ -1,24 +1,18 @@
 
-
-
 export type Session = {
-  id: string;
   accountId: string;
-  ipAddress: string;
-  userAgent: string;
-  lastLoggedIn: string;
-  loginType: string;
-  geolocation?: string;
+  sessionId: string;
+  sessionKey: string;
 };
 
 export type StoredAccount = {
   accountId: string;
   sessionId: string;
   sessionKey: string;
-  expired: boolean;
   neupId?: string;
-  isBrand?: boolean;
+  expired: boolean;
   active: boolean;
+  isBrand?: boolean;
 };
 
 export type Application = {

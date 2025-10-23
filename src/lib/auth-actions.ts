@@ -1,3 +1,4 @@
+
 'use server';
 
 import { cookies } from 'next/headers';
@@ -6,12 +7,7 @@ import { db } from '@/lib/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { logError } from '@/lib/logger';
 import { getSessionCookies } from '@/lib/cookies';
-
-export type Session = {
-  accountId: string;
-  sessionId: string;
-  sessionKey: string;
-};
+import type { Session } from '@/types';
 
 const SESSION_DURATION_DAYS = 30;
 
