@@ -18,7 +18,9 @@ export async function getStoredAccounts(): Promise<StoredAccount[]> {
 export async function switchActiveAccount(account: StoredAccount) {
     const result = await switchToAccountAction(account);
     if(result.success) {
-        await logActivity(account.accountId, `Switched to account: ${account.neupId}`);
+        const headersList = await headers();
+        const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';
+        await logActivity(account.accountId, `Switched to account: ${account.neupId}`, 'Success', ipAddress);
         await createNotification({
             recipient_id: account.accountId,
             action: 'informative.login',
@@ -29,7 +31,8 @@ export async function switchActiveAccount(account: StoredAccount) {
 }
 
 export async function logoutStoredSession(sessionId: string): Promise<{ success: boolean; error?: string }> {
-    const ipAddress = headers().get('x-forwarded-for') || 'Unknown IP';
+    const headersList = await headers();
+    const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';
     
     try {
         const sessionRef = doc(db, 'session', sessionId);

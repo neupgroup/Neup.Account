@@ -18,6 +18,7 @@ export type StoredAccount = {
   expired: boolean;
   neupId?: string;
   isBrand?: boolean;
+  active: boolean;
 };
 
 export type Application = {

@@ -10,7 +10,8 @@ import { getSessionCookies, clearSessionCookies, setStoredAccountsCookie } from 
 
 export async function logoutActiveSession() {
     const { sessionId, accountId, allAccounts } = await getSessionCookies();
-    const ipAddress = headers().get('x-forwarded-for') || 'Unknown IP';
+    const headersList = await headers();
+    const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';
 
     if (sessionId && accountId) {
         try {
