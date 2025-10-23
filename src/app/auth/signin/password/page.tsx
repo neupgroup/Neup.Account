@@ -17,7 +17,16 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Loader2 } from '@/components/icons';
 
+// Add export default at the end of the file
 export default function PasswordPage() {
+  return (
+    <React.Suspense fallback={<div>Loading...</div>}>
+      <PasswordPageContent />
+    </React.Suspense>
+  );
+}
+
+function PasswordPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { toast } = useToast();

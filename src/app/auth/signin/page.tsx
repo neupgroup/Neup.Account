@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { initializeAuthFlow } from '@/actions/auth/initialize';
 
-// This component is an "invisible" entry point to the signin flow.
-export default function SignInStartPage() {
+// Inner component that uses useSearchParams
+function SignInFlow() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -34,4 +34,13 @@ export default function SignInStartPage() {
   }, [router, searchParams]);
 
   return null;
+}
+
+// This component is an "invisible" entry point to the signin flow.
+export default function SignInStartPage() {
+  return (
+    <Suspense fallback={null}>
+      <SignInFlow />
+    </Suspense>
+  );
 }
