@@ -1,3 +1,4 @@
+
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -20,12 +21,14 @@ const ENCRYPTION_KEY = process.env.NEXT_PUBLIC_TOTP_ENCRYPTION_KEY;
 if (!ENCRYPTION_KEY || ENCRYPTION_KEY.length < 64) {
     throw new Error('A 32-byte (64-character hex) NEXT_PUBLIC_TOTP_ENCRYPTION_KEY must be set in .env');
 }
+const keyBuffer = Buffer.from(ENCRYPTION_KEY, 'hex');
+
 
 // Basic encryption/decryption functions using Node.js crypto
 // In a production app, use a dedicated KMS for this.
 export async function encrypt(text: string): Promise<string> {
     const { subtle } = await import('crypto');
-    const key = await subtle.importKey('raw', Buffer.from(ENCRYPTION_KEY, 'hex'), { name: 'AES-GCM' }, false, ['encrypt']);
+    const key = await subtle.importKey('raw', keyBuffer, { name: 'AES-GCM' }, false, ['encrypt']);
     const iv = crypto.randomBytes(12);
     const encoded = new TextEncoder().encode(text);
     const encrypted = await subtle.encrypt({ name: 'AES-GCM', iv }, key, encoded);
@@ -37,7 +40,7 @@ export async function decrypt(encryptedText: string): Promise<string> {
     const [ivHex, encryptedHex] = encryptedText.split(':');
     if (!ivHex || !encryptedHex) throw new Error('Invalid encrypted text format');
     
-    const key = await subtle.importKey('raw', Buffer.from(ENCRYPTION_KEY, 'hex'), { name: 'AES-GCM' }, false, ['decrypt']);
+    const key = await subtle.importKey('raw', keyBuffer, { name: 'AES-GCM' }, false, ['decrypt']);
     const iv = Buffer.from(ivHex, 'hex');
     const encrypted = Buffer.from(encryptedHex, 'hex');
     
