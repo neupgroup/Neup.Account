@@ -35,8 +35,8 @@ import {
 
 // Helper to sanitize name fields
 const sanitizeName = (name: string | undefined | null): string => {
-    if (!name) return '';
-    return name.trim().replace(/\s+/g, ' ');
+  if (!name) return '';
+  return name.trim().replace(/\s+/g, ' ');
 };
 
 
@@ -124,28 +124,28 @@ export async function submitDemographicsStep(authRequestId: string, data: z.infe
 }
 
 export async function submitNationalityStep(authRequestId: string, data: z.infer<typeof nationalitySchema>) {
-    if (!authRequestId)
-        return { success: false, error: 'Signup session not found.' };
+  if (!authRequestId)
+    return { success: false, error: 'Signup session not found.' };
 
-    const validation = nationalitySchema.safeParse(data);
-    if (!validation.success)
-        return {
-            success: false,
-            error: 'Invalid data.',
-            details: validation.error.flatten(),
-        };
+  const validation = nationalitySchema.safeParse(data);
+  if (!validation.success)
+    return {
+      success: false,
+      error: 'Invalid data.',
+      details: validation.error.flatten(),
+    };
 
-    const request = await getAuthRequest(authRequestId);
-    if (!request)
-        return { success: false, error: 'Signup session expired.' };
+  const request = await getAuthRequest(authRequestId);
+  if (!request)
+    return { success: false, error: 'Signup session expired.' };
 
-    await updateDoc(request.ref, {
-        'data.nationality': validation.data.nationality,
-        status: 'pending_contact',
-    });
-    await extendAuthRequest(request.ref);
+  await updateDoc(request.ref, {
+    'data.nationality': validation.data.nationality,
+    status: 'pending_contact',
+  });
+  await extendAuthRequest(request.ref);
 
-    return { success: true };
+  return { success: true };
 }
 
 
@@ -165,12 +165,13 @@ export async function submitContactStep(authRequestId: string, data: z.infer<typ
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
-  // TODO: Send OTP logic here
-  console.log(`Sending OTP to ${validation.data.phone}`);
+  // Skip OTP verification - directly mark phone as verified
+  console.log(`Phone number saved: ${validation.data.phone} (OTP verification skipped)`);
 
   await updateDoc(request.ref, {
     'data.phone': validation.data.phone,
-    status: 'pending_otp',
+    'data.phoneVerified': true,
+    status: 'pending_neupid',
   });
   await extendAuthRequest(request.ref);
 
@@ -294,7 +295,7 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
     neupId,
     password,
   } = request.data.data;
-  
+
   const nameDisplay = [nameFirst, nameMiddle, nameLast].filter(Boolean).join(' ');
 
   if (
@@ -324,21 +325,21 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
     const newAccountRef = doc(collection(db, 'account'));
     const accountId = newAccountRef.id;
 
-    batch.set(newAccountRef, { 
-        accountType: 'individual',
-        accountStatus: 'active',
-        verified: false,
-        nameDisplay: nameDisplay,
-        accountPhoto: null,
-        nameFirst,
-        nameLast,
-        nameMiddle: nameMiddle || null,
-        dateBirth: dateBirth,
-        gender,
-        customGender: customGender || null,
-        nationality,
-        neupIdPrimary: neupId,
-        dateCreated: serverTimestamp(),
+    batch.set(newAccountRef, {
+      accountType: 'individual',
+      accountStatus: 'active',
+      verified: false,
+      nameDisplay: nameDisplay,
+      accountPhoto: null,
+      nameFirst,
+      nameLast,
+      nameMiddle: nameMiddle || null,
+      dateBirth: dateBirth,
+      gender,
+      customGender: customGender || null,
+      nationality,
+      neupIdPrimary: neupId,
+      dateCreated: serverTimestamp(),
     });
 
     const permQuery = query(

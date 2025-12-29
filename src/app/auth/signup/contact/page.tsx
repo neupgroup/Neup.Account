@@ -28,7 +28,7 @@ export default function ContactStepPage() {
             phone: "",
         },
     });
-    
+
     useEffect(() => {
         const id = sessionStorage.getItem('temp_auth_id');
         if (!id) {
@@ -51,7 +51,7 @@ export default function ContactStepPage() {
         NProgress.start();
         const result = await submitContactStep(authRequestId, data);
         if (result.success) {
-            router.push('/auth/signup/otp');
+            router.push('/auth/signup/neupid');
         } else {
             toast({ variant: 'destructive', title: 'Error', description: result.error });
             NProgress.done();
@@ -72,7 +72,7 @@ export default function ContactStepPage() {
                 )} />
                 <Button type="submit" className="w-full" disabled={isSubmitting}>
                     {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    Send Verification Code
+                    Continue
                 </Button>
             </form>
         </Form>
