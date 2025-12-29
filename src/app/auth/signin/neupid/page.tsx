@@ -24,24 +24,24 @@ function NeupIdPageComponent() {
   const [isCheckingNeupId, startNeupIdCheck] = useTransition();
   const [validationError, setValidationError] = useState<string | null>(null);
   const [authRequestId, setAuthRequestId] = useState<string | null>(null);
-  
+
   const returnUrl = searchParams.get('return_url');
 
   useEffect(() => {
     const id = sessionStorage.getItem('temp_auth_id');
     if (!id) {
-        // No session, redirect to start the flow
-        router.push('/auth/signin');
-        return;
+      // No session, redirect to start the flow
+      router.push('/auth/signin');
+      return;
     }
     setAuthRequestId(id);
-    
+
     // Fetch any previously entered NeupID
     const fetchPreviousData = async () => {
-        const { data } = await getSignupStepData(id);
-        if (data?.neupId) {
-            setNeupId(data.neupId);
-        }
+      const { data } = await getSignupStepData(id);
+      if (data?.neupId) {
+        setNeupId(data.neupId);
+      }
     }
     fetchPreviousData();
 
@@ -51,8 +51,8 @@ function NeupIdPageComponent() {
     event.preventDefault();
     setValidationError(null);
     if (!authRequestId) {
-        toast({variant: 'destructive', title: 'Error', description: 'Session not found. Please try again.'});
-        return;
+      toast({ variant: 'destructive', title: 'Error', description: 'Session not found. Please try again.' });
+      return;
     }
     NProgress.start();
     startNeupIdCheck(async () => {
@@ -73,8 +73,12 @@ function NeupIdPageComponent() {
     setNeupId(value);
     if (validationError) setValidationError(null);
   };
-  
+
   const getSignupUrl = () => {
+    if (typeof window === 'undefined') {
+      // Server-side rendering fallback
+      return returnUrl ? `/auth/signup?return_url=${returnUrl}` : '/auth/signup';
+    }
     const url = new URL('/auth/signup', window.location.origin);
     if (returnUrl) url.searchParams.set('return_url', returnUrl);
     return url.toString();
@@ -134,9 +138,9 @@ function NeupIdPageComponent() {
 }
 
 export default function NeupIdPage() {
-    return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <NeupIdPageComponent />
-        </Suspense>
-    );
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <NeupIdPageComponent />
+    </Suspense>
+  );
 }

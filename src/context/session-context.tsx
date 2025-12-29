@@ -4,7 +4,7 @@
 
 import { createContext, useState, useEffect, type ReactNode, useContext } from 'react';
 import { type UserProfile, getUserPermissions, getUserProfile as fetchUserProfile } from '@/lib/user';
-import { getActiveAccountId, getPersonalAccountId, validateCurrentSession } from '@/lib/auth-actions';
+import { getActiveAccountId, getPersonalAccountId } from '@/lib/auth-actions';
 
 type SessionState = {
     loading: boolean;
@@ -36,7 +36,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
         accountId: null,
         personalAccountId: null,
         isManaging: false,
-        refetch: () => {},
+        refetch: () => { },
     });
 
     const fetchData = async (forceRefresh = false) => {
@@ -56,17 +56,19 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
                 }
             }
         }
-        
-        try {
-            await validateCurrentSession();
 
+        try {
             const [activeId, personalId] = await Promise.all([
                 getActiveAccountId(),
                 getPersonalAccountId()
             ]);
-            
+
             if (!activeId || !personalId) {
                 setSessionState(s => ({ ...s, loading: false, profile: null, permissions: [] }));
+                // Only redirect if we're on a protected route
+                if (typeof window !== 'undefined' && window.location.pathname.startsWith('/manage')) {
+                    window.location.href = '/auth/signout?error=session_expired&error_description=Your session has expired. Please sign in again.';
+                }
                 return;
             }
 
@@ -85,7 +87,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
             };
 
             setSessionState({ ...newState, refetch: () => fetchData(true) });
-            
+
             if (typeof window !== 'undefined') {
                 sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(newState));
             }
@@ -94,6 +96,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
             if (typeof window !== 'undefined') {
                 sessionStorage.removeItem(SESSION_STORAGE_KEY);
             }
+            setSessionState(s => ({ ...s, loading: false, profile: null, permissions: [] }));
         }
     };
 
@@ -106,11 +109,11 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
-        <SessionContext.Provider value={{...sessionState, refetch: clearCacheAndRefetch}}>
+        <SessionContext.Provider value={{ ...sessionState, refetch: clearCacheAndRefetch }}>
             {children}
         </SessionContext.Provider>
     );

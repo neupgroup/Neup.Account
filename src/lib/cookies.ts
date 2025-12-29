@@ -4,12 +4,13 @@
 
 import { cookies } from 'next/headers';
 import type { StoredAccount } from '@/types';
-import type {Session} from "@/lib/auth-actions";
+import type { Session } from "@/lib/auth-actions";
 
 
 /**
  * Base options for all authentication-related cookies.
  * Sets path, SameSite, Secure, and HttpOnly attributes.
+ * Secure flag is set to true only in production to allow localhost development.
  */
 const COOKIE_OPTIONS = {
     path: '/',
@@ -39,7 +40,7 @@ export async function getSessionCookies() {
     const sessionKey = cookieStore.get('auth_session_key')?.value;
     const managingCookie = cookieStore.get('auth_managing')?.value;
     const allAccountsCookie = cookieStore.get('auth_accounts');
-    
+
     let allAccounts: StoredAccount[] = [];
     if (allAccountsCookie?.value) {
         try {
@@ -54,7 +55,7 @@ export async function getSessionCookies() {
     if (managingCookie && (managingCookie.startsWith('brand.') || managingCookie.startsWith('dependent.'))) {
         managingAccountId = managingCookie.split('.')[1];
     }
-    
+
     return {
         accountId,
         sessionId,
@@ -114,7 +115,7 @@ export async function clearSessionCookies() {
     cookieStore.delete('auth_session_id');
     cookieStore.delete('auth_session_key');
     cookieStore.delete('auth_managing');
-    
+
     // Also remove old, unnecessary cookies if they exist
     cookieStore.delete('auth_permit');
     cookieStore.delete('profile_name');
