@@ -17,13 +17,13 @@ export default function ForgetPage() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     startTransition(async () => {
-        // In a real application, you would call a server action here.
-        // For this demo, we'll just simulate a network request.
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        toast({
-            title: "Recovery Link Sent",
-            description: "If an account exists for that email, a recovery link has been sent.",
-        });
+      // In a real application, you would call a server action here.
+      // For this demo, we'll just simulate a network request.
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      toast({
+        title: "Recovery Link Sent",
+        description: "If an account exists for that email, a recovery link has been sent.",
+      });
     });
   }
 
@@ -32,7 +32,7 @@ export default function ForgetPage() {
       <Card className="mx-auto max-w-lg w-full border-0 shadow-none md:border md:shadow-sm">
         <CardHeader>
           <div className="flex justify-start items-center mb-4">
-            
+
           </div>
           <CardTitle className="text-2xl font-headline">Forgot NeupID?</CardTitle>
           <CardDescription>
@@ -49,9 +49,9 @@ export default function ForgetPage() {
               {isPending ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending...</> : 'Send Recovery Link'}
             </Button>
           </form>
-           <div className="mt-4 text-center text-sm">
+          <div className="mt-4 text-center text-sm">
             Remembered your NeupID?{" "}
-            <Link href="/auth/signin" className="underline text-primary">
+            <Link href="/auth/signin/neupid" className="underline text-primary">
               Sign In
             </Link>
           </div>
@@ -61,4 +61,3 @@ export default function ForgetPage() {
   );
 }
 
-    

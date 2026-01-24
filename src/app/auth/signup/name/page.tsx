@@ -9,6 +9,7 @@ import NProgress from 'nprogress';
 
 import { useToast } from "@/hooks/use-toast";
 import { submitNameStep, getSignupStepData } from "@/actions/auth/signup";
+import { initializeAuthFlow } from "@/actions/auth/initialize";
 import { nameSchema } from "@/schemas/signup";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -35,33 +36,49 @@ export default function NameStepPage() {
     });
 
     useEffect(() => {
-        const id = sessionStorage.getItem('temp_auth_id');
-        if (!id) {
-            router.push('/auth/signup');
-            return;
-        }
-        setAuthRequestId(id);
+        const initFlow = async () => {
+            let id = sessionStorage.getItem('temp_auth_id');
 
-        async function loadData() {
-            const { data } = await getSignupStepData(id || '');
-            if (data) {
-                form.reset({
-                    firstName: data.nameFirst || "",
-                    middleName: data.nameMiddle || "",
-                    lastName: data.nameLast || "",
-                });
-                if (data.nameMiddle) {
-                    setShowMiddleName(true);
+            if (!id) {
+                try {
+                    id = await initializeAuthFlow(null, 'signup');
+                    sessionStorage.setItem('temp_auth_id', id);
+                    setAuthRequestId(id);
+                } catch (error) {
+                    console.error("Failed to initialize signup flow", error);
+                    toast({ variant: 'destructive', title: 'Error', description: 'Failed to initialize session. Please refresh.' });
+                    return;
                 }
+            } else {
+                setAuthRequestId(id);
+                async function loadData() {
+                    const { data } = await getSignupStepData(id!);
+                    if (data) {
+                        form.reset({
+                            firstName: data.nameFirst || "",
+                            middleName: data.nameMiddle || "",
+                            lastName: data.nameLast || "",
+                        });
+                        if (data.nameMiddle) {
+                            setShowMiddleName(true);
+                        }
+                    }
+                }
+                loadData();
             }
-        }
-        loadData();
-    }, [router, form]);
+        };
+        initFlow();
+    }, [router, form, toast]);
 
     const onSubmit = async (data: FormData) => {
-        if (!authRequestId) return;
+        const currentId = authRequestId || sessionStorage.getItem('temp_auth_id');
+        if (!currentId) {
+            toast({ title: 'Please wait...', description: 'Initializing secure session.' });
+            return;
+        }
+
         NProgress.start();
-        const result = await submitNameStep(authRequestId, data);
+        const result = await submitNameStep(currentId, data);
         if (result.success) {
             router.push('/auth/signup/demographics');
         } else {
@@ -84,7 +101,7 @@ export default function NameStepPage() {
                 )} />
 
                 {!showMiddleName && (
-                     <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-2">
                         <Checkbox id="hasMiddleName" onCheckedChange={(checked) => setShowMiddleName(!!checked)} disabled={isSubmitting} />
                         <Label htmlFor="hasMiddleName" className="font-normal cursor-pointer">I have a middle name</Label>
                     </div>
@@ -100,7 +117,7 @@ export default function NameStepPage() {
                     )} />
                 )}
 
-                 <FormField control={form.control} name="lastName" render={({ field }) => (
+                <FormField control={form.control} name="lastName" render={({ field }) => (
                     <FormItem>
                         <FormLabel>Last Name</FormLabel>
                         <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>

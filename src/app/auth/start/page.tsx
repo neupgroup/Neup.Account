@@ -89,7 +89,7 @@ function StartPageComponent() {
             )}
 
             <Link
-              href={getUrlWithReturn("/auth/signin")}
+              href={getUrlWithReturn("/auth/signin/neupid")}
               className="flex w-full items-center justify-between p-4 border rounded-lg hover:border-primary transition-colors"
             >
               <div>
@@ -99,7 +99,7 @@ function StartPageComponent() {
               <ChevronRight className="h-5 w-5 text-muted-foreground" />
             </Link>
             <Link
-              href={getUrlWithReturn("/auth/signup")}
+              href={getUrlWithReturn("/auth/signup/name")}
               className="flex w-full items-center justify-between p-4 border rounded-lg hover:border-primary transition-colors"
             >
               <div>
