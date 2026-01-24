@@ -82,6 +82,9 @@ function NeupIdPageComponent() {
       // Ensure we use the freshly retrieved ID
       const result = await submitNeupId({ neupId, authRequestId: currentId });
       if (result.success) {
+        if (result.userInfo) {
+          sessionStorage.setItem('temp_user_info', JSON.stringify(result.userInfo));
+        }
         const nextUrl = new URL(window.location.origin + '/auth/signin/password');
         if (returnUrl) nextUrl.searchParams.set('return_url', returnUrl);
         router.push(nextUrl.toString());

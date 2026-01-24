@@ -34,7 +34,7 @@ export async function submitNeupId(data: z.infer<typeof neupIdSchema>) {
     }
 
     const validationResult = await validateNeupId(lowerCaseNeupId);
-     if (!validationResult.success && validationResult.error !== 'pending_deletion') {
+    if (!validationResult.success && validationResult.error !== 'pending_deletion') {
         return { success: false, error: validationResult.error || 'Invalid NeupID.' };
     }
 
@@ -52,10 +52,24 @@ export async function submitNeupId(data: z.infer<typeof neupIdSchema>) {
         accountId: accountId,
         status: 'pending_password',
     });
-    
+
     await extendAuthRequest(request.ref);
 
-    return { success: true };
+    // Fetch user details to return to client for session storage optimization
+    const { getUserProfile, getUserContacts } = await import('@/lib/user');
+    const profile = await getUserProfile(accountId);
+    const contacts = await getUserContacts(accountId);
+
+    return {
+        success: true,
+        userInfo: {
+            neupId: lowerCaseNeupId,
+            firstName: profile?.nameFirst || '',
+            middleName: profile?.nameMiddle || '',
+            lastName: profile?.nameLast || '',
+            phoneNumber: contacts.primaryPhone || '',
+        }
+    };
 }
 
 
@@ -73,7 +87,7 @@ export async function submitPassword(data: z.infer<typeof passwordSchema>): Prom
     }
 
     const { accountId, data: { isPendingDeletion } } = request.data;
-    
+
     const authRef = doc(db, 'auth_password', accountId);
     const authDoc = await getDoc(authRef);
     if (!authDoc.exists()) {
@@ -102,10 +116,10 @@ export async function submitPassword(data: z.infer<typeof passwordSchema>): Prom
         const headersList = await headers();
         const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';
         const userAgent = headersList.get('user-agent') || 'Unknown User-Agent';
-        
+
         // The geolocation is not passed here, so we pass undefined.
         await createAndSetSession(accountId, 'Password', ipAddress, userAgent);
-        
+
         await updateDoc(request.ref, { status: 'completed' });
 
         return { success: true, mfaRequired: false };

@@ -48,12 +48,25 @@ function PasswordPageContent() {
     }
     setAuthRequestId(id);
 
+    // Try to load from session storage for instant render
+    const savedUserInfo = sessionStorage.getItem('temp_user_info');
+    if (savedUserInfo) {
+      try {
+        const parsed = JSON.parse(savedUserInfo);
+        if (parsed.neupId) {
+          setNeupId(parsed.neupId);
+        }
+      } catch (e) {
+        // ignore parse error
+      }
+    }
+
     const fetchPreviousData = async () => {
       const { data } = await getSignupStepData(id);
       if (data?.neupId) {
         setNeupId(data.neupId);
-      } else {
-        // If NeupID isn't set, we can't be on this step
+      } else if (!savedUserInfo) {
+        // If NeupID isn't set and we don't have it locally, we likely can't be on this step
         router.push('/auth/signin/neupid');
       }
     };
