@@ -10,10 +10,13 @@ import { useEffect, useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import React from 'react';
 
+import { useToast } from '@/hooks/use-toast';
+
 function StartPageComponent() {
   const [hasSession, setHasSession] = useState(false);
   const [loading, setLoading] = useState(true);
   const searchParams = useSearchParams();
+  const { toast } = useToast();
   const error = searchParams.get('error');
   const errorDescription = searchParams.get('error_description');
   const returnUrl = searchParams.get('return_url');
@@ -27,6 +30,17 @@ function StartPageComponent() {
     checkSession();
   }, []);
 
+  useEffect(() => {
+    if (error === 'inactivity') {
+      toast({
+        variant: 'default', // or 'destructive' if preferred, but 'warning' was asked. Default with title 'Signed Out' is fine.
+        title: 'Signed Out',
+        description: 'Signed Out because of Inactvity',
+        className: 'bg-yellow-500 text-white border-none', // Simple styling for "warning" feel if no variant exists
+      });
+    }
+  }, [error, toast]);
+
   const getUrlWithReturn = (baseUrl: string) => {
     if (returnUrl) {
       return `${baseUrl}?return_url=${encodeURIComponent(returnUrl)}`;
@@ -36,19 +50,19 @@ function StartPageComponent() {
 
   if (loading) {
     return (
-        <div className="flex min-h-screen items-start justify-center bg-card md:bg-background md:items-center">
-            <Card className="mx-auto max-w-lg w-full border-0 shadow-none md:border md:shadow-sm">
-                <CardHeader>
-                    <div className="h-8 w-8 rounded-full bg-muted animate-pulse mb-4" />
-                    <div className="h-8 w-3/4 bg-muted animate-pulse" />
-                    <div className="h-5 w-1/2 bg-muted animate-pulse mt-1" />
-                </CardHeader>
-                <CardContent className="space-y-4">
-                     <div className="h-20 w-full bg-muted animate-pulse rounded-lg" />
-                     <div className="h-20 w-full bg-muted animate-pulse rounded-lg" />
-                </CardContent>
-            </Card>
-        </div>
+      <div className="flex min-h-screen items-start justify-center bg-card md:bg-background md:items-center">
+        <Card className="mx-auto max-w-lg w-full border-0 shadow-none md:border md:shadow-sm">
+          <CardHeader>
+            <div className="h-8 w-8 rounded-full bg-muted animate-pulse mb-4" />
+            <div className="h-8 w-3/4 bg-muted animate-pulse" />
+            <div className="h-5 w-1/2 bg-muted animate-pulse mt-1" />
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="h-20 w-full bg-muted animate-pulse rounded-lg" />
+            <div className="h-20 w-full bg-muted animate-pulse rounded-lg" />
+          </CardContent>
+        </Card>
+      </div>
     );
   }
 
@@ -57,7 +71,7 @@ function StartPageComponent() {
       <Card className="mx-auto max-w-lg w-full border-0 shadow-none md:border md:shadow-sm">
         <CardHeader>
           <div className="flex justify-start items-center mb-4">
-            
+
           </div>
           <CardTitle className="text-2xl font-headline">Get Started</CardTitle>
           <CardDescription>
@@ -67,13 +81,13 @@ function StartPageComponent() {
         <CardContent>
           <div className="space-y-4">
             {error && (
-                <Alert variant="destructive">
-                    <AlertTriangle className="h-4 w-4" />
-                    <AlertTitle>Authentication Error</AlertTitle>
-                    <AlertDescription>
-                        {errorDescription || 'An unknown error occurred. Please try signing in again.'}
-                    </AlertDescription>
-                </Alert>
+              <Alert variant="destructive">
+                <AlertTriangle className="h-4 w-4" />
+                <AlertTitle>Authentication Error</AlertTitle>
+                <AlertDescription>
+                  {errorDescription || 'An unknown error occurred. Please try signing in again.'}
+                </AlertDescription>
+              </Alert>
             )}
             {hasSession && (
               <Link
@@ -131,9 +145,9 @@ function StartPageComponent() {
 
 
 export default function StartPage() {
-    return (
-        <React.Suspense fallback={<div>Loading...</div>}>
-            <StartPageComponent />
-        </React.Suspense>
-    )
+  return (
+    <React.Suspense fallback={<div>Loading...</div>}>
+      <StartPageComponent />
+    </React.Suspense>
+  )
 }
