@@ -1,35 +1,16 @@
 
-"use client"
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
-import { useEffect, useRef } from "react"
-import { useRouter } from "next/navigation"
-import { getCookie, deleteCookie } from 'cookies-next';
+export default async function SwitchPage() {
+    const cookieStore = await cookies();
 
-export default function SwitchPage() {
-    const router = useRouter()
-    const hasRun = useRef(false);
-
-    useEffect(() => {
-        if (hasRun.current) return;
-        hasRun.current = true;
-
-        const managingCookie = getCookie('auth_managing');
-
-        if (managingCookie) {
-            // If managing, switch back to personal by deleting the cookie
-            deleteCookie('auth_managing', { path: '/' });
-            router.push("/manage");
-            router.refresh();
-        } else {
-            // If not managing, go to the brand selection page
-            router.push("/manage/brand");
-            router.refresh();
-        }
-    }, [router]);
-
-    return (
-        <div>
-            <p>Please wait, switching accounts...</p>
-        </div>
-    )
+    // Since the cookie is HttpOnly, we must check it server-side.
+    if (cookieStore.has('auth_managing')) {
+        // If managing, redirect to the switchback route which handles clearing the cookie
+        redirect("/auth/switchback");
+    } else {
+        // If not managing, go to the brand selection page
+        redirect("/manage/brand");
+    }
 }

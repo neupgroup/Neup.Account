@@ -12,12 +12,12 @@ export async function middleware(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
     requestHeaders.set('x-next-pathname', request.nextUrl.pathname);
     requestHeaders.set('x-is-mobile', isMobile ? 'true' : 'false');
-    
+
     // Check for device block cookie
     if (request.cookies.has('device_block')) {
         return NextResponse.redirect(new URL('/blocked', request.url));
     }
-    
+
     const response = NextResponse.next({
         request: {
             headers: requestHeaders,
@@ -26,24 +26,28 @@ export async function middleware(request: NextRequest) {
 
     // Pass the current URL to the server components via a cookie
     // This is useful for layouts to know the current path.
-    if(request.nextUrl.pathname) {
-        response.cookies.set('next-url', request.nextUrl.pathname);
+    if (request.nextUrl.pathname) {
+        response.cookies.set('next-url', request.nextUrl.pathname, {
+            secure: true,
+            httpOnly: true,
+            sameSite: 'lax',
+        });
     }
 
     return response;
 }
 
 export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - .well-known/genkit (Genkit dev UI)
-     * - blocked (the blocked page itself)
-     */
-    '/((?!api|_next/static|_next/image|favicon.ico|.well-known/genkit|blocked).*)',
-  ],
+    matcher: [
+        /*
+         * Match all request paths except for the ones starting with:
+         * - api (API routes)
+         * - _next/static (static files)
+         * - _next/image (image optimization files)
+         * - favicon.ico (favicon file)
+         * - .well-known/genkit (Genkit dev UI)
+         * - blocked (the blocked page itself)
+         */
+        '/((?!api|_next/static|_next/image|favicon.ico|.well-known/genkit|blocked).*)',
+    ],
 };

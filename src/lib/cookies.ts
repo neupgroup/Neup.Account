@@ -10,7 +10,7 @@ import type { Session } from "@/lib/auth-actions";
 /**
  * Base options for all authentication-related cookies.
  * Sets path, SameSite, Secure, and HttpOnly attributes.
- * Secure flag is set to true only in production to allow localhost development.
+ * Secure and HttpOnly flags are set to true unconditionally for ALL environments (Dev & Prod).
  */
 const COOKIE_OPTIONS = {
     path: '/',
