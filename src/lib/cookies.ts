@@ -2,7 +2,7 @@
 
 'use server';
 
-import { cookies, headers } from 'next/headers';
+import { cookies } from 'next/headers';
 import type { StoredAccount } from '@/types';
 import type { Session } from "@/lib/auth-actions";
 
@@ -15,24 +15,19 @@ import type { Session } from "@/lib/auth-actions";
 const COOKIE_OPTIONS = {
     path: '/',
     sameSite: 'lax' as const,
+    secure: true,
     httpOnly: true,
 };
 
-async function getSecureAttribute() {
-    const isProduction = process.env.NODE_ENV === 'production';
-    if (!isProduction) return false;
 
-    try {
-        const headersList = await headers();
-        const host = headersList.get('host') || '';
-        if (host.includes('localhost') || host.includes('127.0.0.1') || host.startsWith('192.168.')) {
-            return false;
-        }
-    } catch (e) {
-        // Fallback or ignore if headers() not available
-    }
-    return true;
-}
+/**
+ * Options for cookies that should persist for a long time.
+ * Simply extends the base COOKIE_OPTIONS with a 1-year expiration.
+ */
+const LONG_LIVED_COOKIE_OPTIONS = {
+    ...COOKIE_OPTIONS,
+    expires: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+};
 
 
 /**
@@ -76,8 +71,7 @@ export async function getSessionCookies() {
  */
 export async function setSessionCookies(session: Session, expires: Date) {
     const cookieStore = await cookies();
-    const isSecure = await getSecureAttribute();
-    const options = { ...COOKIE_OPTIONS, expires, secure: isSecure };
+    const options = { ...COOKIE_OPTIONS, expires };
 
     cookieStore.set('auth_account_id', session.accountId, options);
     cookieStore.set('auth_session_id', session.sessionId, options);
@@ -90,9 +84,7 @@ export async function setSessionCookies(session: Session, expires: Date) {
  */
 export async function setStoredAccountsCookie(accounts: StoredAccount[]) {
     const cookieStore = await cookies();
-    const isSecure = await getSecureAttribute();
-    const expires = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
-    cookieStore.set('auth_accounts', JSON.stringify(accounts), { ...COOKIE_OPTIONS, expires, secure: isSecure });
+    cookieStore.set('auth_accounts', JSON.stringify(accounts), LONG_LIVED_COOKIE_OPTIONS);
 }
 
 
@@ -101,8 +93,7 @@ export async function setStoredAccountsCookie(accounts: StoredAccount[]) {
  */
 export async function setManagingCookie(value: string, expires: Date) {
     const cookieStore = await cookies();
-    const isSecure = await getSecureAttribute();
-    cookieStore.set('auth_managing', value, { ...COOKIE_OPTIONS, expires, secure: isSecure });
+    cookieStore.set('auth_managing', value, { ...COOKIE_OPTIONS, expires });
 }
 
 

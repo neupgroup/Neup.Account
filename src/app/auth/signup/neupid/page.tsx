@@ -28,8 +28,8 @@ export default function NeupidStepPage() {
             neupId: "",
         },
     });
-    
-     useEffect(() => {
+
+    useEffect(() => {
         const id = sessionStorage.getItem('temp_auth_id');
         if (!id) {
             router.push('/auth/signup');
@@ -66,7 +66,7 @@ export default function NeupidStepPage() {
                 <FormField control={form.control} name="neupId" render={({ field }) => (
                     <FormItem>
                         <FormLabel>Choose your NeupID</FormLabel>
-                        <FormControl><Input {...field} /></FormControl>
+                        <FormControl><Input {...field} autoComplete="username" /></FormControl>
                         <FormMessage />
                     </FormItem>
                 )} />

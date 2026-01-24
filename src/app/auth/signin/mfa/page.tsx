@@ -26,8 +26,8 @@ function MfaForm() {
   useEffect(() => {
     const id = sessionStorage.getItem('temp_auth_id');
     if (!id) {
-        router.push('/auth/signin');
-        return;
+      router.push('/auth/signin');
+      return;
     }
     setAuthRequestId(id);
   }, [router]);
@@ -84,6 +84,7 @@ function MfaForm() {
                 value={token}
                 onChange={(e) => setToken(e.target.value)}
                 disabled={isSubmitting}
+                autoComplete="one-time-code"
               />
             </div>
             <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting}>

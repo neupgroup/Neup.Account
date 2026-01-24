@@ -58,7 +58,7 @@ export default function OtpStepPage() {
                 <FormField control={form.control} name="code" render={({ field }) => (
                     <FormItem>
                         <FormLabel>Verification Code</FormLabel>
-                        <FormControl><Input {...field} maxLength={6} /></FormControl>
+                        <FormControl><Input {...field} maxLength={6} autoComplete="one-time-code" /></FormControl>
                         <FormMessage />
                     </FormItem>
                 )} />

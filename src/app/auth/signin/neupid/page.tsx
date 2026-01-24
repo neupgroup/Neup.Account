@@ -132,6 +132,7 @@ function NeupIdPageComponent() {
                   autoFocus
                   value={neupId}
                   onChange={handleNeupIdChange}
+                  autoComplete="username"
                   className="pr-10"
                   disabled={isCheckingNeupId}
                 />

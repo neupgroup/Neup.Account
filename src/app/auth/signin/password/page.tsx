@@ -63,8 +63,8 @@ function PasswordPageContent() {
   const handlePasswordSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!authRequestId) {
-        toast({variant: 'destructive', title: 'Error', description: 'Session not found. Please try again.'});
-        return;
+      toast({ variant: 'destructive', title: 'Error', description: 'Session not found. Please try again.' });
+      return;
     }
     NProgress.start();
     startPasswordSubmit(async () => {
@@ -94,34 +94,34 @@ function PasswordPageContent() {
     if (!authRequestId) return;
     NProgress.start();
     startPasswordSubmit(async () => {
-        const { data } = await getSignupStepData(authRequestId);
-        if (!data?.accountId) {
-            toast({ variant: "destructive", title: "Error", description: "Could not find account to cancel deletion." });
-            NProgress.done();
-            return;
-        }
+      const { data } = await getSignupStepData(authRequestId);
+      if (!data?.accountId) {
+        toast({ variant: "destructive", title: "Error", description: "Could not find account to cancel deletion." });
+        NProgress.done();
+        return;
+      }
 
-        const result = await cancelAccountDeletion(data.accountId);
-        if (result.success) {
-            toast({ title: "Deletion Cancelled", description: "Your account deletion request has been cancelled. Welcome back!", className: "bg-accent text-accent-foreground" });
-            // Re-attempt login after cancellation
-            const loginResult = await submitPassword({ password, authRequestId });
-             if (loginResult.success && !loginResult.isPendingDeletion) {
-                if(loginResult.mfaRequired) {
-                  router.push(returnUrl ? `/auth/signin/mfa?return_url=${returnUrl}` : '/auth/signin/mfa');
-                }
-                else {
-                  sessionStorage.clear();
-                  router.push(returnUrl || '/manage');
-                }
-            } else {
-                toast({ variant: "destructive", title: "Sign In Failed", description: loginResult.error });
-                NProgress.done();
-            }
+      const result = await cancelAccountDeletion(data.accountId);
+      if (result.success) {
+        toast({ title: "Deletion Cancelled", description: "Your account deletion request has been cancelled. Welcome back!", className: "bg-accent text-accent-foreground" });
+        // Re-attempt login after cancellation
+        const loginResult = await submitPassword({ password, authRequestId });
+        if (loginResult.success && !loginResult.isPendingDeletion) {
+          if (loginResult.mfaRequired) {
+            router.push(returnUrl ? `/auth/signin/mfa?return_url=${returnUrl}` : '/auth/signin/mfa');
+          }
+          else {
+            sessionStorage.clear();
+            router.push(returnUrl || '/manage');
+          }
         } else {
-            toast({ variant: "destructive", title: "Error", description: result.error || "Could not cancel deletion." });
-            NProgress.done();
+          toast({ variant: "destructive", title: "Sign In Failed", description: loginResult.error });
+          NProgress.done();
         }
+      } else {
+        toast({ variant: "destructive", title: "Error", description: result.error || "Could not cancel deletion." });
+        NProgress.done();
+      }
     });
   };
 
@@ -156,6 +156,7 @@ function PasswordPageContent() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={isSubmitting}
+                autoComplete="current-password"
               />
             </div>
             <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting}>

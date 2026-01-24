@@ -28,7 +28,7 @@ export default function PasswordStepPage() {
             password: "",
         },
     });
-    
+
     useEffect(() => {
         const id = sessionStorage.getItem('temp_auth_id');
         if (!id) {
@@ -58,7 +58,7 @@ export default function PasswordStepPage() {
                 <FormField control={form.control} name="password" render={({ field }) => (
                     <FormItem>
                         <FormLabel>Create a Password</FormLabel>
-                        <FormControl><Input type="password" {...field} /></FormControl>
+                        <FormControl><Input type="password" {...field} autoComplete="new-password" /></FormControl>
                         <FormMessage />
                     </FormItem>
                 )} />
