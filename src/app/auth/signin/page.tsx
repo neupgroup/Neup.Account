@@ -11,6 +11,10 @@ function SignInFlow() {
 
   useEffect(() => {
     const startFlow = async () => {
+      if (typeof window !== 'undefined' && !window.isSecureContext) {
+        router.push('/auth/start');
+        return;
+      }
       try {
         const currentId = sessionStorage.getItem('temp_auth_id');
         const newId = await initializeAuthFlow(currentId, 'signin');
@@ -19,11 +23,11 @@ function SignInFlow() {
         const returnUrl = searchParams.get('return_url');
         const neupId = searchParams.get('neupId');
         const redirectPath = neupId ? `/auth/signin/password?neupId=${neupId}` : '/auth/signin/neupid';
-        
-        const finalUrl = returnUrl 
-          ? `${redirectPath}&return_url=${encodeURIComponent(returnUrl)}` 
+
+        const finalUrl = returnUrl
+          ? `${redirectPath}&return_url=${encodeURIComponent(returnUrl)}`
           : redirectPath;
-          
+
         router.push(finalUrl);
 
       } catch (error) {

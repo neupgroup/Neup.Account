@@ -11,6 +11,10 @@ export default function SignUpStartPage() {
 
   useEffect(() => {
     const startFlow = async () => {
+      if (typeof window !== 'undefined' && !window.isSecureContext) {
+        router.push('/auth/start');
+        return;
+      }
       try {
         const currentId = sessionStorage.getItem('temp_auth_id');
         const newId = await initializeAuthFlow(currentId, 'signup');
@@ -18,11 +22,11 @@ export default function SignUpStartPage() {
 
         const returnUrl = searchParams.get('return_url');
         const redirectPath = '/auth/signup/name';
-        
-        const finalUrl = returnUrl 
-          ? `${redirectPath}?return_url=${encodeURIComponent(returnUrl)}` 
+
+        const finalUrl = returnUrl
+          ? `${redirectPath}?return_url=${encodeURIComponent(returnUrl)}`
           : redirectPath;
-          
+
         router.push(finalUrl);
 
       } catch (error) {

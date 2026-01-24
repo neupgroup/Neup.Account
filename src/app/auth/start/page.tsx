@@ -11,12 +11,15 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import React from 'react';
 
 import { useToast } from '@/hooks/use-toast';
+import { useSecurityCheck } from '@/hooks/use-security-check';
+import { cn } from '@/lib/utils';
 
 function StartPageComponent() {
   const [hasSession, setHasSession] = useState(false);
   const [loading, setLoading] = useState(true);
   const searchParams = useSearchParams();
   const { toast } = useToast();
+  const isSecure = useSecurityCheck();
   const error = searchParams.get('error');
   const errorDescription = searchParams.get('error_description');
   const returnUrl = searchParams.get('return_url');
@@ -33,13 +36,23 @@ function StartPageComponent() {
   useEffect(() => {
     if (error === 'inactivity') {
       toast({
-        variant: 'default', // or 'destructive' if preferred, but 'warning' was asked. Default with title 'Signed Out' is fine.
+        variant: 'default',
         title: 'Signed Out',
         description: 'Signed Out because of Inactvity',
-        className: 'bg-yellow-500 text-white border-none', // Simple styling for "warning" feel if no variant exists
+        className: 'bg-yellow-500 text-white border-none',
       });
     }
-  }, [error, toast]);
+
+    if (!isSecure) {
+      toast({
+        variant: 'destructive',
+        title: 'Insecure Conditions',
+        description: 'Cant Authenticate.',
+        duration: Infinity,
+        dismissible: false,
+      });
+    }
+  }, [error, toast, isSecure]);
 
   const getUrlWithReturn = (baseUrl: string) => {
     if (returnUrl) {
@@ -79,7 +92,7 @@ function StartPageComponent() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className={cn("space-y-4", !isSecure && "pointer-events-none opacity-50")}>
             {error && (
               <Alert variant="destructive">
                 <AlertTriangle className="h-4 w-4" />
