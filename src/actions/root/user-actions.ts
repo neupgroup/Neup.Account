@@ -10,7 +10,7 @@ import { cookies, headers } from 'next/headers';
 import crypto from 'crypto';
 import { z } from 'zod';
 import { createNotification } from '../notifications';
-import { warningReasons } from '@/app/manage/root/accounts/[id]/forms';
+import { warningReasons } from '@/app/(manage)/root/accounts/[id]/forms';
 
 
 // --- Administrative Actions ---
@@ -24,10 +24,10 @@ const sendWarningSchema = z.object({
     days: z.number().optional(),
 });
 
-export async function sendWarning(userId: string, data: z.infer<typeof sendWarningSchema>): Promise<{success: boolean, error?: string}> {
+export async function sendWarning(userId: string, data: z.infer<typeof sendWarningSchema>): Promise<{ success: boolean, error?: string }> {
     const canWarn = await checkPermissions(['root.account.send_warning']);
     if (!canWarn) return { success: false, error: 'Permission denied.' };
-    
+
     const adminId = await getPersonalAccountId();
     if (!adminId) return { success: false, error: 'Administrator not authenticated.' };
 
@@ -37,20 +37,20 @@ export async function sendWarning(userId: string, data: z.infer<typeof sendWarni
     }
 
     const { reasonKey, source, remarks, noticeType, persistence, days } = validation.data;
-    
+
     let expiresOn: Date | null = null;
     if (persistence === 'untildays' && days) {
         expiresOn = new Date();
         expiresOn.setDate(expiresOn.getDate() + days);
     }
-    
+
     const actionTypeMap = {
         'general': 'information.sticky',
         'success': 'success.sticky',
         'warning': 'warning.sticky',
         'error': 'danger.sticky'
     };
-    
+
     const reasonText = warningReasons[reasonKey as keyof typeof warningReasons];
     const message = `Your account has received a warning for: <strong>${reasonText}</strong>. Please review our community guidelines.`;
 
@@ -102,10 +102,10 @@ const blockServiceSchema = z.object({
     remarks: z.string().min(1, "Remarks are required"),
 });
 
-export async function blockServiceAccess(userId: string, data: z.infer<typeof blockServiceSchema>): Promise<{success: boolean, error?: string}> {
+export async function blockServiceAccess(userId: string, data: z.infer<typeof blockServiceSchema>): Promise<{ success: boolean, error?: string }> {
     const canBlock = await checkPermissions(['root.account.give_block_account']);
     if (!canBlock) return { success: false, error: 'Permission denied.' };
-    
+
     const adminId = await getPersonalAccountId();
     if (!adminId) return { success: false, error: 'Administrator not authenticated.' };
 
@@ -113,14 +113,14 @@ export async function blockServiceAccess(userId: string, data: z.infer<typeof bl
     if (!validation.success) {
         return { success: false, error: 'Invalid data submitted.' };
     }
-    
+
     const { isPermanent, durationInHours, reasonKey, source, remarks } = validation.data;
     const { reason, message } = blockReasons[reasonKey as keyof typeof blockReasons];
-    
+
     try {
         const accountRef = doc(db, 'account', userId);
         const batch = writeBatch(db);
-        
+
         let until = null;
         if (!isPermanent && durationInHours) {
             const date = new Date();
@@ -150,11 +150,11 @@ export async function blockServiceAccess(userId: string, data: z.infer<typeof bl
             from_date: serverTimestamp(),
             more_info: `Request by admin: ${adminId}.`
         });
-        
+
         await batch.commit();
 
         await logActivity(userId, `Service access blocked. Reason: ${reason}`, 'Alert', undefined, adminId);
-        
+
         await createNotification({
             recipient_id: userId,
             action: 'danger.sticky',
@@ -172,17 +172,17 @@ export async function blockServiceAccess(userId: string, data: z.infer<typeof bl
 }
 
 
-export async function unblockServiceAccess(userId: string): Promise<{success: boolean, error?: string}> {
+export async function unblockServiceAccess(userId: string): Promise<{ success: boolean, error?: string }> {
     const canUnblock = await checkPermissions(['root.account.remove_block_account']);
     if (!canUnblock) return { success: false, error: 'Permission denied.' };
 
     const adminId = await getPersonalAccountId();
     if (!adminId) return { success: false, error: 'Administrator not authenticated.' };
 
-     try {
+    try {
         const accountRef = doc(db, 'account', userId);
         const batch = writeBatch(db);
-        
+
         batch.update(accountRef, { block: null, accountStatus: 'active' });
 
         const statusLogRef = doc(collection(db, 'account_status'));
@@ -193,11 +193,11 @@ export async function unblockServiceAccess(userId: string): Promise<{success: bo
             from_date: serverTimestamp(),
             more_info: `Request by admin: ${adminId}.`
         });
-        
+
         await batch.commit();
 
         await logActivity(userId, `Service access unblocked`, 'Success', undefined, adminId);
-        
+
         await createNotification({
             recipient_id: userId,
             action: 'informative.unblock',
@@ -212,7 +212,7 @@ export async function unblockServiceAccess(userId: string): Promise<{success: bo
     }
 }
 
-export async function impersonateUser(userId: string, neupId: string): Promise<{success: boolean, error?: string}> {
+export async function impersonateUser(userId: string, neupId: string): Promise<{ success: boolean, error?: string }> {
     const canImpersonate = await checkPermissions(['root.account.impersonate']);
     if (!canImpersonate) return { success: false, error: 'Permission denied.' };
 
@@ -238,16 +238,16 @@ export async function impersonateUser(userId: string, neupId: string): Promise<{
             lastLoggedIn: serverTimestamp(),
             loginType: 'Impersonation',
         });
-        
+
         const cookieStore = await cookies();
         const cookieOptions = { path: '/', expires: expiresOn, sameSite: 'lax' as const, secure: true, httpOnly: true };
 
         cookieStore.set('auth_account_id', userId, cookieOptions);
         cookieStore.set('auth_session_id', newSessionDocRef.id, cookieOptions);
         cookieStore.set('auth_session_key', sessionKey, cookieOptions);
-        
+
         await logActivity(userId, `Admin impersonation started by ${adminId}`, 'Alert', undefined, adminId);
-        
+
         await createNotification({
             recipient_id: userId,
             action: 'warning.sticky',
@@ -258,7 +258,7 @@ export async function impersonateUser(userId: string, neupId: string): Promise<{
         });
 
         return { success: true };
-    } catch(error) {
+    } catch (error) {
         await logError('database', error, `impersonateUser: ${userId}`);
         return { success: false, error: 'Could not start impersonation session.' };
     }
@@ -270,7 +270,7 @@ export async function deleteUserAccount(userId: string): Promise<{ success: bool
     if (!canDelete) {
         return { success: false, error: 'Permission denied.' };
     }
-    
+
     const adminId = await getPersonalAccountId();
     if (!adminId) {
         return { success: false, error: 'Administrator not authenticated.' };
@@ -291,17 +291,17 @@ export async function deleteUserAccount(userId: string): Promise<{ success: bool
 
         // --- Documents to find and delete via query ---
         const collectionsToQuery = [
-            'neupid', 
-            'contact', 
+            'neupid',
+            'contact',
             'permit', // This handles permits given to the user
-            'session', 
-            'activity', 
-            'notifications', 
-            'kyc', 
+            'session',
+            'activity',
+            'notifications',
+            'kyc',
             'requests',
             'recovery_contacts'
         ];
-        
+
         for (const coll of collectionsToQuery) {
             const q = query(collection(db, coll), where(coll === 'neupid' ? 'for' : 'accountId', '==', userId));
             const snapshot = await getDocs(q);
@@ -312,10 +312,10 @@ export async function deleteUserAccount(userId: string): Promise<{ success: bool
         const targetPermitQuery = query(collection(db, 'permit'), where('target_id', '==', userId));
         const targetPermitSnapshot = await getDocs(targetPermitQuery);
         targetPermitSnapshot.forEach(doc => batch.delete(doc.ref));
-        
+
         await batch.commit();
         await logActivity(userId, `Account permanently deleted by admin ${adminId}`, 'Alert', undefined, adminId);
-        
+
         return { success: true };
 
     } catch (error) {
@@ -327,7 +327,7 @@ export async function deleteUserAccount(userId: string): Promise<{ success: bool
 export async function setProStatus(accountId: string, isPro: boolean, reason: string): Promise<{ success: boolean; error?: string }> {
     const canModify = await checkPermissions(['root.account.edit_pro_status']);
     if (!canModify) return { success: false, error: 'Permission denied.' };
-    
+
     const adminId = await getPersonalAccountId();
     if (!adminId) return { success: false, error: 'Administrator not authenticated.' };
 
@@ -337,7 +337,7 @@ export async function setProStatus(accountId: string, isPro: boolean, reason: st
 
         const action = isPro ? 'Activated Neup.Pro' : 'Deactivated Neup.Pro';
         await logActivity(accountId, `${action} by admin. Reason: ${reason}`, 'Success', undefined, adminId);
-        
+
         await createNotification({
             recipient_id: accountId,
             action: isPro ? 'success.sticky' : 'warning.sticky',
@@ -346,7 +346,7 @@ export async function setProStatus(accountId: string, isPro: boolean, reason: st
             noticeType: isPro ? 'success' : 'warning',
             sender_id: adminId,
         });
-        
+
         return { success: true };
     } catch (e) {
         await logError('database', e, `setProStatus for account ${accountId}`);

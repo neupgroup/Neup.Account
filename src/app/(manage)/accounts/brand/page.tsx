@@ -3,7 +3,7 @@ import { getBrandAccounts } from "@/actions/manage/accounts/brand";
 import { notFound } from "next/navigation";
 import { getPersonalAccountId } from "@/lib/auth-actions";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { AccountListItem } from "@/app/auth/accounts/account-list-item";
+import { AccountListItem } from "@/app/(auth)/auth/accounts/account-list-item";
 import { Button } from "@/components/ui/button";
 import { Plus } from "@/components/icons";
 import Link from "next/link";
@@ -20,8 +20,8 @@ export default async function BrandAccountsPage() {
 
     const mappedBrandAccounts = brandAccounts.map(brand => ({
         accountId: brand.id,
-        sessionId: '', 
-        sessionKey: '', 
+        sessionId: '',
+        sessionKey: '',
         expired: false,
         isBrand: true,
         displayName: brand.name,
@@ -38,8 +38,8 @@ export default async function BrandAccountsPage() {
                     Select a brand to manage or create a new one.
                 </p>
             </div>
-            
-             <Card>
+
+            <Card>
                 <CardHeader>
                     <SecondaryHeader
                         title="Your Brands"
@@ -49,7 +49,7 @@ export default async function BrandAccountsPage() {
                 <CardContent className="p-0 divide-y">
                     {mappedBrandAccounts.length > 0 ? (
                         mappedBrandAccounts.map(acc => (
-                            <AccountListItem 
+                            <AccountListItem
                                 key={acc.accountId}
                                 account={acc}
                             />
@@ -64,7 +64,7 @@ export default async function BrandAccountsPage() {
                         </div>
                     )}
                 </CardContent>
-                 <CardContent className="pt-6 border-t">
+                <CardContent className="pt-6 border-t">
                     <Button asChild>
                         <Link href="/manage/accounts/brand/create"><Plus className="mr-2 h-4 w-4" />Create New Brand</Link>
                     </Button>

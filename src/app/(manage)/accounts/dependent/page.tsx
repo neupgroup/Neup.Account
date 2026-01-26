@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { getDependentAccounts } from "@/actions/manage/accounts/dependent";
 import { User, Plus } from "lucide-react";
 import { notFound } from "next/navigation";
-import { AccountListItem } from "@/app/auth/accounts/account-list-item";
+import { AccountListItem } from "@/app/(auth)/auth/accounts/account-list-item";
 import { BackButton } from "@/components/ui/back-button";
 import { checkPermissions } from "@/lib/user";
 
@@ -19,13 +19,13 @@ export default async function DependentAccountsPage() {
     if (!canView) {
         notFound();
     }
-    
+
     const dependentAccounts = await getDependentAccounts();
 
     const mappedAccounts = dependentAccounts.map(acc => ({
         accountId: acc.id,
-        sessionId: '', 
-        sessionKey: '', 
+        sessionId: '',
+        sessionKey: '',
         expired: false,
         displayName: acc.nameDisplay || '',
         neupId: acc.neupId || '',
@@ -52,9 +52,9 @@ export default async function DependentAccountsPage() {
                     </div>
                 </CardHeader>
                 <CardContent className="p-0 divide-y">
-                   {mappedAccounts.length > 0 ? (
+                    {mappedAccounts.length > 0 ? (
                         mappedAccounts.map(acc => (
-                           <AccountListItem key={acc.accountId} account={acc} />
+                            <AccountListItem key={acc.accountId} account={acc} />
                         ))
                     ) : (
                         <div className="flex flex-col items-center justify-center text-center p-8 gap-4">
@@ -66,7 +66,7 @@ export default async function DependentAccountsPage() {
                         </div>
                     )}
                 </CardContent>
-                 <CardContent className="pt-6 border-t">
+                <CardContent className="pt-6 border-t">
                     <Button asChild>
                         <Link href="/manage/accounts/dependent/create"><Plus className="mr-2 h-4 w-4" />Create New Dependent</Link>
                     </Button>

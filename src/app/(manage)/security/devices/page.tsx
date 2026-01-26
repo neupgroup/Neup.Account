@@ -3,7 +3,7 @@ import {
     Card,
 } from "@/components/ui/card";
 import { getUserSessions } from "@/actions/security/sessions";
-import { SessionManager } from "@/app/manage/security/session-manager";
+import { SessionManager } from "@/app/(manage)/security/session-manager";
 import { getActiveSession } from "@/lib/auth-actions";
 import { BackButton } from "@/components/ui/back-button";
 import { checkPermissions } from "@/lib/user";
@@ -41,9 +41,9 @@ export default async function DevicesPage() {
                     description="You can sign out any session you don't recognize."
                 />
                 <Card>
-                    <SessionManager 
-                        initialSessions={sessions} 
-                        currentSessionId={currentSessionId} 
+                    <SessionManager
+                        initialSessions={sessions}
+                        currentSessionId={currentSessionId}
                     />
                 </Card>
             </div>

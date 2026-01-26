@@ -1,6 +1,6 @@
 
 
-import { BrandProfileForm } from '@/app/manage/profile/brand-form';
+import { BrandProfileForm } from '@/app/(manage)/profile/brand-form';
 
 export default function BrandInfoPage({ params }: { params: { id: string } }) {
   // eslint-disable-next-line react/no-children-prop

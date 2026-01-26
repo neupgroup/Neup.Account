@@ -11,7 +11,7 @@ import { ListItem } from '@/components/ui/list-item';
 import { SecondaryHeader } from '@/components/ui/secondary-header';
 import { Bot, Building, UserPlus, FolderGit2 } from '@/components/icons';
 import { PrimaryHeader } from '@/components/ui/primary-header';
-import { AccountListItem } from '@/app/auth/accounts/account-list-item';
+import { AccountListItem } from '@/app/(auth)/auth/accounts/account-list-item';
 
 
 const LinkAndCreateFeatures = () => (
@@ -54,74 +54,74 @@ export default async function AccountsPage() {
   // If managing, we don't need to show other accounts, just the management features.
   // The primary logic for showing manageable accounts lives on the personal account dashboard.
   if (!isManaging) {
-     const [storedAccounts, brandAccounts, dependentAccounts] = await Promise.all([
-        getStoredAccounts(),
-        getBrandAccounts(),
-        getDependentAccounts(),
+    const [storedAccounts, brandAccounts, dependentAccounts] = await Promise.all([
+      getStoredAccounts(),
+      getBrandAccounts(),
+      getDependentAccounts(),
     ]);
 
     const otherPersonalAccounts = storedAccounts.filter(acc => acc.accountId !== personalAccountId && !acc.isBrand);
 
     const mappedBrandAccounts = brandAccounts.map(brand => ({
-        accountId: brand.id,
-        sessionId: '',
-        sessionKey: '', 
-        expired: false,
-        isBrand: true,
-        displayName: brand.name,
-        neupId: `brand`, // Placeholder
-        displayPhoto: brand.logoUrl,
-        plan: brand.plan,
+      accountId: brand.id,
+      sessionId: '',
+      sessionKey: '',
+      expired: false,
+      isBrand: true,
+      displayName: brand.name,
+      neupId: `brand`, // Placeholder
+      displayPhoto: brand.logoUrl,
+      plan: brand.plan,
     }));
 
     const mappedDependentAccounts = dependentAccounts.map(acc => ({
-        accountId: acc.id,
-        sessionId: '',
-        sessionKey: '',
-        expired: false,
-        displayName: acc.nameDisplay,
-        displayPhoto: acc.accountPhoto,
-        neupId: acc.neupId,
-        isDependent: true,
+      accountId: acc.id,
+      sessionId: '',
+      sessionKey: '',
+      expired: false,
+      displayName: acc.nameDisplay,
+      displayPhoto: acc.accountPhoto,
+      neupId: acc.neupId,
+      isDependent: true,
     }));
-    
+
     accountsToShow = [...otherPersonalAccounts, ...mappedBrandAccounts, ...mappedDependentAccounts];
   }
-  
+
   return (
     <div className="grid gap-8">
-      <PrimaryHeader 
+      <PrimaryHeader
         title="Accounts"
         description="Manage your connections, create new accounts, and switch between them."
       />
 
-       <div className="space-y-2">
-            <SecondaryHeader 
-                title="Link & Create Accounts"
-                description="Add new brand or dependent accounts to your profile."
-            />
-            <Card>
-                <CardContent className="divide-y p-0">
-                    <LinkAndCreateFeatures />
-                </CardContent>
-            </Card>
-        </div>
+      <div className="space-y-2">
+        <SecondaryHeader
+          title="Link & Create Accounts"
+          description="Add new brand or dependent accounts to your profile."
+        />
+        <Card>
+          <CardContent className="divide-y p-0">
+            <LinkAndCreateFeatures />
+          </CardContent>
+        </Card>
+      </div>
 
-        {!isManaging && (
-            <div className="space-y-2">
-                <SecondaryHeader 
-                    title="Manage Accounts"
-                    description="Switch to another account you have access to."
-                />
-                <Card>
-                    <CardContent className="p-0 divide-y">
-                        {accountsToShow.map((acc: any) => (
-                           <AccountListItem key={acc.accountId} account={acc} />
-                        ))}
-                    </CardContent>
-                </Card>
-            </div>
-        )}
+      {!isManaging && (
+        <div className="space-y-2">
+          <SecondaryHeader
+            title="Manage Accounts"
+            description="Switch to another account you have access to."
+          />
+          <Card>
+            <CardContent className="p-0 divide-y">
+              {accountsToShow.map((acc: any) => (
+                <AccountListItem key={acc.accountId} account={acc} />
+              ))}
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
