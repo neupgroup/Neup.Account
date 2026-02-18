@@ -63,14 +63,14 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
                 getPersonalAccountId()
             ]);
 
-            if (!activeId || !personalId) {
-                setSessionState(s => ({ ...s, loading: false, profile: null, permissions: [] }));
+        if (!activeId || !personalId) {
+            setSessionState(s => ({ ...s, loading: false, profile: null, permissions: [] }));
                 // Only redirect if we're on a protected route
-                if (typeof window !== 'undefined' && window.location.pathname.startsWith('/manage')) {
-                    window.location.href = '/auth/signout?error=session_expired&error_description=Your session has expired. Please sign in again.';
+                if (typeof window !== 'undefined' && (window.location.pathname.startsWith('/manage') || window.location.pathname === '/')) {
+                    window.location.href = '/auth/start';
                 }
-                return;
-            }
+            return;
+        }
 
             const [profile, permissions] = await Promise.all([
                 fetchUserProfile(activeId),

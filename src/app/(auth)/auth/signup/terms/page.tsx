@@ -48,7 +48,7 @@ export default function TermsStepPage() {
         if (result.success) {
             sessionStorage.clear();
             const returnUrl = searchParams.get('return_url');
-            router.push(returnUrl || '/manage');
+            router.push(returnUrl || '/');
         } else {
             toast({ variant: 'destructive', title: 'Error', description: result.error });
             NProgress.done();
@@ -70,7 +70,7 @@ export default function TermsStepPage() {
                             </FormControl>
                             <div className="space-y-1 leading-none">
                                 <FormLabel>
-                                    I agree to the <Link href="/manage/policies" target="_blank" className="underline text-primary">terms and conditions</Link>.
+                                    I agree to the <Link href="/policies" target="_blank" className="underline text-primary">terms and conditions</Link>.
                                 </FormLabel>
                                 <FormMessage />
                             </div>
