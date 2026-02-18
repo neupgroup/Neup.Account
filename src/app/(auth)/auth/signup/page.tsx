@@ -1,16 +1,734 @@
 'use client';
 
-import { useEffect, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { initializeAuthFlow } from '@/actions/auth/initialize';
-import { NameStep } from './_components/name-step';
-import { DemographicsStep } from './_components/demographics-step';
-import { NationalityStep } from './_components/nationality-step';
-import { ContactStep } from './_components/contact-step';
-import { OtpStep } from './_components/otp-step';
-import { NeupIdStep } from './_components/neupid-step';
-import { PasswordStep } from './_components/password-step';
-import { TermsStep } from './_components/terms-step';
+import { useEffect, useState, Suspense } from "react";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { useRouter, useSearchParams } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import NProgress from 'nprogress';
+import { format } from "date-fns";
+
+import { useToast } from "@/hooks/use-toast";
+import { 
+    submitNameStep, 
+    getSignupStepData, 
+    submitDemographicsStep, 
+    submitNationalityStep, 
+    submitContactStep, 
+    submitOtpStep, 
+    submitNeupIdStep, 
+    submitPasswordStep, 
+    submitTermsStep 
+} from "@/actions/auth/signup";
+import { initializeAuthFlow } from "@/actions/auth/initialize";
+import { parseDateString } from "@/actions/profile";
+import { 
+    nameSchema, 
+    demographicsSchema, 
+    nationalitySchema, 
+    contactSchema, 
+    otpSchema, 
+    neupidSchema, 
+    passwordSchema, 
+    termsSchema 
+} from "@/schemas/signup";
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Loader2, Check } from "@/components/icons";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { countries } from "./countries";
+
+// --- Components ---
+
+function NameStep() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const { toast } = useToast();
+    const [showMiddleName, setShowMiddleName] = useState(false);
+    const [authRequestId, setAuthRequestId] = useState<string | null>(null);
+
+    const form = useForm<z.infer<typeof nameSchema>>({
+        resolver: zodResolver(nameSchema),
+        defaultValues: {
+            firstName: "",
+            middleName: "",
+            lastName: "",
+        },
+    });
+
+    useEffect(() => {
+        const initFlow = async () => {
+            let id = sessionStorage.getItem('temp_auth_id');
+
+            if (!id) {
+                try {
+                    id = await initializeAuthFlow(null, 'signup');
+                    sessionStorage.setItem('temp_auth_id', id);
+                    setAuthRequestId(id);
+                } catch (error) {
+                    console.error("Failed to initialize signup flow", error);
+                    toast({ variant: 'destructive', title: 'Error', description: 'Failed to initialize session. Please refresh.' });
+                    return;
+                }
+            } else {
+                setAuthRequestId(id);
+                async function loadData() {
+                    const { data } = await getSignupStepData(id!);
+                    if (data) {
+                        form.reset({
+                            firstName: data.nameFirst || "",
+                            middleName: data.nameMiddle || "",
+                            lastName: data.nameLast || "",
+                        });
+                        if (data.nameMiddle) {
+                            setShowMiddleName(true);
+                        }
+                    }
+                }
+                loadData();
+            }
+        };
+        initFlow();
+    }, [router, form, toast]);
+
+    const onSubmit = async (data: z.infer<typeof nameSchema>) => {
+        const currentId = authRequestId || sessionStorage.getItem('temp_auth_id');
+        if (!currentId) {
+            toast({ title: 'Please wait...', description: 'Initializing secure session.' });
+            return;
+        }
+
+        NProgress.start();
+        const result = await submitNameStep(currentId, data);
+        if (result.success) {
+            const params = new URLSearchParams(searchParams.toString());
+            params.set('step', 'demographics');
+            router.push(`/auth/signup?${params.toString()}`);
+        } else {
+            toast({ variant: 'destructive', title: 'Error', description: result.error });
+            NProgress.done();
+        }
+    }
+
+    const isSubmitting = form.formState.isSubmitting;
+
+    return (
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <FormField control={form.control} name="firstName" render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>First Name</FormLabel>
+                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
+                        <FormMessage />
+                    </FormItem>
+                )} />
+
+                {!showMiddleName && (
+                    <div className="flex items-center space-x-2">
+                        <Checkbox id="hasMiddleName" onCheckedChange={(checked) => setShowMiddleName(!!checked)} disabled={isSubmitting} />
+                        <Label htmlFor="hasMiddleName" className="font-normal cursor-pointer">I have a middle name</Label>
+                    </div>
+                )}
+
+                {showMiddleName && (
+                    <FormField control={form.control} name="middleName" render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Middle Name</FormLabel>
+                            <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )} />
+                )}
+
+                <FormField control={form.control} name="lastName" render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Last Name</FormLabel>
+                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
+                        <FormMessage />
+                    </FormItem>
+                )} />
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    Next
+                </Button>
+            </form>
+        </Form>
+    );
+}
+
+function DemographicsStep() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const { toast } = useToast();
+    const [dateInput, setDateInput] = useState<string>('');
+    const [isParsingDate, setIsParsingDate] = useState(false);
+    const [authRequestId, setAuthRequestId] = useState<string | null>(null);
+
+    const form = useForm<z.infer<typeof demographicsSchema>>({
+        resolver: zodResolver(demographicsSchema),
+        defaultValues: {
+            customGender: "",
+        },
+    });
+    
+    const genderValue = form.watch("gender");
+    
+    useEffect(() => {
+        const id = sessionStorage.getItem('temp_auth_id');
+        if (!id) {
+            router.push('/auth/signup');
+            return;
+        }
+        setAuthRequestId(id);
+
+        async function loadData() {
+            const { data } = await getSignupStepData(id || '');
+            if (data) {
+                let formGender = data.gender;
+                let formCustomGender = data.customGender || "";
+                
+                const dobDate = data.dateBirth ? new Date(data.dateBirth) : undefined;
+                if (dobDate) {
+                    setDateInput(format(dobDate, 'yyyy-MM-dd'));
+                }
+
+                form.reset({
+                    dob: dobDate,
+                    gender: formGender || undefined,
+                    customGender: formCustomGender,
+                });
+            }
+        }
+        loadData();
+    }, [router, form]);
+
+    const handleDateInputBlur = async () => {
+        if (!dateInput) return;
+        if (dateInput.length > 30) {
+            form.setError("dob", { type: "manual", message: "Input must be 30 characters or less." });
+            return;
+        }
+
+        const currentDate = form.getValues("dob");
+        if (currentDate && dateInput === format(currentDate, 'yyyy-MM-dd')) {
+            form.clearErrors('dob');
+            return;
+        }
+
+        setIsParsingDate(true);
+        form.clearErrors('dob');
+        const result = await parseDateString(dateInput);
+        setIsParsingDate(false);
+
+        if (result.success && result.date) {
+            const newDate = new Date(result.date + 'T00:00:00');
+            form.setValue('dob', newDate, { shouldDirty: true, shouldValidate: true });
+            setDateInput(format(newDate, 'yyyy-MM-dd'));
+        } else {
+            form.setError('dob', { type: 'manual', message: result.error || 'Invalid date format.' });
+        }
+    };
+
+    const onSubmit = async (data: z.infer<typeof demographicsSchema>) => {
+        if (!authRequestId) return;
+        NProgress.start();
+        const result = await submitDemographicsStep(authRequestId, data);
+        if (result.success) {
+            const params = new URLSearchParams(searchParams.toString());
+            params.set('step', 'nationality');
+            router.push(`/auth/signup?${params.toString()}`);
+        } else {
+            toast({ variant: 'destructive', title: 'Error', description: result.error });
+            NProgress.done();
+        }
+    }
+
+    const isSubmitting = form.formState.isSubmitting;
+    
+    const genderOptions = ["Male", "Female", "Prefer not to say", "Custom"];
+
+    return (
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <FormField
+                    control={form.control}
+                    name="gender"
+                    render={({ field }) => (
+                        <FormItem className="space-y-3">
+                            <FormLabel>Gender</FormLabel>
+                             <FormControl>
+                                <RadioGroup
+                                    onValueChange={field.onChange}
+                                    value={field.value}
+                                    className="block"
+                                >
+                                    <div className="border border-input rounded-lg overflow-hidden">
+                                    {genderOptions.map((option) => {
+                                        const value = option.toLowerCase().replace(/\s/g, '_');
+                                        return (
+                                            <FormItem key={value} className="m-0">
+                                                <Label htmlFor={`gender-${value}`} className="flex items-center space-x-3 space-y-0 p-3 cursor-pointer hover:bg-muted/50 transition-colors border-b border-input last:border-b-0 has-[input:checked]:bg-primary/10">
+                                                    <div className="relative flex items-center">
+                                                        <RadioGroupItem value={value} id={`gender-${value}`} className="peer sr-only" />
+                                                            <div className="w-5 h-5 border-2 border-primary rounded-sm flex-shrink-0 peer-data-[state=checked]:bg-primary peer-data-[state=checked]:text-white flex items-center justify-center">
+                                                            <Check className="h-4 w-4 opacity-0 peer-data-[state=checked]:opacity-100" />
+                                                        </div>
+                                                    </div>
+                                                    <span className="ml-3 font-normal">{option}</span>
+                                                </Label>
+                                            </FormItem>
+                                        );
+                                    })}
+                                    </div>
+                                </RadioGroup>
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                
+                {genderValue === 'custom' && (
+                    <FormField
+                        control={form.control}
+                        name="customGender"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Custom Gender</FormLabel>
+                                <FormControl>
+                                    <Input {...field} placeholder="Please specify" />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                )}
+
+                 <FormField
+                    control={form.control}
+                    name="dob"
+                    render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                        <FormLabel>Date of birth</FormLabel>
+                            <div className="relative w-full">
+                                <Input
+                                    placeholder="YYYY-MM-DD or e.g. June 12 2002"
+                                    value={dateInput}
+                                    onChange={(e) => setDateInput(e.target.value)}
+                                    onBlur={handleDateInputBlur}
+                                    disabled={isParsingDate || isSubmitting}
+                                    className="pr-10"
+                                />
+                                {isParsingDate && <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin" />}
+                            </div>
+                        <FormMessage />
+                    </FormItem>
+                    )}
+                />
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    Next
+                </Button>
+            </form>
+        </Form>
+    );
+}
+
+function NationalityStep() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const { toast } = useToast();
+    const [authRequestId, setAuthRequestId] = useState<string | null>(null);
+
+    const form = useForm<z.infer<typeof nationalitySchema>>({
+        resolver: zodResolver(nationalitySchema),
+    });
+
+    useEffect(() => {
+        const id = sessionStorage.getItem('temp_auth_id');
+        if (!id) {
+            router.push('/auth/signup');
+            return;
+        }
+        setAuthRequestId(id);
+
+        async function loadData() {
+            const { data } = await getSignupStepData(id || '');
+            if (data?.nationality) {
+                form.setValue("nationality", data.nationality);
+            }
+        }
+        loadData();
+    }, [router, form]);
+
+    const onSubmit = async (data: z.infer<typeof nationalitySchema>) => {
+        if (!authRequestId) return;
+        NProgress.start();
+        const result = await submitNationalityStep(authRequestId, data);
+        if (result.success) {
+            const params = new URLSearchParams(searchParams.toString());
+            params.set('step', 'contact');
+            router.push(`/auth/signup?${params.toString()}`);
+        } else {
+            toast({ variant: 'destructive', title: 'Error', description: result.error });
+            NProgress.done();
+        }
+    }
+
+    const isSubmitting = form.formState.isSubmitting;
+
+    return (
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <FormField
+                    control={form.control}
+                    name="nationality"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Nationality</FormLabel>
+                            <Select onValueChange={field.onChange} value={field.value}>
+                                <FormControl>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select your country" />
+                                    </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                    {countries.map(country => (
+                                        <SelectItem key={country.code} value={country.name}>
+                                            {country.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    Next
+                </Button>
+            </form>
+        </Form>
+    );
+}
+
+function ContactStep() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const { toast } = useToast();
+    const [authRequestId, setAuthRequestId] = useState<string | null>(null);
+
+    const form = useForm<z.infer<typeof contactSchema>>({
+        resolver: zodResolver(contactSchema),
+        defaultValues: {
+            phone: "",
+        },
+    });
+
+    useEffect(() => {
+        const id = sessionStorage.getItem('temp_auth_id');
+        if (!id) {
+            router.push('/auth/signup');
+            return;
+        }
+        setAuthRequestId(id);
+
+        async function loadData() {
+            const { data } = await getSignupStepData(id || '');
+            if (data?.phone) {
+                form.setValue("phone", data.phone);
+            }
+        }
+        loadData();
+    }, [router, form]);
+
+    const onSubmit = async (data: z.infer<typeof contactSchema>) => {
+        if (!authRequestId) return;
+        NProgress.start();
+        const result = await submitContactStep(authRequestId, data);
+        if (result.success) {
+            const params = new URLSearchParams(searchParams.toString());
+            params.set('step', 'neupid');
+            router.push(`/auth/signup?${params.toString()}`);
+        } else {
+            toast({ variant: 'destructive', title: 'Error', description: result.error });
+            NProgress.done();
+        }
+    }
+
+    const isSubmitting = form.formState.isSubmitting;
+
+    return (
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <FormField control={form.control} name="phone" render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Phone Number</FormLabel>
+                        <FormControl><Input type="tel" {...field} /></FormControl>
+                        <FormMessage />
+                    </FormItem>
+                )} />
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    Continue
+                </Button>
+            </form>
+        </Form>
+    );
+}
+
+function OtpStep() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const { toast } = useToast();
+    const [authRequestId, setAuthRequestId] = useState<string | null>(null);
+
+    const form = useForm<z.infer<typeof otpSchema>>({
+        resolver: zodResolver(otpSchema),
+        defaultValues: {
+            code: "",
+        },
+    });
+
+    useEffect(() => {
+        const id = sessionStorage.getItem('temp_auth_id');
+        if (!id) {
+            router.push('/auth/signup');
+            return;
+        }
+        setAuthRequestId(id);
+    }, [router]);
+
+    const onSubmit = async (data: z.infer<typeof otpSchema>) => {
+        if (!authRequestId) return;
+        NProgress.start();
+        const result = await submitOtpStep(authRequestId, data);
+        if (result.success) {
+            const params = new URLSearchParams(searchParams.toString());
+            params.set('step', 'neupid');
+            router.push(`/auth/signup?${params.toString()}`);
+        } else {
+            toast({ variant: 'destructive', title: 'Error', description: result.error });
+            NProgress.done();
+        }
+    }
+
+    const isSubmitting = form.formState.isSubmitting;
+
+    return (
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <FormField control={form.control} name="code" render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Verification Code</FormLabel>
+                        <FormControl><Input {...field} maxLength={6} autoComplete="one-time-code" /></FormControl>
+                        <FormMessage />
+                    </FormItem>
+                )} />
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    Verify and Continue
+                </Button>
+            </form>
+        </Form>
+    );
+}
+
+function NeupIdStep() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const { toast } = useToast();
+    const [authRequestId, setAuthRequestId] = useState<string | null>(null);
+
+    const form = useForm<z.infer<typeof neupidSchema>>({
+        resolver: zodResolver(neupidSchema),
+        defaultValues: {
+            neupId: "",
+        },
+    });
+
+    useEffect(() => {
+        const id = sessionStorage.getItem('temp_auth_id');
+        if (!id) {
+            router.push('/auth/signup');
+            return;
+        }
+        setAuthRequestId(id);
+
+        async function loadData() {
+            const { data } = await getSignupStepData(id || '');
+            if (data?.neupId) {
+                form.setValue("neupId", data.neupId);
+            }
+        }
+        loadData();
+    }, [router, form]);
+
+    const onSubmit = async (data: z.infer<typeof neupidSchema>) => {
+        if (!authRequestId) return;
+        NProgress.start();
+        const result = await submitNeupIdStep(authRequestId, data);
+        if (result.success) {
+            const params = new URLSearchParams(searchParams.toString());
+            params.set('step', 'password');
+            router.push(`/auth/signup?${params.toString()}`);
+        } else {
+            toast({ variant: 'destructive', title: 'Error', description: result.error });
+            NProgress.done();
+        }
+    }
+
+    const isSubmitting = form.formState.isSubmitting;
+
+    return (
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <FormField control={form.control} name="neupId" render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Choose your NeupID</FormLabel>
+                        <FormControl><Input {...field} autoComplete="username" /></FormControl>
+                        <FormMessage />
+                    </FormItem>
+                )} />
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    Next
+                </Button>
+            </form>
+        </Form>
+    );
+}
+
+function PasswordStep() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const { toast } = useToast();
+    const [authRequestId, setAuthRequestId] = useState<string | null>(null);
+
+    const form = useForm<z.infer<typeof passwordSchema>>({
+        resolver: zodResolver(passwordSchema),
+        defaultValues: {
+            password: "",
+        },
+    });
+
+    useEffect(() => {
+        const id = sessionStorage.getItem('temp_auth_id');
+        if (!id) {
+            router.push('/auth/signup');
+            return;
+        }
+        setAuthRequestId(id);
+    }, [router]);
+
+    const onSubmit = async (data: z.infer<typeof passwordSchema>) => {
+        if (!authRequestId) return;
+        NProgress.start();
+        const result = await submitPasswordStep(authRequestId, data);
+        if (result.success) {
+            const params = new URLSearchParams(searchParams.toString());
+            params.set('step', 'terms');
+            router.push(`/auth/signup?${params.toString()}`);
+        } else {
+            toast({ variant: 'destructive', title: 'Error', description: result.error });
+            NProgress.done();
+        }
+    }
+
+    const isSubmitting = form.formState.isSubmitting;
+
+    return (
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <FormField control={form.control} name="password" render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Create a Password</FormLabel>
+                        <FormControl><Input type="password" {...field} autoComplete="new-password" /></FormControl>
+                        <FormMessage />
+                    </FormItem>
+                )} />
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    Next
+                </Button>
+            </form>
+        </Form>
+    );
+}
+
+function TermsStep() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const { toast } = useToast();
+    const [authRequestId, setAuthRequestId] = useState<string | null>(null);
+
+    const form = useForm<z.infer<typeof termsSchema>>({
+        resolver: zodResolver(termsSchema),
+        defaultValues: {
+            agreement: false,
+        },
+    });
+
+    useEffect(() => {
+        const id = sessionStorage.getItem('temp_auth_id');
+        if (!id) {
+            router.push('/auth/signup');
+            return;
+        }
+        setAuthRequestId(id);
+    }, [router]);
+
+    const onSubmit = async (data: z.infer<typeof termsSchema>) => {
+        if (!authRequestId) return;
+        NProgress.start();
+        const result = await submitTermsStep(authRequestId, data);
+        if (result.success) {
+            sessionStorage.clear();
+            const returnUrl = searchParams.get('return_url');
+            router.push(returnUrl || '/');
+        } else {
+            toast({ variant: 'destructive', title: 'Error', description: result.error });
+            NProgress.done();
+        }
+    }
+
+    const isSubmitting = form.formState.isSubmitting;
+
+    return (
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <FormField
+                    control={form.control}
+                    name="agreement"
+                    render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                            <FormControl>
+                                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                            </FormControl>
+                            <div className="space-y-1 leading-none">
+                                <FormLabel>
+                                    I agree to the <Link href="/policies" target="_blank" className="underline text-primary">terms and conditions</Link>.
+                                </FormLabel>
+                                <FormMessage />
+                            </div>
+                        </FormItem>
+                    )}
+                />
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    Create Account
+                </Button>
+            </form>
+        </Form>
+    );
+}
+
+// --- Main Page ---
 
 function SignupFlow() {
   const router = useRouter();

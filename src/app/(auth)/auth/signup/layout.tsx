@@ -1,4 +1,3 @@
-import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
