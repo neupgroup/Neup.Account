@@ -2,7 +2,7 @@
 
 import { useRef, useTransition, useState, useEffect, useCallback } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { useForm, useFieldArray } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useDebounce } from 'use-debounce';
@@ -48,11 +48,8 @@ export default function CreatePermissionPage() {
         defaultValues: { name: '', app_id: '', access: [], description: '' }
     });
     
-    const { fields, append, remove } = useFieldArray<FormValues>({
-        control: form.control,
-        name: "access",
-    });
-    
+    const accessList = form.watch("access");
+
     const appIdValue = form.watch("app_id");
     const [debouncedAppId] = useDebounce(appIdValue, 500);
 
@@ -77,7 +74,10 @@ export default function CreatePermissionPage() {
         const currentPermissions = new Set(form.getValues('access'));
         const uniqueNewPerms = perms.filter(p => !currentPermissions.has(p));
         
-        uniqueNewPerms.forEach(p => append(p));
+        if (uniqueNewPerms.length > 0) {
+            const current = form.getValues('access');
+            form.setValue('access', [...current, ...uniqueNewPerms]);
+        }
         setPermissionInput('');
     }
 
@@ -194,10 +194,13 @@ export default function CreatePermissionPage() {
                                     </div>
                                     <FormDescription>Enter permissions in 'domain.action' format, separated by commas.</FormDescription>
                                     <div className="flex flex-wrap gap-2 border rounded-md p-2 min-h-[40px]">
-                                        {fields.map((field, index) => (
-                                            <Badge key={field.id} variant="outline" className="text-sm font-normal">
-                                                {form.getValues('access')[index]}
-                                                <button type="button" onClick={() => remove(index)} className="ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2">
+                                        {accessList.map((perm, index) => (
+                                            <Badge key={perm} variant="outline" className="text-sm font-normal">
+                                                {perm}
+                                                <button type="button" onClick={() => {
+                                                    const current = form.getValues('access');
+                                                    form.setValue('access', current.filter((_, i) => i !== index));
+                                                }} className="ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2">
                                                     <XCircle className="h-4 w-4" />
                                                 </button>
                                             </Badge>

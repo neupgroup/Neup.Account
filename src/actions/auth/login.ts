@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from '@/lib/firebase';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { headers } from 'next/headers';
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
@@ -49,14 +49,22 @@ export async function submitNeupId(data: z.infer<typeof neupIdSchema>) {
         return { success: false, error: "Account mapping is missing." };
     }
 
-    await updateDoc(request.ref, {
-        'data.neupId': lowerCaseNeupId,
-        'data.isPendingDeletion': validationResult.error === 'pending_deletion',
-        accountId: accountId,
-        status: 'pending_password',
+    const currentData = (request.data.data as Record<string, any>) || {};
+    
+    await prisma.authRequest.update({
+        where: { id: request.id },
+        data: {
+            data: {
+                ...currentData,
+                neupId: lowerCaseNeupId,
+                isPendingDeletion: validationResult.error === 'pending_deletion',
+            },
+            accountId: accountId,
+            status: 'pending_password',
+        }
     });
 
-    await extendAuthRequest(request.ref);
+    await extendAuthRequest(request.id);
 
     // Fetch user details to return to client for session storage optimization
     const { getUserProfile, getUserContacts } = await import('@/lib/user');
@@ -89,7 +97,9 @@ export async function submitPassword(data: z.infer<typeof passwordSchema>): Prom
         return { success: false, mfaRequired: false, error: 'Your session has expired. Please try again.' };
     }
 
-    const { accountId, data: { isPendingDeletion } } = request.data;
+    const accountId = request.data.accountId;
+    const requestData = (request.data.data as Record<string, any>) || {};
+    const isPendingDeletion = requestData.isPendingDeletion;
 
     // Verify password using Prisma instead of Firebase
     const passwordRecord = await prisma.password.findUnique({
@@ -112,10 +122,11 @@ export async function submitPassword(data: z.infer<typeof passwordSchema>): Prom
     const totpDoc = await getDoc(totpRef);
 
     if (totpDoc.exists()) {
-        await updateDoc(request.ref, {
-            status: 'pending_mfa',
+        await prisma.authRequest.update({
+            where: { id: request.id },
+            data: { status: 'pending_mfa' }
         });
-        await extendAuthRequest(request.ref);
+        await extendAuthRequest(request.id);
         return { success: true, mfaRequired: true };
     } else {
         const headersList = await headers();
@@ -125,7 +136,10 @@ export async function submitPassword(data: z.infer<typeof passwordSchema>): Prom
         // The geolocation is not passed here, so we pass undefined.
         await createAndSetSession(accountId, 'Password', ipAddress, userAgent);
 
-        await updateDoc(request.ref, { status: 'completed' });
+        await prisma.authRequest.update({
+            where: { id: request.id },
+            data: { status: 'completed' }
+        });
 
         return { success: true, mfaRequired: false };
     }

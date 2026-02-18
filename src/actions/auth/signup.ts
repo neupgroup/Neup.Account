@@ -40,7 +40,7 @@ export async function getSignupStepData(authRequestId: string) {
   if (!request) {
     return { success: false, data: null };
   }
-  return { success: true, data: request.data.data };
+  return { success: true, data: request.data.data as Record<string, any> };
 }
 
 export async function submitNameStep(authRequestId: string, data: z.infer<typeof nameSchema>) {
