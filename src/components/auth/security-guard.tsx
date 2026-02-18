@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useSecurityCheck } from '@/hooks/use-security-check';
+import { isConnectionSecure } from '@/lib/security-check';
 
 export function SecurityGuard({ children }: { children: React.ReactNode }) {
     const isSecure = useSecurityCheck();
@@ -10,17 +11,18 @@ export function SecurityGuard({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
 
     useEffect(() => {
-        // If we are not in a secure context
-        if (!isSecure) {
-            // And we are NOT already on the start page (to avoid loop)
+        // Check for specific HTTP + Unsecure condition as requested
+        if (!isConnectionSecure()) {
             if (pathname !== '/auth/start') {
-                router.push('/auth/start');
+                router.push('/auth/start?error=unsecure');
+                return;
             }
         }
     }, [isSecure, pathname, router]);
 
     // If insecure and not on start page, hide content to prevent flash/interaction
-    if (!isSecure && pathname !== '/auth/start') {
+    // We check both general security and specific HTTP unsecure condition
+    if ((!isSecure || (typeof window !== 'undefined' && !isConnectionSecure())) && pathname !== '/auth/start') {
         return null;
     }
 

@@ -2,6 +2,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { isConnectionSecure } from '@/lib/security-check';
 
 export function useSecurityCheck() {
   const [isSecure, setIsSecure] = useState(true);
@@ -9,7 +10,7 @@ export function useSecurityCheck() {
   useEffect(() => {
     // Check if we are running in a secure context (HTTPS or localhost)
     if (typeof window !== 'undefined') {
-      setIsSecure(window.isSecureContext);
+      setIsSecure(isConnectionSecure());
     }
   }, []);
 
