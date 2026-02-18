@@ -5,7 +5,7 @@ import type { NextRequest } from 'next/server';
 
 const MOBILE_BREAKPOINT = 1024;
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
     const viewport = request.headers.get('x-viewport-width');
     const isMobile = viewport ? parseInt(viewport, 10) < MOBILE_BREAKPOINT : userAgent(request).device.type === 'mobile';
 

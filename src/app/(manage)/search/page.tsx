@@ -1,7 +1,7 @@
 
 import { Suspense } from 'react';
 import { searchAll } from '@/actions/search';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { UserCircle, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
@@ -28,7 +28,7 @@ async function SearchResults({ query }: { query: string }) {
             {results.length > 0 ? (
                 <div className="space-y-4">
                     {results.map((item) => {
-                        const Icon = iconMap[item.type] || UserCircle;
+                        const Icon = (item.type in iconMap ? iconMap[item.type as keyof typeof iconMap] : UserCircle);
                         return (
                             <Card key={item.id}>
                                 <CardContent className="p-4">
@@ -73,7 +73,8 @@ function SearchSkeleton() {
 }
 
 
-export default function SearchPage({ searchParams }: { searchParams?: { q?: string } }) {
+export default async function SearchPage(props: { searchParams?: Promise<{ q?: string }> }) {
+    const searchParams = await props.searchParams;
     const query = searchParams?.q || '';
 
     return (
