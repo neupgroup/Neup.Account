@@ -9,7 +9,7 @@ import { z } from 'zod';
 import { brandProfileFormSchema } from '@/schemas/auth';
 import { getUserProfile, checkPermissions, checkNeupIdAvailability, getUserNeupIds } from '@/lib/user';
 import { logActivity } from '@/lib/log-actions';
-import { parseDateWithAI } from '@/ai/flows/parse-date';
+import { parseDate } from '@/ai/flows/parse-date';
 
 
 export async function getDisplayNameSuggestions(accountId: string): Promise<string[]> {
@@ -276,7 +276,7 @@ export async function parseDateString(dateString: string): Promise<{ success: bo
     }
 
     try {
-        const result = await parseDateWithAI(dateString);
+        const result = await parseDate(dateString);
         if (result.parsedDate !== 'invalid') {
             const d = new Date(result.parsedDate + 'T00:00:00');
             if (!isNaN(d.getTime())) {

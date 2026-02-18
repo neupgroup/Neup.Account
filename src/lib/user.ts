@@ -1,15 +1,6 @@
 'use server';
 
-import { db } from './firebase';
-import {
-  doc,
-  getDoc,
-  collection,
-  query,
-  where,
-  getDocs,
-  limit,
-} from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { logError } from './logger';
 import { getActiveAccountId, getPersonalAccountId } from './auth-actions';
 
@@ -52,17 +43,30 @@ export async function getUserProfile(
   const idToFetch = accountId || (await getActiveAccountId());
   if (!idToFetch) return null;
   try {
-    const accountRef = doc(db, 'account', idToFetch);
-    const accountDoc = await getDoc(accountRef);
+    const account = await prisma.account.findUnique({
+      where: { id: idToFetch },
+    });
     
-    if (accountDoc.exists()) {
-      const accountData = accountDoc.data();
-      
+    if (account) {
       const serializedData: UserProfile = {
-        ...accountData,
-        dateCreated: accountData.dateCreated?.toDate?.().toISOString() || accountData.dateCreated || null,
-        dateBirth: accountData.dateBirth?.toDate?.().toISOString() || accountData.dateBirth || null,
-        dateEstablished: accountData.dateEstablished?.toDate?.().toISOString() || accountData.dateEstablished || null,
+        nameFirst: account.nameFirst || undefined,
+        nameMiddle: account.nameMiddle || undefined,
+        nameLast: account.nameLast || undefined,
+        nameDisplay: account.nameDisplay || undefined,
+        displayName: account.displayName || undefined,
+        accountPhoto: account.accountPhoto || undefined,
+        gender: account.gender || undefined,
+        dateBirth: account.dateBirth?.toISOString() || undefined,
+        dateCreated: account.dateCreated?.toISOString() || undefined,
+        nationality: account.nationality || undefined,
+        isLegalEntity: account.isLegalEntity || undefined,
+        nameLegal: account.nameLegal || undefined,
+        registrationId: account.registrationId || undefined,
+        countryOfOrigin: account.countryOfOrigin || undefined,
+        dateEstablished: account.dateEstablished?.toISOString() || undefined,
+        neupIdPrimary: account.neupIdPrimary || undefined,
+        verified: account.verified || undefined,
+        accountType: account.accountType || undefined,
       };
 
       if (!serializedData.accountPhoto) {
@@ -70,7 +74,7 @@ export async function getUserProfile(
       }
 
       // Ensure accountType is part of the returned profile
-      serializedData.accountType = accountData.accountType || 'individual';
+      serializedData.accountType = account.accountType || 'individual';
 
       return serializedData;
     }
@@ -93,15 +97,14 @@ export async function getUserContacts(
   const idToFetch = accountId || (await getActiveAccountId());
   if (!idToFetch) return {};
   try {
-    const contactsRef = collection(db, 'contact');
-    const q = query(contactsRef, where('account_id', '==', idToFetch));
-    const querySnapshot = await getDocs(q);
+    const contactsList = await prisma.contact.findMany({
+      where: { accountId: idToFetch },
+    });
 
     const contacts: UserContacts = {};
-    querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      if (data.contact_type) {
-        contacts[data.contact_type as keyof UserContacts] = data.value;
+    contactsList.forEach((data) => {
+      if (data.contactType) {
+        contacts[data.contactType as keyof UserContacts] = data.value;
       }
     });
     return contacts;
@@ -115,10 +118,10 @@ export async function getUserNeupIds(accountId?: string): Promise<string[]> {
   const idToFetch = accountId || (await getActiveAccountId());
   if (!idToFetch) return [];
   try {
-    const neupidsRef = collection(db, 'neupid');
-    const q = query(neupidsRef, where('for', '==', idToFetch));
-    const querySnapshot = await getDocs(q);
-    return querySnapshot.docs.map((doc) => doc.id);
+    const neupIds = await prisma.neupId.findMany({
+      where: { accountId: idToFetch },
+    });
+    return neupIds.map((doc) => doc.id);
   } catch (error) {
     await logError('database', error, `getUserNeupIds: ${idToFetch}`);
     return [];
@@ -135,54 +138,53 @@ export async function getUserPermissions(accountId?: string, appId?: string): Pr
   const isManaging = activeId !== personalId;
 
   try {
-    const permitRef = collection(db, 'permit');
-    const queries = [];
+    let permits;
 
     // If managing another account, fetch permissions *for* that account.
     if (isManaging && personalId) {
-        queries.push(query(permitRef, 
-            where('account_id', '==', personalId),
-            where('target_account', '==', activeId),
-            where('for_self', '==', false),
-            where('is_root', '==', false)
-        ));
+        permits = await prisma.permit.findMany({
+            where: {
+                accountId: personalId,
+                targetAccountId: activeId,
+                forSelf: false,
+                isRoot: false
+            }
+        });
     } else {
         // Otherwise, find the personal account's own root and self permissions.
-        queries.push(query(permitRef, where('account_id', '==', activeId), where('for_self', '==', true)));
-        queries.push(query(permitRef, where('account_id', '==', activeId), where('is_root', '==', true)));
+        permits = await prisma.permit.findMany({
+            where: {
+                accountId: activeId,
+                OR: [
+                    { forSelf: true },
+                    { isRoot: true }
+                ]
+            }
+        });
     }
 
-    const snapshots = await Promise.all(queries.map(q => getDocs(q)));
-    
     const permissionIds = new Set<string>();
     const restrictionIds = new Set<string>();
 
-    snapshots.forEach(snapshot => {
-        snapshot.forEach(doc => {
-            const data = doc.data();
-            (data.permission || []).forEach((id: string) => permissionIds.add(id));
-            (data.restrictions || []).forEach((id: string) => restrictionIds.add(id));
-        });
+    permits.forEach(permit => {
+        (permit.permissions || []).forEach((id: string) => permissionIds.add(id));
+        (permit.restrictions || []).forEach((id: string) => restrictionIds.add(id));
     });
 
     const finalPermissionSetIds = Array.from(permissionIds).filter(id => !restrictionIds.has(id));
 
     if (finalPermissionSetIds.length === 0) return [];
     
-    const permissionCollection = collection(db, 'permission');
-    let permissionQueryConstraints = [where('__name__', 'in', finalPermissionSetIds)];
-
-    // If an appId is provided, filter the permission sets by that app ID.
-    if (appId) {
-      permissionQueryConstraints.push(where('app_id', '==', appId));
-    }
-
-    const permissionDocsQuery = query(permissionCollection, ...permissionQueryConstraints);
-    const permissionDocsSnapshot = await getDocs(permissionDocsQuery);
+    const permissionDocs = await prisma.permission.findMany({
+        where: {
+            id: { in: finalPermissionSetIds },
+            ...(appId ? { appId: appId } : {})
+        }
+    });
 
     const allAccessStrings = new Set<string>();
-    permissionDocsSnapshot.forEach((doc) => {
-      (doc.data().access || []).forEach((access: string) =>
+    permissionDocs.forEach((doc) => {
+      (doc.access || []).forEach((access: string) =>
         allAccessStrings.add(access)
       );
     });
@@ -218,33 +220,32 @@ export async function validateNeupId(neupId: string): Promise<{ success: boolean
     }
 
     try {
-        const neupidRef = doc(db, 'neupid', neupId);
-        const neupidDoc = await getDoc(neupidRef);
+        const neupIdDoc = await prisma.neupId.findUnique({
+            where: { id: neupId },
+            include: { account: true }
+        });
 
-        if (!neupidDoc.exists()) {
+        if (!neupIdDoc) {
             return { success: false, error: "NeupID not found." };
         }
 
-        const accountId = neupidDoc.data().for;
-        const accountRef = doc(db, 'account', accountId);
-        const accountDoc = await getDoc(accountRef);
+        const account = neupIdDoc.account;
 
-        if (!accountDoc.exists()) {
+        if (!account) {
             return { success: false, error: "Associated account does not exist." };
         }
 
-        const accountData = accountDoc.data();
-        if (accountData.accountType === 'brand' || accountData.accountType === 'branch') {
+        if (account.accountType === 'brand' || account.accountType === 'branch') {
              return { success: false, error: "Brand accounts can't be signed in." };
         }
         
-        if (accountData.accountStatus === 'deletion_requested') {
+        if (account.accountStatus === 'deletion_requested') {
             return { success: false, error: "pending_deletion" };
         }
 
-        if (accountData.accountStatus === 'blocked') {
-             const block = accountData.block;
-             if (block && (block.is_permanent || (block.until && block.until.toDate() > new Date()))) {
+        if (account.accountStatus === 'blocked') {
+             const block = account.block as any;
+             if (block && (block.is_permanent || (block.until && new Date(block.until) > new Date()))) {
                 return { success: false, error: "This account has been blocked." };
              }
         }
@@ -263,9 +264,10 @@ export async function checkNeupIdAvailability(neupId: string): Promise<{ availab
         return { available: false };
     }
     try {
-        const docRef = doc(db, 'neupid', lowerNeupId);
-        const docSnap = await getDoc(docRef);
-        return { available: !docSnap.exists() };
+        const count = await prisma.neupId.count({
+            where: { id: lowerNeupId }
+        });
+        return { available: count === 0 };
     } catch (error) {
         await logError('database', error, `checkNeupIdAvailability: ${lowerNeupId}`);
         return { available: false }; // Fail safe
@@ -275,13 +277,13 @@ export async function checkNeupIdAvailability(neupId: string): Promise<{ availab
 export async function isRootUser(accountId: string): Promise<boolean> {
     if (!accountId) return false;
     try {
-        const permitQuery = query(
-            collection(db, 'permit'),
-            where('account_id', '==', accountId),
-            where('is_root', '==', true)
-        );
-        const snapshot = await getDocs(permitQuery);
-        return !snapshot.empty;
+        const count = await prisma.permit.count({
+            where: {
+                accountId: accountId,
+                isRoot: true
+            }
+        });
+        return count > 0;
     } catch (error) {
         await logError('database', error, `isRootUser check for ${accountId}`);
         return false;

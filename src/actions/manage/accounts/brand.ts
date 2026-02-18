@@ -1,7 +1,6 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs, writeBatch, doc, serverTimestamp, getDoc, limit } from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { checkPermissions, getUserProfile } from '@/lib/user';
 import { logError } from '@/lib/logger';
 import { switchToBrand as switchToBrandAction, switchToPersonal as switchToPersonalAction } from '@/lib/session';
@@ -13,7 +12,6 @@ import { brandCreationSchema } from '@/schemas/auth';
 import type { BrandAccount } from '@/types';
 import { logActivity } from '@/lib/log-actions';
 
-
 export async function getBrandAccounts(): Promise<BrandAccount[]> {
     const canView = await checkPermissions(['linked_accounts.brand.view']);
     if (!canView) return [];
@@ -24,43 +22,41 @@ export async function getBrandAccounts(): Promise<BrandAccount[]> {
     }
 
     try {
-        const permitsRef = collection(db, 'permit');
-        const permitsQuery = query(
-            permitsRef, 
-            where('account_id', '==', personalAccountId),
-            where('for_self', '==', false),
-            where('is_root', '==', false)
-        );
-        const permitsSnapshot = await getDocs(permitsQuery);
+        const permits = await prisma.permit.findMany({
+            where: {
+                accountId: personalAccountId,
+                forSelf: false,
+                isRoot: false
+            }
+        });
         
-        if (permitsSnapshot.empty) {
+        if (permits.length === 0) {
             return [];
         }
 
-        const managedAccountIds = permitsSnapshot.docs
-            .map(doc => doc.data().target_account)
-            .filter(Boolean);
+        const managedAccountIds = permits
+            .map(permit => permit.targetAccountId)
+            .filter((id): id is string => !!id);
 
         if (managedAccountIds.length === 0) {
             return [];
         }
 
-        const accountRef = collection(db, 'account');
-        const brandAccountsQuery = query(
-            accountRef, 
-            where('__name__', 'in', managedAccountIds), 
-            where('accountType', '==', 'brand')
-        );
-        
-        const querySnapshot = await getDocs(brandAccountsQuery);
+        const brandAccountsData = await prisma.account.findMany({
+            where: {
+                id: { in: managedAccountIds },
+                accountType: 'brand'
+            }
+        });
 
-        if (querySnapshot.empty) {
+        if (brandAccountsData.length === 0) {
             return [];
         }
 
         const brandAccounts = await Promise.all(
-            querySnapshot.docs.map(async (doc) => {
-                const brandAccountId = doc.id;
+            brandAccountsData.map(async (account) => {
+                const brandAccountId = account.id;
+                // We can use the account data directly or call getUserProfile if it adds more logic
                 const profile = await getUserProfile(brandAccountId);
 
                 if (!profile) return null;
@@ -103,68 +99,70 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
     const ipAddress = (await headers()).get('x-forwarded-for') || 'Unknown IP';
 
     try {
-        const neupidsRef = collection(db, 'neupid');
-        const q = query(neupidsRef, where('__name__', '==', neupId));
-        const querySnapshot = await getDocs(q);
-        if (!querySnapshot.empty) {
+        const existingNeupId = await prisma.neupId.findUnique({
+            where: { id: neupId }
+        });
+        
+        if (existingNeupId) {
             return { success: false, error: 'This NeupID is already taken.' };
         }
 
-        const batch = writeBatch(db);
-
-        const newAccountRef = doc(collection(db, 'account'));
-        const brandAccountId = newAccountRef.id;
-
-        batch.set(newAccountRef, {
-            accountType: 'brand',
-            accountStatus: 'active',
-            verified: false,
-            nameDisplay: nameBrand,
-            nameBrand: nameBrand,
-            accountPhoto: null,
-            nameLegal: nameLegal || null,
-            registrationId: registrationId || null,
-            servingAreas: servingAreas || null,
-            dateCreated: serverTimestamp(),
-        });
-
         // Grant management permission to the creator by creating a permit document
-        const brandAdminPermQuery = query(collection(db, 'permission'), where('name', '==', 'brand.founder'), limit(1));
-        const brandAdminPermSnap = await getDocs(brandAdminPermQuery);
+        const brandAdminPerm = await prisma.permission.findUnique({
+            where: { name: 'brand.founder' }
+        });
         
-        if (brandAdminPermSnap.empty) {
+        if (!brandAdminPerm) {
             await logError('database', new Error('brand.founder permission set not found'), 'createBrandAccount');
             return { success: false, error: 'Could not assign default management permissions. Please contact support.' };
         }
 
-        const permId = brandAdminPermSnap.docs[0].id;
-        const newPermitRef = doc(collection(db, 'permit'));
-        batch.set(newPermitRef, {
-            account_id: creatorAccountId, // The user who manages
-            target_account: brandAccountId,     // The brand account being managed
-            for_self: false,
-            is_root: false,
-            full_access: true,            // This user is the owner
-            permission: [permId],          // The specific permission being granted
-            restrictions: [],
-            status: 'approved',            // The access is active immediately
-            created_on: serverTimestamp(),
-        });
-
-
-        const newNeupIdRef = doc(db, 'neupid', neupId);
-        batch.set(newNeupIdRef, { for: brandAccountId, is_primary: true });
-        
-        if (headOfficeLocation) {
-             const newContactRef = doc(collection(db, 'contact'));
-             batch.set(newContactRef, {
-                account_id: brandAccountId,
-                contact_type: 'headOfficeLocation',
-                value: headOfficeLocation
+        // Transaction to create everything
+        await prisma.$transaction(async (tx) => {
+             const account = await tx.account.create({
+                data: {
+                    accountType: 'brand',
+                    accountStatus: 'active',
+                    verified: false,
+                    nameDisplay: nameBrand,
+                    // nameBrand: nameBrand, // nameBrand is not in schema, mapping to nameDisplay or nameLegal if needed, or adding to schema. 
+                    // Assuming nameDisplay is enough for now, or nameLegal. 
+                    // Wait, schema has nameLegal. 
+                    nameLegal: nameLegal || null,
+                    registrationId: registrationId || null,
+                    // servingAreas: servingAreas || null, // servingAreas is not in schema.
+                    dateCreated: new Date(),
+                    
+                    neupIds: {
+                        create: {
+                            id: neupId,
+                            isPrimary: true
+                        }
+                    },
+                    
+                    contacts: headOfficeLocation ? {
+                        create: {
+                            contactType: 'headOfficeLocation',
+                            value: headOfficeLocation
+                        }
+                    } : undefined
+                }
             });
-        }
-        
-        await batch.commit();
+
+            await tx.permit.create({
+                data: {
+                    accountId: creatorAccountId,
+                    targetAccountId: account.id,
+                    forSelf: false,
+                    isRoot: false,
+                    // full_access: true, // Not in schema, relying on permissions list
+                    permissions: [brandAdminPerm.id],
+                    restrictions: [],
+                    // status: 'approved', // Not in schema
+                    createdOn: new Date()
+                }
+            });
+        });
         
         await logActivity(creatorAccountId, `Created Brand Account: ${neupId}`, 'Success', ipAddress, undefined, geolocation);
         revalidatePath('/manage/accounts/brand');

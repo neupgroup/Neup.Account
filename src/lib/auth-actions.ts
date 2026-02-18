@@ -2,8 +2,7 @@
 
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { db } from '@/lib/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { logError } from '@/lib/logger';
 import { getSessionCookies } from '@/lib/cookies';
 
@@ -32,31 +31,31 @@ export async function getActiveSession(): Promise<Session | null> {
   }
 
   try {
-    const sessionRef = doc(db, 'session', sessionId);
-    const sessionDoc = await getDoc(sessionRef);
+    const session = await prisma.session.findUnique({
+      where: { id: sessionId },
+    });
 
-    if (!sessionDoc.exists()) {
+    if (!session) {
       return null;
     }
 
-    const sessionData = sessionDoc.data();
-    const dbExpiresOn = sessionData.expiresOn?.toDate();
+    const dbExpiresOn = session.expiresOn;
 
     const isInvalid =
       !dbExpiresOn ||
       dbExpiresOn < new Date() ||
-      sessionData.isExpired ||
-      sessionData.accountId !== accountId ||
-      sessionData.auth_session_key !== sessionKey;
+      session.isExpired ||
+      session.accountId !== accountId ||
+      session.authSessionKey !== sessionKey;
 
     if (isInvalid) {
       return null;
     }
 
     return {
-      accountId: sessionData.accountId,
+      accountId: session.accountId,
       sessionId: sessionId,
-      sessionKey: sessionData.auth_session_key,
+      sessionKey: session.authSessionKey,
     };
   } catch (error) {
     await logError('database', error, 'getActiveSession');

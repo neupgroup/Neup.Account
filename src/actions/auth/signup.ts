@@ -1,20 +1,7 @@
 
 'use server';
 
-import { db } from '@/lib/firebase';
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  setDoc,
-  getDoc,
-  limit,
-  serverTimestamp,
-  writeBatch,
-  updateDoc,
-} from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 import { logActivity } from '@/lib/log-actions';
 import { headers } from 'next/headers';
@@ -41,9 +28,8 @@ const sanitizeName = (name: string | undefined | null): string => {
 
 
 async function isFirstUser() {
-  const accountsCollection = collection(db, 'account');
-  const accountsSnapshot = await getDocs(query(accountsCollection, limit(1)));
-  return accountsSnapshot.empty;
+  const count = await prisma.account.count();
+  return count === 0;
 }
 
 export async function getSignupStepData(authRequestId: string) {
@@ -77,13 +63,22 @@ export async function submitNameStep(authRequestId: string, data: z.infer<typeof
   const nameMiddle = sanitizeName(validation.data.middleName);
   const nameLast = sanitizeName(validation.data.lastName);
 
-  await updateDoc(request.ref, {
-    'data.nameFirst': nameFirst,
-    'data.nameMiddle': nameMiddle,
-    'data.nameLast': nameLast,
-    status: 'pending_demographics',
+  const currentData = request.data.data as Record<string, any>;
+  const newData = {
+    ...currentData,
+    nameFirst,
+    nameMiddle,
+    nameLast
+  };
+
+  await prisma.authRequest.update({
+    where: { id: authRequestId },
+    data: {
+      data: newData,
+      status: 'pending_demographics',
+    },
   });
-  await extendAuthRequest(request.ref);
+  await extendAuthRequest(authRequestId);
 
   return { success: true };
 }
@@ -112,13 +107,22 @@ export async function submitDemographicsStep(authRequestId: string, data: z.infe
     finalCustomGender = undefined;
   }
 
-  await updateDoc(request.ref, {
-    'data.dateBirth': validation.data.dob,
-    'data.gender': finalGender,
-    'data.customGender': finalCustomGender ? sanitizeName(finalCustomGender) : null,
-    status: 'pending_nationality',
+  const currentData = request.data.data as Record<string, any>;
+  const newData = {
+    ...currentData,
+    dateBirth: validation.data.dob,
+    gender: finalGender,
+    customGender: finalCustomGender ? sanitizeName(finalCustomGender) : null,
+  };
+
+  await prisma.authRequest.update({
+    where: { id: authRequestId },
+    data: {
+      data: newData,
+      status: 'pending_nationality',
+    },
   });
-  await extendAuthRequest(request.ref);
+  await extendAuthRequest(authRequestId);
 
   return { success: true };
 }
@@ -139,11 +143,20 @@ export async function submitNationalityStep(authRequestId: string, data: z.infer
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
-  await updateDoc(request.ref, {
-    'data.nationality': validation.data.nationality,
-    status: 'pending_contact',
+  const currentData = request.data.data as Record<string, any>;
+  const newData = {
+    ...currentData,
+    nationality: validation.data.nationality,
+  };
+
+  await prisma.authRequest.update({
+    where: { id: authRequestId },
+    data: {
+      data: newData,
+      status: 'pending_contact',
+    },
   });
-  await extendAuthRequest(request.ref);
+  await extendAuthRequest(authRequestId);
 
   return { success: true };
 }
@@ -168,12 +181,21 @@ export async function submitContactStep(authRequestId: string, data: z.infer<typ
   // Skip OTP verification - directly mark phone as verified
   console.log(`Phone number saved: ${validation.data.phone} (OTP verification skipped)`);
 
-  await updateDoc(request.ref, {
-    'data.phone': validation.data.phone,
-    'data.phoneVerified': true,
-    status: 'pending_neupid',
+  const currentData = request.data.data as Record<string, any>;
+  const newData = {
+    ...currentData,
+    phone: validation.data.phone,
+    phoneVerified: true,
+  };
+
+  await prisma.authRequest.update({
+    where: { id: authRequestId },
+    data: {
+      data: newData,
+      status: 'pending_neupid',
+    },
   });
-  await extendAuthRequest(request.ref);
+  await extendAuthRequest(authRequestId);
 
   return { success: true };
 }
@@ -199,11 +221,20 @@ export async function submitOtpStep(authRequestId: string, data: z.infer<typeof 
     return { success: false, error: 'Invalid OTP code.' };
   }
 
-  await updateDoc(request.ref, {
-    'data.phoneVerified': true,
-    status: 'pending_neupid',
+  const currentData = request.data.data as Record<string, any>;
+  const newData = {
+    ...currentData,
+    phoneVerified: true,
+  };
+
+  await prisma.authRequest.update({
+    where: { id: authRequestId },
+    data: {
+      data: newData,
+      status: 'pending_neupid',
+    },
   });
-  await extendAuthRequest(request.ref);
+  await extendAuthRequest(authRequestId);
 
   return { success: true };
 }
@@ -221,9 +252,11 @@ export async function submitNeupIdStep(authRequestId: string, data: z.infer<type
     };
 
   const neupId = validation.data.neupId.toLowerCase();
-  const neupidRef = doc(db, 'neupid', neupId);
-  const neupidDoc = await getDoc(neupidRef);
-  if (neupidDoc.exists()) {
+  const existingNeupId = await prisma.neupId.findUnique({
+    where: { id: neupId },
+  });
+
+  if (existingNeupId) {
     return { success: false, error: 'This NeupID is already taken.' };
   }
 
@@ -231,11 +264,20 @@ export async function submitNeupIdStep(authRequestId: string, data: z.infer<type
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
-  await updateDoc(request.ref, {
-    'data.neupId': neupId,
-    status: 'pending_password',
+  const currentData = request.data.data as Record<string, any>;
+  const newData = {
+    ...currentData,
+    neupId: neupId,
+  };
+
+  await prisma.authRequest.update({
+    where: { id: authRequestId },
+    data: {
+      data: newData,
+      status: 'pending_password',
+    },
   });
-  await extendAuthRequest(request.ref);
+  await extendAuthRequest(authRequestId);
 
   return { success: true };
 }
@@ -258,11 +300,20 @@ export async function submitPasswordStep(authRequestId: string, data: z.infer<ty
 
   const hashedPassword = await bcrypt.hash(validation.data.password, 10);
 
-  await updateDoc(request.ref, {
-    'data.password': hashedPassword,
-    status: 'pending_terms',
+  const currentData = request.data.data as Record<string, any>;
+  const newData = {
+    ...currentData,
+    password: hashedPassword,
+  };
+
+  await prisma.authRequest.update({
+    where: { id: authRequestId },
+    data: {
+      data: newData,
+      status: 'pending_terms',
+    },
   });
-  await extendAuthRequest(request.ref);
+  await extendAuthRequest(authRequestId);
 
   return { success: true };
 }
@@ -283,6 +334,8 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
+  const requestData = request.data.data as Record<string, any>;
+
   const {
     nameFirst,
     nameLast,
@@ -294,7 +347,7 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
     phone,
     neupId,
     password,
-  } = request.data.data;
+  } = requestData;
 
   const nameDisplay = [nameFirst, nameMiddle, nameLast].filter(Boolean).join(' ');
 
@@ -321,62 +374,66 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
   try {
     const isAdmin = await isFirstUser();
     const permissionSetName = isAdmin ? 'root.whole' : 'individual.default';
-    const batch = writeBatch(db);
-    const newAccountRef = doc(collection(db, 'account'));
-    const accountId = newAccountRef.id;
 
-    batch.set(newAccountRef, {
-      accountType: 'individual',
-      accountStatus: 'active',
-      verified: false,
-      nameDisplay: nameDisplay,
-      accountPhoto: null,
-      nameFirst,
-      nameLast,
-      nameMiddle: nameMiddle || null,
-      dateBirth: dateBirth,
-      gender,
-      customGender: customGender || null,
-      nationality,
-      neupIdPrimary: neupId,
-      dateCreated: serverTimestamp(),
+    const account = await prisma.account.create({
+      data: {
+        accountType: 'individual',
+        accountStatus: 'active',
+        verified: false,
+        nameDisplay: nameDisplay,
+        accountPhoto: null,
+        nameFirst,
+        nameLast,
+        nameMiddle: nameMiddle || null,
+        dateBirth: new Date(dateBirth),
+        gender,
+        // customGender: customGender || null, // customGender is not in schema yet, adding to block if needed or ignoring for now
+        nationality,
+        neupIdPrimary: neupId,
+        dateCreated: new Date(),
+        
+        neupIds: {
+          create: {
+            id: neupId,
+            isPrimary: true,
+          },
+        },
+        
+        password: {
+            create: {
+                hash: password,
+                passwordLastChanged: new Date(),
+            }
+        },
+
+        contacts: {
+          create: {
+            contactType: 'primaryPhone',
+            value: phone,
+          },
+        },
+      },
     });
 
-    const permQuery = query(
-      collection(db, 'permission'),
-      where('name', '==', permissionSetName),
-      limit(1)
-    );
-    const permSnap = await getDocs(permQuery);
-    if (!permSnap.empty) {
-      const permId = permSnap.docs[0].id;
-      const newPermitRef = doc(collection(db, 'permit'));
-      batch.set(newPermitRef, {
-        account_id: accountId,
-        for_self: !isAdmin,
-        is_root: isAdmin,
-        permission: [permId],
-        restrictions: [],
-        created_on: serverTimestamp(),
+    const accountId = account.id;
+
+    // Permissions
+    const permissionSet = await prisma.permission.findUnique({
+      where: { name: permissionSetName },
+    });
+
+    if (permissionSet) {
+      await prisma.permit.create({
+        data: {
+          accountId: accountId,
+          forSelf: !isAdmin,
+          isRoot: isAdmin,
+          permissions: [permissionSet.id],
+          restrictions: [],
+          createdOn: new Date(),
+        },
       });
     }
-
-    batch.set(doc(db, 'neupid', neupId), {
-      for: accountId,
-      is_primary: true,
-    });
-    batch.set(doc(db, 'auth_password', accountId), {
-      pass: password,
-      passwordLastChanged: serverTimestamp(),
-    });
-
-    batch.set(doc(db, 'contact', `primaryPhone_${accountId}`), {
-      account_id: accountId,
-      contact_type: 'primaryPhone',
-      value: phone,
-    });
-
-    await batch.commit();
 
     await logActivity(
       accountId,
@@ -387,7 +444,10 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
     await createAndSetSession(accountId, 'Registration', ipAddress, userAgent);
 
     // Mark the auth request as completed
-    await updateDoc(request.ref, { status: 'completed' });
+    await prisma.authRequest.update({
+        where: { id: authRequestId },
+        data: { status: 'completed' }
+    });
 
     return { success: true };
   } catch (error) {

@@ -1,0 +1,145 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Account {
+  id              String    @id @default(uuid())
+  nameFirst       String?
+  nameMiddle      String?
+  nameLast        String?
+  nameDisplay     String?
+  displayName     String?
+  accountPhoto    String?
+  gender          String?
+  dateBirth       DateTime?
+  dateCreated     DateTime  @default(now())
+  nationality     String?
+  isLegalEntity   Boolean   @default(false)
+  nameLegal       String?
+  registrationId  String?
+  countryOfOrigin String?
+  dateEstablished DateTime?
+  neupIdPrimary   String?
+  verified        Boolean   @default(false)
+  accountType     String    @default("individual")
+  accountStatus   String?
+  
+  // JSON fields for unstructured data like 'block'
+  block           Json?
+
+  // Relations
+  contacts        Contact[]
+  neupIds         NeupId[]
+  permits         Permit[]
+  targetPermits   Permit[] @relation("TargetAccount")
+  password        Password?
+  sessions        Session[]
+
+  @@map("accounts")
+}
+
+model AuthRequest {
+  id        String   @id @default(uuid())
+  type      String
+  status    String   @default("pending")
+  data      Json     @default("{}")
+  accountId String?
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@map("auth_requests")
+}
+
+model ActivityLog {
+  id              String   @id @default(uuid())
+  targetAccountId String
+  actorAccountId  String
+  action          String
+  status          String
+  ip              String
+  timestamp       DateTime @default(now())
+  geolocation     String?
+
+  @@map("activity_logs")
+}
+
+model Contact {
+  id          String  @id @default(uuid())
+  accountId   String
+  contactType String
+  value       String
+  
+  account     Account @relation(fields: [accountId], references: [id])
+
+  @@map("contacts")
+}
+
+model NeupId {
+  id        String  @id // The neupId string itself
+  accountId String
+  isPrimary Boolean @default(false)
+  
+  account   Account @relation(fields: [accountId], references: [id])
+
+  @@map("neup_ids")
+}
+
+model Password {
+  accountId           String   @id
+  hash                String
+  passwordLastChanged DateTime @default(now())
+  
+  account             Account  @relation(fields: [accountId], references: [id])
+  
+  @@map("auth_passwords")
+}
+
+model Permit {
+  id            String  @id @default(uuid())
+  accountId     String
+  targetAccountId String?
+  forSelf       Boolean @default(false)
+  isRoot        Boolean @default(false)
+  permissions   String[]
+  restrictions  String[]
+  createdOn     DateTime @default(now())
+  
+  account       Account @relation(fields: [accountId], references: [id])
+  targetAccount Account? @relation("TargetAccount", fields: [targetAccountId], references: [id])
+
+  @@map("permits")
+}
+
+model Permission {
+  id      String   @id @default(uuid())
+  name    String   @unique
+  appId   String?
+  access  String[]
+
+  @@map("permissions")
+}
+
+model Session {
+  id              String   @id @default(uuid())
+  accountId       String
+  authSessionKey  String
+  ipAddress       String
+  userAgent       String
+  isExpired       Boolean  @default(false)
+  expiresOn       DateTime
+  lastLoggedIn    DateTime @default(now())
+  loginType       String
+  geolocation     String?
+  
+  account         Account  @relation(fields: [accountId], references: [id])
+  
+  @@map("sessions")
+}

@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { createAndSetSession } from '@/lib/session';
 import { validateNeupId } from '@/lib/user';
 import { getAuthRequest, extendAuthRequest } from './utils';
+import prisma from '@/lib/prisma';
 
 const neupIdSchema = z.object({
     neupId: z.string().min(1, "NeupID is required."),
@@ -38,9 +39,11 @@ export async function submitNeupId(data: z.infer<typeof neupIdSchema>) {
         return { success: false, error: validationResult.error || 'Invalid NeupID.' };
     }
 
-    const neupIdRef = doc(db, 'neupid', lowerCaseNeupId);
-    const neupIdDoc = await getDoc(neupIdRef);
-    const accountId = neupIdDoc.data()?.for;
+    // Map NeupID to accountId via Prisma instead of Firebase
+    const neupIdRecord = await prisma.neupId.findUnique({
+        where: { id: lowerCaseNeupId },
+    });
+    const accountId = neupIdRecord?.accountId;
 
     if (!accountId) {
         return { success: false, error: "Account mapping is missing." };
@@ -88,13 +91,15 @@ export async function submitPassword(data: z.infer<typeof passwordSchema>): Prom
 
     const { accountId, data: { isPendingDeletion } } = request.data;
 
-    const authRef = doc(db, 'auth_password', accountId);
-    const authDoc = await getDoc(authRef);
-    if (!authDoc.exists()) {
+    // Verify password using Prisma instead of Firebase
+    const passwordRecord = await prisma.password.findUnique({
+        where: { accountId },
+    });
+    if (!passwordRecord) {
         return { success: false, mfaRequired: false, error: "Invalid credentials." };
     }
 
-    const isMatch = await bcrypt.compare(password, authDoc.data().pass);
+    const isMatch = await bcrypt.compare(password, passwordRecord.hash);
     if (!isMatch) {
         return { success: false, mfaRequired: false, error: "Invalid credentials." };
     }

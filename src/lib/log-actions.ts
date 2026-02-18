@@ -1,7 +1,6 @@
 'use server';
 
-import { db } from './firebase';
-import { collection, addDoc, serverTimestamp, query, getDocs, orderBy, limit, getDoc, doc, startAfter, where } from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { headers } from 'next/headers';
 import { getUserProfile } from './user';
 import { logError } from './logger';
@@ -31,23 +30,20 @@ export async function logActivity(
         
         const finalActorAccountId = actorAccountId || targetAccountId;
 
-        const logData: { [key: string]: any } = {
-            targetAccountId,
-            actorAccountId: finalActorAccountId,
-            action,
-            status,
-            ip,
-            timestamp: serverTimestamp(),
-        };
-        
-        if (geolocation) {
-            logData.geolocation = geolocation;
-        }
-
-        await addDoc(collection(db, 'activity'), logData);
+        await prisma.activityLog.create({
+            data: {
+                targetAccountId,
+                actorAccountId: finalActorAccountId,
+                action,
+                status,
+                ip,
+                timestamp: new Date(),
+                geolocation,
+            }
+        });
 
     } catch (error) {
-        await logError('database', error, 'logActivity:addDoc');
+        await logError('database', error, 'logActivity:create');
     }
 }
 
@@ -62,37 +58,30 @@ type GetActivitiesResponse = {
   hasNextPage: boolean;
 };
 
-type ActivityLogInternal = ActivityLog & { rawTimestamp: Date };
-
-
 export async function getActivities({ startAfter: startAfterDocId, forCurrentUser = false }: GetActivitiesParams): Promise<GetActivitiesResponse> {
     try {
         const currentAccountId = await getActiveAccountId();
         
-        const accountLogsCollection = collection(db, 'activity');
-        
-        let constraints = [];
+        const where: any = {};
         if (forCurrentUser) {
             if (!currentAccountId) {
                  return { logs: [], hasNextPage: false };
             }
-            constraints.push(where('actorAccountId', '==', currentAccountId));
+            where.actorAccountId = currentAccountId;
         }
 
-        constraints.push(orderBy('timestamp', 'desc'));
-        
+        const queryOptions: any = {
+            where,
+            orderBy: { timestamp: 'desc' },
+            take: PAGE_SIZE + 1,
+        };
+
         if (startAfterDocId) {
-            const startAfterDoc = await getDoc(doc(db, 'activity', startAfterDocId));
-            constraints.push(startAfter(startAfterDoc));
+            queryOptions.cursor = { id: startAfterDocId };
+            queryOptions.skip = 1;
         }
 
-        constraints.push(limit(PAGE_SIZE + 1)); // Fetch one extra to check for next page
-
-        const q = query(accountLogsCollection, ...constraints);
-        
-        const querySnapshot = await getDocs(q);
-        
-        const pageDocs = querySnapshot.docs;
+        const pageDocs = await prisma.activityLog.findMany(queryOptions);
 
         let hasNextPage = pageDocs.length > PAGE_SIZE;
         if(hasNextPage) {
@@ -100,12 +89,14 @@ export async function getActivities({ startAfter: startAfterDocId, forCurrentUse
         }
 
         let logs: ActivityLog[] = await Promise.all(pageDocs.map(async (doc) => {
-            const data = doc.data();
-            const timestamp = data.timestamp?.toDate() || new Date();
+            const timestamp = doc.timestamp;
 
-            const [actorProfile, neupIdsSnapshot] = await Promise.all([
-                getUserProfile(data.actorAccountId),
-                 getDocs(query(collection(db, 'neupid'), where('for', '==', data.actorAccountId), limit(1)))
+            const [actorProfile, neupIds] = await Promise.all([
+                getUserProfile(doc.actorAccountId),
+                prisma.neupId.findMany({
+                    where: { accountId: doc.actorAccountId },
+                    take: 1
+                })
             ]);
             
             const getDisplayName = (profile: any, fallbackId: string) => {
@@ -115,10 +106,10 @@ export async function getActivities({ startAfter: startAfterDocId, forCurrentUse
 
             return {
                 id: doc.id,
-                user: getDisplayName(actorProfile, data.actorAccountId),
-                neupId: neupIdsSnapshot.docs[0]?.id || 'N/A',
-                action: data.action,
-                status: data.status,
+                user: getDisplayName(actorProfile, doc.actorAccountId),
+                neupId: neupIds[0]?.id || 'N/A',
+                action: doc.action,
+                status: doc.status,
                 timestamp: timestamp.toLocaleString(),
             };
         }));

@@ -1,14 +1,6 @@
 'use server';
 
-import { db } from './firebase';
-import {
-  collection,
-  addDoc,
-  doc,
-  getDoc,
-  serverTimestamp,
-  Timestamp,
-} from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import crypto from 'crypto';
 import { cookies } from 'next/headers';
 
@@ -35,26 +27,23 @@ export async function createAndSetSession(
     expiresOn.setDate(expiresOn.getDate() + SESSION_DURATION_DAYS);
     const sessionKey = crypto.randomUUID();
 
-    const sessionData: { [key: string]: any } = {
-      accountId: accountId,
-      auth_session_key: sessionKey,
-      ipAddress: ipAddress,
-      userAgent: userAgent,
-      isExpired: false,
-      expiresOn: Timestamp.fromDate(expiresOn),
-      lastLoggedIn: serverTimestamp(),
-      loginType: loginType,
-    };
-
-    if (geolocation) {
-      sessionData.geolocation = geolocation;
-    }
-
-    const newSessionDocRef = await addDoc(collection(db, 'session'), sessionData);
+    const session = await prisma.session.create({
+      data: {
+        accountId: accountId,
+        authSessionKey: sessionKey,
+        ipAddress: ipAddress,
+        userAgent: userAgent,
+        isExpired: false,
+        expiresOn: expiresOn,
+        lastLoggedIn: new Date(),
+        loginType: loginType,
+        geolocation: geolocation,
+      },
+    });
 
     const newSession = {
       accountId: accountId,
-      sessionId: newSessionDocRef.id,
+      sessionId: session.id,
       sessionKey: sessionKey,
     };
 
@@ -70,7 +59,7 @@ export async function createAndSetSession(
 
     const newStoredAccount: StoredAccount & { active: boolean } = {
       accountId: accountId,
-      sessionId: newSessionDocRef.id,
+      sessionId: session.id,
       sessionKey: sessionKey,
       expired: false,
       neupId: primaryNeupId,
@@ -111,20 +100,20 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
       if (!account.sessionId) return { ...account, expired: true };
 
       try {
-        const sessionRef = doc(db, 'session', account.sessionId);
-        const sessionDoc = await getDoc(sessionRef);
+        const session = await prisma.session.findUnique({
+          where: { id: account.sessionId },
+        });
 
-        if (!sessionDoc.exists()) return { ...account, expired: true };
+        if (!session) return { ...account, expired: true };
 
-        const sessionData = sessionDoc.data();
-        const dbExpiresOn = sessionData.expiresOn?.toDate();
+        const dbExpiresOn = session.expiresOn;
 
         const isInvalid =
           !dbExpiresOn ||
           dbExpiresOn < new Date() ||
-          sessionData.isExpired ||
-          sessionData.accountId !== account.accountId ||
-          sessionData.auth_session_key !== account.sessionKey;
+          session.isExpired ||
+          session.accountId !== account.accountId ||
+          session.authSessionKey !== account.sessionKey;
 
         if (isInvalid) {
             return { ...account, expired: true };
@@ -151,13 +140,14 @@ export async function switchToAccount(account: StoredAccount) {
     expiresOn.setDate(expiresOn.getDate() + SESSION_DURATION_DAYS);
     
     try {
-        const sessionRef = doc(db, 'session', account.sessionId);
-        const sessionDoc = await getDoc(sessionRef);
+        const session = await prisma.session.findUnique({
+          where: { id: account.sessionId },
+        });
 
-        if (!sessionDoc.exists() || 
-            sessionDoc.data().accountId !== account.accountId ||
-            sessionDoc.data().auth_session_key !== account.sessionKey ||
-            sessionDoc.data().isExpired) {
+        if (!session || 
+            session.accountId !== account.accountId ||
+            session.authSessionKey !== account.sessionKey ||
+            session.isExpired) {
             return { success: false, error: 'Invalid or expired session.' };
         }
 

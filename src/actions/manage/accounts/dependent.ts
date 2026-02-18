@@ -1,8 +1,7 @@
 'use server';
 
 import { z } from 'zod';
-import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs, writeBatch, doc, serverTimestamp, limit } from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
@@ -30,40 +29,41 @@ export async function getDependentAccounts(): Promise<DependentAccount[]> {
     }
 
     try {
-        const permitsRef = collection(db, 'permit');
-        const permitsQuery = query(
-            permitsRef, 
-            where('account_id', '==', personalAccountId),
-            where('for_self', '==', false),
-            where('is_root', '==', false)
-        );
-        const permitsSnapshot = await getDocs(permitsQuery);
+        const permits = await prisma.permit.findMany({
+            where: {
+                accountId: personalAccountId,
+                forSelf: false,
+                isRoot: false
+            }
+        });
         
-        if (permitsSnapshot.empty) {
+        if (permits.length === 0) {
             return [];
         }
 
-        const dependentAccountIds = permitsSnapshot.docs
-            .map(doc => doc.data().target_account)
-            .filter(Boolean);
+        const dependentAccountIds = permits
+            .map(permit => permit.targetAccountId)
+            .filter((id): id is string => !!id);
 
         if (dependentAccountIds.length === 0) {
             return [];
         }
 
         // Fetch account details for only those that are dependent accounts
-        const accountRef = collection(db, 'account');
-        const dependentAccountsQuery = query(accountRef, where('__name__', 'in', dependentAccountIds), where('accountType', '==', 'dependent'));
+        const dependentAccountsData = await prisma.account.findMany({
+            where: {
+                id: { in: dependentAccountIds },
+                accountType: 'dependent'
+            }
+        });
         
-        const querySnapshot = await getDocs(dependentAccountsQuery);
-
-        if (querySnapshot.empty) {
+        if (dependentAccountsData.length === 0) {
             return [];
         }
         
         const dependentAccounts = await Promise.all(
-            querySnapshot.docs.map(async (doc) => {
-                const accountId = doc.id;
+            dependentAccountsData.map(async (account) => {
+                const accountId = account.id;
                 const profile = await getUserProfile(accountId);
 
                 if (!profile) return null;
@@ -107,75 +107,86 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
     const ipAddress = (await headers()).get('x-forwarded-for') || 'Unknown IP';
 
     try {
-        const neupidsRef = collection(db, 'neupid');
-        const q = query(neupidsRef, where('__name__', '==', neupId));
-        const querySnapshot = await getDocs(q);
-        if (!querySnapshot.empty) {
-            return { success: false, error: 'This NeupID is already taken.' };
-        }
-
-        const batch = writeBatch(db);
-
-        const newAccountRef = doc(collection(db, 'account'));
-        const dependentAccountId = newAccountRef.id;
-        
-        const { neupId: _n, ...restOfProfile } = profileData;
-
-        batch.set(newAccountRef, {
-            accountType: 'dependent',
-            accountStatus: 'active',
-            verified: false,
-            nameDisplay: `${profileData.firstName} ${profileData.lastName}`.trim(),
-            accountPhoto: null,
-            neupIdPrimary: neupId,
-            ...restOfProfile,
-            dateBirth: profileData.dob.toISOString(),
-            dateCreated: serverTimestamp()
+        const existingNeupId = await prisma.neupId.findUnique({
+            where: { id: neupId }
         });
         
-        const [guardianPermSnap, dependentPermSnap] = await Promise.all([
-            getDocs(query(collection(db, 'permission'), where('name', '==', 'individual.default'), limit(1))),
-            getDocs(query(collection(db, 'permission'), where('name', '==', 'dependent.default'), limit(1)))
+        if (existingNeupId) {
+            return { success: false, error: 'This NeupID is already taken.' };
+        }
+        
+        const [guardianPerm, dependentPerm] = await Promise.all([
+            prisma.permission.findUnique({ where: { name: 'individual.default' } }),
+            prisma.permission.findUnique({ where: { name: 'dependent.default' } })
         ]);
         
+        const hashedPassword = await bcrypt.hash(password, 10);
+        
+        const account = await prisma.account.create({
+            data: {
+                accountType: 'dependent',
+                accountStatus: 'active',
+                verified: false,
+                nameDisplay: `${profileData.firstName} ${profileData.lastName}`.trim(),
+                accountPhoto: null,
+                neupIdPrimary: neupId,
+                
+                nameFirst: profileData.firstName,
+                nameMiddle: profileData.middleName,
+                nameLast: profileData.lastName,
+                gender: profileData.gender,
+                nationality: profileData.nationality,
+                
+                dateBirth: new Date(profileData.dob),
+                dateCreated: new Date(),
+                
+                neupIds: {
+                    create: {
+                        id: neupId,
+                        isPrimary: true
+                    }
+                },
+                
+                password: {
+                    create: {
+                        hash: hashedPassword,
+                        passwordLastChanged: new Date()
+                    }
+                }
+            }
+        });
+        
+        const dependentAccountId = account.id;
+        
         // Grant management permission to the guardian
-        if (!guardianPermSnap.empty) {
-            const permId = guardianPermSnap.docs[0].id;
-            const newPermitRef = doc(collection(db, 'permit'));
-            batch.set(newPermitRef, {
-                account_id: guardianAccountId,
-                target_account: dependentAccountId,
-                for_self: false,
-                is_root: false,
-                full_access: true,
-                permission: [permId],
-                restrictions: [],
-                created_on: serverTimestamp(),
+        if (guardianPerm) {
+            await prisma.permit.create({
+                data: {
+                    accountId: guardianAccountId,
+                    targetAccountId: dependentAccountId,
+                    forSelf: false,
+                    isRoot: false,
+                    // full_access: true, // Not in schema
+                    permissions: [guardianPerm.id],
+                    restrictions: [],
+                    createdOn: new Date(),
+                }
             });
         }
         
         // Grant self-permissions to the dependent account
-        if (!dependentPermSnap.empty) {
-            const permId = dependentPermSnap.docs[0].id;
-            const newPermitRef = doc(collection(db, 'permit'));
-            batch.set(newPermitRef, {
-                account_id: dependentAccountId,
-                for_self: true,
-                is_root: false,
-                permission: [permId],
-                restrictions: [],
-                created_on: serverTimestamp(),
+        if (dependentPerm) {
+             await prisma.permit.create({
+                data: {
+                    accountId: dependentAccountId,
+                    forSelf: true,
+                    isRoot: false,
+                    permissions: [dependentPerm.id],
+                    restrictions: [],
+                    createdOn: new Date(),
+                }
             });
         }
-
-
-        const newNeupIdRef = doc(db, 'neupid', neupId);
-        batch.set(newNeupIdRef, { for: dependentAccountId, is_primary: true });
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-        batch.set(doc(db, 'auth_password', dependentAccountId), { pass: hashedPassword, passwordLastChanged: serverTimestamp() });
-        
-        await batch.commit();
         
         await logActivity(guardianAccountId, `Created Dependent Account: ${neupId}`, 'Success', ipAddress, undefined, geolocation);
         revalidatePath('/manage/accounts/dependent');
