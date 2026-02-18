@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import NProgress from 'nprogress';
@@ -17,8 +17,9 @@ import { Loader2 } from "@/components/icons";
 
 type FormData = z.infer<typeof otpSchema>;
 
-export default function OtpStepPage() {
+export function OtpStep() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const { toast } = useToast();
     const [authRequestId, setAuthRequestId] = useState<string | null>(null);
 
@@ -43,7 +44,9 @@ export default function OtpStepPage() {
         NProgress.start();
         const result = await submitOtpStep(authRequestId, data);
         if (result.success) {
-            router.push('/auth/signup/neupid');
+            const params = new URLSearchParams(searchParams.toString());
+            params.set('step', 'neupid');
+            router.push(`/auth/signup?${params.toString()}`);
         } else {
             toast({ variant: 'destructive', title: 'Error', description: result.error });
             NProgress.done();

@@ -1,9 +1,8 @@
-
 'use client';
 
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useState, useEffect, useContext, useTransition } from 'react';
+import React, { useState, useEffect, useTransition } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { submitPassword } from '@/actions/auth/login';
 import { getSignupStepData } from '@/actions/auth/signup';
@@ -17,16 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Loader2 } from '@/components/icons';
 
-// Add export default at the end of the file
-export default function PasswordPage() {
-  return (
-    <React.Suspense fallback={<div>Loading...</div>}>
-      <PasswordPageContent />
-    </React.Suspense>
-  );
-}
-
-function PasswordPageContent() {
+export function PasswordStep() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { toast } = useToast();
@@ -48,7 +38,6 @@ function PasswordPageContent() {
     }
     setAuthRequestId(id);
 
-    // Try to load from session storage for instant render
     const savedUserInfo = sessionStorage.getItem('temp_user_info');
     if (savedUserInfo) {
       try {
@@ -66,12 +55,13 @@ function PasswordPageContent() {
       if (data?.neupId) {
         setNeupId(data.neupId);
       } else if (!savedUserInfo) {
-        // If NeupID isn't set and we don't have it locally, we likely can't be on this step
-        router.push('/auth/signin/neupid');
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('step', 'neupid');
+        router.push(`/auth/signin?${params.toString()}`);
       }
     };
     fetchPreviousData();
-  }, [router]);
+  }, [router, searchParams]);
 
   const handlePasswordSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -88,9 +78,9 @@ function PasswordPageContent() {
           setShowDeletionDialog(true);
           NProgress.done();
         } else if (result.mfaRequired) {
-          const mfaUrl = new URL(window.location.origin + '/auth/signin/mfa');
-          if (returnUrl) mfaUrl.searchParams.set('return_url', returnUrl);
-          router.push(mfaUrl.toString());
+          const params = new URLSearchParams(searchParams.toString());
+          params.set('step', 'mfa');
+          router.push(`/auth/signin?${params.toString()}`);
         } else {
           sessionStorage.clear();
           router.push(returnUrl || '/manage');
@@ -117,11 +107,12 @@ function PasswordPageContent() {
       const result = await cancelAccountDeletion(data.accountId);
       if (result.success) {
         toast({ title: "Deletion Cancelled", description: "Your account deletion request has been cancelled. Welcome back!", className: "bg-accent text-accent-foreground" });
-        // Re-attempt login after cancellation
         const loginResult = await submitPassword({ password, authRequestId });
         if (loginResult.success && !loginResult.isPendingDeletion) {
           if (loginResult.mfaRequired) {
-            router.push(returnUrl ? `/auth/signin/mfa?return_url=${returnUrl}` : '/auth/signin/mfa');
+            const params = new URLSearchParams(searchParams.toString());
+            params.set('step', 'mfa');
+            router.push(`/auth/signin?${params.toString()}`);
           }
           else {
             sessionStorage.clear();
@@ -144,7 +135,9 @@ function PasswordPageContent() {
   };
 
   const handleBack = () => {
-    router.push('/auth/signin/neupid' + (returnUrl ? `?return_url=${returnUrl}` : ''));
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('step', 'neupid');
+    router.push(`/auth/signin?${params.toString()}`);
   };
 
   return (

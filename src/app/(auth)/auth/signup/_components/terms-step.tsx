@@ -1,4 +1,3 @@
-
 'use client';
 
 import Link from "next/link";
@@ -19,7 +18,7 @@ import { Loader2 } from "@/components/icons";
 
 type FormData = z.infer<typeof termsSchema>;
 
-export default function TermsStepPage() {
+export function TermsStep() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const { toast } = useToast();

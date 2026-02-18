@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import NProgress from 'nprogress';
@@ -16,14 +16,14 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Loader2, Check } from "@/components/icons";
-import { cn } from "@/lib/utils";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 
 type FormData = z.infer<typeof demographicsSchema>;
 
-export default function DemographicsStepPage() {
+export function DemographicsStep() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const { toast } = useToast();
     const [dateInput, setDateInput] = useState<string>('');
     const [isParsingDate, setIsParsingDate] = useState(false);
@@ -99,7 +99,9 @@ export default function DemographicsStepPage() {
         NProgress.start();
         const result = await submitDemographicsStep(authRequestId, data);
         if (result.success) {
-            router.push('/auth/signup/nationality');
+            const params = new URLSearchParams(searchParams.toString());
+            params.set('step', 'nationality');
+            router.push(`/auth/signup?${params.toString()}`);
         } else {
             toast({ variant: 'destructive', title: 'Error', description: result.error });
             NProgress.done();

@@ -5,14 +5,14 @@ import { db } from '@/lib/firebase';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const stepOrder = [
-    { path: '/auth/signup/name', status: 'pending_name' },
-    { path: '/auth/signup/demographics', status: 'pending_demographics' },
-    { path: '/auth/signup/nationality', status: 'pending_nationality' },
-    { path: '/auth/signup/contact', status: 'pending_contact' },
-    { path: '/auth/signup/otp', status: 'pending_otp' },
-    { path: '/auth/signup/neupid', status: 'pending_neupid' },
-    { path: '/auth/signup/password', status: 'pending_password' },
-    { path: '/auth/signup/terms', status: 'pending_terms' },
+    { path: '/auth/signup?step=name', status: 'pending_name' },
+    { path: '/auth/signup?step=demographics', status: 'pending_demographics' },
+    { path: '/auth/signup?step=nationality', status: 'pending_nationality' },
+    { path: '/auth/signup?step=contact', status: 'pending_contact' },
+    { path: '/auth/signup?step=otp', status: 'pending_otp' },
+    { path: '/auth/signup?step=neupid', status: 'pending_neupid' },
+    { path: '/auth/signup?step=password', status: 'pending_password' },
+    { path: '/auth/signup?step=terms', status: 'pending_terms' },
 ];
 
 async function getSignupStatus(authRequestId: string | null) {

@@ -1,8 +1,7 @@
-
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useState, useTransition, useEffect } from 'react';
+import { useState, useTransition, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { verifyMfa } from '@/actions/auth/verify-mfa';
 import NProgress from 'nprogress';
@@ -13,7 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Loader2 } from '@/components/icons';
 
-function MfaForm() {
+export function MfaStep() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { toast } = useToast();
@@ -94,13 +93,5 @@ function MfaForm() {
         </CardContent>
       </Card>
     </div>
-  );
-}
-
-export default function MfaPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <MfaForm />
-    </Suspense>
   );
 }

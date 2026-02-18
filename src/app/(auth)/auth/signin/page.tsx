@@ -3,48 +3,63 @@
 import { useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { initializeAuthFlow } from '@/actions/auth/initialize';
+import { NeupIdStep } from './_components/neupid-step';
+import { PasswordStep } from './_components/password-step';
+import { MfaStep } from './_components/mfa-step';
 
-// Inner component that uses useSearchParams
-function SignInFlow() {
+function SigninFlow() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const step = searchParams.get('step');
 
   useEffect(() => {
-    const startFlow = async () => {
-      if (typeof window !== 'undefined' && !window.isSecureContext) {
-        router.push('/auth/start');
-        return;
-      }
-      try {
-        const currentId = sessionStorage.getItem('temp_auth_id');
-        const newId = await initializeAuthFlow(currentId, 'signin');
-        sessionStorage.setItem('temp_auth_id', newId);
+    if (!step) {
+      const startFlow = async () => {
+        if (typeof window !== 'undefined' && !window.isSecureContext) {
+          router.push('/auth/start');
+          return;
+        }
+        try {
+          const currentId = sessionStorage.getItem('temp_auth_id');
+          const newId = await initializeAuthFlow(currentId, 'signin');
+          sessionStorage.setItem('temp_auth_id', newId);
 
-        const returnUrl = searchParams.get('return_url');
-        const neupId = searchParams.get('neupId');
-        const redirectPath = neupId ? `/auth/signin/password?neupId=${neupId}` : '/auth/signin/neupid';
+          const returnUrl = searchParams.get('return_url');
+          const neupId = searchParams.get('neupId');
+          
+          const params = new URLSearchParams(searchParams.toString());
+          if (neupId) {
+             params.set('step', 'password');
+             // neupId is already in searchParams so it's preserved
+          } else {
+             params.set('step', 'neupid');
+          }
+          if (returnUrl) params.set('return_url', returnUrl);
 
-        const finalUrl = returnUrl
-          ? `${redirectPath}&return_url=${encodeURIComponent(returnUrl)}`
-          : redirectPath;
+          router.push(`/auth/signin?${params.toString()}`);
 
-        router.push(finalUrl);
+        } catch (error) {
+          console.error('Failed to initialize signin flow:', error);
+        }
+      };
+      startFlow();
+    }
+  }, [step, router, searchParams]);
 
-      } catch (error) {
-        console.error('Failed to initialize signin flow:', error);
-      }
-    };
-    startFlow();
-  }, [router, searchParams]);
+  if (!step) return null;
 
-  return null;
+  switch (step) {
+    case 'neupid': return <NeupIdStep />;
+    case 'password': return <PasswordStep />;
+    case 'mfa': return <MfaStep />;
+    default: return <NeupIdStep />;
+  }
 }
 
-// This component is an "invisible" entry point to the signin flow.
-export default function SignInStartPage() {
+export default function SigninPage() {
   return (
-    <Suspense fallback={null}>
-      <SignInFlow />
+    <Suspense fallback={<div>Loading...</div>}>
+      <SigninFlow />
     </Suspense>
-  );
+  )
 }

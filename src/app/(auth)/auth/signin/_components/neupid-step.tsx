@@ -1,9 +1,8 @@
-
 'use client';
 
 import Link from 'next/link';
-import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import React, { useState, useEffect, useTransition, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useState, useEffect, useTransition } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { submitNeupId } from '@/actions/auth/login';
 import { getSignupStepData } from '@/actions/auth/signup';
@@ -16,7 +15,7 @@ import { initializeAuthFlow } from '@/actions/auth/initialize';
 import { Label } from '@/components/ui/label';
 import { Loader2 } from '@/components/icons';
 
-function NeupIdPageComponent() {
+export function NeupIdStep() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { toast } = useToast();
@@ -33,7 +32,6 @@ function NeupIdPageComponent() {
       let id = sessionStorage.getItem('temp_auth_id');
 
       if (!id) {
-        // Lazy initialization - don't redirect, just create a new one
         try {
           id = await initializeAuthFlow(null, 'signin');
           sessionStorage.setItem('temp_auth_id', id);
@@ -45,9 +43,8 @@ function NeupIdPageComponent() {
         }
       } else {
         setAuthRequestId(id);
-        // Fetch any previously entered NeupID only if we had an ID already
         const fetchPreviousData = async () => {
-          const { data } = await getSignupStepData(id!); // id is definitely string here
+          const { data } = await getSignupStepData(id!);
           if (data?.neupId) {
             setNeupId(data.neupId);
           }
@@ -62,32 +59,23 @@ function NeupIdPageComponent() {
     event.preventDefault();
     setValidationError(null);
 
-    // If authRequestId isn't ready yet (lazy init still running), we should wait or show loading.
-    // However, since the user takes time to type, it's 99% likely ready.
-    // If it's not ready, let's fast-track or queue it? 
-    // Simplified: just wait for the state to populate or check session storage again if state update is lagging.
-
-    // Check sessionStorage directly in case state update is pending
     const currentId = authRequestId || sessionStorage.getItem('temp_auth_id');
 
     if (!currentId) {
-      // This effectively means initialization failed or is remarkably slow
       toast({ title: 'Please wait...', description: 'Initializing secure session.' });
-      // We could theoretically retry init here, but let's assume the effect is catching up.
       return;
     }
 
     NProgress.start();
     startNeupIdCheck(async () => {
-      // Ensure we use the freshly retrieved ID
       const result = await submitNeupId({ neupId, authRequestId: currentId });
       if (result.success) {
         if (result.userInfo) {
           sessionStorage.setItem('temp_user_info', JSON.stringify(result.userInfo));
         }
-        const nextUrl = new URL(window.location.origin + '/auth/signin/password');
-        if (returnUrl) nextUrl.searchParams.set('return_url', returnUrl);
-        router.push(nextUrl.toString());
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('step', 'password');
+        router.push(`/auth/signin?${params.toString()}`);
       } else {
         setValidationError(result.error || 'Invalid NeupID.');
         NProgress.done();
@@ -102,13 +90,10 @@ function NeupIdPageComponent() {
   };
 
   const getSignupUrl = () => {
-    if (typeof window === 'undefined') {
-      // Server-side rendering fallback
-      return returnUrl ? `/auth/signup/name?return_url=${returnUrl}` : '/auth/signup/name';
-    }
-    const url = new URL('/auth/signup/name', window.location.origin);
-    if (returnUrl) url.searchParams.set('return_url', returnUrl);
-    return url.toString();
+    const params = new URLSearchParams();
+    params.set('step', 'name');
+    if (returnUrl) params.set('return_url', returnUrl);
+    return `/auth/signup?${params.toString()}`;
   };
 
   return (
@@ -162,13 +147,5 @@ function NeupIdPageComponent() {
         </CardContent>
       </Card>
     </div>
-  );
-}
-
-export default function NeupIdPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <NeupIdPageComponent />
-    </Suspense>
   );
 }

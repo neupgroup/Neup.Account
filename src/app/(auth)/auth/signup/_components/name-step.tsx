@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import NProgress from 'nprogress';
@@ -20,8 +20,9 @@ import { Label } from "@/components/ui/label";
 
 type FormData = z.infer<typeof nameSchema>;
 
-export default function NameStepPage() {
+export function NameStep() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const { toast } = useToast();
     const [showMiddleName, setShowMiddleName] = useState(false);
     const [authRequestId, setAuthRequestId] = useState<string | null>(null);
@@ -80,7 +81,9 @@ export default function NameStepPage() {
         NProgress.start();
         const result = await submitNameStep(currentId, data);
         if (result.success) {
-            router.push('/auth/signup/demographics');
+            const params = new URLSearchParams(searchParams.toString());
+            params.set('step', 'demographics');
+            router.push(`/auth/signup?${params.toString()}`);
         } else {
             toast({ variant: 'destructive', title: 'Error', description: result.error });
             NProgress.done();
