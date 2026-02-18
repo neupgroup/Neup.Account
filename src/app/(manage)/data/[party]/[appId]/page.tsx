@@ -5,10 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Check, ShieldQuestion, Trash2 } from '@/components/icons';
 import { BackButton } from '@/components/ui/back-button';
 
-export default async function AppDataAccessPage({ params }: { params: { appId: string, party: string } }) {
-    const app = await getApplicationDetails(params.appId);
+export default async function AppDataAccessPage({ params }: { params: Promise<{ appId: string, party: string }> }) {
+    const { appId, party } = await params;
+    const app = await getApplicationDetails(appId);
 
-    if (!app || (params.party !== '1' && params.party !== '3')) {
+    if (!app || (party !== '1' && party !== '3')) {
         notFound();
     }
     

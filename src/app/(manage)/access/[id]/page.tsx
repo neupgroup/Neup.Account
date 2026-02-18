@@ -17,10 +17,11 @@ import type { Permission } from "@/types";
 export default async function AccessDetailsPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   const [details, delegatablePermissionsResponse] = await Promise.all([
-    getAccessDetails(params.id),
+    getAccessDetails(id),
     getDelegatablePermissions(),
   ]);
 

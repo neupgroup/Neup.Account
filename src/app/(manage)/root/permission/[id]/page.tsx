@@ -4,8 +4,9 @@ import { getPermissionSetDetails } from "@/actions/root/permission";
 import { PermissionForm } from "./form";
 import { BackButton } from "@/components/ui/back-button";
 
-export default async function PermissionDetailsPage({ params }: { params: { id: string } }) {
-    const permission = await getPermissionSetDetails(params.id);
+export default async function PermissionDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    const permission = await getPermissionSetDetails(id);
 
     if (!permission) {
         notFound();

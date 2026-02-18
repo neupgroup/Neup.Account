@@ -58,7 +58,8 @@ const adminActions = (accountId: string) => [
     }
 ]
 
-export default async function AccountDetailsPage({ params }: { params: { id: string } }) {
+export default async function AccountDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const canView = await checkPermissions([
     'root.account.view_full',
     'root.account.view_limited1',
@@ -68,14 +69,14 @@ export default async function AccountDetailsPage({ params }: { params: { id: str
     notFound();
   }
 
-  const userDetails = await getUserDetails(params.id);
+  const userDetails = await getUserDetails(id);
 
   if (!userDetails || !userDetails.profile) {
     notFound();
   }
 
-  const features = accountManagementFeatures(params.id);
-  const adminFeatures = adminActions(params.id);
+  const features = accountManagementFeatures(id);
+  const adminFeatures = adminActions(id);
 
   return (
     <div className="grid gap-8">
@@ -95,7 +96,7 @@ export default async function AccountDetailsPage({ params }: { params: { id: str
               {userDetails.profile.nameDisplay ||
                 `${userDetails.profile.nameFirst} ${userDetails.profile.nameLast}`}
             </h1>
-            {userDetails.profile.verified && <VerifiedBadge accountId={params.id} className="h-6 w-6" />}
+            {userDetails.profile.verified && <VerifiedBadge accountId={id} className="h-6 w-6" />}
           </div>
           <p className="text-muted-foreground font-mono">
             @{userDetails.profile.neupIdPrimary}

@@ -3,15 +3,16 @@ import { getUserDetails } from "@/actions/root/users";
 import { BackButton } from "@/components/ui/back-button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 
-export default async function NoticeHistoryPage({ params }: { params: { id: string } }) {
-    const userDetails = await getUserDetails(params.id);
+export default async function NoticeHistoryPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    const userDetails = await getUserDetails(id);
     if (!userDetails) {
         notFound();
     }
     
     return (
         <div className="grid gap-8">
-            <BackButton href={`/manage/root/accounts/${params.id}`} />
+            <BackButton href={`/manage/root/accounts/${id}`} />
             <div>
                 <h1 className="text-3xl font-bold tracking-tight">Notice History</h1>
                 <p className="text-muted-foreground">

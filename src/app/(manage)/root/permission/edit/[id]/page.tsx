@@ -2,7 +2,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { BackButton } from "@/components/ui/back-button";
 
-export default function EditPermissionPage({ params }: { params: { id: string } }) {
+export default async function EditPermissionPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
 
   return (
     <div className="grid gap-6">
@@ -12,7 +13,7 @@ export default function EditPermissionPage({ params }: { params: { id: string } 
           Manage Permission Set
         </h1>
         <p className="text-muted-foreground font-mono text-sm">
-            ID: {params.id}
+            ID: {id}
         </p>
       </div>
       <Card>

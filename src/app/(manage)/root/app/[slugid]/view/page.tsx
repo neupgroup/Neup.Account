@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useTransition } from 'react';
-import { notFound, useRouter } from 'next/navigation';
+import { notFound, useRouter, useParams } from 'next/navigation';
 import { getAppDetails, regenerateAppSecret } from '../../actions';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
@@ -34,8 +34,8 @@ function AppDetailsSkeleton() {
     )
 }
 
-export default function ViewAppPage({ params }: { params: Promise<{ slugid: string }> }) {
-    const resolvedParams = React.use(params);
+export default function ViewAppPage() {
+    const params = useParams<{ slugid: string }>();
     const [app, setApp] = useState<Application | null>(null);
     const [loading, setLoading] = useState(true);
     const [isPending, startTransition] = useTransition();
@@ -45,17 +45,17 @@ export default function ViewAppPage({ params }: { params: Promise<{ slugid: stri
 
     useEffect(() => {
         const fetchDetails = async () => {
-            const data = await getAppDetails(resolvedParams?.slugid || '');
+            const data = await getAppDetails(params?.slugid || '');
             if (!data) notFound();
             setApp(data);
             setLoading(false);
         };
         fetchDetails();
-    }, [resolvedParams?.slugid]);
+    }, [params?.slugid]);
 
     const handleRegenerate = () => {
         startTransition(async () => {
-            const result = await regenerateAppSecret(resolvedParams?.slugid || '');
+            const result = await regenerateAppSecret(params?.slugid || '');
             if (result.success && result.newSecret) {
                 setNewSecret(result.newSecret);
                 setShowSecret(true); // Show the new secret immediately

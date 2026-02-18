@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from 'react'
+import { useParams } from 'next/navigation'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -30,7 +31,8 @@ const demographicsFormSchema = z.object({
 
 type DemographicsFormValues = z.infer<typeof demographicsFormSchema>;
 
-export default function RootUserDemographicsPage({ params }: { params: { id: string } }) {
+export default function RootUserDemographicsPage() {
+    const params = useParams<{ id: string }>();
     const [loading, setLoading] = useState(true);
     const { toast } = useToast();
     const [profile, setProfile] = useState<any>(null);

@@ -2,17 +2,18 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { BackButton } from "@/components/ui/back-button";
 
-export default function EditAppPage({ params }: { params: { slugid: string } }) {
+export default async function EditAppPage({ params }: { params: Promise<{ slugid: string }> }) {
+  const { slugid } = await params;
 
   return (
     <div className="grid gap-6">
-      <BackButton href={`/manage/root/app/${params.slugid}`} />
+      <BackButton href={`/manage/root/app/${slugid}`} />
       <div>
         <h1 className="text-2xl font-bold tracking-tight">
           Edit Application
         </h1>
         <p className="text-muted-foreground font-mono text-sm">
-            ID: {params.slugid}
+            ID: {slugid}
         </p>
       </div>
       <Card>

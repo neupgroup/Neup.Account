@@ -18,8 +18,9 @@ const InfoItem = ({ label, value }: { label: string, value: React.ReactNode }) =
 );
 
 
-export default async function ErrorDetailsPage({ params }: { params: { id: string } }) {
-    const error = await getErrorDetails(params.id);
+export default async function ErrorDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    const error = await getErrorDetails(id);
 
     if (!error) {
         notFound();

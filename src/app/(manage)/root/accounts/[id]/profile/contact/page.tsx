@@ -2,6 +2,7 @@
 "use client"
 
 import { useEffect, useState } from 'react'
+import { useParams } from 'next/navigation'
 import { useForm, useWatch } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -30,7 +31,8 @@ const contactFormSchema = z.object({
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
 
-export default function RootUserContactPage({ params }: { params: { id: string } }) {
+export default function RootUserContactPage() {
+    const params = useParams<{ id: string }>();
     const [loading, setLoading] = useState(true);
     const { toast } = useToast();
     const [userNeupId, setUserNeupId] = useState('');

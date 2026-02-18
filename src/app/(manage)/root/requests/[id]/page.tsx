@@ -5,7 +5,7 @@ import { getNeupIdRequestDetails } from '@/actions/root/requests/neupid';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { RequestDecisionForm } from './form';
-import { notFound } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import type { PendingNeupIdRequest } from '@/types';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -44,7 +44,8 @@ function RequestDetailsSkeleton() {
 }
 
 
-export default function NeupIdRequestDetailsPage({ params }: { params: { id: string } }) {
+export default function NeupIdRequestDetailsPage() {
+    const params = useParams<{ id: string }>();
     const [requestDetails, setRequestDetails] = useState<PendingNeupIdRequest | null>(null);
     const [loading, setLoading] = useState(true);
 

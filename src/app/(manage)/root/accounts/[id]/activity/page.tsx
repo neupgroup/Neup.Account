@@ -2,7 +2,7 @@
 
 'use client';
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, useParams } from "next/navigation";
 import {
     Table,
     TableBody,
@@ -130,7 +130,8 @@ export function ActivityList({ initialActivity, accountId }: { initialActivity?:
     );
 }
 
-export default function UserActivityPage({ params }: { params: { id: string } }) {
+export default function UserActivityPage() {
+    const params = useParams<{ id: string }>();
     
     return (
          <div className="grid gap-8">

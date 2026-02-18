@@ -5,8 +5,9 @@ import { PrimaryHeader } from '@/components/ui/primary-header';
 import { getUserDetails } from '@/actions/root/users';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-export default async function RootUserKycPage({ params }: { params: { id: string } }) {
-    const userDetails = await getUserDetails(params.id);
+export default async function RootUserKycPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    const userDetails = await getUserDetails(id);
 
     if (!userDetails) {
         notFound();
@@ -14,7 +15,7 @@ export default async function RootUserKycPage({ params }: { params: { id: string
 
     return (
         <div className="grid gap-8">
-            <BackButton href={`/manage/root/accounts/${params.id}/profile`} />
+            <BackButton href={`/manage/root/accounts/${id}/profile`} />
             <PrimaryHeader
                 title="KYC & Verification"
                 description={`Review KYC status and submitted documents for @${userDetails.neupId}.`}

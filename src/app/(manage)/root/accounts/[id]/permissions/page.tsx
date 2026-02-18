@@ -7,16 +7,17 @@ import { BackButton } from "@/components/ui/back-button";
 import { PermissionEditor } from "./form";
 import { PrimaryHeader } from "@/components/ui/primary-header";
 
-export default async function UserPermissionsPage({ params }: { params: { id: string } }) {
-    const userDetails = await getUserDetails(params.id);
+export default async function UserPermissionsPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    const userDetails = await getUserDetails(id);
     if (!userDetails) {
         notFound();
     }
 
     const [userPermissions, allPermissionsResponse, accountType] = await Promise.all([
-        getPermissions(params.id),
+        getPermissions(id),
         getMasterPermissions("", 1, 9999), // Fetch all permissions
-        getAccountType(params.id),
+        getAccountType(id),
     ]);
 
     // Filter permissions to only show those intended for the user's account type, plus root permissions.
@@ -27,13 +28,13 @@ export default async function UserPermissionsPage({ params }: { params: { id: st
     
     return (
         <div className="grid gap-8">
-            <BackButton href={`/manage/root/accounts/${params.id}`} />
+            <BackButton href={`/manage/root/accounts/${id}`} />
             <PrimaryHeader
                 title="Manage User Permissions"
                 description={`Assign or restrict permission sets for @${userDetails.neupId}.`}
             />
             <PermissionEditor 
-                accountId={params.id}
+                accountId={id}
                 allPermissionSets={assignablePermissions}
                 initialAssignedSetIds={userPermissions.assignedPermissionSetIds}
                 initialRestrictedSetIds={userPermissions.restrictedPermissionSetIds}

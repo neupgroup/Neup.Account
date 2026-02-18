@@ -2,7 +2,7 @@
 'use client';
 
 import { useEffect, useState, useTransition } from 'react';
-import { notFound, useRouter } from 'next/navigation';
+import { notFound, useRouter, useParams } from 'next/navigation';
 import { getBugDetails, updateBugStatus, deleteBugReport } from '@/actions/root/site';
 import type { BugReportDetails } from '@/types';
 import { useToast } from '@/hooks/use-toast';
@@ -39,7 +39,8 @@ const statusVariantMap: { [key: string]: "default" | "destructive" | "secondary"
     solved: "default",
 };
 
-export default function BugDetailsPage({ params }: { params: { id: string } }) {
+export default function BugDetailsPage() {
+    const params = useParams<{ id: string }>();
     const [bug, setBug] = useState<BugReportDetails | null>(null);
     const [loading, setLoading] = useState(true);
     const [isPending, startTransition] = useTransition();

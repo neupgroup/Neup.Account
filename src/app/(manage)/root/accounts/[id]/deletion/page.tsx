@@ -4,8 +4,9 @@ import { BackButton } from "@/components/ui/back-button";
 import { PrimaryHeader } from "@/components/ui/primary-header";
 import { DeletionManager } from "./form";
 
-export default async function UserDeletionPage({ params }: { params: { id: string } }) {
-    const userDetails = await getUserDetails(params.id);
+export default async function UserDeletionPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    const userDetails = await getUserDetails(id);
     if (!userDetails) {
         notFound();
     }
@@ -13,7 +14,7 @@ export default async function UserDeletionPage({ params }: { params: { id: strin
     return (
         <div className="grid gap-8">
             <div className="space-y-4">
-                <BackButton href={`/manage/root/accounts/${params.id}`} />
+                <BackButton href={`/manage/root/accounts/${id}`} />
                 <PrimaryHeader
                     title="Account Deletion"
                     description={`Manage the deletion process for @${userDetails.neupId}.`}
