@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UserDetails } from '@/types';
 import { ProfileForm } from './profile-form'; 
 import { VerificationManager } from './verification-manager';
-import { ActivityList } from './activity/page'; 
+import { ActivityList } from './activity/activity-list'; 
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from '@/components/icons';
 import { useRouter } from 'next/navigation';
