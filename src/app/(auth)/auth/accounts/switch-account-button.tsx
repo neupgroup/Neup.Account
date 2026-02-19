@@ -35,7 +35,7 @@ export function SwitchAccountButton({ account }: { account: CombinedAccount }) {
             if (result.success) {
                 toast({ title: "Success", description: "Switched account successfully." });
                 sessionStorage.clear();
-                router.push('/manage');
+                router.push('/');
                 router.refresh();
             } else {
                 toast({ variant: "destructive", title: "Error", description: result.error });

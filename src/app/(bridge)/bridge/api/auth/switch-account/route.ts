@@ -10,25 +10,27 @@ export async function GET(request: NextRequest) {
     const sessionId = searchParams.get('sessionId');
 
     if (!sessionId) {
-        return NextResponse.redirect(new URL('/auth/accounts?error=invalid_request', request.url));
+        const errorUrl = new URL('/auth/start', request.url);
+        errorUrl.searchParams.set('error', 'invalid_request');
+        return NextResponse.redirect(errorUrl);
     }
     
     const storedAccounts = await getStoredAccounts();
     const accountToSwitch = storedAccounts.find(acc => acc.sessionId === sessionId);
 
     if (!accountToSwitch) {
-         return NextResponse.redirect(new URL('/auth/accounts?error=session_not_found', request.url));
+        const errorUrl = new URL('/auth/start', request.url);
+        errorUrl.searchParams.set('error', 'session_not_found');
+        return NextResponse.redirect(errorUrl);
     }
 
     const result = await switchToAccount(accountToSwitch);
 
     if (result.success) {
-        const manageUrl = new URL('/manage', request.url);
-        revalidatePath('/manage', 'layout');
-        const response = NextResponse.redirect(manageUrl);
-        return response;
+        const manageUrl = new URL('/', request.url);
+        return NextResponse.redirect(manageUrl);
     } else {
-        const errorUrl = new URL('/auth/accounts', request.url);
+        const errorUrl = new URL('/auth/start', request.url);
         errorUrl.searchParams.set('error', 'switch_failed');
         if(result.error) {
             errorUrl.searchParams.set('error_description', result.error);

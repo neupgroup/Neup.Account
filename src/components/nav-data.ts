@@ -67,7 +67,7 @@ export const navItems = {
         { href: "/root/site", label: "Site Configuration", description: "Manage site-wide settings and error logs." },
     ],
     accountNav: [
-        { href: "/auth/accounts", label: "Switch Account", description: "Switch between different NeupID accounts." },
+        { href: "/auth/start", label: "Switch Account", description: "Switch between different NeupID accounts." },
         { href: "/auth/signout", label: "SignOut Account", description: "Sign out of your account." },
     ],
 };

@@ -8,9 +8,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronRight } from '@/components/icons';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { AccountActions } from './account-actions';
-import { switchToBrand, switchToDependent, switchToDelegated } from '@/lib/session';
+import { switchToBrand, switchToDependent, switchToDelegated, switchToAccount } from '@/lib/session';
 
 type CombinedAccount = StoredAccount & {
     displayName?: string;
@@ -96,10 +95,14 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
                     router.refresh();
                  }
             } else if (finalAccount.sessionId) {
-                const href = finalAccount.expired 
-                    ? `/auth/signin?neupId=${finalAccount.neupId}` 
-                    : `/auth/switch/handler?sessionId=${finalAccount.sessionId}`;
-                router.push(href);
+                if (finalAccount.expired) {
+                    router.push(`/auth/signin?neupId=${finalAccount.neupId}`);
+                } else {
+                    const res = await switchToAccount(finalAccount);
+                    if (res.success) {
+                        router.push('/');
+                    }
+                }
             } else {
                 // If sessionId is undefined, it means it's a signed-out personal account
                 if (finalAccount.sessionId === undefined) {
@@ -119,7 +122,6 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
         return (
             <div className="flex w-full items-center justify-between p-4 border rounded-lg">
                 <div className="flex items-center gap-4">
-                    <Skeleton className="h-10 w-10 rounded-full" />
                     <div className="space-y-2">
                         <Skeleton className="h-5 w-32" />
                         <Skeleton className="h-4 w-24" />
@@ -144,10 +146,6 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
             }}
         >
             <div className="flex items-center gap-4">
-                <Avatar>
-                    <AvatarImage src={finalAccount.displayPhoto} alt={finalAccount.displayName} />
-                    <AvatarFallback />
-                </Avatar>
                 <div>
                     <h3 className="font-semibold">{finalAccount.displayName}</h3>
                     <div className="flex items-center gap-2">

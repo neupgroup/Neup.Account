@@ -77,24 +77,26 @@ function NameStep() {
                 }
             } else {
                 setAuthRequestId(id);
-                async function loadData() {
-                    const { data } = await getSignupStepData(id!);
-                    if (data) {
-                        form.reset({
-                            firstName: data.nameFirst || "",
-                            middleName: data.nameMiddle || "",
-                            lastName: data.nameLast || "",
-                        });
-                        if (data.nameMiddle) {
-                            setShowMiddleName(true);
-                        }
+                const { data } = await getSignupStepData(id!);
+                if (data) {
+                    form.reset({
+                        firstName: data.nameFirst || "",
+                        middleName: data.nameMiddle || "",
+                        lastName: data.nameLast || "",
+                    });
+                    if (data.nameMiddle) {
+                        setShowMiddleName(true);
                     }
                 }
-                loadData();
             }
+
+            const firstName = searchParams.get('firstName');
+            const lastName = searchParams.get('lastName');
+            if (firstName) form.setValue('firstName', firstName);
+            if (lastName) form.setValue('lastName', lastName);
         };
         initFlow();
-    }, [router, form, toast]);
+    }, [router, form, toast, searchParams]);
 
     const onSubmit = async (data: z.infer<typeof nameSchema>) => {
         const currentId = authRequestId || sessionStorage.getItem('temp_auth_id');
@@ -188,21 +190,37 @@ function DemographicsStep() {
 
         async function loadData() {
             const { data } = await getSignupStepData(id || '');
+            
+            const birthdateParam = searchParams.get('birthdate');
+            const genderParam = searchParams.get('gender');
+
             if (data) {
                 let formGender = data.gender;
                 let formCustomGender = data.customGender || "";
                 
                 let dobDate: Date | undefined;
-                if (data.dateBirth) {
+                
+                // Prioritize query param if available, otherwise use stored data
+                const dateSource = birthdateParam || data.dateBirth;
+
+                if (dateSource) {
                      // Check if it's a string (YYYY-MM-DD) or ISO string
-                     if (typeof data.dateBirth === 'string') {
-                         if (data.dateBirth.includes('T')) {
-                             dobDate = new Date(data.dateBirth);
+                     if (typeof dateSource === 'string') {
+                         if (dateSource.includes('T')) {
+                             dobDate = new Date(dateSource);
                          } else {
-                             dobDate = new Date(data.dateBirth + 'T00:00:00');
+                             // Handle YYYYMMDD format
+                             if (/^\d{8}$/.test(dateSource)) {
+                                 const y = dateSource.substring(0, 4);
+                                 const m = dateSource.substring(4, 6);
+                                 const d = dateSource.substring(6, 8);
+                                 dobDate = new Date(`${y}-${m}-${d}T12:00:00`);
+                             } else {
+                                 dobDate = new Date(dateSource + 'T12:00:00');
+                             }
                          }
                      } else {
-                         dobDate = new Date(data.dateBirth);
+                         dobDate = new Date(dateSource);
                      }
                 }
                 
@@ -210,15 +228,68 @@ function DemographicsStep() {
                     setDateInput(format(dobDate, 'yyyy-MM-dd'));
                 }
 
+                // Prioritize query param for gender
+                let finalGender: "male" | "female" | "prefer_not_to_say" | "custom" | undefined;
+                
+                if (genderParam) {
+                    const normalizedGender = genderParam.toLowerCase();
+                    if (["male", "female", "prefer_not_to_say"].includes(normalizedGender)) {
+                         finalGender = normalizedGender as "male" | "female" | "prefer_not_to_say";
+                    } else {
+                         finalGender = "custom";
+                         formCustomGender = genderParam;
+                    }
+                } else if (formGender) {
+                     // If from DB and no query param override
+                     // We need to type check this string
+                     if (formGender === "male" || formGender === "female" || formGender === "prefer_not_to_say" || formGender === "custom") {
+                        finalGender = formGender;
+                     }
+                }
+
                 form.reset({
                     dob: dobDate,
-                    gender: formGender || undefined,
+                    gender: finalGender,
                     customGender: formCustomGender,
                 });
+            } else if (birthdateParam || genderParam) {
+                 // Fallback if no data stored but params exist
+                 let dobDate: Date | undefined;
+                 if (birthdateParam) {
+                     if (/^\d{8}$/.test(birthdateParam)) {
+                         const y = birthdateParam.substring(0, 4);
+                         const m = birthdateParam.substring(4, 6);
+                         const d = birthdateParam.substring(6, 8);
+                         dobDate = new Date(`${y}-${m}-${d}T12:00:00`);
+                         if (!isNaN(dobDate.getTime())) {
+                             setDateInput(format(dobDate, 'yyyy-MM-dd'));
+                         }
+                     }
+                 }
+                 
+                 let formGender = genderParam?.toLowerCase();
+                 let formCustomGender = "";
+                 
+                 let finalGender: "male" | "female" | "prefer_not_to_say" | "custom" | undefined;
+
+                 if (formGender) {
+                    if (["male", "female", "prefer_not_to_say"].includes(formGender)) {
+                        finalGender = formGender as "male" | "female" | "prefer_not_to_say";
+                    } else {
+                        formCustomGender = genderParam || ""; // use original casing for custom value
+                        finalGender = "custom";
+                    }
+                 }
+
+                 form.reset({
+                    dob: dobDate,
+                    gender: finalGender,
+                    customGender: formCustomGender
+                 });
             }
         }
         loadData();
-    }, [router, form]);
+    }, [router, form, searchParams]);
 
     const handleDateInputBlur = async () => {
         if (!dateInput) return;
@@ -786,6 +857,17 @@ function SignupFlow() {
           const params = new URLSearchParams(searchParams.toString());
           params.set('step', 'name');
           if (returnUrl) params.set('return_url', returnUrl);
+          
+          // Preserve pre-fill params
+          const firstName = searchParams.get('firstName');
+          const lastName = searchParams.get('lastName');
+          const birthdate = searchParams.get('birthdate');
+          const gender = searchParams.get('gender');
+          
+          if (firstName) params.set('firstName', firstName);
+          if (lastName) params.set('lastName', lastName);
+          if (birthdate) params.set('birthdate', birthdate);
+          if (gender) params.set('gender', gender);
           
           router.push(`/auth/signup?${params.toString()}`);
 

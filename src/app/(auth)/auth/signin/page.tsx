@@ -57,9 +57,14 @@ function NeupIdStep() {
         }
         fetchPreviousData();
       }
+      
+      const neupIdParam = searchParams.get('neupId');
+      if (neupIdParam) {
+          setNeupId(neupIdParam);
+      }
     };
     initFlow();
-  }, [router, toast]);
+  }, [router, toast, searchParams]);
 
   const handleNeupIdSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -223,7 +228,7 @@ function PasswordStep() {
           router.push(`/auth/signin?${params.toString()}`);
         } else {
           sessionStorage.clear();
-          router.push(returnUrl || '/manage');
+          router.push(returnUrl || '/');
         }
       } else {
         toast({ variant: 'destructive', title: 'Sign In Failed', description: result.error });
@@ -271,7 +276,7 @@ function PasswordStep() {
 
   const handleProceedWithDeletion = () => {
     setShowDeletionDialog(false);
-    router.push('/auth/accounts');
+    router.push('/auth/start');
   };
 
   const handleBack = () => {
@@ -369,7 +374,7 @@ function MfaStep() {
 
         if (result.success) {
           sessionStorage.clear();
-          router.push(returnUrl || '/manage');
+          router.push(returnUrl || '/');
         } else {
           toast({
             variant: 'destructive',
