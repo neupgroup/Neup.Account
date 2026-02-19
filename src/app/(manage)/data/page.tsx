@@ -15,31 +15,31 @@ export default async function DataAndPrivacyPage() {
             icon: History,
             title: "Your Account Activity",
             description: "View a log of recent actions performed on your account.",
-            href: "/manage/data/activity",
+            href: "/data/activity",
         },
         {
             icon: FileText,
             title: "Agreed Terms",
             description: "Review terms and conditions you have agreed to.",
-            href: "/manage/data/policies",
+            href: "/data/policies",
         },
         {
             icon: Trash2,
             title: "Delete Your Account",
             description: "Permanently delete your account and associated data.",
-            href: "/manage/data/delete",
+            href: "/data/delete",
         },
         {
             icon: PowerOff,
             title: "Deactivate Your Account",
             description: "Temporarily deactivate your account.",
-            href: "/manage/data/deactivate",
+            href: "/data/deactivate",
         },
         {
             icon: CalendarClock,
             title: "Schedule Deletion (Materialization)",
             description: "Request data deletion after a period of inactivity.",
-            href: "/manage/data/materialization",
+            href: "/data/materialization",
         },
     ];
 
@@ -84,7 +84,7 @@ export default async function DataAndPrivacyPage() {
                                     icon={app.icon ? appIconMap[app.icon] : AppWindow}
                                     title={app.name}
                                     description={app.description}
-                                    href={`/manage/data/1/${app.id}`} 
+                                    href={`/data/1/${app.id}`} 
                                 />
                             ))}
                         </CardContent>
@@ -106,7 +106,7 @@ export default async function DataAndPrivacyPage() {
                                     icon={app.icon ? appIconMap[app.icon] : Share2}
                                     title={app.name}
                                     description={app.description}
-                                    href={`/manage/data/3/${app.id}`} 
+                                    href={`/data/3/${app.id}`} 
                                 />
                             ))}
                         </CardContent>

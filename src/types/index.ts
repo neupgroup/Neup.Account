@@ -18,8 +18,8 @@ export type Session = {
 
 export type StoredAccount = {
     accountId: string;
-    sessionId: string;
-    sessionKey: string;
+    sessionId?: string;
+    sessionKey?: string;
     neupId: string;
     expired: boolean;
     active: boolean; // Add active flag

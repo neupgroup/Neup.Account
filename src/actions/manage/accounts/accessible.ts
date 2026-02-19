@@ -1,0 +1,72 @@
+'use server';
+
+import prisma from '@/lib/prisma';
+import { getPersonalAccountId } from '@/lib/auth-actions';
+import { logError } from '@/lib/logger';
+import type { StoredAccount } from '@/types';
+
+// Define a type that extends StoredAccount with the fields we need
+export type AccessibleAccount = StoredAccount & {
+    displayName: string;
+    displayPhoto?: string;
+    isBrand: boolean;
+    isDependent: boolean;
+    accountType: string;
+    active: boolean;
+};
+
+export async function getAccessibleAccounts(): Promise<AccessibleAccount[]> {
+    const personalAccountId = await getPersonalAccountId();
+    if (!personalAccountId) return [];
+
+    try {
+        const permits = await prisma.permit.findMany({
+            where: {
+                accountId: personalAccountId,
+                forSelf: false,
+                // We want all permits, regardless of account type
+            },
+            include: {
+                targetAccount: {
+                    include: {
+                        neupIds: {
+                            where: { isPrimary: true }
+                        }
+                    }
+                }
+            }
+        });
+
+        const accounts = await Promise.all(permits.map(async (permit) => {
+            const targetAccount = permit.targetAccount;
+            if (!targetAccount) return null;
+
+            const neupId = targetAccount.neupIds[0]?.id || 'unknown';
+            
+            // Determine display name
+            const displayName = targetAccount.nameDisplay || 
+                                (targetAccount.nameFirst ? `${targetAccount.nameFirst} ${targetAccount.nameLast || ''}`.trim() : 'Unnamed Account');
+
+            const accessibleAccount: AccessibleAccount = {
+                accountId: targetAccount.id,
+                sessionId: '', // No session for managed accounts
+                sessionKey: '',
+                neupId: neupId,
+                expired: false,
+                active: false,
+                isBrand: targetAccount.accountType === 'brand',
+                isDependent: targetAccount.accountType === 'dependent',
+                accountType: targetAccount.accountType,
+                displayName: displayName,
+                displayPhoto: targetAccount.accountPhoto || undefined,
+            };
+            return accessibleAccount;
+        }));
+
+        return accounts.filter((acc): acc is AccessibleAccount => acc !== null);
+
+    } catch (error) {
+        await logError('database', error, 'getAccessibleAccounts');
+        return [];
+    }
+}

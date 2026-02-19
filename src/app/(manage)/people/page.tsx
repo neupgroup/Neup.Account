@@ -20,14 +20,14 @@ export default async function PeopleSharingPage() {
             icon: Users,
             title: "Family Sharing",
             description: "Manage your family group and shared subscriptions.",
-            href: "/manage/people/family",
+            href: "/people/family",
             show: canViewFamily,
         },
         {
             icon: MailQuestion,
             title: "Invitations",
             description: "Accept or reject requests from other users.",
-            href: "/manage/people/invitations",
+            href: "/people/invitations",
             show: canViewInvitations,
         },
         {
@@ -41,7 +41,7 @@ export default async function PeopleSharingPage() {
             icon: UserX,
             title: "Blocked Users",
             description: "Manage users you have blocked or restricted.",
-            href: "/manage/people/blocked",
+            href: "/people/blocked",
             show: canBlockUsers,
         },
     ];

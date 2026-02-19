@@ -98,6 +98,7 @@ export const AccountScalarFieldEnum = {
   neupIdPrimary: 'neupIdPrimary',
   verified: 'verified',
   accountType: 'accountType',
+  permit: 'permit',
   accountStatus: 'accountStatus',
   block: 'block'
 } as const
@@ -177,6 +178,7 @@ export type PermitScalarFieldEnum = (typeof PermitScalarFieldEnum)[keyof typeof 
 export const PermissionScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  type: 'type',
   appId: 'appId',
   access: 'access'
 } as const

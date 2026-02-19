@@ -5,7 +5,7 @@ import { SecondaryHeader } from '@/components/ui/secondary-header';
 import type { Notification as NotificationType } from '@/types';
 
 function getNotificationDetails(notification: NotificationType): { iconName: string, message: string, href: string } {
-    const defaultHref = '/manage/notifications';
+    const defaultHref = '/notifications';
     let href = defaultHref;
     let message = notification.message || 'You have a new notification.';
     let iconName = 'MessageSquareWarning';
@@ -14,20 +14,20 @@ function getNotificationDetails(notification: NotificationType): { iconName: str
         case 'informative.login':
         case 'informative.logout':
         case 'informative.unblock':
-            href = '/manage/security/devices';
+            href = '/security/devices';
             break;
         case 'informative.security':
-            href = '/manage/security';
+            href = '/security';
             break;
         case 'access_invitation':
             iconName = 'Handshake';
             message = `${notification.senderName} wants you to manage their account.`;
-            href = '/manage/people/invitations';
+            href = '/people/invitations';
             break;
         case 'family_invitation':
             iconName = 'UserPlus';
             message = `${notification.senderName} invited you to join their family.`;
-            href = '/manage/people/invitations';
+            href = '/people/invitations';
             break;
     }
     
@@ -104,7 +104,7 @@ export async function NotificationsCard() {
                     })}
                      {showAllButton && (
                         <ListItem
-                            href="/manage/notifications"
+                            href="/notifications"
                             iconName="Bell"
                             title="See all notifications"
                             description={`You have ${prioritizedNotifications.length} total unread notifications.`}

@@ -52,7 +52,7 @@ export async function getSessionCookies() {
     }
 
     let managingAccountId: string | undefined = undefined;
-    if (managingCookie && (managingCookie.startsWith('brand.') || managingCookie.startsWith('dependent.'))) {
+    if (managingCookie && (managingCookie.startsWith('brand.') || managingCookie.startsWith('dependent.') || managingCookie.startsWith('delegated.'))) {
         managingAccountId = managingCookie.split('.')[1];
     }
 

@@ -392,7 +392,6 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
 
   try {
     const isAdmin = await isFirstUser();
-    const permissionSetName = isAdmin ? 'root.whole' : 'individual.default';
 
     const neupIdTaken = await prisma.neupId.findUnique({
         where: { id: neupId },
@@ -417,6 +416,7 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
         nationality,
         neupIdPrimary: neupId,
         dateCreated: new Date(),
+        // For admin, we will update permit to 'addition' later. Default is 'default'.
         
         neupIds: {
           create: {
@@ -444,21 +444,31 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
     const accountId = account.id;
 
     // Permissions
-    const permissionSet = await prisma.permission.findUnique({
-      where: { name: permissionSetName },
-    });
-
-    if (permissionSet) {
-      await prisma.permit.create({
-        data: {
-          accountId: accountId,
-          forSelf: !isAdmin,
-          isRoot: isAdmin,
-          permissions: [permissionSet.id],
-          restrictions: [],
-          createdOn: new Date(),
-        },
+    // Optimized: Only create Permit entry for non-default users (e.g. admin)
+    // Default users rely on account.permit='default' (set by default in schema)
+    if (isAdmin) {
+      const permissionSet = await prisma.permission.findUnique({
+        where: { name: 'root.whole' },
       });
+
+      if (permissionSet) {
+        // Update account to 'addition' type for root, as they have extra permissions
+        await prisma.account.update({
+            where: { id: accountId },
+            data: { permit: 'addition' }
+        });
+
+        await prisma.permit.create({
+          data: {
+            accountId: accountId,
+            forSelf: false, 
+            isRoot: true,
+            permissions: [permissionSet.id],
+            restrictions: [],
+            createdOn: new Date(),
+          },
+        });
+      }
     }
 
     await logActivity(

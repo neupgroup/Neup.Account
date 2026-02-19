@@ -66,7 +66,7 @@ export default async function BrandAccountsPage() {
                 </CardContent>
                 <CardContent className="pt-6 border-t">
                     <Button asChild>
-                        <Link href="/manage/accounts/brand/create"><Plus className="mr-2 h-4 w-4" />Create New Brand</Link>
+                        <Link href="/accounts/brand/create"><Plus className="mr-2 h-4 w-4" />Create New Brand</Link>
                     </Button>
                 </CardContent>
             </Card>

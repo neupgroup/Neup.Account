@@ -28,7 +28,7 @@ export async function SecurityCard() {
                     ))}
                  </div>
                  <Button variant="outline" className="w-full" asChild>
-                    <Link href="/manage/security/devices">Manage All Devices <ChevronRight className="ml-2 h-4 w-4" /></Link>
+                    <Link href="/security/devices">Manage All Devices <ChevronRight className="ml-2 h-4 w-4" /></Link>
                 </Button>
             </CardContent>
         </Card>

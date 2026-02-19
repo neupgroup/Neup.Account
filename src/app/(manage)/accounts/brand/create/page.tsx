@@ -99,7 +99,7 @@ export default function CreateBrandPage() {
 
             if (result.success) {
                 toast({ title: "Success", description: "Brand Account created successfully!", className: "bg-accent text-accent-foreground" });
-                router.push('/manage/accounts/brand');
+                router.push('/accounts/brand');
             } else {
                 toast({
                     variant: "destructive",
@@ -128,7 +128,7 @@ export default function CreateBrandPage() {
 
     return (
         <div className="grid gap-8">
-             <BackButton href="/manage/accounts/brand" />
+             <BackButton href="/accounts/brand" />
             <div>
                 <h1 className="text-3xl font-bold tracking-tight">Create a Brand Account</h1>
                 <p className="text-muted-foreground">
@@ -234,7 +234,7 @@ export default function CreateBrandPage() {
                                         <FormControl><Checkbox checked={field.value} onCheckedChange={field.onChange} /></FormControl>
                                         <div className="space-y-1 leading-none">
                                             <FormLabel>
-                                                I agree to the <Link href="/manage/policies" target="_blank" className="underline text-primary">terms and conditions</Link> for creating and managing a brand account.
+                                                I agree to the <Link href="/policies" target="_blank" className="underline text-primary">terms and conditions</Link> for creating and managing a brand account.
                                             </FormLabel>
                                             <FormMessage />
                                         </div>

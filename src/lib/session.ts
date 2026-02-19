@@ -97,7 +97,7 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
   const validatedAccounts = await Promise.all(
     allAccounts.map(async (account) => {
       if (account.expired) return account;
-      if (!account.sessionId) return { ...account, expired: true };
+      if (!account.sessionId || !account.sessionKey) return { ...account, expired: true };
 
       try {
         const session = await prisma.session.findUnique({
@@ -197,6 +197,18 @@ export async function switchToDependent(dependentId: string) {
   } catch (error) {
     await logError('auth', error, `switchToDependent: ${dependentId}`);
     return { success: false, error: 'Failed to switch to dependent account.' };
+  }
+}
+
+export async function switchToDelegated(accountId: string) {
+  try {
+    const expiresOn = new Date();
+    expiresOn.setDate(expiresOn.getDate() + SESSION_DURATION_DAYS);
+    await setManagingCookie(`delegated.${accountId}`, expiresOn);
+    return { success: true };
+  } catch (error) {
+    await logError('auth', error, `switchToDelegated: ${accountId}`);
+    return { success: false, error: 'Failed to switch to delegated account.' };
   }
 }
 

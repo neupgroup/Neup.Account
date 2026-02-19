@@ -44,6 +44,7 @@ export type AccountMinAggregateOutputType = {
   neupIdPrimary: string | null
   verified: boolean | null
   accountType: string | null
+  permit: string | null
   accountStatus: string | null
 }
 
@@ -67,6 +68,7 @@ export type AccountMaxAggregateOutputType = {
   neupIdPrimary: string | null
   verified: boolean | null
   accountType: string | null
+  permit: string | null
   accountStatus: string | null
 }
 
@@ -90,6 +92,7 @@ export type AccountCountAggregateOutputType = {
   neupIdPrimary: number
   verified: number
   accountType: number
+  permit: number
   accountStatus: number
   block: number
   _all: number
@@ -116,6 +119,7 @@ export type AccountMinAggregateInputType = {
   neupIdPrimary?: true
   verified?: true
   accountType?: true
+  permit?: true
   accountStatus?: true
 }
 
@@ -139,6 +143,7 @@ export type AccountMaxAggregateInputType = {
   neupIdPrimary?: true
   verified?: true
   accountType?: true
+  permit?: true
   accountStatus?: true
 }
 
@@ -162,6 +167,7 @@ export type AccountCountAggregateInputType = {
   neupIdPrimary?: true
   verified?: true
   accountType?: true
+  permit?: true
   accountStatus?: true
   block?: true
   _all?: true
@@ -259,6 +265,7 @@ export type AccountGroupByOutputType = {
   neupIdPrimary: string | null
   verified: boolean
   accountType: string
+  permit: string
   accountStatus: string | null
   block: runtime.JsonValue | null
   _count: AccountCountAggregateOutputType | null
@@ -304,6 +311,7 @@ export type AccountWhereInput = {
   neupIdPrimary?: Prisma.StringNullableFilter<"Account"> | string | null
   verified?: Prisma.BoolFilter<"Account"> | boolean
   accountType?: Prisma.StringFilter<"Account"> | string
+  permit?: Prisma.StringFilter<"Account"> | string
   accountStatus?: Prisma.StringNullableFilter<"Account"> | string | null
   block?: Prisma.JsonNullableFilter<"Account">
   contacts?: Prisma.ContactListRelationFilter
@@ -334,6 +342,7 @@ export type AccountOrderByWithRelationInput = {
   neupIdPrimary?: Prisma.SortOrderInput | Prisma.SortOrder
   verified?: Prisma.SortOrder
   accountType?: Prisma.SortOrder
+  permit?: Prisma.SortOrder
   accountStatus?: Prisma.SortOrderInput | Prisma.SortOrder
   block?: Prisma.SortOrderInput | Prisma.SortOrder
   contacts?: Prisma.ContactOrderByRelationAggregateInput
@@ -367,6 +376,7 @@ export type AccountWhereUniqueInput = Prisma.AtLeast<{
   neupIdPrimary?: Prisma.StringNullableFilter<"Account"> | string | null
   verified?: Prisma.BoolFilter<"Account"> | boolean
   accountType?: Prisma.StringFilter<"Account"> | string
+  permit?: Prisma.StringFilter<"Account"> | string
   accountStatus?: Prisma.StringNullableFilter<"Account"> | string | null
   block?: Prisma.JsonNullableFilter<"Account">
   contacts?: Prisma.ContactListRelationFilter
@@ -397,6 +407,7 @@ export type AccountOrderByWithAggregationInput = {
   neupIdPrimary?: Prisma.SortOrderInput | Prisma.SortOrder
   verified?: Prisma.SortOrder
   accountType?: Prisma.SortOrder
+  permit?: Prisma.SortOrder
   accountStatus?: Prisma.SortOrderInput | Prisma.SortOrder
   block?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.AccountCountOrderByAggregateInput
@@ -427,6 +438,7 @@ export type AccountScalarWhereWithAggregatesInput = {
   neupIdPrimary?: Prisma.StringNullableWithAggregatesFilter<"Account"> | string | null
   verified?: Prisma.BoolWithAggregatesFilter<"Account"> | boolean
   accountType?: Prisma.StringWithAggregatesFilter<"Account"> | string
+  permit?: Prisma.StringWithAggregatesFilter<"Account"> | string
   accountStatus?: Prisma.StringNullableWithAggregatesFilter<"Account"> | string | null
   block?: Prisma.JsonNullableWithAggregatesFilter<"Account">
 }
@@ -451,6 +463,7 @@ export type AccountCreateInput = {
   neupIdPrimary?: string | null
   verified?: boolean
   accountType?: string
+  permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
@@ -481,6 +494,7 @@ export type AccountUncheckedCreateInput = {
   neupIdPrimary?: string | null
   verified?: boolean
   accountType?: string
+  permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
@@ -511,6 +525,7 @@ export type AccountUpdateInput = {
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
@@ -541,6 +556,7 @@ export type AccountUncheckedUpdateInput = {
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
@@ -571,6 +587,7 @@ export type AccountCreateManyInput = {
   neupIdPrimary?: string | null
   verified?: boolean
   accountType?: string
+  permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
@@ -595,6 +612,7 @@ export type AccountUpdateManyMutationInput = {
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
@@ -619,6 +637,7 @@ export type AccountUncheckedUpdateManyInput = {
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
@@ -643,6 +662,7 @@ export type AccountCountOrderByAggregateInput = {
   neupIdPrimary?: Prisma.SortOrder
   verified?: Prisma.SortOrder
   accountType?: Prisma.SortOrder
+  permit?: Prisma.SortOrder
   accountStatus?: Prisma.SortOrder
   block?: Prisma.SortOrder
 }
@@ -667,6 +687,7 @@ export type AccountMaxOrderByAggregateInput = {
   neupIdPrimary?: Prisma.SortOrder
   verified?: Prisma.SortOrder
   accountType?: Prisma.SortOrder
+  permit?: Prisma.SortOrder
   accountStatus?: Prisma.SortOrder
 }
 
@@ -690,6 +711,7 @@ export type AccountMinOrderByAggregateInput = {
   neupIdPrimary?: Prisma.SortOrder
   verified?: Prisma.SortOrder
   accountType?: Prisma.SortOrder
+  permit?: Prisma.SortOrder
   accountStatus?: Prisma.SortOrder
 }
 
@@ -829,6 +851,7 @@ export type AccountCreateWithoutContactsInput = {
   neupIdPrimary?: string | null
   verified?: boolean
   accountType?: string
+  permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
@@ -858,6 +881,7 @@ export type AccountUncheckedCreateWithoutContactsInput = {
   neupIdPrimary?: string | null
   verified?: boolean
   accountType?: string
+  permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
@@ -903,6 +927,7 @@ export type AccountUpdateWithoutContactsInput = {
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
@@ -932,6 +957,7 @@ export type AccountUncheckedUpdateWithoutContactsInput = {
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
@@ -961,6 +987,7 @@ export type AccountCreateWithoutNeupIdsInput = {
   neupIdPrimary?: string | null
   verified?: boolean
   accountType?: string
+  permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
@@ -990,6 +1017,7 @@ export type AccountUncheckedCreateWithoutNeupIdsInput = {
   neupIdPrimary?: string | null
   verified?: boolean
   accountType?: string
+  permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
@@ -1035,6 +1063,7 @@ export type AccountUpdateWithoutNeupIdsInput = {
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
@@ -1064,6 +1093,7 @@ export type AccountUncheckedUpdateWithoutNeupIdsInput = {
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
@@ -1093,6 +1123,7 @@ export type AccountCreateWithoutPasswordInput = {
   neupIdPrimary?: string | null
   verified?: boolean
   accountType?: string
+  permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
@@ -1122,6 +1153,7 @@ export type AccountUncheckedCreateWithoutPasswordInput = {
   neupIdPrimary?: string | null
   verified?: boolean
   accountType?: string
+  permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
@@ -1167,6 +1199,7 @@ export type AccountUpdateWithoutPasswordInput = {
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
@@ -1196,6 +1229,7 @@ export type AccountUncheckedUpdateWithoutPasswordInput = {
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
@@ -1225,6 +1259,7 @@ export type AccountCreateWithoutPermitsInput = {
   neupIdPrimary?: string | null
   verified?: boolean
   accountType?: string
+  permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
@@ -1254,6 +1289,7 @@ export type AccountUncheckedCreateWithoutPermitsInput = {
   neupIdPrimary?: string | null
   verified?: boolean
   accountType?: string
+  permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
@@ -1288,6 +1324,7 @@ export type AccountCreateWithoutTargetPermitsInput = {
   neupIdPrimary?: string | null
   verified?: boolean
   accountType?: string
+  permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
@@ -1317,6 +1354,7 @@ export type AccountUncheckedCreateWithoutTargetPermitsInput = {
   neupIdPrimary?: string | null
   verified?: boolean
   accountType?: string
+  permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
@@ -1362,6 +1400,7 @@ export type AccountUpdateWithoutPermitsInput = {
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
@@ -1391,6 +1430,7 @@ export type AccountUncheckedUpdateWithoutPermitsInput = {
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
@@ -1431,6 +1471,7 @@ export type AccountUpdateWithoutTargetPermitsInput = {
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
@@ -1460,6 +1501,7 @@ export type AccountUncheckedUpdateWithoutTargetPermitsInput = {
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
@@ -1489,6 +1531,7 @@ export type AccountCreateWithoutSessionsInput = {
   neupIdPrimary?: string | null
   verified?: boolean
   accountType?: string
+  permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
@@ -1518,6 +1561,7 @@ export type AccountUncheckedCreateWithoutSessionsInput = {
   neupIdPrimary?: string | null
   verified?: boolean
   accountType?: string
+  permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
@@ -1563,6 +1607,7 @@ export type AccountUpdateWithoutSessionsInput = {
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
@@ -1592,6 +1637,7 @@ export type AccountUncheckedUpdateWithoutSessionsInput = {
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
@@ -1688,6 +1734,7 @@ export type AccountSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   neupIdPrimary?: boolean
   verified?: boolean
   accountType?: boolean
+  permit?: boolean
   accountStatus?: boolean
   block?: boolean
   contacts?: boolean | Prisma.Account$contactsArgs<ExtArgs>
@@ -1719,6 +1766,7 @@ export type AccountSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   neupIdPrimary?: boolean
   verified?: boolean
   accountType?: boolean
+  permit?: boolean
   accountStatus?: boolean
   block?: boolean
 }, ExtArgs["result"]["account"]>
@@ -1743,6 +1791,7 @@ export type AccountSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   neupIdPrimary?: boolean
   verified?: boolean
   accountType?: boolean
+  permit?: boolean
   accountStatus?: boolean
   block?: boolean
 }, ExtArgs["result"]["account"]>
@@ -1767,11 +1816,12 @@ export type AccountSelectScalar = {
   neupIdPrimary?: boolean
   verified?: boolean
   accountType?: boolean
+  permit?: boolean
   accountStatus?: boolean
   block?: boolean
 }
 
-export type AccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nameFirst" | "nameMiddle" | "nameLast" | "nameDisplay" | "displayName" | "accountPhoto" | "gender" | "dateBirth" | "dateCreated" | "nationality" | "isLegalEntity" | "nameLegal" | "registrationId" | "countryOfOrigin" | "dateEstablished" | "neupIdPrimary" | "verified" | "accountType" | "accountStatus" | "block", ExtArgs["result"]["account"]>
+export type AccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nameFirst" | "nameMiddle" | "nameLast" | "nameDisplay" | "displayName" | "accountPhoto" | "gender" | "dateBirth" | "dateCreated" | "nationality" | "isLegalEntity" | "nameLegal" | "registrationId" | "countryOfOrigin" | "dateEstablished" | "neupIdPrimary" | "verified" | "accountType" | "permit" | "accountStatus" | "block", ExtArgs["result"]["account"]>
 export type AccountInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   contacts?: boolean | Prisma.Account$contactsArgs<ExtArgs>
   neupIds?: boolean | Prisma.Account$neupIdsArgs<ExtArgs>
@@ -1814,6 +1864,7 @@ export type $AccountPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     neupIdPrimary: string | null
     verified: boolean
     accountType: string
+    permit: string
     accountStatus: string | null
     block: runtime.JsonValue | null
   }, ExtArgs["result"]["account"]>
@@ -2264,6 +2315,7 @@ export interface AccountFieldRefs {
   readonly neupIdPrimary: Prisma.FieldRef<"Account", 'String'>
   readonly verified: Prisma.FieldRef<"Account", 'Boolean'>
   readonly accountType: Prisma.FieldRef<"Account", 'String'>
+  readonly permit: Prisma.FieldRef<"Account", 'String'>
   readonly accountStatus: Prisma.FieldRef<"Account", 'String'>
   readonly block: Prisma.FieldRef<"Account", 'Json'>
 }

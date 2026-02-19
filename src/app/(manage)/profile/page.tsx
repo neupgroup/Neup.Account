@@ -19,37 +19,37 @@ export default async function ProfilePage() {
             icon: UserCircle,
             title: "Display Information",
             description: "Update your public display name and photo.",
-            href: "/manage/profile/display",
+            href: "/profile/display",
         },
         {
             icon: FileText,
             title: "Legal Name",
             description: "Manage your legal first, middle, and last name.",
-            href: "/manage/profile/name",
+            href: "/profile/name",
         },
         {
             icon: HeartHandshake,
             title: "Demographics",
             description: "Update your date of birth and gender.",
-            href: "/manage/profile/demographics",
+            href: "/profile/demographics",
         },
         {
             icon: AtSign,
             title: "NeupID",
             description: "Manage your unique NeupIDs.",
-            href: "/manage/profile/neupid",
+            href: "/profile/neupid",
         },
         {
             icon: Contact,
             title: "Contact Information",
             description: "Manage your phone numbers and addresses.",
-            href: "/manage/profile/contact",
+            href: "/profile/contact",
         },
         {
             icon: ShieldCheck,
             title: "KYC & Verification",
             description: "Submit documents to verify your identity.",
-            href: "/manage/profile/documents",
+            href: "/profile/documents",
         },
     ];
 

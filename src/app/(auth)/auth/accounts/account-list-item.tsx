@@ -10,11 +10,15 @@ import Link from 'next/link';
 import { ChevronRight } from '@/components/icons';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { AccountActions } from './account-actions';
+import { switchToBrand, switchToDependent, switchToDelegated } from '@/lib/session';
 
 type CombinedAccount = StoredAccount & {
     displayName?: string;
     displayPhoto?: string;
     isUnknown?: boolean;
+    isBrand?: boolean;
+    isDependent?: boolean;
+    accountType?: string;
 };
 
 export function AccountListItem({ account }: { account: CombinedAccount }) {
@@ -33,6 +37,14 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
             if (!account.accountId || account.isUnknown) {
                 if (isMounted) {
                     setDetails({ isUnknown: true, displayName: 'Unknown Account', neupId: 'unknown', displayPhoto: 'https://neupgroup.com/assets/user.png' });
+                    setLoading(false);
+                }
+                return;
+            }
+
+            // If we already have details passed in (e.g. from getAccessibleAccounts), use them and skip fetch
+            if (account.displayName && account.displayPhoto && !account.isUnknown) {
+                 if (isMounted) {
                     setLoading(false);
                 }
                 return;
@@ -62,7 +74,7 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
         return () => {
             isMounted = false;
         };
-    }, [account.accountId, account.isUnknown, account.neupId, account.isBrand]);
+    }, [account.accountId, account.isUnknown, account.neupId, account.isBrand, account.displayName, account.displayPhoto]);
 
     const finalAccount = { ...account, ...details };
 
@@ -72,11 +84,34 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
             return;
         }
 
-        startSwitchTransition(() => {
-            const href = finalAccount.expired 
-                ? `/auth/signin?neupId=${finalAccount.neupId}` 
-                : `/auth/switch/handler?sessionId=${finalAccount.sessionId}`;
-            router.push(href);
+        startSwitchTransition(async () => {
+            if (finalAccount.isBrand) {
+                 const res = await switchToBrand(finalAccount.accountId);
+                 if (res.success) {
+                    router.refresh();
+                 }
+            } else if (finalAccount.isDependent) {
+                 const res = await switchToDependent(finalAccount.accountId);
+                 if (res.success) {
+                    router.refresh();
+                 }
+            } else if (finalAccount.sessionId) {
+                const href = finalAccount.expired 
+                    ? `/auth/signin?neupId=${finalAccount.neupId}` 
+                    : `/auth/switch/handler?sessionId=${finalAccount.sessionId}`;
+                router.push(href);
+            } else {
+                // If sessionId is undefined, it means it's a signed-out personal account
+                if (finalAccount.sessionId === undefined) {
+                     router.push(`/auth/signin?neupId=${finalAccount.neupId}`);
+                } else {
+                    // If sessionId is empty string (''), it's a managed/delegated account
+                     const res = await switchToDelegated(finalAccount.accountId);
+                     if (res.success) {
+                        router.refresh();
+                     }
+                }
+            }
         });
     };
 

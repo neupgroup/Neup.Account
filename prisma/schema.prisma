@@ -30,6 +30,7 @@ model Account {
   neupIdPrimary   String?
   verified        Boolean   @default(false)
   accountType     String    @default("individual")
+  permit          String    @default("default") // default, addition, reduction, addition_reduction
   accountStatus   String?
   
   // JSON fields for unstructured data like 'block'
@@ -121,6 +122,7 @@ model Permit {
 model Permission {
   id      String   @id @default(uuid())
   name    String   @unique
+  type    String   @default("addition") // addition, reduction
   appId   String?
   access  String[]
 

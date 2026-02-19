@@ -1,14 +1,16 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import { doc, updateDoc, getDoc } from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
 import { headers } from 'next/headers';
 import { switchToAccount as switchToAccountAction, switchToBrand as switchToBrandAction, switchToPersonal as switchToPersonalAction, switchToDependent as switchToDependentAction } from '@/lib/session';
 import type { StoredAccount } from '@/types';
-import { getSessionCookies, setStoredAccountsCookie } from '@/lib/cookies';
+import { getSessionCookies, setStoredAccountsCookie, clearSessionCookies } from '@/lib/cookies';
 import { createNotification } from '../notifications';
+
+// This function is now just a wrapper or re-export if needed, but the main logic is in lib/session
+// However, the client uses this file for actions.
 
 export async function getStoredAccounts(): Promise<StoredAccount[]> {
     return getValidatedStoredAccounts();
@@ -32,15 +34,21 @@ export async function logoutStoredSession(sessionId: string): Promise<{ success:
     const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';
     
     try {
-        const sessionRef = doc(db, 'session', sessionId);
-        const sessionDoc = await getDoc(sessionRef);
+        const session = await prisma.session.findUnique({
+            where: { id: sessionId }
+        });
 
-        if (!sessionDoc.exists()) {
+        if (!session) {
             return { success: false, error: "Session not found." };
         }
         
-        const accountId = sessionDoc.data().accountId;
-        await updateDoc(sessionRef, { isExpired: true });
+        const accountId = session.accountId;
+        
+        await prisma.session.update({
+            where: { id: sessionId },
+            data: { isExpired: true }
+        });
+
         await logActivity(accountId, 'Signout', 'Success', ipAddress);
         await createNotification({
             recipient_id: accountId,
@@ -53,7 +61,14 @@ export async function logoutStoredSession(sessionId: string): Promise<{ success:
         if (allAccounts.length > 0) {
             const updatedAccounts = allAccounts.map(acc => {
                 if (acc.sessionId === sessionId) {
-                    return { ...acc, expired: true };
+                    // Remove session details but keep account in list
+                    return { 
+                        ...acc, 
+                        sessionId: undefined, 
+                        sessionKey: undefined, 
+                        expired: true,
+                        active: false 
+                    };
                 }
                 return acc;
             });
@@ -68,11 +83,18 @@ export async function logoutStoredSession(sessionId: string): Promise<{ success:
 
 export async function removeStoredAccount(accountId: string): Promise<{ success: boolean; error?: string }> {
     try {
-        const { allAccounts } = await getSessionCookies();
+        const { allAccounts, accountId: activeAccountId } = await getSessionCookies();
+        
+        // If removing the active account, clear session cookies
+        if (accountId === activeAccountId) {
+            await clearSessionCookies();
+        }
+
         if (allAccounts.length > 0) {
             const filteredAccounts = allAccounts.filter(acc => acc.accountId !== accountId);
             await setStoredAccountsCookie(filteredAccounts);
         }
+        
         await logActivity(accountId, 'Removed account from device', 'Success');
         return { success: true };
     } catch (error) {
@@ -93,6 +115,7 @@ export async function switchToPersonal() {
     await switchToPersonalAction();
 }
 
+// Local helper to validate accounts using Prisma
 async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
   const { allAccounts } = await getSessionCookies();
   if (allAccounts.length === 0) {
@@ -102,25 +125,30 @@ async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
   const validatedAccounts = await Promise.all(
     allAccounts.map(async (account) => {
       if (account.expired) return account;
-      if (!account.sessionId) return { ...account, expired: true };
+      // If session info is missing, mark as expired but keep account
+      if (!account.sessionId || !account.sessionKey) return { ...account, expired: true };
 
       try {
-        const sessionRef = doc(db, 'session', account.sessionId);
-        const sessionDoc = await getDoc(sessionRef);
+        const session = await prisma.session.findUnique({
+            where: { id: account.sessionId }
+        });
 
-        if (!sessionDoc.exists()) return { ...account, expired: true };
+        if (!session) return { ...account, expired: true };
 
-        const sessionData = sessionDoc.data();
-        const dbExpiresOn = sessionData.expiresOn?.toDate();
+        const dbExpiresOn = session.expiresOn;
 
         const isInvalid =
           !dbExpiresOn ||
           dbExpiresOn < new Date() ||
-          sessionData.isExpired ||
-          sessionData.accountId !== account.accountId ||
-          sessionData.auth_session_key !== account.sessionKey;
+          session.isExpired ||
+          session.accountId !== account.accountId ||
+          session.authSessionKey !== account.sessionKey;
 
-        return { ...account, expired: isInvalid };
+        if (isInvalid) {
+            return { ...account, expired: true };
+        }
+
+        return account;
       } catch (e) {
         await logError('database', e, 'getValidatedStoredAccounts');
         return { ...account, expired: true };

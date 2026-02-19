@@ -47,9 +47,9 @@ export function DashboardNav() {
         
         if (isManaging) {
             config.push({ title: title || "Brand", items: [
-                { href: "/manage/home", label: "Dashboard", description: "Your central account management hub." },
-                { href: "/manage/profile", label: "Brand Info", description: "Manage brand profile." },
-                { href: "/manage/accounts/branches", label: "Branches", description: "Manage brand branches." },
+                { href: "/home", label: "Dashboard", description: "Your central account management hub." },
+                { href: "/profile", label: "Brand Info", description: "Manage brand profile." },
+                { href: "/accounts/branches", label: "Branches", description: "Manage brand branches." },
             ]});
              config.push({ title: "Account", items: visibleAccountNav });
 
@@ -96,8 +96,8 @@ export function DashboardNav() {
                     )}
                      <div className="flex flex-col gap-1">
                         {section.items.map((item) => {
-                             const isActive = item.href === '/manage/home' 
-                                ? pathname === item.href || pathname === '/manage'
+                             const isActive = item.href === '/home' 
+                                ? pathname === item.href || pathname === '/'
                                 : pathname.startsWith(item.href);
                             return (
                                 <Link

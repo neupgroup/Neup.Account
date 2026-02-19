@@ -35,7 +35,7 @@ export default async function DependentAccountsPage() {
 
     return (
         <div className="grid gap-8">
-            <BackButton href="/manage/accounts" />
+            <BackButton href="/accounts" />
             <div>
                 <h1 className="text-3xl font-bold tracking-tight">Manage Dependent Accounts</h1>
                 <p className="text-muted-foreground">
@@ -68,7 +68,7 @@ export default async function DependentAccountsPage() {
                 </CardContent>
                 <CardContent className="pt-6 border-t">
                     <Button asChild>
-                        <Link href="/manage/accounts/dependent/create"><Plus className="mr-2 h-4 w-4" />Create New Dependent</Link>
+                        <Link href="/accounts/dependent/create"><Plus className="mr-2 h-4 w-4" />Create New Dependent</Link>
                     </Button>
                 </CardContent>
             </Card>

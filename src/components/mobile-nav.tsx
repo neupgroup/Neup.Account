@@ -89,9 +89,9 @@ export function MobileNav() {
         
         if (isManaging) {
             config.push({ title: profile?.nameDisplay || "Brand", items: [
-                { href: "/manage/home", label: "Dashboard", description: "Your central account management hub.", icon: Home },
-                { href: "/manage/profile", label: "Brand Info", description: "Manage brand profile.", icon: iconMap['BrandInfo'] },
-                { href: "/manage/accounts/branches", label: "Branches", description: "Manage brand branches.", icon: iconMap['LinkedAccounts'] },
+                { href: "/home", label: "Dashboard", description: "Your central account management hub.", icon: Home },
+                { href: "/profile", label: "Brand Info", description: "Manage brand profile.", icon: iconMap['BrandInfo'] },
+                { href: "/accounts/branches", label: "Branches", description: "Manage brand branches.", icon: iconMap['LinkedAccounts'] },
             ]});
              config.push({ title: "Account", items: visibleAccountNav });
         } else {

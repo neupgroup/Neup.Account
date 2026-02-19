@@ -25,7 +25,7 @@ export async function AccessCard() {
                             <AppWindow className="h-5 w-5 mr-3 text-muted-foreground" />
                             <span className="text-sm font-medium flex-grow">{app.name}</span>
                             <Button variant="ghost" size="sm" asChild>
-                                <Link href={`/manage/data/1/${app.id}`}>Manage</Link>
+                                <Link href={`/data/1/${app.id}`}>Manage</Link>
                             </Button>
                         </div>
                     ))}
@@ -34,13 +34,13 @@ export async function AccessCard() {
                             <AppWindow className="h-5 w-5 mr-3 text-muted-foreground" />
                             <span className="text-sm font-medium flex-grow">{app.name}</span>
                             <Button variant="ghost" size="sm" asChild>
-                                <Link href={`/manage/data/3/${app.id}`}>Manage</Link>
+                                <Link href={`/data/3/${app.id}`}>Manage</Link>
                             </Button>
                         </div>
                     ))}
                  </div>
                  <Button variant="outline" className="w-full" asChild>
-                    <Link href="/manage/data">View All Apps <ChevronRight className="ml-2 h-4 w-4" /></Link>
+                    <Link href="/data">View All Apps <ChevronRight className="ml-2 h-4 w-4" /></Link>
                 </Button>
             </CardContent>
         </Card>

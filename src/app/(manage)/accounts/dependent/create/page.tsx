@@ -115,7 +115,7 @@ export default function CreateDependentPage() {
                 description: "Dependent account created successfully.",
                 className: "bg-accent text-accent-foreground"
             });
-            router.push('/manage/accounts/dependent');
+            router.push('/accounts/dependent');
             router.refresh();
         } else {
             toast({
@@ -140,7 +140,7 @@ export default function CreateDependentPage() {
 
     return (
         <div className="grid gap-8">
-            <BackButton href="/manage/accounts/dependent" />
+            <BackButton href="/accounts/dependent" />
              <div>
                 <h1 className="text-3xl font-bold tracking-tight">Create Dependent Account</h1>
                 <p className="text-muted-foreground">
@@ -254,7 +254,7 @@ export default function CreateDependentPage() {
                                         </FormControl>
                                         <div className="space-y-1 leading-none">
                                             <FormLabel>
-                                                I acknowledge that I am the parent or legal guardian and I agree to the <Link href="/manage/policies" target="_blank" className="underline text-primary">terms and conditions</Link> on behalf of the dependent.
+                                                I acknowledge that I am the parent or legal guardian and I agree to the <Link href="/policies" target="_blank" className="underline text-primary">terms and conditions</Link> on behalf of the dependent.
                                             </FormLabel>
                                             <FormMessage />
                                         </div>

@@ -1,11 +1,8 @@
 import { Card, CardContent } from '@/components/ui/card';
 import React from 'react';
-import { getActiveAccountId, getPersonalAccountId } from '@/lib/auth-actions';
-import { getAccountType } from '@/lib/user';
+import { getActiveAccountId } from '@/lib/auth-actions';
 import { notFound } from 'next/navigation';
-import { getStoredAccounts } from '@/lib/session';
-import { getBrandAccounts } from '@/actions/manage/accounts/brand';
-import { getDependentAccounts } from '@/actions/manage/accounts/dependent';
+import { getAccessibleAccounts } from '@/actions/manage/accounts/accessible';
 import { cookies } from 'next/headers';
 import { ListItem } from '@/components/ui/list-item';
 import { SecondaryHeader } from '@/components/ui/secondary-header';
@@ -20,19 +17,19 @@ const LinkAndCreateFeatures = () => (
       icon={FolderGit2}
       title="Link Other Accounts"
       description="Connect third-party platforms like WhatsApp."
-      href="/manage/accounts/link"
+      href="/accounts/link"
     />
     <ListItem
       icon={Building}
       title="Create Brand Account"
       description="Set up a new profile for a business or organization."
-      href="/manage/accounts/brand/create"
+      href="/accounts/brand/create"
     />
     <ListItem
       icon={UserPlus}
       title="Create Dependent Account"
       description="Create and manage an account for a family member."
-      href="/manage/accounts/dependent/create"
+      href="/accounts/dependent/create"
     />
   </>
 );
@@ -44,48 +41,15 @@ export default async function AccountsPage() {
     notFound();
   }
 
-  const accountType = await getAccountType(accountId);
   const cookieStore = await cookies();
   const isManaging = !!cookieStore.get('auth_managing')?.value;
-  const personalAccountId = await getPersonalAccountId();
 
   let accountsToShow: any[] = [];
 
   // If managing, we don't need to show other accounts, just the management features.
   // The primary logic for showing manageable accounts lives on the personal account dashboard.
   if (!isManaging) {
-    const [storedAccounts, brandAccounts, dependentAccounts] = await Promise.all([
-      getStoredAccounts(),
-      getBrandAccounts(),
-      getDependentAccounts(),
-    ]);
-
-    const otherPersonalAccounts = storedAccounts.filter(acc => acc.accountId !== personalAccountId && !acc.isBrand);
-
-    const mappedBrandAccounts = brandAccounts.map(brand => ({
-      accountId: brand.id,
-      sessionId: '',
-      sessionKey: '',
-      expired: false,
-      isBrand: true,
-      displayName: brand.name,
-      neupId: `brand`, // Placeholder
-      displayPhoto: brand.logoUrl,
-      plan: brand.plan,
-    }));
-
-    const mappedDependentAccounts = dependentAccounts.map(acc => ({
-      accountId: acc.id,
-      sessionId: '',
-      sessionKey: '',
-      expired: false,
-      displayName: acc.nameDisplay,
-      displayPhoto: acc.accountPhoto,
-      neupId: acc.neupId,
-      isDependent: true,
-    }));
-
-    accountsToShow = [...otherPersonalAccounts, ...mappedBrandAccounts, ...mappedDependentAccounts];
+    accountsToShow = await getAccessibleAccounts();
   }
 
   return (
@@ -115,9 +79,15 @@ export default async function AccountsPage() {
           />
           <Card>
             <CardContent className="p-0 divide-y">
-              {accountsToShow.map((acc: any) => (
-                <AccountListItem key={acc.accountId} account={acc} />
-              ))}
+              {accountsToShow.length > 0 ? (
+                accountsToShow.map((acc: any) => (
+                  <AccountListItem key={acc.accountId} account={acc} />
+                ))
+              ) : (
+                <div className="p-4 text-center text-muted-foreground text-sm">
+                  No other accounts found.
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
