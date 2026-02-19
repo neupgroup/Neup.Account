@@ -51,7 +51,7 @@ export default function ForgetPage() {
           </form>
           <div className="mt-4 text-center text-sm">
             Remembered your NeupID?{" "}
-            <Link href="/auth/signin/neupid" className="underline text-primary">
+            <Link href="/auth/signin?step=neupid" className="underline text-primary">
               Sign In
             </Link>
           </div>

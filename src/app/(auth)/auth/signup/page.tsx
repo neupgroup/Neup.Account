@@ -192,8 +192,21 @@ function DemographicsStep() {
                 let formGender = data.gender;
                 let formCustomGender = data.customGender || "";
                 
-                const dobDate = data.dateBirth ? new Date(data.dateBirth) : undefined;
-                if (dobDate) {
+                let dobDate: Date | undefined;
+                if (data.dateBirth) {
+                     // Check if it's a string (YYYY-MM-DD) or ISO string
+                     if (typeof data.dateBirth === 'string') {
+                         if (data.dateBirth.includes('T')) {
+                             dobDate = new Date(data.dateBirth);
+                         } else {
+                             dobDate = new Date(data.dateBirth + 'T00:00:00');
+                         }
+                     } else {
+                         dobDate = new Date(data.dateBirth);
+                     }
+                }
+                
+                if (dobDate && !isNaN(dobDate.getTime())) {
                     setDateInput(format(dobDate, 'yyyy-MM-dd'));
                 }
 
@@ -214,30 +227,49 @@ function DemographicsStep() {
             return;
         }
 
+        // Auto-format simplistic inputs like 20220122 -> 2022-01-22
+        let formattedInput = dateInput;
+        if (/^\d{8}$/.test(dateInput)) {
+            formattedInput = `${dateInput.substring(0, 4)}-${dateInput.substring(4, 6)}-${dateInput.substring(6, 8)}`;
+            setDateInput(formattedInput);
+        }
+
         const currentDate = form.getValues("dob");
-        if (currentDate && dateInput === format(currentDate, 'yyyy-MM-dd')) {
+        if (currentDate && formattedInput === format(currentDate, 'yyyy-MM-dd')) {
             form.clearErrors('dob');
             return;
         }
 
         setIsParsingDate(true);
         form.clearErrors('dob');
-        const result = await parseDateString(dateInput);
+        const result = await parseDateString(formattedInput);
         setIsParsingDate(false);
 
         if (result.success && result.date) {
-            const newDate = new Date(result.date + 'T00:00:00');
+            // Use T12:00:00 to avoid midnight DST issues where 00:00:00 might not exist
+            const newDate = new Date(result.date + 'T12:00:00');
+            if (isNaN(newDate.getTime())) {
+                form.setError('dob', { type: 'manual', message: 'Invalid date provided.' });
+                return;
+            }
             form.setValue('dob', newDate, { shouldDirty: true, shouldValidate: true });
             setDateInput(format(newDate, 'yyyy-MM-dd'));
         } else {
-            form.setError('dob', { type: 'manual', message: result.error || 'Invalid date format.' });
+            form.setError('dob', { type: 'manual', message: 'Invalid date provided.' });
         }
     };
 
     const onSubmit = async (data: z.infer<typeof demographicsSchema>) => {
         if (!authRequestId) return;
         NProgress.start();
-        const result = await submitDemographicsStep(authRequestId, data);
+        
+        // Convert Date to YYYY-MM-DD string to preserve local date and avoid UTC shifting
+        const payload = {
+            ...data,
+            dob: data.dob instanceof Date ? format(data.dob, 'yyyy-MM-dd') : data.dob
+        };
+
+        const result = await submitDemographicsStep(authRequestId, payload);
         if (result.success) {
             const params = new URLSearchParams(searchParams.toString());
             params.set('step', 'nationality');

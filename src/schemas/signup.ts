@@ -14,7 +14,10 @@ export const displayNameSchema = z.object({
 export const demographicsSchema = z.object({
     gender: z.enum(["male", "female", "custom", "prefer_not_to_say"], { required_error: "Please select a gender."}),
     customGender: z.string().optional(),
-    dob: z.date({ required_error: "Date of birth is required." }),
+    dob: z.union([z.date(), z.string()]).refine((val) => {
+        const date = new Date(val);
+        return !isNaN(date.getTime());
+    }, { message: "Date of birth is required." }),
 });
 
 export const nationalitySchema = z.object({

@@ -56,7 +56,8 @@ function StartPageComponent() {
 
   const getUrlWithReturn = (baseUrl: string) => {
     if (returnUrl) {
-      return `${baseUrl}?return_url=${encodeURIComponent(returnUrl)}`;
+      const separator = baseUrl.includes('?') ? '&' : '?';
+      return `${baseUrl}${separator}return_url=${encodeURIComponent(returnUrl)}`;
     }
     return baseUrl;
   };
@@ -116,7 +117,7 @@ function StartPageComponent() {
             )}
 
             <Link
-              href={getUrlWithReturn("/auth/signin/neupid")}
+              href={getUrlWithReturn("/auth/signin?step=neupid")}
               className="flex w-full items-center justify-between p-4 border rounded-lg hover:border-primary transition-colors"
             >
               <div>
@@ -126,7 +127,7 @@ function StartPageComponent() {
               <ChevronRight className="h-5 w-5 text-muted-foreground" />
             </Link>
             <Link
-              href={getUrlWithReturn("/auth/signup/name")}
+              href={getUrlWithReturn("/auth/signup?step=name")}
               className="flex w-full items-center justify-between p-4 border rounded-lg hover:border-primary transition-colors"
             >
               <div>

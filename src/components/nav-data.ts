@@ -13,58 +13,58 @@ export type NavSection = {
 export const navItems = {
     neupIdNav: [
         { 
-            href: "/manage/home", 
+            href: "/home", 
             label: "Home", 
             description: "Your central account management hub.",
         },
         { 
-            href: "/manage/profile", 
+            href: "/profile", 
             label: "Personal Info", 
             description: "Manage your personal details and contact information.",
         },
         { 
-            href: "/manage/notifications", 
+            href: "/notifications", 
             label: "Notifications", 
             description: "View and manage all your account notifications.",
         },
         { 
-            href: "/manage/security", 
+            href: "/security", 
             label: "Password & Security", 
             description: "Update your password and manage your account's security.",
         },
         { 
-            href: "/manage/accounts", 
+            href: "/accounts", 
             label: "Linked Accounts", 
             description: "Manage brand, branch, and dependent accounts.",
         },
         { 
-            href: "/manage/data", 
+            href: "/data", 
             label: "Data & Privacy", 
             description: "See your data and the way we use it.",
         },
         { 
-            href: "/manage/access", 
+            href: "/access", 
             label: "Access & Control", 
             description: "Manage who you share data and services with.",
         },
         { 
-            href: "/manage/people", 
+            href: "/people", 
             label: "People & Sharing", 
             description: "Manage who you share data and services with.",
         },
         { 
-            href: "/manage/payment", 
+            href: "/payment", 
             label: "Payment & Subscription", 
             description: "Manage billing and subscriptions.",
         },
     ],
     managementNav: [
-        { href: "/manage/root/dashboard", label: "Dashboard", description: "A high-level overview of key metrics and system status." },
-        { href: "/manage/root/accounts", label: "Account Management", description: "Manage account roles and permissions." },
-        { href: "/manage/root/requests", label: "Requests Management", description: "Review and act on pending user requests." },
-        { href: "/manage/root/permission", label: "Permission Management", description: "Define system-wide permission sets." },
-        { href: "/manage/root/app", label: "App Management", description: "Create, edit, and manage applications." },
-        { href: "/manage/root/site", label: "Site Configuration", description: "Manage site-wide settings and error logs." },
+        { href: "/", label: "Dashboard", description: "A high-level overview of key metrics and system status." },
+        { href: "/root/accounts", label: "Account Management", description: "Manage account roles and permissions." },
+        { href: "/root/requests", label: "Requests Management", description: "Review and act on pending user requests." },
+        { href: "/root/permission", label: "Permission Management", description: "Define system-wide permission sets." },
+        { href: "/root/app", label: "App Management", description: "Create, edit, and manage applications." },
+        { href: "/root/site", label: "Site Configuration", description: "Manage site-wide settings and error logs." },
     ],
     accountNav: [
         { href: "/auth/accounts", label: "Switch Account", description: "Switch between different NeupID accounts." },

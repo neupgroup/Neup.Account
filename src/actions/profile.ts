@@ -268,9 +268,14 @@ export async function parseDateString(dateString: string): Promise<{ success: bo
         const day = parseInt(match[3]);
         
         if (month >= 1 && month <= 12 && day >= 1 && day <= 31) {
-            const d = new Date(year, month - 1, day);
-            if (!isNaN(d.getTime())) {
-                 return { success: true, date: d.toISOString().split('T')[0] };
+            // Use UTC to validate the date to avoid server timezone issues
+            const d = new Date(Date.UTC(year, month - 1, day));
+            if (!isNaN(d.getTime()) && d.getUTCMonth() === month - 1 && d.getUTCDate() === day) {
+                 // Return strictly formatted YYYY-MM-DD string
+                 return { 
+                     success: true, 
+                     date: `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}` 
+                 };
             }
         }
     }

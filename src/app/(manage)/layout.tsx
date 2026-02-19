@@ -17,7 +17,7 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
              <div className="min-h-screen w-full bg-background text-foreground">
                 <header className="sticky top-0 z-10 flex h-16 items-center border-b bg-background shadow">
                     <div className="mx-auto flex w-full max-w-[1440px] items-center justify-between px-4 lg:px-6">
-                        <NeupIdLogo iconHref={process.env.NEXT_PUBLIC_COMPANY_URL || "/"} textHref="/manage" />
+                        <NeupIdLogo iconHref="https://neupgroup.com" textHref="/" />
                         <div className="flex items-center gap-2">
                             <div className="text-right">
                                 <Skeleton className="h-4 w-20 mb-1" />
@@ -51,7 +51,7 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
         <div className="min-h-screen w-full bg-background text-foreground">
             <header className="sticky top-0 z-10 flex h-16 items-center border-b bg-background shadow">
                 <div className="mx-auto flex w-full max-w-[1440px] items-center justify-between px-4 lg:px-6">
-                    <NeupIdLogo iconHref={process.env.NEXT_PUBLIC_COMPANY_URL || "/"} textHref="/manage" />
+                    <NeupIdLogo iconHref="https://neupgroup.com" textHref="/" />
                     <UserNav />
                 </div>
             </header>

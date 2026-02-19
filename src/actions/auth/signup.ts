@@ -110,7 +110,9 @@ export async function submitDemographicsStep(authRequestId: string, data: z.infe
   const currentData = request.data.data as Record<string, any>;
   const newData = {
     ...currentData,
-    dateBirth: validation.data.dob,
+    dateBirth: validation.data.dob instanceof Date 
+        ? validation.data.dob.toISOString().split('T')[0] // Store as YYYY-MM-DD string
+        : validation.data.dob,
     gender: finalGender,
     customGender: finalCustomGender ? sanitizeName(finalCustomGender) : null,
   };
@@ -336,6 +338,10 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
 
   const requestData = request.data.data as Record<string, any>;
 
+  if (!requestData || Object.keys(requestData).length === 0) {
+      return { success: false, error: 'Session data lost. Please restart signup.' };
+  }
+
   const {
     nameFirst,
     nameLast,
@@ -348,6 +354,19 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
     neupId,
     password,
   } = requestData;
+
+  // Validate dateBirth specifically
+  let birthDateObj: Date;
+  if (typeof dateBirth === 'string' && !dateBirth.includes('T')) {
+      // It's a YYYY-MM-DD string
+      birthDateObj = new Date(dateBirth + 'T00:00:00');
+  } else {
+      birthDateObj = new Date(dateBirth);
+  }
+
+  if (isNaN(birthDateObj.getTime())) {
+      return { success: false, error: 'Invalid date of birth in session data.' };
+  }
 
   const nameDisplay = [nameFirst, nameMiddle, nameLast].filter(Boolean).join(' ');
 
@@ -375,6 +394,13 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
     const isAdmin = await isFirstUser();
     const permissionSetName = isAdmin ? 'root.whole' : 'individual.default';
 
+    const neupIdTaken = await prisma.neupId.findUnique({
+        where: { id: neupId },
+    });
+    if (neupIdTaken) {
+         return { success: false, error: 'This NeupID is no longer available.' };
+    }
+
     const account = await prisma.account.create({
       data: {
         accountType: 'individual',
@@ -385,7 +411,7 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
         nameFirst,
         nameLast,
         nameMiddle: nameMiddle || null,
-        dateBirth: new Date(dateBirth),
+        dateBirth: birthDateObj,
         gender,
         // customGender: customGender || null, // customGender is not in schema yet, adding to block if needed or ignoring for now
         nationality,
@@ -451,6 +477,7 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
 
     return { success: true };
   } catch (error) {
+    console.error('Registration error:', error);
     await logError('database', error, 'submitTermsStep');
     return {
       success: false,
