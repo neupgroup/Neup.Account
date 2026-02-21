@@ -72,7 +72,7 @@ export async function logoutStoredSession(sessionId: string): Promise<{ success:
                 }
                 return acc;
             });
-            await setStoredAccountsCookie(updatedAccounts);
+            await setStoredAccountsCookie(updatedAccounts as StoredAccount[]);
         }
         return { success: true };
     } catch (error) {

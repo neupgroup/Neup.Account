@@ -9,8 +9,8 @@ export type Session = {
 
 export type StoredAccount = {
   accountId: string;
-  sessionId: string;
-  sessionKey: string;
+  sessionId?: string;
+  sessionKey?: string;
   expired: boolean;
   neupId?: string;
   isBrand?: boolean;

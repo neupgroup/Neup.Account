@@ -136,6 +136,10 @@ export async function switchToAccount(account: StoredAccount) {
         return { success: false, error: 'Cannot switch to an expired session. Please sign in.' };
     }
     
+    if (!account.sessionId || !account.sessionKey) {
+        return { success: false, error: 'Invalid session information. Please sign in.' };
+    }
+    
     const expiresOn = new Date();
     expiresOn.setDate(expiresOn.getDate() + SESSION_DURATION_DAYS);
     
