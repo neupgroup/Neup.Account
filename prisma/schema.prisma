@@ -140,6 +140,7 @@ model Session {
   lastLoggedIn    DateTime @default(now())
   loginType       String
   geolocation     String?
+  dependentKeys   Json?    @default("[]") // Stores array of { app, key, expiresOn, isUsed }
   
   account         Account  @relation(fields: [accountId], references: [id])
   

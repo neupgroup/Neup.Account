@@ -57,7 +57,13 @@ export async function logoutStoredSession(sessionId: string): Promise<{ success:
         });
 
 
-        const { allAccounts } = await getSessionCookies();
+        const { allAccounts, sessionId: currentSessionId } = await getSessionCookies();
+        
+        // If signing out the active session, clear session cookies
+        if (currentSessionId === sessionId) {
+            await clearSessionCookies();
+        }
+
         if (allAccounts.length > 0) {
             const updatedAccounts = allAccounts.map(acc => {
                 if (acc.sessionId === sessionId) {

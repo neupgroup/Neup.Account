@@ -196,7 +196,8 @@ export const SessionScalarFieldEnum = {
   expiresOn: 'expiresOn',
   lastLoggedIn: 'lastLoggedIn',
   loginType: 'loginType',
-  geolocation: 'geolocation'
+  geolocation: 'geolocation',
+  dependentKeys: 'dependentKeys'
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]

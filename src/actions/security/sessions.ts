@@ -1,7 +1,6 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import { doc, collection, query, where, getDocs, updateDoc, writeBatch } from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { getActiveAccountId, getActiveSession } from '@/lib/auth-actions';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
@@ -14,30 +13,32 @@ export async function getUserSessions(): Promise<Session[]> {
             return [];
         }
 
-        const sessionsRef = collection(db, 'session');
-        const q = query(sessionsRef, where('accountId', '==', accountId), where('isExpired', '==', false));
-        const querySnapshot = await getDocs(q);
+        const sessions = await prisma.session.findMany({
+            where: {
+                accountId: accountId,
+                isExpired: false
+            },
+            orderBy: {
+                lastLoggedIn: 'desc'
+            }
+        });
         
         type SessionInternal = Session & { rawLastLoggedIn: Date };
 
-        const sessions: SessionInternal[] = querySnapshot.docs.map(doc => {
-            const data = doc.data();
-            const lastLoggedInDate = data.lastLoggedIn?.toDate() || new Date();
+        const formattedSessions: SessionInternal[] = sessions.map(session => {
             return {
-                id: doc.id,
-                ipAddress: data.ipAddress,
-                userAgent: data.userAgent,
-                lastLoggedIn: lastLoggedInDate.toLocaleString(),
-                loginType: data.loginType,
-                geolocation: data.geolocation,
-                rawLastLoggedIn: lastLoggedInDate
+                id: session.id,
+                ipAddress: session.ipAddress,
+                userAgent: session.userAgent,
+                lastLoggedIn: session.lastLoggedIn.toLocaleString(),
+                loginType: session.loginType,
+                geolocation: session.geolocation || undefined,
+                rawLastLoggedIn: session.lastLoggedIn
             };
         });
 
-        sessions.sort((a, b) => b.rawLastLoggedIn.getTime() - a.rawLastLoggedIn.getTime());
-        
         // This is a type-only change, so we can cast it.
-        return sessions as unknown as Session[];
+        return formattedSessions as unknown as Session[];
         
     } catch (error) {
         await logError('database', error, `getUserSessions`);
@@ -51,8 +52,10 @@ export async function logoutSessionById(sessionId: string): Promise<{ success: b
         return { success: false, error: "Session ID is required." };
     }
     try {
-        const sessionRef = doc(db, 'session', sessionId);
-        await updateDoc(sessionRef, { isExpired: true });
+        await prisma.session.update({
+            where: { id: sessionId },
+            data: { isExpired: true }
+        });
         
         const accountId = await getActiveAccountId();
         if (accountId) {
@@ -74,26 +77,22 @@ export async function logoutAllOtherSessions(): Promise<{ success: boolean, erro
         }
         const { accountId, sessionId: currentSessionId } = currentSession;
 
-        const sessionsRef = collection(db, 'session');
-        const q = query(sessionsRef, where('accountId', '==', accountId), where('isExpired', '==', false));
-        const querySnapshot = await getDocs(q);
-
-        if (querySnapshot.empty) {
-            return { success: true }; 
-        }
-
-        const batch = writeBatch(db);
-        let sessionsLoggedOut = 0;
-
-        querySnapshot.docs.forEach(sessionDoc => {
-            if (sessionDoc.id !== currentSessionId) {
-                batch.update(sessionDoc.ref, { isExpired: true });
-                sessionsLoggedOut++;
+        const result = await prisma.session.updateMany({
+            where: {
+                accountId: accountId,
+                isExpired: false,
+                id: {
+                    not: currentSessionId
+                }
+            },
+            data: {
+                isExpired: true
             }
         });
 
+        const sessionsLoggedOut = result.count;
+
         if (sessionsLoggedOut > 0) {
-            await batch.commit();
             await logActivity(accountId, `Remotely logged out of ${sessionsLoggedOut} other sessions.`, 'Success');
         }
 

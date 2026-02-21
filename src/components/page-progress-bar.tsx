@@ -42,13 +42,15 @@ export function PageProgressBar() {
       }
     };
 
+    const processedAnchors = new WeakSet<HTMLAnchorElement>();
+
     const handleMutation: MutationCallback = () => {
       const anchorElements = document.querySelectorAll('a');
       anchorElements.forEach((anchor) => {
-        // We use a custom attribute to track if the listener has been added.
-        if (!anchor.hasAttribute('data-nprogress-listener')) {
-            anchor.setAttribute('data-nprogress-listener', 'true');
-            anchor.addEventListener('click', handleAnchorClick);
+        // We use a WeakSet to track if the listener has been added.
+        if (!processedAnchors.has(anchor)) {
+            processedAnchors.add(anchor);
+            anchor.addEventListener('click', (e) => handleAnchorClick(e as unknown as MouseEvent));
         }
       });
     };

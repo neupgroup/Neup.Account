@@ -61,6 +61,7 @@ export type SessionCountAggregateOutputType = {
   lastLoggedIn: number
   loginType: number
   geolocation: number
+  dependentKeys: number
   _all: number
 }
 
@@ -102,6 +103,7 @@ export type SessionCountAggregateInputType = {
   lastLoggedIn?: true
   loginType?: true
   geolocation?: true
+  dependentKeys?: true
   _all?: true
 }
 
@@ -188,6 +190,7 @@ export type SessionGroupByOutputType = {
   lastLoggedIn: Date
   loginType: string
   geolocation: string | null
+  dependentKeys: runtime.JsonValue | null
   _count: SessionCountAggregateOutputType | null
   _min: SessionMinAggregateOutputType | null
   _max: SessionMaxAggregateOutputType | null
@@ -222,6 +225,7 @@ export type SessionWhereInput = {
   lastLoggedIn?: Prisma.DateTimeFilter<"Session"> | Date | string
   loginType?: Prisma.StringFilter<"Session"> | string
   geolocation?: Prisma.StringNullableFilter<"Session"> | string | null
+  dependentKeys?: Prisma.JsonNullableFilter<"Session">
   account?: Prisma.XOR<Prisma.AccountScalarRelationFilter, Prisma.AccountWhereInput>
 }
 
@@ -236,6 +240,7 @@ export type SessionOrderByWithRelationInput = {
   lastLoggedIn?: Prisma.SortOrder
   loginType?: Prisma.SortOrder
   geolocation?: Prisma.SortOrderInput | Prisma.SortOrder
+  dependentKeys?: Prisma.SortOrderInput | Prisma.SortOrder
   account?: Prisma.AccountOrderByWithRelationInput
 }
 
@@ -253,6 +258,7 @@ export type SessionWhereUniqueInput = Prisma.AtLeast<{
   lastLoggedIn?: Prisma.DateTimeFilter<"Session"> | Date | string
   loginType?: Prisma.StringFilter<"Session"> | string
   geolocation?: Prisma.StringNullableFilter<"Session"> | string | null
+  dependentKeys?: Prisma.JsonNullableFilter<"Session">
   account?: Prisma.XOR<Prisma.AccountScalarRelationFilter, Prisma.AccountWhereInput>
 }, "id">
 
@@ -267,6 +273,7 @@ export type SessionOrderByWithAggregationInput = {
   lastLoggedIn?: Prisma.SortOrder
   loginType?: Prisma.SortOrder
   geolocation?: Prisma.SortOrderInput | Prisma.SortOrder
+  dependentKeys?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.SessionCountOrderByAggregateInput
   _max?: Prisma.SessionMaxOrderByAggregateInput
   _min?: Prisma.SessionMinOrderByAggregateInput
@@ -286,6 +293,7 @@ export type SessionScalarWhereWithAggregatesInput = {
   lastLoggedIn?: Prisma.DateTimeWithAggregatesFilter<"Session"> | Date | string
   loginType?: Prisma.StringWithAggregatesFilter<"Session"> | string
   geolocation?: Prisma.StringNullableWithAggregatesFilter<"Session"> | string | null
+  dependentKeys?: Prisma.JsonNullableWithAggregatesFilter<"Session">
 }
 
 export type SessionCreateInput = {
@@ -298,6 +306,7 @@ export type SessionCreateInput = {
   lastLoggedIn?: Date | string
   loginType: string
   geolocation?: string | null
+  dependentKeys?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   account: Prisma.AccountCreateNestedOneWithoutSessionsInput
 }
 
@@ -312,6 +321,7 @@ export type SessionUncheckedCreateInput = {
   lastLoggedIn?: Date | string
   loginType: string
   geolocation?: string | null
+  dependentKeys?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type SessionUpdateInput = {
@@ -324,6 +334,7 @@ export type SessionUpdateInput = {
   lastLoggedIn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loginType?: Prisma.StringFieldUpdateOperationsInput | string
   geolocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dependentKeys?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   account?: Prisma.AccountUpdateOneRequiredWithoutSessionsNestedInput
 }
 
@@ -338,6 +349,7 @@ export type SessionUncheckedUpdateInput = {
   lastLoggedIn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loginType?: Prisma.StringFieldUpdateOperationsInput | string
   geolocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dependentKeys?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type SessionCreateManyInput = {
@@ -351,6 +363,7 @@ export type SessionCreateManyInput = {
   lastLoggedIn?: Date | string
   loginType: string
   geolocation?: string | null
+  dependentKeys?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type SessionUpdateManyMutationInput = {
@@ -363,6 +376,7 @@ export type SessionUpdateManyMutationInput = {
   lastLoggedIn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loginType?: Prisma.StringFieldUpdateOperationsInput | string
   geolocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dependentKeys?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type SessionUncheckedUpdateManyInput = {
@@ -376,6 +390,7 @@ export type SessionUncheckedUpdateManyInput = {
   lastLoggedIn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loginType?: Prisma.StringFieldUpdateOperationsInput | string
   geolocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dependentKeys?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type SessionListRelationFilter = {
@@ -399,6 +414,7 @@ export type SessionCountOrderByAggregateInput = {
   lastLoggedIn?: Prisma.SortOrder
   loginType?: Prisma.SortOrder
   geolocation?: Prisma.SortOrder
+  dependentKeys?: Prisma.SortOrder
 }
 
 export type SessionMaxOrderByAggregateInput = {
@@ -479,6 +495,7 @@ export type SessionCreateWithoutAccountInput = {
   lastLoggedIn?: Date | string
   loginType: string
   geolocation?: string | null
+  dependentKeys?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type SessionUncheckedCreateWithoutAccountInput = {
@@ -491,6 +508,7 @@ export type SessionUncheckedCreateWithoutAccountInput = {
   lastLoggedIn?: Date | string
   loginType: string
   geolocation?: string | null
+  dependentKeys?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type SessionCreateOrConnectWithoutAccountInput = {
@@ -533,6 +551,7 @@ export type SessionScalarWhereInput = {
   lastLoggedIn?: Prisma.DateTimeFilter<"Session"> | Date | string
   loginType?: Prisma.StringFilter<"Session"> | string
   geolocation?: Prisma.StringNullableFilter<"Session"> | string | null
+  dependentKeys?: Prisma.JsonNullableFilter<"Session">
 }
 
 export type SessionCreateManyAccountInput = {
@@ -545,6 +564,7 @@ export type SessionCreateManyAccountInput = {
   lastLoggedIn?: Date | string
   loginType: string
   geolocation?: string | null
+  dependentKeys?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type SessionUpdateWithoutAccountInput = {
@@ -557,6 +577,7 @@ export type SessionUpdateWithoutAccountInput = {
   lastLoggedIn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loginType?: Prisma.StringFieldUpdateOperationsInput | string
   geolocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dependentKeys?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type SessionUncheckedUpdateWithoutAccountInput = {
@@ -569,6 +590,7 @@ export type SessionUncheckedUpdateWithoutAccountInput = {
   lastLoggedIn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loginType?: Prisma.StringFieldUpdateOperationsInput | string
   geolocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dependentKeys?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type SessionUncheckedUpdateManyWithoutAccountInput = {
@@ -581,6 +603,7 @@ export type SessionUncheckedUpdateManyWithoutAccountInput = {
   lastLoggedIn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   loginType?: Prisma.StringFieldUpdateOperationsInput | string
   geolocation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dependentKeys?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 
@@ -596,6 +619,7 @@ export type SessionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   lastLoggedIn?: boolean
   loginType?: boolean
   geolocation?: boolean
+  dependentKeys?: boolean
   account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["session"]>
 
@@ -610,6 +634,7 @@ export type SessionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   lastLoggedIn?: boolean
   loginType?: boolean
   geolocation?: boolean
+  dependentKeys?: boolean
   account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["session"]>
 
@@ -624,6 +649,7 @@ export type SessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   lastLoggedIn?: boolean
   loginType?: boolean
   geolocation?: boolean
+  dependentKeys?: boolean
   account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["session"]>
 
@@ -638,9 +664,10 @@ export type SessionSelectScalar = {
   lastLoggedIn?: boolean
   loginType?: boolean
   geolocation?: boolean
+  dependentKeys?: boolean
 }
 
-export type SessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "accountId" | "authSessionKey" | "ipAddress" | "userAgent" | "isExpired" | "expiresOn" | "lastLoggedIn" | "loginType" | "geolocation", ExtArgs["result"]["session"]>
+export type SessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "accountId" | "authSessionKey" | "ipAddress" | "userAgent" | "isExpired" | "expiresOn" | "lastLoggedIn" | "loginType" | "geolocation" | "dependentKeys", ExtArgs["result"]["session"]>
 export type SessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
 }
@@ -667,6 +694,7 @@ export type $SessionPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     lastLoggedIn: Date
     loginType: string
     geolocation: string | null
+    dependentKeys: runtime.JsonValue | null
   }, ExtArgs["result"]["session"]>
   composites: {}
 }
@@ -1101,6 +1129,7 @@ export interface SessionFieldRefs {
   readonly lastLoggedIn: Prisma.FieldRef<"Session", 'DateTime'>
   readonly loginType: Prisma.FieldRef<"Session", 'String'>
   readonly geolocation: Prisma.FieldRef<"Session", 'String'>
+  readonly dependentKeys: Prisma.FieldRef<"Session", 'Json'>
 }
     
 

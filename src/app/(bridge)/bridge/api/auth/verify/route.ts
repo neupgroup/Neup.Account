@@ -1,8 +1,9 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { db } from '@/lib/firebase';
-import { doc, getDoc, updateDoc, collection, query, where, getDocs, DocumentReference, DocumentData } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { logError } from '@/lib/logger';
 import { getUserProfile, getUserNeupIds } from '@/lib/user';
+import prisma from '@/lib/prisma';
 
 export async function POST(request: NextRequest) {
     try {
@@ -22,52 +23,54 @@ export async function POST(request: NextRequest) {
         }
 
         // 2. Find the user's session from any of their active sessions
-        const sessionRef = collection(db, 'session');
-        const q = query(sessionRef, where('accountId', '==', accountId), where('isExpired', '==', false));
-        const sessionSnapshot = await getDocs(q);
+        const sessions = await prisma.session.findMany({
+            where: {
+                accountId: accountId,
+                isExpired: false
+            }
+        });
 
-        if (sessionSnapshot.empty) {
+        if (sessions.length === 0) {
              return NextResponse.json({ success: false, error: 'No active session found for user.' }, { status: 403 });
         }
         
         let validKeyFound = false;
-        let sessionDocToUpdate: DocumentReference<DocumentData> | null = null;
+        let sessionIdToUpdate: string | null = null;
         let keyIndexToUpdate = -1;
+        let dependentKeysToUpdate: any[] = [];
 
-        for (const sessionDoc of sessionSnapshot.docs) {
-            const sessionData = sessionDoc.data();
-            const dependentKeys = sessionData.dependentKey || [];
+        for (const session of sessions) {
+            const dependentKeys = Array.isArray(session.dependentKeys) ? session.dependentKeys : [];
             
-            const keyIndex = dependentKeys.findIndex((k: any) => 
-                k.key === key && 
-                k.app === appId && 
-                !k.isUsed &&
-                k.expiresOn.toDate() > new Date()
-            );
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const keyIndex = dependentKeys.findIndex((k: any) => {
+                const expiresOn = new Date(k.expiresOn);
+                return k.key === key && 
+                       k.app === appId && 
+                       !k.isUsed &&
+                       expiresOn > new Date();
+            });
 
             if (keyIndex !== -1) {
                 validKeyFound = true;
-                sessionDocToUpdate = sessionDoc.ref;
+                sessionIdToUpdate = session.id;
                 keyIndexToUpdate = keyIndex;
+                dependentKeysToUpdate = dependentKeys;
                 break;
             }
         }
         
-        if (!validKeyFound || !sessionDocToUpdate) {
+        if (!validKeyFound || !sessionIdToUpdate) {
             return NextResponse.json({ success: false, error: 'Invalid or expired key.' }, { status: 403 });
         }
         
         // 3. Mark the key as used to prevent replay attacks
-        const sessionToUpdateDoc = await getDoc(sessionDocToUpdate);
-        const sessionData = sessionToUpdateDoc.data();
-        if (!sessionData || !sessionData.dependentKey) {
-            return NextResponse.json({ success: false, error: 'Session data or dependent key not found.' }, { status: 500 });
-        }
-        
-        const dependentKeys = sessionData.dependentKey;
-        dependentKeys[keyIndexToUpdate].isUsed = true;
+        dependentKeysToUpdate[keyIndexToUpdate].isUsed = true;
 
-        await updateDoc(sessionDocToUpdate, { dependentKey: dependentKeys });
+        await prisma.session.update({
+            where: { id: sessionIdToUpdate },
+            data: { dependentKeys: dependentKeysToUpdate }
+        });
 
         // 4. Return user info to the third-party app
         const [userProfile, userNeupIds] = await Promise.all([

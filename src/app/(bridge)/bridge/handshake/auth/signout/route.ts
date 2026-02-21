@@ -1,8 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { getActiveSession } from '@/lib/auth-actions';
-import { db } from '@/lib/firebase';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { logError } from '@/lib/logger';
+import prisma from '@/lib/prisma';
 
 // This endpoint logs out a user from a specific application by marking all dependent keys for that app as used.
 export async function GET(request: NextRequest) {
@@ -21,12 +20,13 @@ export async function GET(request: NextRequest) {
             return NextResponse.redirect(postLogoutRedirectUri);
         }
 
-        const sessionRef = doc(db, 'session', session.sessionId);
-        const sessionDoc = await getDoc(sessionRef);
+        const currentSession = await prisma.session.findUnique({
+            where: { id: session.sessionId },
+            select: { dependentKeys: true }
+        });
 
-        if (sessionDoc.exists()) {
-            const sessionData = sessionDoc.data();
-            const dependentKeys = sessionData.dependentKey || [];
+        if (currentSession) {
+            const dependentKeys = Array.isArray(currentSession.dependentKeys) ? currentSession.dependentKeys : [];
 
             const updatedKeys = dependentKeys.map((k: any) => {
                 if (k.app === appId) {
@@ -35,7 +35,10 @@ export async function GET(request: NextRequest) {
                 return k;
             });
             
-            await updateDoc(sessionRef, { dependentKey: updatedKeys });
+            await prisma.session.update({
+                where: { id: session.sessionId },
+                data: { dependentKeys: updatedKeys }
+            });
         }
 
         return NextResponse.redirect(postLogoutRedirectUri);

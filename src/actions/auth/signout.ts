@@ -1,7 +1,6 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import { doc, updateDoc } from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { logActivity } from '@/lib/log-actions';
 import { headers } from 'next/headers';
 import { logError } from '@/lib/logger';
@@ -14,14 +13,18 @@ export async function logoutActiveSession() {
 
     if (sessionId && accountId) {
         try {
-            const sessionRef = doc(db, 'session', sessionId);
-            await updateDoc(sessionRef, { isExpired: true });
+            await prisma.session.update({
+                where: { id: sessionId },
+                data: { isExpired: true }
+            });
             await logActivity(accountId, 'Signout', 'Success', ipAddress);
 
             if (allAccounts.length > 0) {
                 const updatedAccounts = allAccounts.map(acc => {
                     if (acc.sessionId === sessionId) {
-                        return { ...acc, expired: true };
+                        // Remove session details for the signed out account
+                        const { sessionId: _, sessionKey: __, ...rest } = acc;
+                        return { ...rest, expired: true };
                     }
                     return acc;
                 });

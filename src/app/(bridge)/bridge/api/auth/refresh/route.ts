@@ -1,8 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { getActiveSession } from '@/lib/auth-actions';
-import { db } from '@/lib/firebase';
-import { doc, updateDoc, Timestamp } from 'firebase/firestore';
 import { logError } from '@/lib/logger';
+import prisma from '@/lib/prisma';
 
 export async function POST(request: NextRequest) {
     try {
@@ -12,13 +11,12 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ success: false, error: 'Unauthenticated.' }, { status: 401 });
         }
 
-        const sessionRef = doc(db, 'session', session.sessionId);
-
         const newExpiresOn = new Date();
         newExpiresOn.setDate(newExpiresOn.getDate() + 30); // Extend by 30 days
 
-        await updateDoc(sessionRef, {
-            expiresOn: Timestamp.fromDate(newExpiresOn)
+        await prisma.session.update({
+            where: { id: session.sessionId },
+            data: { expiresOn: newExpiresOn }
         });
 
         return NextResponse.json({ 

@@ -2,9 +2,10 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { getActiveSession } from '@/lib/auth-actions';
 import { db } from '@/lib/firebase';
-import { doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import crypto from 'crypto';
 import { logError } from '@/lib/logger';
+import prisma from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic'; // Ensure this route is always dynamically rendered
 
@@ -61,15 +62,27 @@ export async function GET(request: NextRequest) {
         const expiresOn = new Date();
         expiresOn.setMinutes(expiresOn.getMinutes() + 5); // Key is valid for 5 minutes
 
-        const sessionRef = doc(db, 'session', session.sessionId);
+        // Fetch existing keys first
+        const currentSession = await prisma.session.findUnique({
+            where: { id: session.sessionId },
+            select: { dependentKeys: true }
+        });
 
-        await updateDoc(sessionRef, {
-            dependentKey: arrayUnion({
-                app: appId,
-                key: dependentKey,
-                expiresOn: expiresOn,
-                isUsed: false,
-            })
+        const existingKeys = Array.isArray(currentSession?.dependentKeys) ? currentSession.dependentKeys : [];
+
+        const newKeyEntry = {
+            app: appId,
+            key: dependentKey,
+            expiresOn: expiresOn,
+            isUsed: false,
+        };
+
+        // Update with new key added
+        await prisma.session.update({
+            where: { id: session.sessionId },
+            data: {
+                dependentKeys: [...existingKeys, newKeyEntry]
+            }
         });
         
         // Append the new, secure parameters to the final URL
