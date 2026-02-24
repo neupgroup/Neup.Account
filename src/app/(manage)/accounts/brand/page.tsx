@@ -3,7 +3,7 @@ import { getBrandAccounts } from "@/actions/manage/accounts/brand";
 import { notFound } from "next/navigation";
 import { getPersonalAccountId } from "@/lib/auth-actions";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { AccountListItem } from "@/app/(auth)/auth/accounts/account-list-item";
+import { AccountListItem } from "@/app/auth/accounts/account-list-item";
 import { Button } from "@/components/ui/button";
 import { Plus } from "@/components/icons";
 import Link from "next/link";

@@ -24,7 +24,7 @@ export function StartPageComponent({ accounts, hasActiveSession }: StartPageComp
   const isSecure = useSecurityCheck();
   const error = searchParams.get('error');
   const errorDescription = searchParams.get('error_description');
-  const returnUrl = searchParams.get('return_url');
+  const redirects = searchParams.get('redirects');
 
   useEffect(() => {
     if (error === 'inactivity') {
@@ -48,9 +48,9 @@ export function StartPageComponent({ accounts, hasActiveSession }: StartPageComp
   }, [error, toast, isSecure]);
 
   const getUrlWithReturn = (baseUrl: string) => {
-    if (returnUrl) {
+    if (redirects) {
       const separator = baseUrl.includes('?') ? '&' : '?';
-      return `${baseUrl}${separator}return_url=${encodeURIComponent(returnUrl)}`;
+      return `${baseUrl}${separator}redirects=${encodeURIComponent(redirects)}`;
     }
     return baseUrl;
   };

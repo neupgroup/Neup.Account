@@ -792,8 +792,8 @@ function TermsStep() {
         const result = await submitTermsStep(authRequestId, data);
         if (result.success) {
             sessionStorage.clear();
-            const returnUrl = searchParams.get('return_url');
-            router.push(returnUrl || '/');
+            const redirects = searchParams.get('redirects');
+            router.push(redirects || '/');
         } else {
             toast({ variant: 'destructive', title: 'Error', description: result.error });
             NProgress.done();
@@ -852,11 +852,11 @@ function SignupFlow() {
           const newId = await initializeAuthFlow(currentId, 'signup');
           sessionStorage.setItem('temp_auth_id', newId);
 
-          const returnUrl = searchParams.get('return_url');
+          const redirects = searchParams.get('redirects');
           
           const params = new URLSearchParams(searchParams.toString());
           params.set('step', 'name');
-          if (returnUrl) params.set('return_url', returnUrl);
+          if (redirects) params.set('redirects', redirects);
           
           // Preserve pre-fill params
           const firstName = searchParams.get('firstName');

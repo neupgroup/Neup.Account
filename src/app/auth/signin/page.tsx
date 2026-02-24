@@ -6,7 +6,7 @@ import React, { useState, useEffect, useTransition, Suspense } from 'react';
 import NProgress from 'nprogress';
 
 import { useToast } from '@/hooks/use-toast';
-import { submitNeupId, submitPassword } from '@/actions/auth/login';
+import { submitNeupId, submitPassword } from '@/actions/auth/signin';
 import { getSignupStepData } from '@/actions/auth/signup';
 import { cancelAccountDeletion } from '@/actions/data/delete';
 import { initializeAuthFlow } from '@/actions/auth/initialize';
@@ -31,7 +31,7 @@ function NeupIdStep() {
   const [validationError, setValidationError] = useState<string | null>(null);
   const [authRequestId, setAuthRequestId] = useState<string | null>(null);
 
-  const returnUrl = searchParams.get('return_url');
+  const redirects = searchParams.get('redirects');
 
   useEffect(() => {
     const initFlow = async () => {
@@ -103,7 +103,7 @@ function NeupIdStep() {
   const getSignupUrl = () => {
     const params = new URLSearchParams();
     params.set('step', 'name');
-    if (returnUrl) params.set('return_url', returnUrl);
+    if (redirects) params.set('redirects', redirects);
     return `/auth/signup?${params.toString()}`;
   };
 
@@ -173,7 +173,7 @@ function PasswordStep() {
 
   const [showDeletionDialog, setShowDeletionDialog] = useState(false);
 
-  const returnUrl = searchParams.get('return_url');
+  const redirects = searchParams.get('redirects');
 
   useEffect(() => {
     const id = sessionStorage.getItem('temp_auth_id');
@@ -228,7 +228,7 @@ function PasswordStep() {
           router.push(`/auth/signin?${params.toString()}`);
         } else {
           sessionStorage.clear();
-          router.push(returnUrl || '/');
+          router.push(redirects || '/');
         }
       } else {
         toast({ variant: 'destructive', title: 'Sign In Failed', description: result.error });
@@ -261,7 +261,7 @@ function PasswordStep() {
           }
           else {
             sessionStorage.clear();
-            router.push(returnUrl || '/manage');
+            router.push(redirects || '/manage');
           }
         } else {
           toast({ variant: "destructive", title: "Sign In Failed", description: loginResult.error });
@@ -353,7 +353,7 @@ function MfaStep() {
   const [isSubmitting, startSubmit] = useTransition();
   const [authRequestId, setAuthRequestId] = useState<string | null>(null);
 
-  const returnUrl = searchParams.get('return_url');
+  const redirects = searchParams.get('redirects');
 
   useEffect(() => {
     const id = sessionStorage.getItem('temp_auth_id');
@@ -374,7 +374,7 @@ function MfaStep() {
 
         if (result.success) {
           sessionStorage.clear();
-          router.push(returnUrl || '/');
+          router.push(redirects || '/');
         } else {
           toast({
             variant: 'destructive',
@@ -448,7 +448,7 @@ function SigninFlow() {
           const newId = await initializeAuthFlow(currentId, 'signin');
           sessionStorage.setItem('temp_auth_id', newId);
 
-          const returnUrl = searchParams.get('return_url');
+          const redirects = searchParams.get('redirects');
           const neupId = searchParams.get('neupId');
           
           const params = new URLSearchParams(searchParams.toString());
@@ -458,7 +458,7 @@ function SigninFlow() {
           } else {
              params.set('step', 'neupid');
           }
-          if (returnUrl) params.set('return_url', returnUrl);
+          if (redirects) params.set('redirects', redirects);
 
           router.push(`/auth/signin?${params.toString()}`);
 

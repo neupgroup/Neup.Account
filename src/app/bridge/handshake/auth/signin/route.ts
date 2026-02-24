@@ -51,10 +51,14 @@ export async function GET(request: NextRequest) {
         const session = await getActiveSession();
 
         if (!session) {
-            // User is not logged in. Redirect to sign-in page, preserving the original request.
-            const returnUrl = request.nextUrl.pathname + '?' + searchParams.toString();
+            const backTo = request.nextUrl.pathname + (searchParams.toString() ? `?${searchParams.toString()}` : '');
             const signInUrl = new URL('/auth/start', request.url);
-            signInUrl.searchParams.set('return_url', returnUrl);
+            signInUrl.searchParams.set('redirects', backTo);
+            searchParams.forEach((value, key) => {
+                if (key !== 'redirects') {
+                    signInUrl.searchParams.set(key, value);
+                }
+            });
             return NextResponse.redirect(signInUrl);
         }
 

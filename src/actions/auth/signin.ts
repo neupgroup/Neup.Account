@@ -1,78 +1,141 @@
-
 'use server';
 
-import prisma from '@/lib/prisma';
-import bcrypt from 'bcryptjs';
-import type { z } from 'zod';
-import { logActivity } from '@/lib/log-actions';
+import { db } from '@/lib/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 import { headers } from 'next/headers';
+import bcrypt from 'bcryptjs';
+import { z } from 'zod';
 import { createAndSetSession } from '@/lib/session';
-import { logError } from '@/lib/logger';
 import { validateNeupId } from '@/lib/user';
-import { loginFormSchema } from '@/schemas/auth';
-import { createNotification } from '@/actions/notifications';
+import { getAuthRequest, extendAuthRequest } from './utils';
+import prisma from '@/lib/prisma';
 
+const neupIdSchema = z.object({
+    neupId: z.string().min(1, "NeupID is required."),
+    authRequestId: z.string(),
+});
 
-export async function loginUser(data: z.infer<typeof loginFormSchema>) {
-    const validation = loginFormSchema.safeParse(data);
-    if (!validation.success) { return { success: false, error: "Invalid data provided." }; }
+const passwordSchema = z.object({
+    password: z.string().min(1, "Password is required."),
+    authRequestId: z.string(),
+});
+
+export async function submitNeupId(data: z.infer<typeof neupIdSchema>) {
+    const validation = neupIdSchema.safeParse(data);
+    if (!validation.success) {
+        return { success: false, error: 'Invalid input.' };
+    }
+
+    const { neupId, authRequestId } = validation.data;
+    const lowerCaseNeupId = neupId.toLowerCase();
+
+    const request = await getAuthRequest(authRequestId);
+    if (!request) {
+        return { success: false, error: 'Your session has expired. Please try again.' };
+    }
+
+    const validationResult = await validateNeupId(lowerCaseNeupId);
+    if (!validationResult.success && validationResult.error !== 'pending_deletion') {
+        return { success: false, error: validationResult.error || 'Invalid NeupID.' };
+    }
+
+    const neupIdRecord = await prisma.neupId.findUnique({
+        where: { id: lowerCaseNeupId },
+    });
+    const accountId = neupIdRecord?.accountId;
+
+    if (!accountId) {
+        return { success: false, error: "Account mapping is missing." };
+    }
+
+    const currentData = (request.data.data as Record<string, any>) || {};
     
-    const neupId = data.neupId.toLowerCase();
-    const { password, geolocation } = validation.data;
-    
-    const headersList = await headers();
-    const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';
-    const userAgent = headersList.get('user-agent') || 'Unknown User-Agent';
+    await prisma.authRequest.update({
+        where: { id: request.id },
+        data: {
+            data: {
+                ...currentData,
+                neupId: lowerCaseNeupId,
+                isPendingDeletion: validationResult.error === 'pending_deletion',
+            },
+            accountId: accountId,
+            status: 'pending_password',
+        }
+    });
 
-    try {
-        const neupIdDoc = await prisma.neupId.findUnique({
-            where: { id: neupId },
+    await extendAuthRequest(request.id);
+
+    const { getUserProfile, getUserContacts } = await import('@/lib/user');
+    const profile = await getUserProfile(accountId);
+    const contacts = await getUserContacts(accountId);
+
+    return {
+        success: true,
+        userInfo: {
+            neupId: lowerCaseNeupId,
+            firstName: profile?.nameFirst || '',
+            middleName: profile?.nameMiddle || '',
+            lastName: profile?.nameLast || '',
+            phoneNumber: contacts.primaryPhone || '',
+        }
+    };
+}
+
+export async function submitPassword(data: z.infer<typeof passwordSchema>): Promise<{ success: boolean; mfaRequired: boolean; error?: string; isPendingDeletion?: boolean }> {
+    const validation = passwordSchema.safeParse(data);
+    if (!validation.success) {
+        return { success: false, mfaRequired: false, error: 'Invalid input.' };
+    }
+
+    const { password, authRequestId } = validation.data;
+
+    const request = await getAuthRequest(authRequestId);
+    if (!request || !request.data.accountId) {
+        return { success: false, mfaRequired: false, error: 'Your session has expired. Please try again.' };
+    }
+
+    const accountId = request.data.accountId;
+    const requestData = (request.data.data as Record<string, any>) || {};
+    const isPendingDeletion = requestData.isPendingDeletion;
+
+    const passwordRecord = await prisma.password.findUnique({
+        where: { accountId },
+    });
+    if (!passwordRecord) {
+        return { success: false, mfaRequired: false, error: "Invalid credentials." };
+    }
+
+    const isMatch = await bcrypt.compare(password, passwordRecord.hash);
+    if (!isMatch) {
+        return { success: false, mfaRequired: false, error: "Invalid credentials." };
+    }
+
+    if (isPendingDeletion) {
+        return { success: true, mfaRequired: false, isPendingDeletion: true };
+    }
+
+    const totpRef = doc(db, 'auth_totp', accountId);
+    const totpDoc = await getDoc(totpRef);
+
+    if (totpDoc.exists()) {
+        await prisma.authRequest.update({
+            where: { id: request.id },
+            data: { status: 'pending_mfa' }
+        });
+        await extendAuthRequest(request.id);
+        return { success: true, mfaRequired: true };
+    } else {
+        const headersList = await headers();
+        const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';
+        const userAgent = headersList.get('user-agent') || 'Unknown User-Agent';
+
+        await createAndSetSession(accountId, 'Password', ipAddress, userAgent);
+
+        await prisma.authRequest.update({
+            where: { id: request.id },
+            data: { status: 'completed' }
         });
 
-        if (!neupIdDoc) {
-            await logActivity('unknown', `Login Attempt Failed for NeupID: ${neupId}`, 'Failed', ipAddress, undefined, geolocation);
-            return { success: false, error: 'Invalid NeupID or password.' };
-        }
-        
-        const accountId = neupIdDoc.accountId;
-        
-        const validationResult = await validateNeupId(neupId);
-        if(validationResult.success === false && validationResult.error !== 'pending_deletion') {
-            await logActivity(accountId, 'Login Attempt Failed', 'Failed', ipAddress, undefined, geolocation);
-            return validationResult;
-        }
-
-        const passwordDoc = await prisma.password.findUnique({
-            where: { accountId: accountId },
-        });
-
-        if (!passwordDoc) {
-             await logActivity(accountId, 'Login Attempt Failed', 'Failed', ipAddress, undefined, geolocation);
-            return { success: false, error: 'Authentication data not found.' };
-        }
-        const isMatch = await bcrypt.compare(password, passwordDoc.hash);
-        if (!isMatch) {
-            await logActivity(accountId, 'Login Attempt Failed', 'Failed', ipAddress, undefined, geolocation);
-            return { success: false, error: 'Invalid NeupID or password.' };
-        }
-        
-        // After password is confirmed, check for pending deletion
-        if (validationResult.error === 'pending_deletion') {
-            return { success: false, error: 'pending_deletion' };
-        }
-
-        await logActivity(accountId, 'Login', 'Success', ipAddress, undefined, geolocation);
-        await createAndSetSession(accountId, 'Password', ipAddress, userAgent, geolocation);
-        await createNotification({
-            recipient_id: accountId,
-            action: 'informative.login',
-            message: `Your account was signed in from a new device.`,
-        });
-
-
-        return { success: true };
-    } catch (error) {
-        await logError('database', error, 'loginUser');
-        return { success: false, error: 'An unexpected error occurred.' };
+        return { success: true, mfaRequired: false };
     }
 }

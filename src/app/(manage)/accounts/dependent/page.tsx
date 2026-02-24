@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { getDependentAccounts } from "@/actions/manage/accounts/dependent";
 import { User, Plus } from "lucide-react";
 import { notFound } from "next/navigation";
-import { AccountListItem } from "@/app/(auth)/auth/accounts/account-list-item";
+import { AccountListItem } from "@/app/auth/accounts/account-list-item";
 import { BackButton } from "@/components/ui/back-button";
 import { checkPermissions } from "@/lib/user";
 
