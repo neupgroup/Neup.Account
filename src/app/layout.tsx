@@ -10,6 +10,7 @@ import { UrlErrorBanner } from '@/components/ui/url-error-banner';
 export const metadata: Metadata = {
   title: 'Neup.Account',
   description: 'Create an account to access NeupID Group Products and Services.',
+  metadataBase: new URL('https://neupgroup.com/account'),
 };
 
 export default function RootLayout({

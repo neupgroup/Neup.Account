@@ -28,7 +28,7 @@ The external application **must** redirect the user to the following endpoint wi
 
 ### Example Request
 ```
-https://neup.account.com/bridge/handshake/auth/signin?appId=my-cool-app&auth_handler=https%3A%2F%2Fmy-cool-app.com%2Flogin%2Fcallback&redirect_to=%2Fdashboard
+https://neupgroup.com/account/bridge/handshake/auth/signin?appId=my-cool-app&auth_handler=https%3A%2F%2Fmy-cool-app.com%2Flogin%2Fcallback&redirect_to=%2Fdashboard
 ```
 
 ---
@@ -60,7 +60,7 @@ This is the most critical security step. Your application's **backend** must mak
 **As a best practice, store your application's secret key and other credentials in environment variables (e.g., in a `.env` file) or a secure key storage service, rather than hardcoding them in your application. For example:**
 - `NEUP_APP_ID=my-cool-app`
 - `NEUP_APP_SECRET=your_super_secret_key_here`
-- `NEUP_ACCOUNT_API_URL=https://neup.account.com`
+- `NEUP_ACCOUNT_API_URL=https://neupgroup.com/account`
 
 
 **Endpoint**: `/bridge/api/auth/verify`
