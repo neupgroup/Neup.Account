@@ -1,20 +1,6 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  getDoc,
-  deleteDoc,
-  updateDoc,
-  addDoc,
-  serverTimestamp,
-  writeBatch,
-  limit
-} from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { getActiveAccountId, getPersonalAccountId } from '@/lib/auth-actions';
 import { getUserProfile, getUserNeupIds, getAccountType, getUserPermissions, checkPermissions } from '@/lib/user';
 import { logError } from '@/lib/logger';
@@ -46,29 +32,27 @@ const statusOrder: Record<UserAccess['status'], number> = {
 
 export async function getAccessList(accountId: string): Promise<UserAccess[]> {
   try {
-    const permitsRef = collection(db, 'permit');
-    const q = query(
-      permitsRef,
-      where('target_account', '==', accountId),
-      where('for_self', '==', false),
-      where('is_root', '==', false)
-    );
-    const querySnapshot = await getDocs(q);
+    const permits = await prisma.permit.findMany({
+      where: {
+        targetAccountId: accountId,
+        forSelf: false,
+        isRoot: false
+      }
+    });
 
     const accessList = await Promise.all(
-      querySnapshot.docs.map(async (doc) => {
-        const data = doc.data();
-        const userProfile = await getUserProfile(data.account_id);
+      permits.map(async (permit: any) => {
+        const userProfile = await getUserProfile(permit.accountId);
         if (!userProfile) return null;
 
         return {
-          permitId: doc.id,
-          userId: data.account_id,
+          permitId: permit.id,
+          userId: permit.accountId,
           displayName:
             userProfile.nameDisplay ||
             `${userProfile.nameFirst} ${userProfile.nameLast}`.trim(),
           accountPhoto: userProfile.accountPhoto,
-          permissions: data.permission || [],
+          permissions: permit.permissions || [],
           status: 'approved' as const,
         };
       })
@@ -86,19 +70,18 @@ export async function getAccessList(accountId: string): Promise<UserAccess[]> {
 
 export async function getAccessDetails(permitId: string): Promise<AccessDetails | null> {
     try {
-        const permitRef = doc(db, 'permit', permitId);
-        const permitDoc = await getDoc(permitRef);
+        const permit = await prisma.permit.findUnique({
+          where: { id: permitId }
+        });
 
-        if (!permitDoc.exists()) {
+        if (!permit) {
             return null;
         }
-
-        const data = permitDoc.data();
         
         const [grantedToProfile, grantedByProfile, grantedToNeupIds] = await Promise.all([
-            getUserProfile(data.account_id), // The user who has access
-            getUserProfile(data.target_account),   // The account being accessed
-            getUserNeupIds(data.account_id)
+            getUserProfile(permit.accountId), // The user who has access
+            getUserProfile(permit.targetAccountId!),   // The account being accessed
+            getUserNeupIds(permit.accountId)
         ]);
 
         if (!grantedToProfile || !grantedByProfile) {
@@ -106,18 +89,18 @@ export async function getAccessDetails(permitId: string): Promise<AccessDetails 
         }
 
         return {
-            permitId: permitDoc.id,
+            permitId: permit.id,
             grantedTo: {
-                id: data.account_id,
+                id: permit.accountId,
                 name: grantedToProfile.nameDisplay || `${grantedToProfile.nameFirst} ${grantedToProfile.nameLast}`.trim(),
                 neupId: grantedToNeupIds[0] || 'N/A'
             },
             grantedBy: {
-                id: data.target_account,
+                id: permit.targetAccountId!,
                 name: grantedByProfile.nameDisplay || `${grantedByProfile.nameFirst} ${grantedByProfile.nameLast}`.trim()
             },
-            grantedOn: data.created_on?.toDate().toLocaleString() || new Date().toLocaleString(),
-            permissions: data.permission || []
+            grantedOn: permit.createdOn.toLocaleString(),
+            permissions: permit.permissions || []
         }
 
     } catch (error) {
@@ -133,15 +116,19 @@ export async function removeAccess(permitId: string, geolocation?: string): Prom
     }
     
     try {
-        const docRef = doc(db, 'permit', permitId);
-        const docSnap = await getDoc(docRef);
+        const permit = await prisma.permit.findUnique({
+          where: { id: permitId }
+        });
 
-        if (!docSnap.exists() || docSnap.data().target_account !== currentAccountId) {
+        if (!permit || permit.targetAccountId !== currentAccountId) {
             return { success: false, error: "Permission denied or grant not found." };
         }
         
-        const removedUserId = docSnap.data().account_id;
-        await deleteDoc(docRef);
+        const removedUserId = permit.accountId;
+        await prisma.permit.delete({
+          where: { id: permitId }
+        });
+
         await logActivity(currentAccountId, `Revoked access for user ${removedUserId}`, 'Success', undefined, undefined, geolocation);
         
         revalidatePath('/manage/access');
@@ -159,45 +146,58 @@ export async function getDelegatablePermissions(): Promise<Permission[]> {
     
     if (!managerId || !managedAccountId || managerId === managedAccountId) {
         // Fallback for self-permissions if not in a managing context.
-        const selfPermitQuery = query(collection(db, 'permit'), where('account_id', '==', managerId), where('for_self', '==', true));
-        const selfPermitSnapshot = await getDocs(selfPermitQuery);
-        if (selfPermitSnapshot.empty) return [];
+        const selfPermit = await prisma.permit.findFirst({
+          where: {
+            accountId: managerId!,
+            forSelf: true
+          }
+        });
 
-        const selfPermitData = selfPermitSnapshot.docs[0].data();
-        const selfAssignedIds = selfPermitData.permission || [];
+        if (!selfPermit) return [];
+
+        const selfAssignedIds = selfPermit.permissions || [];
         if (selfAssignedIds.length === 0) return [];
 
-        const selfPermsQuery = query(collection(db, 'permission'), where('__name__', 'in', selfAssignedIds));
-        const selfPermsSnapshot = await getDocs(selfPermsQuery);
-        return selfPermsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Permission));
+        const selfPerms = await prisma.permission.findMany({
+          where: {
+            id: { in: selfAssignedIds }
+          }
+        });
+        return selfPerms.map((p: any) => ({ ...p } as unknown as Permission));
     }
 
     // Find the permit that grants the personal account access to the managed account.
-    const permitQuery = query(
-        collection(db, 'permit'),
-        where('account_id', '==', managerId),
-        where('target_account', '==', managedAccountId)
-    );
-    const permitSnapshot = await getDocs(permitQuery);
+    const permit = await prisma.permit.findFirst({
+      where: {
+        accountId: managerId,
+        targetAccountId: managedAccountId
+      }
+    });
     
-    if (permitSnapshot.empty) return [];
-
-    const permitData = permitSnapshot.docs[0].data();
+    if (!permit) return [];
 
     // If the manager has full access, they can delegate any non-root permission.
-    if (permitData.full_access) {
-        const allPermsQuery = query(collection(db, 'permission'), where('name', '!=', 'root.whole'));
-        const allPermsSnapshot = await getDocs(allPermsQuery);
-        return allPermsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Permission)).filter(p => !p.name.startsWith('root.'));
+    if (permit.fullAccess) {
+        const allPerms = await prisma.permission.findMany({
+          where: {
+            name: { not: 'root.whole' }
+          }
+        });
+        return allPerms
+          .map((p: any) => ({ ...p } as unknown as Permission))
+          .filter((p: any) => !p.name.startsWith('root.'));
     }
     
     // Otherwise, they can only delegate the permissions they have been explicitly assigned.
-    const assignedIds = permitData.permission || [];
+    const assignedIds = permit.permissions || [];
     if (assignedIds.length === 0) return [];
     
-    const delegatablePermsQuery = query(collection(db, 'permission'), where('__name__', 'in', assignedIds));
-    const delegatablePermsSnapshot = await getDocs(delegatablePermsQuery);
-    return delegatablePermsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Permission));
+    const delegatablePerms = await prisma.permission.findMany({
+      where: {
+        id: { in: assignedIds }
+      }
+    });
+    return delegatablePerms.map((p: any) => ({ ...p } as unknown as Permission));
 }
 
 
@@ -208,10 +208,11 @@ export async function updatePermissions(permitId: string, newPermissionIds: stri
     }
 
     try {
-        const docRef = doc(db, 'permit', permitId);
-        const docSnap = await getDoc(docRef);
+        const permit = await prisma.permit.findUnique({
+          where: { id: permitId }
+        });
 
-        if (!docSnap.exists() || docSnap.data().target_account !== currentAccountId) {
+        if (!permit || permit.targetAccountId !== currentAccountId) {
             return { success: false, error: "Permission denied or grant not found." };
         }
 
@@ -225,8 +226,11 @@ export async function updatePermissions(permitId: string, newPermissionIds: stri
         }
         // --- End Check ---
         
-        const targetUserId = docSnap.data().account_id;
-        await updateDoc(docRef, { permission: newPermissionIds });
+        const targetUserId = permit.accountId;
+        await prisma.permit.update({
+          where: { id: permitId },
+          data: { permissions: newPermissionIds }
+        });
         
         await logActivity(currentAccountId, `Updated permissions for user ${targetUserId}`, 'Success', undefined, undefined, geolocation);
         revalidatePath('/manage/access');
@@ -253,13 +257,14 @@ export async function grantAccessByNeupId(formData: FormData, geolocation?: stri
 
     try {
         // Find the account to add
-        const neupidsRef = doc(db, 'neupid', neupId);
-        const userSnapshot = await getDoc(neupidsRef);
+        const neupIdRecord = await prisma.neupId.findUnique({
+          where: { id: neupId }
+        });
 
-        if (!userSnapshot.exists()) {
+        if (!neupIdRecord) {
             return { success: false, error: "No user found with that NeupID." };
         }
-        const targetAccountId = userSnapshot.data().for;
+        const targetAccountId = neupIdRecord.accountId;
 
         // Prevent adding self
         if (targetAccountId === ownerAccountId) {
@@ -273,41 +278,48 @@ export async function grantAccessByNeupId(formData: FormData, geolocation?: stri
 
 
         // Check if already added
-        const permitsRef = collection(db, 'permit');
-        const alreadyExistsQuery = query(permitsRef, where('target_account', '==', ownerAccountId), where('account_id', '==', targetAccountId));
-        const alreadyExistsSnapshot = await getDocs(alreadyExistsQuery);
-        if (!alreadyExistsSnapshot.empty) {
+        const alreadyExists = await prisma.permit.findFirst({
+          where: {
+            targetAccountId: ownerAccountId,
+            accountId: targetAccountId
+          }
+        });
+
+        if (alreadyExists) {
             return { success: false, error: "This user already has access." };
         }
         
-        const requestsRef = collection(db, 'requests');
-        const q = query(
-            requestsRef,
-            where('action', '==', 'access_invitation'),
-            where('sender_id', '==', ownerAccountId),
-            where('recipient_id', '==', targetAccountId),
-            where('status', '==', 'pending')
-        );
-        const existingRequests = await getDocs(q);
-        if(!existingRequests.empty) {
+        const existingRequest = await prisma.request.findFirst({
+          where: {
+            action: 'access_invitation',
+            senderId: ownerAccountId,
+            recipientId: targetAccountId,
+            status: 'pending'
+          }
+        });
+
+        if(existingRequest) {
             return { success: false, error: 'An invitation has already been sent to this user.' };
         }
 
 
         // Add the new access document with a 'pending' status
-        const requestRef = await addDoc(requestsRef, {
+        const request = await prisma.request.create({
+          data: {
             action: 'access_invitation',
-            sender_id: ownerAccountId,
-            recipient_id: targetAccountId,
-            status: 'pending',
-            dateCreated: serverTimestamp(),
+            senderId: ownerAccountId,
+            recipientId: targetAccountId,
+            status: 'pending'
+          }
         });
         
-        await addDoc(collection(db, 'notifications'), {
-            recipient_id: targetAccountId,
-            request_id: requestRef.id,
-            is_read: false,
-            dateCreated: serverTimestamp()
+        await prisma.notification.create({
+          data: {
+            accountId: targetAccountId,
+            requestId: request.id,
+            read: false,
+            createdAt: new Date()
+          }
         });
 
 

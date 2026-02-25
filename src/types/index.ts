@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { Timestamp } from 'firebase/firestore';
 
 // --- Base Types ---
 export type ApiResponse<T = any> = {
@@ -147,5 +146,30 @@ export interface AccessDetails {
 export interface Application {
     id: string;
     name: string;
+    party: 'first' | 'third';
     description: string;
+    icon?: "app-window" | "building" | "bar-chart" | "share-2";
+    website?: string;
+    developer?: string;
+}
+
+export interface KycRequest {
+    id: string;
+    accountId: string;
+    userFullName: string;
+    userNeupId: string;
+    documentType: string;
+    submittedAt: string;
+    status: 'pending' | 'approved' | 'rejected';
+    documentPhotoUrl: string;
+    selfiePhotoUrl: string;
+}
+
+export interface VerificationRequest {
+    id: string;
+    accountId: string;
+    fullName: string;
+    neupId: string;
+    requestedAt: string;
+    status: 'pending' | 'approved' | 'rejected' | 'revoked';
 }

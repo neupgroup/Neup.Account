@@ -1,11 +1,10 @@
 
 'use server';
 
-import { db } from '@/lib/firebase';
-import { collection, getDocs } from 'firebase/firestore';
 import { logError } from '@/lib/logger';
 import { checkPermissions } from '@/lib/user';
 import type { SearchResult } from '@/types';
+import prisma from '@/lib/prisma';
 
 
 // A very basic search function. In a real-world scenario,
@@ -18,34 +17,60 @@ export async function searchAll(query: string): Promise<SearchResult[]> {
     const canSearchUsers = await checkPermissions(['root.account.search']);
     if (canSearchUsers) {
         try {
-            const profilesSnapshot = await getDocs(collection(db, 'profile'));
-            const neupidsSnapshot = await getDocs(collection(db, 'neupid'));
-            
-            const neupIdMap = new Map<string, string>();
-            neupidsSnapshot.forEach(doc => {
-                neupIdMap.set(doc.data().for, doc.id);
+            const accountsByName = await prisma.account.findMany({
+                where: {
+                    OR: [
+                        { nameDisplay: { contains: lowercasedQuery, mode: 'insensitive' } },
+                        { nameFirst: { contains: lowercasedQuery, mode: 'insensitive' } },
+                        { nameLast: { contains: lowercasedQuery, mode: 'insensitive' } },
+                    ],
+                },
+                select: { id: true, nameFirst: true, nameLast: true, nameDisplay: true },
+                take: 100,
             });
 
-            profilesSnapshot.forEach(doc => {
-                const data = doc.data();
-                const neupId = neupIdMap.get(doc.id) || '';
-                const fullName = `${data.firstName || ''} ${data.lastName || ''}`.trim();
-                const displayName = data.displayName || '';
-
-                if (
-                    neupId.toLowerCase().includes(lowercasedQuery) ||
-                    fullName.toLowerCase().includes(lowercasedQuery) ||
-                    displayName.toLowerCase().includes(lowercasedQuery)
-                ) {
-                    results.push({
-                        id: `user-${doc.id}`,
-                        type: 'user',
-                        title: displayName || fullName,
-                        description: `@${neupId}`,
-                        url: `/manage/root/accounts/${doc.id}`,
-                    });
-                }
+            const neupIds = await prisma.neupId.findMany({
+                where: { id: { contains: lowercasedQuery, mode: 'insensitive' } },
+                select: { id: true, accountId: true },
+                take: 100,
             });
+
+            const accountIdToNeupId = new Map<string, string>();
+            for (const n of neupIds) accountIdToNeupId.set(n.accountId, n.id);
+
+            const seenAccounts = new Set<string>();
+
+            for (const acc of accountsByName) {
+                const fullName = `${acc.nameFirst || ''} ${acc.nameLast || ''}`.trim();
+                const displayName = acc.nameDisplay || '';
+                const neupId = accountIdToNeupId.get(acc.id) || '';
+                seenAccounts.add(acc.id);
+                results.push({
+                    id: `user-${acc.id}`,
+                    type: 'user',
+                    title: displayName || fullName,
+                    description: neupId ? `@${neupId}` : '',
+                    url: `/manage/root/accounts/${acc.id}`,
+                });
+            }
+
+            for (const n of neupIds) {
+                if (seenAccounts.has(n.accountId)) continue;
+                const acc = await prisma.account.findUnique({
+                    where: { id: n.accountId },
+                    select: { id: true, nameFirst: true, nameLast: true, nameDisplay: true },
+                });
+                if (!acc) continue;
+                const fullName = `${acc.nameFirst || ''} ${acc.nameLast || ''}`.trim();
+                const displayName = acc.nameDisplay || '';
+                results.push({
+                    id: `user-${acc.id}`,
+                    type: 'user',
+                    title: displayName || fullName || `@${n.id}`,
+                    description: `@${n.id}`,
+                    url: `/manage/root/accounts/${acc.id}`,
+                });
+            }
         } catch (error) {
             await logError('database', error, 'searchAll:users');
         }
@@ -55,24 +80,33 @@ export async function searchAll(query: string): Promise<SearchResult[]> {
     const canSearchPermissions = await checkPermissions(['root.permission.view']);
     if (canSearchPermissions) {
         try {
-            const permissionsSnapshot = await getDocs(collection(db, 'permission'));
-            permissionsSnapshot.forEach(doc => {
-                const data = doc.data();
+            const perms = await prisma.permission.findMany({
+                where: {
+                    OR: [
+                        { name: { contains: lowercasedQuery, mode: 'insensitive' } },
+                        { appId: { contains: lowercasedQuery, mode: 'insensitive' } },
+                    ],
+                },
+                orderBy: { name: 'asc' },
+                take: 200,
+            });
+
+            for (const p of perms) {
+                const accessMatches = p.access.some(a => a.toLowerCase().includes(lowercasedQuery));
                 if (
-                    data.name.toLowerCase().includes(lowercasedQuery) ||
-                    data.description.toLowerCase().includes(lowercasedQuery) ||
-                    data.app_id.toLowerCase().includes(lowercasedQuery) ||
-                    data.access?.some((p: string) => p.toLowerCase().includes(lowercasedQuery))
+                    accessMatches ||
+                    p.name.toLowerCase().includes(lowercasedQuery) ||
+                    (p.appId || '').toLowerCase().includes(lowercasedQuery)
                 ) {
                     results.push({
-                        id: `permission-${doc.id}`,
+                        id: `permission-${p.id}`,
                         type: 'permission',
-                        title: data.name,
-                        description: data.description,
-                        url: `/manage/root/permission/${doc.id}`,
+                        title: p.name,
+                        description: `Permissions for ${p.appId || 'default'}`,
+                        url: `/manage/root/permission/${p.id}`,
                     });
                 }
-            });
+            }
         } catch (error) {
             await logError('database', error, 'searchAll:permissions');
         }

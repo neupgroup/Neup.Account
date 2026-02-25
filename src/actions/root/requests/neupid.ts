@@ -1,7 +1,6 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs, doc, getDoc, updateDoc, setDoc } from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { getUserProfile, getUserNeupIds, checkPermissions } from '@/lib/user';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
@@ -18,22 +17,20 @@ export async function getPendingNeupIdRequests(): Promise<PendingNeupIdRequest[]
     if (!canView) return [];
 
     try {
-        const requestsRef = collection(db, 'requests');
-        const q = query(requestsRef, where('action', '==', 'neupid_request'), where('status', '==', 'pending'));
-        const querySnapshot = await getDocs(q);
+        const requests = await prisma.neupIdRequest.findMany({
+            where: { status: 'pending' },
+            include: {
+                account: true
+            }
+        });
 
-        if (querySnapshot.empty) {
+        if (requests.length === 0) {
             return [];
         }
 
-        const requests = await Promise.all(
-            querySnapshot.docs.map(async (doc) => {
-                const data = doc.data();
-                const accountId = data.accountId;
-
-                if (!accountId) {
-                    return null;
-                }
+        const pendingRequests = await Promise.all(
+            requests.map(async (doc) => {
+                const accountId = doc.accountId;
 
                 const [profile, currentNeupIds] = await Promise.all([
                     getUserProfile(accountId),
@@ -42,21 +39,21 @@ export async function getPendingNeupIdRequests(): Promise<PendingNeupIdRequest[]
 
                 const userFullName = profile ? `${profile.nameFirst || ''} ${profile.nameLast || ''}`.trim() : 'Unknown User';
                 
-                const createdAt = data.createdAt?.toDate() || new Date();
+                const createdAt = doc.submittedAt;
 
                 return {
                     id: doc.id,
                     userFullName,
-                    requestedNeupId: data.requestedNeupId,
+                    requestedNeupId: doc.requestedId,
                     requestDate: createdAt.toLocaleDateString(),
-                    status: data.status,
+                    status: doc.status,
                     currentNeupIds: currentNeupIds,
                     accountId: accountId,
                     createdAt: createdAt
                 };
             })
         );
-        const validRequests = requests.filter((request): request is PendingRequestInternal => request !== null);
+        const validRequests = pendingRequests.filter((request): request is PendingRequestInternal => request !== null);
         validRequests.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         return validRequests.map(({ createdAt, ...rest }) => rest);
@@ -72,19 +69,18 @@ export async function getNeupIdRequestDetails(id: string): Promise<PendingNeupId
     if (!canView) return null;
 
     try {
-        const requestRef = doc(db, 'requests', id);
-        const requestDoc = await getDoc(requestRef);
+        const request = await prisma.neupIdRequest.findUnique({
+            where: { id },
+            include: {
+                account: true
+            }
+        });
 
-        if (!requestDoc.exists()) {
+        if (!request) {
             return null;
         }
 
-        const data = requestDoc.data();
-        const accountId = data.accountId;
-
-        if (!accountId) {
-            return null;
-        }
+        const accountId = request.accountId;
 
         const [profile, currentNeupIds] = await Promise.all([
             getUserProfile(accountId),
@@ -92,14 +88,14 @@ export async function getNeupIdRequestDetails(id: string): Promise<PendingNeupId
         ]);
 
         const userFullName = profile ? `${profile.nameFirst || ''} ${profile.nameLast || ''}`.trim() : 'Unknown User';
-        const createdAt = data.createdAt?.toDate() || new Date();
+        const createdAt = request.submittedAt;
 
         return {
-            id: requestDoc.id,
+            id: request.id,
             userFullName,
-            requestedNeupId: data.requestedNeupId,
+            requestedNeupId: request.requestedId,
             requestDate: createdAt.toLocaleDateString(),
-            status: data.status,
+            status: request.status,
             currentNeupIds: currentNeupIds,
             accountId: accountId,
         };
@@ -116,14 +112,19 @@ export async function approveNeupIdRequest(requestId: string, accountId: string,
     }
 
     try {
-        const requestRef = doc(db, 'requests', requestId);
-        await updateDoc(requestRef, { status: 'approved' });
-
-        const neupidDocRef = doc(db, 'neupid', newNeupId.toLowerCase());
-        await setDoc(neupidDocRef, {
-            for: accountId,
-            is_primary: false,
-        });
+        await prisma.$transaction([
+            prisma.neupIdRequest.update({
+                where: { id: requestId },
+                data: { status: 'approved' }
+            }),
+            prisma.neupId.create({
+                data: {
+                    id: newNeupId.toLowerCase(),
+                    accountId: accountId,
+                    isPrimary: false,
+                }
+            })
+        ]);
 
         await logActivity(accountId, `Approved NeupID Request: ${newNeupId}`, 'Success');
 
@@ -141,14 +142,13 @@ export async function denyNeupIdRequest(requestId: string): Promise<{success: bo
     }
     
     try {
-        const requestRef = doc(db, 'requests', requestId);
-        const requestDoc = await getDoc(requestRef);
-        const accountId = requestDoc.data()?.accountId;
-
-        await updateDoc(requestRef, { status: 'denied' });
+        const request = await prisma.neupIdRequest.update({
+            where: { id: requestId },
+            data: { status: 'denied' }
+        });
         
-        if (accountId) {
-            await logActivity(accountId, `Denied NeupID Request: ${requestDoc.data()?.requestedNeupId}`, 'Success');
+        if (request.accountId) {
+            await logActivity(request.accountId, `Denied NeupID Request: ${request.requestedId}`, 'Success');
         }
 
         return { success: true };

@@ -1,7 +1,6 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { headers } from 'next/headers';
 import { authenticator } from 'otplib';
 import { decrypt } from '@/actions/security/totp';
@@ -28,20 +27,25 @@ export async function verifyMfa(data: z.infer<typeof mfaSchema>): Promise<{ succ
         return { success: false, error: 'Your session has expired. Please try again.' };
     }
 
-    const { accountId, status } = request.data;
+    const { accountId, status } = request.data as any;
     if (status !== 'pending_mfa') {
         return { success: false, error: 'Invalid authentication request state.' };
     }
 
-    const totpRef = doc(db, 'auth_totp', accountId);
-    const totpDoc = await getDoc(totpRef);
+    const totp = await prisma.totp.findUnique({
+        where: { accountId }
+    });
 
-    if (!totpDoc.exists()) {
+    if (!totp) {
         return { success: false, error: 'TOTP not enabled for this account.' };
     }
 
-    const encryptedSecret = totpDoc.data().secret;
-    const secret = await decrypt(encryptedSecret);
+    const secret = await decrypt(totp.secret);
+    const isValid = authenticator.verify({ token, secret });
+
+    if (!isValid) {
+        return { success: false, error: 'Invalid token. Please check your device time and try again.' };
+    }
 
     const headersList = await headers();
     const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';

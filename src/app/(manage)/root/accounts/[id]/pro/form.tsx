@@ -5,8 +5,6 @@ import { useEffect, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -14,6 +12,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { setProStatus } from '@/actions/root/user-actions';
+import { getUserProfile } from '@/lib/user';
 import { Gem, Loader2 } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { TertiaryHeader } from '@/components/ui/tertiary-header';
@@ -37,10 +36,9 @@ export function NeupProManager({ accountId }: { accountId: string }) {
     useEffect(() => {
         async function fetchStatus() {
             setLoading(true);
-            const accountRef = doc(db, 'account', accountId);
-            const docSnap = await getDoc(accountRef);
-            if (docSnap.exists()) {
-                setIsPro(docSnap.data().pro === true);
+            const profile = await getUserProfile(accountId);
+            if (profile) {
+                setIsPro(profile.pro === true);
             } else {
                 setIsPro(false);
             }

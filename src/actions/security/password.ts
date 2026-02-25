@@ -2,15 +2,13 @@
 
 import { z } from 'zod';
 import bcrypt from 'bcryptjs';
-import { doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
-
-import { db } from '@/lib/firebase';
 import { getActiveAccountId } from '@/lib/auth-actions';
 import { checkPermissions } from '@/lib/user';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
 import { changePasswordSchema } from '@/schemas/security';
 import { createNotification } from '../notifications';
+import prisma from '@/lib/prisma';
 
 export async function changePassword(data: z.infer<typeof changePasswordSchema>, geolocation?: string) {
     const hasPermission = await checkPermissions(['security.pass.modify']);
@@ -31,14 +29,15 @@ export async function changePassword(data: z.infer<typeof changePasswordSchema>,
     const { currentPassword, newPassword } = validation.data;
 
     try {
-        const authRef = doc(db, 'auth_password', accountId);
-        const authDoc = await getDoc(authRef);
+        const passwordRecord = await prisma.password.findUnique({
+            where: { accountId }
+        });
 
-        if (!authDoc.exists()) {
+        if (!passwordRecord) {
             return { success: false, error: "Authentication data not found." };
         }
 
-        const isMatch = await bcrypt.compare(currentPassword, authDoc.data().pass);
+        const isMatch = await bcrypt.compare(currentPassword, passwordRecord.hash);
 
         if (!isMatch) {
             await logActivity(accountId, 'Password Change Failed', 'Failed', undefined, undefined, geolocation);
@@ -47,9 +46,12 @@ export async function changePassword(data: z.infer<typeof changePasswordSchema>,
 
         const newHashedPassword = await bcrypt.hash(newPassword, 10);
 
-        await updateDoc(authRef, {
-            pass: newHashedPassword,
-            passwordLastChanged: serverTimestamp()
+        await prisma.password.update({
+            where: { accountId },
+            data: {
+                hash: newHashedPassword,
+                passwordLastChanged: new Date()
+            }
         });
         
         await logActivity(accountId, 'Password Change', 'Success', undefined, undefined, geolocation);

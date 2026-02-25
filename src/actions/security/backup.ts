@@ -1,7 +1,6 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import { collection, doc, writeBatch, getDocs, query, where, serverTimestamp } from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
@@ -28,16 +27,15 @@ export async function getBackupCodes(): Promise<BackupCode[]> {
     if (!accountId) return [];
 
     try {
-        const codesRef = collection(db, 'auth_backup');
-        const q = query(codesRef, where('accountId', '==', accountId));
-        const querySnapshot = await getDocs(q);
+        const codes = await prisma.backupCode.findMany({
+            where: { accountId },
+            orderBy: { createdAt: 'desc' }
+        });
 
-        if (querySnapshot.empty) {
-            return [];
-        }
-
-        const doc = querySnapshot.docs[0];
-        return doc.data().codes || [];
+        return codes.map(c => ({
+            code: c.code,
+            used: c.used
+        }));
 
     } catch (error) {
         await logError('database', error, `getBackupCodes: ${accountId}`);
@@ -60,27 +58,20 @@ export async function generateBackupCodes(): Promise<BackupCode[]> {
             used: false,
         }));
 
-        const codesRef = collection(db, 'auth_backup');
-        const q = query(codesRef, where('accountId', '==', accountId));
-        const querySnapshot = await getDocs(q);
-
-        const batch = writeBatch(db);
-
-        if (!querySnapshot.empty) {
-            // Invalidate old codes by deleting the document.
-            const oldDocRef = querySnapshot.docs[0].ref;
-            batch.delete(oldDocRef);
-        }
-
-        // Create a new document with the new codes.
-        const newDocRef = doc(codesRef);
-        batch.set(newDocRef, {
-            accountId: accountId,
-            codes: newCodes,
-            createdAt: serverTimestamp(),
-        });
-        
-        await batch.commit();
+        await prisma.$transaction([
+            // Invalidate old codes by deleting them.
+            prisma.backupCode.deleteMany({
+                where: { accountId }
+            }),
+            // Create new codes.
+            prisma.backupCode.createMany({
+                data: newCodes.map(c => ({
+                    accountId,
+                    code: c.code,
+                    used: false
+                }))
+            })
+        ]);
 
         await logActivity(accountId, 'Generated new backup codes', 'Success');
         

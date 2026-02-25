@@ -1,10 +1,9 @@
 
 'use server';
 
+import prisma from '@/lib/prisma';
 import { getActiveAccountId, getPersonalAccountId } from '@/lib/auth-actions';
 import { logError } from '@/lib/logger';
-import { db } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 // Make sure to set this in your environment variables
 const UPLOAD_URL = process.env.NEXT_PUBLIC_UPLOAD_URL || 'https://neupgroup.com/usercontent/bridge/api/upload.php';
@@ -123,17 +122,18 @@ export async function uploadFile(
     if (result.success && result.url) {
       const fullUrl = `https://neupgroup.com${result.url}`;
       
-      // Log successful upload to Firestore
-      await addDoc(collection(db, 'usercontent'), {
-        contentId,
-        platform,
-        uploaderId: actorAccountId,
-        forAccountId: targetAccountId,
-        url: fullUrl,
-        originalName: name,
-        fileType: file.type,
-        size: file.size,
-        uploadedAt: serverTimestamp(),
+      // Log successful upload to Prisma
+      await prisma.userContent.create({
+        data: {
+          contentId,
+          platform,
+          uploaderId: actorAccountId,
+          forAccountId: targetAccountId,
+          url: fullUrl,
+          originalName: name,
+          fileType: file.type,
+          size: file.size,
+        }
       });
 
       return { success: true, url: fullUrl, contentId: contentId };

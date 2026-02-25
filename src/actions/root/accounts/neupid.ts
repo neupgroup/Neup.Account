@@ -1,7 +1,6 @@
  'use server';
  
- import { db } from '@/lib/firebase';
- import { doc, getDoc, setDoc, deleteDoc, writeBatch } from 'firebase/firestore';
+ import prisma from '@/lib/prisma';
  import { getPersonalAccountId } from '@/lib/auth-actions';
  import { logActivity } from '@/lib/log-actions';
  import { logError } from '@/lib/logger';
@@ -18,16 +17,20 @@
    const lowerCaseNeupId = neupId.toLowerCase();
  
    try {
-     const neupidRef = doc(db, 'neupid', lowerCaseNeupId);
-     const neupidDoc = await getDoc(neupidRef);
-     if (neupidDoc.exists()) {
+    const existing = await prisma.neupId.findUnique({
+      where: { id: lowerCaseNeupId },
+    });
+    if (existing) {
        return { success: false, error: 'This NeupID is already taken.' };
      }
  
-     await setDoc(neupidRef, {
-       for: accountId,
-       is_primary: false,
-     });
+    await prisma.neupId.create({
+      data: {
+        id: lowerCaseNeupId,
+        accountId,
+        isPrimary: false,
+      },
+    });
  
      await logActivity(accountId, `NeupID added by admin: ${lowerCaseNeupId}`, 'Success', undefined, adminId);
      revalidatePath(`/manage/root/accounts/${accountId}/profile/neupid`);
@@ -46,18 +49,21 @@
    if (!adminId) return { success: false, error: 'Administrator not authenticated.' };
  
    try {
-     const neupidRef = doc(db, 'neupid', neupId);
-     const neupidDoc = await getDoc(neupidRef);
-     if (!neupidDoc.exists()) {
+    const neupidDoc = await prisma.neupId.findUnique({
+      where: { id: neupId },
+    });
+    if (!neupidDoc) {
        return { success: false, error: 'NeupID not found.' };
      }
  
-     if (neupidDoc.data().is_primary) {
+    if (neupidDoc.isPrimary) {
        return { success: false, error: 'Cannot remove a primary NeupID. Set another as primary first.' };
      }
  
-     const accountId = neupidDoc.data().for;
-     await deleteDoc(neupidRef);
+    const accountId = neupidDoc.accountId;
+    await prisma.neupId.delete({
+      where: { id: neupId },
+    });
  
      await logActivity(accountId, `NeupID removed by admin: ${neupId}`, 'Success', undefined, adminId);
      revalidatePath(`/manage/root/accounts/${accountId}/profile/neupid`);
@@ -81,17 +87,14 @@
        return { success: false, error: 'This NeupID does not belong to the user.' };
      }
  
-     const batch = writeBatch(db);
- 
-     existingNeupIds.forEach((id) => {
-       const d = doc(db, 'neupid', id);
-       batch.update(d, { is_primary: false });
-     });
- 
-     const newPrimaryRef = doc(db, 'neupid', newPrimaryNeupId);
-     batch.update(newPrimaryRef, { is_primary: true });
- 
-     await batch.commit();
+    await prisma.neupId.updateMany({
+      where: { accountId },
+      data: { isPrimary: false },
+    });
+    await prisma.neupId.update({
+      where: { id: newPrimaryNeupId },
+      data: { isPrimary: true },
+    });
  
      await logActivity(accountId, `Primary NeupID set to: ${newPrimaryNeupId}`, 'Success', undefined, adminId);
      revalidatePath(`/manage/root/accounts/${accountId}/profile/neupid`);

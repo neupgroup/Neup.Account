@@ -1,7 +1,6 @@
 'use server';
 
-import { db } from "@/lib/firebase";
-import { doc, updateDoc, serverTimestamp, collection, query, where, orderBy, limit, getDocs, writeBatch, getDoc } from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { logError } from '@/lib/logger';
 import { revalidatePath } from 'next/cache';
@@ -39,48 +38,42 @@ export async function getDisplayNameSuggestions(accountId: string): Promise<stri
 
 export async function getPastProfilePhotos(accountId: string): Promise<string[]> {
     try {
-        const contentRef = collection(db, 'usercontent');
-        const q = query(
-            contentRef,
-            where('forAccountId', '==', accountId),
-            where('platform', '==', 'neup.account'),
-            orderBy('uploadedAt', 'desc'),
-            limit(4)
-        );
-        const querySnapshot = await getDocs(q);
-        const urls = querySnapshot.docs.map((docSnap) => (docSnap.data() as any).url as string);
-        return urls;
+        const items = await prisma.userContent.findMany({
+            where: { forAccountId: accountId, platform: 'neup.account' },
+            orderBy: [{ uploadedAt: 'desc' }, { id: 'desc' }],
+            take: 4
+        });
+        return items.map((i) => i.url);
     } catch (error) {
         await logError('database', error, `getPastProfilePhotos for ${accountId}`);
         return [];
     }
 }
 
-
-async function updateOrCreateContact(batch: ReturnType<typeof writeBatch>, accountId: string, type: string, value: string | undefined, hasPermission: boolean) {
+async function updateOrCreateContact(tx: any, accountId: string, type: string, value: string | undefined, hasPermission: boolean) {
     if (!hasPermission) return;
 
-    const contactsRef = collection(db, 'contact');
-    const q = query(contactsRef, where('account_id', '==', accountId), where('contact_type', '==', type));
-    const snapshot = await getDocs(q);
+    const existing = await tx.contact.findFirst({
+        where: { accountId, contactType: type }
+    });
 
     if (value && value.trim().length > 0) {
-        if (snapshot.empty) {
-            const newContactRef = doc(contactsRef);
-            batch.set(newContactRef, {
-                account_id: accountId,
-                contact_type: type,
-                value: value
+        if (existing) {
+            await tx.contact.update({
+                where: { id: existing.id },
+                data: { value }
             });
         } else {
-            const existingDocRef = snapshot.docs[0].ref;
-            batch.update(existingDocRef, { value: value });
+            await tx.contact.create({
+                data: {
+                    accountId,
+                    contactType: type,
+                    value
+                }
+            });
         }
-    } else {
-        if (!snapshot.empty) {
-            const existingDocRef = snapshot.docs[0].ref;
-            batch.delete(existingDocRef);
-        }
+    } else if (existing) {
+        await tx.contact.delete({ where: { id: existing.id } });
     }
 }
 
@@ -101,110 +94,100 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
     }
 
     try {
-        const batch = writeBatch(db);
-        const accountRef = doc(db, 'account', accountId);
+        await prisma.$transaction(async (tx: any) => {
 
-        if (canModifyProfile) {
-            const accountData: Record<string, any> = {};
-            const validAccountFields = ['nameFirst', 'nameMiddle', 'nameLast', 'gender', 'customGender', 'dateBirth', 'nameDisplay', 'accountPhoto'];
-            for(const key of validAccountFields) {
-                if(data[key] !== undefined) {
-                    accountData[key] = data[key];
+            if (canModifyProfile) {
+                const accountData: Record<string, any> = {};
+                const validAccountFields = ['nameFirst', 'nameMiddle', 'nameLast', 'gender', 'customGender', 'dateBirth', 'nameDisplay', 'accountPhoto'];
+                for(const key of validAccountFields) {
+                    if(data[key] !== undefined) {
+                        accountData[key] = data[key];
+                    }
                 }
-            }
 
-            const hasNameChange = ['nameFirst', 'nameMiddle', 'nameLast'].some(key => data[key] !== undefined);
-            if (hasNameChange) {
-                const currentProfile = await getUserProfile(accountId);
-                const newFirstName = data.nameFirst ?? currentProfile?.nameFirst;
-                const newMiddleName = data.nameMiddle ?? currentProfile?.nameMiddle;
-                const newLastName = data.nameLast ?? currentProfile?.nameLast;
+                const hasNameChange = ['nameFirst', 'nameMiddle', 'nameLast'].some(key => data[key] !== undefined);
+                if (hasNameChange) {
+                    const currentProfile = await getUserProfile(accountId);
+                    const newFirstName = data.nameFirst ?? currentProfile?.nameFirst;
+                    const newMiddleName = data.nameMiddle ?? currentProfile?.nameMiddle;
+                    const newLastName = data.nameLast ?? currentProfile?.nameLast;
+                    
+                    let defaultDisplayName = `${newFirstName || ''} ${newLastName || ''}`.trim();
+                    if (newMiddleName) {
+                        defaultDisplayName = `${newFirstName || ''} ${newMiddleName} ${newLastName || ''}`.trim();
+                    }
+                    accountData.nameDisplay = defaultDisplayName;
+                }
+
+                if (accountData.dateBirth instanceof Date) {
+                  accountData.dateBirth = accountData.dateBirth;
+                }
                 
-                let defaultDisplayName = `${newFirstName || ''} ${newLastName || ''}`.trim();
-                if (newMiddleName) {
-                    defaultDisplayName = `${newFirstName || ''} ${newMiddleName} ${newLastName || ''}`.trim();
+                if (data.customDisplayNameRequest) {
+                     const requesterId = await getPersonalAccountId();
+
+                     await tx.authRequest.updateMany({
+                        where: { type: 'display_name_request', accountId, status: 'pending' },
+                        data: { status: 'cancelled', data: { remarks: 'Superseded by new request.' } as any }
+                     });
+                     
+                     await tx.authRequest.create({
+                        data: {
+                            type: 'display_name_request',
+                            accountId,
+                            status: 'pending',
+                            data: { requestedDisplayName: data.customDisplayNameRequest, requestor: requesterId } as any,
+                            expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+                        }
+                     });
+                    await logActivity(accountId, `Requested Custom Display Name: ${data.customDisplayNameRequest}`, 'Pending', undefined, geolocation);
+                    delete accountData.nameDisplay;
                 }
-                accountData.nameDisplay = defaultDisplayName;
-            }
 
-            if (accountData.dateBirth instanceof Date) {
-              accountData.dateBirth = accountData.dateBirth.toISOString();
+                if(Object.keys(accountData).length > 0) {
+                    await tx.account.update({
+                        where: { id: accountId },
+                        data: accountData
+                    });
+                }
             }
             
-            if (data.customDisplayNameRequest) {
-                 const requestsRef = collection(db, 'requests');
-                 const requesterId = await getPersonalAccountId();
+            if (canModifyNeupId && data.newNeupIdRequest && data.newNeupIdRequest.trim().length > 0) {
+                const { available } = await checkNeupIdAvailability(data.newNeupIdRequest);
+                if (!available) {
+                    throw new Error("neupid_taken");
+                }
+                
+                const existingNeupIds = await getUserNeupIds(accountId);
+                const isPro = false;
+                const limit = isPro ? 2 : 1;
 
-                 const q = query(
-                    requestsRef,
-                    where('action', '==', 'display_name_request'),
-                    where('accountId', '==', accountId),
-                    where('status', '==', 'pending')
-                 );
-                 const oldRequests = await getDocs(q);
-                 oldRequests.forEach((docSnap) => {
-                    batch.update(docSnap.ref, { status: 'cancelled', remarks: 'Superseded by new request.' });
-                 });
-                 
-                 const newRequestRef = doc(requestsRef);
-                 batch.set(newRequestRef, {
-                    action: 'display_name_request',
-                    accountId: accountId,
-                    requestedDisplayName: data.customDisplayNameRequest,
-                    status: 'pending',
-                    createdAt: serverTimestamp(),
-                    requestor: requesterId,
+                if (existingNeupIds.length >= limit) {
+                    throw new Error(`limit_${limit}`);
+                }
+
+                const requestedNeupId = data.newNeupIdRequest.toLowerCase();
+                const requesterId = await getPersonalAccountId();
+
+                await tx.authRequest.create({
+                    data: {
+                        type: 'neupid_request',
+                        accountId,
+                        status: 'pending',
+                        data: { requestedNeupId, requestor: requesterId } as any,
+                        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+                    }
                 });
-                await logActivity(accountId, `Requested Custom Display Name: ${data.customDisplayNameRequest}`, 'Pending', undefined, geolocation);
-                delete accountData.nameDisplay;
+                await logActivity(accountId, `Requested New NeupID: ${requestedNeupId}`, 'Pending', undefined, geolocation);
             }
 
-            if(Object.keys(accountData).length > 0) {
-                batch.update(accountRef, accountData);
-            }
-        }
-        
-        if (canModifyNeupId && data.newNeupIdRequest && data.newNeupIdRequest.trim().length > 0) {
-            const { available } = await checkNeupIdAvailability(data.newNeupIdRequest);
-            if (!available) {
-                return { success: false, error: "The requested NeupID is already taken." };
-            }
-            
-            const accountDoc = await getDoc(doc(db, 'account', accountId));
-            const accountData = accountDoc.data();
-            const existingNeupIds = await getUserNeupIds(accountId);
-            
-            const isPro = accountData?.pro === true;
-            const limit = isPro ? 2 : 1;
-
-            if (existingNeupIds.length >= limit) {
-                return { success: false, error: `You have reached the limit of ${limit} NeupID(s) for your account.` };
-            }
-
-            const requestsRef = collection(db, 'requests');
-            const newRequestRef = doc(requestsRef);
-            const requestedNeupId = data.newNeupIdRequest.toLowerCase();
-            const requesterId = await getPersonalAccountId();
-
-            batch.set(newRequestRef, {
-                action: 'neupid_request',
-                accountId: accountId,
-                requestedNeupId: requestedNeupId,
-                status: 'pending',
-                createdAt: serverTimestamp(),
-                requestor: requesterId,
-            });
-            await logActivity(accountId, `Requested New NeupID: ${requestedNeupId}`, 'Pending', undefined, geolocation);
-        }
-
-        await updateOrCreateContact(batch, accountId, 'primaryPhone', data.primaryPhone, canModifyContact);
-        await updateOrCreateContact(batch, accountId, 'secondaryPhone', data.secondaryPhone, canModifyContact);
-        await updateOrCreateContact(batch, accountId, 'permanentLocation', data.permanentLocation, canModifyContact);
-        await updateOrCreateContact(batch, accountId, 'currentLocation', data.currentLocation, canModifyContact);
-        await updateOrCreateContact(batch, accountId, 'workLocation', data.workLocation, canModifyContact);
-        await updateOrCreateContact(batch, accountId, 'otherLocation', data.otherLocation, canModifyContact);
-
-        await batch.commit();
+            await updateOrCreateContact(tx, accountId, 'primaryPhone', data.primaryPhone, canModifyContact);
+            await updateOrCreateContact(tx, accountId, 'secondaryPhone', data.secondaryPhone, canModifyContact);
+            await updateOrCreateContact(tx, accountId, 'permanentLocation', data.permanentLocation, canModifyContact);
+            await updateOrCreateContact(tx, accountId, 'currentLocation', data.currentLocation, canModifyContact);
+            await updateOrCreateContact(tx, accountId, 'workLocation', data.workLocation, canModifyContact);
+            await updateOrCreateContact(tx, accountId, 'otherLocation', data.otherLocation, canModifyContact);
+        });
         
         await logActivity(accountId, 'Profile Update', 'Success', undefined, geolocation);
         
@@ -214,7 +197,16 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
 
         return { success: true, message }
     } catch (error) {
-        await logError('database', error, `updateUserProfile: ${accountId}`);
+        if (error instanceof Error) {
+            if (error.message.startsWith('limit_')) {
+                const limit = error.message.split('_')[1];
+                return { success: false, error: `You have reached the limit of ${limit} NeupID(s) for your account.` };
+            }
+            if (error.message === 'neupid_taken') {
+                return { success: false, error: "The requested NeupID is already taken." };
+            }
+        }
+        await logError('database', error as any, `updateUserProfile: ${accountId}`);
         if (error instanceof z.ZodError) {
             return { success: false, error: "Validation failed.", details: error.flatten() }
         }
@@ -234,17 +226,20 @@ export async function updateBrandProfile(accountId: string, data: z.infer<typeof
     }
 
     try {
-        const accountRef = doc(db, 'account', accountId);
-        const updateData: any = {
-            ...validation.data,
-            updatedAt: serverTimestamp(),
+        const allowed: Record<string, any> = {
+            nameDisplay: validation.data.nameDisplay,
+            accountPhoto: validation.data.accountPhoto || undefined,
+            isLegalEntity: validation.data.isLegalEntity,
+            nameLegal: validation.data.nameLegal || undefined,
+            registrationId: validation.data.registrationId || undefined,
+            countryOfOrigin: validation.data.countryOfOrigin || undefined,
+            dateEstablished: validation.data.dateEstablished || undefined,
         };
 
-        if (locationString) {
-            updateData.lastLocation = locationString;
-        }
-
-        await updateDoc(accountRef, updateData);
+        await prisma.account.update({
+            where: { id: accountId },
+            data: allowed
+        });
         revalidatePath('/manage/profile');
         
         return { success: true, message: "Brand profile updated successfully." };

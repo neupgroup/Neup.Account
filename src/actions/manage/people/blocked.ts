@@ -1,13 +1,6 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import {
-  doc,
-  updateDoc,
-  arrayUnion,
-  arrayRemove,
-  getDoc,
-} from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { getUserProfile, getUserNeupIds } from '@/lib/user';
 import { logError } from '@/lib/logger';
@@ -25,24 +18,13 @@ export type BlockedUser = {
   displayPhoto?: string;
 };
 
-// Helper function to get the account document for the current user
-async function getAccountDoc(accountId: string) {
-  const accountRef = doc(db, 'account', accountId);
-  const accountDoc = await getDoc(accountRef);
-  if (!accountDoc.exists()) {
-    // This case should ideally not happen for an authenticated user
-    // but is a safeguard.
-    return { ref: accountRef, data: { blockList: [], restrictList: [] } };
-  }
-  return { ref: accountRef, data: accountDoc.data() };
-}
+type BlockJson = { blockList?: string[]; restrictList?: string[] } | null;
 
 // Helper function to find a user's account ID by their NeupID
 async function findAccountIdByNeupId(neupId: string): Promise<string | null> {
   try {
-    const neupidRef = doc(db, 'neupid', neupId);
-    const neupidDoc = await getDoc(neupidRef);
-    return neupidDoc.exists() ? neupidDoc.data().for : null;
+    const neup = await prisma.neupId.findUnique({ where: { id: neupId } });
+    return neup ? neup.accountId : null;
   } catch (error) {
     await logError('database', error, `findAccountIdByNeupId: ${neupId}`);
     return null;
@@ -55,8 +37,9 @@ async function getList(type: 'blockList' | 'restrictList'): Promise<BlockedUser[
   if (!accountId) return [];
 
   try {
-    const { data } = await getAccountDoc(accountId);
-    const listAccountIds: string[] = data[type] || [];
+    const account = await prisma.account.findUnique({ where: { id: accountId } });
+    const block = (account?.block as BlockJson) || {};
+    const listAccountIds: string[] = (block?.[type] as string[]) || [];
 
     if (listAccountIds.length === 0) return [];
 
@@ -106,9 +89,14 @@ async function addUserToList(neupId: string, type: 'blockList' | 'restrictList')
   }
 
   try {
-    const { ref } = await getAccountDoc(ownerAccountId);
-    await updateDoc(ref, {
-      [type]: arrayUnion(targetAccountId),
+    const account = await prisma.account.findUnique({ where: { id: ownerAccountId } });
+    const block = (account?.block as BlockJson) || {};
+    const list: string[] = Array.isArray(block?.[type]) ? (block?.[type] as string[]) : [];
+    if (!list.includes(targetAccountId)) list.push(targetAccountId);
+    const newBlock: BlockJson = { ...(block || {}), [type]: list };
+    await prisma.account.update({
+      where: { id: ownerAccountId },
+      data: { block: newBlock as any },
     });
     revalidatePath('/manage/people/blocked');
     return { success: true };
@@ -132,9 +120,14 @@ async function removeUserFromList(accountId: string, type: 'blockList' | 'restri
   if (!ownerAccountId) return { success: false, error: 'User not authenticated.' };
 
   try {
-    const { ref } = await getAccountDoc(ownerAccountId);
-    await updateDoc(ref, {
-      [type]: arrayRemove(accountId),
+    const account = await prisma.account.findUnique({ where: { id: ownerAccountId } });
+    const block = (account?.block as BlockJson) || {};
+    const list: string[] = Array.isArray(block?.[type]) ? (block?.[type] as string[]) : [];
+    const newList = list.filter((id) => id !== accountId);
+    const newBlock: BlockJson = { ...(block || {}), [type]: newList };
+    await prisma.account.update({
+      where: { id: ownerAccountId },
+      data: { block: newBlock as any },
     });
     revalidatePath('/manage/people/blocked');
     return { success: true };

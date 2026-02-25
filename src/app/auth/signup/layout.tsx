@@ -1,6 +1,5 @@
 import { headers } from 'next/headers';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import prisma from '@/lib/prisma';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const stepOrder = [
@@ -19,19 +18,25 @@ async function getSignupStatus(authRequestId: string | null) {
         return { valid: false, currentStepPath: '/auth/signup' };
     }
 
-    const authRequestRef = doc(db, 'auth_requests', authRequestId);
-    const authRequestDoc = await getDoc(authRequestRef);
+    try {
+        const authRequest = await prisma.authRequest.findUnique({
+            where: { id: authRequestId }
+        });
 
-    if (!authRequestDoc.exists() || (authRequestDoc.data().expiresAt && authRequestDoc.data().expiresAt.toDate() < new Date())) {
+        if (!authRequest || (authRequest.expiresAt && authRequest.expiresAt < new Date())) {
+            return { valid: false, currentStepPath: '/auth/signup' };
+        }
+
+        const status = authRequest.status || 'pending_name';
+        const currentStep = stepOrder.find(s => s.status === status);
+        
+        const currentStepPath = currentStep ? currentStep.path : '/auth/signup';
+
+        return { valid: true, currentStepPath };
+    } catch (error) {
+        console.error('getSignupStatus error:', error);
         return { valid: false, currentStepPath: '/auth/signup' };
     }
-
-    const status = authRequestDoc.data()?.status || 'pending_name';
-    const currentStep = stepOrder.find(s => s.status === status);
-    
-    const currentStepPath = currentStep ? currentStep.path : '/auth/signup';
-
-    return { valid: true, currentStepPath };
 }
 
 

@@ -1,8 +1,7 @@
 
 'use server';
 
-import { db } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { checkPermissions } from '@/lib/user';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
@@ -26,23 +25,25 @@ export async function submitKyc(accountId: string, data: KycSubmissionData): Pro
 
     try {
         // Prevent duplicate pending submissions
-        const kycRef = collection(db, 'kyc');
-        const q = query(kycRef, where('accountId', '==', accountId), where('status', '==', 'pending'));
-        const existing = await getDocs(q);
-        if (!existing.empty) {
+        const existing = await prisma.kycRequest.findFirst({
+            where: { accountId, status: 'pending' }
+        });
+
+        if (existing) {
             return { success: false, error: 'You already have a pending KYC submission.' };
         }
 
-        await addDoc(collection(db, 'kyc'), {
-            accountId,
-            status: 'pending',
-            submittedAt: serverTimestamp(),
-            documentType: data.documentType,
-            documentId: data.documentId,
-            documentPhotoUrl: data.documentPhotoUrl,
-            documentPhotoContentId: data.documentPhotoContentId,
-            selfiePhotoUrl: data.selfiePhotoUrl,
-            selfiePhotoContentId: data.selfiePhotoContentId,
+        await prisma.kycRequest.create({
+            data: {
+                accountId,
+                status: 'pending',
+                documentType: data.documentType,
+                documentId: data.documentId,
+                documentPhotoUrl: data.documentPhotoUrl,
+                documentPhotoContentId: data.documentPhotoContentId,
+                selfiePhotoUrl: data.selfiePhotoUrl,
+                selfiePhotoContentId: data.selfiePhotoContentId,
+            },
         });
 
         await logActivity(accountId, 'KYC Submitted', 'Pending');

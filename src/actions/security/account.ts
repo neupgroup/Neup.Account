@@ -1,18 +1,6 @@
  'use server';
  
- import { db } from '@/lib/firebase';
- import {
-   collection,
-   query,
-   where,
-   getDocs,
-   addDoc,
-   serverTimestamp,
-   limit,
-   deleteDoc,
-   doc,
-   getDoc,
- } from 'firebase/firestore';
+ import prisma from '@/lib/prisma';
  import { getPersonalAccountId } from '@/lib/auth-actions';
  import { logError } from '@/lib/logger';
  import { getUserProfile, checkPermissions } from '@/lib/user';
@@ -46,31 +34,28 @@
    if (!ownerAccountId) return [];
  
    try {
-     const recoveryRef = collection(db, 'recovery_contacts');
-     const q = query(recoveryRef, where('ownerAccountId', '==', ownerAccountId));
-     const querySnapshot = await getDocs(q);
+    const rows = await prisma.recoveryContact.findMany({
+      where: { ownerAccountId },
+    });
  
-     if (querySnapshot.empty) {
-       return [];
-     }
+    if (rows.length === 0) return [];
  
-     const recoveryContacts = await Promise.all(
-       querySnapshot.docs.map(async (d) => {
-         const data = d.data();
-         const profile = await getUserProfile(data.recoveryAccountId);
-         return {
-           id: d.id,
-           recoveryAccountId: data.recoveryAccountId,
-           recoveryNeupId: data.recoveryNeupId,
-           displayName:
-             profile?.nameDisplay ||
-             `${profile?.nameFirst || ''} ${profile?.nameLast || ''}`.trim() ||
-             data.recoveryNeupId,
-           displayPhoto: profile?.accountPhoto,
-           status: (data.status || 'pending') as 'pending' | 'approved' | 'rejected',
-         };
-       }),
-     );
+    const recoveryContacts = await Promise.all(
+      rows.map(async (r) => {
+        const profile = await getUserProfile(r.recoveryAccountId);
+        return {
+          id: r.id,
+          recoveryAccountId: r.recoveryAccountId,
+          recoveryNeupId: r.recoveryNeupId,
+          displayName:
+            profile?.nameDisplay ||
+            `${profile?.nameFirst || ''} ${profile?.nameLast || ''}`.trim() ||
+            r.recoveryNeupId,
+          displayPhoto: profile?.accountPhoto,
+          status: (r.status || 'pending') as 'pending' | 'approved' | 'rejected',
+        };
+      }),
+    );
  
      recoveryContacts.sort((a: RecoveryAccount, b: RecoveryAccount) => statusOrder[a.status] - statusOrder[b.status]);
  
@@ -96,48 +81,44 @@
    const { neupId } = validation.data;
  
    try {
-     const recoveryRef = collection(db, 'recovery_contacts');
-     const currentQuery = query(recoveryRef, where('ownerAccountId', '==', ownerAccountId));
-     const currentSnapshot = await getDocs(currentQuery);
-     if (currentSnapshot.size >= 5) {
+    const count = await prisma.recoveryContact.count({
+      where: { ownerAccountId },
+    });
+    if (count >= 5) {
        return { success: false, error: 'You cannot add more than 5 recovery accounts.' };
      }
  
-     const neupidsRef = collection(db, 'neupid');
-     const userQuery = query(neupidsRef, where('__name__', '==', neupId), limit(1));
-     const userSnapshot = await getDocs(userQuery);
+    const neup = await prisma.neupId.findUnique({ where: { id: neupId } });
  
-     if (userSnapshot.empty) {
+    if (!neup) {
        return { success: false, error: 'No user found with that NeupID.' };
      }
-     const recoveryAccountId = userSnapshot.docs[0].data().for;
+    const recoveryAccountId = neup.accountId;
  
      if (recoveryAccountId === ownerAccountId) {
        return { success: false, error: 'You cannot add yourself as a recovery account.' };
      }
  
-     const alreadyExistsQuery = query(
-       recoveryRef,
-       where('ownerAccountId', '==', ownerAccountId),
-       where('recoveryAccountId', '==', recoveryAccountId),
-     );
-     const alreadyExistsSnapshot = await getDocs(alreadyExistsQuery);
-     if (!alreadyExistsSnapshot.empty) {
+    const exists = await prisma.recoveryContact.findFirst({
+      where: { ownerAccountId, recoveryAccountId },
+    });
+    if (exists) {
        return { success: false, error: 'This account has already been added.' };
      }
  
-     const newDocRef = await addDoc(recoveryRef, {
-       ownerAccountId,
-       recoveryAccountId,
-       recoveryNeupId: neupId,
-       status: 'pending',
-       createdAt: serverTimestamp(),
-     });
+    const created = await prisma.recoveryContact.create({
+      data: {
+        ownerAccountId,
+        recoveryAccountId,
+        recoveryNeupId: neupId,
+        status: 'pending',
+      },
+    });
  
      const profile = await getUserProfile(recoveryAccountId);
  
      const newAccountData: RecoveryAccount = {
-       id: newDocRef.id,
+      id: created.id,
        recoveryAccountId,
        recoveryNeupId: neupId,
        displayName:
@@ -164,14 +145,13 @@
    if (!ownerAccountId) return { success: false, error: 'User not authenticated.' };
  
    try {
-     const docRef = doc(db, 'recovery_contacts', id);
-     const docSnap = await getDoc(docRef);
+    const row = await prisma.recoveryContact.findUnique({ where: { id } });
  
-     if (!docSnap.exists() || docSnap.data().ownerAccountId !== ownerAccountId) {
+    if (!row || row.ownerAccountId !== ownerAccountId) {
        return { success: false, error: 'Permission denied or account not found.' };
      }
  
-     await deleteDoc(docRef);
+    await prisma.recoveryContact.delete({ where: { id } });
  
      revalidatePath('/manage/security/account');
      return { success: true };

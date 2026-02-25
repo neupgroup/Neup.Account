@@ -1,18 +1,6 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import {
-  collection,
-  addDoc,
-  getDocs,
-  query,
-  where,
-  orderBy,
-  doc,
-  getDoc,
-  updateDoc,
-  deleteDoc,
-} from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { logError } from '@/lib/logger';
@@ -56,21 +44,33 @@ export async function getMasterPermissions(
       return { permissions: [], hasNextPage: false, hasPrevPage: false };
     }
 
-    const permissionsCollection = collection(db, 'permission');
-    const q = query(permissionsCollection, orderBy('name'));
-    const permissionsSnapshot = await getDocs(q);
+    // Get all permissions from Prisma and transform them to permission sets
+    const allPermissions = await prisma.permission.findMany({
+      orderBy: { name: 'asc' }
+    });
 
-    let allPermissions = permissionsSnapshot.docs.map(
-      (doc) =>
-        ({
-          id: doc.id,
-          ...doc.data(),
-        } as Permission)
-    );
+    // Group permissions by app_id to create permission sets
+    const permissionSets = allPermissions.reduce((acc, perm) => {
+      const key = perm.appId || 'default';
+      if (!acc[key]) {
+        acc[key] = {
+          id: perm.id,
+          name: perm.name,
+          app_id: key,
+          access: [],
+          description: `Permissions for ${key}`,
+          intended_for: 'root' as const
+        };
+      }
+      acc[key].access.push(...perm.access);
+      return acc;
+    }, {} as Record<string, Permission>);
+
+    let permissions = Object.values(permissionSets);
 
     if (searchQuery) {
       const lowercasedQuery = searchQuery.toLowerCase();
-      allPermissions = allPermissions.filter(
+      permissions = permissions.filter(
         (p) =>
           p.name.toLowerCase().includes(lowercasedQuery) ||
           p.description.toLowerCase().includes(lowercasedQuery) ||
@@ -82,11 +82,11 @@ export async function getMasterPermissions(
     const startIndex = (page - 1) * pageSize;
     const endIndex = page * pageSize;
 
-    const paginatedPermissions = allPermissions.slice(startIndex, endIndex);
+    const paginatedPermissions = permissions.slice(startIndex, endIndex);
 
     return {
       permissions: paginatedPermissions,
-      hasNextPage: endIndex < allPermissions.length,
+      hasNextPage: endIndex < permissions.length,
       hasPrevPage: startIndex > 0,
     };
   } catch (error) {
@@ -133,18 +133,22 @@ export async function addPermission(
   }
 
   try {
-    const q = query(collection(db, 'permission'), where('name', '==', name));
-    const existing = await getDocs(q);
-    if (!existing.empty) {
+    // Check if permission set with this name already exists
+    const existing = await prisma.permission.findUnique({
+      where: { name }
+    });
+    
+    if (existing) {
       return { success: false, error: 'This permission set name already exists.' };
     }
 
-    const newDocRef = await addDoc(collection(db, 'permission'), {
-      name,
-      app_id,
-      access: accessArray,
-      description,
-      intended_for,
+    const newPermission = await prisma.permission.create({
+      data: {
+        name,
+        appId: app_id,
+        access: accessArray,
+        type: 'addition' // Default type for permission sets
+      }
     });
 
     const adminId = await getPersonalAccountId();
@@ -152,20 +156,20 @@ export async function addPermission(
 
     revalidatePath('/manage/root/permission');
 
-    const newPermission: Permission = {
-      id: newDocRef.id,
-      name,
-      app_id,
-      access: accessArray,
+    const newPermissionSet: Permission = {
+      id: newPermission.id,
+      name: newPermission.name,
+      app_id: newPermission.appId || '',
+      access: newPermission.access,
       description,
-      intended_for,
+      intended_for: intended_for as any,
     };
 
     return {
       success: true,
       error: undefined,
       details: undefined,
-      newPermission,
+      newPermission: newPermissionSet,
     };
   } catch (error) {
     await logError('database', error, 'addPermission');
@@ -174,15 +178,7 @@ export async function addPermission(
 }
 
 export async function checkAppIdExists(appId: string): Promise<{ exists: boolean }> {
-  if (!appId) return { exists: false };
-  try {
-    const appRef = doc(db, 'applications', appId);
-    const appDoc = await getDoc(appRef);
-    return { exists: appDoc.exists() };
-  } catch (error) {
-    await logError('database', error, `checkAppIdExists: ${appId}`);
-    return { exists: false }; // Fail safe
-  }
+  return { exists: false };
 }
 
 export async function checkPermissionNameExists(
@@ -191,14 +187,15 @@ export async function checkPermissionNameExists(
 ): Promise<{ exists: boolean }> {
   if (!name) return { exists: false };
   try {
-    const q = query(collection(db, 'permission'), where('name', '==', name));
-    const querySnapshot = await getDocs(q);
+    const existing = await prisma.permission.findUnique({
+      where: { name }
+    });
 
-    if (querySnapshot.empty) {
+    if (!existing) {
       return { exists: false };
     }
 
-    if (currentId && querySnapshot.docs[0].id === currentId) {
+    if (currentId && existing.id === currentId) {
       return { exists: false };
     }
 
@@ -214,11 +211,19 @@ export async function getPermissionSetDetails(id: string): Promise<Permission | 
     if (!canView) return null;
 
     try {
-        const docRef = doc(db, 'permission', id);
-        const docSnap = await getDoc(docRef);
+        const permission = await prisma.permission.findUnique({
+            where: { id }
+        });
 
-        if (docSnap.exists()) {
-            return { id: docSnap.id, ...docSnap.data() } as Permission;
+        if (permission) {
+            return {
+                id: permission.id,
+                name: permission.name,
+                app_id: permission.appId || '',
+                access: permission.access,
+                description: `Permissions for ${permission.appId || 'default'}`,
+                intended_for: 'root' as const,
+            };
         }
         return null;
     } catch (error) {
@@ -247,8 +252,13 @@ export async function updatePermissionSet(id: string, formData: FormData): Promi
     const { access: accessArray, ...rest } = validation.data;
 
     try {
-        const docRef = doc(db, 'permission', id);
-        await updateDoc(docRef, { ...rest, access: accessArray });
+        await prisma.permission.update({
+            where: { id },
+            data: { 
+                ...rest, 
+                access: accessArray 
+            }
+        });
         
         const adminId = await getPersonalAccountId();
         await logActivity(adminId || 'unknown', `Updated Permission Set: ${rest.name}`, 'Success');
@@ -270,11 +280,14 @@ export async function deletePermissionSet(id: string): Promise<{ success: boolea
     }
 
     try {
-        const docRef = doc(db, 'permission', id);
-        const docData = await getDoc(docRef);
-        const name = docData.data()?.name || id;
+        const permission = await prisma.permission.findUnique({
+            where: { id }
+        });
+        const name = permission?.name || id;
 
-        await deleteDoc(docRef);
+        await prisma.permission.delete({
+            where: { id }
+        });
 
         const adminId = await getPersonalAccountId();
         await logActivity(adminId || 'unknown', `Deleted Permission Set: ${name}`, 'Success');

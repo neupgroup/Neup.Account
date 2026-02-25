@@ -43,9 +43,11 @@ export type AccountMinAggregateOutputType = {
   dateEstablished: Date | null
   neupIdPrimary: string | null
   verified: boolean | null
+  pro: boolean | null
   accountType: string | null
   permit: string | null
   accountStatus: string | null
+  parentBrandId: string | null
 }
 
 export type AccountMaxAggregateOutputType = {
@@ -67,9 +69,11 @@ export type AccountMaxAggregateOutputType = {
   dateEstablished: Date | null
   neupIdPrimary: string | null
   verified: boolean | null
+  pro: boolean | null
   accountType: string | null
   permit: string | null
   accountStatus: string | null
+  parentBrandId: string | null
 }
 
 export type AccountCountAggregateOutputType = {
@@ -91,9 +95,11 @@ export type AccountCountAggregateOutputType = {
   dateEstablished: number
   neupIdPrimary: number
   verified: number
+  pro: number
   accountType: number
   permit: number
   accountStatus: number
+  parentBrandId: number
   block: number
   _all: number
 }
@@ -118,9 +124,11 @@ export type AccountMinAggregateInputType = {
   dateEstablished?: true
   neupIdPrimary?: true
   verified?: true
+  pro?: true
   accountType?: true
   permit?: true
   accountStatus?: true
+  parentBrandId?: true
 }
 
 export type AccountMaxAggregateInputType = {
@@ -142,9 +150,11 @@ export type AccountMaxAggregateInputType = {
   dateEstablished?: true
   neupIdPrimary?: true
   verified?: true
+  pro?: true
   accountType?: true
   permit?: true
   accountStatus?: true
+  parentBrandId?: true
 }
 
 export type AccountCountAggregateInputType = {
@@ -166,9 +176,11 @@ export type AccountCountAggregateInputType = {
   dateEstablished?: true
   neupIdPrimary?: true
   verified?: true
+  pro?: true
   accountType?: true
   permit?: true
   accountStatus?: true
+  parentBrandId?: true
   block?: true
   _all?: true
 }
@@ -264,9 +276,11 @@ export type AccountGroupByOutputType = {
   dateEstablished: Date | null
   neupIdPrimary: string | null
   verified: boolean
+  pro: boolean
   accountType: string
   permit: string
   accountStatus: string | null
+  parentBrandId: string | null
   block: runtime.JsonValue | null
   _count: AccountCountAggregateOutputType | null
   _min: AccountMinAggregateOutputType | null
@@ -310,16 +324,34 @@ export type AccountWhereInput = {
   dateEstablished?: Prisma.DateTimeNullableFilter<"Account"> | Date | string | null
   neupIdPrimary?: Prisma.StringNullableFilter<"Account"> | string | null
   verified?: Prisma.BoolFilter<"Account"> | boolean
+  pro?: Prisma.BoolFilter<"Account"> | boolean
   accountType?: Prisma.StringFilter<"Account"> | string
   permit?: Prisma.StringFilter<"Account"> | string
   accountStatus?: Prisma.StringNullableFilter<"Account"> | string | null
+  parentBrandId?: Prisma.StringNullableFilter<"Account"> | string | null
   block?: Prisma.JsonNullableFilter<"Account">
+  parentBrand?: Prisma.XOR<Prisma.AccountNullableScalarRelationFilter, Prisma.AccountWhereInput> | null
+  branches?: Prisma.AccountListRelationFilter
   contacts?: Prisma.ContactListRelationFilter
   neupIds?: Prisma.NeupIdListRelationFilter
   permits?: Prisma.PermitListRelationFilter
   targetPermits?: Prisma.PermitListRelationFilter
   password?: Prisma.XOR<Prisma.PasswordNullableScalarRelationFilter, Prisma.PasswordWhereInput> | null
   sessions?: Prisma.SessionListRelationFilter
+  errorLogs?: Prisma.ErrorLogListRelationFilter
+  statusLogs?: Prisma.AccountStatusLogListRelationFilter
+  appConnections?: Prisma.UserAppConnectionListRelationFilter
+  kycRequests?: Prisma.KycRequestListRelationFilter
+  invitations?: Prisma.InvitationListRelationFilter
+  neupIdRequests?: Prisma.NeupIdRequestListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
+  backupCodes?: Prisma.BackupCodeListRelationFilter
+  verifications?: Prisma.VerificationListRelationFilter
+  documents?: Prisma.UserDocumentListRelationFilter
+  userContents?: Prisma.UserContentListRelationFilter
+  totp?: Prisma.XOR<Prisma.TotpNullableScalarRelationFilter, Prisma.TotpWhereInput> | null
+  sentRequests?: Prisma.RequestListRelationFilter
+  receivedRequests?: Prisma.RequestListRelationFilter
 }
 
 export type AccountOrderByWithRelationInput = {
@@ -341,16 +373,34 @@ export type AccountOrderByWithRelationInput = {
   dateEstablished?: Prisma.SortOrderInput | Prisma.SortOrder
   neupIdPrimary?: Prisma.SortOrderInput | Prisma.SortOrder
   verified?: Prisma.SortOrder
+  pro?: Prisma.SortOrder
   accountType?: Prisma.SortOrder
   permit?: Prisma.SortOrder
   accountStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  parentBrandId?: Prisma.SortOrderInput | Prisma.SortOrder
   block?: Prisma.SortOrderInput | Prisma.SortOrder
+  parentBrand?: Prisma.AccountOrderByWithRelationInput
+  branches?: Prisma.AccountOrderByRelationAggregateInput
   contacts?: Prisma.ContactOrderByRelationAggregateInput
   neupIds?: Prisma.NeupIdOrderByRelationAggregateInput
   permits?: Prisma.PermitOrderByRelationAggregateInput
   targetPermits?: Prisma.PermitOrderByRelationAggregateInput
   password?: Prisma.PasswordOrderByWithRelationInput
   sessions?: Prisma.SessionOrderByRelationAggregateInput
+  errorLogs?: Prisma.ErrorLogOrderByRelationAggregateInput
+  statusLogs?: Prisma.AccountStatusLogOrderByRelationAggregateInput
+  appConnections?: Prisma.UserAppConnectionOrderByRelationAggregateInput
+  kycRequests?: Prisma.KycRequestOrderByRelationAggregateInput
+  invitations?: Prisma.InvitationOrderByRelationAggregateInput
+  neupIdRequests?: Prisma.NeupIdRequestOrderByRelationAggregateInput
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
+  backupCodes?: Prisma.BackupCodeOrderByRelationAggregateInput
+  verifications?: Prisma.VerificationOrderByRelationAggregateInput
+  documents?: Prisma.UserDocumentOrderByRelationAggregateInput
+  userContents?: Prisma.UserContentOrderByRelationAggregateInput
+  totp?: Prisma.TotpOrderByWithRelationInput
+  sentRequests?: Prisma.RequestOrderByRelationAggregateInput
+  receivedRequests?: Prisma.RequestOrderByRelationAggregateInput
 }
 
 export type AccountWhereUniqueInput = Prisma.AtLeast<{
@@ -375,16 +425,34 @@ export type AccountWhereUniqueInput = Prisma.AtLeast<{
   dateEstablished?: Prisma.DateTimeNullableFilter<"Account"> | Date | string | null
   neupIdPrimary?: Prisma.StringNullableFilter<"Account"> | string | null
   verified?: Prisma.BoolFilter<"Account"> | boolean
+  pro?: Prisma.BoolFilter<"Account"> | boolean
   accountType?: Prisma.StringFilter<"Account"> | string
   permit?: Prisma.StringFilter<"Account"> | string
   accountStatus?: Prisma.StringNullableFilter<"Account"> | string | null
+  parentBrandId?: Prisma.StringNullableFilter<"Account"> | string | null
   block?: Prisma.JsonNullableFilter<"Account">
+  parentBrand?: Prisma.XOR<Prisma.AccountNullableScalarRelationFilter, Prisma.AccountWhereInput> | null
+  branches?: Prisma.AccountListRelationFilter
   contacts?: Prisma.ContactListRelationFilter
   neupIds?: Prisma.NeupIdListRelationFilter
   permits?: Prisma.PermitListRelationFilter
   targetPermits?: Prisma.PermitListRelationFilter
   password?: Prisma.XOR<Prisma.PasswordNullableScalarRelationFilter, Prisma.PasswordWhereInput> | null
   sessions?: Prisma.SessionListRelationFilter
+  errorLogs?: Prisma.ErrorLogListRelationFilter
+  statusLogs?: Prisma.AccountStatusLogListRelationFilter
+  appConnections?: Prisma.UserAppConnectionListRelationFilter
+  kycRequests?: Prisma.KycRequestListRelationFilter
+  invitations?: Prisma.InvitationListRelationFilter
+  neupIdRequests?: Prisma.NeupIdRequestListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
+  backupCodes?: Prisma.BackupCodeListRelationFilter
+  verifications?: Prisma.VerificationListRelationFilter
+  documents?: Prisma.UserDocumentListRelationFilter
+  userContents?: Prisma.UserContentListRelationFilter
+  totp?: Prisma.XOR<Prisma.TotpNullableScalarRelationFilter, Prisma.TotpWhereInput> | null
+  sentRequests?: Prisma.RequestListRelationFilter
+  receivedRequests?: Prisma.RequestListRelationFilter
 }, "id">
 
 export type AccountOrderByWithAggregationInput = {
@@ -406,9 +474,11 @@ export type AccountOrderByWithAggregationInput = {
   dateEstablished?: Prisma.SortOrderInput | Prisma.SortOrder
   neupIdPrimary?: Prisma.SortOrderInput | Prisma.SortOrder
   verified?: Prisma.SortOrder
+  pro?: Prisma.SortOrder
   accountType?: Prisma.SortOrder
   permit?: Prisma.SortOrder
   accountStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  parentBrandId?: Prisma.SortOrderInput | Prisma.SortOrder
   block?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.AccountCountOrderByAggregateInput
   _max?: Prisma.AccountMaxOrderByAggregateInput
@@ -437,9 +507,11 @@ export type AccountScalarWhereWithAggregatesInput = {
   dateEstablished?: Prisma.DateTimeNullableWithAggregatesFilter<"Account"> | Date | string | null
   neupIdPrimary?: Prisma.StringNullableWithAggregatesFilter<"Account"> | string | null
   verified?: Prisma.BoolWithAggregatesFilter<"Account"> | boolean
+  pro?: Prisma.BoolWithAggregatesFilter<"Account"> | boolean
   accountType?: Prisma.StringWithAggregatesFilter<"Account"> | string
   permit?: Prisma.StringWithAggregatesFilter<"Account"> | string
   accountStatus?: Prisma.StringNullableWithAggregatesFilter<"Account"> | string | null
+  parentBrandId?: Prisma.StringNullableWithAggregatesFilter<"Account"> | string | null
   block?: Prisma.JsonNullableWithAggregatesFilter<"Account">
 }
 
@@ -462,16 +534,33 @@ export type AccountCreateInput = {
   dateEstablished?: Date | string | null
   neupIdPrimary?: string | null
   verified?: boolean
+  pro?: boolean
   accountType?: string
   permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
   contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
   neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
   permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
   targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
   password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
   sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
 }
 
 export type AccountUncheckedCreateInput = {
@@ -493,16 +582,33 @@ export type AccountUncheckedCreateInput = {
   dateEstablished?: Date | string | null
   neupIdPrimary?: string | null
   verified?: boolean
+  pro?: boolean
   accountType?: string
   permit?: string
   accountStatus?: string | null
+  parentBrandId?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
   contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
   neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
   permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
   targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
   password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
 }
 
 export type AccountUpdateInput = {
@@ -524,16 +630,33 @@ export type AccountUpdateInput = {
   dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
   permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
   contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
   neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
   permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
   targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
   password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
 }
 
 export type AccountUncheckedUpdateInput = {
@@ -555,16 +678,33 @@ export type AccountUncheckedUpdateInput = {
   dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
   permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
   contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
   neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
   permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
   targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
   password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
 }
 
 export type AccountCreateManyInput = {
@@ -586,9 +726,11 @@ export type AccountCreateManyInput = {
   dateEstablished?: Date | string | null
   neupIdPrimary?: string | null
   verified?: boolean
+  pro?: boolean
   accountType?: string
   permit?: string
   accountStatus?: string | null
+  parentBrandId?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
@@ -611,6 +753,7 @@ export type AccountUpdateManyMutationInput = {
   dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
   permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -636,10 +779,27 @@ export type AccountUncheckedUpdateManyInput = {
   dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
   permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+}
+
+export type AccountNullableScalarRelationFilter = {
+  is?: Prisma.AccountWhereInput | null
+  isNot?: Prisma.AccountWhereInput | null
+}
+
+export type AccountListRelationFilter = {
+  every?: Prisma.AccountWhereInput
+  some?: Prisma.AccountWhereInput
+  none?: Prisma.AccountWhereInput
+}
+
+export type AccountOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type AccountCountOrderByAggregateInput = {
@@ -661,9 +821,11 @@ export type AccountCountOrderByAggregateInput = {
   dateEstablished?: Prisma.SortOrder
   neupIdPrimary?: Prisma.SortOrder
   verified?: Prisma.SortOrder
+  pro?: Prisma.SortOrder
   accountType?: Prisma.SortOrder
   permit?: Prisma.SortOrder
   accountStatus?: Prisma.SortOrder
+  parentBrandId?: Prisma.SortOrder
   block?: Prisma.SortOrder
 }
 
@@ -686,9 +848,11 @@ export type AccountMaxOrderByAggregateInput = {
   dateEstablished?: Prisma.SortOrder
   neupIdPrimary?: Prisma.SortOrder
   verified?: Prisma.SortOrder
+  pro?: Prisma.SortOrder
   accountType?: Prisma.SortOrder
   permit?: Prisma.SortOrder
   accountStatus?: Prisma.SortOrder
+  parentBrandId?: Prisma.SortOrder
 }
 
 export type AccountMinOrderByAggregateInput = {
@@ -710,9 +874,11 @@ export type AccountMinOrderByAggregateInput = {
   dateEstablished?: Prisma.SortOrder
   neupIdPrimary?: Prisma.SortOrder
   verified?: Prisma.SortOrder
+  pro?: Prisma.SortOrder
   accountType?: Prisma.SortOrder
   permit?: Prisma.SortOrder
   accountStatus?: Prisma.SortOrder
+  parentBrandId?: Prisma.SortOrder
 }
 
 export type AccountScalarRelationFilter = {
@@ -720,9 +886,24 @@ export type AccountScalarRelationFilter = {
   isNot?: Prisma.AccountWhereInput
 }
 
-export type AccountNullableScalarRelationFilter = {
-  is?: Prisma.AccountWhereInput | null
-  isNot?: Prisma.AccountWhereInput | null
+export type AccountCreateNestedOneWithoutBranchesInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutBranchesInput, Prisma.AccountUncheckedCreateWithoutBranchesInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutBranchesInput
+  connect?: Prisma.AccountWhereUniqueInput
+}
+
+export type AccountCreateNestedManyWithoutParentBrandInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutParentBrandInput, Prisma.AccountUncheckedCreateWithoutParentBrandInput> | Prisma.AccountCreateWithoutParentBrandInput[] | Prisma.AccountUncheckedCreateWithoutParentBrandInput[]
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutParentBrandInput | Prisma.AccountCreateOrConnectWithoutParentBrandInput[]
+  createMany?: Prisma.AccountCreateManyParentBrandInputEnvelope
+  connect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+}
+
+export type AccountUncheckedCreateNestedManyWithoutParentBrandInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutParentBrandInput, Prisma.AccountUncheckedCreateWithoutParentBrandInput> | Prisma.AccountCreateWithoutParentBrandInput[] | Prisma.AccountUncheckedCreateWithoutParentBrandInput[]
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutParentBrandInput | Prisma.AccountCreateOrConnectWithoutParentBrandInput[]
+  createMany?: Prisma.AccountCreateManyParentBrandInputEnvelope
+  connect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -743,6 +924,198 @@ export type DateTimeFieldUpdateOperationsInput = {
 
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
+}
+
+export type AccountUpdateOneWithoutBranchesNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutBranchesInput, Prisma.AccountUncheckedCreateWithoutBranchesInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutBranchesInput
+  upsert?: Prisma.AccountUpsertWithoutBranchesInput
+  disconnect?: Prisma.AccountWhereInput | boolean
+  delete?: Prisma.AccountWhereInput | boolean
+  connect?: Prisma.AccountWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AccountUpdateToOneWithWhereWithoutBranchesInput, Prisma.AccountUpdateWithoutBranchesInput>, Prisma.AccountUncheckedUpdateWithoutBranchesInput>
+}
+
+export type AccountUpdateManyWithoutParentBrandNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutParentBrandInput, Prisma.AccountUncheckedCreateWithoutParentBrandInput> | Prisma.AccountCreateWithoutParentBrandInput[] | Prisma.AccountUncheckedCreateWithoutParentBrandInput[]
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutParentBrandInput | Prisma.AccountCreateOrConnectWithoutParentBrandInput[]
+  upsert?: Prisma.AccountUpsertWithWhereUniqueWithoutParentBrandInput | Prisma.AccountUpsertWithWhereUniqueWithoutParentBrandInput[]
+  createMany?: Prisma.AccountCreateManyParentBrandInputEnvelope
+  set?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  disconnect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  delete?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  connect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  update?: Prisma.AccountUpdateWithWhereUniqueWithoutParentBrandInput | Prisma.AccountUpdateWithWhereUniqueWithoutParentBrandInput[]
+  updateMany?: Prisma.AccountUpdateManyWithWhereWithoutParentBrandInput | Prisma.AccountUpdateManyWithWhereWithoutParentBrandInput[]
+  deleteMany?: Prisma.AccountScalarWhereInput | Prisma.AccountScalarWhereInput[]
+}
+
+export type AccountUncheckedUpdateManyWithoutParentBrandNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutParentBrandInput, Prisma.AccountUncheckedCreateWithoutParentBrandInput> | Prisma.AccountCreateWithoutParentBrandInput[] | Prisma.AccountUncheckedCreateWithoutParentBrandInput[]
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutParentBrandInput | Prisma.AccountCreateOrConnectWithoutParentBrandInput[]
+  upsert?: Prisma.AccountUpsertWithWhereUniqueWithoutParentBrandInput | Prisma.AccountUpsertWithWhereUniqueWithoutParentBrandInput[]
+  createMany?: Prisma.AccountCreateManyParentBrandInputEnvelope
+  set?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  disconnect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  delete?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  connect?: Prisma.AccountWhereUniqueInput | Prisma.AccountWhereUniqueInput[]
+  update?: Prisma.AccountUpdateWithWhereUniqueWithoutParentBrandInput | Prisma.AccountUpdateWithWhereUniqueWithoutParentBrandInput[]
+  updateMany?: Prisma.AccountUpdateManyWithWhereWithoutParentBrandInput | Prisma.AccountUpdateManyWithWhereWithoutParentBrandInput[]
+  deleteMany?: Prisma.AccountScalarWhereInput | Prisma.AccountScalarWhereInput[]
+}
+
+export type AccountCreateNestedOneWithoutTotpInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutTotpInput, Prisma.AccountUncheckedCreateWithoutTotpInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutTotpInput
+  connect?: Prisma.AccountWhereUniqueInput
+}
+
+export type AccountUpdateOneRequiredWithoutTotpNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutTotpInput, Prisma.AccountUncheckedCreateWithoutTotpInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutTotpInput
+  upsert?: Prisma.AccountUpsertWithoutTotpInput
+  connect?: Prisma.AccountWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AccountUpdateToOneWithWhereWithoutTotpInput, Prisma.AccountUpdateWithoutTotpInput>, Prisma.AccountUncheckedUpdateWithoutTotpInput>
+}
+
+export type AccountCreateNestedOneWithoutStatusLogsInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutStatusLogsInput, Prisma.AccountUncheckedCreateWithoutStatusLogsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutStatusLogsInput
+  connect?: Prisma.AccountWhereUniqueInput
+}
+
+export type AccountUpdateOneRequiredWithoutStatusLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutStatusLogsInput, Prisma.AccountUncheckedCreateWithoutStatusLogsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutStatusLogsInput
+  upsert?: Prisma.AccountUpsertWithoutStatusLogsInput
+  connect?: Prisma.AccountWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AccountUpdateToOneWithWhereWithoutStatusLogsInput, Prisma.AccountUpdateWithoutStatusLogsInput>, Prisma.AccountUncheckedUpdateWithoutStatusLogsInput>
+}
+
+export type AccountCreateNestedOneWithoutKycRequestsInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutKycRequestsInput, Prisma.AccountUncheckedCreateWithoutKycRequestsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutKycRequestsInput
+  connect?: Prisma.AccountWhereUniqueInput
+}
+
+export type AccountUpdateOneRequiredWithoutKycRequestsNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutKycRequestsInput, Prisma.AccountUncheckedCreateWithoutKycRequestsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutKycRequestsInput
+  upsert?: Prisma.AccountUpsertWithoutKycRequestsInput
+  connect?: Prisma.AccountWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AccountUpdateToOneWithWhereWithoutKycRequestsInput, Prisma.AccountUpdateWithoutKycRequestsInput>, Prisma.AccountUncheckedUpdateWithoutKycRequestsInput>
+}
+
+export type AccountCreateNestedOneWithoutInvitationsInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutInvitationsInput, Prisma.AccountUncheckedCreateWithoutInvitationsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutInvitationsInput
+  connect?: Prisma.AccountWhereUniqueInput
+}
+
+export type AccountUpdateOneRequiredWithoutInvitationsNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutInvitationsInput, Prisma.AccountUncheckedCreateWithoutInvitationsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutInvitationsInput
+  upsert?: Prisma.AccountUpsertWithoutInvitationsInput
+  connect?: Prisma.AccountWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AccountUpdateToOneWithWhereWithoutInvitationsInput, Prisma.AccountUpdateWithoutInvitationsInput>, Prisma.AccountUncheckedUpdateWithoutInvitationsInput>
+}
+
+export type AccountCreateNestedOneWithoutNeupIdRequestsInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutNeupIdRequestsInput, Prisma.AccountUncheckedCreateWithoutNeupIdRequestsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutNeupIdRequestsInput
+  connect?: Prisma.AccountWhereUniqueInput
+}
+
+export type AccountUpdateOneRequiredWithoutNeupIdRequestsNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutNeupIdRequestsInput, Prisma.AccountUncheckedCreateWithoutNeupIdRequestsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutNeupIdRequestsInput
+  upsert?: Prisma.AccountUpsertWithoutNeupIdRequestsInput
+  connect?: Prisma.AccountWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AccountUpdateToOneWithWhereWithoutNeupIdRequestsInput, Prisma.AccountUpdateWithoutNeupIdRequestsInput>, Prisma.AccountUncheckedUpdateWithoutNeupIdRequestsInput>
+}
+
+export type AccountCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutNotificationsInput, Prisma.AccountUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.AccountWhereUniqueInput
+}
+
+export type AccountUpdateOneRequiredWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutNotificationsInput, Prisma.AccountUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.AccountUpsertWithoutNotificationsInput
+  connect?: Prisma.AccountWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AccountUpdateToOneWithWhereWithoutNotificationsInput, Prisma.AccountUpdateWithoutNotificationsInput>, Prisma.AccountUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type AccountCreateNestedOneWithoutSentRequestsInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutSentRequestsInput, Prisma.AccountUncheckedCreateWithoutSentRequestsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutSentRequestsInput
+  connect?: Prisma.AccountWhereUniqueInput
+}
+
+export type AccountCreateNestedOneWithoutReceivedRequestsInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutReceivedRequestsInput, Prisma.AccountUncheckedCreateWithoutReceivedRequestsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutReceivedRequestsInput
+  connect?: Prisma.AccountWhereUniqueInput
+}
+
+export type AccountUpdateOneRequiredWithoutSentRequestsNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutSentRequestsInput, Prisma.AccountUncheckedCreateWithoutSentRequestsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutSentRequestsInput
+  upsert?: Prisma.AccountUpsertWithoutSentRequestsInput
+  connect?: Prisma.AccountWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AccountUpdateToOneWithWhereWithoutSentRequestsInput, Prisma.AccountUpdateWithoutSentRequestsInput>, Prisma.AccountUncheckedUpdateWithoutSentRequestsInput>
+}
+
+export type AccountUpdateOneRequiredWithoutReceivedRequestsNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutReceivedRequestsInput, Prisma.AccountUncheckedCreateWithoutReceivedRequestsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutReceivedRequestsInput
+  upsert?: Prisma.AccountUpsertWithoutReceivedRequestsInput
+  connect?: Prisma.AccountWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AccountUpdateToOneWithWhereWithoutReceivedRequestsInput, Prisma.AccountUpdateWithoutReceivedRequestsInput>, Prisma.AccountUncheckedUpdateWithoutReceivedRequestsInput>
+}
+
+export type AccountCreateNestedOneWithoutBackupCodesInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutBackupCodesInput, Prisma.AccountUncheckedCreateWithoutBackupCodesInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutBackupCodesInput
+  connect?: Prisma.AccountWhereUniqueInput
+}
+
+export type AccountUpdateOneRequiredWithoutBackupCodesNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutBackupCodesInput, Prisma.AccountUncheckedCreateWithoutBackupCodesInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutBackupCodesInput
+  upsert?: Prisma.AccountUpsertWithoutBackupCodesInput
+  connect?: Prisma.AccountWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AccountUpdateToOneWithWhereWithoutBackupCodesInput, Prisma.AccountUpdateWithoutBackupCodesInput>, Prisma.AccountUncheckedUpdateWithoutBackupCodesInput>
+}
+
+export type AccountCreateNestedOneWithoutVerificationsInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutVerificationsInput, Prisma.AccountUncheckedCreateWithoutVerificationsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutVerificationsInput
+  connect?: Prisma.AccountWhereUniqueInput
+}
+
+export type AccountUpdateOneRequiredWithoutVerificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutVerificationsInput, Prisma.AccountUncheckedCreateWithoutVerificationsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutVerificationsInput
+  upsert?: Prisma.AccountUpsertWithoutVerificationsInput
+  connect?: Prisma.AccountWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AccountUpdateToOneWithWhereWithoutVerificationsInput, Prisma.AccountUpdateWithoutVerificationsInput>, Prisma.AccountUncheckedUpdateWithoutVerificationsInput>
+}
+
+export type AccountCreateNestedOneWithoutDocumentsInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutDocumentsInput, Prisma.AccountUncheckedCreateWithoutDocumentsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutDocumentsInput
+  connect?: Prisma.AccountWhereUniqueInput
+}
+
+export type AccountUpdateOneRequiredWithoutDocumentsNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutDocumentsInput, Prisma.AccountUncheckedCreateWithoutDocumentsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutDocumentsInput
+  upsert?: Prisma.AccountUpsertWithoutDocumentsInput
+  connect?: Prisma.AccountWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AccountUpdateToOneWithWhereWithoutDocumentsInput, Prisma.AccountUpdateWithoutDocumentsInput>, Prisma.AccountUncheckedUpdateWithoutDocumentsInput>
 }
 
 export type AccountCreateNestedOneWithoutContactsInput = {
@@ -831,6 +1204,2648 @@ export type AccountUpdateOneRequiredWithoutSessionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AccountUpdateToOneWithWhereWithoutSessionsInput, Prisma.AccountUpdateWithoutSessionsInput>, Prisma.AccountUncheckedUpdateWithoutSessionsInput>
 }
 
+export type AccountCreateNestedOneWithoutErrorLogsInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutErrorLogsInput, Prisma.AccountUncheckedCreateWithoutErrorLogsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutErrorLogsInput
+  connect?: Prisma.AccountWhereUniqueInput
+}
+
+export type AccountUpdateOneWithoutErrorLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutErrorLogsInput, Prisma.AccountUncheckedCreateWithoutErrorLogsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutErrorLogsInput
+  upsert?: Prisma.AccountUpsertWithoutErrorLogsInput
+  disconnect?: Prisma.AccountWhereInput | boolean
+  delete?: Prisma.AccountWhereInput | boolean
+  connect?: Prisma.AccountWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AccountUpdateToOneWithWhereWithoutErrorLogsInput, Prisma.AccountUpdateWithoutErrorLogsInput>, Prisma.AccountUncheckedUpdateWithoutErrorLogsInput>
+}
+
+export type AccountCreateNestedOneWithoutUserContentsInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutUserContentsInput, Prisma.AccountUncheckedCreateWithoutUserContentsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutUserContentsInput
+  connect?: Prisma.AccountWhereUniqueInput
+}
+
+export type AccountUpdateOneRequiredWithoutUserContentsNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutUserContentsInput, Prisma.AccountUncheckedCreateWithoutUserContentsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutUserContentsInput
+  upsert?: Prisma.AccountUpsertWithoutUserContentsInput
+  connect?: Prisma.AccountWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AccountUpdateToOneWithWhereWithoutUserContentsInput, Prisma.AccountUpdateWithoutUserContentsInput>, Prisma.AccountUncheckedUpdateWithoutUserContentsInput>
+}
+
+export type AccountCreateNestedOneWithoutAppConnectionsInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutAppConnectionsInput, Prisma.AccountUncheckedCreateWithoutAppConnectionsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutAppConnectionsInput
+  connect?: Prisma.AccountWhereUniqueInput
+}
+
+export type AccountUpdateOneRequiredWithoutAppConnectionsNestedInput = {
+  create?: Prisma.XOR<Prisma.AccountCreateWithoutAppConnectionsInput, Prisma.AccountUncheckedCreateWithoutAppConnectionsInput>
+  connectOrCreate?: Prisma.AccountCreateOrConnectWithoutAppConnectionsInput
+  upsert?: Prisma.AccountUpsertWithoutAppConnectionsInput
+  connect?: Prisma.AccountWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AccountUpdateToOneWithWhereWithoutAppConnectionsInput, Prisma.AccountUpdateWithoutAppConnectionsInput>, Prisma.AccountUncheckedUpdateWithoutAppConnectionsInput>
+}
+
+export type AccountCreateWithoutBranchesInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountUncheckedCreateWithoutBranchesInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  parentBrandId?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountCreateOrConnectWithoutBranchesInput = {
+  where: Prisma.AccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCreateWithoutBranchesInput, Prisma.AccountUncheckedCreateWithoutBranchesInput>
+}
+
+export type AccountCreateWithoutParentBrandInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountUncheckedCreateWithoutParentBrandInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountCreateOrConnectWithoutParentBrandInput = {
+  where: Prisma.AccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCreateWithoutParentBrandInput, Prisma.AccountUncheckedCreateWithoutParentBrandInput>
+}
+
+export type AccountCreateManyParentBrandInputEnvelope = {
+  data: Prisma.AccountCreateManyParentBrandInput | Prisma.AccountCreateManyParentBrandInput[]
+  skipDuplicates?: boolean
+}
+
+export type AccountUpsertWithoutBranchesInput = {
+  update: Prisma.XOR<Prisma.AccountUpdateWithoutBranchesInput, Prisma.AccountUncheckedUpdateWithoutBranchesInput>
+  create: Prisma.XOR<Prisma.AccountCreateWithoutBranchesInput, Prisma.AccountUncheckedCreateWithoutBranchesInput>
+  where?: Prisma.AccountWhereInput
+}
+
+export type AccountUpdateToOneWithWhereWithoutBranchesInput = {
+  where?: Prisma.AccountWhereInput
+  data: Prisma.XOR<Prisma.AccountUpdateWithoutBranchesInput, Prisma.AccountUncheckedUpdateWithoutBranchesInput>
+}
+
+export type AccountUpdateWithoutBranchesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountUncheckedUpdateWithoutBranchesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountUpsertWithWhereUniqueWithoutParentBrandInput = {
+  where: Prisma.AccountWhereUniqueInput
+  update: Prisma.XOR<Prisma.AccountUpdateWithoutParentBrandInput, Prisma.AccountUncheckedUpdateWithoutParentBrandInput>
+  create: Prisma.XOR<Prisma.AccountCreateWithoutParentBrandInput, Prisma.AccountUncheckedCreateWithoutParentBrandInput>
+}
+
+export type AccountUpdateWithWhereUniqueWithoutParentBrandInput = {
+  where: Prisma.AccountWhereUniqueInput
+  data: Prisma.XOR<Prisma.AccountUpdateWithoutParentBrandInput, Prisma.AccountUncheckedUpdateWithoutParentBrandInput>
+}
+
+export type AccountUpdateManyWithWhereWithoutParentBrandInput = {
+  where: Prisma.AccountScalarWhereInput
+  data: Prisma.XOR<Prisma.AccountUpdateManyMutationInput, Prisma.AccountUncheckedUpdateManyWithoutParentBrandInput>
+}
+
+export type AccountScalarWhereInput = {
+  AND?: Prisma.AccountScalarWhereInput | Prisma.AccountScalarWhereInput[]
+  OR?: Prisma.AccountScalarWhereInput[]
+  NOT?: Prisma.AccountScalarWhereInput | Prisma.AccountScalarWhereInput[]
+  id?: Prisma.StringFilter<"Account"> | string
+  nameFirst?: Prisma.StringNullableFilter<"Account"> | string | null
+  nameMiddle?: Prisma.StringNullableFilter<"Account"> | string | null
+  nameLast?: Prisma.StringNullableFilter<"Account"> | string | null
+  nameDisplay?: Prisma.StringNullableFilter<"Account"> | string | null
+  displayName?: Prisma.StringNullableFilter<"Account"> | string | null
+  accountPhoto?: Prisma.StringNullableFilter<"Account"> | string | null
+  gender?: Prisma.StringNullableFilter<"Account"> | string | null
+  dateBirth?: Prisma.DateTimeNullableFilter<"Account"> | Date | string | null
+  dateCreated?: Prisma.DateTimeFilter<"Account"> | Date | string
+  nationality?: Prisma.StringNullableFilter<"Account"> | string | null
+  isLegalEntity?: Prisma.BoolFilter<"Account"> | boolean
+  nameLegal?: Prisma.StringNullableFilter<"Account"> | string | null
+  registrationId?: Prisma.StringNullableFilter<"Account"> | string | null
+  countryOfOrigin?: Prisma.StringNullableFilter<"Account"> | string | null
+  dateEstablished?: Prisma.DateTimeNullableFilter<"Account"> | Date | string | null
+  neupIdPrimary?: Prisma.StringNullableFilter<"Account"> | string | null
+  verified?: Prisma.BoolFilter<"Account"> | boolean
+  pro?: Prisma.BoolFilter<"Account"> | boolean
+  accountType?: Prisma.StringFilter<"Account"> | string
+  permit?: Prisma.StringFilter<"Account"> | string
+  accountStatus?: Prisma.StringNullableFilter<"Account"> | string | null
+  parentBrandId?: Prisma.StringNullableFilter<"Account"> | string | null
+  block?: Prisma.JsonNullableFilter<"Account">
+}
+
+export type AccountCreateWithoutTotpInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountUncheckedCreateWithoutTotpInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  parentBrandId?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountCreateOrConnectWithoutTotpInput = {
+  where: Prisma.AccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCreateWithoutTotpInput, Prisma.AccountUncheckedCreateWithoutTotpInput>
+}
+
+export type AccountUpsertWithoutTotpInput = {
+  update: Prisma.XOR<Prisma.AccountUpdateWithoutTotpInput, Prisma.AccountUncheckedUpdateWithoutTotpInput>
+  create: Prisma.XOR<Prisma.AccountCreateWithoutTotpInput, Prisma.AccountUncheckedCreateWithoutTotpInput>
+  where?: Prisma.AccountWhereInput
+}
+
+export type AccountUpdateToOneWithWhereWithoutTotpInput = {
+  where?: Prisma.AccountWhereInput
+  data: Prisma.XOR<Prisma.AccountUpdateWithoutTotpInput, Prisma.AccountUncheckedUpdateWithoutTotpInput>
+}
+
+export type AccountUpdateWithoutTotpInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountUncheckedUpdateWithoutTotpInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountCreateWithoutStatusLogsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountUncheckedCreateWithoutStatusLogsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  parentBrandId?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountCreateOrConnectWithoutStatusLogsInput = {
+  where: Prisma.AccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCreateWithoutStatusLogsInput, Prisma.AccountUncheckedCreateWithoutStatusLogsInput>
+}
+
+export type AccountUpsertWithoutStatusLogsInput = {
+  update: Prisma.XOR<Prisma.AccountUpdateWithoutStatusLogsInput, Prisma.AccountUncheckedUpdateWithoutStatusLogsInput>
+  create: Prisma.XOR<Prisma.AccountCreateWithoutStatusLogsInput, Prisma.AccountUncheckedCreateWithoutStatusLogsInput>
+  where?: Prisma.AccountWhereInput
+}
+
+export type AccountUpdateToOneWithWhereWithoutStatusLogsInput = {
+  where?: Prisma.AccountWhereInput
+  data: Prisma.XOR<Prisma.AccountUpdateWithoutStatusLogsInput, Prisma.AccountUncheckedUpdateWithoutStatusLogsInput>
+}
+
+export type AccountUpdateWithoutStatusLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountUncheckedUpdateWithoutStatusLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountCreateWithoutKycRequestsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountUncheckedCreateWithoutKycRequestsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  parentBrandId?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountCreateOrConnectWithoutKycRequestsInput = {
+  where: Prisma.AccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCreateWithoutKycRequestsInput, Prisma.AccountUncheckedCreateWithoutKycRequestsInput>
+}
+
+export type AccountUpsertWithoutKycRequestsInput = {
+  update: Prisma.XOR<Prisma.AccountUpdateWithoutKycRequestsInput, Prisma.AccountUncheckedUpdateWithoutKycRequestsInput>
+  create: Prisma.XOR<Prisma.AccountCreateWithoutKycRequestsInput, Prisma.AccountUncheckedCreateWithoutKycRequestsInput>
+  where?: Prisma.AccountWhereInput
+}
+
+export type AccountUpdateToOneWithWhereWithoutKycRequestsInput = {
+  where?: Prisma.AccountWhereInput
+  data: Prisma.XOR<Prisma.AccountUpdateWithoutKycRequestsInput, Prisma.AccountUncheckedUpdateWithoutKycRequestsInput>
+}
+
+export type AccountUpdateWithoutKycRequestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountUncheckedUpdateWithoutKycRequestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountCreateWithoutInvitationsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountUncheckedCreateWithoutInvitationsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  parentBrandId?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountCreateOrConnectWithoutInvitationsInput = {
+  where: Prisma.AccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCreateWithoutInvitationsInput, Prisma.AccountUncheckedCreateWithoutInvitationsInput>
+}
+
+export type AccountUpsertWithoutInvitationsInput = {
+  update: Prisma.XOR<Prisma.AccountUpdateWithoutInvitationsInput, Prisma.AccountUncheckedUpdateWithoutInvitationsInput>
+  create: Prisma.XOR<Prisma.AccountCreateWithoutInvitationsInput, Prisma.AccountUncheckedCreateWithoutInvitationsInput>
+  where?: Prisma.AccountWhereInput
+}
+
+export type AccountUpdateToOneWithWhereWithoutInvitationsInput = {
+  where?: Prisma.AccountWhereInput
+  data: Prisma.XOR<Prisma.AccountUpdateWithoutInvitationsInput, Prisma.AccountUncheckedUpdateWithoutInvitationsInput>
+}
+
+export type AccountUpdateWithoutInvitationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountUncheckedUpdateWithoutInvitationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountCreateWithoutNeupIdRequestsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountUncheckedCreateWithoutNeupIdRequestsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  parentBrandId?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountCreateOrConnectWithoutNeupIdRequestsInput = {
+  where: Prisma.AccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCreateWithoutNeupIdRequestsInput, Prisma.AccountUncheckedCreateWithoutNeupIdRequestsInput>
+}
+
+export type AccountUpsertWithoutNeupIdRequestsInput = {
+  update: Prisma.XOR<Prisma.AccountUpdateWithoutNeupIdRequestsInput, Prisma.AccountUncheckedUpdateWithoutNeupIdRequestsInput>
+  create: Prisma.XOR<Prisma.AccountCreateWithoutNeupIdRequestsInput, Prisma.AccountUncheckedCreateWithoutNeupIdRequestsInput>
+  where?: Prisma.AccountWhereInput
+}
+
+export type AccountUpdateToOneWithWhereWithoutNeupIdRequestsInput = {
+  where?: Prisma.AccountWhereInput
+  data: Prisma.XOR<Prisma.AccountUpdateWithoutNeupIdRequestsInput, Prisma.AccountUncheckedUpdateWithoutNeupIdRequestsInput>
+}
+
+export type AccountUpdateWithoutNeupIdRequestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountUncheckedUpdateWithoutNeupIdRequestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountCreateWithoutNotificationsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountUncheckedCreateWithoutNotificationsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  parentBrandId?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.AccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCreateWithoutNotificationsInput, Prisma.AccountUncheckedCreateWithoutNotificationsInput>
+}
+
+export type AccountUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.AccountUpdateWithoutNotificationsInput, Prisma.AccountUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.AccountCreateWithoutNotificationsInput, Prisma.AccountUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.AccountWhereInput
+}
+
+export type AccountUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.AccountWhereInput
+  data: Prisma.XOR<Prisma.AccountUpdateWithoutNotificationsInput, Prisma.AccountUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type AccountUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountCreateWithoutSentRequestsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountUncheckedCreateWithoutSentRequestsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  parentBrandId?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountCreateOrConnectWithoutSentRequestsInput = {
+  where: Prisma.AccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCreateWithoutSentRequestsInput, Prisma.AccountUncheckedCreateWithoutSentRequestsInput>
+}
+
+export type AccountCreateWithoutReceivedRequestsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+}
+
+export type AccountUncheckedCreateWithoutReceivedRequestsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  parentBrandId?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+}
+
+export type AccountCreateOrConnectWithoutReceivedRequestsInput = {
+  where: Prisma.AccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCreateWithoutReceivedRequestsInput, Prisma.AccountUncheckedCreateWithoutReceivedRequestsInput>
+}
+
+export type AccountUpsertWithoutSentRequestsInput = {
+  update: Prisma.XOR<Prisma.AccountUpdateWithoutSentRequestsInput, Prisma.AccountUncheckedUpdateWithoutSentRequestsInput>
+  create: Prisma.XOR<Prisma.AccountCreateWithoutSentRequestsInput, Prisma.AccountUncheckedCreateWithoutSentRequestsInput>
+  where?: Prisma.AccountWhereInput
+}
+
+export type AccountUpdateToOneWithWhereWithoutSentRequestsInput = {
+  where?: Prisma.AccountWhereInput
+  data: Prisma.XOR<Prisma.AccountUpdateWithoutSentRequestsInput, Prisma.AccountUncheckedUpdateWithoutSentRequestsInput>
+}
+
+export type AccountUpdateWithoutSentRequestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountUncheckedUpdateWithoutSentRequestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountUpsertWithoutReceivedRequestsInput = {
+  update: Prisma.XOR<Prisma.AccountUpdateWithoutReceivedRequestsInput, Prisma.AccountUncheckedUpdateWithoutReceivedRequestsInput>
+  create: Prisma.XOR<Prisma.AccountCreateWithoutReceivedRequestsInput, Prisma.AccountUncheckedCreateWithoutReceivedRequestsInput>
+  where?: Prisma.AccountWhereInput
+}
+
+export type AccountUpdateToOneWithWhereWithoutReceivedRequestsInput = {
+  where?: Prisma.AccountWhereInput
+  data: Prisma.XOR<Prisma.AccountUpdateWithoutReceivedRequestsInput, Prisma.AccountUncheckedUpdateWithoutReceivedRequestsInput>
+}
+
+export type AccountUpdateWithoutReceivedRequestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+}
+
+export type AccountUncheckedUpdateWithoutReceivedRequestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+}
+
+export type AccountCreateWithoutBackupCodesInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountUncheckedCreateWithoutBackupCodesInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  parentBrandId?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountCreateOrConnectWithoutBackupCodesInput = {
+  where: Prisma.AccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCreateWithoutBackupCodesInput, Prisma.AccountUncheckedCreateWithoutBackupCodesInput>
+}
+
+export type AccountUpsertWithoutBackupCodesInput = {
+  update: Prisma.XOR<Prisma.AccountUpdateWithoutBackupCodesInput, Prisma.AccountUncheckedUpdateWithoutBackupCodesInput>
+  create: Prisma.XOR<Prisma.AccountCreateWithoutBackupCodesInput, Prisma.AccountUncheckedCreateWithoutBackupCodesInput>
+  where?: Prisma.AccountWhereInput
+}
+
+export type AccountUpdateToOneWithWhereWithoutBackupCodesInput = {
+  where?: Prisma.AccountWhereInput
+  data: Prisma.XOR<Prisma.AccountUpdateWithoutBackupCodesInput, Prisma.AccountUncheckedUpdateWithoutBackupCodesInput>
+}
+
+export type AccountUpdateWithoutBackupCodesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountUncheckedUpdateWithoutBackupCodesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountCreateWithoutVerificationsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountUncheckedCreateWithoutVerificationsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  parentBrandId?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountCreateOrConnectWithoutVerificationsInput = {
+  where: Prisma.AccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCreateWithoutVerificationsInput, Prisma.AccountUncheckedCreateWithoutVerificationsInput>
+}
+
+export type AccountUpsertWithoutVerificationsInput = {
+  update: Prisma.XOR<Prisma.AccountUpdateWithoutVerificationsInput, Prisma.AccountUncheckedUpdateWithoutVerificationsInput>
+  create: Prisma.XOR<Prisma.AccountCreateWithoutVerificationsInput, Prisma.AccountUncheckedCreateWithoutVerificationsInput>
+  where?: Prisma.AccountWhereInput
+}
+
+export type AccountUpdateToOneWithWhereWithoutVerificationsInput = {
+  where?: Prisma.AccountWhereInput
+  data: Prisma.XOR<Prisma.AccountUpdateWithoutVerificationsInput, Prisma.AccountUncheckedUpdateWithoutVerificationsInput>
+}
+
+export type AccountUpdateWithoutVerificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountUncheckedUpdateWithoutVerificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountCreateWithoutDocumentsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountUncheckedCreateWithoutDocumentsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  parentBrandId?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountCreateOrConnectWithoutDocumentsInput = {
+  where: Prisma.AccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCreateWithoutDocumentsInput, Prisma.AccountUncheckedCreateWithoutDocumentsInput>
+}
+
+export type AccountUpsertWithoutDocumentsInput = {
+  update: Prisma.XOR<Prisma.AccountUpdateWithoutDocumentsInput, Prisma.AccountUncheckedUpdateWithoutDocumentsInput>
+  create: Prisma.XOR<Prisma.AccountCreateWithoutDocumentsInput, Prisma.AccountUncheckedCreateWithoutDocumentsInput>
+  where?: Prisma.AccountWhereInput
+}
+
+export type AccountUpdateToOneWithWhereWithoutDocumentsInput = {
+  where?: Prisma.AccountWhereInput
+  data: Prisma.XOR<Prisma.AccountUpdateWithoutDocumentsInput, Prisma.AccountUncheckedUpdateWithoutDocumentsInput>
+}
+
+export type AccountUpdateWithoutDocumentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountUncheckedUpdateWithoutDocumentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
+}
+
 export type AccountCreateWithoutContactsInput = {
   id?: string
   nameFirst?: string | null
@@ -850,15 +3865,32 @@ export type AccountCreateWithoutContactsInput = {
   dateEstablished?: Date | string | null
   neupIdPrimary?: string | null
   verified?: boolean
+  pro?: boolean
   accountType?: string
   permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
   neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
   permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
   targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
   password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
   sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
 }
 
 export type AccountUncheckedCreateWithoutContactsInput = {
@@ -880,15 +3912,32 @@ export type AccountUncheckedCreateWithoutContactsInput = {
   dateEstablished?: Date | string | null
   neupIdPrimary?: string | null
   verified?: boolean
+  pro?: boolean
   accountType?: string
   permit?: string
   accountStatus?: string | null
+  parentBrandId?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
   neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
   permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
   targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
   password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
 }
 
 export type AccountCreateOrConnectWithoutContactsInput = {
@@ -926,15 +3975,32 @@ export type AccountUpdateWithoutContactsInput = {
   dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
   permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
   neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
   permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
   targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
   password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
 }
 
 export type AccountUncheckedUpdateWithoutContactsInput = {
@@ -956,15 +4022,32 @@ export type AccountUncheckedUpdateWithoutContactsInput = {
   dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
   permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
   neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
   permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
   targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
   password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
 }
 
 export type AccountCreateWithoutNeupIdsInput = {
@@ -986,15 +4069,32 @@ export type AccountCreateWithoutNeupIdsInput = {
   dateEstablished?: Date | string | null
   neupIdPrimary?: string | null
   verified?: boolean
+  pro?: boolean
   accountType?: string
   permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
   contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
   permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
   targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
   password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
   sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
 }
 
 export type AccountUncheckedCreateWithoutNeupIdsInput = {
@@ -1016,15 +4116,32 @@ export type AccountUncheckedCreateWithoutNeupIdsInput = {
   dateEstablished?: Date | string | null
   neupIdPrimary?: string | null
   verified?: boolean
+  pro?: boolean
   accountType?: string
   permit?: string
   accountStatus?: string | null
+  parentBrandId?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
   contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
   permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
   targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
   password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
 }
 
 export type AccountCreateOrConnectWithoutNeupIdsInput = {
@@ -1062,15 +4179,32 @@ export type AccountUpdateWithoutNeupIdsInput = {
   dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
   permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
   contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
   permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
   targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
   password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
 }
 
 export type AccountUncheckedUpdateWithoutNeupIdsInput = {
@@ -1092,15 +4226,32 @@ export type AccountUncheckedUpdateWithoutNeupIdsInput = {
   dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
   permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
   contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
   permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
   targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
   password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
 }
 
 export type AccountCreateWithoutPasswordInput = {
@@ -1122,15 +4273,32 @@ export type AccountCreateWithoutPasswordInput = {
   dateEstablished?: Date | string | null
   neupIdPrimary?: string | null
   verified?: boolean
+  pro?: boolean
   accountType?: string
   permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
   contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
   neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
   permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
   targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
   sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
 }
 
 export type AccountUncheckedCreateWithoutPasswordInput = {
@@ -1152,15 +4320,32 @@ export type AccountUncheckedCreateWithoutPasswordInput = {
   dateEstablished?: Date | string | null
   neupIdPrimary?: string | null
   verified?: boolean
+  pro?: boolean
   accountType?: string
   permit?: string
   accountStatus?: string | null
+  parentBrandId?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
   contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
   neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
   permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
   targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
 }
 
 export type AccountCreateOrConnectWithoutPasswordInput = {
@@ -1198,15 +4383,32 @@ export type AccountUpdateWithoutPasswordInput = {
   dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
   permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
   contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
   neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
   permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
   targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
 }
 
 export type AccountUncheckedUpdateWithoutPasswordInput = {
@@ -1228,15 +4430,32 @@ export type AccountUncheckedUpdateWithoutPasswordInput = {
   dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
   permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
   contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
   neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
   permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
   targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
 }
 
 export type AccountCreateWithoutPermitsInput = {
@@ -1258,15 +4477,32 @@ export type AccountCreateWithoutPermitsInput = {
   dateEstablished?: Date | string | null
   neupIdPrimary?: string | null
   verified?: boolean
+  pro?: boolean
   accountType?: string
   permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
   contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
   neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
   targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
   password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
   sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
 }
 
 export type AccountUncheckedCreateWithoutPermitsInput = {
@@ -1288,15 +4524,32 @@ export type AccountUncheckedCreateWithoutPermitsInput = {
   dateEstablished?: Date | string | null
   neupIdPrimary?: string | null
   verified?: boolean
+  pro?: boolean
   accountType?: string
   permit?: string
   accountStatus?: string | null
+  parentBrandId?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
   contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
   neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
   targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
   password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
 }
 
 export type AccountCreateOrConnectWithoutPermitsInput = {
@@ -1323,15 +4576,32 @@ export type AccountCreateWithoutTargetPermitsInput = {
   dateEstablished?: Date | string | null
   neupIdPrimary?: string | null
   verified?: boolean
+  pro?: boolean
   accountType?: string
   permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
   contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
   neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
   permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
   password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
   sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
 }
 
 export type AccountUncheckedCreateWithoutTargetPermitsInput = {
@@ -1353,15 +4623,32 @@ export type AccountUncheckedCreateWithoutTargetPermitsInput = {
   dateEstablished?: Date | string | null
   neupIdPrimary?: string | null
   verified?: boolean
+  pro?: boolean
   accountType?: string
   permit?: string
   accountStatus?: string | null
+  parentBrandId?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
   contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
   neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
   permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
   password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
 }
 
 export type AccountCreateOrConnectWithoutTargetPermitsInput = {
@@ -1399,15 +4686,32 @@ export type AccountUpdateWithoutPermitsInput = {
   dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
   permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
   contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
   neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
   targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
   password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
 }
 
 export type AccountUncheckedUpdateWithoutPermitsInput = {
@@ -1429,15 +4733,32 @@ export type AccountUncheckedUpdateWithoutPermitsInput = {
   dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
   permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
   contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
   neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
   targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
   password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
 }
 
 export type AccountUpsertWithoutTargetPermitsInput = {
@@ -1470,15 +4791,32 @@ export type AccountUpdateWithoutTargetPermitsInput = {
   dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
   permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
   contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
   neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
   permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
   password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
 }
 
 export type AccountUncheckedUpdateWithoutTargetPermitsInput = {
@@ -1500,15 +4838,32 @@ export type AccountUncheckedUpdateWithoutTargetPermitsInput = {
   dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
   permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
   contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
   neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
   permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
   password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
 }
 
 export type AccountCreateWithoutSessionsInput = {
@@ -1530,15 +4885,32 @@ export type AccountCreateWithoutSessionsInput = {
   dateEstablished?: Date | string | null
   neupIdPrimary?: string | null
   verified?: boolean
+  pro?: boolean
   accountType?: string
   permit?: string
   accountStatus?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
   contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
   neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
   permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
   targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
   password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
 }
 
 export type AccountUncheckedCreateWithoutSessionsInput = {
@@ -1560,15 +4932,32 @@ export type AccountUncheckedCreateWithoutSessionsInput = {
   dateEstablished?: Date | string | null
   neupIdPrimary?: string | null
   verified?: boolean
+  pro?: boolean
   accountType?: string
   permit?: string
   accountStatus?: string | null
+  parentBrandId?: string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
   contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
   neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
   permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
   targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
   password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
 }
 
 export type AccountCreateOrConnectWithoutSessionsInput = {
@@ -1606,15 +4995,32 @@ export type AccountUpdateWithoutSessionsInput = {
   dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
   permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
   contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
   neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
   permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
   targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
   password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
 }
 
 export type AccountUncheckedUpdateWithoutSessionsInput = {
@@ -1636,15 +5042,790 @@ export type AccountUncheckedUpdateWithoutSessionsInput = {
   dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accountType?: Prisma.StringFieldUpdateOperationsInput | string
   permit?: Prisma.StringFieldUpdateOperationsInput | string
   accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
   contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
   neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
   permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
   targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
   password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountCreateWithoutErrorLogsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountUncheckedCreateWithoutErrorLogsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  parentBrandId?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountCreateOrConnectWithoutErrorLogsInput = {
+  where: Prisma.AccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCreateWithoutErrorLogsInput, Prisma.AccountUncheckedCreateWithoutErrorLogsInput>
+}
+
+export type AccountUpsertWithoutErrorLogsInput = {
+  update: Prisma.XOR<Prisma.AccountUpdateWithoutErrorLogsInput, Prisma.AccountUncheckedUpdateWithoutErrorLogsInput>
+  create: Prisma.XOR<Prisma.AccountCreateWithoutErrorLogsInput, Prisma.AccountUncheckedCreateWithoutErrorLogsInput>
+  where?: Prisma.AccountWhereInput
+}
+
+export type AccountUpdateToOneWithWhereWithoutErrorLogsInput = {
+  where?: Prisma.AccountWhereInput
+  data: Prisma.XOR<Prisma.AccountUpdateWithoutErrorLogsInput, Prisma.AccountUncheckedUpdateWithoutErrorLogsInput>
+}
+
+export type AccountUpdateWithoutErrorLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountUncheckedUpdateWithoutErrorLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountCreateWithoutUserContentsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountUncheckedCreateWithoutUserContentsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  parentBrandId?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  appConnections?: Prisma.UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountCreateOrConnectWithoutUserContentsInput = {
+  where: Prisma.AccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCreateWithoutUserContentsInput, Prisma.AccountUncheckedCreateWithoutUserContentsInput>
+}
+
+export type AccountUpsertWithoutUserContentsInput = {
+  update: Prisma.XOR<Prisma.AccountUpdateWithoutUserContentsInput, Prisma.AccountUncheckedUpdateWithoutUserContentsInput>
+  create: Prisma.XOR<Prisma.AccountCreateWithoutUserContentsInput, Prisma.AccountUncheckedCreateWithoutUserContentsInput>
+  where?: Prisma.AccountWhereInput
+}
+
+export type AccountUpdateToOneWithWhereWithoutUserContentsInput = {
+  where?: Prisma.AccountWhereInput
+  data: Prisma.XOR<Prisma.AccountUpdateWithoutUserContentsInput, Prisma.AccountUncheckedUpdateWithoutUserContentsInput>
+}
+
+export type AccountUpdateWithoutUserContentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountUncheckedUpdateWithoutUserContentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountCreateWithoutAppConnectionsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountCreateNestedOneWithoutBranchesInput
+  branches?: Prisma.AccountCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountUncheckedCreateWithoutAppConnectionsInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  parentBrandId?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedCreateNestedManyWithoutParentBrandInput
+  contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutAccountInput
+  neupIds?: Prisma.NeupIdUncheckedCreateNestedManyWithoutAccountInput
+  permits?: Prisma.PermitUncheckedCreateNestedManyWithoutAccountInput
+  targetPermits?: Prisma.PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+  password?: Prisma.PasswordUncheckedCreateNestedOneWithoutAccountInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutAccountInput
+  errorLogs?: Prisma.ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+  kycRequests?: Prisma.KycRequestUncheckedCreateNestedManyWithoutAccountInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutAccountInput
+  backupCodes?: Prisma.BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+  verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutAccountInput
+  documents?: Prisma.UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+  userContents?: Prisma.UserContentUncheckedCreateNestedManyWithoutAccountInput
+  totp?: Prisma.TotpUncheckedCreateNestedOneWithoutAccountInput
+  sentRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutSenderInput
+  receivedRequests?: Prisma.RequestUncheckedCreateNestedManyWithoutRecipientInput
+}
+
+export type AccountCreateOrConnectWithoutAppConnectionsInput = {
+  where: Prisma.AccountWhereUniqueInput
+  create: Prisma.XOR<Prisma.AccountCreateWithoutAppConnectionsInput, Prisma.AccountUncheckedCreateWithoutAppConnectionsInput>
+}
+
+export type AccountUpsertWithoutAppConnectionsInput = {
+  update: Prisma.XOR<Prisma.AccountUpdateWithoutAppConnectionsInput, Prisma.AccountUncheckedUpdateWithoutAppConnectionsInput>
+  create: Prisma.XOR<Prisma.AccountCreateWithoutAppConnectionsInput, Prisma.AccountUncheckedCreateWithoutAppConnectionsInput>
+  where?: Prisma.AccountWhereInput
+}
+
+export type AccountUpdateToOneWithWhereWithoutAppConnectionsInput = {
+  where?: Prisma.AccountWhereInput
+  data: Prisma.XOR<Prisma.AccountUpdateWithoutAppConnectionsInput, Prisma.AccountUncheckedUpdateWithoutAppConnectionsInput>
+}
+
+export type AccountUpdateWithoutAppConnectionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  parentBrand?: Prisma.AccountUpdateOneWithoutBranchesNestedInput
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountUncheckedUpdateWithoutAppConnectionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentBrandId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountCreateManyParentBrandInput = {
+  id?: string
+  nameFirst?: string | null
+  nameMiddle?: string | null
+  nameLast?: string | null
+  nameDisplay?: string | null
+  displayName?: string | null
+  accountPhoto?: string | null
+  gender?: string | null
+  dateBirth?: Date | string | null
+  dateCreated?: Date | string
+  nationality?: string | null
+  isLegalEntity?: boolean
+  nameLegal?: string | null
+  registrationId?: string | null
+  countryOfOrigin?: string | null
+  dateEstablished?: Date | string | null
+  neupIdPrimary?: string | null
+  verified?: boolean
+  pro?: boolean
+  accountType?: string
+  permit?: string
+  accountStatus?: string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+}
+
+export type AccountUpdateWithoutParentBrandInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountUncheckedUpdateWithoutParentBrandInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  branches?: Prisma.AccountUncheckedUpdateManyWithoutParentBrandNestedInput
+  contacts?: Prisma.ContactUncheckedUpdateManyWithoutAccountNestedInput
+  neupIds?: Prisma.NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+  permits?: Prisma.PermitUncheckedUpdateManyWithoutAccountNestedInput
+  targetPermits?: Prisma.PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+  password?: Prisma.PasswordUncheckedUpdateOneWithoutAccountNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutAccountNestedInput
+  errorLogs?: Prisma.ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+  statusLogs?: Prisma.AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+  appConnections?: Prisma.UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+  kycRequests?: Prisma.KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput
+  neupIdRequests?: Prisma.NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutAccountNestedInput
+  backupCodes?: Prisma.BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+  verifications?: Prisma.VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  documents?: Prisma.UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+  userContents?: Prisma.UserContentUncheckedUpdateManyWithoutAccountNestedInput
+  totp?: Prisma.TotpUncheckedUpdateOneWithoutAccountNestedInput
+  sentRequests?: Prisma.RequestUncheckedUpdateManyWithoutSenderNestedInput
+  receivedRequests?: Prisma.RequestUncheckedUpdateManyWithoutRecipientNestedInput
+}
+
+export type AccountUncheckedUpdateManyWithoutParentBrandInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nameFirst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameMiddle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameLast?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameDisplay?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountPhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isLegalEntity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  nameLegal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  countryOfOrigin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateEstablished?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  neupIdPrimary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pro?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  accountType?: Prisma.StringFieldUpdateOperationsInput | string
+  permit?: Prisma.StringFieldUpdateOperationsInput | string
+  accountStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  block?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 
@@ -1653,19 +5834,47 @@ export type AccountUncheckedUpdateWithoutSessionsInput = {
  */
 
 export type AccountCountOutputType = {
+  branches: number
   contacts: number
   neupIds: number
   permits: number
   targetPermits: number
   sessions: number
+  errorLogs: number
+  statusLogs: number
+  appConnections: number
+  kycRequests: number
+  invitations: number
+  neupIdRequests: number
+  notifications: number
+  backupCodes: number
+  verifications: number
+  documents: number
+  userContents: number
+  sentRequests: number
+  receivedRequests: number
 }
 
 export type AccountCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  branches?: boolean | AccountCountOutputTypeCountBranchesArgs
   contacts?: boolean | AccountCountOutputTypeCountContactsArgs
   neupIds?: boolean | AccountCountOutputTypeCountNeupIdsArgs
   permits?: boolean | AccountCountOutputTypeCountPermitsArgs
   targetPermits?: boolean | AccountCountOutputTypeCountTargetPermitsArgs
   sessions?: boolean | AccountCountOutputTypeCountSessionsArgs
+  errorLogs?: boolean | AccountCountOutputTypeCountErrorLogsArgs
+  statusLogs?: boolean | AccountCountOutputTypeCountStatusLogsArgs
+  appConnections?: boolean | AccountCountOutputTypeCountAppConnectionsArgs
+  kycRequests?: boolean | AccountCountOutputTypeCountKycRequestsArgs
+  invitations?: boolean | AccountCountOutputTypeCountInvitationsArgs
+  neupIdRequests?: boolean | AccountCountOutputTypeCountNeupIdRequestsArgs
+  notifications?: boolean | AccountCountOutputTypeCountNotificationsArgs
+  backupCodes?: boolean | AccountCountOutputTypeCountBackupCodesArgs
+  verifications?: boolean | AccountCountOutputTypeCountVerificationsArgs
+  documents?: boolean | AccountCountOutputTypeCountDocumentsArgs
+  userContents?: boolean | AccountCountOutputTypeCountUserContentsArgs
+  sentRequests?: boolean | AccountCountOutputTypeCountSentRequestsArgs
+  receivedRequests?: boolean | AccountCountOutputTypeCountReceivedRequestsArgs
 }
 
 /**
@@ -1676,6 +5885,13 @@ export type AccountCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
    * Select specific fields to fetch from the AccountCountOutputType
    */
   select?: Prisma.AccountCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * AccountCountOutputType without action
+ */
+export type AccountCountOutputTypeCountBranchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AccountWhereInput
 }
 
 /**
@@ -1713,6 +5929,97 @@ export type AccountCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Type
   where?: Prisma.SessionWhereInput
 }
 
+/**
+ * AccountCountOutputType without action
+ */
+export type AccountCountOutputTypeCountErrorLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ErrorLogWhereInput
+}
+
+/**
+ * AccountCountOutputType without action
+ */
+export type AccountCountOutputTypeCountStatusLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AccountStatusLogWhereInput
+}
+
+/**
+ * AccountCountOutputType without action
+ */
+export type AccountCountOutputTypeCountAppConnectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserAppConnectionWhereInput
+}
+
+/**
+ * AccountCountOutputType without action
+ */
+export type AccountCountOutputTypeCountKycRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.KycRequestWhereInput
+}
+
+/**
+ * AccountCountOutputType without action
+ */
+export type AccountCountOutputTypeCountInvitationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InvitationWhereInput
+}
+
+/**
+ * AccountCountOutputType without action
+ */
+export type AccountCountOutputTypeCountNeupIdRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NeupIdRequestWhereInput
+}
+
+/**
+ * AccountCountOutputType without action
+ */
+export type AccountCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
+}
+
+/**
+ * AccountCountOutputType without action
+ */
+export type AccountCountOutputTypeCountBackupCodesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BackupCodeWhereInput
+}
+
+/**
+ * AccountCountOutputType without action
+ */
+export type AccountCountOutputTypeCountVerificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.VerificationWhereInput
+}
+
+/**
+ * AccountCountOutputType without action
+ */
+export type AccountCountOutputTypeCountDocumentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserDocumentWhereInput
+}
+
+/**
+ * AccountCountOutputType without action
+ */
+export type AccountCountOutputTypeCountUserContentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserContentWhereInput
+}
+
+/**
+ * AccountCountOutputType without action
+ */
+export type AccountCountOutputTypeCountSentRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RequestWhereInput
+}
+
+/**
+ * AccountCountOutputType without action
+ */
+export type AccountCountOutputTypeCountReceivedRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RequestWhereInput
+}
+
 
 export type AccountSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1733,16 +6040,34 @@ export type AccountSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   dateEstablished?: boolean
   neupIdPrimary?: boolean
   verified?: boolean
+  pro?: boolean
   accountType?: boolean
   permit?: boolean
   accountStatus?: boolean
+  parentBrandId?: boolean
   block?: boolean
+  parentBrand?: boolean | Prisma.Account$parentBrandArgs<ExtArgs>
+  branches?: boolean | Prisma.Account$branchesArgs<ExtArgs>
   contacts?: boolean | Prisma.Account$contactsArgs<ExtArgs>
   neupIds?: boolean | Prisma.Account$neupIdsArgs<ExtArgs>
   permits?: boolean | Prisma.Account$permitsArgs<ExtArgs>
   targetPermits?: boolean | Prisma.Account$targetPermitsArgs<ExtArgs>
   password?: boolean | Prisma.Account$passwordArgs<ExtArgs>
   sessions?: boolean | Prisma.Account$sessionsArgs<ExtArgs>
+  errorLogs?: boolean | Prisma.Account$errorLogsArgs<ExtArgs>
+  statusLogs?: boolean | Prisma.Account$statusLogsArgs<ExtArgs>
+  appConnections?: boolean | Prisma.Account$appConnectionsArgs<ExtArgs>
+  kycRequests?: boolean | Prisma.Account$kycRequestsArgs<ExtArgs>
+  invitations?: boolean | Prisma.Account$invitationsArgs<ExtArgs>
+  neupIdRequests?: boolean | Prisma.Account$neupIdRequestsArgs<ExtArgs>
+  notifications?: boolean | Prisma.Account$notificationsArgs<ExtArgs>
+  backupCodes?: boolean | Prisma.Account$backupCodesArgs<ExtArgs>
+  verifications?: boolean | Prisma.Account$verificationsArgs<ExtArgs>
+  documents?: boolean | Prisma.Account$documentsArgs<ExtArgs>
+  userContents?: boolean | Prisma.Account$userContentsArgs<ExtArgs>
+  totp?: boolean | Prisma.Account$totpArgs<ExtArgs>
+  sentRequests?: boolean | Prisma.Account$sentRequestsArgs<ExtArgs>
+  receivedRequests?: boolean | Prisma.Account$receivedRequestsArgs<ExtArgs>
   _count?: boolean | Prisma.AccountCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["account"]>
 
@@ -1765,10 +6090,13 @@ export type AccountSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   dateEstablished?: boolean
   neupIdPrimary?: boolean
   verified?: boolean
+  pro?: boolean
   accountType?: boolean
   permit?: boolean
   accountStatus?: boolean
+  parentBrandId?: boolean
   block?: boolean
+  parentBrand?: boolean | Prisma.Account$parentBrandArgs<ExtArgs>
 }, ExtArgs["result"]["account"]>
 
 export type AccountSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1790,10 +6118,13 @@ export type AccountSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   dateEstablished?: boolean
   neupIdPrimary?: boolean
   verified?: boolean
+  pro?: boolean
   accountType?: boolean
   permit?: boolean
   accountStatus?: boolean
+  parentBrandId?: boolean
   block?: boolean
+  parentBrand?: boolean | Prisma.Account$parentBrandArgs<ExtArgs>
 }, ExtArgs["result"]["account"]>
 
 export type AccountSelectScalar = {
@@ -1815,34 +6146,72 @@ export type AccountSelectScalar = {
   dateEstablished?: boolean
   neupIdPrimary?: boolean
   verified?: boolean
+  pro?: boolean
   accountType?: boolean
   permit?: boolean
   accountStatus?: boolean
+  parentBrandId?: boolean
   block?: boolean
 }
 
-export type AccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nameFirst" | "nameMiddle" | "nameLast" | "nameDisplay" | "displayName" | "accountPhoto" | "gender" | "dateBirth" | "dateCreated" | "nationality" | "isLegalEntity" | "nameLegal" | "registrationId" | "countryOfOrigin" | "dateEstablished" | "neupIdPrimary" | "verified" | "accountType" | "permit" | "accountStatus" | "block", ExtArgs["result"]["account"]>
+export type AccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nameFirst" | "nameMiddle" | "nameLast" | "nameDisplay" | "displayName" | "accountPhoto" | "gender" | "dateBirth" | "dateCreated" | "nationality" | "isLegalEntity" | "nameLegal" | "registrationId" | "countryOfOrigin" | "dateEstablished" | "neupIdPrimary" | "verified" | "pro" | "accountType" | "permit" | "accountStatus" | "parentBrandId" | "block", ExtArgs["result"]["account"]>
 export type AccountInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  parentBrand?: boolean | Prisma.Account$parentBrandArgs<ExtArgs>
+  branches?: boolean | Prisma.Account$branchesArgs<ExtArgs>
   contacts?: boolean | Prisma.Account$contactsArgs<ExtArgs>
   neupIds?: boolean | Prisma.Account$neupIdsArgs<ExtArgs>
   permits?: boolean | Prisma.Account$permitsArgs<ExtArgs>
   targetPermits?: boolean | Prisma.Account$targetPermitsArgs<ExtArgs>
   password?: boolean | Prisma.Account$passwordArgs<ExtArgs>
   sessions?: boolean | Prisma.Account$sessionsArgs<ExtArgs>
+  errorLogs?: boolean | Prisma.Account$errorLogsArgs<ExtArgs>
+  statusLogs?: boolean | Prisma.Account$statusLogsArgs<ExtArgs>
+  appConnections?: boolean | Prisma.Account$appConnectionsArgs<ExtArgs>
+  kycRequests?: boolean | Prisma.Account$kycRequestsArgs<ExtArgs>
+  invitations?: boolean | Prisma.Account$invitationsArgs<ExtArgs>
+  neupIdRequests?: boolean | Prisma.Account$neupIdRequestsArgs<ExtArgs>
+  notifications?: boolean | Prisma.Account$notificationsArgs<ExtArgs>
+  backupCodes?: boolean | Prisma.Account$backupCodesArgs<ExtArgs>
+  verifications?: boolean | Prisma.Account$verificationsArgs<ExtArgs>
+  documents?: boolean | Prisma.Account$documentsArgs<ExtArgs>
+  userContents?: boolean | Prisma.Account$userContentsArgs<ExtArgs>
+  totp?: boolean | Prisma.Account$totpArgs<ExtArgs>
+  sentRequests?: boolean | Prisma.Account$sentRequestsArgs<ExtArgs>
+  receivedRequests?: boolean | Prisma.Account$receivedRequestsArgs<ExtArgs>
   _count?: boolean | Prisma.AccountCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type AccountIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type AccountIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type AccountIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  parentBrand?: boolean | Prisma.Account$parentBrandArgs<ExtArgs>
+}
+export type AccountIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  parentBrand?: boolean | Prisma.Account$parentBrandArgs<ExtArgs>
+}
 
 export type $AccountPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Account"
   objects: {
+    parentBrand: Prisma.$AccountPayload<ExtArgs> | null
+    branches: Prisma.$AccountPayload<ExtArgs>[]
     contacts: Prisma.$ContactPayload<ExtArgs>[]
     neupIds: Prisma.$NeupIdPayload<ExtArgs>[]
     permits: Prisma.$PermitPayload<ExtArgs>[]
     targetPermits: Prisma.$PermitPayload<ExtArgs>[]
     password: Prisma.$PasswordPayload<ExtArgs> | null
     sessions: Prisma.$SessionPayload<ExtArgs>[]
+    errorLogs: Prisma.$ErrorLogPayload<ExtArgs>[]
+    statusLogs: Prisma.$AccountStatusLogPayload<ExtArgs>[]
+    appConnections: Prisma.$UserAppConnectionPayload<ExtArgs>[]
+    kycRequests: Prisma.$KycRequestPayload<ExtArgs>[]
+    invitations: Prisma.$InvitationPayload<ExtArgs>[]
+    neupIdRequests: Prisma.$NeupIdRequestPayload<ExtArgs>[]
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
+    backupCodes: Prisma.$BackupCodePayload<ExtArgs>[]
+    verifications: Prisma.$VerificationPayload<ExtArgs>[]
+    documents: Prisma.$UserDocumentPayload<ExtArgs>[]
+    userContents: Prisma.$UserContentPayload<ExtArgs>[]
+    totp: Prisma.$TotpPayload<ExtArgs> | null
+    sentRequests: Prisma.$RequestPayload<ExtArgs>[]
+    receivedRequests: Prisma.$RequestPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1863,9 +6232,11 @@ export type $AccountPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     dateEstablished: Date | null
     neupIdPrimary: string | null
     verified: boolean
+    pro: boolean
     accountType: string
     permit: string
     accountStatus: string | null
+    parentBrandId: string | null
     block: runtime.JsonValue | null
   }, ExtArgs["result"]["account"]>
   composites: {}
@@ -2261,12 +6632,28 @@ readonly fields: AccountFieldRefs;
  */
 export interface Prisma__AccountClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  parentBrand<T extends Prisma.Account$parentBrandArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$parentBrandArgs<ExtArgs>>): Prisma.Prisma__AccountClient<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  branches<T extends Prisma.Account$branchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$branchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   contacts<T extends Prisma.Account$contactsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$contactsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   neupIds<T extends Prisma.Account$neupIdsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$neupIdsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NeupIdPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   permits<T extends Prisma.Account$permitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$permitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PermitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   targetPermits<T extends Prisma.Account$targetPermitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$targetPermitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PermitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   password<T extends Prisma.Account$passwordArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$passwordArgs<ExtArgs>>): Prisma.Prisma__PasswordClient<runtime.Types.Result.GetResult<Prisma.$PasswordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   sessions<T extends Prisma.Account$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  errorLogs<T extends Prisma.Account$errorLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$errorLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ErrorLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  statusLogs<T extends Prisma.Account$statusLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$statusLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountStatusLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  appConnections<T extends Prisma.Account$appConnectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$appConnectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserAppConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  kycRequests<T extends Prisma.Account$kycRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$kycRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KycRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  invitations<T extends Prisma.Account$invitationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$invitationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  neupIdRequests<T extends Prisma.Account$neupIdRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$neupIdRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NeupIdRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notifications<T extends Prisma.Account$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  backupCodes<T extends Prisma.Account$backupCodesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$backupCodesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BackupCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  verifications<T extends Prisma.Account$verificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$verificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VerificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  documents<T extends Prisma.Account$documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  userContents<T extends Prisma.Account$userContentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$userContentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserContentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  totp<T extends Prisma.Account$totpArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$totpArgs<ExtArgs>>): Prisma.Prisma__TotpClient<runtime.Types.Result.GetResult<Prisma.$TotpPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  sentRequests<T extends Prisma.Account$sentRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$sentRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  receivedRequests<T extends Prisma.Account$receivedRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Account$receivedRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2314,9 +6701,11 @@ export interface AccountFieldRefs {
   readonly dateEstablished: Prisma.FieldRef<"Account", 'DateTime'>
   readonly neupIdPrimary: Prisma.FieldRef<"Account", 'String'>
   readonly verified: Prisma.FieldRef<"Account", 'Boolean'>
+  readonly pro: Prisma.FieldRef<"Account", 'Boolean'>
   readonly accountType: Prisma.FieldRef<"Account", 'String'>
   readonly permit: Prisma.FieldRef<"Account", 'String'>
   readonly accountStatus: Prisma.FieldRef<"Account", 'String'>
+  readonly parentBrandId: Prisma.FieldRef<"Account", 'String'>
   readonly block: Prisma.FieldRef<"Account", 'Json'>
 }
     
@@ -2567,6 +6956,10 @@ export type AccountCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    */
   data: Prisma.AccountCreateManyInput | Prisma.AccountCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AccountIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -2637,6 +7030,10 @@ export type AccountUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many Accounts to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AccountIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -2703,6 +7100,49 @@ export type AccountDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Accounts to delete.
    */
   limit?: number
+}
+
+/**
+ * Account.parentBrand
+ */
+export type Account$parentBrandArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Account
+   */
+  select?: Prisma.AccountSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Account
+   */
+  omit?: Prisma.AccountOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AccountInclude<ExtArgs> | null
+  where?: Prisma.AccountWhereInput
+}
+
+/**
+ * Account.branches
+ */
+export type Account$branchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Account
+   */
+  select?: Prisma.AccountSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Account
+   */
+  omit?: Prisma.AccountOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AccountInclude<ExtArgs> | null
+  where?: Prisma.AccountWhereInput
+  orderBy?: Prisma.AccountOrderByWithRelationInput | Prisma.AccountOrderByWithRelationInput[]
+  cursor?: Prisma.AccountWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AccountScalarFieldEnum | Prisma.AccountScalarFieldEnum[]
 }
 
 /**
@@ -2842,6 +7282,337 @@ export type Account$sessionsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.SessionScalarFieldEnum | Prisma.SessionScalarFieldEnum[]
+}
+
+/**
+ * Account.errorLogs
+ */
+export type Account$errorLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ErrorLog
+   */
+  select?: Prisma.ErrorLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ErrorLog
+   */
+  omit?: Prisma.ErrorLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ErrorLogInclude<ExtArgs> | null
+  where?: Prisma.ErrorLogWhereInput
+  orderBy?: Prisma.ErrorLogOrderByWithRelationInput | Prisma.ErrorLogOrderByWithRelationInput[]
+  cursor?: Prisma.ErrorLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ErrorLogScalarFieldEnum | Prisma.ErrorLogScalarFieldEnum[]
+}
+
+/**
+ * Account.statusLogs
+ */
+export type Account$statusLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AccountStatusLog
+   */
+  select?: Prisma.AccountStatusLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AccountStatusLog
+   */
+  omit?: Prisma.AccountStatusLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AccountStatusLogInclude<ExtArgs> | null
+  where?: Prisma.AccountStatusLogWhereInput
+  orderBy?: Prisma.AccountStatusLogOrderByWithRelationInput | Prisma.AccountStatusLogOrderByWithRelationInput[]
+  cursor?: Prisma.AccountStatusLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AccountStatusLogScalarFieldEnum | Prisma.AccountStatusLogScalarFieldEnum[]
+}
+
+/**
+ * Account.appConnections
+ */
+export type Account$appConnectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserAppConnection
+   */
+  select?: Prisma.UserAppConnectionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserAppConnection
+   */
+  omit?: Prisma.UserAppConnectionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserAppConnectionInclude<ExtArgs> | null
+  where?: Prisma.UserAppConnectionWhereInput
+  orderBy?: Prisma.UserAppConnectionOrderByWithRelationInput | Prisma.UserAppConnectionOrderByWithRelationInput[]
+  cursor?: Prisma.UserAppConnectionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserAppConnectionScalarFieldEnum | Prisma.UserAppConnectionScalarFieldEnum[]
+}
+
+/**
+ * Account.kycRequests
+ */
+export type Account$kycRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the KycRequest
+   */
+  select?: Prisma.KycRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the KycRequest
+   */
+  omit?: Prisma.KycRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KycRequestInclude<ExtArgs> | null
+  where?: Prisma.KycRequestWhereInput
+  orderBy?: Prisma.KycRequestOrderByWithRelationInput | Prisma.KycRequestOrderByWithRelationInput[]
+  cursor?: Prisma.KycRequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.KycRequestScalarFieldEnum | Prisma.KycRequestScalarFieldEnum[]
+}
+
+/**
+ * Account.invitations
+ */
+export type Account$invitationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Invitation
+   */
+  select?: Prisma.InvitationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Invitation
+   */
+  omit?: Prisma.InvitationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvitationInclude<ExtArgs> | null
+  where?: Prisma.InvitationWhereInput
+  orderBy?: Prisma.InvitationOrderByWithRelationInput | Prisma.InvitationOrderByWithRelationInput[]
+  cursor?: Prisma.InvitationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InvitationScalarFieldEnum | Prisma.InvitationScalarFieldEnum[]
+}
+
+/**
+ * Account.neupIdRequests
+ */
+export type Account$neupIdRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the NeupIdRequest
+   */
+  select?: Prisma.NeupIdRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the NeupIdRequest
+   */
+  omit?: Prisma.NeupIdRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NeupIdRequestInclude<ExtArgs> | null
+  where?: Prisma.NeupIdRequestWhereInput
+  orderBy?: Prisma.NeupIdRequestOrderByWithRelationInput | Prisma.NeupIdRequestOrderByWithRelationInput[]
+  cursor?: Prisma.NeupIdRequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NeupIdRequestScalarFieldEnum | Prisma.NeupIdRequestScalarFieldEnum[]
+}
+
+/**
+ * Account.notifications
+ */
+export type Account$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
+}
+
+/**
+ * Account.backupCodes
+ */
+export type Account$backupCodesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BackupCode
+   */
+  select?: Prisma.BackupCodeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BackupCode
+   */
+  omit?: Prisma.BackupCodeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BackupCodeInclude<ExtArgs> | null
+  where?: Prisma.BackupCodeWhereInput
+  orderBy?: Prisma.BackupCodeOrderByWithRelationInput | Prisma.BackupCodeOrderByWithRelationInput[]
+  cursor?: Prisma.BackupCodeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BackupCodeScalarFieldEnum | Prisma.BackupCodeScalarFieldEnum[]
+}
+
+/**
+ * Account.verifications
+ */
+export type Account$verificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Verification
+   */
+  select?: Prisma.VerificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Verification
+   */
+  omit?: Prisma.VerificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VerificationInclude<ExtArgs> | null
+  where?: Prisma.VerificationWhereInput
+  orderBy?: Prisma.VerificationOrderByWithRelationInput | Prisma.VerificationOrderByWithRelationInput[]
+  cursor?: Prisma.VerificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.VerificationScalarFieldEnum | Prisma.VerificationScalarFieldEnum[]
+}
+
+/**
+ * Account.documents
+ */
+export type Account$documentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserDocument
+   */
+  select?: Prisma.UserDocumentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserDocument
+   */
+  omit?: Prisma.UserDocumentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserDocumentInclude<ExtArgs> | null
+  where?: Prisma.UserDocumentWhereInput
+  orderBy?: Prisma.UserDocumentOrderByWithRelationInput | Prisma.UserDocumentOrderByWithRelationInput[]
+  cursor?: Prisma.UserDocumentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserDocumentScalarFieldEnum | Prisma.UserDocumentScalarFieldEnum[]
+}
+
+/**
+ * Account.userContents
+ */
+export type Account$userContentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserContent
+   */
+  select?: Prisma.UserContentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserContent
+   */
+  omit?: Prisma.UserContentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserContentInclude<ExtArgs> | null
+  where?: Prisma.UserContentWhereInput
+  orderBy?: Prisma.UserContentOrderByWithRelationInput | Prisma.UserContentOrderByWithRelationInput[]
+  cursor?: Prisma.UserContentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserContentScalarFieldEnum | Prisma.UserContentScalarFieldEnum[]
+}
+
+/**
+ * Account.totp
+ */
+export type Account$totpArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Totp
+   */
+  select?: Prisma.TotpSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Totp
+   */
+  omit?: Prisma.TotpOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TotpInclude<ExtArgs> | null
+  where?: Prisma.TotpWhereInput
+}
+
+/**
+ * Account.sentRequests
+ */
+export type Account$sentRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Request
+   */
+  select?: Prisma.RequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Request
+   */
+  omit?: Prisma.RequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RequestInclude<ExtArgs> | null
+  where?: Prisma.RequestWhereInput
+  orderBy?: Prisma.RequestOrderByWithRelationInput | Prisma.RequestOrderByWithRelationInput[]
+  cursor?: Prisma.RequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RequestScalarFieldEnum | Prisma.RequestScalarFieldEnum[]
+}
+
+/**
+ * Account.receivedRequests
+ */
+export type Account$receivedRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Request
+   */
+  select?: Prisma.RequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Request
+   */
+  omit?: Prisma.RequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RequestInclude<ExtArgs> | null
+  where?: Prisma.RequestWhereInput
+  orderBy?: Prisma.RequestOrderByWithRelationInput | Prisma.RequestOrderByWithRelationInput[]
+  cursor?: Prisma.RequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RequestScalarFieldEnum | Prisma.RequestScalarFieldEnum[]
 }
 
 /**

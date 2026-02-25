@@ -1,8 +1,7 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs, doc, updateDoc, setDoc, serverTimestamp, writeBatch } from 'firebase/firestore';
-import { getUserProfile, checkPermissions, getUserNeupIds } from '@/lib/user';
+import prisma from '@/lib/prisma';
+import { getUserProfile, checkPermissions } from '@/lib/user';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
 import { revalidatePath } from 'next/cache';
@@ -20,31 +19,22 @@ export async function getPendingVerificationRequests(): Promise<VerificationRequ
     if (!canView) return [];
 
     try {
-        const verificationsRef = collection(db, 'verifications');
-        const q = query(verificationsRef, where('status', '==', 'pending'));
-        const querySnapshot = await getDocs(q);
+        const verifications = await prisma.verification.findMany({
+            where: { status: 'pending' },
+            include: { account: true }
+        });
 
-        if (querySnapshot.empty) {
-            return [];
-        }
-
-        const requests = await Promise.all(
-            querySnapshot.docs.map(async (doc) => {
-                const data = doc.data();
-                const accountId = data.accountId;
-
-                const profile = await getUserProfile(accountId);
-
-                return {
-                    id: doc.id,
-                    accountId,
-                    fullName: profile?.nameDisplay || `${profile?.nameFirst || ''} ${profile?.nameLast || ''}`.trim() || 'Unknown User',
-                    neupId: profile?.neupIdPrimary || 'N/A',
-                    requestedAt: data.requestedAt?.toDate()?.toLocaleDateString() || 'N/A',
-                    status: data.status,
-                };
-            })
-        );
+        const requests = verifications.map(v => {
+            const profile = v.account;
+            return {
+                id: v.id,
+                accountId: v.accountId,
+                fullName: profile?.nameDisplay || `${profile?.nameFirst || ''} ${profile?.nameLast || ''}`.trim() || 'Unknown User',
+                neupId: profile?.neupIdPrimary || 'N/A',
+                requestedAt: v.createdAt.toLocaleDateString() || 'N/A',
+                status: v.status as 'pending' | 'approved' | 'rejected' | 'revoked',
+            };
+        });
         return requests;
     } catch (error) {
         await logError('database', error, 'getPendingVerificationRequests');
@@ -71,24 +61,35 @@ export async function grantVerification(accountId: string, data: z.infer<typeof 
     const { reason, category } = validation.data;
 
     try {
-        const batch = writeBatch(db);
-        
-        // Update account document
-        const accountRef = doc(db, 'account', accountId);
-        batch.update(accountRef, { verified: true });
-        
-        // Set verification details in verifications collection
-        const verificationRef = doc(db, 'verifications', accountId);
-        batch.set(verificationRef, {
-            accountId,
-            status: 'approved',
-            verifiedBy: adminId,
-            verifiedAt: serverTimestamp(),
-            reason,
-            category
-        }, { merge: true });
-
-        await batch.commit();
+        await prisma.$transaction([
+            // Update account document
+            prisma.account.update({
+                where: { id: accountId },
+                data: { verified: true }
+            }),
+            // Set verification details in verifications collection
+            prisma.verification.upsert({
+                where: { id: accountId }, // Using accountId as ID for account verification to match Firestore logic
+                update: {
+                    status: 'approved',
+                    verifiedBy: adminId,
+                    verifiedAt: new Date(),
+                    reason,
+                    category,
+                    type: 'account'
+                },
+                create: {
+                    id: accountId,
+                    accountId,
+                    status: 'approved',
+                    verifiedBy: adminId,
+                    verifiedAt: new Date(),
+                    reason,
+                    category,
+                    type: 'account'
+                }
+            })
+        ]);
 
         await logActivity(accountId, `Account Verified. Category: ${category}`, 'Success', undefined, adminId);
         revalidatePath('/manage/root/accounts/[id]', 'page');
@@ -111,20 +112,21 @@ export async function revokeVerification(accountId: string, reason: string): Pro
     }
 
     try {
-        const batch = writeBatch(db);
-
-        const accountRef = doc(db, 'account', accountId);
-        batch.update(accountRef, { verified: false });
-
-        const verificationRef = doc(db, 'verifications', accountId);
-        batch.update(verificationRef, {
-            status: 'revoked',
-            revokedBy: adminId,
-            revokedAt: serverTimestamp(),
-            revocationReason: reason
-        });
-        
-        await batch.commit();
+        await prisma.$transaction([
+            prisma.account.update({
+                where: { id: accountId },
+                data: { verified: false }
+            }),
+            prisma.verification.update({
+                where: { id: accountId },
+                data: {
+                    status: 'revoked',
+                    revokedBy: adminId,
+                    revokedAt: new Date(),
+                    revocationReason: reason
+                }
+            })
+        ]);
 
         await logActivity(accountId, 'Account Verification Revoked', 'Alert', undefined, adminId);
         revalidatePath('/manage/root/accounts/[id]', 'page');
@@ -132,5 +134,31 @@ export async function revokeVerification(accountId: string, reason: string): Pro
     } catch (error) {
         await logError('database', error, `revokeVerification: ${accountId}`);
         return { success: false, error: 'An unexpected error occurred.' };
+    }
+}
+
+export async function getAccountVerification(accountId: string): Promise<{ verified: boolean; category?: string; verifiedAt?: string } | null> {
+    try {
+        const account = await prisma.account.findUnique({
+            where: { id: accountId },
+            select: { verified: true }
+        });
+
+        if (!account || !account.verified) {
+            return { verified: false };
+        }
+
+        const verification = await prisma.verification.findUnique({
+            where: { id: accountId }
+        });
+
+        return {
+            verified: true,
+            category: verification?.category || 'Standard',
+            verifiedAt: verification?.verifiedAt?.toLocaleDateString() || 'N/A'
+        };
+    } catch (error) {
+        await logError('database', error, `getAccountVerification: ${accountId}`);
+        return null;
     }
 }

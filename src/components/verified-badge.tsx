@@ -2,11 +2,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { getAccountVerification } from '@/actions/root/verifications';
 
 type VerificationDetails = {
     category: string;
@@ -21,22 +20,14 @@ export function VerifiedBadge({ accountId, className }: { accountId: string, cla
         if (!accountId) return;
 
         const checkVerification = async () => {
-            const accountRef = doc(db, 'account', accountId);
             try {
-                const docSnap = await getDoc(accountRef);
-                if (docSnap.exists() && docSnap.data().verified === true) {
+                const data = await getAccountVerification(accountId);
+                if (data && data.verified) {
                     setIsVerified(true);
-                    
-                    const verificationRef = doc(db, 'verifications', accountId);
-                    const verificationSnap = await getDoc(verificationRef);
-                     if (verificationSnap.exists()) {
-                         const data = verificationSnap.data();
-                         setVerificationDetails({
-                            category: data.category,
-                            verifiedAt: data.verifiedAt?.toDate().toLocaleDateString() || 'N/A',
-                        });
-                     }
-
+                    setVerificationDetails({
+                        category: data.category || 'Standard',
+                        verifiedAt: data.verifiedAt || 'N/A',
+                    });
                 } else {
                     setIsVerified(false);
                 }

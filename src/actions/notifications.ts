@@ -1,11 +1,10 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs, doc, updateDoc, deleteDoc, getDoc, serverTimestamp, writeBatch, setDoc, limit, Timestamp, addDoc } from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { logError } from '@/lib/logger';
 import { revalidatePath } from 'next/cache';
-import { checkPermissions, getUserProfile } from '@/lib/user';
+import { checkPermissions } from '@/lib/user';
 
 export type Notification = {
     id: string;
@@ -42,24 +41,30 @@ export type NotificationCreate = {
 export async function createNotification(data: NotificationCreate) {
     try {
         const now = new Date();
-        let deletable_on: Date | null = null;
+        let deletable_on: Date | null = data.expiresOn || null;
         
         const action = data.action;
 
-        if (action === 'informative.login') {
-            deletable_on = new Date(now.setDate(now.getDate() + 3));
-        } else if (action.startsWith('informative.security') || action.startsWith('security.')) {
-            deletable_on = new Date(now.setDate(now.getDate() + 7));
-        } else if (action.endsWith('_invitation')) {
-            deletable_on = new Date(now.setDate(now.getDate() + 1));
+        if (!deletable_on) {
+            if (action === 'informative.login') {
+                deletable_on = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000);
+            } else if (action.startsWith('informative.security') || action.startsWith('security.')) {
+                deletable_on = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+            } else if (action.endsWith('_invitation')) {
+                deletable_on = new Date(now.getTime() + 1 * 24 * 60 * 60 * 1000);
+            }
         }
 
-
-        await addDoc(collection(db, 'notifications'), {
-            ...data,
-            is_read: false,
-            createdAt: serverTimestamp(),
-            deletable_on: deletable_on,
+        await prisma.notification.create({
+            data: {
+                accountId: data.recipient_id,
+                action: data.action,
+                message: data.message,
+                persistence: data.persistence,
+                type: data.noticeType || 'info',
+                deletableOn: deletable_on,
+                createdAt: now,
+            },
         });
     } catch (e) {
         await logError('database', e, `createNotification for ${data.recipient_id}`);
@@ -71,72 +76,67 @@ export async function getNotifications(): Promise<AllNotifications> {
     const accountId = await getPersonalAccountId();
     if (!accountId) return { sticky: [], requests: [], other: [] };
 
-    const notificationsRef = collection(db, 'notifications');
-    const q = query(notificationsRef, where('recipient_id', '==', accountId));
-    const querySnapshot = await getDocs(q);
+    const notifications = await prisma.notification.findMany({
+        where: { accountId },
+        include: {
+            request: {
+                include: {
+                    sender: {
+                        include: {
+                            neupIds: {
+                                where: { isPrimary: true },
+                                take: 1
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        orderBy: { createdAt: 'desc' }
+    });
 
     const requests: Notification[] = [];
     const sticky: Notification[] = [];
     const other: Notification[] = [];
 
-    for (const notifDoc of querySnapshot.docs) {
-        const notifData = notifDoc.data();
-        const baseNotification: Omit<Notification, 'action'> = {
-            id: notifDoc.id,
-            isRead: notifData.is_read,
-            createdAt: notifData.createdAt?.toDate().toISOString() || new Date().toISOString(),
-            deletableOn: notifData.deletable_on?.toDate()?.toISOString() || null,
+    for (const notif of notifications) {
+        const baseNotification: Notification = {
+            id: notif.id,
+            isRead: notif.read,
+            createdAt: notif.createdAt.toISOString(),
+            deletableOn: notif.deletableOn?.toISOString() || null,
+            action: notif.action || 'info',
+            message: notif.message || undefined,
+            persistence: notif.persistence as any,
+            noticeType: notif.type as any,
         };
 
-        if (notifData.request_id) { // This is a request-based notification
-            const requestRef = doc(db, 'requests', notifData.request_id);
-            const requestDoc = await getDoc(requestRef);
+        if (notif.requestId && notif.request) {
+            if (notif.request.status !== 'pending') continue;
 
-            if (requestDoc.exists()) {
-                const requestData = requestDoc.data();
-                if (requestData.status !== 'pending') continue; // Only show pending requests
+            const sender = notif.request.sender;
+            const senderName = sender.nameDisplay || `${sender.nameFirst || ''} ${sender.nameLast || ''}`.trim() || 'A user';
+            const senderNeupId = sender.neupIds[0]?.id || 'N/A';
 
-                const senderProfile = await getUserProfile(requestData.sender_id);
-                const senderNeupIds = await getDocs(query(collection(db, 'neupid'), where('for', '==', requestData.sender_id)));
-
-                requests.push({
-                    ...baseNotification,
-                    action: requestData.action,
-                    requestId: notifData.request_id,
-                    senderId: requestData.sender_id,
-                    senderName: senderProfile?.nameDisplay || `${senderProfile?.nameFirst || ''} ${senderProfile?.nameLast || ''}`.trim() || 'A user',
-                    senderNeupId: senderNeupIds.docs[0]?.id || 'N/A',
-                });
-            }
-        } else if (notifData.action && notifData.action.endsWith('.sticky')) { // This is a sticky warning/notice
-             if (notifData.persistence === 'untildays' && notifData.expiresOn) {
-                const expires = notifData.expiresOn.toDate();
-                if (expires < new Date()) continue; // Skip expired notices
-            }
-            if (notifData.is_read) continue; // Skip read notices
-
-            sticky.push({
+            requests.push({
                 ...baseNotification,
-                action: notifData.action,
-                message: notifData.message,
-                persistence: notifData.persistence,
-                noticeType: notifData.noticeType,
+                action: notif.request.action,
+                requestId: notif.requestId,
+                senderId: notif.request.senderId,
+                senderName,
+                senderNeupId,
             });
+        } else if (notif.action && notif.action.endsWith('.sticky')) {
+            if (notif.persistence === 'untildays' && notif.deletableOn) {
+                if (notif.deletableOn < new Date()) continue;
+            }
+            if (notif.read) continue;
+
+            sticky.push(baseNotification);
         } else {
-            // This is a normal, informative notification
-             other.push({
-                ...baseNotification,
-                action: notifData.action,
-                message: notifData.message,
-            });
+            other.push(baseNotification);
         }
     }
-    
-    const sortByDate = (a: Notification, b: Notification) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-
-    requests.sort(sortByDate);
-    sticky.sort(sortByDate);
-    other.sort(sortByDate);
 
     return { sticky, requests, other };
 }
@@ -146,11 +146,10 @@ export async function markNotificationAsRead(notificationId: string): Promise<{ 
     if (!canMarkAsRead) return { success: false };
 
     try {
-        const notifRef = doc(db, 'notifications', notificationId);
-        const notifDoc = await getDoc(notifRef);
-        if (notifDoc.exists()) {
-            await updateDoc(notifRef, { is_read: true });
-        }
+        await prisma.notification.update({
+            where: { id: notificationId },
+            data: { read: true }
+        });
         revalidatePath('/manage/notifications');
         return { success: true };
     } catch(error) {
@@ -164,8 +163,9 @@ export async function deleteNotification(notificationId: string): Promise<{ succ
     if (!canDelete) return { success: false, error: "Permission denied." };
     
     try {
-        const notifRef = doc(db, 'notifications', notificationId);
-        await deleteDoc(notifRef);
+        await prisma.notification.delete({
+            where: { id: notificationId }
+        });
         revalidatePath('/manage/notifications');
         return { success: true };
     } catch (error) {

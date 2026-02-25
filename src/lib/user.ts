@@ -27,6 +27,7 @@ export type UserProfile = {
   verified?: boolean; // Added for convenience
   accountType?: string;
   permit?: string;
+  pro?: boolean;
 };
 
 export type UserContacts = {
@@ -71,6 +72,7 @@ export async function getUserProfile(
         verified: account.verified || undefined,
         accountType: account.accountType || undefined,
         permit: account.permit || 'default',
+        pro: account.pro,
       };
 
       if (!serializedData.accountPhoto) {
@@ -128,6 +130,21 @@ export async function getUserNeupIds(accountId?: string): Promise<string[]> {
     return neupIds.map((doc) => doc.id);
   } catch (error) {
     await logError('database', error, `getUserNeupIds: ${idToFetch}`);
+    return [];
+  }
+}
+
+export async function getUserNeupIdDetails(accountId?: string): Promise<{ id: string; isPrimary: boolean }[]> {
+  const idToFetch = accountId || (await getActiveAccountId());
+  if (!idToFetch) return [];
+  try {
+    const neupIds = await prisma.neupId.findMany({
+      where: { accountId: idToFetch },
+      select: { id: true, isPrimary: true }
+    });
+    return neupIds;
+  } catch (error) {
+    await logError('database', error, `getUserNeupIdDetails: ${idToFetch}`);
     return [];
   }
 }

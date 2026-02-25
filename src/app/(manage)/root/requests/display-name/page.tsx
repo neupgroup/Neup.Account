@@ -11,70 +11,8 @@ import { Ban, Loader2 } from '@/components/icons';
 import { BackButton } from '@/components/ui/back-button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { checkPermissions } from '@/lib/user';
-import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs, doc, updateDoc, writeBatch } from 'firebase/firestore';
-import { getUserProfile } from '@/lib/user';
 import { useToast } from '@/hooks/use-toast';
-import { logActivity } from '@/lib/log-actions';
-import { getPersonalAccountId } from '@/lib/auth-actions';
-
-type DisplayNameRequest = {
-  id: string;
-  accountId: string;
-  userFullName: string;
-  requestedDisplayName: string;
-  createdAt: string;
-};
-
-async function getRequests(): Promise<DisplayNameRequest[]> {
-  const requestsRef = collection(db, 'requests');
-  const q = query(requestsRef, where('action', '==', 'display_name_request'), where('status', '==', 'pending'));
-  const querySnapshot = await getDocs(q);
-
-  if (querySnapshot.empty) {
-    return [];
-  }
-
-  const requests = await Promise.all(
-    querySnapshot.docs.map(async (docSnap) => {
-      const data = docSnap.data();
-      const profile = await getUserProfile(data.accountId);
-      return {
-        id: docSnap.id,
-        accountId: data.accountId,
-        userFullName: profile?.nameDisplay || `${profile?.nameFirst || ''} ${profile?.nameLast || ''}`.trim() || 'Unknown',
-        requestedDisplayName: data.requestedDisplayName,
-        createdAt: data.createdAt.toDate().toLocaleString(),
-      };
-    })
-  );
-  return requests;
-}
-
-async function processRequest(requestId: string, accountId: string, displayName: string, approve: boolean) {
-    const adminId = await getPersonalAccountId();
-    if (!adminId) {
-        return { success: false, error: "Administrator not authenticated."};
-    }
-    
-    const batch = writeBatch(db);
-    
-    // Update request status
-    const requestRef = doc(db, 'requests', requestId);
-    batch.update(requestRef, { status: approve ? 'approved' : 'rejected' });
-
-    if (approve) {
-        // Update user's account document
-        const accountRef = doc(db, 'account', accountId);
-        batch.update(accountRef, { displayName });
-        await logActivity(accountId, `Display name change approved: ${displayName}`, "Success", undefined, adminId);
-    } else {
-        await logActivity(accountId, `Display name change rejected: ${displayName}`, "Failed", undefined, adminId);
-    }
-    
-    await batch.commit();
-    return { success: true };
-}
+import { getDisplayNameRequests, processDisplayNameRequest, type DisplayNameRequest } from '@/actions/root/requests/display-name';
 
 
 export default function DisplayNameRequestsPage() {
@@ -86,7 +24,7 @@ export default function DisplayNameRequestsPage() {
 
     const fetchRequests = async () => {
         setLoading(true);
-        const data = await getRequests();
+        const data = await getDisplayNameRequests();
         setRequests(data);
         setLoading(false);
     };
@@ -107,7 +45,7 @@ export default function DisplayNameRequestsPage() {
 
     const handleAction = (requestId: string, accountId: string, displayName: string, approve: boolean) => {
         startTransition(async () => {
-            const result = await processRequest(requestId, accountId, displayName, approve);
+            const result = await processDisplayNameRequest(requestId, accountId, displayName, approve);
             if (result.success) {
                 toast({ title: "Success", description: `Request has been ${approve ? 'approved' : 'rejected'}.` });
                 fetchRequests();

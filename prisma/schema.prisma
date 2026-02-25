@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/client"
 }
 
@@ -29,9 +29,13 @@ model Account {
   dateEstablished DateTime?
   neupIdPrimary   String?
   verified        Boolean   @default(false)
+  pro             Boolean   @default(false)
   accountType     String    @default("individual")
   permit          String    @default("default") // default, addition, reduction, addition_reduction
   accountStatus   String?
+  parentBrandId   String?
+  parentBrand     Account?  @relation("BrandBranches", fields: [parentBrandId], references: [id])
+  branches        Account[] @relation("BrandBranches")
   
   // JSON fields for unstructured data like 'block'
   block           Json?
@@ -43,8 +47,40 @@ model Account {
   targetPermits   Permit[] @relation("TargetAccount")
   password        Password?
   sessions        Session[]
+  errorLogs       ErrorLog[]
+  statusLogs      AccountStatusLog[]
+  appConnections  UserAppConnection[]
+  kycRequests     KycRequest[]
+  invitations     Invitation[]   @relation("Inviter")
+  neupIdRequests  NeupIdRequest[]
+  notifications   Notification[]
+  backupCodes     BackupCode[]
+  verifications   Verification[]
+  documents       UserDocument[]
+  userContents    UserContent[]
+  totp            Totp?
+  sentRequests    Request[] @relation("SentRequests")
+  receivedRequests Request[] @relation("ReceivedRequests")
 
   @@map("accounts")
+}
+
+model Totp {
+  accountId String   @id
+  secret    String
+  createdAt DateTime @default(now())
+
+  account   Account  @relation(fields: [accountId], references: [id])
+
+  @@map("auth_totp")
+}
+
+model SystemConfig {
+  id        String   @id
+  data      Json
+  updatedAt DateTime @updatedAt
+
+  @@map("system_configs")
 }
 
 model AuthRequest {
@@ -70,6 +106,181 @@ model ActivityLog {
   geolocation     String?
 
   @@map("activity_logs")
+}
+
+model AccountStatusLog {
+  id        String   @id @default(uuid())
+  accountId String
+  status    String
+  remarks   String?
+  fromDate  DateTime @default(now())
+  moreInfo  String?
+
+  account   Account  @relation(fields: [accountId], references: [id])
+
+  @@map("account_status_logs")
+}
+
+model KycRequest {
+  id                     String   @id @default(uuid())
+  accountId              String
+  documentType           String
+  documentId             String?
+  documentPhotoUrl       String?
+  documentPhotoContentId String?
+  selfiePhotoUrl         String?
+  selfiePhotoContentId   String?
+  status                 String   @default("pending") // 'pending' | 'approved' | 'rejected'
+  rejectionReason        String?
+  submittedAt            DateTime @default(now())
+  userFullName           String?
+  userNeupId             String?
+
+  account                Account  @relation(fields: [accountId], references: [id])
+
+  @@map("kyc_requests")
+}
+
+model Permission {
+  id           String   @id @default(uuid())
+  name         String   @unique
+  appId        String?
+  access       String[]
+  description  String?
+  intendedFor  String?  @default("all") // 'all' | 'individual' | 'brand' | 'dependent'
+  type         String?  @default("addition") // 'addition' | 'reduction'
+
+  @@map("permissions")
+}
+
+model PermissionSet {
+  id           String   @id @default(uuid())
+  name         String   @unique
+  description  String?
+  permissions  String[] // Array of permission IDs or names
+
+  @@map("permission_sets")
+}
+
+model Invitation {
+  id              String   @id @default(uuid())
+  inviterAccountId String
+  inviteeEmail    String
+  role            String   @default("member")
+  status          String   @default("pending") // 'pending' | 'accepted' | 'declined' | 'expired'
+  createdAt       DateTime @default(now())
+  expiresAt       DateTime
+
+  inviter         Account  @relation("Inviter", fields: [inviterAccountId], references: [id])
+
+  @@map("invitations")
+}
+
+model NeupIdRequest {
+  id          String   @id @default(uuid())
+  accountId   String
+  requestedId String   @unique
+  status      String   @default("pending") // 'pending' | 'approved' | 'rejected'
+  reason      String?
+  submittedAt DateTime @default(now())
+
+  account     Account  @relation(fields: [accountId], references: [id])
+
+  @@map("neupid_requests")
+}
+
+model Notification {
+  id          String    @id @default(uuid())
+  accountId   String
+  action      String?
+  title       String?
+  message     String?
+  type        String    @default("info") // 'info' | 'success' | 'warning' | 'error'
+  read        Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  deletableOn DateTime?
+  persistence String?   // 'dismissable' | 'untildays' | 'permanent'
+  requestId   String?
+
+  account     Account   @relation(fields: [accountId], references: [id])
+  request     Request?  @relation(fields: [requestId], references: [id])
+
+  @@map("notifications")
+}
+
+model Request {
+  id              String   @id @default(uuid())
+  senderId        String
+  recipientId     String
+  status          String   @default("pending") // 'pending' | 'approved' | 'rejected'
+  action          String   // 'family_invitation' | 'access_invitation' | 'display_name_request'
+  type            String?  // 'partner' | 'dependent' | 'other'
+  data            Json?    @default("{}")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  sender          Account  @relation("SentRequests", fields: [senderId], references: [id])
+  recipient       Account  @relation("ReceivedRequests", fields: [recipientId], references: [id])
+  notifications   Notification[]
+
+  @@map("requests")
+}
+
+model Family {
+  id              String   @id @default(uuid())
+  createdBy       String
+  memberIds       String[]
+  members         Json     // Array of { accountId: string, addedOn: DateTime, addedBy: string, hidden: boolean, status: string }
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("families")
+}
+
+model BackupCode {
+  id          String   @id @default(uuid())
+  accountId   String
+  code        String
+  used        Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  account     Account  @relation(fields: [accountId], references: [id])
+
+  @@map("backup_codes")
+}
+
+model Verification {
+  id               String    @id @default(uuid())
+  accountId        String
+  type             String    // 'email' | 'phone' | 'identity' | 'account'
+  token            String?
+  code             String?
+  status           String    @default("pending") // 'pending' | 'verified' | 'expired' | 'approved' | 'revoked'
+  reason           String?
+  category         String?
+  verifiedBy       String?
+  revokedBy        String?
+  revocationReason String?
+  createdAt        DateTime  @default(now())
+  verifiedAt       DateTime?
+  revokedAt        DateTime?
+
+  account          Account   @relation(fields: [accountId], references: [id])
+
+  @@map("verifications")
+}
+
+model UserDocument {
+  id          String   @id @default(uuid())
+  accountId   String
+  type        String   // 'id_card' | 'passport' | 'utility_bill' | 'other'
+  url         String
+  status      String   @default("pending") // 'pending' | 'approved' | 'rejected'
+  uploadedAt  DateTime @default(now())
+
+  account     Account  @relation(fields: [accountId], references: [id])
+
+  @@map("user_documents")
 }
 
 model Contact {
@@ -99,50 +310,140 @@ model Password {
   passwordLastChanged DateTime @default(now())
   
   account             Account  @relation(fields: [accountId], references: [id])
-  
-  @@map("auth_passwords")
+
+  @@map("passwords")
 }
 
 model Permit {
-  id            String  @id @default(uuid())
-  accountId     String
-  targetAccountId String?
-  forSelf       Boolean @default(false)
-  isRoot        Boolean @default(false)
-  permissions   String[]
-  restrictions  String[]
-  createdOn     DateTime @default(now())
+  id                String   @id @default(uuid())
+  permitType        String?  // e.g. "property", "vehicle", "business"
+  permitSubType     String?  // e.g. "residential", "commercial"
+  permitNumber      String?
+  issuingAuthority  String?
+  issueDate         DateTime?
+  expiryDate        DateTime?
+  status            String    @default("active") // active, expired, revoked
+  accountId         String
+  targetAccountId   String?
+  forSelf           Boolean   @default(false)
+  isRoot            Boolean   @default(false)
+  fullAccess        Boolean   @default(false)
+  permissions       String[]
+  restrictions      String[]
+  createdOn         DateTime  @default(now())
+  managedBy         String?
   
-  account       Account @relation(fields: [accountId], references: [id])
-  targetAccount Account? @relation("TargetAccount", fields: [targetAccountId], references: [id])
+  account           Account @relation(fields: [accountId], references: [id])
+  targetAccount     Account? @relation("TargetAccount", fields: [targetAccountId], references: [id])
 
   @@map("permits")
 }
 
-model Permission {
-  id      String   @id @default(uuid())
-  name    String   @unique
-  type    String   @default("addition") // addition, reduction
-  appId   String?
-  access  String[]
+model Session {
+  id          String   @id @default(uuid())
+  accountId   String
+  ipAddress   String
+  userAgent   String
+  lastLoggedIn DateTime
+  loginType     String
+  geolocation String?
+  expiresOn       DateTime?
+  isExpired       Boolean   @default(false)
+  authSessionKey  String?
+  dependentKeys   Json?
+  
+  account     Account  @relation(fields: [accountId], references: [id])
 
-  @@map("permissions")
+  @@map("sessions")
 }
 
-model Session {
-  id              String   @id @default(uuid())
-  accountId       String
-  authSessionKey  String
-  ipAddress       String
-  userAgent       String
-  isExpired       Boolean  @default(false)
-  expiresOn       DateTime
-  lastLoggedIn    DateTime @default(now())
-  loginType       String
-  geolocation     String?
-  dependentKeys   Json?    @default("[]") // Stores array of { app, key, expiresOn, isUsed }
+// New models for error tracking and bug reports
+model ErrorLog {
+  id          String    @id @default(uuid())
+  type        String    // 'ai' | 'database' | 'validation' | 'auth' | 'unknown'
+  context     String
+  message     String
+  status      String    @default("new") // 'new' | 'in_progress' | 'solved'
+  accountId   String?
+  ipAddress   String?
+  geolocation String?
+  reproSteps  String?
+  solution    String?
+  solvedBy    String?
+  problemLevel String?   // 'hot' | 'warm' | 'cold'
+  timestamp   DateTime  @default(now())
   
-  account         Account  @relation(fields: [accountId], references: [id])
+  account     Account?  @relation(fields: [accountId], references: [id])
+
+  @@map("error_logs")
+}
+
+model BugReport {
+  id          String    @id @default(uuid())
+  reportType  String    @default("submitted")
+  context     String    // title
+  message     String    // description
+  status      String    @default("new") // 'new' | 'in_progress' | 'solved'
+  reportedBy  String?
+  timestamp   DateTime  @default(now())
   
-  @@map("sessions")
+  @@map("bug_reports")
+}
+
+model UserContent {
+  id           String   @id @default(uuid())
+  contentId    String?
+  uploaderId   String?
+  forAccountId String
+  platform     String
+  url          String
+  originalName String?
+  fileType     String?
+  size         Int?
+  uploadedAt   DateTime @default(now())
+  contentType  String? // 'profile_photo' | 'document' | 'other'
+
+  account Account @relation(fields: [forAccountId], references: [id])
+
+  @@map("user_content")
+}
+
+model RecoveryContact {
+  id               String   @id @default(uuid())
+  ownerAccountId   String
+  recoveryAccountId String
+  recoveryNeupId   String
+  status           String   @default("pending") // 'pending' | 'approved' | 'rejected'
+  createdAt        DateTime @default(now())
+
+  @@map("recovery_contacts")
+}
+
+model Application {
+  id          String   @id
+  name        String
+  party       String   @default("third") // 'first' | 'third'
+  description String?
+  icon        String?
+  website     String?
+  developer   String?
+  appSecret   String?
+  createdAt   DateTime @default(now())
+
+  connections UserAppConnection[]
+
+  @@map("applications")
+}
+
+model UserAppConnection {
+  id        String   @id @default(uuid())
+  accountId String
+  appId     String
+  connectedAt DateTime @default(now())
+
+  account     Account     @relation(fields: [accountId], references: [id])
+  application Application @relation(fields: [appId], references: [id])
+
+  @@unique([accountId, appId])
+  @@map("user_app_connections")
 }

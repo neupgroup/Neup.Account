@@ -52,14 +52,33 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Account: 'Account',
+  Totp: 'Totp',
+  SystemConfig: 'SystemConfig',
   AuthRequest: 'AuthRequest',
   ActivityLog: 'ActivityLog',
+  AccountStatusLog: 'AccountStatusLog',
+  KycRequest: 'KycRequest',
+  Permission: 'Permission',
+  PermissionSet: 'PermissionSet',
+  Invitation: 'Invitation',
+  NeupIdRequest: 'NeupIdRequest',
+  Notification: 'Notification',
+  Request: 'Request',
+  Family: 'Family',
+  BackupCode: 'BackupCode',
+  Verification: 'Verification',
+  UserDocument: 'UserDocument',
   Contact: 'Contact',
   NeupId: 'NeupId',
   Password: 'Password',
   Permit: 'Permit',
-  Permission: 'Permission',
-  Session: 'Session'
+  Session: 'Session',
+  ErrorLog: 'ErrorLog',
+  BugReport: 'BugReport',
+  UserContent: 'UserContent',
+  RecoveryContact: 'RecoveryContact',
+  Application: 'Application',
+  UserAppConnection: 'UserAppConnection'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -97,13 +116,33 @@ export const AccountScalarFieldEnum = {
   dateEstablished: 'dateEstablished',
   neupIdPrimary: 'neupIdPrimary',
   verified: 'verified',
+  pro: 'pro',
   accountType: 'accountType',
   permit: 'permit',
   accountStatus: 'accountStatus',
+  parentBrandId: 'parentBrandId',
   block: 'block'
 } as const
 
 export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
+
+
+export const TotpScalarFieldEnum = {
+  accountId: 'accountId',
+  secret: 'secret',
+  createdAt: 'createdAt'
+} as const
+
+export type TotpScalarFieldEnum = (typeof TotpScalarFieldEnum)[keyof typeof TotpScalarFieldEnum]
+
+
+export const SystemConfigScalarFieldEnum = {
+  id: 'id',
+  data: 'data',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SystemConfigScalarFieldEnum = (typeof SystemConfigScalarFieldEnum)[keyof typeof SystemConfigScalarFieldEnum]
 
 
 export const AuthRequestScalarFieldEnum = {
@@ -131,6 +170,172 @@ export const ActivityLogScalarFieldEnum = {
 } as const
 
 export type ActivityLogScalarFieldEnum = (typeof ActivityLogScalarFieldEnum)[keyof typeof ActivityLogScalarFieldEnum]
+
+
+export const AccountStatusLogScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  status: 'status',
+  remarks: 'remarks',
+  fromDate: 'fromDate',
+  moreInfo: 'moreInfo'
+} as const
+
+export type AccountStatusLogScalarFieldEnum = (typeof AccountStatusLogScalarFieldEnum)[keyof typeof AccountStatusLogScalarFieldEnum]
+
+
+export const KycRequestScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  documentType: 'documentType',
+  documentId: 'documentId',
+  documentPhotoUrl: 'documentPhotoUrl',
+  documentPhotoContentId: 'documentPhotoContentId',
+  selfiePhotoUrl: 'selfiePhotoUrl',
+  selfiePhotoContentId: 'selfiePhotoContentId',
+  status: 'status',
+  rejectionReason: 'rejectionReason',
+  submittedAt: 'submittedAt',
+  userFullName: 'userFullName',
+  userNeupId: 'userNeupId'
+} as const
+
+export type KycRequestScalarFieldEnum = (typeof KycRequestScalarFieldEnum)[keyof typeof KycRequestScalarFieldEnum]
+
+
+export const PermissionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  appId: 'appId',
+  access: 'access',
+  description: 'description',
+  intendedFor: 'intendedFor',
+  type: 'type'
+} as const
+
+export type PermissionScalarFieldEnum = (typeof PermissionScalarFieldEnum)[keyof typeof PermissionScalarFieldEnum]
+
+
+export const PermissionSetScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  permissions: 'permissions'
+} as const
+
+export type PermissionSetScalarFieldEnum = (typeof PermissionSetScalarFieldEnum)[keyof typeof PermissionSetScalarFieldEnum]
+
+
+export const InvitationScalarFieldEnum = {
+  id: 'id',
+  inviterAccountId: 'inviterAccountId',
+  inviteeEmail: 'inviteeEmail',
+  role: 'role',
+  status: 'status',
+  createdAt: 'createdAt',
+  expiresAt: 'expiresAt'
+} as const
+
+export type InvitationScalarFieldEnum = (typeof InvitationScalarFieldEnum)[keyof typeof InvitationScalarFieldEnum]
+
+
+export const NeupIdRequestScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  requestedId: 'requestedId',
+  status: 'status',
+  reason: 'reason',
+  submittedAt: 'submittedAt'
+} as const
+
+export type NeupIdRequestScalarFieldEnum = (typeof NeupIdRequestScalarFieldEnum)[keyof typeof NeupIdRequestScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  action: 'action',
+  title: 'title',
+  message: 'message',
+  type: 'type',
+  read: 'read',
+  createdAt: 'createdAt',
+  deletableOn: 'deletableOn',
+  persistence: 'persistence',
+  requestId: 'requestId'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+export const RequestScalarFieldEnum = {
+  id: 'id',
+  senderId: 'senderId',
+  recipientId: 'recipientId',
+  status: 'status',
+  action: 'action',
+  type: 'type',
+  data: 'data',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RequestScalarFieldEnum = (typeof RequestScalarFieldEnum)[keyof typeof RequestScalarFieldEnum]
+
+
+export const FamilyScalarFieldEnum = {
+  id: 'id',
+  createdBy: 'createdBy',
+  memberIds: 'memberIds',
+  members: 'members',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FamilyScalarFieldEnum = (typeof FamilyScalarFieldEnum)[keyof typeof FamilyScalarFieldEnum]
+
+
+export const BackupCodeScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  code: 'code',
+  used: 'used',
+  createdAt: 'createdAt'
+} as const
+
+export type BackupCodeScalarFieldEnum = (typeof BackupCodeScalarFieldEnum)[keyof typeof BackupCodeScalarFieldEnum]
+
+
+export const VerificationScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  type: 'type',
+  token: 'token',
+  code: 'code',
+  status: 'status',
+  reason: 'reason',
+  category: 'category',
+  verifiedBy: 'verifiedBy',
+  revokedBy: 'revokedBy',
+  revocationReason: 'revocationReason',
+  createdAt: 'createdAt',
+  verifiedAt: 'verifiedAt',
+  revokedAt: 'revokedAt'
+} as const
+
+export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
+
+
+export const UserDocumentScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  type: 'type',
+  url: 'url',
+  status: 'status',
+  uploadedAt: 'uploadedAt'
+} as const
+
+export type UserDocumentScalarFieldEnum = (typeof UserDocumentScalarFieldEnum)[keyof typeof UserDocumentScalarFieldEnum]
 
 
 export const ContactScalarFieldEnum = {
@@ -163,44 +368,128 @@ export type PasswordScalarFieldEnum = (typeof PasswordScalarFieldEnum)[keyof typ
 
 export const PermitScalarFieldEnum = {
   id: 'id',
+  permitType: 'permitType',
+  permitSubType: 'permitSubType',
+  permitNumber: 'permitNumber',
+  issuingAuthority: 'issuingAuthority',
+  issueDate: 'issueDate',
+  expiryDate: 'expiryDate',
+  status: 'status',
   accountId: 'accountId',
   targetAccountId: 'targetAccountId',
   forSelf: 'forSelf',
   isRoot: 'isRoot',
+  fullAccess: 'fullAccess',
   permissions: 'permissions',
   restrictions: 'restrictions',
-  createdOn: 'createdOn'
+  createdOn: 'createdOn',
+  managedBy: 'managedBy'
 } as const
 
 export type PermitScalarFieldEnum = (typeof PermitScalarFieldEnum)[keyof typeof PermitScalarFieldEnum]
 
 
-export const PermissionScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  type: 'type',
-  appId: 'appId',
-  access: 'access'
-} as const
-
-export type PermissionScalarFieldEnum = (typeof PermissionScalarFieldEnum)[keyof typeof PermissionScalarFieldEnum]
-
-
 export const SessionScalarFieldEnum = {
   id: 'id',
   accountId: 'accountId',
-  authSessionKey: 'authSessionKey',
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
-  isExpired: 'isExpired',
-  expiresOn: 'expiresOn',
   lastLoggedIn: 'lastLoggedIn',
   loginType: 'loginType',
   geolocation: 'geolocation',
+  expiresOn: 'expiresOn',
+  isExpired: 'isExpired',
+  authSessionKey: 'authSessionKey',
   dependentKeys: 'dependentKeys'
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+
+
+export const ErrorLogScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  context: 'context',
+  message: 'message',
+  status: 'status',
+  accountId: 'accountId',
+  ipAddress: 'ipAddress',
+  geolocation: 'geolocation',
+  reproSteps: 'reproSteps',
+  solution: 'solution',
+  solvedBy: 'solvedBy',
+  problemLevel: 'problemLevel',
+  timestamp: 'timestamp'
+} as const
+
+export type ErrorLogScalarFieldEnum = (typeof ErrorLogScalarFieldEnum)[keyof typeof ErrorLogScalarFieldEnum]
+
+
+export const BugReportScalarFieldEnum = {
+  id: 'id',
+  reportType: 'reportType',
+  context: 'context',
+  message: 'message',
+  status: 'status',
+  reportedBy: 'reportedBy',
+  timestamp: 'timestamp'
+} as const
+
+export type BugReportScalarFieldEnum = (typeof BugReportScalarFieldEnum)[keyof typeof BugReportScalarFieldEnum]
+
+
+export const UserContentScalarFieldEnum = {
+  id: 'id',
+  contentId: 'contentId',
+  uploaderId: 'uploaderId',
+  forAccountId: 'forAccountId',
+  platform: 'platform',
+  url: 'url',
+  originalName: 'originalName',
+  fileType: 'fileType',
+  size: 'size',
+  uploadedAt: 'uploadedAt',
+  contentType: 'contentType'
+} as const
+
+export type UserContentScalarFieldEnum = (typeof UserContentScalarFieldEnum)[keyof typeof UserContentScalarFieldEnum]
+
+
+export const RecoveryContactScalarFieldEnum = {
+  id: 'id',
+  ownerAccountId: 'ownerAccountId',
+  recoveryAccountId: 'recoveryAccountId',
+  recoveryNeupId: 'recoveryNeupId',
+  status: 'status',
+  createdAt: 'createdAt'
+} as const
+
+export type RecoveryContactScalarFieldEnum = (typeof RecoveryContactScalarFieldEnum)[keyof typeof RecoveryContactScalarFieldEnum]
+
+
+export const ApplicationScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  party: 'party',
+  description: 'description',
+  icon: 'icon',
+  website: 'website',
+  developer: 'developer',
+  appSecret: 'appSecret',
+  createdAt: 'createdAt'
+} as const
+
+export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
+
+
+export const UserAppConnectionScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  appId: 'appId',
+  connectedAt: 'connectedAt'
+} as const
+
+export type UserAppConnectionScalarFieldEnum = (typeof UserAppConnectionScalarFieldEnum)[keyof typeof UserAppConnectionScalarFieldEnum]
 
 
 export const SortOrder = {

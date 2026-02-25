@@ -55,7 +55,7 @@ export async function getActiveSession(): Promise<Session | null> {
     return {
       accountId: session.accountId,
       sessionId: sessionId,
-      sessionKey: session.authSessionKey,
+      sessionKey: session.authSessionKey || '',
     };
   } catch (error) {
     await logError('database', error, 'getActiveSession');

@@ -1,7 +1,6 @@
 'use server';
 
-import {db} from '@/lib/firebase';
-import {collection, getDocs, doc, updateDoc, deleteDoc, query, orderBy, getDoc, startAfter, limit, where} from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import {revalidatePath} from 'next/cache';
 import {logError} from '@/lib/logger';
 import {checkPermissions, getUserProfile} from '@/lib/user';
@@ -17,36 +16,27 @@ export async function getSystemErrors(
         const canView = await checkPermissions(['root.errors.view']);
         if (!canView) return { errors: [], hasNextPage: false };
 
-        const errorsCollection = collection(db, 'error');
-        let constraints: any[] = [];
-        constraints.push(orderBy('timestamp', 'desc'));
+        const logs = await prisma.errorLog.findMany({
+            where: { type: { not: 'submitted' } },
+            orderBy: [{ timestamp: 'desc' }, { id: 'desc' }],
+            ...(startAfterDocId
+                ? { cursor: { id: startAfterDocId }, skip: 1 }
+                : {}),
+            take: PAGE_SIZE_ERRORS + 1,
+        });
 
-        if (startAfterDocId) {
-            const startDoc = await getDoc(doc(db, 'error', startAfterDocId));
-            constraints.push(startAfter(startDoc));
-        }
+        const hasNextPage = logs.length > PAGE_SIZE_ERRORS;
+        const pageLogs = hasNextPage ? logs.slice(0, PAGE_SIZE_ERRORS) : logs;
 
-        constraints.push(limit(PAGE_SIZE_ERRORS + 1));
-
-        const q = query(errorsCollection, ...constraints);
-        const errorsSnapshot = await getDocs(q);
-        const pageDocs = errorsSnapshot.docs;
-
-        const hasNextPage = pageDocs.length > PAGE_SIZE_ERRORS;
-        if (hasNextPage) {
-            pageDocs.pop();
-        }
-
-        const errors: SystemError[] = pageDocs.map(doc => {
-            const data = doc.data();
-            const timestamp = data.timestamp?.toDate() || new Date();
+        const errors: SystemError[] = pageLogs.map((log) => {
+            const timestamp = log.timestamp.toLocaleString();
             return {
-                id: doc.id,
-                type: data.type,
-                context: data.context,
-                message: data.message.split('\n')[0], // Show first line only
-                timestamp: timestamp.toLocaleString(),
-                status: data.status || 'new'
+                id: log.id,
+                type: log.type as any,
+                context: log.context,
+                message: log.message.split('\n')[0], // Show first line only
+                timestamp: timestamp,
+                status: log.status as 'new' | 'in_progress' | 'solved',
             };
         });
 
@@ -67,17 +57,12 @@ export async function getErrorDetails(id: string): Promise<SystemErrorDetails | 
          const canView = await checkPermissions(['root.errors.view']);
         if (!canView) return null;
 
-        const errorRef = doc(db, 'error', id);
-        const errorDoc = await getDoc(errorRef);
+        const log = await prisma.errorLog.findUnique({ where: { id } });
+        if (!log) return null;
 
-        if (!errorDoc.exists()) {
-            return null;
-        }
-
-        const data = errorDoc.data();
         let user;
-        if (data.accountId) {
-            const userProfile = await getUserProfile(data.accountId);
+        if (log.accountId) {
+            const userProfile = await getUserProfile(log.accountId);
             user = {
                 name: userProfile?.nameDisplay || 'Unknown User',
                 neupId: userProfile?.neupIdPrimary || 'N/A'
@@ -85,20 +70,20 @@ export async function getErrorDetails(id: string): Promise<SystemErrorDetails | 
         }
 
         return {
-            id: errorDoc.id,
-            type: data.type,
-            context: data.context,
-            message: data.message.split('\n')[0],
-            fullError: data.message,
-            timestamp: data.timestamp?.toDate().toLocaleString() || 'N/A',
-            status: data.status || 'new',
+            id: log.id,
+            type: log.type as any,
+            context: log.context,
+            message: log.message.split('\n')[0],
+            fullError: log.message,
+            timestamp: log.timestamp.toLocaleString(),
+            status: log.status as 'new' | 'in_progress' | 'solved',
             user,
-            ipAddress: data.ipAddress,
-            geolocation: data.geolocation,
-            reproSteps: data.reproSteps,
-            solution: data.solution,
-            solvedBy: data.solvedBy,
-            problemLevel: data.problemLevel
+            ipAddress: log.ipAddress ?? undefined,
+            geolocation: log.geolocation ?? undefined,
+            reproSteps: log.reproSteps ?? undefined,
+            solution: log.solution ?? undefined,
+            solvedBy: log.solvedBy ?? undefined,
+            problemLevel: log.problemLevel as any
         }
 
     } catch (e) {
@@ -119,43 +104,32 @@ export async function getReportedBugs({startAfter: startAfterDocId}: { startAfte
     if (!canView) return {bugs: [], hasNextPage: false};
 
     try {
-        const bugsCollection = collection(db, 'error');
-        const constraints: any[] = [
-            where('reportType', '==', 'submitted'),
-            orderBy('timestamp', 'desc'),
-        ];
+        const bugs = await prisma.bugReport.findMany({
+            where: { reportType: 'submitted' },
+            orderBy: [{ timestamp: 'desc' }, { id: 'desc' }],
+            ...(startAfterDocId
+                ? { cursor: { id: startAfterDocId }, skip: 1 }
+                : {}),
+            take: PAGE_SIZE_BUGS + 1,
+        });
 
-        if (startAfterDocId) {
-            const startDoc = await getDoc(doc(db, 'error', startAfterDocId));
-            constraints.push(startAfter(startDoc));
-        }
+        const hasNextPage = bugs.length > PAGE_SIZE_BUGS;
+        const pageBugs = hasNextPage ? bugs.slice(0, PAGE_SIZE_BUGS) : bugs;
 
-        constraints.push(limit(PAGE_SIZE_BUGS + 1));
-
-        const q = query(bugsCollection, ...constraints);
-        const snapshot = await getDocs(q);
-
-        const pageDocs = snapshot.docs;
-        const hasNextPage = pageDocs.length > PAGE_SIZE_BUGS;
-        if (hasNextPage) {
-            pageDocs.pop();
-        }
-
-        const bugs: BugReport[] = await Promise.all(pageDocs.map(async (doc) => {
-            const data = doc.data();
-            const reporterProfile = data.reported_by ? await getUserProfile(data.reported_by) : null;
+        const bugReports: BugReport[] = await Promise.all(pageBugs.map(async (bug) => {
+            const reporterProfile = bug.reportedBy ? await getUserProfile(bug.reportedBy) : null;
 
             return {
-                id: doc.id,
-                reportedBy: reporterProfile?.nameDisplay || data.reported_by || 'Anonymous',
-                title: data.context,
-                description: data.message,
-                createdAt: data.timestamp?.toDate().toLocaleString() || 'N/A',
-                status: data.status || 'new',
+                id: bug.id,
+                reportedBy: reporterProfile?.nameDisplay || bug.reportedBy || 'Anonymous',
+                title: bug.context,
+                description: bug.message,
+                createdAt: bug.timestamp.toLocaleString(),
+                status: bug.status as 'new' | 'in_progress' | 'solved',
             };
         }));
 
-        return {bugs, hasNextPage};
+        return {bugs: bugReports, hasNextPage};
 
     } catch (error) {
         await logError('database', error, 'getReportedBugs');
@@ -168,24 +142,21 @@ export async function getBugDetails(id: string): Promise<BugReportDetails | null
     if (!canView) return null;
 
     try {
-        const bugRef = doc(db, 'error', id);
-        const bugDoc = await getDoc(bugRef);
-
-        if (!bugDoc.exists() || bugDoc.data().reportType !== 'submitted') {
+        const bug = await prisma.bugReport.findUnique({ where: { id } });
+        if (!bug || bug.reportType !== 'submitted') {
             return null;
         }
 
-        const data = bugDoc.data();
-        const reporterProfile = data.reported_by ? await getUserProfile(data.reported_by) : null;
+        const reporterProfile = bug.reportedBy ? await getUserProfile(bug.reportedBy) : null;
 
         return {
-            id: bugDoc.id,
+            id: bug.id,
             reportedBy: reporterProfile?.nameDisplay || 'Anonymous',
-            reporterId: data.reported_by,
-            title: data.context,
-            description: data.message,
-            createdAt: data.timestamp?.toDate().toLocaleString() || 'N/A',
-            status: data.status || 'new',
+            reporterId: bug.reportedBy ?? '',
+            title: bug.context,
+            description: bug.message,
+            createdAt: bug.timestamp.toLocaleString(),
+            status: bug.status as 'new' | 'in_progress' | 'solved',
         };
     } catch (error) {
         await logError('database', error, `getBugDetails: ${id}`);
@@ -202,8 +173,7 @@ export async function updateBugStatus(id: string, status: 'new' | 'in_progress' 
     if (!canEdit) return {success: false, error: 'Permission denied.'};
 
     try {
-        const bugRef = doc(db, 'error', id);
-        await updateDoc(bugRef, {status});
+        await prisma.bugReport.update({ where: { id }, data: { status } });
         revalidatePath(`/manage/root/site/bugs/${id}`);
         revalidatePath('/manage/root/site/bugs');
         return {success: true};
@@ -219,7 +189,7 @@ export async function deleteBugReport(id: string): Promise<{ success: boolean; e
     if (!canDelete) return {success: false, error: 'Permission denied.'};
 
     try {
-        await deleteDoc(doc(db, 'error', id));
+        await prisma.bugReport.delete({ where: { id } });
         revalidatePath('/manage/root/site/bugs');
         return {success: true};
     } catch (error) {

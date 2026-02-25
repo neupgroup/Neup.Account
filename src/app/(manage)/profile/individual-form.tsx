@@ -25,8 +25,6 @@ import { Calendar } from "@/components/ui/calendar"
 import { Label } from '@/components/ui/label'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { GeolocationContext } from '@/context/geolocation-context'
-import { doc, getDoc } from 'firebase/firestore'
-import { db } from '@/lib/firebase'
 import { Loader2 } from '@/components/icons'
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
@@ -66,18 +64,14 @@ export function IndividualProfileForm({ accountId }: { accountId: string }) {
 
         const fetchData = async () => {
             try {
-                const [profileData, neupIdsData, contactsData, accountDoc] = await Promise.all([
+                const [profileData, neupIdsData, contactsData] = await Promise.all([
                     getUserProfile(accountId),
                     getUserNeupIds(accountId),
                     getUserContacts(accountId),
-                    getDoc(doc(db, 'account', accountId)),
                 ]);
 
-                if (accountDoc.exists()) {
-                    setIsPro(accountDoc.data()?.pro === true);
-                }
-
                 if (profileData) {
+                    setIsPro(profileData.pro === true);
                     let formGender = profileData.gender || 'prefer_not_to_say';
                     let formCustomGender = "";
 

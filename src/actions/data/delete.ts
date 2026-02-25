@@ -5,8 +5,7 @@ import { z } from "zod";
 import { getActiveAccountId } from "@/lib/auth-actions";
 import { logActivity } from "@/lib/log-actions";
 import { logError } from "@/lib/logger";
-import { db } from "@/lib/firebase";
-import { doc, getDoc, writeBatch, collection, serverTimestamp, updateDoc } from "firebase/firestore";
+import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { checkPermissions } from "@/lib/user";
 import { logoutActiveSession } from "../auth/signout";
@@ -33,44 +32,42 @@ export async function requestAccountDeletion(data: z.infer<typeof formSchema>, g
   const { password } = validation.data;
 
   try {
-    const accountRef = doc(db, 'account', accountId);
-    const authRef = doc(db, 'auth_password', accountId);
-    
-    const [accountDoc, authDoc] = await Promise.all([
-        getDoc(accountRef),
-        getDoc(authRef)
+    const [account, authData] = await Promise.all([
+        prisma.account.findUnique({ where: { id: accountId } }),
+        prisma.password.findUnique({ where: { accountId } })
     ]);
     
-    if (accountDoc.exists() && accountDoc.data().accountStatus === 'deletion_requested') {
+    if (account && account.accountStatus === 'deletion_requested') {
         return { success: false, error: "Your account is already scheduled for deletion." };
     }
 
-    if (!authDoc.exists()) {
+    if (!authData) {
         await logActivity(accountId, 'Account Deletion Request Failed', 'Failed', undefined, undefined, geolocation);
         return { success: false, error: "Authentication data not found." };
     }
-    const isMatch = await bcrypt.compare(password, authDoc.data().pass);
+    const isMatch = await bcrypt.compare(password, authData.hash);
     if (!isMatch) {
         await logActivity(accountId, 'Account Deletion Request Failed', 'Failed', undefined, undefined, geolocation);
         return { success: false, error: "The password you entered is incorrect." };
     }
     
-    const batch = writeBatch(db);
-
-    // Update the status in the account document
-    batch.update(accountRef, { accountStatus: 'deletion_requested' });
-
-    // Create a log in the new account_status collection
-    const statusLogRef = doc(collection(db, 'account_status'));
-    batch.set(statusLogRef, {
-        account_id: accountId,
-        status: 'deletion_requested',
-        remarks: 'User initiated deletion request.',
-        from_date: serverTimestamp(),
-        more_info: 'User verified password to request deletion.'
-    });
-
-    await batch.commit();
+    await prisma.$transaction([
+        // Update the status in the account document
+        prisma.account.update({
+            where: { id: accountId },
+            data: { accountStatus: 'deletion_requested' }
+        }),
+        // Create a log in the new account_status collection
+        prisma.accountStatusLog.create({
+            data: {
+                accountId: accountId,
+                status: 'deletion_requested',
+                remarks: 'User initiated deletion request.',
+                fromDate: new Date(),
+                moreInfo: 'User verified password to request deletion.'
+            }
+        })
+    ]);
 
     await logActivity(accountId, "Account Deletion Requested", "Success", undefined, undefined, geolocation);
     await logoutActiveSession();
@@ -86,8 +83,10 @@ export async function requestAccountDeletion(data: z.infer<typeof formSchema>, g
 
 export async function cancelAccountDeletion(accountId: string): Promise<{ success: boolean; error?: string }> {
     try {
-        const accountRef = doc(db, 'account', accountId);
-        await updateDoc(accountRef, { accountStatus: 'active' });
+        await prisma.account.update({
+            where: { id: accountId },
+            data: { accountStatus: 'active' }
+        });
 
         await logActivity(accountId, "Account Deletion Cancelled", "Success");
         return { success: true };

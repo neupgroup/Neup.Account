@@ -1,7 +1,6 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { checkPermissions } from '@/lib/user';
 import { logError } from '@/lib/logger';
@@ -25,32 +24,21 @@ export async function getConnectedApplications(): Promise<ConnectedApplications>
     }
 
     try {
-        // Step 1: Find all app connections for the user
-        const connectionsRef = collection(db, 'user_app_connections');
-        const connectionsQuery = query(connectionsRef, where('accountId', '==', accountId));
-        const connectionsSnapshot = await getDocs(connectionsQuery);
+        const connections = await prisma.userAppConnection.findMany({
+            where: { accountId },
+            include: { application: true }
+        });
 
-        if (connectionsSnapshot.empty) {
-            return { firstParty: [], thirdParty: [] };
-        }
+        const allApps: Application[] = connections.map((conn: any) => ({
+            id: conn.application.id,
+            name: conn.application.name,
+            party: conn.application.party as 'first' | 'third',
+            description: conn.application.description || '',
+            icon: conn.application.icon as any || undefined,
+            website: conn.application.website || undefined,
+            developer: conn.application.developer || undefined,
+        }));
 
-        const appIds = connectionsSnapshot.docs.map(doc => doc.data().appId);
-        
-        if (appIds.length === 0) {
-            return { firstParty: [], thirdParty: [] };
-        }
-
-        // Step 2: Fetch details for those apps
-        const appsRef = collection(db, 'applications');
-        const appsQuery = query(appsRef, where('__name__', 'in', appIds));
-        const appsSnapshot = await getDocs(appsQuery);
-
-        const allApps: Application[] = appsSnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-        } as Application));
-
-        // Step 3: Categorize apps
         const firstParty = allApps.filter(app => app.party === 'first');
         const thirdParty = allApps.filter(app => app.party === 'third');
 
@@ -70,13 +58,19 @@ export async function getApplicationDetails(appId: string): Promise<Application 
     }
     
     try {
-        const appRef = doc(db, 'applications', appId);
-        const appDoc = await getDoc(appRef);
+        const app = await prisma.application.findUnique({
+            where: { id: appId }
+        });
 
-        if (appDoc.exists()) {
+        if (app) {
             return {
-                id: appDoc.id,
-                ...appDoc.data()
+                id: app.id,
+                name: app.name,
+                party: app.party as 'first' | 'third',
+                description: app.description || '',
+                icon: app.icon as any || undefined,
+                website: (app as any).website || undefined,
+                developer: app.developer || undefined,
             } as Application;
         }
 

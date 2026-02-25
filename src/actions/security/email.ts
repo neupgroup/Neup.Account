@@ -1,7 +1,5 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import { doc, getDoc, setDoc, deleteDoc, collection } from 'firebase/firestore';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
 import { z } from 'zod';
@@ -10,12 +8,9 @@ import { getPersonalAccountId } from '@/lib/auth-actions';
 import { checkPermissions } from '@/lib/user';
 import { emailFormSchema } from '@/schemas/security';
 import { createNotification } from '../notifications';
+import prisma from '@/lib/prisma';
 
 const CONTACT_TYPE = 'recoveryEmail';
-
-function getDocRef(accountId: string) {
-    return doc(db, 'contact', `${CONTACT_TYPE}_${accountId}`);
-}
 
 export async function getRecoveryEmail(): Promise<string | null> {
     try {
@@ -25,12 +20,10 @@ export async function getRecoveryEmail(): Promise<string | null> {
         const accountId = await getPersonalAccountId();
         if (!accountId) return null;
 
-        const contactRef = getDocRef(accountId);
-        const contactDoc = await getDoc(contactRef);
-        
-        if (contactDoc.exists()) {
-            return contactDoc.data().value || null;
-        }
+        const contact = await prisma.contact.findFirst({
+            where: { accountId, contactType: CONTACT_TYPE },
+        });
+        if (contact) return contact.value || null;
 
         return null;
     } catch (error) {
@@ -56,17 +49,19 @@ export async function addRecoveryEmail(data: z.infer<typeof emailFormSchema>): P
         }
         
         const { email } = validation.data;
-        const contactRef = getDocRef(accountId);
-
-        const currentDoc = await getDoc(contactRef);
-        if (currentDoc.exists()) {
+        const existing = await prisma.contact.findFirst({
+            where: { accountId, contactType: CONTACT_TYPE },
+        });
+        if (existing) {
             return { success: false, error: "A recovery email already exists. Please remove it first." };
         }
 
-        await setDoc(contactRef, {
-            account_id: accountId,
-            contact_type: CONTACT_TYPE,
-            value: email,
+        await prisma.contact.create({
+            data: {
+                accountId,
+                contactType: CONTACT_TYPE,
+                value: email,
+            },
         });
         await logActivity(accountId, 'Added Recovery Email', 'Success');
         
@@ -95,8 +90,9 @@ export async function removeRecoveryEmail(): Promise<{ success: boolean; error?:
         const canRemove = await checkPermissions(['security.recovery_email.remove']);
         if (!canRemove) return { success: false, error: "Permission denied." };
         
-        const contactRef = getDocRef(accountId);
-        await deleteDoc(contactRef);
+        await prisma.contact.deleteMany({
+            where: { accountId, contactType: CONTACT_TYPE },
+        });
         await logActivity(accountId, 'Removed Recovery Email', 'Success');
         
         await createNotification({

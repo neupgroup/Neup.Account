@@ -1,7 +1,5 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import { doc, getDoc } from 'firebase/firestore';
 import prisma from '@/lib/prisma';
 import { z } from 'zod';
 import { getUserProfile, getUserNeupIds } from '@/lib/user';
@@ -37,9 +35,11 @@ export async function validateExternalRequest(input: ValidateInput): Promise<Val
   }
   const { appId, appSecret, key, accountId } = parsed.data;
 
-  const appRef = doc(db, 'applications', appId);
-  const appDoc = await getDoc(appRef);
-  if (!appDoc.exists() || appDoc.data().appSecret !== appSecret) {
+  const app = await prisma.application.findUnique({
+    where: { id: appId }
+  });
+
+  if (!app || app.appSecret !== appSecret) {
     return { success: false, error: 'Invalid application ID or secret.', status: 401 };
   }
 

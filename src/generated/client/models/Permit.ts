@@ -26,62 +26,116 @@ export type AggregatePermit = {
 
 export type PermitMinAggregateOutputType = {
   id: string | null
+  permitType: string | null
+  permitSubType: string | null
+  permitNumber: string | null
+  issuingAuthority: string | null
+  issueDate: Date | null
+  expiryDate: Date | null
+  status: string | null
   accountId: string | null
   targetAccountId: string | null
   forSelf: boolean | null
   isRoot: boolean | null
+  fullAccess: boolean | null
   createdOn: Date | null
+  managedBy: string | null
 }
 
 export type PermitMaxAggregateOutputType = {
   id: string | null
+  permitType: string | null
+  permitSubType: string | null
+  permitNumber: string | null
+  issuingAuthority: string | null
+  issueDate: Date | null
+  expiryDate: Date | null
+  status: string | null
   accountId: string | null
   targetAccountId: string | null
   forSelf: boolean | null
   isRoot: boolean | null
+  fullAccess: boolean | null
   createdOn: Date | null
+  managedBy: string | null
 }
 
 export type PermitCountAggregateOutputType = {
   id: number
+  permitType: number
+  permitSubType: number
+  permitNumber: number
+  issuingAuthority: number
+  issueDate: number
+  expiryDate: number
+  status: number
   accountId: number
   targetAccountId: number
   forSelf: number
   isRoot: number
+  fullAccess: number
   permissions: number
   restrictions: number
   createdOn: number
+  managedBy: number
   _all: number
 }
 
 
 export type PermitMinAggregateInputType = {
   id?: true
+  permitType?: true
+  permitSubType?: true
+  permitNumber?: true
+  issuingAuthority?: true
+  issueDate?: true
+  expiryDate?: true
+  status?: true
   accountId?: true
   targetAccountId?: true
   forSelf?: true
   isRoot?: true
+  fullAccess?: true
   createdOn?: true
+  managedBy?: true
 }
 
 export type PermitMaxAggregateInputType = {
   id?: true
+  permitType?: true
+  permitSubType?: true
+  permitNumber?: true
+  issuingAuthority?: true
+  issueDate?: true
+  expiryDate?: true
+  status?: true
   accountId?: true
   targetAccountId?: true
   forSelf?: true
   isRoot?: true
+  fullAccess?: true
   createdOn?: true
+  managedBy?: true
 }
 
 export type PermitCountAggregateInputType = {
   id?: true
+  permitType?: true
+  permitSubType?: true
+  permitNumber?: true
+  issuingAuthority?: true
+  issueDate?: true
+  expiryDate?: true
+  status?: true
   accountId?: true
   targetAccountId?: true
   forSelf?: true
   isRoot?: true
+  fullAccess?: true
   permissions?: true
   restrictions?: true
   createdOn?: true
+  managedBy?: true
   _all?: true
 }
 
@@ -159,13 +213,22 @@ export type PermitGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type PermitGroupByOutputType = {
   id: string
+  permitType: string | null
+  permitSubType: string | null
+  permitNumber: string | null
+  issuingAuthority: string | null
+  issueDate: Date | null
+  expiryDate: Date | null
+  status: string
   accountId: string
   targetAccountId: string | null
   forSelf: boolean
   isRoot: boolean
+  fullAccess: boolean
   permissions: string[]
   restrictions: string[]
   createdOn: Date
+  managedBy: string | null
   _count: PermitCountAggregateOutputType | null
   _min: PermitMinAggregateOutputType | null
   _max: PermitMaxAggregateOutputType | null
@@ -191,26 +254,44 @@ export type PermitWhereInput = {
   OR?: Prisma.PermitWhereInput[]
   NOT?: Prisma.PermitWhereInput | Prisma.PermitWhereInput[]
   id?: Prisma.StringFilter<"Permit"> | string
+  permitType?: Prisma.StringNullableFilter<"Permit"> | string | null
+  permitSubType?: Prisma.StringNullableFilter<"Permit"> | string | null
+  permitNumber?: Prisma.StringNullableFilter<"Permit"> | string | null
+  issuingAuthority?: Prisma.StringNullableFilter<"Permit"> | string | null
+  issueDate?: Prisma.DateTimeNullableFilter<"Permit"> | Date | string | null
+  expiryDate?: Prisma.DateTimeNullableFilter<"Permit"> | Date | string | null
+  status?: Prisma.StringFilter<"Permit"> | string
   accountId?: Prisma.StringFilter<"Permit"> | string
   targetAccountId?: Prisma.StringNullableFilter<"Permit"> | string | null
   forSelf?: Prisma.BoolFilter<"Permit"> | boolean
   isRoot?: Prisma.BoolFilter<"Permit"> | boolean
+  fullAccess?: Prisma.BoolFilter<"Permit"> | boolean
   permissions?: Prisma.StringNullableListFilter<"Permit">
   restrictions?: Prisma.StringNullableListFilter<"Permit">
   createdOn?: Prisma.DateTimeFilter<"Permit"> | Date | string
+  managedBy?: Prisma.StringNullableFilter<"Permit"> | string | null
   account?: Prisma.XOR<Prisma.AccountScalarRelationFilter, Prisma.AccountWhereInput>
   targetAccount?: Prisma.XOR<Prisma.AccountNullableScalarRelationFilter, Prisma.AccountWhereInput> | null
 }
 
 export type PermitOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  permitType?: Prisma.SortOrderInput | Prisma.SortOrder
+  permitSubType?: Prisma.SortOrderInput | Prisma.SortOrder
+  permitNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  issuingAuthority?: Prisma.SortOrderInput | Prisma.SortOrder
+  issueDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  expiryDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   accountId?: Prisma.SortOrder
   targetAccountId?: Prisma.SortOrderInput | Prisma.SortOrder
   forSelf?: Prisma.SortOrder
   isRoot?: Prisma.SortOrder
+  fullAccess?: Prisma.SortOrder
   permissions?: Prisma.SortOrder
   restrictions?: Prisma.SortOrder
   createdOn?: Prisma.SortOrder
+  managedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   account?: Prisma.AccountOrderByWithRelationInput
   targetAccount?: Prisma.AccountOrderByWithRelationInput
 }
@@ -220,26 +301,44 @@ export type PermitWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.PermitWhereInput | Prisma.PermitWhereInput[]
   OR?: Prisma.PermitWhereInput[]
   NOT?: Prisma.PermitWhereInput | Prisma.PermitWhereInput[]
+  permitType?: Prisma.StringNullableFilter<"Permit"> | string | null
+  permitSubType?: Prisma.StringNullableFilter<"Permit"> | string | null
+  permitNumber?: Prisma.StringNullableFilter<"Permit"> | string | null
+  issuingAuthority?: Prisma.StringNullableFilter<"Permit"> | string | null
+  issueDate?: Prisma.DateTimeNullableFilter<"Permit"> | Date | string | null
+  expiryDate?: Prisma.DateTimeNullableFilter<"Permit"> | Date | string | null
+  status?: Prisma.StringFilter<"Permit"> | string
   accountId?: Prisma.StringFilter<"Permit"> | string
   targetAccountId?: Prisma.StringNullableFilter<"Permit"> | string | null
   forSelf?: Prisma.BoolFilter<"Permit"> | boolean
   isRoot?: Prisma.BoolFilter<"Permit"> | boolean
+  fullAccess?: Prisma.BoolFilter<"Permit"> | boolean
   permissions?: Prisma.StringNullableListFilter<"Permit">
   restrictions?: Prisma.StringNullableListFilter<"Permit">
   createdOn?: Prisma.DateTimeFilter<"Permit"> | Date | string
+  managedBy?: Prisma.StringNullableFilter<"Permit"> | string | null
   account?: Prisma.XOR<Prisma.AccountScalarRelationFilter, Prisma.AccountWhereInput>
   targetAccount?: Prisma.XOR<Prisma.AccountNullableScalarRelationFilter, Prisma.AccountWhereInput> | null
 }, "id">
 
 export type PermitOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  permitType?: Prisma.SortOrderInput | Prisma.SortOrder
+  permitSubType?: Prisma.SortOrderInput | Prisma.SortOrder
+  permitNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  issuingAuthority?: Prisma.SortOrderInput | Prisma.SortOrder
+  issueDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  expiryDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   accountId?: Prisma.SortOrder
   targetAccountId?: Prisma.SortOrderInput | Prisma.SortOrder
   forSelf?: Prisma.SortOrder
   isRoot?: Prisma.SortOrder
+  fullAccess?: Prisma.SortOrder
   permissions?: Prisma.SortOrder
   restrictions?: Prisma.SortOrder
   createdOn?: Prisma.SortOrder
+  managedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.PermitCountOrderByAggregateInput
   _max?: Prisma.PermitMaxOrderByAggregateInput
   _min?: Prisma.PermitMinOrderByAggregateInput
@@ -250,88 +349,160 @@ export type PermitScalarWhereWithAggregatesInput = {
   OR?: Prisma.PermitScalarWhereWithAggregatesInput[]
   NOT?: Prisma.PermitScalarWhereWithAggregatesInput | Prisma.PermitScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Permit"> | string
+  permitType?: Prisma.StringNullableWithAggregatesFilter<"Permit"> | string | null
+  permitSubType?: Prisma.StringNullableWithAggregatesFilter<"Permit"> | string | null
+  permitNumber?: Prisma.StringNullableWithAggregatesFilter<"Permit"> | string | null
+  issuingAuthority?: Prisma.StringNullableWithAggregatesFilter<"Permit"> | string | null
+  issueDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Permit"> | Date | string | null
+  expiryDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Permit"> | Date | string | null
+  status?: Prisma.StringWithAggregatesFilter<"Permit"> | string
   accountId?: Prisma.StringWithAggregatesFilter<"Permit"> | string
   targetAccountId?: Prisma.StringNullableWithAggregatesFilter<"Permit"> | string | null
   forSelf?: Prisma.BoolWithAggregatesFilter<"Permit"> | boolean
   isRoot?: Prisma.BoolWithAggregatesFilter<"Permit"> | boolean
+  fullAccess?: Prisma.BoolWithAggregatesFilter<"Permit"> | boolean
   permissions?: Prisma.StringNullableListFilter<"Permit">
   restrictions?: Prisma.StringNullableListFilter<"Permit">
   createdOn?: Prisma.DateTimeWithAggregatesFilter<"Permit"> | Date | string
+  managedBy?: Prisma.StringNullableWithAggregatesFilter<"Permit"> | string | null
 }
 
 export type PermitCreateInput = {
   id?: string
+  permitType?: string | null
+  permitSubType?: string | null
+  permitNumber?: string | null
+  issuingAuthority?: string | null
+  issueDate?: Date | string | null
+  expiryDate?: Date | string | null
+  status?: string
   forSelf?: boolean
   isRoot?: boolean
+  fullAccess?: boolean
   permissions?: Prisma.PermitCreatepermissionsInput | string[]
   restrictions?: Prisma.PermitCreaterestrictionsInput | string[]
   createdOn?: Date | string
+  managedBy?: string | null
   account: Prisma.AccountCreateNestedOneWithoutPermitsInput
   targetAccount?: Prisma.AccountCreateNestedOneWithoutTargetPermitsInput
 }
 
 export type PermitUncheckedCreateInput = {
   id?: string
+  permitType?: string | null
+  permitSubType?: string | null
+  permitNumber?: string | null
+  issuingAuthority?: string | null
+  issueDate?: Date | string | null
+  expiryDate?: Date | string | null
+  status?: string
   accountId: string
   targetAccountId?: string | null
   forSelf?: boolean
   isRoot?: boolean
+  fullAccess?: boolean
   permissions?: Prisma.PermitCreatepermissionsInput | string[]
   restrictions?: Prisma.PermitCreaterestrictionsInput | string[]
   createdOn?: Date | string
+  managedBy?: string | null
 }
 
 export type PermitUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  permitType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permitSubType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permitNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuingAuthority?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   forSelf?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRoot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fullAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
   permissions?: Prisma.PermitUpdatepermissionsInput | string[]
   restrictions?: Prisma.PermitUpdaterestrictionsInput | string[]
   createdOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  managedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   account?: Prisma.AccountUpdateOneRequiredWithoutPermitsNestedInput
   targetAccount?: Prisma.AccountUpdateOneWithoutTargetPermitsNestedInput
 }
 
 export type PermitUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  permitType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permitSubType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permitNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuingAuthority?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   accountId?: Prisma.StringFieldUpdateOperationsInput | string
   targetAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   forSelf?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRoot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fullAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
   permissions?: Prisma.PermitUpdatepermissionsInput | string[]
   restrictions?: Prisma.PermitUpdaterestrictionsInput | string[]
   createdOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  managedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PermitCreateManyInput = {
   id?: string
+  permitType?: string | null
+  permitSubType?: string | null
+  permitNumber?: string | null
+  issuingAuthority?: string | null
+  issueDate?: Date | string | null
+  expiryDate?: Date | string | null
+  status?: string
   accountId: string
   targetAccountId?: string | null
   forSelf?: boolean
   isRoot?: boolean
+  fullAccess?: boolean
   permissions?: Prisma.PermitCreatepermissionsInput | string[]
   restrictions?: Prisma.PermitCreaterestrictionsInput | string[]
   createdOn?: Date | string
+  managedBy?: string | null
 }
 
 export type PermitUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  permitType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permitSubType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permitNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuingAuthority?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   forSelf?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRoot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fullAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
   permissions?: Prisma.PermitUpdatepermissionsInput | string[]
   restrictions?: Prisma.PermitUpdaterestrictionsInput | string[]
   createdOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  managedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PermitUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  permitType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permitSubType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permitNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuingAuthority?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   accountId?: Prisma.StringFieldUpdateOperationsInput | string
   targetAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   forSelf?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRoot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fullAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
   permissions?: Prisma.PermitUpdatepermissionsInput | string[]
   restrictions?: Prisma.PermitUpdaterestrictionsInput | string[]
   createdOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  managedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PermitListRelationFilter = {
@@ -344,41 +515,60 @@ export type PermitOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type StringNullableListFilter<$PrismaModel = never> = {
-  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
-  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
-  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
-}
-
 export type PermitCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  permitType?: Prisma.SortOrder
+  permitSubType?: Prisma.SortOrder
+  permitNumber?: Prisma.SortOrder
+  issuingAuthority?: Prisma.SortOrder
+  issueDate?: Prisma.SortOrder
+  expiryDate?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   accountId?: Prisma.SortOrder
   targetAccountId?: Prisma.SortOrder
   forSelf?: Prisma.SortOrder
   isRoot?: Prisma.SortOrder
+  fullAccess?: Prisma.SortOrder
   permissions?: Prisma.SortOrder
   restrictions?: Prisma.SortOrder
   createdOn?: Prisma.SortOrder
+  managedBy?: Prisma.SortOrder
 }
 
 export type PermitMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  permitType?: Prisma.SortOrder
+  permitSubType?: Prisma.SortOrder
+  permitNumber?: Prisma.SortOrder
+  issuingAuthority?: Prisma.SortOrder
+  issueDate?: Prisma.SortOrder
+  expiryDate?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   accountId?: Prisma.SortOrder
   targetAccountId?: Prisma.SortOrder
   forSelf?: Prisma.SortOrder
   isRoot?: Prisma.SortOrder
+  fullAccess?: Prisma.SortOrder
   createdOn?: Prisma.SortOrder
+  managedBy?: Prisma.SortOrder
 }
 
 export type PermitMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  permitType?: Prisma.SortOrder
+  permitSubType?: Prisma.SortOrder
+  permitNumber?: Prisma.SortOrder
+  issuingAuthority?: Prisma.SortOrder
+  issueDate?: Prisma.SortOrder
+  expiryDate?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   accountId?: Prisma.SortOrder
   targetAccountId?: Prisma.SortOrder
   forSelf?: Prisma.SortOrder
   isRoot?: Prisma.SortOrder
+  fullAccess?: Prisma.SortOrder
   createdOn?: Prisma.SortOrder
+  managedBy?: Prisma.SortOrder
 }
 
 export type PermitCreateNestedManyWithoutAccountInput = {
@@ -485,22 +675,40 @@ export type PermitUpdaterestrictionsInput = {
 
 export type PermitCreateWithoutAccountInput = {
   id?: string
+  permitType?: string | null
+  permitSubType?: string | null
+  permitNumber?: string | null
+  issuingAuthority?: string | null
+  issueDate?: Date | string | null
+  expiryDate?: Date | string | null
+  status?: string
   forSelf?: boolean
   isRoot?: boolean
+  fullAccess?: boolean
   permissions?: Prisma.PermitCreatepermissionsInput | string[]
   restrictions?: Prisma.PermitCreaterestrictionsInput | string[]
   createdOn?: Date | string
+  managedBy?: string | null
   targetAccount?: Prisma.AccountCreateNestedOneWithoutTargetPermitsInput
 }
 
 export type PermitUncheckedCreateWithoutAccountInput = {
   id?: string
+  permitType?: string | null
+  permitSubType?: string | null
+  permitNumber?: string | null
+  issuingAuthority?: string | null
+  issueDate?: Date | string | null
+  expiryDate?: Date | string | null
+  status?: string
   targetAccountId?: string | null
   forSelf?: boolean
   isRoot?: boolean
+  fullAccess?: boolean
   permissions?: Prisma.PermitCreatepermissionsInput | string[]
   restrictions?: Prisma.PermitCreaterestrictionsInput | string[]
   createdOn?: Date | string
+  managedBy?: string | null
 }
 
 export type PermitCreateOrConnectWithoutAccountInput = {
@@ -515,22 +723,40 @@ export type PermitCreateManyAccountInputEnvelope = {
 
 export type PermitCreateWithoutTargetAccountInput = {
   id?: string
+  permitType?: string | null
+  permitSubType?: string | null
+  permitNumber?: string | null
+  issuingAuthority?: string | null
+  issueDate?: Date | string | null
+  expiryDate?: Date | string | null
+  status?: string
   forSelf?: boolean
   isRoot?: boolean
+  fullAccess?: boolean
   permissions?: Prisma.PermitCreatepermissionsInput | string[]
   restrictions?: Prisma.PermitCreaterestrictionsInput | string[]
   createdOn?: Date | string
+  managedBy?: string | null
   account: Prisma.AccountCreateNestedOneWithoutPermitsInput
 }
 
 export type PermitUncheckedCreateWithoutTargetAccountInput = {
   id?: string
+  permitType?: string | null
+  permitSubType?: string | null
+  permitNumber?: string | null
+  issuingAuthority?: string | null
+  issueDate?: Date | string | null
+  expiryDate?: Date | string | null
+  status?: string
   accountId: string
   forSelf?: boolean
   isRoot?: boolean
+  fullAccess?: boolean
   permissions?: Prisma.PermitCreatepermissionsInput | string[]
   restrictions?: Prisma.PermitCreaterestrictionsInput | string[]
   createdOn?: Date | string
+  managedBy?: string | null
 }
 
 export type PermitCreateOrConnectWithoutTargetAccountInput = {
@@ -564,13 +790,22 @@ export type PermitScalarWhereInput = {
   OR?: Prisma.PermitScalarWhereInput[]
   NOT?: Prisma.PermitScalarWhereInput | Prisma.PermitScalarWhereInput[]
   id?: Prisma.StringFilter<"Permit"> | string
+  permitType?: Prisma.StringNullableFilter<"Permit"> | string | null
+  permitSubType?: Prisma.StringNullableFilter<"Permit"> | string | null
+  permitNumber?: Prisma.StringNullableFilter<"Permit"> | string | null
+  issuingAuthority?: Prisma.StringNullableFilter<"Permit"> | string | null
+  issueDate?: Prisma.DateTimeNullableFilter<"Permit"> | Date | string | null
+  expiryDate?: Prisma.DateTimeNullableFilter<"Permit"> | Date | string | null
+  status?: Prisma.StringFilter<"Permit"> | string
   accountId?: Prisma.StringFilter<"Permit"> | string
   targetAccountId?: Prisma.StringNullableFilter<"Permit"> | string | null
   forSelf?: Prisma.BoolFilter<"Permit"> | boolean
   isRoot?: Prisma.BoolFilter<"Permit"> | boolean
+  fullAccess?: Prisma.BoolFilter<"Permit"> | boolean
   permissions?: Prisma.StringNullableListFilter<"Permit">
   restrictions?: Prisma.StringNullableListFilter<"Permit">
   createdOn?: Prisma.DateTimeFilter<"Permit"> | Date | string
+  managedBy?: Prisma.StringNullableFilter<"Permit"> | string | null
 }
 
 export type PermitUpsertWithWhereUniqueWithoutTargetAccountInput = {
@@ -591,137 +826,245 @@ export type PermitUpdateManyWithWhereWithoutTargetAccountInput = {
 
 export type PermitCreateManyAccountInput = {
   id?: string
+  permitType?: string | null
+  permitSubType?: string | null
+  permitNumber?: string | null
+  issuingAuthority?: string | null
+  issueDate?: Date | string | null
+  expiryDate?: Date | string | null
+  status?: string
   targetAccountId?: string | null
   forSelf?: boolean
   isRoot?: boolean
+  fullAccess?: boolean
   permissions?: Prisma.PermitCreatepermissionsInput | string[]
   restrictions?: Prisma.PermitCreaterestrictionsInput | string[]
   createdOn?: Date | string
+  managedBy?: string | null
 }
 
 export type PermitCreateManyTargetAccountInput = {
   id?: string
+  permitType?: string | null
+  permitSubType?: string | null
+  permitNumber?: string | null
+  issuingAuthority?: string | null
+  issueDate?: Date | string | null
+  expiryDate?: Date | string | null
+  status?: string
   accountId: string
   forSelf?: boolean
   isRoot?: boolean
+  fullAccess?: boolean
   permissions?: Prisma.PermitCreatepermissionsInput | string[]
   restrictions?: Prisma.PermitCreaterestrictionsInput | string[]
   createdOn?: Date | string
+  managedBy?: string | null
 }
 
 export type PermitUpdateWithoutAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  permitType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permitSubType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permitNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuingAuthority?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   forSelf?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRoot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fullAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
   permissions?: Prisma.PermitUpdatepermissionsInput | string[]
   restrictions?: Prisma.PermitUpdaterestrictionsInput | string[]
   createdOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  managedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetAccount?: Prisma.AccountUpdateOneWithoutTargetPermitsNestedInput
 }
 
 export type PermitUncheckedUpdateWithoutAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  permitType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permitSubType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permitNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuingAuthority?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   targetAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   forSelf?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRoot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fullAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
   permissions?: Prisma.PermitUpdatepermissionsInput | string[]
   restrictions?: Prisma.PermitUpdaterestrictionsInput | string[]
   createdOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  managedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PermitUncheckedUpdateManyWithoutAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  permitType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permitSubType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permitNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuingAuthority?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   targetAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   forSelf?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRoot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fullAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
   permissions?: Prisma.PermitUpdatepermissionsInput | string[]
   restrictions?: Prisma.PermitUpdaterestrictionsInput | string[]
   createdOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  managedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PermitUpdateWithoutTargetAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  permitType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permitSubType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permitNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuingAuthority?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   forSelf?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRoot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fullAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
   permissions?: Prisma.PermitUpdatepermissionsInput | string[]
   restrictions?: Prisma.PermitUpdaterestrictionsInput | string[]
   createdOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  managedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   account?: Prisma.AccountUpdateOneRequiredWithoutPermitsNestedInput
 }
 
 export type PermitUncheckedUpdateWithoutTargetAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  permitType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permitSubType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permitNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuingAuthority?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   accountId?: Prisma.StringFieldUpdateOperationsInput | string
   forSelf?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRoot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fullAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
   permissions?: Prisma.PermitUpdatepermissionsInput | string[]
   restrictions?: Prisma.PermitUpdaterestrictionsInput | string[]
   createdOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  managedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PermitUncheckedUpdateManyWithoutTargetAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  permitType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permitSubType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permitNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuingAuthority?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   accountId?: Prisma.StringFieldUpdateOperationsInput | string
   forSelf?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isRoot?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fullAccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
   permissions?: Prisma.PermitUpdatepermissionsInput | string[]
   restrictions?: Prisma.PermitUpdaterestrictionsInput | string[]
   createdOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  managedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
 
 export type PermitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  permitType?: boolean
+  permitSubType?: boolean
+  permitNumber?: boolean
+  issuingAuthority?: boolean
+  issueDate?: boolean
+  expiryDate?: boolean
+  status?: boolean
   accountId?: boolean
   targetAccountId?: boolean
   forSelf?: boolean
   isRoot?: boolean
+  fullAccess?: boolean
   permissions?: boolean
   restrictions?: boolean
   createdOn?: boolean
+  managedBy?: boolean
   account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
   targetAccount?: boolean | Prisma.Permit$targetAccountArgs<ExtArgs>
 }, ExtArgs["result"]["permit"]>
 
 export type PermitSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  permitType?: boolean
+  permitSubType?: boolean
+  permitNumber?: boolean
+  issuingAuthority?: boolean
+  issueDate?: boolean
+  expiryDate?: boolean
+  status?: boolean
   accountId?: boolean
   targetAccountId?: boolean
   forSelf?: boolean
   isRoot?: boolean
+  fullAccess?: boolean
   permissions?: boolean
   restrictions?: boolean
   createdOn?: boolean
+  managedBy?: boolean
   account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
   targetAccount?: boolean | Prisma.Permit$targetAccountArgs<ExtArgs>
 }, ExtArgs["result"]["permit"]>
 
 export type PermitSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  permitType?: boolean
+  permitSubType?: boolean
+  permitNumber?: boolean
+  issuingAuthority?: boolean
+  issueDate?: boolean
+  expiryDate?: boolean
+  status?: boolean
   accountId?: boolean
   targetAccountId?: boolean
   forSelf?: boolean
   isRoot?: boolean
+  fullAccess?: boolean
   permissions?: boolean
   restrictions?: boolean
   createdOn?: boolean
+  managedBy?: boolean
   account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
   targetAccount?: boolean | Prisma.Permit$targetAccountArgs<ExtArgs>
 }, ExtArgs["result"]["permit"]>
 
 export type PermitSelectScalar = {
   id?: boolean
+  permitType?: boolean
+  permitSubType?: boolean
+  permitNumber?: boolean
+  issuingAuthority?: boolean
+  issueDate?: boolean
+  expiryDate?: boolean
+  status?: boolean
   accountId?: boolean
   targetAccountId?: boolean
   forSelf?: boolean
   isRoot?: boolean
+  fullAccess?: boolean
   permissions?: boolean
   restrictions?: boolean
   createdOn?: boolean
+  managedBy?: boolean
 }
 
-export type PermitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "accountId" | "targetAccountId" | "forSelf" | "isRoot" | "permissions" | "restrictions" | "createdOn", ExtArgs["result"]["permit"]>
+export type PermitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "permitType" | "permitSubType" | "permitNumber" | "issuingAuthority" | "issueDate" | "expiryDate" | "status" | "accountId" | "targetAccountId" | "forSelf" | "isRoot" | "fullAccess" | "permissions" | "restrictions" | "createdOn" | "managedBy", ExtArgs["result"]["permit"]>
 export type PermitInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
   targetAccount?: boolean | Prisma.Permit$targetAccountArgs<ExtArgs>
@@ -743,13 +1086,22 @@ export type $PermitPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    permitType: string | null
+    permitSubType: string | null
+    permitNumber: string | null
+    issuingAuthority: string | null
+    issueDate: Date | null
+    expiryDate: Date | null
+    status: string
     accountId: string
     targetAccountId: string | null
     forSelf: boolean
     isRoot: boolean
+    fullAccess: boolean
     permissions: string[]
     restrictions: string[]
     createdOn: Date
+    managedBy: string | null
   }, ExtArgs["result"]["permit"]>
   composites: {}
 }
@@ -1176,13 +1528,22 @@ export interface Prisma__PermitClient<T, Null = never, ExtArgs extends runtime.T
  */
 export interface PermitFieldRefs {
   readonly id: Prisma.FieldRef<"Permit", 'String'>
+  readonly permitType: Prisma.FieldRef<"Permit", 'String'>
+  readonly permitSubType: Prisma.FieldRef<"Permit", 'String'>
+  readonly permitNumber: Prisma.FieldRef<"Permit", 'String'>
+  readonly issuingAuthority: Prisma.FieldRef<"Permit", 'String'>
+  readonly issueDate: Prisma.FieldRef<"Permit", 'DateTime'>
+  readonly expiryDate: Prisma.FieldRef<"Permit", 'DateTime'>
+  readonly status: Prisma.FieldRef<"Permit", 'String'>
   readonly accountId: Prisma.FieldRef<"Permit", 'String'>
   readonly targetAccountId: Prisma.FieldRef<"Permit", 'String'>
   readonly forSelf: Prisma.FieldRef<"Permit", 'Boolean'>
   readonly isRoot: Prisma.FieldRef<"Permit", 'Boolean'>
+  readonly fullAccess: Prisma.FieldRef<"Permit", 'Boolean'>
   readonly permissions: Prisma.FieldRef<"Permit", 'String[]'>
   readonly restrictions: Prisma.FieldRef<"Permit", 'String[]'>
   readonly createdOn: Prisma.FieldRef<"Permit", 'DateTime'>
+  readonly managedBy: Prisma.FieldRef<"Permit", 'String'>
 }
     
 

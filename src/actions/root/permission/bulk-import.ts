@@ -1,8 +1,7 @@
 
 'use server';
 
-import { db } from '@/lib/firebase';
-import { collection, addDoc, getDocs, query, where, doc } from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { logError } from '@/lib/logger';
@@ -64,21 +63,24 @@ export async function bulkAddPermissions(
     // 3. Process each permission
     for (const perm of parsedPermissions) {
         try {
-            const q = query(collection(db, 'permission'), where('name', '==', perm.name));
-            const existing = await getDocs(q);
-            if (!existing.empty) {
+            const existing = await prisma.permission.findUnique({
+                where: { name: perm.name }
+            });
+            if (existing) {
                 results.push({ name: perm.name, status: 'error', message: 'This permission set name already exists.' });
                 continue;
             }
 
             const accessArray = perm.permissions.split(',').map(s => s.trim()).filter(Boolean);
 
-            await addDoc(collection(db, 'permission'), {
-                name: perm.name,
-                app_id: appId,
-                access: accessArray,
-                description: perm.description,
-                intended_for: intendedFor, // Add the intended_for value here
+            await prisma.permission.create({
+                data: {
+                    name: perm.name,
+                    appId: appId,
+                    access: accessArray,
+                    description: perm.description,
+                    intendedFor: intendedFor,
+                }
             });
             results.push({ name: perm.name, status: 'success', message: 'Successfully added.' });
         } catch (error) {

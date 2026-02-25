@@ -1,7 +1,6 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import { doc, getDoc, setDoc, deleteDoc, serverTimestamp } from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { getActiveAccountId } from '@/lib/auth-actions';
 import { getUserNeupIds, checkPermissions } from '@/lib/user';
 import { authenticator } from 'otplib';
@@ -52,10 +51,11 @@ export async function getTotpStatus(): Promise<{ isEnabled: boolean }> {
     const accountId = await getActiveAccountId();
     if (!accountId) return { isEnabled: false };
 
-    const totpRef = doc(db, 'auth_totp', accountId);
-    const totpDoc = await getDoc(totpRef);
+    const totp = await prisma.totp.findUnique({
+        where: { accountId }
+    });
 
-    return { isEnabled: totpDoc.exists() };
+    return { isEnabled: !!totp };
 }
 
 // Generate a new secret and QR code for setup
@@ -96,8 +96,13 @@ export async function verifyAndEnableTotp(data: z.infer<typeof totpEnableSchema>
 
     try {
         const encryptedSecret = await encrypt(secret);
-        const totpRef = doc(db, 'auth_totp', accountId);
-        await setDoc(totpRef, { secret: encryptedSecret, createdAt: serverTimestamp() });
+        
+        await prisma.totp.upsert({
+            where: { accountId },
+            update: { secret: encryptedSecret },
+            create: { accountId, secret: encryptedSecret }
+        });
+
         await logActivity(accountId, 'TOTP Enabled', 'Success');
         
         await createNotification({
@@ -129,20 +134,24 @@ export async function disableTotp(data: z.infer<typeof totpDisableSchema>): Prom
 
     try {
         // 1. Verify password
-        const authRef = doc(db, 'auth_password', accountId);
-        const authDoc = await getDoc(authRef);
-        if (!authDoc.exists()) {
+        const authDoc = await prisma.password.findUnique({
+            where: { accountId }
+        });
+
+        if (!authDoc) {
             return { success: false, error: "Authentication data not found." };
         }
-        const isMatch = await bcrypt.compare(password, authDoc.data().pass);
+
+        const isMatch = await bcrypt.compare(password, authDoc.hash);
         if (!isMatch) {
             await logActivity(accountId, 'TOTP Disable Failed', 'Failed');
             return { success: false, error: "The password you entered is incorrect." };
         }
 
         // 2. Delete TOTP secret
-        const totpRef = doc(db, 'auth_totp', accountId);
-        await deleteDoc(totpRef);
+        await prisma.totp.delete({
+            where: { accountId }
+        });
 
         await logActivity(accountId, 'TOTP Disabled', 'Success');
         

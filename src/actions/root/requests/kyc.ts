@@ -1,7 +1,6 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs, doc, updateDoc } from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { getUserProfile, checkPermissions, getUserNeupIds } from '@/lib/user';
 import { logActivity } from '@/lib/log-actions';
 import { logError } from '@/lib/logger';
@@ -14,18 +13,17 @@ export async function getPendingKycRequests(): Promise<KycRequest[]> {
     if (!canView) return [];
 
     try {
-        const kycRef = collection(db, 'kyc');
-        const q = query(kycRef, where('status', '==', 'pending'));
-        const querySnapshot = await getDocs(q);
+        const querySnapshot = await prisma.kycRequest.findMany({
+            where: { status: 'pending' }
+        });
 
-        if (querySnapshot.empty) {
+        if (querySnapshot.length === 0) {
             return [];
         }
 
         const requests = await Promise.all(
-            querySnapshot.docs.map(async (doc) => {
-                const data = doc.data();
-                const accountId = data.accountId;
+            querySnapshot.map(async (doc) => {
+                const accountId = doc.accountId;
 
                 const [profile, neupIds] = await Promise.all([
                     getUserProfile(accountId),
@@ -37,11 +35,11 @@ export async function getPendingKycRequests(): Promise<KycRequest[]> {
                     accountId,
                     userFullName: profile ? `${profile.nameFirst || ''} ${profile.nameLast || ''}`.trim() : 'Unknown User',
                     userNeupId: neupIds[0] || 'N/A',
-                    documentType: data.documentType,
-                    submittedAt: data.submittedAt?.toDate()?.toLocaleDateString() || 'N/A',
-                    status: data.status,
-                    documentPhotoUrl: data.documentPhotoUrl || 'https://placehold.co/600x400',
-                    selfiePhotoUrl: data.selfiePhotoUrl || 'https://placehold.co/400x400',
+                    documentType: doc.documentType,
+                    submittedAt: doc.submittedAt.toLocaleDateString() || 'N/A',
+                    status: doc.status as 'pending' | 'approved' | 'rejected',
+                    documentPhotoUrl: doc.documentPhotoUrl || 'https://placehold.co/600x400',
+                    selfiePhotoUrl: doc.selfiePhotoUrl || 'https://placehold.co/400x400',
                 };
             })
         );
@@ -57,12 +55,16 @@ export async function approveKycRequest(kycId: string, accountId: string): Promi
     if (!canApprove) return { success: false, error: 'Permission denied.' };
 
     try {
-        const kycRef = doc(db, 'kyc', kycId);
-        await updateDoc(kycRef, { status: 'approved' });
-
-        // Optionally, update the user's main profile/account to mark as verified
-        const accountRef = doc(db, 'account', accountId);
-        await updateDoc(accountRef, { kycVerified: true });
+        await prisma.$transaction([
+            prisma.kycRequest.update({
+                where: { id: kycId },
+                data: { status: 'approved' }
+            }),
+            prisma.account.update({
+                where: { id: accountId },
+                data: { verified: true } // Assuming 'verified' in Account model maps to kycVerified
+            })
+        ]);
 
         await logActivity(accountId, 'KYC Approved', 'Success');
         revalidatePath('/manage/root/requests/kyc');
@@ -78,8 +80,10 @@ export async function rejectKycRequest(kycId: string, accountId: string, reason:
     if (!canDeny) return { success: false, error: 'Permission denied.' };
 
     try {
-        const kycRef = doc(db, 'kyc', kycId);
-        await updateDoc(kycRef, { status: 'rejected', rejectionReason: reason });
+        await prisma.kycRequest.update({
+            where: { id: kycId },
+            data: { status: 'rejected', rejectionReason: reason }
+        });
         
         await logActivity(accountId, `KYC Rejected. Reason: ${reason}`, 'Alert');
         revalidatePath('/manage/root/requests/kyc');

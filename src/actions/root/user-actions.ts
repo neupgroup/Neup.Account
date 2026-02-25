@@ -1,7 +1,7 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import { doc, updateDoc, addDoc, collection, serverTimestamp, deleteDoc, writeBatch, query, where, getDocs, getDoc, setDoc } from 'firebase/firestore';
+import prisma from '@/lib/prisma';
+import { Prisma } from '@/generated/client/client';
 import { logError } from '@/lib/logger';
 import { checkPermissions, getUserNeupIds } from '@/lib/user';
 import { getPersonalAccountId } from '@/lib/auth-actions';
@@ -118,9 +118,6 @@ export async function blockServiceAccess(userId: string, data: z.infer<typeof bl
     const { reason, message } = blockReasons[reasonKey as keyof typeof blockReasons];
 
     try {
-        const accountRef = doc(db, 'account', userId);
-        const batch = writeBatch(db);
-
         let until = null;
         if (!isPermanent && durationInHours) {
             const date = new Date();
@@ -133,25 +130,31 @@ export async function blockServiceAccess(userId: string, data: z.infer<typeof bl
             reason,
             message,
             is_permanent: isPermanent,
-            until: until,
+            until: until ? until.toISOString() : null,
             source: source || null,
             remarks: remarks,
             blockedBy: adminId,
-            blockedOn: serverTimestamp()
+            blockedOn: new Date().toISOString()
         };
 
-        batch.update(accountRef, { block: blockData, accountStatus: 'blocked' });
-
-        const statusLogRef = doc(collection(db, 'account_status'));
-        batch.set(statusLogRef, {
-            account_id: userId,
-            status: 'blocked',
-            remarks: `Admin blocked access. Reason: ${reason}. ${remarks}`,
-            from_date: serverTimestamp(),
-            more_info: `Request by admin: ${adminId}.`
-        });
-
-        await batch.commit();
+        await prisma.$transaction([
+            prisma.account.update({
+                where: { id: userId },
+                data: { 
+                    block: blockData, 
+                    accountStatus: 'blocked' 
+                }
+            }),
+            prisma.accountStatusLog.create({
+                data: {
+                    accountId: userId,
+                    status: 'blocked',
+                    remarks: `Admin blocked access. Reason: ${reason}. ${remarks}`,
+                    fromDate: new Date(),
+                    moreInfo: `Request by admin: ${adminId}.`
+                }
+            })
+        ]);
 
         await logActivity(userId, `Service access blocked. Reason: ${reason}`, 'Alert', undefined, adminId);
 
@@ -180,21 +183,24 @@ export async function unblockServiceAccess(userId: string): Promise<{ success: b
     if (!adminId) return { success: false, error: 'Administrator not authenticated.' };
 
     try {
-        const accountRef = doc(db, 'account', userId);
-        const batch = writeBatch(db);
-
-        batch.update(accountRef, { block: null, accountStatus: 'active' });
-
-        const statusLogRef = doc(collection(db, 'account_status'));
-        batch.set(statusLogRef, {
-            account_id: userId,
-            status: 'active',
-            remarks: 'Service access restored by admin.',
-            from_date: serverTimestamp(),
-            more_info: `Request by admin: ${adminId}.`
-        });
-
-        await batch.commit();
+        await prisma.$transaction([
+            prisma.account.update({
+                 where: { id: userId },
+                 data: { 
+                     block: Prisma.DbNull, 
+                     accountStatus: 'active' 
+                 }
+             }),
+            prisma.accountStatusLog.create({
+                data: {
+                    accountId: userId,
+                    status: 'active',
+                    remarks: 'Service access restored by admin.',
+                    fromDate: new Date(),
+                    moreInfo: `Request by admin: ${adminId}.`
+                }
+            })
+        ]);
 
         await logActivity(userId, `Service access unblocked`, 'Success', undefined, adminId);
 
@@ -228,22 +234,24 @@ export async function impersonateUser(userId: string, neupId: string): Promise<{
         expiresOn.setHours(expiresOn.getHours() + 1); // 1 hour impersonation
         const sessionKey = crypto.randomUUID();
 
-        const newSessionDocRef = await addDoc(collection(db, 'session'), {
-            accountId: userId,
-            auth_session_key: sessionKey,
-            ipAddress: ipAddress,
-            userAgent: userAgent,
-            isExpired: false,
-            expiresOn: serverTimestamp(),
-            lastLoggedIn: serverTimestamp(),
-            loginType: 'Impersonation',
+        const newSession = await prisma.session.create({
+            data: {
+                accountId: userId,
+                authSessionKey: sessionKey,
+                ipAddress: ipAddress,
+                userAgent: userAgent,
+                isExpired: false,
+                expiresOn: expiresOn,
+                lastLoggedIn: new Date(),
+                loginType: 'Impersonation',
+            }
         });
 
         const cookieStore = await cookies();
         const cookieOptions = { path: '/', expires: expiresOn, sameSite: 'lax' as const, secure: true, httpOnly: true };
 
         cookieStore.set('auth_account_id', userId, cookieOptions);
-        cookieStore.set('auth_session_id', newSessionDocRef.id, cookieOptions);
+        cookieStore.set('auth_session_id', newSession.id, cookieOptions);
         cookieStore.set('auth_session_key', sessionKey, cookieOptions);
 
         await logActivity(userId, `Admin impersonation started by ${adminId}`, 'Alert', undefined, adminId);
@@ -277,43 +285,40 @@ export async function deleteUserAccount(userId: string): Promise<{ success: bool
     }
 
     try {
-        const batch = writeBatch(db);
+        // In Prisma, we can use delete with cascade if relations are set up correctly.
+        // If not, we need to delete related data manually in a transaction.
+        await prisma.$transaction([
+            prisma.neupId.deleteMany({ where: { accountId: userId } }),
+            prisma.contact.deleteMany({ where: { accountId: userId } }),
+            prisma.permit.deleteMany({ 
+                where: { 
+                    OR: [
+                        { accountId: userId },
+                        { targetAccountId: userId }
+                    ]
+                } 
+            }),
+            prisma.session.deleteMany({ where: { accountId: userId } }),
+            prisma.activityLog.deleteMany({ 
+                where: { 
+                    OR: [
+                        { targetAccountId: userId },
+                        { actorAccountId: userId }
+                    ]
+                } 
+            }),
+            prisma.notification.deleteMany({ where: { accountId: userId } }),
+            prisma.kycRequest.deleteMany({ where: { accountId: userId } }),
+            prisma.backupCode.deleteMany({ where: { accountId: userId } }),
+            prisma.verification.deleteMany({ where: { accountId: userId } }),
+            prisma.userDocument.deleteMany({ where: { accountId: userId } }),
+            prisma.userContent.deleteMany({ where: { forAccountId: userId } }),
+            prisma.password.deleteMany({ where: { accountId: userId } }),
+            prisma.totp.deleteMany({ where: { accountId: userId } }),
+            prisma.accountStatusLog.deleteMany({ where: { accountId: userId } }),
+            prisma.account.delete({ where: { id: userId } }),
+        ]);
 
-        // --- Documents to delete by direct reference ---
-        batch.delete(doc(db, 'account', userId));
-        batch.delete(doc(db, 'auth_password', userId));
-        // Delete TOTP if it exists
-        const totpRef = doc(db, 'auth_totp', userId);
-        const totpDoc = await getDoc(totpRef);
-        if (totpDoc.exists()) {
-            batch.delete(totpRef);
-        }
-
-        // --- Documents to find and delete via query ---
-        const collectionsToQuery = [
-            'neupid',
-            'contact',
-            'permit', // This handles permits given to the user
-            'session',
-            'activity',
-            'notifications',
-            'kyc',
-            'requests',
-            'recovery_contacts'
-        ];
-
-        for (const coll of collectionsToQuery) {
-            const q = query(collection(db, coll), where(coll === 'neupid' ? 'for' : 'accountId', '==', userId));
-            const snapshot = await getDocs(q);
-            snapshot.forEach(doc => batch.delete(doc.ref));
-        }
-
-        // --- Also delete permits where this user is the target ---
-        const targetPermitQuery = query(collection(db, 'permit'), where('target_id', '==', userId));
-        const targetPermitSnapshot = await getDocs(targetPermitQuery);
-        targetPermitSnapshot.forEach(doc => batch.delete(doc.ref));
-
-        await batch.commit();
         await logActivity(userId, `Account permanently deleted by admin ${adminId}`, 'Alert', undefined, adminId);
 
         return { success: true };
@@ -332,8 +337,10 @@ export async function setProStatus(accountId: string, isPro: boolean, reason: st
     if (!adminId) return { success: false, error: 'Administrator not authenticated.' };
 
     try {
-        const accountRef = doc(db, 'account', accountId);
-        await updateDoc(accountRef, { pro: isPro });
+        await prisma.account.update({
+            where: { id: accountId },
+            data: { pro: isPro }
+        });
 
         const action = isPro ? 'Activated Neup.Pro' : 'Deactivated Neup.Pro';
         await logActivity(accountId, `${action} by admin. Reason: ${reason}`, 'Success', undefined, adminId);

@@ -2,21 +2,7 @@
 
 'use server';
 
-import { db } from '@/lib/firebase';
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-  updateDoc,
-  limit,
-  writeBatch,
-  serverTimestamp,
-  setDoc,
-  orderBy,
-} from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { getUserNeupIds, getUserProfile as fetchUserProfile, checkPermissions } from '@/lib/user';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { revalidatePath } from 'next/cache';
@@ -54,66 +40,64 @@ export async function getUserDetails(
 }
 
 export async function getAccountDetails(accountId: string) {
-    const accountRef = doc(db, 'account', accountId);
-    const accountDoc = await getDoc(accountRef);
-    if(accountDoc.exists()) {
-        return accountDoc.data();
-    }
-    return null;
+    const account = await prisma.account.findUnique({
+        where: { id: accountId },
+        select: {
+            block: true,
+        },
+    });
+    if (!account) return null;
+    return account;
 }
 
 
 export async function getActivity(accountId: string): Promise<UserActivityLog[]> {
-    const activityRef = collection(db, 'activity');
-    const q = query(activityRef, where('targetAccountId', '==', accountId), orderBy('timestamp', 'desc'), limit(20));
-    const snapshot = await getDocs(q);
-
-    return snapshot.docs.map(doc => {
-        const data = doc.data();
-        const rawTimestamp = data.timestamp?.toDate() || new Date();
+    const rows = await prisma.activityLog.findMany({
+        where: { targetAccountId: accountId },
+        orderBy: { timestamp: 'desc' },
+        take: 20,
+    });
+    return rows.map(row => {
+        const rawTimestamp = new Date(row.timestamp);
         return {
-            id: doc.id,
-            action: data.action,
-            status: data.status,
-            ip: data.ip,
+            id: row.id,
+            action: row.action,
+            status: row.status,
+            ip: row.ip,
             timestamp: rawTimestamp.toLocaleString(),
-            geolocation: data.geolocation,
-            rawTimestamp
-        }
-    }).sort((a, b) => b.rawTimestamp.getTime() - a.rawTimestamp.getTime());
+            geolocation: row.geolocation || undefined,
+            rawTimestamp,
+        };
+    });
 }
 
 export async function getPermissions(accountId: string): Promise<UserPermissions> {
-    const permitQuery = query(collection(db, 'permit'), where('account_id', '==', accountId), where('for_self', '==', true));
-    const permitSnapshot = await getDocs(permitQuery);
-    
-    if (permitSnapshot.empty) {
+    const permit = await prisma.permit.findFirst({
+        where: { accountId, forSelf: true },
+        select: { permissions: true, restrictions: true },
+    });
+    if (!permit) {
         return { assignedPermissionSetIds: [], restrictedPermissionSetIds: [], allPermissions: [] };
     }
-
-    const permitDoc = permitSnapshot.docs[0];
-    const permissionIds: string[] = permitDoc.data().permission || [];
-    const restrictionIds: string[] = permitDoc.data().restrictions || [];
-    
+    const permissionIds = permit.permissions || [];
+    const restrictionIds = permit.restrictions || [];
     const finalPermissionIds = permissionIds.filter(id => !restrictionIds.includes(id));
 
     if (finalPermissionIds.length === 0) {
         return { assignedPermissionSetIds: permissionIds, restrictedPermissionSetIds: restrictionIds, allPermissions: [] };
     }
-    
-    const permsRef = collection(db, 'permission');
-    const permsQuery = query(permsRef, where('__name__', 'in', finalPermissionIds));
-    const permsSnapshot = await getDocs(permsQuery);
 
-    const allPermissions = new Set<string>();
-    permsSnapshot.forEach(doc => {
-        (doc.data().access || []).forEach((p: string) => allPermissions.add(p));
+    const perms = await prisma.permission.findMany({
+        where: { id: { in: finalPermissionIds } },
+        select: { access: true },
     });
+    const allPermissions = new Set<string>();
+    perms.forEach(p => (p.access || []).forEach(a => allPermissions.add(a)));
 
-    return { 
-        assignedPermissionSetIds: permissionIds, 
-        restrictedPermissionSetIds: restrictionIds, 
-        allPermissions: Array.from(allPermissions) 
+    return {
+        assignedPermissionSetIds: permissionIds,
+        restrictedPermissionSetIds: restrictionIds,
+        allPermissions: Array.from(allPermissions),
     };
 }
 
@@ -124,28 +108,28 @@ export async function updateUserPermissions(accountId: string, newPermissionIds:
     }
 
     try {
-        const permitQuery = query(collection(db, 'permit'), where('account_id', '==', accountId), where('for_self', '==', true), limit(1));
-        const permitSnapshot = await getDocs(permitQuery);
-
-        const dataToSet = {
-            permission: newPermissionIds,
-            restrictions: newRestrictionIds
-        };
-
-        if (permitSnapshot.empty) {
-            // Document doesn't exist, so create it.
-            const newPermitRef = doc(collection(db, 'permit'));
-            await setDoc(newPermitRef, {
-                ...dataToSet,
-                account_id: accountId,
-                for_self: true,
-                is_root: false,
-                created_on: serverTimestamp(),
+        const existing = await prisma.permit.findFirst({
+            where: { accountId, forSelf: true },
+            select: { id: true },
+        });
+        if (!existing) {
+            await prisma.permit.create({
+                data: {
+                    accountId,
+                    forSelf: true,
+                    isRoot: false,
+                    permissions: newPermissionIds,
+                    restrictions: newRestrictionIds,
+                },
             });
         } else {
-            // Document exists, so update it.
-            const permitDocRef = permitSnapshot.docs[0].ref;
-            await updateDoc(permitDocRef, dataToSet);
+            await prisma.permit.update({
+                where: { id: existing.id },
+                data: {
+                    permissions: newPermissionIds,
+                    restrictions: newRestrictionIds,
+                },
+            });
         }
         
         const adminId = await getPersonalAccountId() ?? "";
@@ -162,22 +146,20 @@ export async function updateUserPermissions(accountId: string, newPermissionIds:
 
 
 export async function getUserDashboardStats(accountId: string): Promise<UserDashboardStats> {
-    const activityRef = collection(db, 'activity');
-    const q = query(activityRef, where('targetAccountId', '==', accountId), orderBy('timestamp', 'desc'), limit(1));
-    const snapshot = await getDocs(q);
-
-    if (snapshot.empty) {
+    const last = await prisma.activityLog.findFirst({
+        where: { targetAccountId: accountId },
+        orderBy: { timestamp: 'desc' },
+    });
+    if (!last) {
         return {
             lastIpAddress: 'N/A',
             lastLocation: 'N/A',
             lastActive: 'N/A',
         };
     }
-
-    const lastActivity = snapshot.docs[0].data();
     return {
-        lastIpAddress: lastActivity.ip,
-        lastLocation: lastActivity.geolocation || 'N/A',
-        lastActive: lastActivity.timestamp?.toDate().toLocaleString() || 'N/A',
+        lastIpAddress: last.ip,
+        lastLocation: last.geolocation || 'N/A',
+        lastActive: new Date(last.timestamp).toLocaleString(),
     }
 }

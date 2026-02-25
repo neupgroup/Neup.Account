@@ -1,8 +1,6 @@
 
 import { NextResponse, type NextRequest } from 'next/server';
 import { getActiveSession } from '@/lib/auth-actions';
-import { db } from '@/lib/firebase';
-import { doc, getDoc } from 'firebase/firestore';
 import crypto from 'crypto';
 import { logError } from '@/lib/logger';
 import prisma from '@/lib/prisma';
@@ -39,10 +37,11 @@ export async function GET(request: NextRequest) {
     
     try {
         // --- Security Check ---
-        const appRef = doc(db, 'applications', appId);
-        const appDoc = await getDoc(appRef);
+        const application = await prisma.application.findUnique({
+            where: { id: appId }
+        });
 
-        if (!appDoc.exists() || !appDoc.data().appSecret) {
+        if (!application || !application.appSecret) {
             finalRedirectUrl.searchParams.set('error', 'invalid_app');
             finalRedirectUrl.searchParams.set('error_description', 'The provided application ID is invalid or not fully configured.');
             return NextResponse.redirect(finalRedirectUrl);

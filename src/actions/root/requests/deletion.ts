@@ -1,18 +1,7 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  updateDoc,
-  writeBatch,
-  serverTimestamp,
-  getDoc,
-} from 'firebase/firestore';
-import { getUserProfile, checkPermissions, getUserNeupIds, isRootUser } from '@/lib/user';
+import prisma from '@/lib/prisma';
+import { getUserProfile, checkPermissions, isRootUser } from '@/lib/user';
 import { logError } from '@/lib/logger';
 import { revalidatePath } from 'next/cache';
 import { deleteUserAccount } from '@/actions/root/user-actions';
@@ -36,30 +25,27 @@ export async function getDeletionRequests(): Promise<DeletionRequest[]> {
   if (!canView) return [];
 
   try {
-    const accountsRef = collection(db, 'account');
-    const q = query(
-      accountsRef,
-      where('accountStatus', '==', 'deletion_requested')
-    );
-    const querySnapshot = await getDocs(q);
+    const accounts = await prisma.account.findMany({
+      where: { accountStatus: 'deletion_requested' }
+    });
 
-    if (querySnapshot.empty) {
+    if (accounts.length === 0) {
       return [];
     }
 
     const requests = await Promise.all(
-      querySnapshot.docs.map(async (docSnap) => {
-        const accountId = docSnap.id;
+      accounts.map(async (account) => {
+        const accountId = account.id;
         const profile = await getUserProfile(accountId);
 
-        // Attempt to get the request date from the account_status collection
-        const statusQuery = query(
-            collection(db, 'account_status'),
-            where('account_id', '==', accountId),
-            where('status', '==', 'deletion_requested')
-        );
-        const statusSnapshot = await getDocs(statusQuery);
-        const requestedAt = statusSnapshot.docs[0]?.data().from_date?.toDate()?.toLocaleDateString() || 'N/A';
+        const statusLog = await prisma.accountStatusLog.findFirst({
+            where: {
+                accountId,
+                status: 'deletion_requested'
+            },
+            orderBy: { fromDate: 'desc' }
+        });
+        const requestedAt = statusLog?.fromDate?.toLocaleDateString() || 'N/A';
 
         return {
           accountId,
@@ -86,22 +72,24 @@ export async function getDeletionStatus(accountId: string): Promise<{status: 'no
             return { status: 'is_root' };
         }
 
-        const accountRef = doc(db, 'account', accountId);
-        const accountDoc = await getDoc(accountRef);
+        const account = await prisma.account.findUnique({
+            where: { id: accountId }
+        });
 
-        if (!accountDoc.exists()) {
+        if (!account) {
             return { status: 'deleted' };
         }
 
-        const status = accountDoc.data().accountStatus;
+        const status = account.accountStatus;
         if (status === 'deletion_requested') {
-            const statusQuery = query(
-                collection(db, 'account_status'),
-                where('account_id', '==', accountId),
-                where('status', '==', 'deletion_requested')
-            );
-            const statusSnapshot = await getDocs(statusQuery);
-            const requestedAt = statusSnapshot.docs[0]?.data().from_date?.toDate()?.toLocaleDateString() || null;
+            const statusLog = await prisma.accountStatusLog.findFirst({
+                where: {
+                    accountId,
+                    status: 'deletion_requested'
+                },
+                orderBy: { fromDate: 'desc' }
+            });
+            const requestedAt = statusLog?.fromDate?.toLocaleDateString() || null;
             return { status: 'pending', requestedAt };
         }
 
@@ -148,26 +136,30 @@ export async function cancelAccountDeletion(
     if (!adminId) return { success: false, error: 'Admin not authenticated.'};
 
     try {
-        const batch = writeBatch(db);
-        const accountRef = doc(db, 'account', accountId);
-        batch.update(accountRef, { accountStatus: 'active' });
-
-        // Find and update the status log
-        const statusQuery = query(
-            collection(db, 'account_status'),
-            where('account_id', '==', accountId),
-            where('status', '==', 'deletion_requested')
-        );
-        const statusSnapshot = await getDocs(statusQuery);
-        if (!statusSnapshot.empty) {
-            const statusDocRef = statusSnapshot.docs[0].ref;
-            batch.update(statusDocRef, {
-                status: 'request_cancelled',
-                remarks: `Request cancelled by admin ${adminId}.`
+        await prisma.$transaction(async (tx) => {
+            await tx.account.update({
+                where: { id: accountId },
+                data: { accountStatus: 'active' }
             });
-        }
-        
-        await batch.commit();
+
+            const statusLog = await tx.accountStatusLog.findFirst({
+                where: {
+                    accountId,
+                    status: 'deletion_requested'
+                },
+                orderBy: { fromDate: 'desc' }
+            });
+
+            if (statusLog) {
+                await tx.accountStatusLog.update({
+                    where: { id: statusLog.id },
+                    data: {
+                        status: 'request_cancelled',
+                        remarks: `Request cancelled by admin ${adminId}.`
+                    }
+                });
+            }
+        });
 
         await logActivity(accountId, 'Account Deletion Cancelled by Admin', 'Success', undefined, adminId);
         revalidatePath('/manage/root/requests/deletion');
@@ -200,21 +192,21 @@ export async function requestAccountDeletionByAdmin(accountId: string, data: z.i
             return { success: false, error: "Root user accounts cannot be deleted this way." };
         }
 
-        const accountRef = doc(db, 'account', accountId);
-        const batch = writeBatch(db);
+        await prisma.$transaction(async (tx) => {
+            await tx.account.update({
+                where: { id: accountId },
+                data: { accountStatus: 'deletion_requested' }
+            });
 
-        batch.update(accountRef, { accountStatus: 'deletion_requested' });
-
-        const statusLogRef = doc(collection(db, 'account_status'));
-        batch.set(statusLogRef, {
-            account_id: accountId,
-            status: 'deletion_requested',
-            remarks: `Admin initiated deletion. Reason: ${validation.data.reason}`,
-            from_date: serverTimestamp(),
-            more_info: `Request by admin: ${adminId}.`
+            await tx.accountStatusLog.create({
+                data: {
+                    accountId: accountId,
+                    status: 'deletion_requested',
+                    remarks: `Admin initiated deletion. Reason: ${validation.data.reason}`,
+                    moreInfo: `Request by admin: ${adminId}.`
+                }
+            });
         });
-
-        await batch.commit();
 
         await logActivity(accountId, "Account Deletion Requested by Admin", "Alert", undefined, adminId);
         revalidatePath(`/manage/root/accounts/${accountId}/deletion`);

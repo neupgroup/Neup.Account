@@ -5,8 +5,6 @@ import { useEffect, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { db } from '@/lib/firebase';
-import { doc, getDoc } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
 import { TertiaryHeader } from '@/components/ui/tertiary-header';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
@@ -14,7 +12,8 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { grantVerification, revokeVerification } from '@/actions/root/verifications';
+import { grantVerification, revokeVerification, getAccountVerification } from '@/actions/root/verifications';
+import { getUserProfile } from '@/lib/user';
 import { CheckCircle2, Loader2, ShieldCheck, XCircle } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -74,23 +73,18 @@ export function VerificationManager({ accountId }: { accountId: string }) {
     useEffect(() => {
         async function fetchDetails() {
             setLoading(true);
-            const accountRef = doc(db, 'account', accountId);
-            const verificationRef = doc(db, 'verifications', accountId);
-            const [accountSnap, verificationSnap] = await Promise.all([
-                getDoc(accountRef),
-                getDoc(verificationRef)
+            const [profile, verificationData] = await Promise.all([
+                getUserProfile(accountId),
+                getAccountVerification(accountId)
             ]);
 
-            setIsVerified(accountSnap.exists() && accountSnap.data().verified === true);
+            setIsVerified(profile?.verified === true);
             
-            if (verificationSnap.exists()) {
-                const data = verificationSnap.data();
+            if (verificationData && verificationData.verified) {
                 setDetails({
-                    status: data.status,
-                    category: data.category,
-                    verifiedAt: data.verifiedAt?.toDate().toLocaleString(),
-                    verifiedBy: data.verifiedBy,
-                    reason: data.reason,
+                    status: 'approved',
+                    category: verificationData.category,
+                    verifiedAt: verificationData.verifiedAt,
                 });
             } else {
                 setDetails({ status: 'none' });
@@ -106,14 +100,12 @@ export function VerificationManager({ accountId }: { accountId: string }) {
             if (result.success) {
                 toast({ title: 'Success', description: 'User has been verified.', className: 'bg-accent text-accent-foreground' });
                 // Re-fetch details
-                const verificationRef = doc(db, 'verifications', accountId);
-                const docSnap = await getDoc(verificationRef);
-                if (docSnap.exists()){
-                    const newData = docSnap.data();
+                const verificationData = await getAccountVerification(accountId);
+                if (verificationData && verificationData.verified){
                     setDetails({
                         status: 'approved',
-                        category: newData.category,
-                        verifiedAt: newData.verifiedAt?.toDate().toLocaleString(),
+                        category: verificationData.category,
+                        verifiedAt: verificationData.verifiedAt,
                     });
                 }
                 setIsVerified(true);

@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
-import { getUserNeupIds } from "@/lib/user"
+import { getUserNeupIds, getUserProfile } from "@/lib/user"
 import { updateUserProfile } from "@/actions/profile"
 import { useToast } from "@/hooks/use-toast"
 
@@ -19,8 +19,6 @@ import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import { useSession } from '@/context/session-context'
 import { BackButton } from '@/components/ui/back-button'
-import { doc, getDoc } from 'firebase/firestore'
-import { db } from '@/lib/firebase'
 
 
 const neupidFormSchema = z.object({
@@ -45,14 +43,14 @@ export default function NeupidPage() {
         if (!accountId) return;
 
         const fetchData = async () => {
-            const [neupIdsData, accountDoc] = await Promise.all([
+            const [neupIdsData, profile] = await Promise.all([
                 getUserNeupIds(accountId),
-                getDoc(doc(db, 'account', accountId)),
+                getUserProfile(accountId),
             ]);
 
             setNeupIds(neupIdsData);
-            if (accountDoc.exists()) {
-                setIsPro(accountDoc.data()?.pro === true);
+            if (profile) {
+                setIsPro(profile.pro === true);
             }
             setLoading(false);
         }

@@ -1,23 +1,9 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  addDoc,
-  serverTimestamp,
-  limit,
-  deleteDoc,
-  doc,
-  getDoc,
-  writeBatch,
-  updateDoc,
-} from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { logError } from '@/lib/logger';
-import { getUserProfile, checkPermissions, getUserNeupIds } from '@/lib/user';
+import { getUserProfile, checkPermissions } from '@/lib/user';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import type { FamilyMember, FamilyGroup } from '@/types';
@@ -39,59 +25,65 @@ async function createInvite(
   if (!inviterAccountId) return { success: false, error: 'User not authenticated.' };
 
   try {
-    const neupidRef = doc(db, 'neupid', neupId);
-    const userSnapshot = await getDoc(neupidRef);
+    const neupIdRecord = await prisma.neupId.findUnique({
+      where: { id: neupId }
+    });
 
-    if (!userSnapshot.exists())
+    if (!neupIdRecord)
       return { success: false, error: 'No user found with that NeupID.' };
 
-    const inviteeAccountId = userSnapshot.data().for;
+    const inviteeAccountId = neupIdRecord.accountId;
     if (inviteeAccountId === inviterAccountId)
       return { success: false, error: 'You cannot invite yourself.' };
       
     // Check if user is already in a family with the inviter.
-    const familyQuery = query(collection(db, 'family'), where('memberIds', 'array-contains', inviterAccountId));
-    const familySnapshot = await getDocs(familyQuery);
-    if (!familySnapshot.empty) {
-        const familyData = familySnapshot.docs[0].data();
-        if (familyData.memberIds.includes(inviteeAccountId)) {
-            return { success: false, error: 'This user is already in your family.' };
+    const family = await prisma.family.findFirst({
+      where: {
+        memberIds: {
+          has: inviterAccountId
         }
+      }
+    });
+
+    if (family && family.memberIds.includes(inviteeAccountId)) {
+        return { success: false, error: 'This user is already in your family.' };
     }
 
+    const existingRequest = await prisma.request.findFirst({
+      where: {
+        action: 'family_invitation',
+        senderId: inviterAccountId,
+        recipientId: inviteeAccountId,
+        status: 'pending'
+      }
+    });
 
-    const requestsRef = collection(db, 'requests');
-    const q = query(
-        requestsRef,
-        where('action', '==', 'family_invitation'),
-        where('sender_id', '==', inviterAccountId),
-        where('recipient_id', '==', inviteeAccountId),
-        where('status', '==', 'pending')
-    );
-    const existingRequests = await getDocs(q);
-    if(!existingRequests.empty) {
+    if(existingRequest) {
         return { success: false, error: 'An invitation has already been sent to this user.' };
     }
 
-
-    const newRequestRef = await addDoc(requestsRef, {
-        action: 'family_invitation',
-        request_to: 'account',
-        sender_id: inviterAccountId,
-        recipient_id: inviteeAccountId,
-        type: type, // 'member' or 'partner'
-        status: 'pending',
-        createdAt: serverTimestamp(),
+    await prisma.$transaction(async (tx) => {
+      const newRequest = await tx.request.create({
+        data: {
+          action: 'family_invitation',
+          senderId: inviterAccountId,
+          recipientId: inviteeAccountId,
+          type: type,
+          status: 'pending',
+        }
+      });
+      
+      await tx.notification.create({
+        data: {
+          accountId: inviteeAccountId,
+          requestId: newRequest.id,
+          type: 'info',
+          title: 'Family Invitation',
+          message: `You have received a family invitation.`,
+          read: false,
+        }
+      });
     });
-    
-    // Create notification
-    await addDoc(collection(db, 'notifications'), {
-        recipient_id: inviteeAccountId,
-        request_id: newRequestRef.id,
-        is_read: false,
-        createdAt: serverTimestamp()
-    });
-
 
     revalidatePath('/manage/people/family');
     return { success: true };
@@ -146,29 +138,32 @@ async function fetchFamilyGroups(): Promise<FamilyGroup[]> {
   if (!accountId) return [];
 
   try {
-    const familyCol = collection(db, 'family');
-    const q = query(familyCol, where('memberIds', 'array-contains', accountId));
-    const querySnapshot = await getDocs(q);
+    const families = await prisma.family.findMany({
+      where: {
+        memberIds: {
+          has: accountId
+        }
+      }
+    });
 
-    if (querySnapshot.empty) return [];
+    if (families.length === 0) return [];
 
-    const families = await Promise.all(
-      querySnapshot.docs.map(async (familyDoc) => {
-        const familyData = familyDoc.data();
+    const populatedFamilies = await Promise.all(
+      families.map(async (family) => {
+        const members = (family.members as any[]) || [];
         const populatedMembers: FamilyMember[] = await Promise.all(
-          (familyData.members || []).map(async (member: any) => {
+          members.map(async (member: any) => {
             const profile = await getUserProfile(member.accountId);
-            const neupids = await getDocs(
-              query(
-                collection(db, 'neupid'),
-                where('for', '==', member.accountId),
-                limit(1)
-              )
-            );
+            const neupIdRecord = await prisma.neupId.findFirst({
+              where: {
+                accountId: member.accountId,
+                isPrimary: true
+              }
+            });
 
             return {
               accountId: member.accountId,
-              neupId: neupids.docs[0]?.id || 'N/A',
+              neupId: neupIdRecord?.id || 'N/A',
               displayName:
                 profile?.nameDisplay ||
                 `${profile?.nameFirst || ''} ${profile?.nameLast || ''}`.trim() ||
@@ -182,14 +177,14 @@ async function fetchFamilyGroups(): Promise<FamilyGroup[]> {
         );
 
         return {
-          id: familyDoc.id,
-          createdBy: familyData.createdBy,
+          id: family.id,
+          createdBy: family.createdBy,
           members: populatedMembers,
         };
       })
     );
 
-    return families;
+    return populatedFamilies;
   } catch (e) {
     await logError('database', e, 'fetchFamilyGroups');
     return [];
@@ -211,14 +206,14 @@ export async function removeFamilyMember(
   const canRemovePartner = await checkPermissions(['people.family.partner.remove']);
 
   try {
-    const familyDocRef = doc(db, 'family', familyId);
-    const familyDoc = await getDoc(familyDocRef);
+    const family = await prisma.family.findUnique({
+      where: { id: familyId }
+    });
 
-    if (!familyDoc.exists()) return { success: false, error: 'Family not found.' };
+    if (!family) return { success: false, error: 'Family not found.' };
 
-    const familyData = familyDoc.data();
-    const memberIds: string[] = familyData.memberIds || [];
-    const members: any[] = familyData.members || [];
+    const memberIds = family.memberIds || [];
+    const members = (family.members as any[]) || [];
     
     const memberToRemove = members.find(m => m.accountId === memberAccountId);
     if (!memberToRemove) return { success: false, error: "Member not found in family." };
@@ -231,7 +226,7 @@ export async function removeFamilyMember(
     }
 
     // Additional business logic: Only the creator of the family or the member themselves can remove someone.
-    if (removerId !== familyData.createdBy && removerId !== memberAccountId) {
+    if (removerId !== family.createdBy && removerId !== memberAccountId) {
       return {
         success: false,
         error: "You don't have permission to remove this member.",
@@ -243,9 +238,12 @@ export async function removeFamilyMember(
       (m) => m.accountId !== memberAccountId
     );
 
-    await updateDoc(familyDocRef, {
-      memberIds: updatedMemberIds,
-      members: updatedMembers,
+    await prisma.family.update({
+      where: { id: familyId },
+      data: {
+        memberIds: updatedMemberIds,
+        members: updatedMembers,
+      }
     });
 
     revalidatePath('/manage/people/family');

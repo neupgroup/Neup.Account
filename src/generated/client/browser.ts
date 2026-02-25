@@ -23,6 +23,16 @@ export * from './enums';
  */
 export type Account = Prisma.AccountModel
 /**
+ * Model Totp
+ * 
+ */
+export type Totp = Prisma.TotpModel
+/**
+ * Model SystemConfig
+ * 
+ */
+export type SystemConfig = Prisma.SystemConfigModel
+/**
  * Model AuthRequest
  * 
  */
@@ -32,6 +42,66 @@ export type AuthRequest = Prisma.AuthRequestModel
  * 
  */
 export type ActivityLog = Prisma.ActivityLogModel
+/**
+ * Model AccountStatusLog
+ * 
+ */
+export type AccountStatusLog = Prisma.AccountStatusLogModel
+/**
+ * Model KycRequest
+ * 
+ */
+export type KycRequest = Prisma.KycRequestModel
+/**
+ * Model Permission
+ * 
+ */
+export type Permission = Prisma.PermissionModel
+/**
+ * Model PermissionSet
+ * 
+ */
+export type PermissionSet = Prisma.PermissionSetModel
+/**
+ * Model Invitation
+ * 
+ */
+export type Invitation = Prisma.InvitationModel
+/**
+ * Model NeupIdRequest
+ * 
+ */
+export type NeupIdRequest = Prisma.NeupIdRequestModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
+/**
+ * Model Request
+ * 
+ */
+export type Request = Prisma.RequestModel
+/**
+ * Model Family
+ * 
+ */
+export type Family = Prisma.FamilyModel
+/**
+ * Model BackupCode
+ * 
+ */
+export type BackupCode = Prisma.BackupCodeModel
+/**
+ * Model Verification
+ * 
+ */
+export type Verification = Prisma.VerificationModel
+/**
+ * Model UserDocument
+ * 
+ */
+export type UserDocument = Prisma.UserDocumentModel
 /**
  * Model Contact
  * 
@@ -53,12 +123,37 @@ export type Password = Prisma.PasswordModel
  */
 export type Permit = Prisma.PermitModel
 /**
- * Model Permission
- * 
- */
-export type Permission = Prisma.PermissionModel
-/**
  * Model Session
  * 
  */
 export type Session = Prisma.SessionModel
+/**
+ * Model ErrorLog
+ * 
+ */
+export type ErrorLog = Prisma.ErrorLogModel
+/**
+ * Model BugReport
+ * 
+ */
+export type BugReport = Prisma.BugReportModel
+/**
+ * Model UserContent
+ * 
+ */
+export type UserContent = Prisma.UserContentModel
+/**
+ * Model RecoveryContact
+ * 
+ */
+export type RecoveryContact = Prisma.RecoveryContactModel
+/**
+ * Model Application
+ * 
+ */
+export type Application = Prisma.ApplicationModel
+/**
+ * Model UserAppConnection
+ * 
+ */
+export type UserAppConnection = Prisma.UserAppConnectionModel

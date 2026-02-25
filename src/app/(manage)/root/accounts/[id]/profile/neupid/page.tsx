@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
-import { getUserNeupIds as fetchUserNeupIds } from "@/lib/user"
+import { getUserNeupIdDetails as fetchUserNeupIdDetails } from "@/lib/user"
 import { addNeupId, removeNeupId, setPrimaryNeupId } from '@/actions/root/accounts/neupid';
 import { useToast } from "@/hooks/use-toast"
 
@@ -18,8 +18,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import { BackButton } from '@/components/ui/back-button'
-import { doc, getDoc } from 'firebase/firestore'
-import { db } from '@/lib/firebase'
 import { PrimaryHeader } from '@/components/ui/primary-header'
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { Loader2, Plus } from '@/components/icons'
@@ -51,18 +49,11 @@ export default function RootUserNeupidPage() {
 
     const fetchNeupIds = async () => {
         setLoading(true);
-        const neupIdStrings = await fetchUserNeupIds(resolvedParams?.id || '');
-        const neupIdDetails = await Promise.all(
-            neupIdStrings.map(async (id) => {
-                const docRef = doc(db, 'neupid', id);
-                const docSnap = await getDoc(docRef);
-                return { id, isPrimary: docSnap.data()?.is_primary || false };
-            })
-        );
+        const neupIdDetails = await fetchUserNeupIdDetails(resolvedParams?.id || '');
         
-        neupIdDetails.sort((a, b) => (b.isPrimary ? 1 : -1));
-        setNeupIds(neupIdDetails);
-        setUserNeupId(neupIdDetails.find(n => n.isPrimary)?.id || neupIdDetails[0]?.id || resolvedParams.id);
+        const sortedDetails = [...neupIdDetails].sort((a, b) => (b.isPrimary ? 1 : -1));
+        setNeupIds(sortedDetails);
+        setUserNeupId(sortedDetails.find(n => n.isPrimary)?.id || sortedDetails[0]?.id || resolvedParams.id);
         setLoading(false);
     }
     

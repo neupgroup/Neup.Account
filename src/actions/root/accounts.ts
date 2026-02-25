@@ -2,8 +2,7 @@
 
 'use server';
 
-import { db } from '@/lib/firebase';
-import { collection, getDocs, query, where, Timestamp } from 'firebase/firestore';
+import prisma from '@/lib/prisma';
 import { logError } from '@/lib/logger';
 import { checkPermissions } from '@/lib/user';
 import type { UserStats } from '@/types';
@@ -26,25 +25,15 @@ export async function getUserStats(): Promise<UserStats> {
     if (!canView) return { totalUsers: 0, activeUsers: 0, signedUpToday: 0 };
 
     try {
-        const twentyFourHoursAgo = Timestamp.fromMillis(Date.now() - 24 * 60 * 60 * 1000);
-        
-        const accountsCollection = collection(db, 'account');
-
-        const accountsSnapshot = await getDocs(accountsCollection);
-
-        const totalUsers = accountsSnapshot.size;
-        
-        let signedUpToday = 0;
-        accountsSnapshot.forEach(doc => {
-            const dateCreated = doc.data().dateCreated;
-            if (dateCreated && dateCreated.toDate() > twentyFourHoursAgo.toDate()) {
-                signedUpToday++;
-            }
-        });
-
-        // The logic for 'activeUsers' is a placeholder as we don't have a 'last_active' field.
-        const activeUsers = Math.floor(totalUsers * 0.8); // Placeholder
-
+        const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+        const [totalUsers, signedUpToday] = await Promise.all([
+            prisma.account.count(),
+            prisma.account.count({
+                where: { dateCreated: { gte: twentyFourHoursAgo } },
+            }),
+        ]);
+        // Placeholder for active users until a proper metric exists
+        const activeUsers = Math.floor(totalUsers * 0.8);
         return { totalUsers, activeUsers, signedUpToday };
 
     } catch (error) {
@@ -67,28 +56,30 @@ export async function getAllAccounts(
     }
 
     try {
-        const [accountSnapshot, permitSnapshot] = await Promise.all([
-            getDocs(collection(db, 'account')),
-            getDocs(query(collection(db, 'permit'), where('is_root', '==', true)))
+        const [accounts, rootPermits] = await Promise.all([
+            prisma.account.findMany({
+                select: {
+                    id: true,
+                    nameDisplay: true,
+                    dateCreated: true,
+                    accountType: true,
+                },
+            }),
+            prisma.permit.findMany({
+                where: { isRoot: true },
+                select: { accountId: true },
+            }),
         ]);
 
-        const rootPermitMap = new Map<string, boolean>();
-        permitSnapshot.forEach(doc => {
-            rootPermitMap.set(doc.data().account_id, true);
-        });
+        const rootSet = new Set(rootPermits.map(p => p.accountId));
 
-        let allAccounts: AccountListItem[] = accountSnapshot.docs.map(doc => {
-            const accountId = doc.id;
-            const accountData = doc.data();
-
-            return {
-                id: accountId,
-                name: accountData?.nameDisplay || 'Unnamed Account',
-                dateCreated: accountData.dateCreated?.toDate?.()?.toISOString() || new Date(0).toISOString(),
-                accountType: accountData.accountType || 'individual',
-                isRoot: rootPermitMap.has(accountId) || false,
-            };
-        });
+        let allAccounts: AccountListItem[] = accounts.map(a => ({
+            id: a.id,
+            name: a.nameDisplay || 'Unnamed Account',
+            dateCreated: (a.dateCreated ?? new Date(0)).toISOString(),
+            accountType: a.accountType || 'individual',
+            isRoot: rootSet.has(a.id),
+        }));
         
         // Filter
         if (searchQuery) {

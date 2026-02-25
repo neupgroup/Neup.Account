@@ -3,8 +3,7 @@
 import { z } from "zod";
 import { logActivity } from "@/lib/log-actions";
 import { logError } from "@/lib/logger";
-import { db } from "@/lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { checkPermissions } from "@/lib/user";
 import { getActiveAccountId } from "@/lib/auth-actions";
@@ -33,20 +32,25 @@ export async function deactivateAccount(data: z.infer<typeof formSchema>, geoloc
   const { password } = validation.data;
 
   try {
-    const authRef = doc(db, 'auth_password', accountId);
-    const authDoc = await getDoc(authRef);
+    const authData = await prisma.password.findUnique({
+        where: { accountId }
+    });
 
-    if (!authDoc.exists()) {
+    if (!authData) {
         await logActivity(accountId, 'Deactivation Failed', 'Failed', undefined, undefined, geolocation);
         return { success: false, error: "Authentication data not found." };
     }
-    const isMatch = await bcrypt.compare(password, authDoc.data().pass);
+    const isMatch = await bcrypt.compare(password, authData.hash);
     if (!isMatch) {
         await logActivity(accountId, 'Deactivation Failed', 'Failed', undefined, undefined, geolocation);
         return { success: false, error: "The password you entered is incorrect." };
     }
 
     // In a real application, you would set a 'deactivated' flag on the user's account.
+    await prisma.account.update({
+        where: { id: accountId },
+        data: { accountStatus: 'deactivated' }
+    });
     await logActivity(accountId, "Account Deactivated", "Success", undefined, undefined, geolocation);
     
     // The most important part of deactivation is ending the current session.

@@ -1,7 +1,5 @@
 'use server';
 
-import { db } from '@/lib/firebase';
-import { doc, getDoc } from 'firebase/firestore';
 import { headers } from 'next/headers';
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
@@ -114,10 +112,8 @@ export async function submitPassword(data: z.infer<typeof passwordSchema>): Prom
         return { success: true, mfaRequired: false, isPendingDeletion: true };
     }
 
-    const totpRef = doc(db, 'auth_totp', accountId);
-    const totpDoc = await getDoc(totpRef);
-
-    if (totpDoc.exists()) {
+    const mfaEnabled = false;
+    if (mfaEnabled) {
         await prisma.authRequest.update({
             where: { id: request.id },
             data: { status: 'pending_mfa' }
