@@ -28,7 +28,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { useToast } from "@/hooks/use-toast"
-import { createBranchAccount, checkBranchNeupIdAvailability } from "../actions"
+import { createBranchAccount, checkBranchNeupIdAvailability } from "@/actions/manage/accounts/branches";
 import { CheckCircle2, XCircle, Loader2 } from "@/components/icons"
 import { BackButton } from "@/components/ui/back-button"
 

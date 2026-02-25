@@ -4,7 +4,7 @@
 
 import { useState, useTransition, useRef } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { addRecoveryAccount, removeRecoveryAccount, type RecoveryAccount } from './actions';
+import { addRecoveryAccount, removeRecoveryAccount, type RecoveryAccount } from '@/actions/security/account';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { UserPlus, Loader2, Trash2 } from 'lucide-react';

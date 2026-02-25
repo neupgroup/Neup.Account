@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useTransition } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { getBackupCodes, generateBackupCodes, type BackupCode } from './actions';
+import { getBackupCodes, generateBackupCodes, type BackupCode } from '@/actions/security/backup';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, Download, Copy, RefreshCw } from 'lucide-react';

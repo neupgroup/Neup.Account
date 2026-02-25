@@ -1,0 +1,185 @@
+import 'dotenv/config';
+import bcrypt from 'bcryptjs';
+import prisma from '../src/lib/prisma';
+import { DEFAULT_PERMISSIONS } from '../src/lib/permissions-config';
+import { allPermissionsMap } from '../src/components/nav-data';
+
+if (!process.env.DATABASE_URL) {
+  throw new Error('DATABASE_URL is not set. Please configure your database connection.');
+}
+
+async function main() {
+  const NEUP_ID = 'neupkishor';
+  const firstName = 'Kishor';
+  const lastName = 'Neupane';
+  const gender = 'male';
+  const nationality = 'Nepal';
+  const dob = new Date('2004-01-25T00:00:00.000Z');
+  const passwordPlain = 'admin112';
+
+  const allAccess = Array.from(
+    new Set<string>([
+      ...DEFAULT_PERMISSIONS,
+      ...Object.values(allPermissionsMap).flat(),
+    ])
+  );
+
+  // Ensure a root-wide permission set exists
+  const rootPermName = 'root.whole';
+  let rootWhole = await prisma.permission.findUnique({
+    where: { name: rootPermName },
+  });
+
+  if (!rootWhole) {
+    rootWhole = await prisma.permission.create({
+      data: {
+        name: rootPermName,
+        type: 'addition',
+        access: allAccess,
+      },
+    });
+  } else {
+    // Keep it up to date with new accesses
+    const current = new Set(rootWhole.access || []);
+    const merged = Array.from(new Set([...current, ...allAccess]));
+    if (merged.length !== current.size) {
+      rootWhole = await prisma.permission.update({
+        where: { id: rootWhole.id },
+        data: { access: merged },
+      });
+    }
+  }
+
+  // Find existing account by NeupID
+  const existingNeupId = await prisma.neupId.findUnique({ where: { id: NEUP_ID } });
+  let accountId: string | null = existingNeupId?.accountId ?? null;
+
+  // Fallback: search by primary neupid
+  if (!accountId) {
+    const existingByPrimary = await prisma.account.findFirst({
+      where: { neupIdPrimary: NEUP_ID },
+      select: { id: true },
+    });
+    if (existingByPrimary) accountId = existingByPrimary.id;
+  }
+
+  const nameDisplay = `${firstName} ${lastName}`.trim();
+  const hashed = await bcrypt.hash(passwordPlain, 10);
+
+  if (!accountId) {
+    // Create fresh account with NeupID and Password
+    const created = await prisma.account.create({
+      data: {
+        accountType: 'individual',
+        accountStatus: 'active',
+        verified: false,
+        nameDisplay,
+        nameFirst: firstName,
+        nameLast: lastName,
+        dateBirth: dob,
+        gender,
+        nationality,
+        neupIdPrimary: NEUP_ID,
+        neupIds: {
+          create: {
+            id: NEUP_ID,
+            isPrimary: true,
+          },
+        },
+        password: {
+          create: {
+            hash: hashed,
+          },
+        },
+        permit: 'addition',
+      },
+    });
+    accountId = created.id;
+  } else {
+    // Update existing account and ensure neupid + password
+    await prisma.account.update({
+      where: { id: accountId },
+      data: {
+        accountType: 'individual',
+        accountStatus: 'active',
+        nameDisplay,
+        nameFirst: firstName,
+        nameLast: lastName,
+        dateBirth: dob,
+        gender,
+        nationality,
+        neupIdPrimary: NEUP_ID,
+        permit: 'addition',
+      },
+    });
+
+    // Ensure NeupID record exists and is primary
+    const neupRecord = await prisma.neupId.findUnique({ where: { id: NEUP_ID } });
+    if (!neupRecord) {
+      await prisma.neupId.create({
+        data: { id: NEUP_ID, accountId, isPrimary: true },
+      });
+    } else if (!neupRecord.isPrimary || neupRecord.accountId !== accountId) {
+      // If NeupID exists but not primary or linked, keep ownership and mark primary if owned by this account
+      if (neupRecord.accountId === accountId) {
+        await prisma.neupId.update({
+          where: { id: NEUP_ID },
+          data: { isPrimary: true },
+        });
+      }
+    }
+
+    // Upsert password
+    await prisma.password.upsert({
+      where: { accountId },
+      update: { hash: hashed },
+      create: { accountId, hash: hashed },
+    });
+  }
+
+  // Ensure root permit attached
+  if (accountId) {
+    const existingRootPermit = await prisma.permit.findFirst({
+      where: { accountId, isRoot: true, forSelf: false },
+    });
+
+    if (!existingRootPermit) {
+      await prisma.permit.create({
+        data: {
+          accountId,
+          forSelf: false,
+          isRoot: true,
+          permissions: [rootWhole.id],
+          restrictions: [],
+        },
+      });
+    } else {
+      const current = new Set(existingRootPermit.permissions || []);
+      if (!current.has(rootWhole.id)) {
+        await prisma.permit.update({
+          where: { id: existingRootPermit.id },
+          data: { permissions: [...current, rootWhole.id] },
+        });
+      }
+    }
+  }
+}
+
+main()
+  .then(async () => {
+    await prisma.$disconnect();
+    // eslint-disable-next-line no-console
+    console.log('Seed completed for NeupID "neupkishor".');
+  })
+  .catch(async (e) => {
+    // eslint-disable-next-line no-console
+    if ((e as any)?.code === 'ECONNREFUSED') {
+      console.error('Seed failed: cannot connect to the database (ECONNREFUSED).');
+      console.error('Check that your Postgres server is running and DATABASE_URL is correct.');
+      console.error(`Current DATABASE_URL: ${process.env.DATABASE_URL || '(not set)'}`);
+    } else {
+      console.error('Seed failed:', e);
+    }
+    await prisma.$disconnect();
+    process.exit(1);
+  });

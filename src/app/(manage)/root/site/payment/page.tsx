@@ -1,5 +1,5 @@
 
-import { getPaymentDetails } from "./actions";
+import { getPaymentDetails } from "@/actions/root/site/payment";
 import { PaymentDetailsForm } from "./form";
 import { checkPermissions } from "@/lib/user";
 import { notFound } from "next/navigation";

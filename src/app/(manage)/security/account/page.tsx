@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { getRecoveryAccounts } from "./actions";
+import { getRecoveryAccounts } from "@/actions/security/account";
 import { RecoveryAccountManager } from "./recovery-account-manager";
 import { BackButton } from "@/components/ui/back-button";
 import { SecondaryHeader } from "@/components/ui/secondary-header";

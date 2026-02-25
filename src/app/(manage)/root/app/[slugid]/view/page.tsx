@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useTransition } from 'react';
 import { notFound, useRouter, useParams } from 'next/navigation';
-import { getAppDetails, regenerateAppSecret } from '../../actions';
+import { getAppDetails, regenerateAppSecret } from '@/actions/root/app';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';

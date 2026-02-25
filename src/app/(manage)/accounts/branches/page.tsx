@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { getActiveAccountId } from "@/lib/auth-actions";
-import { getBranches } from "./actions";
+import { getBranches } from "@/actions/manage/accounts/branches";
 import {
     Table,
     TableBody,

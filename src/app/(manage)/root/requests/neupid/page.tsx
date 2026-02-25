@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { getPendingNeupIdRequests } from "./actions"
+import { getPendingNeupIdRequests } from "@/actions/root/requests/neupid"
 import { checkPermissions } from "@/lib/user"
 import { notFound } from "next/navigation"
 import { BackButton } from "@/components/ui/back-button"
