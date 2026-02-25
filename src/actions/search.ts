@@ -50,7 +50,7 @@ export async function searchAll(query: string): Promise<SearchResult[]> {
                     type: 'user',
                     title: displayName || fullName,
                     description: neupId ? `@${neupId}` : '',
-                    url: `/manage/root/accounts/${acc.id}`,
+                    url: `/manage/accounts/${acc.id}`,
                 });
             }
 
@@ -68,7 +68,7 @@ export async function searchAll(query: string): Promise<SearchResult[]> {
                     type: 'user',
                     title: displayName || fullName || `@${n.id}`,
                     description: `@${n.id}`,
-                    url: `/manage/root/accounts/${acc.id}`,
+                    url: `/manage/accounts/${acc.id}`,
                 });
             }
         } catch (error) {
@@ -103,7 +103,7 @@ export async function searchAll(query: string): Promise<SearchResult[]> {
                         type: 'permission',
                         title: p.name,
                         description: `Permissions for ${p.appId || 'default'}`,
-                        url: `/manage/root/permission/${p.id}`,
+                        url: `/manage/permission/${p.id}`,
                     });
                 }
             }

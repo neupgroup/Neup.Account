@@ -59,12 +59,12 @@ export const navItems = {
         },
     ],
     managementNav: [
-        { href: "/", label: "Dashboard", description: "A high-level overview of key metrics and system status." },
-        { href: "/root/accounts", label: "Account Management", description: "Manage account roles and permissions." },
-        { href: "/root/requests", label: "Requests Management", description: "Review and act on pending user requests." },
-        { href: "/root/permission", label: "Permission Management", description: "Define system-wide permission sets." },
-        { href: "/root/app", label: "App Management", description: "Create, edit, and manage applications." },
-        { href: "/root/site", label: "Site Configuration", description: "Manage site-wide settings and error logs." },
+        { href: "/manage/dashboard", label: "Dashboard", description: "A high-level overview of key metrics and system status." },
+        { href: "/manage/accounts", label: "Account Management", description: "Manage account roles and permissions." },
+        { href: "/manage/requests", label: "Requests Management", description: "Review and act on pending user requests." },
+        { href: "/manage/permission", label: "Permission Management", description: "Define system-wide permission sets." },
+        { href: "/manage/app", label: "App Management", description: "Create, edit, and manage applications." },
+        { href: "/manage/site", label: "Site Configuration", description: "Manage site-wide settings and error logs." },
     ],
     accountNav: [
         { href: "/auth/start", label: "Switch Account", description: "Switch between different NeupID accounts." },

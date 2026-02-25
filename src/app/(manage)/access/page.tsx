@@ -18,7 +18,7 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { AddUserForm } from "./add-user-form";
 import type { Permission } from "@/types";
-import { getMasterPermissions } from "@/actions/root/permission";
+import { getMasterPermissions } from "@/actions/manage/permission";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 import { PrimaryHeader } from "@/components/ui/primary-header";
 
