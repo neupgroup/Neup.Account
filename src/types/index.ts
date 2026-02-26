@@ -160,7 +160,7 @@ export interface KycRequest {
     userNeupId: string;
     documentType: string;
     submittedAt: string;
-    status: 'pending' | 'approved' | 'rejected';
+    status: 'pending' | 'approved' | 'rejected' | 'revoked';
     documentPhotoUrl: string;
     selfiePhotoUrl: string;
 }
