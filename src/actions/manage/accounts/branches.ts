@@ -77,22 +77,16 @@ export async function createBranchAccount(data: z.infer<typeof formSchema>, geol
 
             const branchAccountId = newAccount.id;
 
-            const defaultPerm = await tx.permission.findFirst({
-                where: { name: 'individual.default' }
+            await tx.permit.create({
+                data: {
+                    accountId: personalAccountId,
+                    targetAccountId: branchAccountId,
+                    isRoot: false,
+                    permissions: ['individual.default'],
+                    createdOn: new Date(),
+                    managedBy: personalAccountId,
+                }
             });
-
-            if (defaultPerm) {
-                await tx.permit.create({
-                    data: {
-                        accountId: personalAccountId,
-                        targetAccountId: branchAccountId,
-                        isRoot: false,
-                        permissions: [defaultPerm.id],
-                        createdOn: new Date(),
-                        managedBy: personalAccountId,
-                    }
-                });
-            }
 
             await tx.neupId.create({
                 data: {

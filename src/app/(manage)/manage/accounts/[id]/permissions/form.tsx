@@ -5,47 +5,44 @@ import { useState, useTransition } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { updateUserPermissions } from "@/actions/manage/users";
 import type { Permission } from "@/types";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Loader2, ShieldAlert } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Loader2 } from "lucide-react";
 import { TertiaryHeader } from "@/components/ui/tertiary-header";
-
-type PermissionSet = Omit<Permission, 'access'>;
 
 export function PermissionEditor({
   accountId,
-  allPermissionSets,
-  initialAssignedSetIds,
-  initialRestrictedSetIds,
+  allPermissions,
+  initialAssignedPermissions,
+  initialRestrictedPermissions,
 }: {
   accountId: string;
-  allPermissionSets: PermissionSet[];
-  initialAssignedSetIds: string[];
-  initialRestrictedSetIds: string[];
+  allPermissions: Permission[];
+  initialAssignedPermissions: string[];
+  initialRestrictedPermissions: string[];
 }) {
-  const [assignedSetIds, setAssignedSetIds] = useState<string[]>(initialAssignedSetIds);
-  const [restrictedSetIds, setRestrictedSetIds] = useState<string[]>(initialRestrictedSetIds);
+  const [assignedPermissions, setAssignedPermissions] = useState<string[]>(initialAssignedPermissions);
+  const [restrictedPermissions, setRestrictedPermissions] = useState<string[]>(initialRestrictedPermissions);
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
   const handleAssignedChange = (permissionId: string, checked: boolean) => {
-    setAssignedSetIds((prev) =>
+    setAssignedPermissions((prev) =>
       checked ? [...prev, permissionId] : prev.filter((id) => id !== permissionId)
     );
   };
   
    const handleRestrictedChange = (permissionId: string, checked: boolean) => {
-    setRestrictedSetIds((prev) =>
+    setRestrictedPermissions((prev) =>
       checked ? [...prev, permissionId] : prev.filter((id) => id !== permissionId)
     );
   };
 
   const handleSave = () => {
     startTransition(async () => {
-        const result = await updateUserPermissions(accountId, assignedSetIds, restrictedSetIds);
+        const result = await updateUserPermissions(accountId, assignedPermissions, restrictedPermissions);
         if(result.success) {
             toast({ title: "Success", description: "Permissions updated successfully.", className: "bg-accent text-accent-foreground" });
         } else {
@@ -59,16 +56,16 @@ export function PermissionEditor({
       <Card>
         <CardHeader>
             <TertiaryHeader
-                title="Assigned Permission Sets"
-                description="Grant the user access by assigning one or more permission sets."
+                title="Assigned Permissions"
+                description="Grant the user access by assigning one or more permissions or sets."
             />
         </CardHeader>
         <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {allPermissionSets.map((permission) => (
+          {allPermissions.map((permission) => (
             <div key={permission.id} className="flex items-start space-x-3 rounded-md border p-4">
               <Checkbox
                 id={`assign-${permission.id}`}
-                checked={assignedSetIds.includes(permission.id)}
+                checked={assignedPermissions.includes(permission.id)}
                 onCheckedChange={(checked) =>
                   handleAssignedChange(permission.id, !!checked)
                 }
@@ -77,7 +74,6 @@ export function PermissionEditor({
                 <Label htmlFor={`assign-${permission.id}`} className="text-sm font-medium cursor-pointer">
                     {permission.name}
                 </Label>
-                <p className="text-xs text-muted-foreground">{permission.description}</p>
               </div>
             </div>
           ))}
@@ -87,16 +83,16 @@ export function PermissionEditor({
       <Card className="border-amber-500/50">
         <CardHeader>
              <TertiaryHeader
-                title="Restricted Permission Sets"
+                title="Restricted Permissions"
                 description="Explicitly deny permissions, even if they are included in an assigned set. Restrictions always take precedence."
             />
         </CardHeader>
         <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-           {allPermissionSets.map((permission) => (
+           {allPermissions.map((permission) => (
             <div key={permission.id} className="flex items-start space-x-3 rounded-md border p-4">
               <Checkbox
                 id={`restrict-${permission.id}`}
-                checked={restrictedSetIds.includes(permission.id)}
+                checked={restrictedPermissions.includes(permission.id)}
                 onCheckedChange={(checked) =>
                   handleRestrictedChange(permission.id, !!checked)
                 }
@@ -106,7 +102,6 @@ export function PermissionEditor({
                 <Label htmlFor={`restrict-${permission.id}`} className="text-sm font-medium cursor-pointer">
                     {permission.name}
                 </Label>
-                 <p className="text-xs text-muted-foreground">{permission.description}</p>
               </div>
             </div>
           ))}

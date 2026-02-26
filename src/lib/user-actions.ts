@@ -145,92 +145,10 @@ export async function getPersonalAccountId() {
     return getPersonalAccountIdFromServer();
 }
 
+import { getUserPermissions as fetchUserPermissions } from './user';
+
 export async function getUserPermissions(accountId?: string): Promise<string[]> {
-    const idToFetch = accountId || await getActiveAccountIdFromServer();
-    if (!idToFetch) return [];
-    
-    try {
-        const accountType = await getAccountType(idToFetch);
-
-        const permits = await prisma.permit.findMany({
-            where: { accountId: idToFetch }
-        });
-
-        const customPermissionSetIds = new Set<string>();
-        const restrictedPermissionSetIds = new Set<string>();
-
-        permits.forEach(p => {
-            if (p.permissions && Array.isArray(p.permissions)) {
-                p.permissions.forEach(id => customPermissionSetIds.add(id));
-            }
-            if (p.restrictions && Array.isArray(p.restrictions)) {
-                p.restrictions.forEach(id => restrictedPermissionSetIds.add(id));
-            }
-        });
-
-        // Add default permissions for individual accounts
-        if (accountType === 'individual') {
-             const defaultPermSet = await prisma.permissionSet.findUnique({
-                 where: { name: 'individual.default' }
-             });
-             if (defaultPermSet) {
-                customPermissionSetIds.add(defaultPermSet.id);
-             }
-        }
-        
-        // Remove restricted permissions
-        const finalPermissionSetIds = Array.from(customPermissionSetIds).filter(id => !restrictedPermissionSetIds.has(id));
-
-        if (finalPermissionSetIds.length === 0) {
-            return [];
-        }
-
-        // Fetch all permission sets
-        const permissionSets = await prisma.permissionSet.findMany({
-            where: {
-                OR: [
-                    { id: { in: finalPermissionSetIds } },
-                    { name: { in: finalPermissionSetIds } }
-                ]
-            }
-        });
-
-        // Collect all permission IDs/names from the sets
-        const permissionIdsOrNames = new Set<string>();
-        permissionSets.forEach(ps => {
-            if (ps.permissions && Array.isArray(ps.permissions)) {
-                ps.permissions.forEach(p => permissionIdsOrNames.add(p));
-            }
-        });
-
-        if (permissionIdsOrNames.size === 0) {
-            return [];
-        }
-
-        // Fetch all permissions
-        const permissions = await prisma.permission.findMany({
-            where: {
-                OR: [
-                    { id: { in: Array.from(permissionIdsOrNames) } },
-                    { name: { in: Array.from(permissionIdsOrNames) } }
-                ]
-            }
-        });
-
-        // Extract all access strings
-        const allAccess = new Set<string>();
-        permissions.forEach(p => {
-            if (p.access && Array.isArray(p.access)) {
-                p.access.forEach(a => allAccess.add(a));
-            }
-        });
-
-        return Array.from(allAccess);
-
-    } catch (error) {
-        await logError('database', error, `getUserPermissions for ${idToFetch}`);
-        return [];
-    }
+    return fetchUserPermissions(accountId);
 }
 
 
@@ -244,9 +162,9 @@ export async function checkPermissions(requiredPermissions: string[]): Promise<b
     }
 
     const userPermissions = await getUserPermissions(accountId);
-    const userPermissionSet = new Set(userPermissions);
+    const permissionsSet = new Set(userPermissions);
 
-    return requiredPermissions.every(p => userPermissionSet.has(p));
+    return requiredPermissions.every(p => permissionsSet.has(p));
 }
 
     

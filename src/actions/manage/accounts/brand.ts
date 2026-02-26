@@ -107,16 +107,6 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
             return { success: false, error: 'This NeupID is already taken.' };
         }
 
-        // Grant management permission to the creator by creating a permit document
-        const brandAdminPerm = await prisma.permission.findUnique({
-            where: { name: 'brand.founder' }
-        });
-        
-        if (!brandAdminPerm) {
-            await logError('database', new Error('brand.founder permission set not found'), 'createBrandAccount');
-            return { success: false, error: 'Could not assign default management permissions. Please contact support.' };
-        }
-
         // Transaction to create everything
         await prisma.$transaction(async (tx) => {
              const account = await tx.account.create({
@@ -125,12 +115,8 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
                     accountStatus: 'active',
                     verified: false,
                     nameDisplay: nameBrand,
-                    // nameBrand: nameBrand, // nameBrand is not in schema, mapping to nameDisplay or nameLegal if needed, or adding to schema. 
-                    // Assuming nameDisplay is enough for now, or nameLegal. 
-                    // Wait, schema has nameLegal. 
                     nameLegal: nameLegal || null,
                     registrationId: registrationId || null,
-                    // servingAreas: servingAreas || null, // servingAreas is not in schema.
                     dateCreated: new Date(),
                     
                     neupIds: {
@@ -155,10 +141,8 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
                     targetAccountId: account.id,
                     forSelf: false,
                     isRoot: false,
-                    // full_access: true, // Not in schema, relying on permissions list
-                    permissions: [brandAdminPerm.id],
+                    permissions: ['independent.default'], // Founder gets default management permissions
                     restrictions: [],
-                    // status: 'approved', // Not in schema
                     createdOn: new Date()
                 }
             });

@@ -115,11 +115,6 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
             return { success: false, error: 'This NeupID is already taken.' };
         }
         
-        const [guardianPerm, dependentPerm] = await Promise.all([
-            prisma.permission.findUnique({ where: { name: 'individual.default' } }),
-            prisma.permission.findUnique({ where: { name: 'dependent.default' } })
-        ]);
-        
         const hashedPassword = await bcrypt.hash(password, 10);
         
         const account = await prisma.account.create({
@@ -159,34 +154,29 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
         const dependentAccountId = account.id;
         
         // Grant management permission to the guardian
-        if (guardianPerm) {
-            await prisma.permit.create({
-                data: {
-                    accountId: guardianAccountId,
-                    targetAccountId: dependentAccountId,
-                    forSelf: false,
-                    isRoot: false,
-                    // full_access: true, // Not in schema
-                    permissions: [guardianPerm.id],
-                    restrictions: [],
-                    createdOn: new Date(),
-                }
-            });
-        }
+        await prisma.permit.create({
+            data: {
+                accountId: guardianAccountId,
+                targetAccountId: dependentAccountId,
+                forSelf: false,
+                isRoot: false,
+                permissions: ['independent.default'], // Guardian gets default independent permissions over dependent
+                restrictions: [],
+                createdOn: new Date(),
+            }
+        });
         
         // Grant self-permissions to the dependent account
-        if (dependentPerm) {
-             await prisma.permit.create({
-                data: {
-                    accountId: dependentAccountId,
-                    forSelf: true,
-                    isRoot: false,
-                    permissions: [dependentPerm.id],
-                    restrictions: [],
-                    createdOn: new Date(),
-                }
-            });
-        }
+        await prisma.permit.create({
+            data: {
+                accountId: dependentAccountId,
+                forSelf: true,
+                isRoot: false,
+                permissions: ['dependent.full'], // Dependent gets full dependent permissions for self
+                restrictions: [],
+                createdOn: new Date(),
+            }
+        });
         
         await logActivity(guardianAccountId, `Created Dependent Account: ${neupId}`, 'Success', ipAddress, undefined, geolocation);
         revalidatePath('/manage/accounts/dependent');

@@ -1,6 +1,6 @@
 
 
-import { getAccessList } from "@/actions/manage/access";
+import { getAccessList, getMasterPermissions } from "@/actions/manage/access/index";
 import { getActiveAccountId } from "@/lib/auth-actions";
 import { getUserNeupIds } from "@/lib/user";
 import {
@@ -8,8 +8,6 @@ import {
   CardContent,
   CardFooter,
   CardHeader,
-  CardTitle,
-  CardDescription
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
@@ -18,7 +16,6 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { AddUserForm } from "./add-user-form";
 import type { Permission } from "@/types";
-import { getMasterPermissions } from "@/actions/manage/permission";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 import { PrimaryHeader } from "@/components/ui/primary-header";
 
@@ -28,14 +25,12 @@ export default async function AccessControlPage() {
     notFound();
   }
 
-  // Fetch all permissions by providing a large page size and no search query.
-  const [accessList, neupIds, permissionsResponse] = await Promise.all([
+  const [accessList, neupIds, allPermissions] = await Promise.all([
     getAccessList(accountId),
     getUserNeupIds(accountId),
-    getMasterPermissions("", 1, 999), 
+    getMasterPermissions(),
   ]);
 
-  const allPermissions = permissionsResponse.permissions;
   const permissionMap = new Map<string, Permission>(allPermissions.map(p => [p.id, p]));
 
   const currentNeupId = neupIds[0] || "this account";

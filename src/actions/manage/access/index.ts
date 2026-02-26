@@ -8,6 +8,21 @@ import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { logActivity } from '@/lib/log-actions';
 import type { UserAccess, AccessDetails, Permission } from '@/types';
+import { PERMISSION_SET } from '@/lib/permissions';
+
+export async function getMasterPermissions(): Promise<Permission[]> {
+    // Collect all unique permission set keys (roles) and unique permissions from roles
+    const allSetKeys = Object.keys(PERMISSION_SET);
+    const allIndividualPermissions = new Set(Object.values(PERMISSION_SET).flat());
+
+    // Combine roles and individual permissions
+    const combined = new Set([...allSetKeys, ...allIndividualPermissions]);
+
+    return Array.from(combined).sort().map(p => ({
+        id: p,
+        name: p
+    }));
+}
 
 export type Invitation = {
     permitId: string;
@@ -141,63 +156,17 @@ export async function removeAccess(permitId: string, geolocation?: string): Prom
 }
 
 export async function getDelegatablePermissions(): Promise<Permission[]> {
-    const managerId = await getPersonalAccountId();
     const managedAccountId = await getActiveAccountId();
+    if (!managedAccountId) return [];
+
+    // Get all permissions the current user has on the active account
+    const userPermissions = await getUserPermissions(managedAccountId);
     
-    if (!managerId || !managedAccountId || managerId === managedAccountId) {
-        // Fallback for self-permissions if not in a managing context.
-        const selfPermit = await prisma.permit.findFirst({
-          where: {
-            accountId: managerId!,
-            forSelf: true
-          }
-        });
-
-        if (!selfPermit) return [];
-
-        const selfAssignedIds = selfPermit.permissions || [];
-        if (selfAssignedIds.length === 0) return [];
-
-        const selfPerms = await prisma.permission.findMany({
-          where: {
-            id: { in: selfAssignedIds }
-          }
-        });
-        return selfPerms.map((p: any) => ({ ...p } as unknown as Permission));
-    }
-
-    // Find the permit that grants the personal account access to the managed account.
-    const permit = await prisma.permit.findFirst({
-      where: {
-        accountId: managerId,
-        targetAccountId: managedAccountId
-      }
-    });
-    
-    if (!permit) return [];
-
-    // If the manager has full access, they can delegate any non-root permission.
-    if (permit.fullAccess) {
-        const allPerms = await prisma.permission.findMany({
-          where: {
-            name: { not: 'root.whole' }
-          }
-        });
-        return allPerms
-          .map((p: any) => ({ ...p } as unknown as Permission))
-          .filter((p: any) => !p.name.startsWith('root.'));
-    }
-    
-    // Otherwise, they can only delegate the permissions they have been explicitly assigned.
-    const assignedIds = permit.permissions || [];
-    if (assignedIds.length === 0) return [];
-    
-    const delegatablePerms = await prisma.permission.findMany({
-      where: {
-        id: { in: assignedIds }
-      }
-    });
-    return delegatablePerms.map((p: any) => ({ ...p } as unknown as Permission));
+    // Convert to Permission objects
+    return userPermissions.sort().map(p => ({
+        id: p,
+        name: p
+    }));
 }
 
 
@@ -217,9 +186,14 @@ export async function updatePermissions(permitId: string, newPermissionIds: stri
         }
 
         // --- Permission Delegation Check ---
-        const delegatablePerms = await getDelegatablePermissions();
-        const delegatablePermIds = new Set(delegatablePerms.map(p => p.id));
-        const isAllowed = newPermissionIds.every(id => delegatablePermIds.has(id));
+        const userResolvedPermissions = await getUserPermissions(currentAccountId);
+        const userResolvedPermSet = new Set(userResolvedPermissions);
+        
+        // Ensure that for every role/permission we are granting, the user has all those permissions
+        const isAllowed = newPermissionIds.every(entry => {
+            const toApply = PERMISSION_SET[entry] || [entry];
+            return toApply.every(p => userResolvedPermSet.has(p));
+        });
 
         if (!isAllowed) {
             return { success: false, error: "You are trying to grant permissions you do not possess." };

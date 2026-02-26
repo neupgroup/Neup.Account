@@ -141,27 +141,6 @@ model KycRequest {
   @@map("kyc_requests")
 }
 
-model Permission {
-  id           String   @id @default(uuid())
-  name         String   @unique
-  appId        String?
-  access       String[]
-  description  String?
-  intendedFor  String?  @default("all") // 'all' | 'individual' | 'brand' | 'dependent'
-  type         String?  @default("addition") // 'addition' | 'reduction'
-
-  @@map("permissions")
-}
-
-model PermissionSet {
-  id           String   @id @default(uuid())
-  name         String   @unique
-  description  String?
-  permissions  String[] // Array of permission IDs or names
-
-  @@map("permission_sets")
-}
-
 model Invitation {
   id              String   @id @default(uuid())
   inviterAccountId String

@@ -103,7 +103,6 @@ export function AccessManagementForm({
               />
               <Label htmlFor={permission.id} className="text-sm font-normal cursor-pointer">
                 {permission.name}
-                <p className="text-xs text-muted-foreground">{permission.description}</p>
               </Label>
             </div>
           ))}

@@ -119,16 +119,11 @@ export async function acceptRequest(requestId: string, notificationId: string): 
                 }
 
             } else if (request.action === 'access_invitation') {
-                const defaultPermSet = await tx.permissionSet.findUnique({
-                    where: { name: 'individual.default' }
-                });
-                const permId = defaultPermSet?.id || 'individual.default';
-                
                 await tx.permit.create({
                     data: {
                         accountId: inviteeId,
                         targetAccountId: request.senderId,
-                        permissions: [permId],
+                        permissions: ['independent.default'],
                         forSelf: false,
                         isRoot: false,
                         restrictions: [],

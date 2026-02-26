@@ -1,8 +1,6 @@
 import 'dotenv/config';
 import bcrypt from 'bcryptjs';
 import prisma from '../src/lib/prisma';
-import { DEFAULT_PERMISSIONS } from '../src/lib/permissions-config';
-import { allPermissionsMap } from '../src/components/nav-data';
 
 if (!process.env.DATABASE_URL) {
   throw new Error('DATABASE_URL is not set. Please configure your database connection.');
@@ -16,39 +14,6 @@ async function main() {
   const nationality = 'Nepal';
   const dob = new Date('2004-01-25T00:00:00.000Z');
   const passwordPlain = 'admin112';
-
-  const allAccess = Array.from(
-    new Set<string>([
-      ...DEFAULT_PERMISSIONS,
-      ...Object.values(allPermissionsMap).flat(),
-    ])
-  );
-
-  // Ensure a root-wide permission set exists
-  const rootPermName = 'root.whole';
-  let rootWhole = await prisma.permission.findUnique({
-    where: { name: rootPermName },
-  });
-
-  if (!rootWhole) {
-    rootWhole = await prisma.permission.create({
-      data: {
-        name: rootPermName,
-        type: 'addition',
-        access: allAccess,
-      },
-    });
-  } else {
-    // Keep it up to date with new accesses
-    const current = new Set(rootWhole.access || []);
-    const merged = Array.from(new Set([...current, ...allAccess]));
-    if (merged.length !== current.size) {
-      rootWhole = await prisma.permission.update({
-        where: { id: rootWhole.id },
-        data: { access: merged },
-      });
-    }
-  }
 
   // Find existing account by NeupID
   const existingNeupId = await prisma.neupId.findUnique({ where: { id: NEUP_ID } });

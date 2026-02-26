@@ -30,11 +30,7 @@ export type Application = {
 
 export type Permission = {
   id: string;
-  name: string; // e.g. property_ReadWrite
-  app_id: string; // e.g. neup_console
-  access: string[]; // e.g. ["property.read", "property.write"]
-  description: string;
-  intended_for: 'individual' | 'brand' | 'dependent' | 'branch' | 'root';
+  name: string; // e.g. root.full
 };
 
 export type NotificationCreate = {
@@ -175,9 +171,9 @@ export type UserActivityLog = {
     rawTimestamp: Date;
 };
 
-export type UserPermissions = {
-    assignedPermissionSetIds: string[];
-    restrictedPermissionSetIds: string[];
+export interface UserPermissions {
+    assignedPermissions: string[];
+    restrictedPermissions: string[];
     allPermissions: string[];
 };
 

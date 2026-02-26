@@ -2,7 +2,8 @@
 import { notFound } from "next/navigation";
 import { getPermissions, getUserDetails } from "@/actions/manage/users";
 import { getAccountType } from "@/lib/user";
-import { getMasterPermissions } from "@/actions/manage/permission";
+import { getMasterPermissions } from "@/actions/manage/access/index";
+import { PERMISSION_METADATA } from "@/lib/permissions";
 import { BackButton } from "@/components/ui/back-button";
 import { PermissionEditor } from "./form";
 import { PrimaryHeader } from "@/components/ui/primary-header";
@@ -14,16 +15,17 @@ export default async function UserPermissionsPage({ params }: { params: Promise<
         notFound();
     }
 
-    const [userPermissions, allPermissionsResponse, accountType] = await Promise.all([
+    const [userPermissions, allPermissions, accountType] = await Promise.all([
         getPermissions(id),
-        getMasterPermissions("", 1, 9999), // Fetch all permissions
+        getMasterPermissions(), // Fetch all permissions from permissions.ts
         getAccountType(id),
     ]);
 
-    // Filter permissions to only show those intended for the user's account type, plus root permissions.
-    const assignablePermissions = allPermissionsResponse.permissions.filter(p => {
-        if (p.intended_for === 'root') return true;
-        return p.intended_for === accountType;
+    // Filter permissions based on account type using metadata
+    const assignablePermissions = allPermissions.filter(p => {
+        const metadata = PERMISSION_METADATA[p.id];
+        if (!metadata) return true; // Show if no metadata defined
+        return metadata.intended_for.includes(accountType || 'individual');
     });
     
     return (
@@ -35,9 +37,9 @@ export default async function UserPermissionsPage({ params }: { params: Promise<
             />
             <PermissionEditor 
                 accountId={id}
-                allPermissionSets={assignablePermissions}
-                initialAssignedSetIds={userPermissions.assignedPermissionSetIds}
-                initialRestrictedSetIds={userPermissions.restrictedPermissionSetIds}
+                allPermissions={assignablePermissions}
+                initialAssignedPermissions={userPermissions.assignedPermissions}
+                initialRestrictedPermissions={userPermissions.restrictedPermissions}
             />
         </div>
     );

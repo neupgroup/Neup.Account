@@ -5,6 +5,7 @@ import { logError } from '@/lib/logger';
 import { checkPermissions } from '@/lib/user';
 import type { SearchResult } from '@/types';
 import prisma from '@/lib/prisma';
+import { PERMISSION_SET } from '@/lib/permissions';
 
 
 // A very basic search function. In a real-world scenario,
@@ -80,33 +81,23 @@ export async function searchAll(query: string): Promise<SearchResult[]> {
     const canSearchPermissions = await checkPermissions(['root.permission.view']);
     if (canSearchPermissions) {
         try {
-            const perms = await prisma.permission.findMany({
-                where: {
-                    OR: [
-                        { name: { contains: lowercasedQuery, mode: 'insensitive' } },
-                        { appId: { contains: lowercasedQuery, mode: 'insensitive' } },
-                    ],
-                },
-                orderBy: { name: 'asc' },
-                take: 200,
-            });
+            const queryLower = lowercasedQuery.toLowerCase();
+            
+            // Search in PERMISSION_SET keys and their permission lists
+            Object.entries(PERMISSION_SET).forEach(([setName, permissions]) => {
+                const nameMatches = setName.toLowerCase().includes(queryLower);
+                const accessMatches = permissions.some(p => p.toLowerCase().includes(queryLower));
 
-            for (const p of perms) {
-                const accessMatches = p.access.some(a => a.toLowerCase().includes(lowercasedQuery));
-                if (
-                    accessMatches ||
-                    p.name.toLowerCase().includes(lowercasedQuery) ||
-                    (p.appId || '').toLowerCase().includes(lowercasedQuery)
-                ) {
+                if (nameMatches || accessMatches) {
                     results.push({
-                        id: `permission-${p.id}`,
+                        id: `permission-${setName}`,
                         type: 'permission',
-                        title: p.name,
-                        description: `Permissions for ${p.appId || 'default'}`,
-                        url: `/manage/permission/${p.id}`,
+                        title: setName,
+                        description: `${permissions.length} permissions included`,
+                        url: `/manage/access/${setName}`,
                     });
                 }
-            }
+            });
         } catch (error) {
             await logError('database', error, 'searchAll:permissions');
         }

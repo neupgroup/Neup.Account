@@ -65,22 +65,12 @@ export interface UserActivityLog {
 export interface Permission {
     id: string;
     name: string;
-    app_id: string;
-    access: string[];
-    description: string;
-    intended_for: string;
-}
-
-export interface PermissionSet {
-    id: string;
-    name: string;
-    description: string;
-    permissions: string[];
 }
 
 export interface UserPermissions {
-    assignedPermissionSetIds: string[];
-    restrictedPermissionSetIds: string[];
+    assignedPermissions: string[];
+    restrictedPermissions: string[];
+    allPermissions: string[];
 }
 
 export interface SystemError {

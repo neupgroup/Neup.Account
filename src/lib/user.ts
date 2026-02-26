@@ -173,12 +173,12 @@ export async function getUserPermissions(accountId?: string, appId?: string): Pr
     if (!account) return [];
 
     const baseRole = account.permit || 'default';
-    let permissionSet = new Set<string>();
+    let collectedPermissions = new Set<string>();
 
     // If not managing another account, start with the base permissions from the account's role
     if (!isManaging) {
       const basePermissions = PERMISSION_SET[baseRole] || (baseRole === 'default' ? (PERMISSION_SET['independent.default'] || []) : []);
-      basePermissions.forEach(p => permissionSet.add(p));
+      basePermissions.forEach(p => collectedPermissions.add(p));
     }
 
     // Fetch relevant permits
@@ -223,17 +223,17 @@ export async function getUserPermissions(accountId?: string, appId?: string): Pr
         const toApply = PERMISSION_SET[name] || [name];
 
         if (modifier === '-') {
-          toApply.forEach(p => permissionSet.delete(p));
+          toApply.forEach(p => collectedPermissions.delete(p));
         } else {
           // Both '+' and no modifier result in adding permissions
-          toApply.forEach(p => permissionSet.add(p));
+          toApply.forEach(p => collectedPermissions.add(p));
         }
       });
     });
 
     // Filter by appId if provided (if your permissions structure supports appId filtering)
     // For now, returning the full set as requested
-    return Array.from(permissionSet);
+    return Array.from(collectedPermissions);
   } catch (error) {
     await logError('database', error, `getUserPermissions for ${activeId}`);
     return [];
@@ -256,9 +256,9 @@ export async function checkPermissions(
 
   // Pass the appId to the underlying function if it exists
   const userPermissions = await getUserPermissions(accountId, appId);
-  const userPermissionSet = new Set(userPermissions);
+  const permissionsSet = new Set(userPermissions);
 
-  return requiredPermissions.every((p) => userPermissionSet.has(p));
+  return requiredPermissions.every((p) => permissionsSet.has(p));
 }
 
 // --- Validation ---

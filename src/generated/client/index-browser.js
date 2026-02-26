@@ -205,23 +205,6 @@ exports.Prisma.KycRequestScalarFieldEnum = {
   userNeupId: 'userNeupId'
 };
 
-exports.Prisma.PermissionScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  appId: 'appId',
-  access: 'access',
-  description: 'description',
-  intendedFor: 'intendedFor',
-  type: 'type'
-};
-
-exports.Prisma.PermissionSetScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  description: 'description',
-  permissions: 'permissions'
-};
-
 exports.Prisma.InvitationScalarFieldEnum = {
   id: 'id',
   inviterAccountId: 'inviterAccountId',
@@ -470,8 +453,6 @@ exports.Prisma.ModelName = {
   ActivityLog: 'ActivityLog',
   AccountStatusLog: 'AccountStatusLog',
   KycRequest: 'KycRequest',
-  Permission: 'Permission',
-  PermissionSet: 'PermissionSet',
   Invitation: 'Invitation',
   NeupIdRequest: 'NeupIdRequest',
   Notification: 'Notification',

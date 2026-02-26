@@ -149,3 +149,9 @@ export const PERMISSION_SET: Record<string, string[]> = {
     "linked_accounts.brand.manager"
   ]
 };
+
+export const PERMISSION_METADATA: Record<string, { intended_for: string[] }> = {
+  "independent.default": { intended_for: ["individual"] },
+  "dependent.full": { intended_for: ["dependent"] },
+  "root.full": { intended_for: ["individual"] },
+};

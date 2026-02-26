@@ -16,10 +16,10 @@ export function DashboardNav() {
     const navConfig: NavSection[] | null = useMemo(() => {
         if (loading || !permissions) return null;
 
-        const userPermissionSet = new Set(permissions);
+        const permissionsSet = new Set(permissions);
         const hasAnyPermissionFor = (requiredPermissions: string[]) => {
             if (requiredPermissions.length === 0) return true;
-            return requiredPermissions.some(p => userPermissionSet.has(p));
+            return requiredPermissions.some(p => permissionsSet.has(p));
         };
 
         const navItemsWithPerms = (items: Omit<any, 'requiredPermissions' | 'iconName'>[]): any[] => {

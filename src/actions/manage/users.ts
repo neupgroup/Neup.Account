@@ -71,32 +71,45 @@ export async function getActivity(accountId: string): Promise<UserActivityLog[]>
     });
 }
 
+import { PERMISSION_SET } from '@/lib/permissions';
+
 export async function getPermissions(accountId: string): Promise<UserPermissions> {
     const permit = await prisma.permit.findFirst({
         where: { accountId, forSelf: true },
         select: { permissions: true, restrictions: true },
     });
     if (!permit) {
-        return { assignedPermissionSetIds: [], restrictedPermissionSetIds: [], allPermissions: [] };
+        return { assignedPermissions: [], restrictedPermissions: [], allPermissions: [] };
     }
     const permissionIds = permit.permissions || [];
     const restrictionIds = permit.restrictions || [];
-    const finalPermissionIds = permissionIds.filter(id => !restrictionIds.includes(id));
-
-    if (finalPermissionIds.length === 0) {
-        return { assignedPermissionSetIds: permissionIds, restrictedPermissionSetIds: restrictionIds, allPermissions: [] };
-    }
-
-    const perms = await prisma.permission.findMany({
-        where: { id: { in: finalPermissionIds } },
-        select: { access: true },
-    });
+    
+    // In the new system, permissionIds are keys in PERMISSION_SET or individual permission strings.
+    // We collect all permissions from assigned sets, then remove restricted ones.
     const allPermissions = new Set<string>();
-    perms.forEach(p => (p.access || []).forEach(a => allPermissions.add(a)));
+    
+    permissionIds.forEach(id => {
+        const set = PERMISSION_SET[id];
+        if (set) {
+            set.forEach(p => allPermissions.add(p));
+        } else {
+            // It might be an individual permission
+            allPermissions.add(id);
+        }
+    });
+
+    restrictionIds.forEach(id => {
+        const set = PERMISSION_SET[id];
+        if (set) {
+            set.forEach(p => allPermissions.delete(p));
+        } else {
+            allPermissions.delete(id);
+        }
+    });
 
     return {
-        assignedPermissionSetIds: permissionIds,
-        restrictedPermissionSetIds: restrictionIds,
+        assignedPermissions: permissionIds,
+        restrictedPermissions: restrictionIds,
         allPermissions: Array.from(allPermissions),
     };
 }
