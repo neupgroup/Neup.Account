@@ -7,25 +7,17 @@ import { notFound } from "next/navigation";
 import { ListItem } from "@/components/ui/list-item";
 
 export default async function SiteConfigurationPage() {
-    const [canViewPayment, canViewErrors, canViewSocials] = await Promise.all([
-        checkPermissions(['root.payment_config.view']),
+    const [canViewErrors, canViewSocials] = await Promise.all([
         checkPermissions(['root.errors.view']),
         checkPermissions(['root.site.social_accounts.read']),
     ]);
     
-    const canViewPage = canViewPayment || canViewErrors || canViewSocials;
+    const canViewPage = canViewErrors || canViewSocials;
     if (!canViewPage) {
         notFound();
     }
 
     const features = [
-        {
-            icon: Wallet,
-            title: "Payment Configuration",
-            description: "Configure payment instructions for users purchasing Neup.Pro.",
-            href: "/manage/site/payment",
-            show: canViewPayment,
-        },
         {
             icon: AlertTriangle,
             title: "System Errors",

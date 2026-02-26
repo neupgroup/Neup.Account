@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { getPaymentDetails } from "@/actions/manage/payments/neup.pro";
+import { getPaymentDetails, getAppInfo } from "@/actions/manage/payments/neup.pro";
 import Image from "next/image";
 import { Bot, Instagram, Linkedin, Ban } from "lucide-react";
 import { BackButton } from "@/components/ui/back-button";
@@ -14,9 +14,12 @@ export default async function NeupProPage() {
         notFound();
     }
     
-    const details = await getPaymentDetails();
+    const [details, appInfo] = await Promise.all([
+        getPaymentDetails(),
+        getAppInfo(),
+    ]);
 
-    if (!details) {
+    if (!details || !appInfo) {
         return (
              <Card>
                 <CardHeader>
@@ -80,18 +83,18 @@ export default async function NeupProPage() {
                             Send us a screenshot or statement of your transaction from your registered phone number via one of the following channels.
                         </p>
                          <div className="flex flex-wrap gap-4">
-                            {details.whatsappContact && (
-                                <a href={`https://wa.me/${details.whatsappContact.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-medium text-green-500 hover:underline">
+                            {appInfo.whatsappContact && (
+                                <a href={`https://wa.me/${appInfo.whatsappContact.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-medium text-green-500 hover:underline">
                                     <Bot className="h-5 w-5" /> WhatsApp
                                 </a>
                             )}
-                             {details.instagramContact && (
-                                <a href={`https://ig.me/m/${details.instagramContact}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-medium text-pink-500 hover:underline">
+                             {appInfo.instagramContact && (
+                                <a href={`https://ig.me/m/${appInfo.instagramContact}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-medium text-pink-500 hover:underline">
                                     <Instagram className="h-5 w-5" /> Instagram
                                 </a>
                             )}
-                            {details.linkedinContact && (
-                                <a href={details.linkedinContact} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-medium text-sky-500 hover:underline">
+                            {appInfo.linkedinContact && (
+                                <a href={appInfo.linkedinContact} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-medium text-sky-500 hover:underline">
                                     <Linkedin className="h-5 w-5" /> LinkedIn
                                 </a>
                             )}

@@ -1,31 +1,41 @@
 
 'use server';
 
-import prisma from '@/lib/prisma';
-import { logError } from '@/lib/logger';
+import path from 'path';
+import { promises as fs } from 'fs';
 
-export type PaymentDetails = {
-    qrCodeUrl?: string;
-    bankDetails?: string;
+export type AppInfo = {
+    name: string;
+    version: string;
+    description: string;
     whatsappContact?: string;
     instagramContact?: string;
     linkedinContact?: string;
 };
 
-const DOC_ID = "payment_config"; // Use a fixed ID for the singleton document
+export type PaymentDetails = {
+    qrCodeUrl?: string;
+    bankDetails?: string;
+};
+
+export async function getAppInfo(): Promise<AppInfo | null> {
+    try {
+        const filePath = path.join(process.cwd(), 'src/base/config/appInfo.json');
+        const fileContent = await fs.readFile(filePath, 'utf8');
+        return JSON.parse(fileContent) as AppInfo;
+    } catch (error) {
+        console.error('Error reading app info:', error);
+        return null;
+    }
+}
 
 export async function getPaymentDetails(): Promise<PaymentDetails | null> {
     try {
-        const config = await prisma.systemConfig.findUnique({
-            where: { id: DOC_ID }
-        });
-
-        if (config) {
-            return config.data as PaymentDetails;
-        }
-        return null;
+        const filePath = path.join(process.cwd(), 'src/base/config/payInfo.json');
+        const fileContent = await fs.readFile(filePath, 'utf8');
+        return JSON.parse(fileContent) as PaymentDetails;
     } catch (error) {
-        await logError('database', error, 'getPaymentDetails');
+        console.error('Error reading payment details:', error);
         return null;
     }
 }
