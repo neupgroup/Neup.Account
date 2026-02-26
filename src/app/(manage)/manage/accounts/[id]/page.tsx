@@ -60,11 +60,7 @@ const adminActions = (accountId: string) => [
 
 export default async function AccountDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const canView = await checkPermissions([
-    'root.account.view_full',
-    'root.account.view_limited1',
-    'root.account.view_limited2',
-  ]);
+  const canView = await checkPermissions(['root.account.view']);
   if (!canView) {
     notFound();
   }

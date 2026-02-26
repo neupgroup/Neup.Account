@@ -50,7 +50,7 @@ export async function getAllAccounts(
   sortKey: keyof AccountListItem,
   sortDirection: 'asc' | 'desc'
 ): Promise<GetAccountsResponse> {
-    const canView = await checkPermissions(['root.account.view_full', 'root.account.view_limited1', 'root.account.view_limited2']);
+    const canView = await checkPermissions(['root.account.view']);
     if (!canView) {
         return { accounts: [], hasNextPage: false };
     }

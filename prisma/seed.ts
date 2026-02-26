@@ -91,7 +91,7 @@ async function main() {
             hash: hashed,
           },
         },
-        permit: 'addition',
+        permit: 'root.full',
       },
     });
     accountId = created.id;
@@ -109,7 +109,7 @@ async function main() {
         gender,
         nationality,
         neupIdPrimary: NEUP_ID,
-        permit: 'addition',
+        permit: 'root.full',
       },
     });
 
@@ -139,6 +139,12 @@ async function main() {
 
   // Ensure root permit attached
   if (accountId) {
+    // Update account permit type to root.full for seed data
+    await prisma.account.update({
+      where: { id: accountId },
+      data: { permit: 'root.full' },
+    });
+
     const existingRootPermit = await prisma.permit.findFirst({
       where: { accountId, isRoot: true, forSelf: false },
     });
@@ -149,18 +155,10 @@ async function main() {
           accountId,
           forSelf: false,
           isRoot: true,
-          permissions: [rootWhole.id],
+          permissions: [], // Handled by PERMISSION_SET in user.ts
           restrictions: [],
         },
       });
-    } else {
-      const current = new Set(existingRootPermit.permissions || []);
-      if (!current.has(rootWhole.id)) {
-        await prisma.permit.update({
-          where: { id: existingRootPermit.id },
-          data: { permissions: [...current, rootWhole.id] },
-        });
-      }
     }
   }
 }

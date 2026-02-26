@@ -444,31 +444,29 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
     const accountId = account.id;
 
     // Permissions
-    // Optimized: Only create Permit entry for non-default users (e.g. admin)
-    // Default users rely on account.permit='default' (set by default in schema)
+    // Optimized: Set account.permit based on role
+    let role = 'independent.default';
     if (isAdmin) {
-      const permissionSet = await prisma.permission.findUnique({
-        where: { name: 'root.whole' },
+      role = 'root.full';
+    }
+
+    await prisma.account.update({
+        where: { id: accountId },
+        data: { permit: role }
+    });
+
+    if (isAdmin) {
+      // Create root permit entry for admin (legacy compatibility)
+      await prisma.permit.create({
+        data: {
+          accountId: accountId,
+          forSelf: false, 
+          isRoot: true,
+          permissions: [], // Permissions now handled via PERMISSION_SET in user.ts
+          restrictions: [],
+          createdOn: new Date(),
+        },
       });
-
-      if (permissionSet) {
-        // Update account to 'addition' type for root, as they have extra permissions
-        await prisma.account.update({
-            where: { id: accountId },
-            data: { permit: 'addition' }
-        });
-
-        await prisma.permit.create({
-          data: {
-            accountId: accountId,
-            forSelf: false, 
-            isRoot: true,
-            permissions: [permissionSet.id],
-            restrictions: [],
-            createdOn: new Date(),
-          },
-        });
-      }
     }
 
     await logActivity(

@@ -31,7 +31,7 @@ export function ActivityList({ initialActivity, accountId }: { initialActivity?:
     
     useEffect(() => {
         const checkAndFetch = async () => {
-             const hasPerm = await checkPermissions(['root.account.view_full', 'root.account.view_limited1', 'root.account.view_limited2']);
+             const hasPerm = await checkPermissions(['root.account.view']);
              setCanView(hasPerm);
              if (hasPerm && !initialActivity) {
                 setLoading(true);

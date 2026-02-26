@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { getUserPermissions } from '@/lib/user';
+import { getEncodedUserPermissions } from '@/lib/user';
 import { getActiveSession } from '@/lib/auth-actions';
 
 export async function GET(request: NextRequest) {
@@ -9,10 +9,11 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ success: false, error: 'Unauthenticated.' }, { status: 401 });
     }
 
-    const permissions = await getUserPermissions(session.accountId);
+    const { encoded, publicKey } = await getEncodedUserPermissions(session.accountId);
 
     return NextResponse.json({
         success: true,
-        permissions: permissions
+        permissions: encoded,
+        publicKey: publicKey
     });
 }

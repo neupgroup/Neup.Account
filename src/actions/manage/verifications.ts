@@ -32,7 +32,7 @@ export async function getPendingVerificationRequests(): Promise<VerificationRequ
                 fullName: profile?.nameDisplay || `${profile?.nameFirst || ''} ${profile?.nameLast || ''}`.trim() || 'Unknown User',
                 neupId: profile?.neupIdPrimary || 'N/A',
                 requestedAt: v.createdAt.toLocaleDateString() || 'N/A',
-                status: v.status as 'pending' | 'approved' | 'rejected' | 'revoked',
+                status: v.status as VerificationRequest['status'],
             };
         });
         return requests;

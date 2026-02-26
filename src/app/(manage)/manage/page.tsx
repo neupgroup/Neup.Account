@@ -17,42 +17,35 @@ import { Skeleton } from "@/components/ui/skeleton"
 const managementItems = [
     { 
         href: "/manage/dashboard", 
-        label: "Dashboard", 
+        label: "Home", 
         description: "A high-level overview of key metrics and system status.",
         icon: BarChart,
         permission: "root.dashboard.view"
     },
     { 
         href: "/manage/accounts", 
-        label: "Account Management", 
+        label: "Account", 
         description: "Manage account roles and permissions.",
         icon: Users,
         permission: "root.account.search"
     },
     { 
         href: "/manage/requests", 
-        label: "Requests Management", 
+        label: "Requests", 
         description: "Review and act on pending user requests.",
         icon: List,
         permission: "root.requests.view"
     },
     { 
-        href: "/manage/permission", 
-        label: "Permission Management", 
-        description: "Define system-wide permission sets.",
-        icon: ShieldCheck,
-        permission: "root.permission.view"
-    },
-    { 
         href: "/manage/app", 
-        label: "App Management", 
+        label: "Applications", 
         description: "Create, edit, and manage applications.",
         icon: AppWindow,
         permission: "root.app.view"
     },
     { 
         href: "/manage/site", 
-        label: "Site Configuration", 
+        label: "Site Config", 
         description: "Manage site-wide settings and error logs.",
         icon: Terminal,
         permission: "root.payment_config.view"

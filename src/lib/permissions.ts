@@ -139,10 +139,11 @@ export const PERMISSION_SET: Record<string, string[]> = {
     "payment.purchase_neup_pro.view",
     "root.dashboard.view",
     "root.account.search",
+    "root.account.view",
     "root.account.create_individual",
     "root.requests.view",
-    "root.permission.view",
     "root.app.view",
+    "root.app.create",
     "root.payment_config.view",
     "root.errors.view",
     "linked_accounts.brand.manager"

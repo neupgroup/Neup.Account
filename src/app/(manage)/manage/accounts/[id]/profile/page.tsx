@@ -10,7 +10,7 @@ import { UserCircle, FileText, HeartHandshake, AtSign, Contact, ShieldCheck } fr
 
 export default async function UserProfilePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const canView = await checkPermissions(['root.account.view_full']);
+  const canView = await checkPermissions(['root.account.view']);
   if (!canView) {
     notFound();
   }

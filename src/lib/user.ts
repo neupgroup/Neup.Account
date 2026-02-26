@@ -3,7 +3,8 @@
 import prisma from '@/lib/prisma';
 import { logError } from './logger';
 import { getActiveAccountId, getPersonalAccountId } from './auth-actions';
-import { DEFAULT_PERMISSIONS } from './permissions-config';
+import { encodePermissions } from './crypto';
+import { PERMISSION_SET } from './permissions';
 
 
 // --- Types ---
@@ -28,6 +29,11 @@ export type UserProfile = {
   accountType?: string;
   permit?: string;
   pro?: boolean;
+};
+
+export type EncodedPermissions = {
+  encoded: string;
+  publicKey: string;
 };
 
 export type UserContacts = {
@@ -159,141 +165,84 @@ export async function getUserPermissions(accountId?: string, appId?: string): Pr
   const isManaging = activeId !== personalId;
 
   try {
-    let permitType = 'default';
+    const account = await prisma.account.findUnique({
+      where: { id: activeId },
+      select: { permit: true }
+    });
+    
+    if (!account) return [];
 
+    const baseRole = account.permit || 'default';
+    let permissionSet = new Set<string>();
+
+    // If not managing another account, start with the base permissions from the account's role
     if (!isManaging) {
-        // Use any cast to avoid linter errors if types aren't fully propagated yet
-        const account = await prisma.account.findUnique({
-            where: { id: activeId },
-        });
-        
-        // Safely access permit with fallback
-        const accountData = account as any;
-        permitType = accountData?.permit || 'default';
-
-        if (permitType === 'default') {
-            return DEFAULT_PERMISSIONS;
-        }
+      const basePermissions = PERMISSION_SET[baseRole] || (baseRole === 'default' ? (PERMISSION_SET['independent.default'] || []) : []);
+      basePermissions.forEach(p => permissionSet.add(p));
     }
 
+    // Fetch relevant permits
     let permits;
-
-    // If managing another account, fetch permissions *for* that account.
     if (isManaging && personalId) {
-        permits = await prisma.permit.findMany({
-            where: {
-                accountId: personalId,
-                targetAccountId: activeId,
-                forSelf: false,
-                isRoot: false
-            }
-        });
+      permits = await prisma.permit.findMany({
+        where: {
+          accountId: personalId,
+          targetAccountId: activeId,
+          forSelf: false,
+          isRoot: false
+        }
+      });
     } else {
-        // Otherwise, find the personal account's own root and self permissions.
-        permits = await prisma.permit.findMany({
-            where: {
-                accountId: activeId,
-                OR: [
-                    { forSelf: true },
-                    { isRoot: true }
-                ]
-            }
-        });
+      permits = await prisma.permit.findMany({
+        where: {
+          accountId: activeId,
+          OR: [
+            { forSelf: true },
+            { isRoot: true }
+          ]
+        }
+      });
     }
 
-    const permissionIds = new Set<string>();
-    const restrictionIds = new Set<string>();
-
+    // Process modifiers in permit strings
     permits.forEach(permit => {
-        (permit.permissions || []).forEach((id: string) => permissionIds.add(id));
-        (permit.restrictions || []).forEach((id: string) => restrictionIds.add(id));
+      const entries = permit.permissions || [];
+      entries.forEach(entry => {
+        let name = entry;
+        let modifier = '';
+
+        if (entry.endsWith('+')) {
+          name = entry.slice(0, -1);
+          modifier = '+';
+        } else if (entry.endsWith('-')) {
+          name = entry.slice(0, -1);
+          modifier = '-';
+        }
+
+        // Resolve name to either a role's permissions or a single permission
+        const toApply = PERMISSION_SET[name] || [name];
+
+        if (modifier === '-') {
+          toApply.forEach(p => permissionSet.delete(p));
+        } else {
+          // Both '+' and no modifier result in adding permissions
+          toApply.forEach(p => permissionSet.add(p));
+        }
+      });
     });
 
-    const allIdsToFetch = new Set([...permissionIds, ...restrictionIds]);
-    
-    let addedAccess = new Set<string>();
-    let removedAccess = new Set<string>();
-
-    if (allIdsToFetch.size > 0) {
-        const permissionDocs = await prisma.permission.findMany({
-            where: {
-                id: { in: Array.from(allIdsToFetch) },
-                ...(appId ? { appId: appId } : {})
-            }
-        });
-        
-        const docMap = new Map();
-        // Also map the type for each permission
-        const typeMap = new Map();
-        permissionDocs.forEach(doc => {
-            docMap.set(doc.id, doc.access || []);
-            typeMap.set(doc.id, doc.type || 'addition');
-        });
-
-        permissionIds.forEach(id => {
-            const access = docMap.get(id);
-            const type = typeMap.get(id);
-            
-            if (access) {
-                if (type === 'addition') {
-                    access.forEach((a: string) => addedAccess.add(a));
-                } else if (type === 'reduction') {
-                    access.forEach((a: string) => removedAccess.add(a));
-                }
-            }
-        });
-
-        // We still respect restrictions array from permit as reduction for backward compatibility
-        // or if it's explicitly used as a restriction list.
-        restrictionIds.forEach(id => {
-            const access = docMap.get(id);
-            if (access) access.forEach((a: string) => removedAccess.add(a));
-        });
-    }
-
-    let finalPermissions: Set<string>;
-
-    if (!isManaging) {
-         if (permitType === 'default') {
-             return DEFAULT_PERMISSIONS;
-         } else if (permitType === 'addition') {
-             // For addition type: Start with Default, add Additions.
-             // (Reductions are ignored here based on 'addition' type definition, but let's be safe and apply reductions if any exist)
-             // The prompt says: "if the addition exists it means the user has added permissions"
-             // It doesn't explicitly say ignore reductions, but 'addition' implies only additions.
-             // However, to be robust, usually 'addition' just means "base + extra".
-             // If there are 'reduction' permissions linked, should we apply them?
-             // Prompt: "if the addition exists it means the user has added permissions"
-             // Prompt: "if the reduction means the user has reduced permission set"
-             // Prompt: "addition&reduction means some permissions added and some reduced"
-             
-             // So for 'addition', we strictly add.
-             finalPermissions = new Set([...DEFAULT_PERMISSIONS, ...addedAccess]);
-         } else if (permitType === 'reduction') {
-             // For reduction: Start with Default, remove Reductions.
-             // (Additions are ignored)
-             finalPermissions = new Set(DEFAULT_PERMISSIONS.filter(p => !removedAccess.has(p)));
-         } else if (permitType === 'addition_reduction') {
-             // For both: Start with Default, add Additions, remove Reductions.
-             const withAddition = [...DEFAULT_PERMISSIONS, ...addedAccess];
-             finalPermissions = new Set(withAddition.filter(p => !removedAccess.has(p)));
-         } else {
-             // Fallback
-             finalPermissions = new Set([...DEFAULT_PERMISSIONS]);
-         }
-    } else {
-        // Managing logic (Brand/Dependent context):
-        // Prompt: "on brand it means that the user has that permission but that permission has been reduced from his profile."
-        // This likely means we take the "Granted" permissions (Additions) and remove "Restricted" ones (Reductions).
-        // It doesn't use DEFAULT_PERMISSIONS because managers don't inherently have "self" defaults.
-        finalPermissions = new Set([...addedAccess].filter(p => !removedAccess.has(p)));
-    }
-
-    return Array.from(finalPermissions);
+    // Filter by appId if provided (if your permissions structure supports appId filtering)
+    // For now, returning the full set as requested
+    return Array.from(permissionSet);
   } catch (error) {
     await logError('database', error, `getUserPermissions for ${activeId}`);
     return [];
   }
+}
+
+export async function getEncodedUserPermissions(accountId?: string, appId?: string): Promise<EncodedPermissions> {
+  const permissions = await getUserPermissions(accountId, appId);
+  return encodePermissions(permissions);
 }
 
 

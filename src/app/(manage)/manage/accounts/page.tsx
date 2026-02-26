@@ -63,7 +63,7 @@ export default function AccountsPage() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const hasPerm = await checkPermissions(['root.account.view_full', 'root.account.view_limited1', 'root.account.view_limited2']);
+            const hasPerm = await checkPermissions(['root.account.view']);
             setPermissionState(hasPerm ? 'granted' : 'denied');
             if (hasPerm) {
                  startStatsTransition(async () => {
