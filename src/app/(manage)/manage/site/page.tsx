@@ -48,7 +48,7 @@ export default async function SiteConfigurationPage() {
             <div>
                 <h1 className="text-3xl font-bold tracking-tight">Site Configuration</h1>
                 <p className="text-muted-foreground">
-                    Manage site-wide settings, payment details, and error logs.
+                    Manage site-wide settings, social profiles, and error logs.
                 </p>
             </div>
              <div className="space-y-2">

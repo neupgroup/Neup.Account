@@ -34,7 +34,7 @@ export default async function NeupProPage() {
 
     return (
         <div className="grid gap-8">
-            <BackButton href="/manage/payment" />
+            <BackButton href="/payment" />
             <div>
                 <h1 className="text-3xl font-bold tracking-tight">Purchase Neup.Pro</h1>
                 <p className="text-muted-foreground">

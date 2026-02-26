@@ -45,7 +45,7 @@ export default async function PaymentSubscriptionPage() {
             icon: Gem,
             title: "Purchase Neup.Pro",
             description: "Upgrade your account to access premium features.",
-            href: "/manage/payment/neup.pro",
+            href: "/payment/neup.pro",
             show: canViewNeupPro,
         },
     ];

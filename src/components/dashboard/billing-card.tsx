@@ -52,7 +52,7 @@ export function BillingCard() {
     }, [])
 
     const billingItems = [
-        { href: '/manage/payment', icon: Wallet, title: 'Manage Subscription', description: `Your next charge is ${nextCharge}.` },
+        { href: '/payment', icon: Wallet, title: 'Manage Subscription', description: `Your next charge is ${nextCharge}.` },
         { href: 'https://neupgroup.com/wallet/history?source=neup', icon: Gem, title: 'Upgrade Plan', description: 'Unlock premium features by upgrading your plan.', isExternal: true },
     ]
     
