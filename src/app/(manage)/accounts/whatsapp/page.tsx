@@ -83,7 +83,7 @@ export default function LinkWhatsAppPage() {
 
     return (
         <div className="grid gap-8">
-            <BackButton href="/manage/accounts" />
+            <BackButton href="/manage" />
             <div>
                 <h1 className="text-3xl font-bold tracking-tight">Link WhatsApp Account</h1>
                 <p className="text-muted-foreground">

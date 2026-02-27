@@ -11,10 +11,10 @@ import { Separator } from '@/components/ui/separator';
 export function BrandNav({ brandId }: { brandId: string }) {
   const pathname = usePathname();
   const navItems = [
-    { href: `/manage/accounts/brand/${brandId}/info`, label: 'Brand Info', icon: UserCircle },
-    { href: `/manage/accounts/brand/${brandId}/users`, label: 'Users & Permissions', icon: Users },
-    { href: `/manage/accounts/brand/${brandId}/kyc`, label: 'KYC Verification', icon: ShieldCheck },
-    { href: `/manage/accounts/brand/${brandId}/platforms`, label: 'Platform Accounts', icon: AppWindow },
+    { href: `/accounts/brand/${brandId}/info`, label: 'Brand Info', icon: UserCircle },
+    { href: `/accounts/brand/${brandId}/users`, label: 'Users & Permissions', icon: Users },
+    { href: `/accounts/brand/${brandId}/kyc`, label: 'KYC Verification', icon: ShieldCheck },
+    { href: `/accounts/brand/${brandId}/platforms`, label: 'Platform Accounts', icon: AppWindow },
   ];
 
   return (
@@ -34,7 +34,7 @@ export function BrandNav({ brandId }: { brandId: string }) {
       })}
        <Separator className="my-2" />
        <Link
-            href="/manage/accounts/brand"
+            href="/accounts/brand"
             className={cn(buttonVariants({ variant: 'ghost' }), 'justify-start gap-2')}
           >
         <ArrowLeft className="h-4 w-4" />

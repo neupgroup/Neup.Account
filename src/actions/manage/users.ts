@@ -147,7 +147,7 @@ export async function updateUserPermissions(accountId: string, newPermissionIds:
         
         const adminId = await getPersonalAccountId() ?? "";
         await logActivity(accountId, `Permissions updated by root user ${adminId}`, 'Success', undefined, adminId);
-        revalidatePath(`/manage/accounts/${accountId}/permissions`);
+        revalidatePath(`/manage/${accountId}/permissions`);
 
         return { success: true };
 

@@ -149,7 +149,7 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
         });
         
         await logActivity(creatorAccountId, `Created Brand Account: ${neupId}`, 'Success', ipAddress, undefined, geolocation);
-        revalidatePath('/manage/accounts/brand');
+        revalidatePath('/accounts/brand');
 
         return { success: true };
 

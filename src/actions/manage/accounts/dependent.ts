@@ -179,7 +179,7 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
         });
         
         await logActivity(guardianAccountId, `Created Dependent Account: ${neupId}`, 'Success', ipAddress, undefined, geolocation);
-        revalidatePath('/manage/accounts/dependent');
+        revalidatePath('/accounts/dependent');
 
         return { success: true, dependentId: dependentAccountId };
 

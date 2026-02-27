@@ -51,7 +51,7 @@ export async function searchAll(query: string): Promise<SearchResult[]> {
                     type: 'user',
                     title: displayName || fullName,
                     description: neupId ? `@${neupId}` : '',
-                    url: `/manage/accounts/${acc.id}`,
+                    url: `/manage/${acc.id}`,
                 });
             }
 
@@ -69,7 +69,7 @@ export async function searchAll(query: string): Promise<SearchResult[]> {
                     type: 'user',
                     title: displayName || fullName || `@${n.id}`,
                     description: `@${n.id}`,
-                    url: `/manage/accounts/${acc.id}`,
+                    url: `/manage/${acc.id}`,
                 });
             }
         } catch (error) {

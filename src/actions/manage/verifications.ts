@@ -92,7 +92,7 @@ export async function grantVerification(accountId: string, data: z.infer<typeof 
         ]);
 
         await logActivity(accountId, `Account Verified. Category: ${category}`, 'Success', undefined, adminId);
-        revalidatePath('/manage/accounts/[id]', 'page');
+        revalidatePath('/manage/[id]', 'page');
         return { success: true };
     } catch (error) {
         await logError('database', error, `grantVerification: ${accountId}`);
@@ -129,7 +129,7 @@ export async function revokeVerification(accountId: string, reason: string): Pro
         ]);
 
         await logActivity(accountId, 'Account Verification Revoked', 'Alert', undefined, adminId);
-        revalidatePath('/manage/accounts/[id]', 'page');
+        revalidatePath('/manage/[id]', 'page');
         return { success: true };
     } catch (error) {
         await logError('database', error, `revokeVerification: ${accountId}`);

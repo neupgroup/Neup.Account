@@ -73,42 +73,6 @@ export interface UserPermissions {
     allPermissions: string[];
 }
 
-export interface SystemError {
-    id: string;
-    type: string;
-    context: string;
-    message: string;
-    timestamp: string;
-    status: string;
-}
-
-export interface SystemErrorDetails extends SystemError {
-    fullError: string;
-    user?: {
-        name: string;
-        neupId: string;
-    };
-    ipAddress?: string;
-    geolocation?: string;
-    reproSteps?: string;
-    solution?: string;
-    solvedBy?: string;
-    problemLevel?: string;
-}
-
-export interface BugReport {
-    id: string;
-    reportedBy: string;
-    title: string;
-    description: string;
-    createdAt: string;
-    status: string;
-}
-
-export interface BugReportDetails extends BugReport {
-    reporterId?: string;
-}
-
 export interface UserAccess {
     permitId: string;
     userId: string;

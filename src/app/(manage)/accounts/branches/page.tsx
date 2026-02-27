@@ -48,7 +48,7 @@ export default async function BrandBranchPage() {
                         </CardDescription>
                     </div>
                     <Button asChild>
-                        <Link href="/manage/accounts/branches/create"><Plus className="mr-2 h-4 w-4" />Create New Branch</Link>
+                        <Link href="/accounts/branches/create"><Plus className="mr-2 h-4 w-4" />Create New Branch</Link>
                     </Button>
                 </CardHeader>
                 <CardContent>
@@ -83,7 +83,7 @@ export default async function BrandBranchPage() {
                                                 Get started by creating your first branch account.
                                             </p>
                                              <Button asChild>
-                                                <Link href="/manage/accounts/branches/create"><Plus className="mr-2 h-4 w-4" />Create Branch</Link>
+                                                <Link href="/accounts/branches/create"><Plus className="mr-2 h-4 w-4" />Create Branch</Link>
                                             </Button>
                                         </div>
                                     </TableCell>

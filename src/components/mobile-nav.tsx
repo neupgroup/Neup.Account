@@ -99,7 +99,7 @@ export function MobileNav() {
                 config.push({ title: primaryNeupId, items: visibleNeupIdNav });
             }
             if (visibleManagementNav.length > 0) {
-                config.push({ title: "Management", items: visibleManagementNav });
+                config.push({ title: "Manage", items: visibleManagementNav });
             }
             if (visibleAccountNav.length > 0) {
                 config.push({ title: "Account", items: visibleAccountNav });

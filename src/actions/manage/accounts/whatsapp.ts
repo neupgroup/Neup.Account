@@ -43,10 +43,10 @@
  
    try {
      if (code === '123456') {
-       console.log(`Successfully linked WhatsApp number ${whatsappNumber} to account ${accountId}`);
-       revalidatePath('/manage/accounts/whatsapp');
-       return { success: true };
-     }
+      console.log(`Successfully linked WhatsApp number ${whatsappNumber} to account ${accountId}`);
+      revalidatePath('/accounts/whatsapp');
+      return { success: true };
+    }
      return { success: false, error: 'The verification code is incorrect.' };
    } catch (error) {
      await logError('unknown', error, `linkWhatsAppAccount: ${accountId}`);

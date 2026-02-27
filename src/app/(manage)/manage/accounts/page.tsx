@@ -80,7 +80,7 @@ export default function AccountsPage() {
         const searchTerm = searchQuery.trim();
         if (searchTerm) {
             NProgress.start();
-            router.push(`/manage/accounts/list?q=${encodeURIComponent(searchTerm)}`);
+            router.push(`/manage/list?q=${encodeURIComponent(searchTerm)}`);
         }
     }
     
@@ -195,7 +195,7 @@ export default function AccountsPage() {
                             icon={List}
                             title="List All Accounts"
                             description="View, sort, and filter all accounts."
-                            href="/manage/accounts/list"
+                            href="/manage/list"
                         />
                     </CardContent>
                 </Card>

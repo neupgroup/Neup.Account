@@ -10,7 +10,7 @@ import { cookies, headers } from 'next/headers';
 import crypto from 'crypto';
 import { z } from 'zod';
 import { createNotification } from '../notifications';
-import { warningReasons } from '@/app/(manage)/manage/accounts/[id]/forms';
+import { warningReasons } from '@/app/(manage)/manage/[id]/forms';
 
 
 // --- Administrative Actions ---

@@ -68,9 +68,9 @@ function RequestCard({ request, onAction }: { request: VerificationRequest, onAc
         <Card>
             <CardHeader>
                 <CardTitle className="flex items-center justify-between">
-                     <Link href={`/manage/accounts/${request.accountId}`} className="hover:underline">
-                        {request.fullName}
-                     </Link>
+                  <Link href={`/manage/${request.accountId}`} className="hover:underline">
+                    {request.fullName}
+                  </Link>
                 </CardTitle>
                 <CardDescription>@{request.neupId}</CardDescription>
             </CardHeader>

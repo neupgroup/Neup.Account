@@ -3,6 +3,8 @@
 import { headers } from 'next/headers';
 import { getActiveAccountId } from './auth-actions';
 import crypto from 'crypto';
+import fs from 'fs';
+import path from 'path';
 
 type LogType = 'ai' | 'database' | 'validation' | 'auth' | 'unknown';
 type ReportType = 'auto' | 'submitted';
@@ -32,12 +34,7 @@ export async function logError(
     const firstLine = errorMessage.split('\n')[0];
     const signature = crypto.createHash('md5').update(`${type}:${firstLine}`).digest('hex');
 
-    // Console-based logging fallback to remove Firebase dependency.
-    // This preserves visibility while the database-backed error store is introduced.
-    // Consumers await this function for side effects only.
-    // You can later route this to Prisma if/when an ErrorLog model is added.
-    // eslint-disable-next-line no-console
-    console.error("ERROR", {
+    const logEntry = {
         type,
         reportType,
         context,
@@ -46,5 +43,26 @@ export async function logError(
         ip,
         accountId,
         timestamp: new Date().toISOString(),
-    });
+    };
+
+    // Console-based logging fallback
+    // eslint-disable-next-line no-console
+    console.error("ERROR", logEntry);
+
+    // File-based logging to /base/logs/error.log
+    try {
+        const logFilePath = path.join(process.cwd(), 'base', 'logs', 'error.log');
+        const logDir = path.dirname(logFilePath);
+        
+        if (!fs.existsSync(logDir)) {
+            fs.mkdirSync(logDir, { recursive: true });
+        }
+
+        const logString = `[${logEntry.timestamp}] [${type}] [${reportType}] [${context}] [IP: ${ip}] [Account: ${accountId}] [Signature: ${signature}]\nMessage: ${errorMessage}\n${'-'.repeat(80)}\n`;
+        
+        fs.appendFileSync(logFilePath, logString, 'utf8');
+    } catch (fileError) {
+        // eslint-disable-next-line no-console
+        console.error("CRITICAL: Could not write to error log file.", fileError);
+    }
 }

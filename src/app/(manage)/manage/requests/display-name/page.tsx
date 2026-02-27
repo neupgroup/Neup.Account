@@ -102,7 +102,7 @@ export default function DisplayNameRequestsPage() {
                                 requests.map(req => (
                                     <TableRow key={req.id}>
                                         <TableCell>
-                                             <Link href={`/manage/accounts/${req.accountId}`} className="font-medium text-primary hover:underline">
+                                             <Link href={`/manage/${req.accountId}`} className="font-medium text-primary hover:underline">
                                                 {req.userFullName}
                                              </Link>
                                         </TableCell>
