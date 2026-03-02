@@ -6,7 +6,7 @@ Note: In production, a base path may be applied (e.g., `/account`). Prefix endpo
 
 ## Authentication Flow (Handshake)
 
-- Endpoint: `GET /bridge/handshake/auth/signin`
+- Endpoint: `GET /bridge/handshake.v1/auth/signin`
 - Purpose: Start a user authentication handshake from your app.
 - Required query params:
   - `appId`: Your application ID registered with Neup.
@@ -25,7 +25,7 @@ Note: In production, a base path may be applied (e.g., `/account`). Prefix endpo
 
 ### Example
 ```
-GET /bridge/handshake/auth/signin?appId=YOUR_APP_ID&auth_handler=https://yourapp.com/neup/callback&state=xyz
+GET /bridge/handshake.v1/auth/signin?appId=YOUR_APP_ID&auth_handler=https://yourapp.com/neup/callback&state=xyz
 ```
 After sign-in, you will receive a redirect to:
 ```
@@ -34,7 +34,7 @@ https://yourapp.com/neup/callback?state=xyz&key=ONE_TIME_KEY&session_id=SESSION_
 
 ## Verify One-Time Key (Server-to-Server)
 
-- Endpoint: `POST /bridge/api/auth/verify`
+- Endpoint: `POST /bridge/api.v1/auth/verify`
 - Purpose: Validate the one-time `key` and retrieve minimal user info.
 - Body (JSON):
 ```json
@@ -64,38 +64,46 @@ https://yourapp.com/neup/callback?state=xyz&key=ONE_TIME_KEY&session_id=SESSION_
   - The API also marks the `key` as used to prevent replay attacks.
   - The `appId` and `appSecret` must match a registered application.
 
-## Validate Session Triplet (First-Party/Trusted)
+## Unified Verification (Internal & Fast)
 
-For first-party or trusted apps that directly store session details, you can validate the session triplet.
+For internal apps or high-performance checks, you can use the unified verify endpoint with additional parameters.
 
-- Endpoint: `POST /bridge/api/auth/validate-session`
-- Purpose: Verify an existing session using `sessionId`, `sessionKey`, and `accountId`.
-- Body (JSON):
+- Endpoint: `POST /bridge/api.v1/auth/verify`
+- Purpose: Verify an existing session or perform a high-speed status check.
+- Body (JSON) for Internal:
 ```json
 {
-  "sessionId": "SESSION_ID",
-  "sessionKey": "SESSION_KEY",
-  "accountId": "ACCOUNT_ID"
+  "appId": "YOUR_APP_ID",
+  "appType": "internal",
+  "auth_account_id": "ACCOUNT_ID",
+  "auth_session_id": "SESSION_ID",
+  "auth_session_key": "SESSION_KEY"
+}
+```
+- Body (JSON) for Fast check:
+```json
+{
+  "appId": "YOUR_APP_ID",
+  "appType": "fast",
+  "auth_account_id": "ACCOUNT_ID",
+  "auth_session_id": "SESSION_ID",
+  "auth_session_key": "SESSION_KEY"
 }
 ```
 - Success response:
 ```json
 {
   "success": true,
-  "session": {
+  "user": {
     "accountId": "ACCOUNT_ID",
-    "sessionId": "SESSION_ID",
-    "expiresOn": "ISO_DATE"
+    "displayName": "...",
+    "neupId": "..."
   }
 }
 ```
-- Failure response:
-```json
-{ "success": false, "error": "Invalid or expired session." }
-```
 - Notes:
-  - Use this only if you securely received and stored session details.
-  - For third-party apps, prefer the One-Time Key verification above.
+  - `appType: "fast"` skips profile retrieval for maximum performance.
+  - `appType: "internal"` returns full profile details.
 
 ## Sign Out (Optional)
 

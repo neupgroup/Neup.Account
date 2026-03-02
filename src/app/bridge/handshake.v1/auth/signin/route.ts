@@ -64,7 +64,7 @@ export async function GET(request: NextRequest) {
         // --- NEW: Consent Step ---
         const consent = searchParams.get('consent') === 'true';
         if (!consent) {
-            const consentUrl = new URL('/bridge/handshake/auth/consent', request.url);
+            const consentUrl = new URL('/bridge/handshake.v1/auth/consent', request.url);
             searchParams.forEach((value, key) => {
                 consentUrl.searchParams.set(key, value);
             });

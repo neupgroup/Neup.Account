@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { getUserProfile, getUserContacts, getUserNeupIds } from '@/lib/user';
 import { getActiveSession } from '@/lib/auth-actions';
+import { logError } from '@/lib/logger';
 
 export async function POST(request: NextRequest) {
     const session = await getActiveSession();
@@ -8,7 +9,7 @@ export async function POST(request: NextRequest) {
     if (!session) {
         return NextResponse.json({ success: false, error: 'Unauthenticated.' }, { status: 401 });
     }
-    
+
     try {
         const [profile, contacts, neupIds] = await Promise.all([
             getUserProfile(session.accountId),
@@ -17,21 +18,36 @@ export async function POST(request: NextRequest) {
         ]);
 
         if (!profile) {
-             return NextResponse.json({ success: false, error: 'Profile not found.' }, { status: 404 });
+            return NextResponse.json({ success: false, error: 'Profile not found.' }, { status: 404 });
         }
 
-        const selfProfile = {
+        const primaryNeupId = neupIds && neupIds.length > 0 ? neupIds[0] : '';
+
+        // Comprehensive profile including contacts and identity info
+        const responseData = {
             ...profile,
             ...contacts,
-            neupId: neupIds[0] || null, // Add the primary NeupID to the response
+            neupId: primaryNeupId,
+            // Compatibility mapping for apps using legacy format
+            name: {
+                firstName: profile.nameFirst || '',
+                lastname: profile.nameLast || ''
+            },
+            username: primaryNeupId,
+            photo: profile.accountPhoto || ''
         };
 
         return NextResponse.json({
             success: true,
-            profile: selfProfile
+            profile: responseData
         });
 
     } catch (error) {
+        await logError('database', error, 'signed');
         return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });
     }
+}
+
+export async function GET(request: NextRequest) {
+    return POST(request);
 }

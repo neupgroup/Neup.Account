@@ -27,7 +27,7 @@ export default async function ConsentPage({ searchParams }: { searchParams: Prom
                 searchParamsObj.set(key, Array.isArray(value) ? value[0] : value);
             }
         });
-        const backTo = `/bridge/handshake/auth/signin?${searchParamsObj.toString()}`;
+        const backTo = `/bridge/handshake.v1/auth/signin?${searchParamsObj.toString()}`;
         redirect(`/auth/start?redirects=${encodeURIComponent(backTo)}`);
     }
 
@@ -49,7 +49,7 @@ export default async function ConsentPage({ searchParams }: { searchParams: Prom
         }
     });
     searchParamsObj.set('consent', 'true');
-    const continueUrl = `/bridge/handshake/auth/signin?${searchParamsObj.toString()}`;
+    const continueUrl = `/bridge/handshake.v1/auth/signin?${searchParamsObj.toString()}`;
 
     const displayName = profile?.displayName || profile?.nameDisplay || profile?.nameFirst || 'User';
 
