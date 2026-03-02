@@ -414,6 +414,24 @@ exports.Prisma.UserAppConnectionScalarFieldEnum = {
   connectedAt: 'connectedAt'
 };
 
+exports.Prisma.AppAuthenticationScalarFieldEnum = {
+  id: 'id',
+  appId: 'appId',
+  accountId: 'accountId',
+  permissions: 'permissions',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AppSessionScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  sessionId: 'sessionId',
+  appId: 'appId',
+  sessionValue: 'sessionValue',
+  createdOn: 'createdOn',
+  activeTill: 'activeTill'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -471,7 +489,9 @@ exports.Prisma.ModelName = {
   UserContent: 'UserContent',
   RecoveryContact: 'RecoveryContact',
   Application: 'Application',
-  UserAppConnection: 'UserAppConnection'
+  UserAppConnection: 'UserAppConnection',
+  AppAuthentication: 'AppAuthentication',
+  AppSession: 'AppSession'
 };
 
 /**

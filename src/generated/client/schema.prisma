@@ -41,26 +41,28 @@ model Account {
   block Json?
 
   // Relations
-  contacts         Contact[]
-  neupIds          NeupId[]
-  permits          Permit[]
-  targetPermits    Permit[]            @relation("TargetAccount")
-  password         Password?
-  sessions         Session[]
-  errorLogs        ErrorLog[]
-  statusLogs       AccountStatusLog[]
-  appConnections   UserAppConnection[]
-  kycRequests      KycRequest[]
-  invitations      Invitation[]        @relation("Inviter")
-  neupIdRequests   NeupIdRequest[]
-  notifications    Notification[]
-  backupCodes      BackupCode[]
-  verifications    Verification[]
-  documents        UserDocument[]
-  userContents     UserContent[]
-  totp             Totp?
-  sentRequests     Request[]           @relation("SentRequests")
-  receivedRequests Request[]           @relation("ReceivedRequests")
+  contacts           Contact[]
+  neupIds            NeupId[]
+  permits            Permit[]
+  targetPermits      Permit[]            @relation("TargetAccount")
+  password           Password?
+  sessions           Session[]
+  errorLogs          ErrorLog[]
+  statusLogs         AccountStatusLog[]
+  appConnections     UserAppConnection[]
+  appAuthentications AppAuthentication[]
+  appSessions        AppSession[]
+  kycRequests        KycRequest[]
+  invitations        Invitation[]        @relation("Inviter")
+  neupIdRequests     NeupIdRequest[]
+  notifications      Notification[]
+  backupCodes        BackupCode[]
+  verifications      Verification[]
+  documents          UserDocument[]
+  userContents       UserContent[]
+  totp               Totp?
+  sentRequests       Request[]           @relation("SentRequests")
+  receivedRequests   Request[]           @relation("ReceivedRequests")
 
   @@map("accounts")
 }
@@ -331,7 +333,8 @@ model Session {
   authSessionKey String?
   dependentKeys  Json?
 
-  account Account @relation(fields: [accountId], references: [id])
+  appSessions AppSession[]
+  account     Account      @relation(fields: [accountId], references: [id])
 
   @@map("sessions")
 }
@@ -409,7 +412,9 @@ model Application {
   appSecret   String?
   createdAt   DateTime @default(now())
 
-  connections UserAppConnection[]
+  connections        UserAppConnection[]
+  appAuthentications AppAuthentication[]
+  appSessions        AppSession[]
 
   @@map("applications")
 }
@@ -425,4 +430,34 @@ model UserAppConnection {
 
   @@unique([accountId, appId])
   @@map("user_app_connections")
+}
+
+model AppAuthentication {
+  id          String   @id @default(uuid())
+  appId       String
+  accountId   String
+  permissions Json?    @default("[]")
+  createdAt   DateTime @default(now())
+
+  account     Account     @relation(fields: [accountId], references: [id])
+  application Application @relation(fields: [appId], references: [id])
+
+  @@unique([appId, accountId])
+  @@map("app_authentications")
+}
+
+model AppSession {
+  id           String   @id @default(uuid())
+  accountId    String
+  sessionId    String // Link to NeupAccount session
+  appId        String
+  sessionValue String   @unique // The specific session token for the app
+  createdOn    DateTime @default(now())
+  activeTill   DateTime
+
+  account     Account     @relation(fields: [accountId], references: [id])
+  application Application @relation(fields: [appId], references: [id])
+  session     Session     @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@map("app_sessions")
 }

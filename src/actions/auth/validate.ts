@@ -15,6 +15,7 @@ const ValidateInputSchema = z.object({
   auth_account_id: z.string().min(1).optional(),
   auth_session_id: z.string().min(1).optional(),
   auth_session_key: z.string().min(1).optional(),
+  signup: z.boolean().optional(),
 });
 
 export type ValidateInput = z.infer<typeof ValidateInputSchema>;
@@ -27,6 +28,7 @@ export type ValidateResult =
         displayName: string;
         neupId: string | null;
       };
+      signup?: boolean;
     }
   | {
       success: false;
@@ -47,7 +49,8 @@ export async function validateExternalRequest(input: ValidateInput): Promise<Val
     accountId, 
     auth_account_id, 
     auth_session_id, 
-    auth_session_key 
+    auth_session_key,
+    signup
   } = parsed.data;
 
   // 1. App Validation
@@ -89,6 +92,7 @@ export async function validateExternalRequest(input: ValidateInput): Promise<Val
           displayName: '', // Not needed for fast check
           neupId: null,    // Not needed for fast check
         },
+        signup,
       };
     }
 
@@ -108,6 +112,7 @@ export async function validateExternalRequest(input: ValidateInput): Promise<Val
         displayName: userProfile?.nameDisplay || `${userProfile?.nameFirst || ''} ${userProfile?.nameLast || ''} `.trim(),
         neupId: userNeupIds[0] || null,
       },
+      signup,
     };
   }
 
@@ -172,6 +177,7 @@ export async function validateExternalRequest(input: ValidateInput): Promise<Val
       displayName: userProfile?.nameDisplay || `${userProfile?.nameFirst || ''} ${userProfile?.nameLast || ''}`.trim(),
       neupId: userNeupIds[0] || null,
     },
+    signup,
   };
 }
 

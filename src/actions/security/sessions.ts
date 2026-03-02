@@ -52,10 +52,15 @@ export async function logoutSessionById(sessionId: string): Promise<{ success: b
         return { success: false, error: "Session ID is required." };
     }
     try {
-        await prisma.session.update({
-            where: { id: sessionId },
-            data: { isExpired: true }
-        });
+        await prisma.$transaction([
+            prisma.session.update({
+                where: { id: sessionId },
+                data: { isExpired: true }
+            }),
+            prisma.appSession.deleteMany({
+                where: { sessionId: sessionId }
+            })
+        ]);
         
         const accountId = await getActiveAccountId();
         if (accountId) {
@@ -77,17 +82,34 @@ export async function logoutAllOtherSessions(): Promise<{ success: boolean, erro
         }
         const { accountId, sessionId: currentSessionId } = currentSession;
 
-        const result = await prisma.session.updateMany({
-            where: {
-                accountId: accountId,
-                isExpired: false,
-                id: {
-                    not: currentSessionId
+        const result = await prisma.$transaction(async (tx) => {
+            // 1. Get all other session IDs
+            const otherSessions = await tx.session.findMany({
+                where: {
+                    accountId: accountId,
+                    isExpired: false,
+                    id: { not: currentSessionId }
+                },
+                select: { id: true }
+            });
+            const otherSessionIds = otherSessions.map(s => s.id);
+
+            // 2. Expire all other sessions
+            const updateResult = await tx.session.updateMany({
+                where: {
+                    id: { in: otherSessionIds }
+                },
+                data: { isExpired: true }
+            });
+
+            // 3. Delete all AppSessions for these sessions
+            await tx.appSession.deleteMany({
+                where: {
+                    sessionId: { in: otherSessionIds }
                 }
-            },
-            data: {
-                isExpired: true
-            }
+            });
+
+            return updateResult;
         });
 
         const sessionsLoggedOut = result.count;

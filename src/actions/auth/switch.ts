@@ -44,10 +44,15 @@ export async function logoutStoredSession(sessionId: string): Promise<{ success:
         
         const accountId = session.accountId;
         
-        await prisma.session.update({
-            where: { id: sessionId },
-            data: { isExpired: true }
-        });
+        await prisma.$transaction([
+            prisma.session.update({
+                where: { id: sessionId },
+                data: { isExpired: true }
+            }),
+            prisma.appSession.deleteMany({
+                where: { sessionId: sessionId }
+            })
+        ]);
 
         await logActivity(accountId, 'Signout', 'Success', ipAddress);
         await createNotification({
