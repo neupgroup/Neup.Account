@@ -151,10 +151,6 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 
         if (!activeId || !personalId) {
             setSessionState(s => ({ ...s, loading: false, profile: null, permissions: [] }));
-                // Only redirect if we're on a protected route
-                if (typeof window !== 'undefined' && (window.location.pathname.startsWith('/manage') || window.location.pathname === '/')) {
-                    window.location.href = '/auth/start';
-                }
             return;
         }
 
