@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { BackButton } from "@/components/ui/back-button";
 import { GeolocationContext } from "@/context/geolocation-context";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
+import { resolvePath } from "@/lib/utils";
 
 
 export default function DeactivateAccountPage() {
@@ -29,7 +30,7 @@ export default function DeactivateAccountPage() {
           title: "Account Deactivated",
           description: "Your account has been deactivated. You can reactivate it by logging in again.",
         });
-        window.location.href = '/auth/signout';
+        window.location.href = resolvePath('/auth/signout');
       } else {
         toast({
           variant: "destructive",

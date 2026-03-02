@@ -2,6 +2,7 @@
 
 import { useSession } from "@/context/session-context";
 import { useEffect } from "react";
+import { resolvePath } from "@/lib/utils";
 
 /**
  * AuthProxy handles the authentication check and redirection logic.
@@ -21,7 +22,7 @@ export function AuthProxy({ children }: { children: React.ReactNode }) {
         if (!loading && !profile) {
             // We use window.location.href for a hard redirect to ensure
             // all session states are cleared and we start fresh on the auth page.
-            window.location.href = '/auth/start';
+            window.location.href = resolvePath('/auth/start');
         }
     }, [loading, profile]);
 
