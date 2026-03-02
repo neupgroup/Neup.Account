@@ -5,7 +5,7 @@ import { useEffect, useState, useTransition } from 'react';
 import { getUserProfile } from '@/lib/user';
 import type { StoredAccount } from '@/types';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronRight } from '@/components/icons';
 import { AccountActions } from './account-actions';
@@ -29,6 +29,8 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
     const [loading, setLoading] = useState(true);
     const [isSwitching, startSwitchTransition] = useTransition();
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const redirects = searchParams.get('redirects');
 
     useEffect(() => {
         let isMounted = true;
@@ -87,12 +89,14 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
             if (finalAccount.isBrand) {
                  const res = await switchToBrand(finalAccount.accountId);
                  if (res.success) {
-                    router.refresh();
+                    if (redirects) router.push(redirects);
+                    else router.refresh();
                  }
             } else if (finalAccount.isDependent) {
                  const res = await switchToDependent(finalAccount.accountId);
                  if (res.success) {
-                    router.refresh();
+                    if (redirects) router.push(redirects);
+                    else router.refresh();
                  }
             } else if (finalAccount.sessionId) {
                 if (finalAccount.expired) {
@@ -100,7 +104,7 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
                 } else {
                     const res = await switchToAccount(finalAccount);
                     if (res.success) {
-                        router.push('/');
+                        router.push(redirects || '/');
                     }
                 }
             } else {
@@ -111,7 +115,8 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
                     // If sessionId is empty string (''), it's a managed/delegated account
                      const res = await switchToDelegated(finalAccount.accountId);
                      if (res.success) {
-                        router.refresh();
+                        if (redirects) router.push(redirects);
+                        else router.refresh();
                      }
                 }
             }

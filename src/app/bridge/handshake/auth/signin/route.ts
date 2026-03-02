@@ -61,6 +61,16 @@ export async function GET(request: NextRequest) {
             return NextResponse.redirect(signInUrl);
         }
 
+        // --- NEW: Consent Step ---
+        const consent = searchParams.get('consent') === 'true';
+        if (!consent) {
+            const consentUrl = new URL('/bridge/handshake/auth/consent', request.url);
+            searchParams.forEach((value, key) => {
+                consentUrl.searchParams.set(key, value);
+            });
+            return NextResponse.redirect(consentUrl);
+        }
+
         const dependentKey = crypto.randomBytes(32).toString('hex');
         const expiresOn = new Date();
         expiresOn.setMinutes(expiresOn.getMinutes() + 5); // Key is valid for 5 minutes

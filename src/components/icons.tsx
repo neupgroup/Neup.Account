@@ -84,6 +84,7 @@ import {
     ArrowUpDown,
     AtSign,
     Camera,
+    ExternalLink,
 } from "lucide-react";
 
 export {
@@ -171,4 +172,5 @@ export {
     ArrowUpDown,
     AtSign,
     Camera,
+    ExternalLink,
 };

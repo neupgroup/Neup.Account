@@ -81,14 +81,14 @@ export function StartPageComponent({ accounts, hasActiveSession }: StartPageComp
 
             {hasActiveSession && (
               <Link
-                href="/"
+                href={redirects ? redirects : "/"}
                 className="flex w-full items-center justify-between p-4 border rounded-lg bg-accent/10 border-accent hover:bg-accent/20 transition-colors"
               >
                 <div>
-                  <h3 className="font-semibold">Continue</h3>
+                  <h3 className="font-semibold text-accent">Continue</h3>
                   <p className="text-sm text-muted-foreground">Continue with your Account you're currently signed in.</p>
                 </div>
-                <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                <ChevronRight className="h-5 w-5 text-accent" />
               </Link>
             )}
 
