@@ -6,7 +6,7 @@ This guide describes how to integrate both **Internal** (same domain) and **Exte
 
 ## 1. Internal Applications (Same Domain)
 
-Internal applications residing on the same domain (e.g., `app.neupgroup.com`) share the same HTTP-only authentication cookies as Neup.Account.
+Internal applications residing on the same domain (e.g., `neupgroup.com/app`) share the same HTTP-only authentication cookies as Neup.Account.
 
 ### Shared Credentials
 When a user is logged into Neup.Account, your application can access:
