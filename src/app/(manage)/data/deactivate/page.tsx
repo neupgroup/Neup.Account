@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { BackButton } from "@/components/ui/back-button";
 import { GeolocationContext } from "@/context/geolocation-context";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
-import { resolvePath } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 
 export default function DeactivateAccountPage() {
@@ -20,6 +20,7 @@ export default function DeactivateAccountPage() {
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
   const { toast } = useToast();
   const geo = useContext(GeolocationContext);
+  const router = useRouter();
 
   const handleSubmit = (formData: FormData) => {
     startTransition(async () => {
@@ -30,7 +31,8 @@ export default function DeactivateAccountPage() {
           title: "Account Deactivated",
           description: "Your account has been deactivated. You can reactivate it by logging in again.",
         });
-        window.location.href = resolvePath('/auth/signout');
+        // Use router.push which automatically respects basePath from next.config.js
+        router.push('/auth/signout');
       } else {
         toast({
           variant: "destructive",

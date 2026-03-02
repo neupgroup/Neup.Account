@@ -2,7 +2,7 @@
 
 import { useSession } from "@/context/session-context";
 import { useEffect } from "react";
-import { resolvePath } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 /**
  * AuthProxy handles the authentication check and redirection logic.
@@ -14,17 +14,17 @@ import { resolvePath } from "@/lib/utils";
  */
 export function AuthProxy({ children }: { children: React.ReactNode }) {
     const { loading, profile } = useSession();
+    const router = useRouter();
 
     useEffect(() => {
         // Redirect if not logged in.
         // Since this component is used within the (manage) layout,
         // we assume all routes it wraps require authentication.
         if (!loading && !profile) {
-            // We use window.location.href for a hard redirect to ensure
-            // all session states are cleared and we start fresh on the auth page.
-            window.location.href = resolvePath('/auth/start');
+            // Use router.push which automatically respects basePath from next.config.js
+            router.push('/auth/start');
         }
-    }, [loading, profile]);
+    }, [loading, profile, router]);
 
     // If still loading or not authenticated, render nothing to hide the layout
     if (loading || !profile) {
