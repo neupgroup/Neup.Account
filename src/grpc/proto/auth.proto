@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package auth;
+
+service AuthService {
+  rpc VerifySession (VerifyRequest) returns (VerifyResponse);
+}
+
+message VerifyRequest {
+  string appId = 1;
+  string auth_account_id = 2;
+  string auth_session_id = 3;
+  string auth_session_key = 4;
+}
+
+message User {
+  string accountId = 1;
+  string displayName = 2;
+  string neupId = 3;
+}
+
+message VerifyResponse {
+  bool success = 1;
+  string error = 2;
+  User user = 3;
+}

@@ -1,28 +1,30 @@
-# Neup.Account Integration & SSO Guide
+# Neup.Account Integration & SSO Guide (Internal)
 
-This guide describes how to integrate both **Internal** (same domain) and **External** (different domain) applications into the Neup ecosystem.
+This guide describes how to integrate **Internal** applications (developed by Neup Group) into the Neup ecosystem.
 
 ---
 
-## 1. Internal Applications (Same Domain)
+## 1. Application Definitions
 
-Internal applications residing on the same domain (e.g., `neupgroup.com/app`) share the same HTTP-only authentication cookies as Neup.Account.
+- **Internal Apps**: Developed by **Neup Group**.
+- **External Apps**: Developed by **other users**, regardless of domain.
 
-### Shared Credentials
-When a user is logged into Neup.Account, your application can access:
-- `auth_account_id`: The unique user identifier.
-- `auth_session_id`: The active session identifier.
-- `auth_session_key`: The cryptographic key for the session.
+---
 
-### Verification Flow (Check then Signup)
-To optimize performance and database operations, internal apps should follow this strategy:
+## 2. Obtaining Session Information
 
-1.  **Local Check**: Before calling the API, check if the `auth_account_id` already exists in your local database.
-2.  **Conditional Verification**:
-    - **If user exists**: Call `/verify` normally to ensure the session is still active.
-    - **If user is missing**: Call `/verify` with `"signup": true`.
+Internal applications obtain session information based on their domain:
 
-**Endpoint:** `POST neupgroup.com/account/bridge/api.v1/auth/verify`
+### Same Domain (`neupgroup.com`)
+Internal apps on the same domain share secure HTTP-only cookies:
+- `auth_account_id`
+- `auth_session_id`
+- `auth_session_key`
+
+### Different Domain
+Internal apps on different domains must use the **"Sign"** endpoint:
+
+**Endpoint:** `POST https://neupgroup.com/account/bridge/api.v1/auth/sign`
 
 **Request Body:**
 ```json
@@ -31,55 +33,35 @@ To optimize performance and database operations, internal apps should follow thi
   "appType": "internal",
   "auth_account_id": "...",
   "auth_session_id": "...",
-  "auth_session_key": "...",
-  "signup": true 
-}
-```
-
-**Response:**
-If `signup: true` is returned, immediately create the local user record using the provided `user` data (`accountId`, `displayName`, `neupId`).
-
----
-
-## 2. External Applications (Different Domain)
-
-External applications (different domain or third-party) do **not** have access to shared cookies. They must use the "Sign" process to bridge authentication.
-
-### The "Sign" Process
-External apps must receive the `auth_*` credentials (usually via a redirect or secure handshake) and then exchange them for an app-specific session.
-
-**Endpoint:** `POST neupgroup.com/account/bridge/api.v1/auth/sign`
-
-**Request Body:**
-```json
-{
-  "appId": "YOUR_EXTERNAL_APP_ID",
-  "appType": "external",
-  "auth_account_id": "...",
-  "auth_session_id": "...",
   "auth_session_key": "..."
 }
 ```
 
-**Response:**
-- **Account Creation**: If the user hasn't authorized the app before, an `AppAuthentication` record is created automatically.
-- **App Session**: A unique `sessionValue` is generated. This is the token the external app should use for its own session management.
-- **User Data**: Returns `displayName`, `displayImage`, `permissions`, and `accountId`.
+---
 
-### External Signout
-When a user logs out from the external app's interface, the app must notify Neup.Account to revoke the mapping.
+## 3. High-Performance Verification (gRPC)
 
-**Endpoint:** `POST neupgroup.com/account/bridge/api.v1/auth/signout`
-**Request:** `{ "sessionValue": "...", "appId": "..." }`
+Internal applications **do not** use REST endpoints for session verification. Instead, they use **gRPC** for maximum performance and low latency.
 
-### Session Cascading (Security)
-If a user logs out of Neup.Account directly (or their session is remotely terminated), Neup.Account automatically revokes all associated `sessionValue` mappings for that user across all external apps.
+### gRPC Service Definition
+The `AuthService` provides a `VerifySession` method:
+
+```proto
+service AuthService {
+  rpc VerifySession (VerifyRequest) returns (VerifyResponse);
+}
+```
+
+### Implementation
+1.  **Handshake**: Obtain the `auth_*` credentials from cookies or the `/sign` endpoint.
+2.  **Verify**: Call the gRPC `VerifySession` method with these credentials.
+3.  **Local Sync**: If verification is successful, ensure the user data is synchronized with your local database.
 
 ---
 
-## 3. Data Persistence & Constraints (Mandatory)
+## 4. Data Persistence & Constraints (Mandatory)
 
-Regardless of app type, you **must** maintain a local copy of core user data to ensure your app functions correctly even if the account service is temporarily unreachable.
+Regardless of app type, you **must** maintain a local copy of core user data.
 
 ### Required Fields
 - `account_id`: (Primary Key/Unique) The Neup `accountId`.
@@ -88,9 +70,7 @@ Regardless of app type, you **must** maintain a local copy of core user data to 
 - `neup_id`: The user's Neup identity string.
 
 ### Recommended Schema (PostgreSQL)
-
 ```sql
--- Core User Table
 CREATE TABLE users (
     account_id VARCHAR(255) PRIMARY KEY, -- Neup accountId
     display_name VARCHAR(255),
@@ -98,20 +78,4 @@ CREATE TABLE users (
     neup_id VARCHAR(100) UNIQUE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
-
--- App Specific Data
-CREATE TABLE app_features (
-    id SERIAL PRIMARY KEY,
-    account_id VARCHAR(255) NOT NULL,
-    feature_data JSONB,
-    CONSTRAINT fk_user 
-      FOREIGN KEY(account_id) 
-      REFERENCES users(account_id) 
-      ON DELETE CASCADE
-);
 ```
-
-### Best Practices
-1.  **Hard Constraints**: Always use `account_id` as a foreign key for your app's data. This ensures that data is deleted if the user is removed from your app.
-2.  **Periodic Refresh**: Update `display_name` and `display_image` whenever a user starts a new session to keep your local database synchronized.
-3.  **Trust the Sign/Verify**: Only create or update local records after a successful response from the Neup.Account bridge.

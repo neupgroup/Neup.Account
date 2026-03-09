@@ -8,19 +8,20 @@ import { randomBytes } from 'crypto';
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        
+        const { appId, appType } = body;
+
+        if (!appId) {
+            return NextResponse.json({ success: false, error: 'appId is required.' }, { status: 400 });
+        }
+
         // 1. Validate the session/credentials using existing logic
+        // We pass the body to validateExternalRequest which handles internal/external/fast logic
         const validation = await validateExternalRequest(body);
         if (!validation.success) {
             return NextResponse.json({ success: false, error: validation.error }, { status: validation.status ?? 401 });
         }
 
         const { accountId } = validation.user;
-        const { appId, appType } = body;
-
-        if (!appId) {
-            return NextResponse.json({ success: false, error: 'appId is required.' }, { status: 400 });
-        }
 
         // 2. Check/Create AppAuthentication
         let appAuth = await prisma.appAuthentication.findUnique({
