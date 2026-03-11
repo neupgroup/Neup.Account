@@ -52,6 +52,9 @@ model Account {
   appConnections  UserAppConnection[]
   appAuthentications AppAuthentication[]
   appSessions     AppSession[]
+  externalSessions AuthSessionExternal[]
+  externalRoles   AuthRoleExternal[]
+  externalPermissions AuthPermissionsExternal[]
   kycRequests     KycRequest[]
   invitations     Invitation[]   @relation("Inviter")
   neupIdRequests  NeupIdRequest[]
@@ -63,6 +66,15 @@ model Account {
   totp            Totp?
   sentRequests    Request[] @relation("SentRequests")
   receivedRequests Request[] @relation("ReceivedRequests")
+
+  // New Auth Team & Permission Relations
+  adminTeams        AuthTeam[] @relation("AccountAsAdmin")
+  memberTeams       AuthTeam[] @relation("AccountAsTeamMember")
+  externalAdminTeams AuthTeamExternal[] @relation("AccountAsExternalAdmin")
+  externalMemberTeams AuthTeamExternal[] @relation("AccountAsExternalTeamMember")
+  authRolesInternal AuthRole[]
+  recipientPermissions AuthPermissionRecipient[] @relation("RecipientPermissions")
+  ownerPermissions   AuthPermissionRecipient[] @relation("OwnerPermissions")
 
   @@map("accounts")
 }
@@ -415,8 +427,82 @@ model Application {
   connections UserAppConnection[]
   appAuthentications AppAuthentication[]
   appSessions     AppSession[]
+  externalSessions AuthSessionExternal[]
+  externalRoles   AuthRoleExternal[]
+  externalPermissions AuthPermissionsExternal[]
+  
+  // New Auth Team & Permission Models
+  authTeams           AuthTeam[]
+  authTeamsExternal   AuthTeamExternal[]
+  authRoles           AuthRole[]
+  authPermissionRecipients AuthPermissionRecipient[]
 
   @@map("applications")
+}
+
+model AuthTeam {
+  id           String   @id @default(uuid())
+  appId        String
+  accountId    String   // Admin/Manager account
+  recipientId  String   // User being added
+  isPermanent  Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  application  Application @relation(fields: [appId], references: [id])
+  account      Account     @relation("AccountAsAdmin", fields: [accountId], references: [id])
+  recipient    Account     @relation("AccountAsTeamMember", fields: [recipientId], references: [id])
+
+  @@unique([appId, accountId, recipientId])
+  @@map("auth_teams")
+}
+
+model AuthTeamExternal {
+  id           String   @id @default(uuid())
+  appId        String
+  accountId    String   // Admin/Manager account
+  recipientId  String   // User being added
+  isPermanent  Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  application  Application @relation(fields: [appId], references: [id])
+  account      Account     @relation("AccountAsExternalAdmin", fields: [accountId], references: [id])
+  recipient    Account     @relation("AccountAsExternalTeamMember", fields: [recipientId], references: [id])
+
+  @@unique([appId, accountId, recipientId])
+  @@map("auth_teams_external")
+}
+
+model AuthRole {
+  id           String   @id @default(uuid())
+  appId        String
+  accountId    String
+  role         String
+  isPermanent  Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  application  Application @relation(fields: [appId], references: [id])
+  account      Account     @relation(fields: [accountId], references: [id])
+
+  @@unique([appId, accountId])
+  @@map("auth_roles")
+}
+
+model AuthPermissionRecipient {
+  id           String   @id @default(uuid())
+  appId        String
+  recipientId  String
+  ownerId      String
+  assetId      String?  // Optional asset identifier
+  permission   String
+  isPermanent  Boolean  @default(true)
+  expiresAt    DateTime?
+  createdAt    DateTime @default(now())
+
+  application  Application @relation(fields: [appId], references: [id])
+  recipient    Account     @relation("RecipientPermissions", fields: [recipientId], references: [id])
+  owner        Account     @relation("OwnerPermissions", fields: [ownerId], references: [id])
+
+  @@map("auth_permission_recipients")
 }
 
 model UserAppConnection {
@@ -460,4 +546,49 @@ model AppSession {
   session      Session     @relation(fields: [sessionId], references: [id], onDelete: Cascade)
 
   @@map("app_sessions")
+}
+
+model AuthSessionExternal {
+  id           String   @id @default(uuid())
+  accountId    String
+  appId        String
+  sessionId    String
+  sessionKey   String
+  jwt          String   @db.Text
+  expiresOn    DateTime
+  createdAt    DateTime @default(now())
+
+  account      Account     @relation(fields: [accountId], references: [id])
+  application  Application @relation(fields: [appId], references: [id])
+
+  @@map("auth_sessions_external")
+}
+
+model AuthRoleExternal {
+  id        String   @id @default(uuid())
+  accountId String
+  appId     String
+  role      String
+  hasExtra  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  account     Account     @relation(fields: [accountId], references: [id])
+  application Application @relation(fields: [appId], references: [id])
+
+  @@unique([accountId, appId])
+  @@map("auth_roles_external")
+}
+
+model AuthPermissionsExternal {
+  id          String   @id @default(uuid())
+  accountId   String
+  appId       String
+  permissions Json     @default("[]")
+  createdAt   DateTime @default(now())
+
+  account     Account     @relation(fields: [accountId], references: [id])
+  application Application @relation(fields: [appId], references: [id])
+
+  @@unique([accountId, appId])
+  @@map("auth_permissions_external")
 }

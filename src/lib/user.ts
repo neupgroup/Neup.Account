@@ -231,6 +231,21 @@ export async function getUserPermissions(accountId?: string, appId?: string): Pr
       });
     });
 
+    // --- New System: Fetch permissions from AuthPermissionRecipient ---
+    if (appId) {
+      const directPermissions = await prisma.authPermissionRecipient.findMany({
+        where: {
+          recipientId: activeId,
+          appId,
+          OR: [
+            { isPermanent: true },
+            { expiresAt: { gt: new Date() } }
+          ]
+        }
+      });
+      directPermissions.forEach((dp: { permission: string }) => collectedPermissions.add(dp.permission));
+    }
+
     // Filter by appId if provided (if your permissions structure supports appId filtering)
     // For now, returning the full set as requested
     return Array.from(collectedPermissions);

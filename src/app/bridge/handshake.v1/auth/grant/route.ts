@@ -9,26 +9,26 @@ export const dynamic = 'force-dynamic'; // Ensure this route is always dynamical
 
 export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
-    const authHandlerUrlString = searchParams.get('auth_handler');
+    const redirectsTo = searchParams.get('redirectsTo');
+    const appId = searchParams.get('appId');
 
-    // The auth_handler is now mandatory.
-    if (!authHandlerUrlString) {
+    // redirectsTo is now mandatory.
+    if (!redirectsTo) {
         const errorUrl = new URL('/auth/start', request.url);
         errorUrl.searchParams.set('error', 'invalid_request');
-        errorUrl.searchParams.set('error_description', 'The required "auth_handler" parameter was not provided.');
+        errorUrl.searchParams.set('error_description', 'The required "redirectsTo" parameter was not provided.');
         return NextResponse.redirect(errorUrl);
     }
     
     // Create a new URL object from the handler and copy all original params.
-    const finalRedirectUrl = new URL(authHandlerUrlString);
+    const finalRedirectUrl = new URL(redirectsTo);
     searchParams.forEach((value, key) => {
-        // Avoid duplicating the auth_handler itself in the final URL params
-        if (key !== 'auth_handler') {
+        // Avoid duplicating redirectsTo and appId in the final URL params initially
+        if (key !== 'redirectsTo' && key !== 'appId') {
             finalRedirectUrl.searchParams.set(key, value);
         }
     });
 
-    const appId = searchParams.get('appId');
     if (!appId) {
         finalRedirectUrl.searchParams.set('error', 'missing_app_id');
         finalRedirectUrl.searchParams.set('error_description', 'An application ID (appId) must be provided.');
@@ -36,6 +36,9 @@ export async function GET(request: NextRequest) {
     }
     
     try {
+        // In a real scenario, you'd decode/validate the appId from a public key here if needed.
+        // For now, we continue with the existing appId validation logic.
+        
         // --- Security Check ---
         const application = await prisma.application.findUnique({
             where: { id: appId }
@@ -61,19 +64,9 @@ export async function GET(request: NextRequest) {
             return NextResponse.redirect(signInUrl);
         }
 
-        // --- NEW: Consent Step ---
-        const consent = searchParams.get('consent') === 'true';
-        if (!consent) {
-            const consentUrl = new URL('/bridge/handshake.v1/auth/consent', request.url);
-            searchParams.forEach((value, key) => {
-                consentUrl.searchParams.set(key, value);
-            });
-            return NextResponse.redirect(consentUrl);
-        }
-
-        const dependentKey = crypto.randomBytes(32).toString('hex');
+        const tempToken = crypto.randomBytes(32).toString('hex');
         const expiresOn = new Date();
-        expiresOn.setMinutes(expiresOn.getMinutes() + 5); // Key is valid for 5 minutes
+        expiresOn.setMinutes(expiresOn.getMinutes() + 5); // Token is valid for 5 minutes
 
         // Fetch existing keys first
         const currentSession = await prisma.session.findUnique({
@@ -85,7 +78,7 @@ export async function GET(request: NextRequest) {
 
         const newKeyEntry = {
             app: appId,
-            key: dependentKey,
+            key: tempToken,
             expiresOn: expiresOn,
             isUsed: false,
         };
@@ -98,11 +91,21 @@ export async function GET(request: NextRequest) {
             }
         });
         
+        // Check if user is new for this app to determine authType
+        const appAuth = await prisma.appAuthentication.findUnique({
+            where: {
+                appId_accountId: {
+                    appId,
+                    accountId: session.accountId,
+                }
+            }
+        });
+
+        const authType = appAuth ? 'signin' : 'signup';
+
         // Append the new, secure parameters to the final URL
-        finalRedirectUrl.searchParams.set('key', dependentKey);
-        finalRedirectUrl.searchParams.set('session_id', session.sessionId);
-        finalRedirectUrl.searchParams.set('account_id', session.accountId);
-        finalRedirectUrl.searchParams.set('expiresOn', expiresOn.toISOString());
+        finalRedirectUrl.searchParams.set('tempToken', tempToken);
+        finalRedirectUrl.searchParams.set('authType', authType);
         
         return NextResponse.redirect(finalRedirectUrl);
 

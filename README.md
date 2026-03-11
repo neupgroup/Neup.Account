@@ -18,30 +18,28 @@ This comprehensive guide covers everything from technical specifications for ext
 Before an application can verify a session, it must initiate a handshake to obtain the necessary credentials.
 
 ### Start Handshake
-- **Endpoint**: `GET /bridge/handshake.v1/auth/signin`
-- **Purpose**: Start a user authentication handshake from your app.
+- **Endpoint**: `GET /bridge/handshake.v1/auth/grant`
+- **Purpose**: Starts the signing flow and redirects to Neup.Account for authentication.
 - **Required query params**:
-  - `appId`: Your application ID registered with Neup.
-  - `auth_handler`: Your server callback URL that receives the one-time key after the user signs in.
-- **Optional query params**: Any additional parameters you include will be forwarded to your `auth_handler` unchanged.
+  - `appId`: Your application ID (encoded in public key).
+  - `redirectsTo`: Your server callback URL.
+- **Optional query params**: Any additional parameters will be forwarded to your `redirectsTo` unchanged.
 
 ### How it works
 1. If the user is not signed in, they are redirected to `/auth/start?redirects=…`.
-2. After successful sign-in, the handshake redirects the user to your `auth_handler` and appends:
-   - `key`: A short-lived, one-time key (5 minutes) for server-to-server verification.
-   - `session_id`: The user’s session ID in Neup.Account.
-   - `account_id`: The authenticated user’s account ID.
-   - `expiresOn`: The key’s expiration timestamp in ISO format.
-3. Your app server must then verify the key via the verification API before granting access.
+2. After successful sign-in, the handshake redirects the user to your `redirectsTo` URL and appends:
+   - `tempToken`: A short-lived, one-time token (5 minutes) for server-to-server verification.
+   - `authType`: Either `signin` (existing user) or `signup` (new user for this app).
+3. Your app server must then verify the `tempToken` via the verification API before granting access.
 
 **Example Request:**
 ```
-GET https://neupgroup.com/account/bridge/handshake.v1/auth/signin?appId=YOUR_APP_ID&auth_handler=https://yourapp.com/auth/callback&state=xyz
+GET https://neupgroup.com/account/bridge/handshake.v1/auth/grant?appId=YOUR_APP_ID&redirectsTo=https://yourapp.com/auth/callback&state=xyz
 ```
 
 **Example Redirect:**
 ```
-https://yourapp.com/auth/callback?state=xyz&key=ONE_TIME_KEY&session_id=SESSION_ID&account_id=ACCOUNT_ID&expiresOn=ISO_DATE
+https://yourapp.com/auth/callback?state=xyz&tempToken=TOKEN_VALUE&authType=signin
 ```
 
 ---
@@ -50,30 +48,151 @@ https://yourapp.com/auth/callback?state=xyz&key=ONE_TIME_KEY&session_id=SESSION_
 
 External applications interact with Neup.Account primarily through the **"Sign"** endpoint.
 
-### The "Sign" Process
-External apps perform a POST request to exchange credentials (received via the handshake) for a session.
+### The "Grant" Process (Exchange tempToken for Session)
+External apps perform a POST request to exchange the `tempToken` (received via the handshake) for a persistent session and a signed JWT.
 
-**Endpoint:** `POST https://neupgroup.com/account/bridge/api.v1/auth/sign`
+**Endpoint:** `POST https://neupgroup.com/account/api.v1/auth/grant`
 
 **Request Body:**
 ```json
 {
   "appId": "YOUR_APP_ID",
-  "auth_account_id": "...",
-  "auth_session_id": "...",
-  "auth_session_key": "..."
+  "tempToken": "TOKEN_FROM_HANDSHAKE"
 }
 ```
 
 **Response Properties:**
-- `sessionValue`: A unique token the external app should use for its own session management. Once this token is obtained, the app does not need to call other Neup endpoints for basic session maintenance.
-- `activeTill`: Expiration date for the `sessionValue`.
-- `user`: Object containing `accountId`, `displayName`, `displayImage`, and `permissions`.
-- `isNewSignup`: Boolean indicating if this is the user's first time authorizing this app.
+- `aid`: The Neup `accountId`.
+- `sid`: A unique session ID for the external app. (Expires in 7 days)
+- `skey`: A secure session key for the external app. (Expires in 7 days)
+- `jwt`: A signed JSON Web Token containing user identity and roles. (Expires in 7 minutes)
+- `exp`: Expiration timestamp (Unix seconds) for the **JWT token** only.
+- `role`: The user's assigned role for this application.
+- `per`: (Optional) Array of permissions, included if the role has "extra" permissions enabled.
+
+**JWT Payload:**
+```json
+{
+  "aid": "123",
+  "role": "role-name",
+  "per": ["perm1", "perm2"], // Included if hasExtra is true
+  "iat": 123123123,
+  "exp": 234234234 // Exactly 7 minutes after iat
+}
+```
 
 ---
 
-## 4. Internal Application Integration
+### The "Refresh" Process (Renew Session & JWT)
+External apps perform a PATCH request to extend the session's expiry (sid, aid, skey) and obtain a new JWT token. 
+
+- **Session Expiry**: Extended to 7 days from the time of refresh.
+- **JWT Expiry**: A new JWT is issued with a 7-minute lifetime.
+
+**Endpoint:** `PATCH https://neupgroup.com/account/api.v1/auth/grant`
+
+**Request Body:**
+```json
+{
+  "appId": "YOUR_APP_ID",
+  "aid": "USER_ACCOUNT_ID",
+  "sid": "EXTERNAL_SESSION_ID",
+  "skey": "EXTERNAL_SESSION_KEY"
+}
+```
+
+**Response Properties:**
+- `aid`: The user's account ID.
+- `sid`: The session ID.
+- `jwt`: A fresh signed JWT token (expires in 7 minutes).
+- `exp`: New expiration timestamp (Unix seconds).
+- `role`: The user's role.
+- `per`: (Optional) User permissions.
+
+---
+
+### The "Access" Process (Server-Side Permission Check)
+External applications can verify if a user has a specific permission for an activity. This check **must** be performed from the client application's server-side.
+
+**Endpoint:** `GET https://neupgroup.com/account/bridge/api.v1/auth/access`
+
+**Required Query Parameters:**
+- `aid`: The user's account ID.
+- `sid`: The user's external session ID.
+- `skey`: The user's external session key.
+- `permission_required`: The string identifier of the permission to check.
+
+**Optional Query Parameters:**
+- `appId`: Your application ID (can be inferred from `sid`).
+
+**Response Body:**
+```json
+{
+  "aid": "123",
+  "appId": "app_123",
+  "permission_required": "read:profile",
+  "allowed": true,
+  "timestamp": "2024-03-12T12:00:00.000Z"
+}
+```
+
+---
+
+## 4. User Profile & Data Sharing
+
+Applications can retrieve user profile information using the `profile` endpoint. This endpoint supports both persistent session authentication and one-time `tempToken` authentication.
+
+### Get User Profile
+Retrieves user information based on the level of access granted.
+
+- **Endpoint**: `GET /api.v1/profile`
+- **Authentication**:
+  - **Option A (Persistent Session)**: Pass `aid`, `sid`, and `skey` in the request headers.
+  - **Option B (One-time Grant)**: Pass `tempToken` and `appId` as query parameters.
+
+**Request Headers (Option A):**
+```http
+aid: USER_ACCOUNT_ID
+sid: EXTERNAL_SESSION_ID
+skey: EXTERNAL_SESSION_KEY
+```
+
+**Query Parameters (Option B):**
+- `tempToken`: The token received from the handshake.
+- `appId`: Your application ID.
+
+**Query Parameters (Optional for both):**
+- `aid`: The account ID of the user whose profile you want to fetch.
+- `neupid`: The NeupID of the user whose profile you want to fetch.
+
+**Privacy Logic:**
+- **Self/Authenticated User**: Returns full profile details (emails, phones, DOB, gender, nationality, etc.).
+- **Other Users**: Returns limited public information (`displayName`, `displayImage`, `verified`, `accountType`).
+
+**Example Response (Full Profile):**
+```json
+{
+  "success": true,
+  "profile": {
+    "aid": "acc_123",
+    "neupId": "user.name",
+    "displayName": "John Doe",
+    "displayImage": "https://...",
+    "firstName": "John",
+    "lastName": "Doe",
+    "gender": "male",
+    "dob": "1990-01-01T00:00:00.000Z",
+    "emails": ["john@example.com"],
+    "phones": ["+123456789"],
+    "verified": true,
+    "accountType": "individual"
+  }
+}
+```
+
+---
+
+## 5. Internal Application Integration
 
 Internal applications use different methods to obtain and verify session information based on their domain.
 
@@ -94,7 +213,7 @@ service AuthService {
 
 ---
 
-## 5. Signout Implementation
+## 6. Signout Implementation
 
 When a user logs out from your application, notify Neup.Account to revoke the mapping.
 
@@ -110,7 +229,7 @@ When a user logs out from your application, notify Neup.Account to revoke the ma
 
 ---
 
-## 6. Cryptography and Session Security
+## 7. Cryptography and Session Security
 
 To prevent users from manually modifying their permissions in `sessionStorage`, Neup.Account uses an asymmetric cryptographic signing mechanism.
 
@@ -127,7 +246,7 @@ To prevent users from manually modifying their permissions in `sessionStorage`, 
 
 ---
 
-## 7. Data Persistence Requirements (Mandatory)
+## 8. Data Persistence Requirements (Mandatory)
 
 All applications (Internal & External) **must** maintain a local copy of core user data to ensure resilience.
 
@@ -150,7 +269,7 @@ CREATE TABLE users (
 
 ---
 
-## 8. Security Best Practices
+## 9. Security Best Practices
 
 - **Server-to-Server Only**: All calls to the bridge API (`/sign`, `/signout`) **must** be performed from your server.
 - **Session Cascading**: If a user logs out of Neup.Account, all associated `sessionValue` tokens are automatically revoked.
@@ -159,23 +278,34 @@ CREATE TABLE users (
 
 ---
 
-## 9. cURL Examples
+## 10. cURL Examples
 
 ### Start Handshake (browser redirect)
 ```
-GET https://neupgroup.com/account/bridge/handshake.v1/auth/signin?appId=app_123&auth_handler=https://yourapp.com/neup/callback
+GET https://neupgroup.com/account/bridge/handshake.v1/auth/grant?appId=app_123&redirectsTo=https://yourapp.com/neup/callback
 ```
 
-### Verify One-Time Key
+### Verify tempToken (External Apps)
 ```bash
 curl -X POST https://neupgroup.com/account/bridge/api.v1/auth/verify \
   -H "Content-Type: application/json" \
-  -d '{"appId":"app_123","appSecret":"secret_abc","key":"one_time_key","accountId":"acct_456"}'
+  -d '{
+    "appId": "app_123",
+    "appSecret": "secret_abc",
+    "key": "tempToken_value",
+    "accountId": "acct_456"
+  }'
 ```
 
-### Validate Session Triplet
+### Verify Session Triplet (Internal/Fast Apps)
 ```bash
-curl -X POST https://neupgroup.com/account/bridge/api.v1/auth/validate-session \
+curl -X POST https://neupgroup.com/account/bridge/api.v1/auth/verify \
   -H "Content-Type: application/json" \
-  -d '{"sessionId":"sess_123","sessionKey":"key_abc","accountId":"acct_456"}'
+  -d '{
+    "appId": "app_123",
+    "appType": "internal",
+    "auth_account_id": "acct_456",
+    "auth_session_id": "sess_123",
+    "auth_session_key": "key_abc"
+  }'
 ```

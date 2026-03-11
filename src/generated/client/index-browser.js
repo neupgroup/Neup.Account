@@ -407,6 +407,45 @@ exports.Prisma.ApplicationScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.AuthTeamScalarFieldEnum = {
+  id: 'id',
+  appId: 'appId',
+  accountId: 'accountId',
+  recipientId: 'recipientId',
+  isPermanent: 'isPermanent',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AuthTeamExternalScalarFieldEnum = {
+  id: 'id',
+  appId: 'appId',
+  accountId: 'accountId',
+  recipientId: 'recipientId',
+  isPermanent: 'isPermanent',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AuthRoleScalarFieldEnum = {
+  id: 'id',
+  appId: 'appId',
+  accountId: 'accountId',
+  role: 'role',
+  isPermanent: 'isPermanent',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AuthPermissionRecipientScalarFieldEnum = {
+  id: 'id',
+  appId: 'appId',
+  recipientId: 'recipientId',
+  ownerId: 'ownerId',
+  assetId: 'assetId',
+  permission: 'permission',
+  isPermanent: 'isPermanent',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.UserAppConnectionScalarFieldEnum = {
   id: 'id',
   accountId: 'accountId',
@@ -430,6 +469,34 @@ exports.Prisma.AppSessionScalarFieldEnum = {
   sessionValue: 'sessionValue',
   createdOn: 'createdOn',
   activeTill: 'activeTill'
+};
+
+exports.Prisma.AuthSessionExternalScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  appId: 'appId',
+  sessionId: 'sessionId',
+  sessionKey: 'sessionKey',
+  jwt: 'jwt',
+  expiresOn: 'expiresOn',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AuthRoleExternalScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  appId: 'appId',
+  role: 'role',
+  hasExtra: 'hasExtra',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AuthPermissionsExternalScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  appId: 'appId',
+  permissions: 'permissions',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -489,9 +556,16 @@ exports.Prisma.ModelName = {
   UserContent: 'UserContent',
   RecoveryContact: 'RecoveryContact',
   Application: 'Application',
+  AuthTeam: 'AuthTeam',
+  AuthTeamExternal: 'AuthTeamExternal',
+  AuthRole: 'AuthRole',
+  AuthPermissionRecipient: 'AuthPermissionRecipient',
   UserAppConnection: 'UserAppConnection',
   AppAuthentication: 'AppAuthentication',
-  AppSession: 'AppSession'
+  AppSession: 'AppSession',
+  AuthSessionExternal: 'AuthSessionExternal',
+  AuthRoleExternal: 'AuthRoleExternal',
+  AuthPermissionsExternal: 'AuthPermissionsExternal'
 };
 
 /**
