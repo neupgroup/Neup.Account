@@ -340,6 +340,7 @@ exports.Prisma.SessionScalarFieldEnum = {
   lastLoggedIn: 'lastLoggedIn',
   loginType: 'loginType',
   geolocation: 'geolocation',
+  deviceType: 'deviceType',
   expiresOn: 'expiresOn',
   isExpired: 'isExpired',
   authSessionKey: 'authSessionKey',

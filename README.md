@@ -83,6 +83,30 @@ External apps perform a POST request to exchange the `tempToken` (received via t
 
 ---
 
+### The "Validate Grant" Process (Check if Session is Valid)
+External apps perform a GET request to check if their authentication grant is still active.
+
+**Endpoint:** `GET https://neupgroup.com/account/api.v1/auth/grant`
+
+**Query Parameters:**
+- `appId`: Your application ID.
+- `aid`: The account ID.
+- `sid`: The session ID.
+- `skey`: The session key.
+
+**Response:**
+```json
+{
+  "success": true,
+  "aid": "acc_123",
+  "appId": "app_456",
+  "expiresOn": "2026-03-20T10:00:00.000Z",
+  "lastLoggedIn": "2026-03-12T10:00:00.000Z"
+}
+```
+
+---
+
 ### The "Refresh" Process (Renew Session & JWT)
 External apps perform a PATCH request to extend the session's expiry (sid, aid, skey) and obtain a new JWT token. 
 
@@ -138,7 +162,42 @@ External applications can verify if a user has a specific permission for an acti
 
 ---
 
-## 4. User Profile & Data Sharing
+## 4. Internal Application Session Management
+
+For applications directly under the Neup.Account ecosystem, use the internal session API to validate sessions, update device types, and handle logout.
+
+### Validate & Update Session
+Used to verify if a user's session is still active and update its metadata (e.g., device type, last activity).
+
+- **Endpoint**: `POST /api.v1/auth/session`
+- **Request Body**:
+  ```json
+  {
+    "aid": "USER_ACCOUNT_ID",
+    "sid": "SESSION_ID",
+    "skey": "SESSION_KEY",
+    "deviceType": "android", // optional
+    "activity": "user_action" // optional
+  }
+  ```
+- **Privacy & Security**: Extends session expiry by 30 days and records the `deviceType`.
+
+### Invalidate Session (Logout)
+Invalidates a specific session immediately.
+
+- **Endpoint**: `DELETE /api.v1/auth/session`
+- **Request Body**:
+  ```json
+  {
+    "aid": "USER_ACCOUNT_ID",
+    "sid": "SESSION_ID",
+    "skey": "SESSION_KEY"
+  }
+  ```
+
+---
+
+## 5. User Profile & Data Sharing
 
 Applications can retrieve user profile information using the `profile` endpoint. This endpoint supports both persistent session authentication and one-time `tempToken` authentication.
 
