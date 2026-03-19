@@ -159,6 +159,16 @@ export type AuthRole = $Result.DefaultSelection<Prisma.$AuthRolePayload>
  */
 export type AuthPermissionRecipient = $Result.DefaultSelection<Prisma.$AuthPermissionRecipientPayload>
 /**
+ * Model AccountAccess
+ * 
+ */
+export type AccountAccess = $Result.DefaultSelection<Prisma.$AccountAccessPayload>
+/**
+ * Model AccessMember
+ * 
+ */
+export type AccessMember = $Result.DefaultSelection<Prisma.$AccessMemberPayload>
+/**
  * Model UserAppConnection
  * 
  */
@@ -595,6 +605,26 @@ export class PrismaClient<
     * ```
     */
   get authPermissionRecipient(): Prisma.AuthPermissionRecipientDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.accountAccess`: Exposes CRUD operations for the **AccountAccess** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AccountAccesses
+    * const accountAccesses = await prisma.accountAccess.findMany()
+    * ```
+    */
+  get accountAccess(): Prisma.AccountAccessDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.accessMember`: Exposes CRUD operations for the **AccessMember** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AccessMembers
+    * const accessMembers = await prisma.accessMember.findMany()
+    * ```
+    */
+  get accessMember(): Prisma.AccessMemberDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.userAppConnection`: Exposes CRUD operations for the **UserAppConnection** model.
@@ -1118,6 +1148,8 @@ export namespace Prisma {
     AuthTeamExternal: 'AuthTeamExternal',
     AuthRole: 'AuthRole',
     AuthPermissionRecipient: 'AuthPermissionRecipient',
+    AccountAccess: 'AccountAccess',
+    AccessMember: 'AccessMember',
     UserAppConnection: 'UserAppConnection',
     AppAuthentication: 'AppAuthentication',
     AppSession: 'AppSession',
@@ -1139,7 +1171,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "totp" | "systemConfig" | "authRequest" | "activityLog" | "accountStatusLog" | "kycRequest" | "invitation" | "neupIdRequest" | "notification" | "request" | "family" | "backupCode" | "verification" | "userDocument" | "contact" | "neupId" | "password" | "permit" | "session" | "errorLog" | "bugReport" | "userContent" | "recoveryContact" | "application" | "authTeam" | "authTeamExternal" | "authRole" | "authPermissionRecipient" | "userAppConnection" | "appAuthentication" | "appSession" | "authSessionExternal" | "authRoleExternal" | "authPermissionsExternal"
+      modelProps: "account" | "totp" | "systemConfig" | "authRequest" | "activityLog" | "accountStatusLog" | "kycRequest" | "invitation" | "neupIdRequest" | "notification" | "request" | "family" | "backupCode" | "verification" | "userDocument" | "contact" | "neupId" | "password" | "permit" | "session" | "errorLog" | "bugReport" | "userContent" | "recoveryContact" | "application" | "authTeam" | "authTeamExternal" | "authRole" | "authPermissionRecipient" | "accountAccess" | "accessMember" | "userAppConnection" | "appAuthentication" | "appSession" | "authSessionExternal" | "authRoleExternal" | "authPermissionsExternal"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3289,6 +3321,154 @@ export namespace Prisma {
           }
         }
       }
+      AccountAccess: {
+        payload: Prisma.$AccountAccessPayload<ExtArgs>
+        fields: Prisma.AccountAccessFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AccountAccessFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountAccessPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AccountAccessFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountAccessPayload>
+          }
+          findFirst: {
+            args: Prisma.AccountAccessFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountAccessPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AccountAccessFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountAccessPayload>
+          }
+          findMany: {
+            args: Prisma.AccountAccessFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountAccessPayload>[]
+          }
+          create: {
+            args: Prisma.AccountAccessCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountAccessPayload>
+          }
+          createMany: {
+            args: Prisma.AccountAccessCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AccountAccessCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountAccessPayload>[]
+          }
+          delete: {
+            args: Prisma.AccountAccessDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountAccessPayload>
+          }
+          update: {
+            args: Prisma.AccountAccessUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountAccessPayload>
+          }
+          deleteMany: {
+            args: Prisma.AccountAccessDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AccountAccessUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AccountAccessUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountAccessPayload>[]
+          }
+          upsert: {
+            args: Prisma.AccountAccessUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountAccessPayload>
+          }
+          aggregate: {
+            args: Prisma.AccountAccessAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAccountAccess>
+          }
+          groupBy: {
+            args: Prisma.AccountAccessGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AccountAccessGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AccountAccessCountArgs<ExtArgs>
+            result: $Utils.Optional<AccountAccessCountAggregateOutputType> | number
+          }
+        }
+      }
+      AccessMember: {
+        payload: Prisma.$AccessMemberPayload<ExtArgs>
+        fields: Prisma.AccessMemberFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AccessMemberFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccessMemberPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AccessMemberFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccessMemberPayload>
+          }
+          findFirst: {
+            args: Prisma.AccessMemberFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccessMemberPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AccessMemberFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccessMemberPayload>
+          }
+          findMany: {
+            args: Prisma.AccessMemberFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccessMemberPayload>[]
+          }
+          create: {
+            args: Prisma.AccessMemberCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccessMemberPayload>
+          }
+          createMany: {
+            args: Prisma.AccessMemberCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AccessMemberCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccessMemberPayload>[]
+          }
+          delete: {
+            args: Prisma.AccessMemberDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccessMemberPayload>
+          }
+          update: {
+            args: Prisma.AccessMemberUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccessMemberPayload>
+          }
+          deleteMany: {
+            args: Prisma.AccessMemberDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AccessMemberUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AccessMemberUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccessMemberPayload>[]
+          }
+          upsert: {
+            args: Prisma.AccessMemberUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccessMemberPayload>
+          }
+          aggregate: {
+            args: Prisma.AccessMemberAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAccessMember>
+          }
+          groupBy: {
+            args: Prisma.AccessMemberGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AccessMemberGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AccessMemberCountArgs<ExtArgs>
+            result: $Utils.Optional<AccessMemberCountAggregateOutputType> | number
+          }
+        }
+      }
       UserAppConnection: {
         payload: Prisma.$UserAppConnectionPayload<ExtArgs>
         fields: Prisma.UserAppConnectionFieldRefs
@@ -3870,6 +4050,8 @@ export namespace Prisma {
     authTeamExternal?: AuthTeamExternalOmit
     authRole?: AuthRoleOmit
     authPermissionRecipient?: AuthPermissionRecipientOmit
+    accountAccess?: AccountAccessOmit
+    accessMember?: AccessMemberOmit
     userAppConnection?: UserAppConnectionOmit
     appAuthentication?: AppAuthenticationOmit
     appSession?: AppSessionOmit
@@ -3987,6 +4169,10 @@ export namespace Prisma {
     authRolesInternal: number
     recipientPermissions: number
     ownerPermissions: number
+    receivedAccountAccess: number
+    ownedAccountAccess: number
+    accessMembersOwned: number
+    accessMemberships: number
   }
 
   export type AccountCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4021,6 +4207,10 @@ export namespace Prisma {
     authRolesInternal?: boolean | AccountCountOutputTypeCountAuthRolesInternalArgs
     recipientPermissions?: boolean | AccountCountOutputTypeCountRecipientPermissionsArgs
     ownerPermissions?: boolean | AccountCountOutputTypeCountOwnerPermissionsArgs
+    receivedAccountAccess?: boolean | AccountCountOutputTypeCountReceivedAccountAccessArgs
+    ownedAccountAccess?: boolean | AccountCountOutputTypeCountOwnedAccountAccessArgs
+    accessMembersOwned?: boolean | AccountCountOutputTypeCountAccessMembersOwnedArgs
+    accessMemberships?: boolean | AccountCountOutputTypeCountAccessMembershipsArgs
   }
 
   // Custom InputTypes
@@ -4251,6 +4441,34 @@ export namespace Prisma {
     where?: AuthPermissionRecipientWhereInput
   }
 
+  /**
+   * AccountCountOutputType without action
+   */
+  export type AccountCountOutputTypeCountReceivedAccountAccessArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AccountAccessWhereInput
+  }
+
+  /**
+   * AccountCountOutputType without action
+   */
+  export type AccountCountOutputTypeCountOwnedAccountAccessArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AccountAccessWhereInput
+  }
+
+  /**
+   * AccountCountOutputType without action
+   */
+  export type AccountCountOutputTypeCountAccessMembersOwnedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AccessMemberWhereInput
+  }
+
+  /**
+   * AccountCountOutputType without action
+   */
+  export type AccountCountOutputTypeCountAccessMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AccessMemberWhereInput
+  }
+
 
   /**
    * Count Type RequestCountOutputType
@@ -4329,6 +4547,7 @@ export namespace Prisma {
     authTeamsExternal: number
     authRoles: number
     authPermissionRecipients: number
+    accountAccesses: number
   }
 
   export type ApplicationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4342,6 +4561,7 @@ export namespace Prisma {
     authTeamsExternal?: boolean | ApplicationCountOutputTypeCountAuthTeamsExternalArgs
     authRoles?: boolean | ApplicationCountOutputTypeCountAuthRolesArgs
     authPermissionRecipients?: boolean | ApplicationCountOutputTypeCountAuthPermissionRecipientsArgs
+    accountAccesses?: boolean | ApplicationCountOutputTypeCountAccountAccessesArgs
   }
 
   // Custom InputTypes
@@ -4423,6 +4643,13 @@ export namespace Prisma {
    */
   export type ApplicationCountOutputTypeCountAuthPermissionRecipientsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AuthPermissionRecipientWhereInput
+  }
+
+  /**
+   * ApplicationCountOutputType without action
+   */
+  export type ApplicationCountOutputTypeCountAccountAccessesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AccountAccessWhereInput
   }
 
 
@@ -4776,6 +5003,10 @@ export namespace Prisma {
     authRolesInternal?: boolean | Account$authRolesInternalArgs<ExtArgs>
     recipientPermissions?: boolean | Account$recipientPermissionsArgs<ExtArgs>
     ownerPermissions?: boolean | Account$ownerPermissionsArgs<ExtArgs>
+    receivedAccountAccess?: boolean | Account$receivedAccountAccessArgs<ExtArgs>
+    ownedAccountAccess?: boolean | Account$ownedAccountAccessArgs<ExtArgs>
+    accessMembersOwned?: boolean | Account$accessMembersOwnedArgs<ExtArgs>
+    accessMemberships?: boolean | Account$accessMembershipsArgs<ExtArgs>
     _count?: boolean | AccountCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["account"]>
 
@@ -4898,6 +5129,10 @@ export namespace Prisma {
     authRolesInternal?: boolean | Account$authRolesInternalArgs<ExtArgs>
     recipientPermissions?: boolean | Account$recipientPermissionsArgs<ExtArgs>
     ownerPermissions?: boolean | Account$ownerPermissionsArgs<ExtArgs>
+    receivedAccountAccess?: boolean | Account$receivedAccountAccessArgs<ExtArgs>
+    ownedAccountAccess?: boolean | Account$ownedAccountAccessArgs<ExtArgs>
+    accessMembersOwned?: boolean | Account$accessMembersOwnedArgs<ExtArgs>
+    accessMemberships?: boolean | Account$accessMembershipsArgs<ExtArgs>
     _count?: boolean | AccountCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AccountIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4944,6 +5179,10 @@ export namespace Prisma {
       authRolesInternal: Prisma.$AuthRolePayload<ExtArgs>[]
       recipientPermissions: Prisma.$AuthPermissionRecipientPayload<ExtArgs>[]
       ownerPermissions: Prisma.$AuthPermissionRecipientPayload<ExtArgs>[]
+      receivedAccountAccess: Prisma.$AccountAccessPayload<ExtArgs>[]
+      ownedAccountAccess: Prisma.$AccountAccessPayload<ExtArgs>[]
+      accessMembersOwned: Prisma.$AccessMemberPayload<ExtArgs>[]
+      accessMemberships: Prisma.$AccessMemberPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5398,6 +5637,10 @@ export namespace Prisma {
     authRolesInternal<T extends Account$authRolesInternalArgs<ExtArgs> = {}>(args?: Subset<T, Account$authRolesInternalArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     recipientPermissions<T extends Account$recipientPermissionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$recipientPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthPermissionRecipientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ownerPermissions<T extends Account$ownerPermissionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$ownerPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthPermissionRecipientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    receivedAccountAccess<T extends Account$receivedAccountAccessArgs<ExtArgs> = {}>(args?: Subset<T, Account$receivedAccountAccessArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountAccessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ownedAccountAccess<T extends Account$ownedAccountAccessArgs<ExtArgs> = {}>(args?: Subset<T, Account$ownedAccountAccessArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountAccessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    accessMembersOwned<T extends Account$accessMembersOwnedArgs<ExtArgs> = {}>(args?: Subset<T, Account$accessMembersOwnedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccessMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    accessMemberships<T extends Account$accessMembershipsArgs<ExtArgs> = {}>(args?: Subset<T, Account$accessMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccessMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6645,6 +6888,102 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AuthPermissionRecipientScalarFieldEnum | AuthPermissionRecipientScalarFieldEnum[]
+  }
+
+  /**
+   * Account.receivedAccountAccess
+   */
+  export type Account$receivedAccountAccessArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountAccess
+     */
+    select?: AccountAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountAccess
+     */
+    omit?: AccountAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountAccessInclude<ExtArgs> | null
+    where?: AccountAccessWhereInput
+    orderBy?: AccountAccessOrderByWithRelationInput | AccountAccessOrderByWithRelationInput[]
+    cursor?: AccountAccessWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AccountAccessScalarFieldEnum | AccountAccessScalarFieldEnum[]
+  }
+
+  /**
+   * Account.ownedAccountAccess
+   */
+  export type Account$ownedAccountAccessArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountAccess
+     */
+    select?: AccountAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountAccess
+     */
+    omit?: AccountAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountAccessInclude<ExtArgs> | null
+    where?: AccountAccessWhereInput
+    orderBy?: AccountAccessOrderByWithRelationInput | AccountAccessOrderByWithRelationInput[]
+    cursor?: AccountAccessWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AccountAccessScalarFieldEnum | AccountAccessScalarFieldEnum[]
+  }
+
+  /**
+   * Account.accessMembersOwned
+   */
+  export type Account$accessMembersOwnedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccessMember
+     */
+    select?: AccessMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccessMember
+     */
+    omit?: AccessMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccessMemberInclude<ExtArgs> | null
+    where?: AccessMemberWhereInput
+    orderBy?: AccessMemberOrderByWithRelationInput | AccessMemberOrderByWithRelationInput[]
+    cursor?: AccessMemberWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AccessMemberScalarFieldEnum | AccessMemberScalarFieldEnum[]
+  }
+
+  /**
+   * Account.accessMemberships
+   */
+  export type Account$accessMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccessMember
+     */
+    select?: AccessMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccessMember
+     */
+    omit?: AccessMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccessMemberInclude<ExtArgs> | null
+    where?: AccessMemberWhereInput
+    orderBy?: AccessMemberOrderByWithRelationInput | AccessMemberOrderByWithRelationInput[]
+    cursor?: AccessMemberWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AccessMemberScalarFieldEnum | AccessMemberScalarFieldEnum[]
   }
 
   /**
@@ -31816,6 +32155,7 @@ export namespace Prisma {
     authTeamsExternal?: boolean | Application$authTeamsExternalArgs<ExtArgs>
     authRoles?: boolean | Application$authRolesArgs<ExtArgs>
     authPermissionRecipients?: boolean | Application$authPermissionRecipientsArgs<ExtArgs>
+    accountAccesses?: boolean | Application$accountAccessesArgs<ExtArgs>
     _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
 
@@ -31867,6 +32207,7 @@ export namespace Prisma {
     authTeamsExternal?: boolean | Application$authTeamsExternalArgs<ExtArgs>
     authRoles?: boolean | Application$authRolesArgs<ExtArgs>
     authPermissionRecipients?: boolean | Application$authPermissionRecipientsArgs<ExtArgs>
+    accountAccesses?: boolean | Application$accountAccessesArgs<ExtArgs>
     _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ApplicationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -31885,6 +32226,7 @@ export namespace Prisma {
       authTeamsExternal: Prisma.$AuthTeamExternalPayload<ExtArgs>[]
       authRoles: Prisma.$AuthRolePayload<ExtArgs>[]
       authPermissionRecipients: Prisma.$AuthPermissionRecipientPayload<ExtArgs>[]
+      accountAccesses: Prisma.$AccountAccessPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -32300,6 +32642,7 @@ export namespace Prisma {
     authTeamsExternal<T extends Application$authTeamsExternalArgs<ExtArgs> = {}>(args?: Subset<T, Application$authTeamsExternalArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthTeamExternalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     authRoles<T extends Application$authRolesArgs<ExtArgs> = {}>(args?: Subset<T, Application$authRolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     authPermissionRecipients<T extends Application$authPermissionRecipientsArgs<ExtArgs> = {}>(args?: Subset<T, Application$authPermissionRecipientsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthPermissionRecipientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    accountAccesses<T extends Application$accountAccessesArgs<ExtArgs> = {}>(args?: Subset<T, Application$accountAccessesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountAccessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -32963,6 +33306,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AuthPermissionRecipientScalarFieldEnum | AuthPermissionRecipientScalarFieldEnum[]
+  }
+
+  /**
+   * Application.accountAccesses
+   */
+  export type Application$accountAccessesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountAccess
+     */
+    select?: AccountAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountAccess
+     */
+    omit?: AccountAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountAccessInclude<ExtArgs> | null
+    where?: AccountAccessWhereInput
+    orderBy?: AccountAccessOrderByWithRelationInput | AccountAccessOrderByWithRelationInput[]
+    cursor?: AccountAccessWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AccountAccessScalarFieldEnum | AccountAccessScalarFieldEnum[]
   }
 
   /**
@@ -37360,6 +37727,2211 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: AuthPermissionRecipientInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AccountAccess
+   */
+
+  export type AggregateAccountAccess = {
+    _count: AccountAccessCountAggregateOutputType | null
+    _min: AccountAccessMinAggregateOutputType | null
+    _max: AccountAccessMaxAggregateOutputType | null
+  }
+
+  export type AccountAccessMinAggregateOutputType = {
+    id: string | null
+    accountId: string | null
+    appId: string | null
+    resourceId: string | null
+    parentOwnerId: string | null
+    role: string | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AccountAccessMaxAggregateOutputType = {
+    id: string | null
+    accountId: string | null
+    appId: string | null
+    resourceId: string | null
+    parentOwnerId: string | null
+    role: string | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AccountAccessCountAggregateOutputType = {
+    id: number
+    accountId: number
+    appId: number
+    resourceId: number
+    parentOwnerId: number
+    role: number
+    status: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AccountAccessMinAggregateInputType = {
+    id?: true
+    accountId?: true
+    appId?: true
+    resourceId?: true
+    parentOwnerId?: true
+    role?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AccountAccessMaxAggregateInputType = {
+    id?: true
+    accountId?: true
+    appId?: true
+    resourceId?: true
+    parentOwnerId?: true
+    role?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AccountAccessCountAggregateInputType = {
+    id?: true
+    accountId?: true
+    appId?: true
+    resourceId?: true
+    parentOwnerId?: true
+    role?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AccountAccessAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AccountAccess to aggregate.
+     */
+    where?: AccountAccessWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccountAccesses to fetch.
+     */
+    orderBy?: AccountAccessOrderByWithRelationInput | AccountAccessOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AccountAccessWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccountAccesses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccountAccesses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AccountAccesses
+    **/
+    _count?: true | AccountAccessCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AccountAccessMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AccountAccessMaxAggregateInputType
+  }
+
+  export type GetAccountAccessAggregateType<T extends AccountAccessAggregateArgs> = {
+        [P in keyof T & keyof AggregateAccountAccess]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAccountAccess[P]>
+      : GetScalarType<T[P], AggregateAccountAccess[P]>
+  }
+
+
+
+
+  export type AccountAccessGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AccountAccessWhereInput
+    orderBy?: AccountAccessOrderByWithAggregationInput | AccountAccessOrderByWithAggregationInput[]
+    by: AccountAccessScalarFieldEnum[] | AccountAccessScalarFieldEnum
+    having?: AccountAccessScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AccountAccessCountAggregateInputType | true
+    _min?: AccountAccessMinAggregateInputType
+    _max?: AccountAccessMaxAggregateInputType
+  }
+
+  export type AccountAccessGroupByOutputType = {
+    id: string
+    accountId: string
+    appId: string
+    resourceId: string
+    parentOwnerId: string
+    role: string
+    status: string
+    createdAt: Date
+    updatedAt: Date
+    _count: AccountAccessCountAggregateOutputType | null
+    _min: AccountAccessMinAggregateOutputType | null
+    _max: AccountAccessMaxAggregateOutputType | null
+  }
+
+  type GetAccountAccessGroupByPayload<T extends AccountAccessGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AccountAccessGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AccountAccessGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AccountAccessGroupByOutputType[P]>
+            : GetScalarType<T[P], AccountAccessGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AccountAccessSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    accountId?: boolean
+    appId?: boolean
+    resourceId?: boolean
+    parentOwnerId?: boolean
+    role?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    account?: boolean | AccountDefaultArgs<ExtArgs>
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    parentOwner?: boolean | AccountDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["accountAccess"]>
+
+  export type AccountAccessSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    accountId?: boolean
+    appId?: boolean
+    resourceId?: boolean
+    parentOwnerId?: boolean
+    role?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    account?: boolean | AccountDefaultArgs<ExtArgs>
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    parentOwner?: boolean | AccountDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["accountAccess"]>
+
+  export type AccountAccessSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    accountId?: boolean
+    appId?: boolean
+    resourceId?: boolean
+    parentOwnerId?: boolean
+    role?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    account?: boolean | AccountDefaultArgs<ExtArgs>
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    parentOwner?: boolean | AccountDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["accountAccess"]>
+
+  export type AccountAccessSelectScalar = {
+    id?: boolean
+    accountId?: boolean
+    appId?: boolean
+    resourceId?: boolean
+    parentOwnerId?: boolean
+    role?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AccountAccessOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "appId" | "resourceId" | "parentOwnerId" | "role" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["accountAccess"]>
+  export type AccountAccessInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    account?: boolean | AccountDefaultArgs<ExtArgs>
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    parentOwner?: boolean | AccountDefaultArgs<ExtArgs>
+  }
+  export type AccountAccessIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    account?: boolean | AccountDefaultArgs<ExtArgs>
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    parentOwner?: boolean | AccountDefaultArgs<ExtArgs>
+  }
+  export type AccountAccessIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    account?: boolean | AccountDefaultArgs<ExtArgs>
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    parentOwner?: boolean | AccountDefaultArgs<ExtArgs>
+  }
+
+  export type $AccountAccessPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AccountAccess"
+    objects: {
+      account: Prisma.$AccountPayload<ExtArgs>
+      application: Prisma.$ApplicationPayload<ExtArgs>
+      parentOwner: Prisma.$AccountPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      accountId: string
+      appId: string
+      resourceId: string
+      parentOwnerId: string
+      role: string
+      status: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["accountAccess"]>
+    composites: {}
+  }
+
+  type AccountAccessGetPayload<S extends boolean | null | undefined | AccountAccessDefaultArgs> = $Result.GetResult<Prisma.$AccountAccessPayload, S>
+
+  type AccountAccessCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AccountAccessFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AccountAccessCountAggregateInputType | true
+    }
+
+  export interface AccountAccessDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AccountAccess'], meta: { name: 'AccountAccess' } }
+    /**
+     * Find zero or one AccountAccess that matches the filter.
+     * @param {AccountAccessFindUniqueArgs} args - Arguments to find a AccountAccess
+     * @example
+     * // Get one AccountAccess
+     * const accountAccess = await prisma.accountAccess.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AccountAccessFindUniqueArgs>(args: SelectSubset<T, AccountAccessFindUniqueArgs<ExtArgs>>): Prisma__AccountAccessClient<$Result.GetResult<Prisma.$AccountAccessPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AccountAccess that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AccountAccessFindUniqueOrThrowArgs} args - Arguments to find a AccountAccess
+     * @example
+     * // Get one AccountAccess
+     * const accountAccess = await prisma.accountAccess.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AccountAccessFindUniqueOrThrowArgs>(args: SelectSubset<T, AccountAccessFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AccountAccessClient<$Result.GetResult<Prisma.$AccountAccessPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AccountAccess that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountAccessFindFirstArgs} args - Arguments to find a AccountAccess
+     * @example
+     * // Get one AccountAccess
+     * const accountAccess = await prisma.accountAccess.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AccountAccessFindFirstArgs>(args?: SelectSubset<T, AccountAccessFindFirstArgs<ExtArgs>>): Prisma__AccountAccessClient<$Result.GetResult<Prisma.$AccountAccessPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AccountAccess that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountAccessFindFirstOrThrowArgs} args - Arguments to find a AccountAccess
+     * @example
+     * // Get one AccountAccess
+     * const accountAccess = await prisma.accountAccess.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AccountAccessFindFirstOrThrowArgs>(args?: SelectSubset<T, AccountAccessFindFirstOrThrowArgs<ExtArgs>>): Prisma__AccountAccessClient<$Result.GetResult<Prisma.$AccountAccessPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AccountAccesses that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountAccessFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AccountAccesses
+     * const accountAccesses = await prisma.accountAccess.findMany()
+     * 
+     * // Get first 10 AccountAccesses
+     * const accountAccesses = await prisma.accountAccess.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const accountAccessWithIdOnly = await prisma.accountAccess.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AccountAccessFindManyArgs>(args?: SelectSubset<T, AccountAccessFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountAccessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AccountAccess.
+     * @param {AccountAccessCreateArgs} args - Arguments to create a AccountAccess.
+     * @example
+     * // Create one AccountAccess
+     * const AccountAccess = await prisma.accountAccess.create({
+     *   data: {
+     *     // ... data to create a AccountAccess
+     *   }
+     * })
+     * 
+     */
+    create<T extends AccountAccessCreateArgs>(args: SelectSubset<T, AccountAccessCreateArgs<ExtArgs>>): Prisma__AccountAccessClient<$Result.GetResult<Prisma.$AccountAccessPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AccountAccesses.
+     * @param {AccountAccessCreateManyArgs} args - Arguments to create many AccountAccesses.
+     * @example
+     * // Create many AccountAccesses
+     * const accountAccess = await prisma.accountAccess.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AccountAccessCreateManyArgs>(args?: SelectSubset<T, AccountAccessCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AccountAccesses and returns the data saved in the database.
+     * @param {AccountAccessCreateManyAndReturnArgs} args - Arguments to create many AccountAccesses.
+     * @example
+     * // Create many AccountAccesses
+     * const accountAccess = await prisma.accountAccess.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AccountAccesses and only return the `id`
+     * const accountAccessWithIdOnly = await prisma.accountAccess.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AccountAccessCreateManyAndReturnArgs>(args?: SelectSubset<T, AccountAccessCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountAccessPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AccountAccess.
+     * @param {AccountAccessDeleteArgs} args - Arguments to delete one AccountAccess.
+     * @example
+     * // Delete one AccountAccess
+     * const AccountAccess = await prisma.accountAccess.delete({
+     *   where: {
+     *     // ... filter to delete one AccountAccess
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AccountAccessDeleteArgs>(args: SelectSubset<T, AccountAccessDeleteArgs<ExtArgs>>): Prisma__AccountAccessClient<$Result.GetResult<Prisma.$AccountAccessPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AccountAccess.
+     * @param {AccountAccessUpdateArgs} args - Arguments to update one AccountAccess.
+     * @example
+     * // Update one AccountAccess
+     * const accountAccess = await prisma.accountAccess.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AccountAccessUpdateArgs>(args: SelectSubset<T, AccountAccessUpdateArgs<ExtArgs>>): Prisma__AccountAccessClient<$Result.GetResult<Prisma.$AccountAccessPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AccountAccesses.
+     * @param {AccountAccessDeleteManyArgs} args - Arguments to filter AccountAccesses to delete.
+     * @example
+     * // Delete a few AccountAccesses
+     * const { count } = await prisma.accountAccess.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AccountAccessDeleteManyArgs>(args?: SelectSubset<T, AccountAccessDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AccountAccesses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountAccessUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AccountAccesses
+     * const accountAccess = await prisma.accountAccess.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AccountAccessUpdateManyArgs>(args: SelectSubset<T, AccountAccessUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AccountAccesses and returns the data updated in the database.
+     * @param {AccountAccessUpdateManyAndReturnArgs} args - Arguments to update many AccountAccesses.
+     * @example
+     * // Update many AccountAccesses
+     * const accountAccess = await prisma.accountAccess.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AccountAccesses and only return the `id`
+     * const accountAccessWithIdOnly = await prisma.accountAccess.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AccountAccessUpdateManyAndReturnArgs>(args: SelectSubset<T, AccountAccessUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountAccessPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AccountAccess.
+     * @param {AccountAccessUpsertArgs} args - Arguments to update or create a AccountAccess.
+     * @example
+     * // Update or create a AccountAccess
+     * const accountAccess = await prisma.accountAccess.upsert({
+     *   create: {
+     *     // ... data to create a AccountAccess
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AccountAccess we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AccountAccessUpsertArgs>(args: SelectSubset<T, AccountAccessUpsertArgs<ExtArgs>>): Prisma__AccountAccessClient<$Result.GetResult<Prisma.$AccountAccessPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AccountAccesses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountAccessCountArgs} args - Arguments to filter AccountAccesses to count.
+     * @example
+     * // Count the number of AccountAccesses
+     * const count = await prisma.accountAccess.count({
+     *   where: {
+     *     // ... the filter for the AccountAccesses we want to count
+     *   }
+     * })
+    **/
+    count<T extends AccountAccessCountArgs>(
+      args?: Subset<T, AccountAccessCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AccountAccessCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AccountAccess.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountAccessAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AccountAccessAggregateArgs>(args: Subset<T, AccountAccessAggregateArgs>): Prisma.PrismaPromise<GetAccountAccessAggregateType<T>>
+
+    /**
+     * Group by AccountAccess.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountAccessGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AccountAccessGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AccountAccessGroupByArgs['orderBy'] }
+        : { orderBy?: AccountAccessGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AccountAccessGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAccountAccessGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AccountAccess model
+   */
+  readonly fields: AccountAccessFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AccountAccess.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AccountAccessClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    account<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    application<T extends ApplicationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationDefaultArgs<ExtArgs>>): Prisma__ApplicationClient<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    parentOwner<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AccountAccess model
+   */
+  interface AccountAccessFieldRefs {
+    readonly id: FieldRef<"AccountAccess", 'String'>
+    readonly accountId: FieldRef<"AccountAccess", 'String'>
+    readonly appId: FieldRef<"AccountAccess", 'String'>
+    readonly resourceId: FieldRef<"AccountAccess", 'String'>
+    readonly parentOwnerId: FieldRef<"AccountAccess", 'String'>
+    readonly role: FieldRef<"AccountAccess", 'String'>
+    readonly status: FieldRef<"AccountAccess", 'String'>
+    readonly createdAt: FieldRef<"AccountAccess", 'DateTime'>
+    readonly updatedAt: FieldRef<"AccountAccess", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AccountAccess findUnique
+   */
+  export type AccountAccessFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountAccess
+     */
+    select?: AccountAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountAccess
+     */
+    omit?: AccountAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountAccessInclude<ExtArgs> | null
+    /**
+     * Filter, which AccountAccess to fetch.
+     */
+    where: AccountAccessWhereUniqueInput
+  }
+
+  /**
+   * AccountAccess findUniqueOrThrow
+   */
+  export type AccountAccessFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountAccess
+     */
+    select?: AccountAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountAccess
+     */
+    omit?: AccountAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountAccessInclude<ExtArgs> | null
+    /**
+     * Filter, which AccountAccess to fetch.
+     */
+    where: AccountAccessWhereUniqueInput
+  }
+
+  /**
+   * AccountAccess findFirst
+   */
+  export type AccountAccessFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountAccess
+     */
+    select?: AccountAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountAccess
+     */
+    omit?: AccountAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountAccessInclude<ExtArgs> | null
+    /**
+     * Filter, which AccountAccess to fetch.
+     */
+    where?: AccountAccessWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccountAccesses to fetch.
+     */
+    orderBy?: AccountAccessOrderByWithRelationInput | AccountAccessOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AccountAccesses.
+     */
+    cursor?: AccountAccessWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccountAccesses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccountAccesses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AccountAccesses.
+     */
+    distinct?: AccountAccessScalarFieldEnum | AccountAccessScalarFieldEnum[]
+  }
+
+  /**
+   * AccountAccess findFirstOrThrow
+   */
+  export type AccountAccessFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountAccess
+     */
+    select?: AccountAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountAccess
+     */
+    omit?: AccountAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountAccessInclude<ExtArgs> | null
+    /**
+     * Filter, which AccountAccess to fetch.
+     */
+    where?: AccountAccessWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccountAccesses to fetch.
+     */
+    orderBy?: AccountAccessOrderByWithRelationInput | AccountAccessOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AccountAccesses.
+     */
+    cursor?: AccountAccessWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccountAccesses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccountAccesses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AccountAccesses.
+     */
+    distinct?: AccountAccessScalarFieldEnum | AccountAccessScalarFieldEnum[]
+  }
+
+  /**
+   * AccountAccess findMany
+   */
+  export type AccountAccessFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountAccess
+     */
+    select?: AccountAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountAccess
+     */
+    omit?: AccountAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountAccessInclude<ExtArgs> | null
+    /**
+     * Filter, which AccountAccesses to fetch.
+     */
+    where?: AccountAccessWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccountAccesses to fetch.
+     */
+    orderBy?: AccountAccessOrderByWithRelationInput | AccountAccessOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AccountAccesses.
+     */
+    cursor?: AccountAccessWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccountAccesses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccountAccesses.
+     */
+    skip?: number
+    distinct?: AccountAccessScalarFieldEnum | AccountAccessScalarFieldEnum[]
+  }
+
+  /**
+   * AccountAccess create
+   */
+  export type AccountAccessCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountAccess
+     */
+    select?: AccountAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountAccess
+     */
+    omit?: AccountAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountAccessInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AccountAccess.
+     */
+    data: XOR<AccountAccessCreateInput, AccountAccessUncheckedCreateInput>
+  }
+
+  /**
+   * AccountAccess createMany
+   */
+  export type AccountAccessCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AccountAccesses.
+     */
+    data: AccountAccessCreateManyInput | AccountAccessCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AccountAccess createManyAndReturn
+   */
+  export type AccountAccessCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountAccess
+     */
+    select?: AccountAccessSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountAccess
+     */
+    omit?: AccountAccessOmit<ExtArgs> | null
+    /**
+     * The data used to create many AccountAccesses.
+     */
+    data: AccountAccessCreateManyInput | AccountAccessCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountAccessIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AccountAccess update
+   */
+  export type AccountAccessUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountAccess
+     */
+    select?: AccountAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountAccess
+     */
+    omit?: AccountAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountAccessInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AccountAccess.
+     */
+    data: XOR<AccountAccessUpdateInput, AccountAccessUncheckedUpdateInput>
+    /**
+     * Choose, which AccountAccess to update.
+     */
+    where: AccountAccessWhereUniqueInput
+  }
+
+  /**
+   * AccountAccess updateMany
+   */
+  export type AccountAccessUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AccountAccesses.
+     */
+    data: XOR<AccountAccessUpdateManyMutationInput, AccountAccessUncheckedUpdateManyInput>
+    /**
+     * Filter which AccountAccesses to update
+     */
+    where?: AccountAccessWhereInput
+    /**
+     * Limit how many AccountAccesses to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AccountAccess updateManyAndReturn
+   */
+  export type AccountAccessUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountAccess
+     */
+    select?: AccountAccessSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountAccess
+     */
+    omit?: AccountAccessOmit<ExtArgs> | null
+    /**
+     * The data used to update AccountAccesses.
+     */
+    data: XOR<AccountAccessUpdateManyMutationInput, AccountAccessUncheckedUpdateManyInput>
+    /**
+     * Filter which AccountAccesses to update
+     */
+    where?: AccountAccessWhereInput
+    /**
+     * Limit how many AccountAccesses to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountAccessIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AccountAccess upsert
+   */
+  export type AccountAccessUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountAccess
+     */
+    select?: AccountAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountAccess
+     */
+    omit?: AccountAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountAccessInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AccountAccess to update in case it exists.
+     */
+    where: AccountAccessWhereUniqueInput
+    /**
+     * In case the AccountAccess found by the `where` argument doesn't exist, create a new AccountAccess with this data.
+     */
+    create: XOR<AccountAccessCreateInput, AccountAccessUncheckedCreateInput>
+    /**
+     * In case the AccountAccess was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AccountAccessUpdateInput, AccountAccessUncheckedUpdateInput>
+  }
+
+  /**
+   * AccountAccess delete
+   */
+  export type AccountAccessDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountAccess
+     */
+    select?: AccountAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountAccess
+     */
+    omit?: AccountAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountAccessInclude<ExtArgs> | null
+    /**
+     * Filter which AccountAccess to delete.
+     */
+    where: AccountAccessWhereUniqueInput
+  }
+
+  /**
+   * AccountAccess deleteMany
+   */
+  export type AccountAccessDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AccountAccesses to delete
+     */
+    where?: AccountAccessWhereInput
+    /**
+     * Limit how many AccountAccesses to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AccountAccess without action
+   */
+  export type AccountAccessDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountAccess
+     */
+    select?: AccountAccessSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountAccess
+     */
+    omit?: AccountAccessOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountAccessInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AccessMember
+   */
+
+  export type AggregateAccessMember = {
+    _count: AccessMemberCountAggregateOutputType | null
+    _min: AccessMemberMinAggregateOutputType | null
+    _max: AccessMemberMaxAggregateOutputType | null
+  }
+
+  export type AccessMemberMinAggregateOutputType = {
+    id: string | null
+    parentOwnerId: string | null
+    memberAccountId: string | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AccessMemberMaxAggregateOutputType = {
+    id: string | null
+    parentOwnerId: string | null
+    memberAccountId: string | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AccessMemberCountAggregateOutputType = {
+    id: number
+    parentOwnerId: number
+    memberAccountId: number
+    status: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AccessMemberMinAggregateInputType = {
+    id?: true
+    parentOwnerId?: true
+    memberAccountId?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AccessMemberMaxAggregateInputType = {
+    id?: true
+    parentOwnerId?: true
+    memberAccountId?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AccessMemberCountAggregateInputType = {
+    id?: true
+    parentOwnerId?: true
+    memberAccountId?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AccessMemberAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AccessMember to aggregate.
+     */
+    where?: AccessMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccessMembers to fetch.
+     */
+    orderBy?: AccessMemberOrderByWithRelationInput | AccessMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AccessMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccessMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccessMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AccessMembers
+    **/
+    _count?: true | AccessMemberCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AccessMemberMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AccessMemberMaxAggregateInputType
+  }
+
+  export type GetAccessMemberAggregateType<T extends AccessMemberAggregateArgs> = {
+        [P in keyof T & keyof AggregateAccessMember]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAccessMember[P]>
+      : GetScalarType<T[P], AggregateAccessMember[P]>
+  }
+
+
+
+
+  export type AccessMemberGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AccessMemberWhereInput
+    orderBy?: AccessMemberOrderByWithAggregationInput | AccessMemberOrderByWithAggregationInput[]
+    by: AccessMemberScalarFieldEnum[] | AccessMemberScalarFieldEnum
+    having?: AccessMemberScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AccessMemberCountAggregateInputType | true
+    _min?: AccessMemberMinAggregateInputType
+    _max?: AccessMemberMaxAggregateInputType
+  }
+
+  export type AccessMemberGroupByOutputType = {
+    id: string
+    parentOwnerId: string
+    memberAccountId: string
+    status: string
+    createdAt: Date
+    updatedAt: Date
+    _count: AccessMemberCountAggregateOutputType | null
+    _min: AccessMemberMinAggregateOutputType | null
+    _max: AccessMemberMaxAggregateOutputType | null
+  }
+
+  type GetAccessMemberGroupByPayload<T extends AccessMemberGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AccessMemberGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AccessMemberGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AccessMemberGroupByOutputType[P]>
+            : GetScalarType<T[P], AccessMemberGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AccessMemberSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    parentOwnerId?: boolean
+    memberAccountId?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    parentOwner?: boolean | AccountDefaultArgs<ExtArgs>
+    memberAccount?: boolean | AccountDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["accessMember"]>
+
+  export type AccessMemberSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    parentOwnerId?: boolean
+    memberAccountId?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    parentOwner?: boolean | AccountDefaultArgs<ExtArgs>
+    memberAccount?: boolean | AccountDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["accessMember"]>
+
+  export type AccessMemberSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    parentOwnerId?: boolean
+    memberAccountId?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    parentOwner?: boolean | AccountDefaultArgs<ExtArgs>
+    memberAccount?: boolean | AccountDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["accessMember"]>
+
+  export type AccessMemberSelectScalar = {
+    id?: boolean
+    parentOwnerId?: boolean
+    memberAccountId?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AccessMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "parentOwnerId" | "memberAccountId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["accessMember"]>
+  export type AccessMemberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    parentOwner?: boolean | AccountDefaultArgs<ExtArgs>
+    memberAccount?: boolean | AccountDefaultArgs<ExtArgs>
+  }
+  export type AccessMemberIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    parentOwner?: boolean | AccountDefaultArgs<ExtArgs>
+    memberAccount?: boolean | AccountDefaultArgs<ExtArgs>
+  }
+  export type AccessMemberIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    parentOwner?: boolean | AccountDefaultArgs<ExtArgs>
+    memberAccount?: boolean | AccountDefaultArgs<ExtArgs>
+  }
+
+  export type $AccessMemberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AccessMember"
+    objects: {
+      parentOwner: Prisma.$AccountPayload<ExtArgs>
+      memberAccount: Prisma.$AccountPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      parentOwnerId: string
+      memberAccountId: string
+      status: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["accessMember"]>
+    composites: {}
+  }
+
+  type AccessMemberGetPayload<S extends boolean | null | undefined | AccessMemberDefaultArgs> = $Result.GetResult<Prisma.$AccessMemberPayload, S>
+
+  type AccessMemberCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AccessMemberFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AccessMemberCountAggregateInputType | true
+    }
+
+  export interface AccessMemberDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AccessMember'], meta: { name: 'AccessMember' } }
+    /**
+     * Find zero or one AccessMember that matches the filter.
+     * @param {AccessMemberFindUniqueArgs} args - Arguments to find a AccessMember
+     * @example
+     * // Get one AccessMember
+     * const accessMember = await prisma.accessMember.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AccessMemberFindUniqueArgs>(args: SelectSubset<T, AccessMemberFindUniqueArgs<ExtArgs>>): Prisma__AccessMemberClient<$Result.GetResult<Prisma.$AccessMemberPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AccessMember that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AccessMemberFindUniqueOrThrowArgs} args - Arguments to find a AccessMember
+     * @example
+     * // Get one AccessMember
+     * const accessMember = await prisma.accessMember.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AccessMemberFindUniqueOrThrowArgs>(args: SelectSubset<T, AccessMemberFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AccessMemberClient<$Result.GetResult<Prisma.$AccessMemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AccessMember that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccessMemberFindFirstArgs} args - Arguments to find a AccessMember
+     * @example
+     * // Get one AccessMember
+     * const accessMember = await prisma.accessMember.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AccessMemberFindFirstArgs>(args?: SelectSubset<T, AccessMemberFindFirstArgs<ExtArgs>>): Prisma__AccessMemberClient<$Result.GetResult<Prisma.$AccessMemberPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AccessMember that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccessMemberFindFirstOrThrowArgs} args - Arguments to find a AccessMember
+     * @example
+     * // Get one AccessMember
+     * const accessMember = await prisma.accessMember.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AccessMemberFindFirstOrThrowArgs>(args?: SelectSubset<T, AccessMemberFindFirstOrThrowArgs<ExtArgs>>): Prisma__AccessMemberClient<$Result.GetResult<Prisma.$AccessMemberPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AccessMembers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccessMemberFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AccessMembers
+     * const accessMembers = await prisma.accessMember.findMany()
+     * 
+     * // Get first 10 AccessMembers
+     * const accessMembers = await prisma.accessMember.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const accessMemberWithIdOnly = await prisma.accessMember.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AccessMemberFindManyArgs>(args?: SelectSubset<T, AccessMemberFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccessMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AccessMember.
+     * @param {AccessMemberCreateArgs} args - Arguments to create a AccessMember.
+     * @example
+     * // Create one AccessMember
+     * const AccessMember = await prisma.accessMember.create({
+     *   data: {
+     *     // ... data to create a AccessMember
+     *   }
+     * })
+     * 
+     */
+    create<T extends AccessMemberCreateArgs>(args: SelectSubset<T, AccessMemberCreateArgs<ExtArgs>>): Prisma__AccessMemberClient<$Result.GetResult<Prisma.$AccessMemberPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AccessMembers.
+     * @param {AccessMemberCreateManyArgs} args - Arguments to create many AccessMembers.
+     * @example
+     * // Create many AccessMembers
+     * const accessMember = await prisma.accessMember.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AccessMemberCreateManyArgs>(args?: SelectSubset<T, AccessMemberCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AccessMembers and returns the data saved in the database.
+     * @param {AccessMemberCreateManyAndReturnArgs} args - Arguments to create many AccessMembers.
+     * @example
+     * // Create many AccessMembers
+     * const accessMember = await prisma.accessMember.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AccessMembers and only return the `id`
+     * const accessMemberWithIdOnly = await prisma.accessMember.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AccessMemberCreateManyAndReturnArgs>(args?: SelectSubset<T, AccessMemberCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccessMemberPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AccessMember.
+     * @param {AccessMemberDeleteArgs} args - Arguments to delete one AccessMember.
+     * @example
+     * // Delete one AccessMember
+     * const AccessMember = await prisma.accessMember.delete({
+     *   where: {
+     *     // ... filter to delete one AccessMember
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AccessMemberDeleteArgs>(args: SelectSubset<T, AccessMemberDeleteArgs<ExtArgs>>): Prisma__AccessMemberClient<$Result.GetResult<Prisma.$AccessMemberPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AccessMember.
+     * @param {AccessMemberUpdateArgs} args - Arguments to update one AccessMember.
+     * @example
+     * // Update one AccessMember
+     * const accessMember = await prisma.accessMember.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AccessMemberUpdateArgs>(args: SelectSubset<T, AccessMemberUpdateArgs<ExtArgs>>): Prisma__AccessMemberClient<$Result.GetResult<Prisma.$AccessMemberPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AccessMembers.
+     * @param {AccessMemberDeleteManyArgs} args - Arguments to filter AccessMembers to delete.
+     * @example
+     * // Delete a few AccessMembers
+     * const { count } = await prisma.accessMember.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AccessMemberDeleteManyArgs>(args?: SelectSubset<T, AccessMemberDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AccessMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccessMemberUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AccessMembers
+     * const accessMember = await prisma.accessMember.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AccessMemberUpdateManyArgs>(args: SelectSubset<T, AccessMemberUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AccessMembers and returns the data updated in the database.
+     * @param {AccessMemberUpdateManyAndReturnArgs} args - Arguments to update many AccessMembers.
+     * @example
+     * // Update many AccessMembers
+     * const accessMember = await prisma.accessMember.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AccessMembers and only return the `id`
+     * const accessMemberWithIdOnly = await prisma.accessMember.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AccessMemberUpdateManyAndReturnArgs>(args: SelectSubset<T, AccessMemberUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccessMemberPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AccessMember.
+     * @param {AccessMemberUpsertArgs} args - Arguments to update or create a AccessMember.
+     * @example
+     * // Update or create a AccessMember
+     * const accessMember = await prisma.accessMember.upsert({
+     *   create: {
+     *     // ... data to create a AccessMember
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AccessMember we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AccessMemberUpsertArgs>(args: SelectSubset<T, AccessMemberUpsertArgs<ExtArgs>>): Prisma__AccessMemberClient<$Result.GetResult<Prisma.$AccessMemberPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AccessMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccessMemberCountArgs} args - Arguments to filter AccessMembers to count.
+     * @example
+     * // Count the number of AccessMembers
+     * const count = await prisma.accessMember.count({
+     *   where: {
+     *     // ... the filter for the AccessMembers we want to count
+     *   }
+     * })
+    **/
+    count<T extends AccessMemberCountArgs>(
+      args?: Subset<T, AccessMemberCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AccessMemberCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AccessMember.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccessMemberAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AccessMemberAggregateArgs>(args: Subset<T, AccessMemberAggregateArgs>): Prisma.PrismaPromise<GetAccessMemberAggregateType<T>>
+
+    /**
+     * Group by AccessMember.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccessMemberGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AccessMemberGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AccessMemberGroupByArgs['orderBy'] }
+        : { orderBy?: AccessMemberGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AccessMemberGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAccessMemberGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AccessMember model
+   */
+  readonly fields: AccessMemberFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AccessMember.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AccessMemberClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    parentOwner<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    memberAccount<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AccessMember model
+   */
+  interface AccessMemberFieldRefs {
+    readonly id: FieldRef<"AccessMember", 'String'>
+    readonly parentOwnerId: FieldRef<"AccessMember", 'String'>
+    readonly memberAccountId: FieldRef<"AccessMember", 'String'>
+    readonly status: FieldRef<"AccessMember", 'String'>
+    readonly createdAt: FieldRef<"AccessMember", 'DateTime'>
+    readonly updatedAt: FieldRef<"AccessMember", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AccessMember findUnique
+   */
+  export type AccessMemberFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccessMember
+     */
+    select?: AccessMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccessMember
+     */
+    omit?: AccessMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccessMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which AccessMember to fetch.
+     */
+    where: AccessMemberWhereUniqueInput
+  }
+
+  /**
+   * AccessMember findUniqueOrThrow
+   */
+  export type AccessMemberFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccessMember
+     */
+    select?: AccessMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccessMember
+     */
+    omit?: AccessMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccessMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which AccessMember to fetch.
+     */
+    where: AccessMemberWhereUniqueInput
+  }
+
+  /**
+   * AccessMember findFirst
+   */
+  export type AccessMemberFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccessMember
+     */
+    select?: AccessMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccessMember
+     */
+    omit?: AccessMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccessMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which AccessMember to fetch.
+     */
+    where?: AccessMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccessMembers to fetch.
+     */
+    orderBy?: AccessMemberOrderByWithRelationInput | AccessMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AccessMembers.
+     */
+    cursor?: AccessMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccessMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccessMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AccessMembers.
+     */
+    distinct?: AccessMemberScalarFieldEnum | AccessMemberScalarFieldEnum[]
+  }
+
+  /**
+   * AccessMember findFirstOrThrow
+   */
+  export type AccessMemberFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccessMember
+     */
+    select?: AccessMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccessMember
+     */
+    omit?: AccessMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccessMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which AccessMember to fetch.
+     */
+    where?: AccessMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccessMembers to fetch.
+     */
+    orderBy?: AccessMemberOrderByWithRelationInput | AccessMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AccessMembers.
+     */
+    cursor?: AccessMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccessMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccessMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AccessMembers.
+     */
+    distinct?: AccessMemberScalarFieldEnum | AccessMemberScalarFieldEnum[]
+  }
+
+  /**
+   * AccessMember findMany
+   */
+  export type AccessMemberFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccessMember
+     */
+    select?: AccessMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccessMember
+     */
+    omit?: AccessMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccessMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which AccessMembers to fetch.
+     */
+    where?: AccessMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccessMembers to fetch.
+     */
+    orderBy?: AccessMemberOrderByWithRelationInput | AccessMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AccessMembers.
+     */
+    cursor?: AccessMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccessMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccessMembers.
+     */
+    skip?: number
+    distinct?: AccessMemberScalarFieldEnum | AccessMemberScalarFieldEnum[]
+  }
+
+  /**
+   * AccessMember create
+   */
+  export type AccessMemberCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccessMember
+     */
+    select?: AccessMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccessMember
+     */
+    omit?: AccessMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccessMemberInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AccessMember.
+     */
+    data: XOR<AccessMemberCreateInput, AccessMemberUncheckedCreateInput>
+  }
+
+  /**
+   * AccessMember createMany
+   */
+  export type AccessMemberCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AccessMembers.
+     */
+    data: AccessMemberCreateManyInput | AccessMemberCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AccessMember createManyAndReturn
+   */
+  export type AccessMemberCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccessMember
+     */
+    select?: AccessMemberSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccessMember
+     */
+    omit?: AccessMemberOmit<ExtArgs> | null
+    /**
+     * The data used to create many AccessMembers.
+     */
+    data: AccessMemberCreateManyInput | AccessMemberCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccessMemberIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AccessMember update
+   */
+  export type AccessMemberUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccessMember
+     */
+    select?: AccessMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccessMember
+     */
+    omit?: AccessMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccessMemberInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AccessMember.
+     */
+    data: XOR<AccessMemberUpdateInput, AccessMemberUncheckedUpdateInput>
+    /**
+     * Choose, which AccessMember to update.
+     */
+    where: AccessMemberWhereUniqueInput
+  }
+
+  /**
+   * AccessMember updateMany
+   */
+  export type AccessMemberUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AccessMembers.
+     */
+    data: XOR<AccessMemberUpdateManyMutationInput, AccessMemberUncheckedUpdateManyInput>
+    /**
+     * Filter which AccessMembers to update
+     */
+    where?: AccessMemberWhereInput
+    /**
+     * Limit how many AccessMembers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AccessMember updateManyAndReturn
+   */
+  export type AccessMemberUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccessMember
+     */
+    select?: AccessMemberSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccessMember
+     */
+    omit?: AccessMemberOmit<ExtArgs> | null
+    /**
+     * The data used to update AccessMembers.
+     */
+    data: XOR<AccessMemberUpdateManyMutationInput, AccessMemberUncheckedUpdateManyInput>
+    /**
+     * Filter which AccessMembers to update
+     */
+    where?: AccessMemberWhereInput
+    /**
+     * Limit how many AccessMembers to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccessMemberIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AccessMember upsert
+   */
+  export type AccessMemberUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccessMember
+     */
+    select?: AccessMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccessMember
+     */
+    omit?: AccessMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccessMemberInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AccessMember to update in case it exists.
+     */
+    where: AccessMemberWhereUniqueInput
+    /**
+     * In case the AccessMember found by the `where` argument doesn't exist, create a new AccessMember with this data.
+     */
+    create: XOR<AccessMemberCreateInput, AccessMemberUncheckedCreateInput>
+    /**
+     * In case the AccessMember was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AccessMemberUpdateInput, AccessMemberUncheckedUpdateInput>
+  }
+
+  /**
+   * AccessMember delete
+   */
+  export type AccessMemberDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccessMember
+     */
+    select?: AccessMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccessMember
+     */
+    omit?: AccessMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccessMemberInclude<ExtArgs> | null
+    /**
+     * Filter which AccessMember to delete.
+     */
+    where: AccessMemberWhereUniqueInput
+  }
+
+  /**
+   * AccessMember deleteMany
+   */
+  export type AccessMemberDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AccessMembers to delete
+     */
+    where?: AccessMemberWhereInput
+    /**
+     * Limit how many AccessMembers to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AccessMember without action
+   */
+  export type AccessMemberDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccessMember
+     */
+    select?: AccessMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccessMember
+     */
+    omit?: AccessMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccessMemberInclude<ExtArgs> | null
   }
 
 
@@ -44252,6 +46824,33 @@ export namespace Prisma {
   export type AuthPermissionRecipientScalarFieldEnum = (typeof AuthPermissionRecipientScalarFieldEnum)[keyof typeof AuthPermissionRecipientScalarFieldEnum]
 
 
+  export const AccountAccessScalarFieldEnum: {
+    id: 'id',
+    accountId: 'accountId',
+    appId: 'appId',
+    resourceId: 'resourceId',
+    parentOwnerId: 'parentOwnerId',
+    role: 'role',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AccountAccessScalarFieldEnum = (typeof AccountAccessScalarFieldEnum)[keyof typeof AccountAccessScalarFieldEnum]
+
+
+  export const AccessMemberScalarFieldEnum: {
+    id: 'id',
+    parentOwnerId: 'parentOwnerId',
+    memberAccountId: 'memberAccountId',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AccessMemberScalarFieldEnum = (typeof AccessMemberScalarFieldEnum)[keyof typeof AccessMemberScalarFieldEnum]
+
+
   export const UserAppConnectionScalarFieldEnum: {
     id: 'id',
     accountId: 'accountId',
@@ -44518,6 +47117,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleListRelationFilter
     recipientPermissions?: AuthPermissionRecipientListRelationFilter
     ownerPermissions?: AuthPermissionRecipientListRelationFilter
+    receivedAccountAccess?: AccountAccessListRelationFilter
+    ownedAccountAccess?: AccountAccessListRelationFilter
+    accessMembersOwned?: AccessMemberListRelationFilter
+    accessMemberships?: AccessMemberListRelationFilter
   }
 
   export type AccountOrderByWithRelationInput = {
@@ -44579,6 +47182,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleOrderByRelationAggregateInput
     recipientPermissions?: AuthPermissionRecipientOrderByRelationAggregateInput
     ownerPermissions?: AuthPermissionRecipientOrderByRelationAggregateInput
+    receivedAccountAccess?: AccountAccessOrderByRelationAggregateInput
+    ownedAccountAccess?: AccountAccessOrderByRelationAggregateInput
+    accessMembersOwned?: AccessMemberOrderByRelationAggregateInput
+    accessMemberships?: AccessMemberOrderByRelationAggregateInput
   }
 
   export type AccountWhereUniqueInput = Prisma.AtLeast<{
@@ -44643,6 +47250,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleListRelationFilter
     recipientPermissions?: AuthPermissionRecipientListRelationFilter
     ownerPermissions?: AuthPermissionRecipientListRelationFilter
+    receivedAccountAccess?: AccountAccessListRelationFilter
+    ownedAccountAccess?: AccountAccessListRelationFilter
+    accessMembersOwned?: AccessMemberListRelationFilter
+    accessMemberships?: AccessMemberListRelationFilter
   }, "id">
 
   export type AccountOrderByWithAggregationInput = {
@@ -46317,6 +48928,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalListRelationFilter
     authRoles?: AuthRoleListRelationFilter
     authPermissionRecipients?: AuthPermissionRecipientListRelationFilter
+    accountAccesses?: AccountAccessListRelationFilter
   }
 
   export type ApplicationOrderByWithRelationInput = {
@@ -46339,6 +48951,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalOrderByRelationAggregateInput
     authRoles?: AuthRoleOrderByRelationAggregateInput
     authPermissionRecipients?: AuthPermissionRecipientOrderByRelationAggregateInput
+    accountAccesses?: AccountAccessOrderByRelationAggregateInput
   }
 
   export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
@@ -46364,6 +48977,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalListRelationFilter
     authRoles?: AuthRoleListRelationFilter
     authPermissionRecipients?: AuthPermissionRecipientListRelationFilter
+    accountAccesses?: AccountAccessListRelationFilter
   }, "id">
 
   export type ApplicationOrderByWithAggregationInput = {
@@ -46673,6 +49287,152 @@ export namespace Prisma {
     isPermanent?: BoolWithAggregatesFilter<"AuthPermissionRecipient"> | boolean
     expiresAt?: DateTimeNullableWithAggregatesFilter<"AuthPermissionRecipient"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"AuthPermissionRecipient"> | Date | string
+  }
+
+  export type AccountAccessWhereInput = {
+    AND?: AccountAccessWhereInput | AccountAccessWhereInput[]
+    OR?: AccountAccessWhereInput[]
+    NOT?: AccountAccessWhereInput | AccountAccessWhereInput[]
+    id?: StringFilter<"AccountAccess"> | string
+    accountId?: StringFilter<"AccountAccess"> | string
+    appId?: StringFilter<"AccountAccess"> | string
+    resourceId?: StringFilter<"AccountAccess"> | string
+    parentOwnerId?: StringFilter<"AccountAccess"> | string
+    role?: StringFilter<"AccountAccess"> | string
+    status?: StringFilter<"AccountAccess"> | string
+    createdAt?: DateTimeFilter<"AccountAccess"> | Date | string
+    updatedAt?: DateTimeFilter<"AccountAccess"> | Date | string
+    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
+    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
+    parentOwner?: XOR<AccountScalarRelationFilter, AccountWhereInput>
+  }
+
+  export type AccountAccessOrderByWithRelationInput = {
+    id?: SortOrder
+    accountId?: SortOrder
+    appId?: SortOrder
+    resourceId?: SortOrder
+    parentOwnerId?: SortOrder
+    role?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    account?: AccountOrderByWithRelationInput
+    application?: ApplicationOrderByWithRelationInput
+    parentOwner?: AccountOrderByWithRelationInput
+  }
+
+  export type AccountAccessWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    accountId_appId_resourceId_parentOwnerId?: AccountAccessAccountIdAppIdResourceIdParentOwnerIdCompoundUniqueInput
+    AND?: AccountAccessWhereInput | AccountAccessWhereInput[]
+    OR?: AccountAccessWhereInput[]
+    NOT?: AccountAccessWhereInput | AccountAccessWhereInput[]
+    accountId?: StringFilter<"AccountAccess"> | string
+    appId?: StringFilter<"AccountAccess"> | string
+    resourceId?: StringFilter<"AccountAccess"> | string
+    parentOwnerId?: StringFilter<"AccountAccess"> | string
+    role?: StringFilter<"AccountAccess"> | string
+    status?: StringFilter<"AccountAccess"> | string
+    createdAt?: DateTimeFilter<"AccountAccess"> | Date | string
+    updatedAt?: DateTimeFilter<"AccountAccess"> | Date | string
+    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
+    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
+    parentOwner?: XOR<AccountScalarRelationFilter, AccountWhereInput>
+  }, "id" | "accountId_appId_resourceId_parentOwnerId">
+
+  export type AccountAccessOrderByWithAggregationInput = {
+    id?: SortOrder
+    accountId?: SortOrder
+    appId?: SortOrder
+    resourceId?: SortOrder
+    parentOwnerId?: SortOrder
+    role?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AccountAccessCountOrderByAggregateInput
+    _max?: AccountAccessMaxOrderByAggregateInput
+    _min?: AccountAccessMinOrderByAggregateInput
+  }
+
+  export type AccountAccessScalarWhereWithAggregatesInput = {
+    AND?: AccountAccessScalarWhereWithAggregatesInput | AccountAccessScalarWhereWithAggregatesInput[]
+    OR?: AccountAccessScalarWhereWithAggregatesInput[]
+    NOT?: AccountAccessScalarWhereWithAggregatesInput | AccountAccessScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AccountAccess"> | string
+    accountId?: StringWithAggregatesFilter<"AccountAccess"> | string
+    appId?: StringWithAggregatesFilter<"AccountAccess"> | string
+    resourceId?: StringWithAggregatesFilter<"AccountAccess"> | string
+    parentOwnerId?: StringWithAggregatesFilter<"AccountAccess"> | string
+    role?: StringWithAggregatesFilter<"AccountAccess"> | string
+    status?: StringWithAggregatesFilter<"AccountAccess"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"AccountAccess"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AccountAccess"> | Date | string
+  }
+
+  export type AccessMemberWhereInput = {
+    AND?: AccessMemberWhereInput | AccessMemberWhereInput[]
+    OR?: AccessMemberWhereInput[]
+    NOT?: AccessMemberWhereInput | AccessMemberWhereInput[]
+    id?: StringFilter<"AccessMember"> | string
+    parentOwnerId?: StringFilter<"AccessMember"> | string
+    memberAccountId?: StringFilter<"AccessMember"> | string
+    status?: StringFilter<"AccessMember"> | string
+    createdAt?: DateTimeFilter<"AccessMember"> | Date | string
+    updatedAt?: DateTimeFilter<"AccessMember"> | Date | string
+    parentOwner?: XOR<AccountScalarRelationFilter, AccountWhereInput>
+    memberAccount?: XOR<AccountScalarRelationFilter, AccountWhereInput>
+  }
+
+  export type AccessMemberOrderByWithRelationInput = {
+    id?: SortOrder
+    parentOwnerId?: SortOrder
+    memberAccountId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    parentOwner?: AccountOrderByWithRelationInput
+    memberAccount?: AccountOrderByWithRelationInput
+  }
+
+  export type AccessMemberWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    parentOwnerId_memberAccountId?: AccessMemberParentOwnerIdMemberAccountIdCompoundUniqueInput
+    AND?: AccessMemberWhereInput | AccessMemberWhereInput[]
+    OR?: AccessMemberWhereInput[]
+    NOT?: AccessMemberWhereInput | AccessMemberWhereInput[]
+    parentOwnerId?: StringFilter<"AccessMember"> | string
+    memberAccountId?: StringFilter<"AccessMember"> | string
+    status?: StringFilter<"AccessMember"> | string
+    createdAt?: DateTimeFilter<"AccessMember"> | Date | string
+    updatedAt?: DateTimeFilter<"AccessMember"> | Date | string
+    parentOwner?: XOR<AccountScalarRelationFilter, AccountWhereInput>
+    memberAccount?: XOR<AccountScalarRelationFilter, AccountWhereInput>
+  }, "id" | "parentOwnerId_memberAccountId">
+
+  export type AccessMemberOrderByWithAggregationInput = {
+    id?: SortOrder
+    parentOwnerId?: SortOrder
+    memberAccountId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AccessMemberCountOrderByAggregateInput
+    _max?: AccessMemberMaxOrderByAggregateInput
+    _min?: AccessMemberMinOrderByAggregateInput
+  }
+
+  export type AccessMemberScalarWhereWithAggregatesInput = {
+    AND?: AccessMemberScalarWhereWithAggregatesInput | AccessMemberScalarWhereWithAggregatesInput[]
+    OR?: AccessMemberScalarWhereWithAggregatesInput[]
+    NOT?: AccessMemberScalarWhereWithAggregatesInput | AccessMemberScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AccessMember"> | string
+    parentOwnerId?: StringWithAggregatesFilter<"AccessMember"> | string
+    memberAccountId?: StringWithAggregatesFilter<"AccessMember"> | string
+    status?: StringWithAggregatesFilter<"AccessMember"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"AccessMember"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AccessMember"> | Date | string
   }
 
   export type UserAppConnectionWhereInput = {
@@ -47113,6 +49873,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateInput = {
@@ -47173,6 +49937,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUpdateInput = {
@@ -47233,6 +50001,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateInput = {
@@ -47293,6 +50065,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountCreateManyInput = {
@@ -49126,6 +51902,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
     authRoles?: AuthRoleCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateInput = {
@@ -49148,6 +51925,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
     authRoles?: AuthRoleUncheckedCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUpdateInput = {
@@ -49170,6 +51948,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
     authRoles?: AuthRoleUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateInput = {
@@ -49192,6 +51971,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authRoles?: AuthRoleUncheckedUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationCreateManyInput = {
@@ -49490,6 +52270,148 @@ export namespace Prisma {
     isPermanent?: BoolFieldUpdateOperationsInput | boolean
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccountAccessCreateInput = {
+    id?: string
+    resourceId?: string
+    role: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    account: AccountCreateNestedOneWithoutReceivedAccountAccessInput
+    application: ApplicationCreateNestedOneWithoutAccountAccessesInput
+    parentOwner: AccountCreateNestedOneWithoutOwnedAccountAccessInput
+  }
+
+  export type AccountAccessUncheckedCreateInput = {
+    id?: string
+    accountId: string
+    appId: string
+    resourceId?: string
+    parentOwnerId: string
+    role: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AccountAccessUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    resourceId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    account?: AccountUpdateOneRequiredWithoutReceivedAccountAccessNestedInput
+    application?: ApplicationUpdateOneRequiredWithoutAccountAccessesNestedInput
+    parentOwner?: AccountUpdateOneRequiredWithoutOwnedAccountAccessNestedInput
+  }
+
+  export type AccountAccessUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    appId?: StringFieldUpdateOperationsInput | string
+    resourceId?: StringFieldUpdateOperationsInput | string
+    parentOwnerId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccountAccessCreateManyInput = {
+    id?: string
+    accountId: string
+    appId: string
+    resourceId?: string
+    parentOwnerId: string
+    role: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AccountAccessUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    resourceId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccountAccessUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    appId?: StringFieldUpdateOperationsInput | string
+    resourceId?: StringFieldUpdateOperationsInput | string
+    parentOwnerId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccessMemberCreateInput = {
+    id?: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parentOwner: AccountCreateNestedOneWithoutAccessMembersOwnedInput
+    memberAccount: AccountCreateNestedOneWithoutAccessMembershipsInput
+  }
+
+  export type AccessMemberUncheckedCreateInput = {
+    id?: string
+    parentOwnerId: string
+    memberAccountId: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AccessMemberUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parentOwner?: AccountUpdateOneRequiredWithoutAccessMembersOwnedNestedInput
+    memberAccount?: AccountUpdateOneRequiredWithoutAccessMembershipsNestedInput
+  }
+
+  export type AccessMemberUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    parentOwnerId?: StringFieldUpdateOperationsInput | string
+    memberAccountId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccessMemberCreateManyInput = {
+    id?: string
+    parentOwnerId: string
+    memberAccountId: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AccessMemberUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccessMemberUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    parentOwnerId?: StringFieldUpdateOperationsInput | string
+    memberAccountId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserAppConnectionCreateInput = {
@@ -50101,6 +53023,18 @@ export namespace Prisma {
     none?: AuthPermissionRecipientWhereInput
   }
 
+  export type AccountAccessListRelationFilter = {
+    every?: AccountAccessWhereInput
+    some?: AccountAccessWhereInput
+    none?: AccountAccessWhereInput
+  }
+
+  export type AccessMemberListRelationFilter = {
+    every?: AccessMemberWhereInput
+    some?: AccessMemberWhereInput
+    none?: AccessMemberWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -50207,6 +53141,14 @@ export namespace Prisma {
   }
 
   export type AuthPermissionRecipientOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AccountAccessOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AccessMemberOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -51395,6 +54337,81 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type AccountAccessAccountIdAppIdResourceIdParentOwnerIdCompoundUniqueInput = {
+    accountId: string
+    appId: string
+    resourceId: string
+    parentOwnerId: string
+  }
+
+  export type AccountAccessCountOrderByAggregateInput = {
+    id?: SortOrder
+    accountId?: SortOrder
+    appId?: SortOrder
+    resourceId?: SortOrder
+    parentOwnerId?: SortOrder
+    role?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AccountAccessMaxOrderByAggregateInput = {
+    id?: SortOrder
+    accountId?: SortOrder
+    appId?: SortOrder
+    resourceId?: SortOrder
+    parentOwnerId?: SortOrder
+    role?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AccountAccessMinOrderByAggregateInput = {
+    id?: SortOrder
+    accountId?: SortOrder
+    appId?: SortOrder
+    resourceId?: SortOrder
+    parentOwnerId?: SortOrder
+    role?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AccessMemberParentOwnerIdMemberAccountIdCompoundUniqueInput = {
+    parentOwnerId: string
+    memberAccountId: string
+  }
+
+  export type AccessMemberCountOrderByAggregateInput = {
+    id?: SortOrder
+    parentOwnerId?: SortOrder
+    memberAccountId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AccessMemberMaxOrderByAggregateInput = {
+    id?: SortOrder
+    parentOwnerId?: SortOrder
+    memberAccountId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AccessMemberMinOrderByAggregateInput = {
+    id?: SortOrder
+    parentOwnerId?: SortOrder
+    memberAccountId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type UserAppConnectionAccountIdAppIdCompoundUniqueInput = {
     accountId: string
     appId: string
@@ -51810,6 +54827,34 @@ export namespace Prisma {
     connect?: AuthPermissionRecipientWhereUniqueInput | AuthPermissionRecipientWhereUniqueInput[]
   }
 
+  export type AccountAccessCreateNestedManyWithoutAccountInput = {
+    create?: XOR<AccountAccessCreateWithoutAccountInput, AccountAccessUncheckedCreateWithoutAccountInput> | AccountAccessCreateWithoutAccountInput[] | AccountAccessUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: AccountAccessCreateOrConnectWithoutAccountInput | AccountAccessCreateOrConnectWithoutAccountInput[]
+    createMany?: AccountAccessCreateManyAccountInputEnvelope
+    connect?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+  }
+
+  export type AccountAccessCreateNestedManyWithoutParentOwnerInput = {
+    create?: XOR<AccountAccessCreateWithoutParentOwnerInput, AccountAccessUncheckedCreateWithoutParentOwnerInput> | AccountAccessCreateWithoutParentOwnerInput[] | AccountAccessUncheckedCreateWithoutParentOwnerInput[]
+    connectOrCreate?: AccountAccessCreateOrConnectWithoutParentOwnerInput | AccountAccessCreateOrConnectWithoutParentOwnerInput[]
+    createMany?: AccountAccessCreateManyParentOwnerInputEnvelope
+    connect?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+  }
+
+  export type AccessMemberCreateNestedManyWithoutParentOwnerInput = {
+    create?: XOR<AccessMemberCreateWithoutParentOwnerInput, AccessMemberUncheckedCreateWithoutParentOwnerInput> | AccessMemberCreateWithoutParentOwnerInput[] | AccessMemberUncheckedCreateWithoutParentOwnerInput[]
+    connectOrCreate?: AccessMemberCreateOrConnectWithoutParentOwnerInput | AccessMemberCreateOrConnectWithoutParentOwnerInput[]
+    createMany?: AccessMemberCreateManyParentOwnerInputEnvelope
+    connect?: AccessMemberWhereUniqueInput | AccessMemberWhereUniqueInput[]
+  }
+
+  export type AccessMemberCreateNestedManyWithoutMemberAccountInput = {
+    create?: XOR<AccessMemberCreateWithoutMemberAccountInput, AccessMemberUncheckedCreateWithoutMemberAccountInput> | AccessMemberCreateWithoutMemberAccountInput[] | AccessMemberUncheckedCreateWithoutMemberAccountInput[]
+    connectOrCreate?: AccessMemberCreateOrConnectWithoutMemberAccountInput | AccessMemberCreateOrConnectWithoutMemberAccountInput[]
+    createMany?: AccessMemberCreateManyMemberAccountInputEnvelope
+    connect?: AccessMemberWhereUniqueInput | AccessMemberWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutParentBrandInput = {
     create?: XOR<AccountCreateWithoutParentBrandInput, AccountUncheckedCreateWithoutParentBrandInput> | AccountCreateWithoutParentBrandInput[] | AccountUncheckedCreateWithoutParentBrandInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutParentBrandInput | AccountCreateOrConnectWithoutParentBrandInput[]
@@ -52037,6 +55082,34 @@ export namespace Prisma {
     connectOrCreate?: AuthPermissionRecipientCreateOrConnectWithoutOwnerInput | AuthPermissionRecipientCreateOrConnectWithoutOwnerInput[]
     createMany?: AuthPermissionRecipientCreateManyOwnerInputEnvelope
     connect?: AuthPermissionRecipientWhereUniqueInput | AuthPermissionRecipientWhereUniqueInput[]
+  }
+
+  export type AccountAccessUncheckedCreateNestedManyWithoutAccountInput = {
+    create?: XOR<AccountAccessCreateWithoutAccountInput, AccountAccessUncheckedCreateWithoutAccountInput> | AccountAccessCreateWithoutAccountInput[] | AccountAccessUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: AccountAccessCreateOrConnectWithoutAccountInput | AccountAccessCreateOrConnectWithoutAccountInput[]
+    createMany?: AccountAccessCreateManyAccountInputEnvelope
+    connect?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+  }
+
+  export type AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput = {
+    create?: XOR<AccountAccessCreateWithoutParentOwnerInput, AccountAccessUncheckedCreateWithoutParentOwnerInput> | AccountAccessCreateWithoutParentOwnerInput[] | AccountAccessUncheckedCreateWithoutParentOwnerInput[]
+    connectOrCreate?: AccountAccessCreateOrConnectWithoutParentOwnerInput | AccountAccessCreateOrConnectWithoutParentOwnerInput[]
+    createMany?: AccountAccessCreateManyParentOwnerInputEnvelope
+    connect?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+  }
+
+  export type AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput = {
+    create?: XOR<AccessMemberCreateWithoutParentOwnerInput, AccessMemberUncheckedCreateWithoutParentOwnerInput> | AccessMemberCreateWithoutParentOwnerInput[] | AccessMemberUncheckedCreateWithoutParentOwnerInput[]
+    connectOrCreate?: AccessMemberCreateOrConnectWithoutParentOwnerInput | AccessMemberCreateOrConnectWithoutParentOwnerInput[]
+    createMany?: AccessMemberCreateManyParentOwnerInputEnvelope
+    connect?: AccessMemberWhereUniqueInput | AccessMemberWhereUniqueInput[]
+  }
+
+  export type AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput = {
+    create?: XOR<AccessMemberCreateWithoutMemberAccountInput, AccessMemberUncheckedCreateWithoutMemberAccountInput> | AccessMemberCreateWithoutMemberAccountInput[] | AccessMemberUncheckedCreateWithoutMemberAccountInput[]
+    connectOrCreate?: AccessMemberCreateOrConnectWithoutMemberAccountInput | AccessMemberCreateOrConnectWithoutMemberAccountInput[]
+    createMany?: AccessMemberCreateManyMemberAccountInputEnvelope
+    connect?: AccessMemberWhereUniqueInput | AccessMemberWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -52523,6 +55596,62 @@ export namespace Prisma {
     deleteMany?: AuthPermissionRecipientScalarWhereInput | AuthPermissionRecipientScalarWhereInput[]
   }
 
+  export type AccountAccessUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<AccountAccessCreateWithoutAccountInput, AccountAccessUncheckedCreateWithoutAccountInput> | AccountAccessCreateWithoutAccountInput[] | AccountAccessUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: AccountAccessCreateOrConnectWithoutAccountInput | AccountAccessCreateOrConnectWithoutAccountInput[]
+    upsert?: AccountAccessUpsertWithWhereUniqueWithoutAccountInput | AccountAccessUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: AccountAccessCreateManyAccountInputEnvelope
+    set?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    disconnect?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    delete?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    connect?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    update?: AccountAccessUpdateWithWhereUniqueWithoutAccountInput | AccountAccessUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: AccountAccessUpdateManyWithWhereWithoutAccountInput | AccountAccessUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: AccountAccessScalarWhereInput | AccountAccessScalarWhereInput[]
+  }
+
+  export type AccountAccessUpdateManyWithoutParentOwnerNestedInput = {
+    create?: XOR<AccountAccessCreateWithoutParentOwnerInput, AccountAccessUncheckedCreateWithoutParentOwnerInput> | AccountAccessCreateWithoutParentOwnerInput[] | AccountAccessUncheckedCreateWithoutParentOwnerInput[]
+    connectOrCreate?: AccountAccessCreateOrConnectWithoutParentOwnerInput | AccountAccessCreateOrConnectWithoutParentOwnerInput[]
+    upsert?: AccountAccessUpsertWithWhereUniqueWithoutParentOwnerInput | AccountAccessUpsertWithWhereUniqueWithoutParentOwnerInput[]
+    createMany?: AccountAccessCreateManyParentOwnerInputEnvelope
+    set?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    disconnect?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    delete?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    connect?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    update?: AccountAccessUpdateWithWhereUniqueWithoutParentOwnerInput | AccountAccessUpdateWithWhereUniqueWithoutParentOwnerInput[]
+    updateMany?: AccountAccessUpdateManyWithWhereWithoutParentOwnerInput | AccountAccessUpdateManyWithWhereWithoutParentOwnerInput[]
+    deleteMany?: AccountAccessScalarWhereInput | AccountAccessScalarWhereInput[]
+  }
+
+  export type AccessMemberUpdateManyWithoutParentOwnerNestedInput = {
+    create?: XOR<AccessMemberCreateWithoutParentOwnerInput, AccessMemberUncheckedCreateWithoutParentOwnerInput> | AccessMemberCreateWithoutParentOwnerInput[] | AccessMemberUncheckedCreateWithoutParentOwnerInput[]
+    connectOrCreate?: AccessMemberCreateOrConnectWithoutParentOwnerInput | AccessMemberCreateOrConnectWithoutParentOwnerInput[]
+    upsert?: AccessMemberUpsertWithWhereUniqueWithoutParentOwnerInput | AccessMemberUpsertWithWhereUniqueWithoutParentOwnerInput[]
+    createMany?: AccessMemberCreateManyParentOwnerInputEnvelope
+    set?: AccessMemberWhereUniqueInput | AccessMemberWhereUniqueInput[]
+    disconnect?: AccessMemberWhereUniqueInput | AccessMemberWhereUniqueInput[]
+    delete?: AccessMemberWhereUniqueInput | AccessMemberWhereUniqueInput[]
+    connect?: AccessMemberWhereUniqueInput | AccessMemberWhereUniqueInput[]
+    update?: AccessMemberUpdateWithWhereUniqueWithoutParentOwnerInput | AccessMemberUpdateWithWhereUniqueWithoutParentOwnerInput[]
+    updateMany?: AccessMemberUpdateManyWithWhereWithoutParentOwnerInput | AccessMemberUpdateManyWithWhereWithoutParentOwnerInput[]
+    deleteMany?: AccessMemberScalarWhereInput | AccessMemberScalarWhereInput[]
+  }
+
+  export type AccessMemberUpdateManyWithoutMemberAccountNestedInput = {
+    create?: XOR<AccessMemberCreateWithoutMemberAccountInput, AccessMemberUncheckedCreateWithoutMemberAccountInput> | AccessMemberCreateWithoutMemberAccountInput[] | AccessMemberUncheckedCreateWithoutMemberAccountInput[]
+    connectOrCreate?: AccessMemberCreateOrConnectWithoutMemberAccountInput | AccessMemberCreateOrConnectWithoutMemberAccountInput[]
+    upsert?: AccessMemberUpsertWithWhereUniqueWithoutMemberAccountInput | AccessMemberUpsertWithWhereUniqueWithoutMemberAccountInput[]
+    createMany?: AccessMemberCreateManyMemberAccountInputEnvelope
+    set?: AccessMemberWhereUniqueInput | AccessMemberWhereUniqueInput[]
+    disconnect?: AccessMemberWhereUniqueInput | AccessMemberWhereUniqueInput[]
+    delete?: AccessMemberWhereUniqueInput | AccessMemberWhereUniqueInput[]
+    connect?: AccessMemberWhereUniqueInput | AccessMemberWhereUniqueInput[]
+    update?: AccessMemberUpdateWithWhereUniqueWithoutMemberAccountInput | AccessMemberUpdateWithWhereUniqueWithoutMemberAccountInput[]
+    updateMany?: AccessMemberUpdateManyWithWhereWithoutMemberAccountInput | AccessMemberUpdateManyWithWhereWithoutMemberAccountInput[]
+    deleteMany?: AccessMemberScalarWhereInput | AccessMemberScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutParentBrandNestedInput = {
     create?: XOR<AccountCreateWithoutParentBrandInput, AccountUncheckedCreateWithoutParentBrandInput> | AccountCreateWithoutParentBrandInput[] | AccountUncheckedCreateWithoutParentBrandInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutParentBrandInput | AccountCreateOrConnectWithoutParentBrandInput[]
@@ -52975,6 +56104,62 @@ export namespace Prisma {
     update?: AuthPermissionRecipientUpdateWithWhereUniqueWithoutOwnerInput | AuthPermissionRecipientUpdateWithWhereUniqueWithoutOwnerInput[]
     updateMany?: AuthPermissionRecipientUpdateManyWithWhereWithoutOwnerInput | AuthPermissionRecipientUpdateManyWithWhereWithoutOwnerInput[]
     deleteMany?: AuthPermissionRecipientScalarWhereInput | AuthPermissionRecipientScalarWhereInput[]
+  }
+
+  export type AccountAccessUncheckedUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<AccountAccessCreateWithoutAccountInput, AccountAccessUncheckedCreateWithoutAccountInput> | AccountAccessCreateWithoutAccountInput[] | AccountAccessUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: AccountAccessCreateOrConnectWithoutAccountInput | AccountAccessCreateOrConnectWithoutAccountInput[]
+    upsert?: AccountAccessUpsertWithWhereUniqueWithoutAccountInput | AccountAccessUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: AccountAccessCreateManyAccountInputEnvelope
+    set?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    disconnect?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    delete?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    connect?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    update?: AccountAccessUpdateWithWhereUniqueWithoutAccountInput | AccountAccessUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: AccountAccessUpdateManyWithWhereWithoutAccountInput | AccountAccessUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: AccountAccessScalarWhereInput | AccountAccessScalarWhereInput[]
+  }
+
+  export type AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput = {
+    create?: XOR<AccountAccessCreateWithoutParentOwnerInput, AccountAccessUncheckedCreateWithoutParentOwnerInput> | AccountAccessCreateWithoutParentOwnerInput[] | AccountAccessUncheckedCreateWithoutParentOwnerInput[]
+    connectOrCreate?: AccountAccessCreateOrConnectWithoutParentOwnerInput | AccountAccessCreateOrConnectWithoutParentOwnerInput[]
+    upsert?: AccountAccessUpsertWithWhereUniqueWithoutParentOwnerInput | AccountAccessUpsertWithWhereUniqueWithoutParentOwnerInput[]
+    createMany?: AccountAccessCreateManyParentOwnerInputEnvelope
+    set?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    disconnect?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    delete?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    connect?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    update?: AccountAccessUpdateWithWhereUniqueWithoutParentOwnerInput | AccountAccessUpdateWithWhereUniqueWithoutParentOwnerInput[]
+    updateMany?: AccountAccessUpdateManyWithWhereWithoutParentOwnerInput | AccountAccessUpdateManyWithWhereWithoutParentOwnerInput[]
+    deleteMany?: AccountAccessScalarWhereInput | AccountAccessScalarWhereInput[]
+  }
+
+  export type AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput = {
+    create?: XOR<AccessMemberCreateWithoutParentOwnerInput, AccessMemberUncheckedCreateWithoutParentOwnerInput> | AccessMemberCreateWithoutParentOwnerInput[] | AccessMemberUncheckedCreateWithoutParentOwnerInput[]
+    connectOrCreate?: AccessMemberCreateOrConnectWithoutParentOwnerInput | AccessMemberCreateOrConnectWithoutParentOwnerInput[]
+    upsert?: AccessMemberUpsertWithWhereUniqueWithoutParentOwnerInput | AccessMemberUpsertWithWhereUniqueWithoutParentOwnerInput[]
+    createMany?: AccessMemberCreateManyParentOwnerInputEnvelope
+    set?: AccessMemberWhereUniqueInput | AccessMemberWhereUniqueInput[]
+    disconnect?: AccessMemberWhereUniqueInput | AccessMemberWhereUniqueInput[]
+    delete?: AccessMemberWhereUniqueInput | AccessMemberWhereUniqueInput[]
+    connect?: AccessMemberWhereUniqueInput | AccessMemberWhereUniqueInput[]
+    update?: AccessMemberUpdateWithWhereUniqueWithoutParentOwnerInput | AccessMemberUpdateWithWhereUniqueWithoutParentOwnerInput[]
+    updateMany?: AccessMemberUpdateManyWithWhereWithoutParentOwnerInput | AccessMemberUpdateManyWithWhereWithoutParentOwnerInput[]
+    deleteMany?: AccessMemberScalarWhereInput | AccessMemberScalarWhereInput[]
+  }
+
+  export type AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput = {
+    create?: XOR<AccessMemberCreateWithoutMemberAccountInput, AccessMemberUncheckedCreateWithoutMemberAccountInput> | AccessMemberCreateWithoutMemberAccountInput[] | AccessMemberUncheckedCreateWithoutMemberAccountInput[]
+    connectOrCreate?: AccessMemberCreateOrConnectWithoutMemberAccountInput | AccessMemberCreateOrConnectWithoutMemberAccountInput[]
+    upsert?: AccessMemberUpsertWithWhereUniqueWithoutMemberAccountInput | AccessMemberUpsertWithWhereUniqueWithoutMemberAccountInput[]
+    createMany?: AccessMemberCreateManyMemberAccountInputEnvelope
+    set?: AccessMemberWhereUniqueInput | AccessMemberWhereUniqueInput[]
+    disconnect?: AccessMemberWhereUniqueInput | AccessMemberWhereUniqueInput[]
+    delete?: AccessMemberWhereUniqueInput | AccessMemberWhereUniqueInput[]
+    connect?: AccessMemberWhereUniqueInput | AccessMemberWhereUniqueInput[]
+    update?: AccessMemberUpdateWithWhereUniqueWithoutMemberAccountInput | AccessMemberUpdateWithWhereUniqueWithoutMemberAccountInput[]
+    updateMany?: AccessMemberUpdateManyWithWhereWithoutMemberAccountInput | AccessMemberUpdateManyWithWhereWithoutMemberAccountInput[]
+    deleteMany?: AccessMemberScalarWhereInput | AccessMemberScalarWhereInput[]
   }
 
   export type AccountCreateNestedOneWithoutTotpInput = {
@@ -53452,6 +56637,13 @@ export namespace Prisma {
     connect?: AuthPermissionRecipientWhereUniqueInput | AuthPermissionRecipientWhereUniqueInput[]
   }
 
+  export type AccountAccessCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<AccountAccessCreateWithoutApplicationInput, AccountAccessUncheckedCreateWithoutApplicationInput> | AccountAccessCreateWithoutApplicationInput[] | AccountAccessUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: AccountAccessCreateOrConnectWithoutApplicationInput | AccountAccessCreateOrConnectWithoutApplicationInput[]
+    createMany?: AccountAccessCreateManyApplicationInputEnvelope
+    connect?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+  }
+
   export type UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput = {
     create?: XOR<UserAppConnectionCreateWithoutApplicationInput, UserAppConnectionUncheckedCreateWithoutApplicationInput> | UserAppConnectionCreateWithoutApplicationInput[] | UserAppConnectionUncheckedCreateWithoutApplicationInput[]
     connectOrCreate?: UserAppConnectionCreateOrConnectWithoutApplicationInput | UserAppConnectionCreateOrConnectWithoutApplicationInput[]
@@ -53520,6 +56712,13 @@ export namespace Prisma {
     connectOrCreate?: AuthPermissionRecipientCreateOrConnectWithoutApplicationInput | AuthPermissionRecipientCreateOrConnectWithoutApplicationInput[]
     createMany?: AuthPermissionRecipientCreateManyApplicationInputEnvelope
     connect?: AuthPermissionRecipientWhereUniqueInput | AuthPermissionRecipientWhereUniqueInput[]
+  }
+
+  export type AccountAccessUncheckedCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<AccountAccessCreateWithoutApplicationInput, AccountAccessUncheckedCreateWithoutApplicationInput> | AccountAccessCreateWithoutApplicationInput[] | AccountAccessUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: AccountAccessCreateOrConnectWithoutApplicationInput | AccountAccessCreateOrConnectWithoutApplicationInput[]
+    createMany?: AccountAccessCreateManyApplicationInputEnvelope
+    connect?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
   }
 
   export type UserAppConnectionUpdateManyWithoutApplicationNestedInput = {
@@ -53662,6 +56861,20 @@ export namespace Prisma {
     deleteMany?: AuthPermissionRecipientScalarWhereInput | AuthPermissionRecipientScalarWhereInput[]
   }
 
+  export type AccountAccessUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<AccountAccessCreateWithoutApplicationInput, AccountAccessUncheckedCreateWithoutApplicationInput> | AccountAccessCreateWithoutApplicationInput[] | AccountAccessUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: AccountAccessCreateOrConnectWithoutApplicationInput | AccountAccessCreateOrConnectWithoutApplicationInput[]
+    upsert?: AccountAccessUpsertWithWhereUniqueWithoutApplicationInput | AccountAccessUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: AccountAccessCreateManyApplicationInputEnvelope
+    set?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    disconnect?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    delete?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    connect?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    update?: AccountAccessUpdateWithWhereUniqueWithoutApplicationInput | AccountAccessUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: AccountAccessUpdateManyWithWhereWithoutApplicationInput | AccountAccessUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: AccountAccessScalarWhereInput | AccountAccessScalarWhereInput[]
+  }
+
   export type UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput = {
     create?: XOR<UserAppConnectionCreateWithoutApplicationInput, UserAppConnectionUncheckedCreateWithoutApplicationInput> | UserAppConnectionCreateWithoutApplicationInput[] | UserAppConnectionUncheckedCreateWithoutApplicationInput[]
     connectOrCreate?: UserAppConnectionCreateOrConnectWithoutApplicationInput | UserAppConnectionCreateOrConnectWithoutApplicationInput[]
@@ -53800,6 +57013,20 @@ export namespace Prisma {
     update?: AuthPermissionRecipientUpdateWithWhereUniqueWithoutApplicationInput | AuthPermissionRecipientUpdateWithWhereUniqueWithoutApplicationInput[]
     updateMany?: AuthPermissionRecipientUpdateManyWithWhereWithoutApplicationInput | AuthPermissionRecipientUpdateManyWithWhereWithoutApplicationInput[]
     deleteMany?: AuthPermissionRecipientScalarWhereInput | AuthPermissionRecipientScalarWhereInput[]
+  }
+
+  export type AccountAccessUncheckedUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<AccountAccessCreateWithoutApplicationInput, AccountAccessUncheckedCreateWithoutApplicationInput> | AccountAccessCreateWithoutApplicationInput[] | AccountAccessUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: AccountAccessCreateOrConnectWithoutApplicationInput | AccountAccessCreateOrConnectWithoutApplicationInput[]
+    upsert?: AccountAccessUpsertWithWhereUniqueWithoutApplicationInput | AccountAccessUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: AccountAccessCreateManyApplicationInputEnvelope
+    set?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    disconnect?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    delete?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    connect?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+    update?: AccountAccessUpdateWithWhereUniqueWithoutApplicationInput | AccountAccessUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: AccountAccessUpdateManyWithWhereWithoutApplicationInput | AccountAccessUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: AccountAccessScalarWhereInput | AccountAccessScalarWhereInput[]
   }
 
   export type ApplicationCreateNestedOneWithoutAuthTeamsInput = {
@@ -53954,6 +57181,76 @@ export namespace Prisma {
     upsert?: AccountUpsertWithoutOwnerPermissionsInput
     connect?: AccountWhereUniqueInput
     update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutOwnerPermissionsInput, AccountUpdateWithoutOwnerPermissionsInput>, AccountUncheckedUpdateWithoutOwnerPermissionsInput>
+  }
+
+  export type AccountCreateNestedOneWithoutReceivedAccountAccessInput = {
+    create?: XOR<AccountCreateWithoutReceivedAccountAccessInput, AccountUncheckedCreateWithoutReceivedAccountAccessInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutReceivedAccountAccessInput
+    connect?: AccountWhereUniqueInput
+  }
+
+  export type ApplicationCreateNestedOneWithoutAccountAccessesInput = {
+    create?: XOR<ApplicationCreateWithoutAccountAccessesInput, ApplicationUncheckedCreateWithoutAccountAccessesInput>
+    connectOrCreate?: ApplicationCreateOrConnectWithoutAccountAccessesInput
+    connect?: ApplicationWhereUniqueInput
+  }
+
+  export type AccountCreateNestedOneWithoutOwnedAccountAccessInput = {
+    create?: XOR<AccountCreateWithoutOwnedAccountAccessInput, AccountUncheckedCreateWithoutOwnedAccountAccessInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutOwnedAccountAccessInput
+    connect?: AccountWhereUniqueInput
+  }
+
+  export type AccountUpdateOneRequiredWithoutReceivedAccountAccessNestedInput = {
+    create?: XOR<AccountCreateWithoutReceivedAccountAccessInput, AccountUncheckedCreateWithoutReceivedAccountAccessInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutReceivedAccountAccessInput
+    upsert?: AccountUpsertWithoutReceivedAccountAccessInput
+    connect?: AccountWhereUniqueInput
+    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutReceivedAccountAccessInput, AccountUpdateWithoutReceivedAccountAccessInput>, AccountUncheckedUpdateWithoutReceivedAccountAccessInput>
+  }
+
+  export type ApplicationUpdateOneRequiredWithoutAccountAccessesNestedInput = {
+    create?: XOR<ApplicationCreateWithoutAccountAccessesInput, ApplicationUncheckedCreateWithoutAccountAccessesInput>
+    connectOrCreate?: ApplicationCreateOrConnectWithoutAccountAccessesInput
+    upsert?: ApplicationUpsertWithoutAccountAccessesInput
+    connect?: ApplicationWhereUniqueInput
+    update?: XOR<XOR<ApplicationUpdateToOneWithWhereWithoutAccountAccessesInput, ApplicationUpdateWithoutAccountAccessesInput>, ApplicationUncheckedUpdateWithoutAccountAccessesInput>
+  }
+
+  export type AccountUpdateOneRequiredWithoutOwnedAccountAccessNestedInput = {
+    create?: XOR<AccountCreateWithoutOwnedAccountAccessInput, AccountUncheckedCreateWithoutOwnedAccountAccessInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutOwnedAccountAccessInput
+    upsert?: AccountUpsertWithoutOwnedAccountAccessInput
+    connect?: AccountWhereUniqueInput
+    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutOwnedAccountAccessInput, AccountUpdateWithoutOwnedAccountAccessInput>, AccountUncheckedUpdateWithoutOwnedAccountAccessInput>
+  }
+
+  export type AccountCreateNestedOneWithoutAccessMembersOwnedInput = {
+    create?: XOR<AccountCreateWithoutAccessMembersOwnedInput, AccountUncheckedCreateWithoutAccessMembersOwnedInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutAccessMembersOwnedInput
+    connect?: AccountWhereUniqueInput
+  }
+
+  export type AccountCreateNestedOneWithoutAccessMembershipsInput = {
+    create?: XOR<AccountCreateWithoutAccessMembershipsInput, AccountUncheckedCreateWithoutAccessMembershipsInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutAccessMembershipsInput
+    connect?: AccountWhereUniqueInput
+  }
+
+  export type AccountUpdateOneRequiredWithoutAccessMembersOwnedNestedInput = {
+    create?: XOR<AccountCreateWithoutAccessMembersOwnedInput, AccountUncheckedCreateWithoutAccessMembersOwnedInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutAccessMembersOwnedInput
+    upsert?: AccountUpsertWithoutAccessMembersOwnedInput
+    connect?: AccountWhereUniqueInput
+    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutAccessMembersOwnedInput, AccountUpdateWithoutAccessMembersOwnedInput>, AccountUncheckedUpdateWithoutAccessMembersOwnedInput>
+  }
+
+  export type AccountUpdateOneRequiredWithoutAccessMembershipsNestedInput = {
+    create?: XOR<AccountCreateWithoutAccessMembershipsInput, AccountUncheckedCreateWithoutAccessMembershipsInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutAccessMembershipsInput
+    upsert?: AccountUpsertWithoutAccessMembershipsInput
+    connect?: AccountWhereUniqueInput
+    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutAccessMembershipsInput, AccountUpdateWithoutAccessMembershipsInput>, AccountUncheckedUpdateWithoutAccessMembershipsInput>
   }
 
   export type AccountCreateNestedOneWithoutAppConnectionsInput = {
@@ -54415,6 +57712,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutBranchesInput = {
@@ -54474,6 +57775,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutBranchesInput = {
@@ -54538,6 +57843,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutParentBrandInput = {
@@ -54597,6 +57906,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutParentBrandInput = {
@@ -55557,6 +58870,122 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type AccountAccessCreateWithoutAccountInput = {
+    id?: string
+    resourceId?: string
+    role: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    application: ApplicationCreateNestedOneWithoutAccountAccessesInput
+    parentOwner: AccountCreateNestedOneWithoutOwnedAccountAccessInput
+  }
+
+  export type AccountAccessUncheckedCreateWithoutAccountInput = {
+    id?: string
+    appId: string
+    resourceId?: string
+    parentOwnerId: string
+    role: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AccountAccessCreateOrConnectWithoutAccountInput = {
+    where: AccountAccessWhereUniqueInput
+    create: XOR<AccountAccessCreateWithoutAccountInput, AccountAccessUncheckedCreateWithoutAccountInput>
+  }
+
+  export type AccountAccessCreateManyAccountInputEnvelope = {
+    data: AccountAccessCreateManyAccountInput | AccountAccessCreateManyAccountInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AccountAccessCreateWithoutParentOwnerInput = {
+    id?: string
+    resourceId?: string
+    role: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    account: AccountCreateNestedOneWithoutReceivedAccountAccessInput
+    application: ApplicationCreateNestedOneWithoutAccountAccessesInput
+  }
+
+  export type AccountAccessUncheckedCreateWithoutParentOwnerInput = {
+    id?: string
+    accountId: string
+    appId: string
+    resourceId?: string
+    role: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AccountAccessCreateOrConnectWithoutParentOwnerInput = {
+    where: AccountAccessWhereUniqueInput
+    create: XOR<AccountAccessCreateWithoutParentOwnerInput, AccountAccessUncheckedCreateWithoutParentOwnerInput>
+  }
+
+  export type AccountAccessCreateManyParentOwnerInputEnvelope = {
+    data: AccountAccessCreateManyParentOwnerInput | AccountAccessCreateManyParentOwnerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AccessMemberCreateWithoutParentOwnerInput = {
+    id?: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    memberAccount: AccountCreateNestedOneWithoutAccessMembershipsInput
+  }
+
+  export type AccessMemberUncheckedCreateWithoutParentOwnerInput = {
+    id?: string
+    memberAccountId: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AccessMemberCreateOrConnectWithoutParentOwnerInput = {
+    where: AccessMemberWhereUniqueInput
+    create: XOR<AccessMemberCreateWithoutParentOwnerInput, AccessMemberUncheckedCreateWithoutParentOwnerInput>
+  }
+
+  export type AccessMemberCreateManyParentOwnerInputEnvelope = {
+    data: AccessMemberCreateManyParentOwnerInput | AccessMemberCreateManyParentOwnerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AccessMemberCreateWithoutMemberAccountInput = {
+    id?: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parentOwner: AccountCreateNestedOneWithoutAccessMembersOwnedInput
+  }
+
+  export type AccessMemberUncheckedCreateWithoutMemberAccountInput = {
+    id?: string
+    parentOwnerId: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AccessMemberCreateOrConnectWithoutMemberAccountInput = {
+    where: AccessMemberWhereUniqueInput
+    create: XOR<AccessMemberCreateWithoutMemberAccountInput, AccessMemberUncheckedCreateWithoutMemberAccountInput>
+  }
+
+  export type AccessMemberCreateManyMemberAccountInputEnvelope = {
+    data: AccessMemberCreateManyMemberAccountInput | AccessMemberCreateManyMemberAccountInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AccountUpsertWithoutBranchesInput = {
     update: XOR<AccountUpdateWithoutBranchesInput, AccountUncheckedUpdateWithoutBranchesInput>
     create: XOR<AccountCreateWithoutBranchesInput, AccountUncheckedCreateWithoutBranchesInput>
@@ -55625,6 +59054,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutBranchesInput = {
@@ -55684,6 +59117,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUpsertWithWhereUniqueWithoutParentBrandInput = {
@@ -56603,6 +60040,97 @@ export namespace Prisma {
     data: XOR<AuthPermissionRecipientUpdateManyMutationInput, AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerInput>
   }
 
+  export type AccountAccessUpsertWithWhereUniqueWithoutAccountInput = {
+    where: AccountAccessWhereUniqueInput
+    update: XOR<AccountAccessUpdateWithoutAccountInput, AccountAccessUncheckedUpdateWithoutAccountInput>
+    create: XOR<AccountAccessCreateWithoutAccountInput, AccountAccessUncheckedCreateWithoutAccountInput>
+  }
+
+  export type AccountAccessUpdateWithWhereUniqueWithoutAccountInput = {
+    where: AccountAccessWhereUniqueInput
+    data: XOR<AccountAccessUpdateWithoutAccountInput, AccountAccessUncheckedUpdateWithoutAccountInput>
+  }
+
+  export type AccountAccessUpdateManyWithWhereWithoutAccountInput = {
+    where: AccountAccessScalarWhereInput
+    data: XOR<AccountAccessUpdateManyMutationInput, AccountAccessUncheckedUpdateManyWithoutAccountInput>
+  }
+
+  export type AccountAccessScalarWhereInput = {
+    AND?: AccountAccessScalarWhereInput | AccountAccessScalarWhereInput[]
+    OR?: AccountAccessScalarWhereInput[]
+    NOT?: AccountAccessScalarWhereInput | AccountAccessScalarWhereInput[]
+    id?: StringFilter<"AccountAccess"> | string
+    accountId?: StringFilter<"AccountAccess"> | string
+    appId?: StringFilter<"AccountAccess"> | string
+    resourceId?: StringFilter<"AccountAccess"> | string
+    parentOwnerId?: StringFilter<"AccountAccess"> | string
+    role?: StringFilter<"AccountAccess"> | string
+    status?: StringFilter<"AccountAccess"> | string
+    createdAt?: DateTimeFilter<"AccountAccess"> | Date | string
+    updatedAt?: DateTimeFilter<"AccountAccess"> | Date | string
+  }
+
+  export type AccountAccessUpsertWithWhereUniqueWithoutParentOwnerInput = {
+    where: AccountAccessWhereUniqueInput
+    update: XOR<AccountAccessUpdateWithoutParentOwnerInput, AccountAccessUncheckedUpdateWithoutParentOwnerInput>
+    create: XOR<AccountAccessCreateWithoutParentOwnerInput, AccountAccessUncheckedCreateWithoutParentOwnerInput>
+  }
+
+  export type AccountAccessUpdateWithWhereUniqueWithoutParentOwnerInput = {
+    where: AccountAccessWhereUniqueInput
+    data: XOR<AccountAccessUpdateWithoutParentOwnerInput, AccountAccessUncheckedUpdateWithoutParentOwnerInput>
+  }
+
+  export type AccountAccessUpdateManyWithWhereWithoutParentOwnerInput = {
+    where: AccountAccessScalarWhereInput
+    data: XOR<AccountAccessUpdateManyMutationInput, AccountAccessUncheckedUpdateManyWithoutParentOwnerInput>
+  }
+
+  export type AccessMemberUpsertWithWhereUniqueWithoutParentOwnerInput = {
+    where: AccessMemberWhereUniqueInput
+    update: XOR<AccessMemberUpdateWithoutParentOwnerInput, AccessMemberUncheckedUpdateWithoutParentOwnerInput>
+    create: XOR<AccessMemberCreateWithoutParentOwnerInput, AccessMemberUncheckedCreateWithoutParentOwnerInput>
+  }
+
+  export type AccessMemberUpdateWithWhereUniqueWithoutParentOwnerInput = {
+    where: AccessMemberWhereUniqueInput
+    data: XOR<AccessMemberUpdateWithoutParentOwnerInput, AccessMemberUncheckedUpdateWithoutParentOwnerInput>
+  }
+
+  export type AccessMemberUpdateManyWithWhereWithoutParentOwnerInput = {
+    where: AccessMemberScalarWhereInput
+    data: XOR<AccessMemberUpdateManyMutationInput, AccessMemberUncheckedUpdateManyWithoutParentOwnerInput>
+  }
+
+  export type AccessMemberScalarWhereInput = {
+    AND?: AccessMemberScalarWhereInput | AccessMemberScalarWhereInput[]
+    OR?: AccessMemberScalarWhereInput[]
+    NOT?: AccessMemberScalarWhereInput | AccessMemberScalarWhereInput[]
+    id?: StringFilter<"AccessMember"> | string
+    parentOwnerId?: StringFilter<"AccessMember"> | string
+    memberAccountId?: StringFilter<"AccessMember"> | string
+    status?: StringFilter<"AccessMember"> | string
+    createdAt?: DateTimeFilter<"AccessMember"> | Date | string
+    updatedAt?: DateTimeFilter<"AccessMember"> | Date | string
+  }
+
+  export type AccessMemberUpsertWithWhereUniqueWithoutMemberAccountInput = {
+    where: AccessMemberWhereUniqueInput
+    update: XOR<AccessMemberUpdateWithoutMemberAccountInput, AccessMemberUncheckedUpdateWithoutMemberAccountInput>
+    create: XOR<AccessMemberCreateWithoutMemberAccountInput, AccessMemberUncheckedCreateWithoutMemberAccountInput>
+  }
+
+  export type AccessMemberUpdateWithWhereUniqueWithoutMemberAccountInput = {
+    where: AccessMemberWhereUniqueInput
+    data: XOR<AccessMemberUpdateWithoutMemberAccountInput, AccessMemberUncheckedUpdateWithoutMemberAccountInput>
+  }
+
+  export type AccessMemberUpdateManyWithWhereWithoutMemberAccountInput = {
+    where: AccessMemberScalarWhereInput
+    data: XOR<AccessMemberUpdateManyMutationInput, AccessMemberUncheckedUpdateManyWithoutMemberAccountInput>
+  }
+
   export type AccountCreateWithoutTotpInput = {
     id?: string
     nameFirst?: string | null
@@ -56660,6 +60188,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutTotpInput = {
@@ -56719,6 +60251,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutTotpInput = {
@@ -56794,6 +60330,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutTotpInput = {
@@ -56853,6 +60393,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountCreateWithoutStatusLogsInput = {
@@ -56912,6 +60456,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutStatusLogsInput = {
@@ -56971,6 +60519,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutStatusLogsInput = {
@@ -57046,6 +60598,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutStatusLogsInput = {
@@ -57105,6 +60661,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountCreateWithoutKycRequestsInput = {
@@ -57164,6 +60724,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutKycRequestsInput = {
@@ -57223,6 +60787,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutKycRequestsInput = {
@@ -57298,6 +60866,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutKycRequestsInput = {
@@ -57357,6 +60929,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountCreateWithoutInvitationsInput = {
@@ -57416,6 +60992,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutInvitationsInput = {
@@ -57475,6 +61055,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutInvitationsInput = {
@@ -57550,6 +61134,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutInvitationsInput = {
@@ -57609,6 +61197,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountCreateWithoutNeupIdRequestsInput = {
@@ -57668,6 +61260,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutNeupIdRequestsInput = {
@@ -57727,6 +61323,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutNeupIdRequestsInput = {
@@ -57802,6 +61402,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutNeupIdRequestsInput = {
@@ -57861,6 +61465,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountCreateWithoutNotificationsInput = {
@@ -57920,6 +61528,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutNotificationsInput = {
@@ -57979,6 +61591,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutNotificationsInput = {
@@ -58083,6 +61699,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutNotificationsInput = {
@@ -58142,6 +61762,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type RequestUpsertWithoutNotificationsInput = {
@@ -58236,6 +61860,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutSentRequestsInput = {
@@ -58295,6 +61923,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutSentRequestsInput = {
@@ -58359,6 +61991,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutReceivedRequestsInput = {
@@ -58418,6 +62054,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutReceivedRequestsInput = {
@@ -58529,6 +62169,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutSentRequestsInput = {
@@ -58588,6 +62232,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUpsertWithoutReceivedRequestsInput = {
@@ -58658,6 +62306,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutReceivedRequestsInput = {
@@ -58717,6 +62369,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type NotificationUpsertWithWhereUniqueWithoutRequestInput = {
@@ -58792,6 +62448,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutBackupCodesInput = {
@@ -58851,6 +62511,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutBackupCodesInput = {
@@ -58926,6 +62590,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutBackupCodesInput = {
@@ -58985,6 +62653,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountCreateWithoutVerificationsInput = {
@@ -59044,6 +62716,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutVerificationsInput = {
@@ -59103,6 +62779,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutVerificationsInput = {
@@ -59178,6 +62858,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutVerificationsInput = {
@@ -59237,6 +62921,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountCreateWithoutDocumentsInput = {
@@ -59296,6 +62984,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutDocumentsInput = {
@@ -59355,6 +63047,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutDocumentsInput = {
@@ -59430,6 +63126,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutDocumentsInput = {
@@ -59489,6 +63189,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountCreateWithoutContactsInput = {
@@ -59548,6 +63252,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutContactsInput = {
@@ -59607,6 +63315,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutContactsInput = {
@@ -59682,6 +63394,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutContactsInput = {
@@ -59741,6 +63457,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountCreateWithoutNeupIdsInput = {
@@ -59800,6 +63520,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutNeupIdsInput = {
@@ -59859,6 +63583,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutNeupIdsInput = {
@@ -59934,6 +63662,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutNeupIdsInput = {
@@ -59993,6 +63725,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountCreateWithoutPasswordInput = {
@@ -60052,6 +63788,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutPasswordInput = {
@@ -60111,6 +63851,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutPasswordInput = {
@@ -60186,6 +63930,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutPasswordInput = {
@@ -60245,6 +63993,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountCreateWithoutPermitsInput = {
@@ -60304,6 +64056,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutPermitsInput = {
@@ -60363,6 +64119,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutPermitsInput = {
@@ -60427,6 +64187,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutTargetPermitsInput = {
@@ -60486,6 +64250,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutTargetPermitsInput = {
@@ -60561,6 +64329,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutPermitsInput = {
@@ -60620,6 +64392,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUpsertWithoutTargetPermitsInput = {
@@ -60690,6 +64466,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutTargetPermitsInput = {
@@ -60749,6 +64529,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AppSessionCreateWithoutSessionInput = {
@@ -60836,6 +64620,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutSessionsInput = {
@@ -60895,6 +64683,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutSessionsInput = {
@@ -60986,6 +64778,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutSessionsInput = {
@@ -61045,6 +64841,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountCreateWithoutErrorLogsInput = {
@@ -61104,6 +64904,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutErrorLogsInput = {
@@ -61163,6 +64967,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutErrorLogsInput = {
@@ -61238,6 +65046,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutErrorLogsInput = {
@@ -61297,6 +65109,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountCreateWithoutUserContentsInput = {
@@ -61356,6 +65172,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutUserContentsInput = {
@@ -61415,6 +65235,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutUserContentsInput = {
@@ -61490,6 +65314,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutUserContentsInput = {
@@ -61549,6 +65377,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type UserAppConnectionCreateWithoutApplicationInput = {
@@ -61815,6 +65647,38 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type AccountAccessCreateWithoutApplicationInput = {
+    id?: string
+    resourceId?: string
+    role: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    account: AccountCreateNestedOneWithoutReceivedAccountAccessInput
+    parentOwner: AccountCreateNestedOneWithoutOwnedAccountAccessInput
+  }
+
+  export type AccountAccessUncheckedCreateWithoutApplicationInput = {
+    id?: string
+    accountId: string
+    resourceId?: string
+    parentOwnerId: string
+    role: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AccountAccessCreateOrConnectWithoutApplicationInput = {
+    where: AccountAccessWhereUniqueInput
+    create: XOR<AccountAccessCreateWithoutApplicationInput, AccountAccessUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type AccountAccessCreateManyApplicationInputEnvelope = {
+    data: AccountAccessCreateManyApplicationInput | AccountAccessCreateManyApplicationInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserAppConnectionUpsertWithWhereUniqueWithoutApplicationInput = {
     where: UserAppConnectionWhereUniqueInput
     update: XOR<UserAppConnectionUpdateWithoutApplicationInput, UserAppConnectionUncheckedUpdateWithoutApplicationInput>
@@ -61975,6 +65839,22 @@ export namespace Prisma {
     data: XOR<AuthPermissionRecipientUpdateManyMutationInput, AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationInput>
   }
 
+  export type AccountAccessUpsertWithWhereUniqueWithoutApplicationInput = {
+    where: AccountAccessWhereUniqueInput
+    update: XOR<AccountAccessUpdateWithoutApplicationInput, AccountAccessUncheckedUpdateWithoutApplicationInput>
+    create: XOR<AccountAccessCreateWithoutApplicationInput, AccountAccessUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type AccountAccessUpdateWithWhereUniqueWithoutApplicationInput = {
+    where: AccountAccessWhereUniqueInput
+    data: XOR<AccountAccessUpdateWithoutApplicationInput, AccountAccessUncheckedUpdateWithoutApplicationInput>
+  }
+
+  export type AccountAccessUpdateManyWithWhereWithoutApplicationInput = {
+    where: AccountAccessScalarWhereInput
+    data: XOR<AccountAccessUpdateManyMutationInput, AccountAccessUncheckedUpdateManyWithoutApplicationInput>
+  }
+
   export type ApplicationCreateWithoutAuthTeamsInput = {
     id: string
     name: string
@@ -61994,6 +65874,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
     authRoles?: AuthRoleCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutAuthTeamsInput = {
@@ -62015,6 +65896,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
     authRoles?: AuthRoleUncheckedCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutAuthTeamsInput = {
@@ -62079,6 +65961,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutAdminTeamsInput = {
@@ -62138,6 +66024,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutAdminTeamsInput = {
@@ -62202,6 +66092,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutMemberTeamsInput = {
@@ -62261,6 +66155,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutMemberTeamsInput = {
@@ -62298,6 +66196,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
     authRoles?: AuthRoleUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutAuthTeamsInput = {
@@ -62319,6 +66218,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authRoles?: AuthRoleUncheckedUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type AccountUpsertWithoutAdminTeamsInput = {
@@ -62389,6 +66289,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutAdminTeamsInput = {
@@ -62448,6 +66352,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUpsertWithoutMemberTeamsInput = {
@@ -62518,6 +66426,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutMemberTeamsInput = {
@@ -62577,6 +66489,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type ApplicationCreateWithoutAuthTeamsExternalInput = {
@@ -62598,6 +66514,7 @@ export namespace Prisma {
     authTeams?: AuthTeamCreateNestedManyWithoutApplicationInput
     authRoles?: AuthRoleCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutAuthTeamsExternalInput = {
@@ -62619,6 +66536,7 @@ export namespace Prisma {
     authTeams?: AuthTeamUncheckedCreateNestedManyWithoutApplicationInput
     authRoles?: AuthRoleUncheckedCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutAuthTeamsExternalInput = {
@@ -62683,6 +66601,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutExternalAdminTeamsInput = {
@@ -62742,6 +66664,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutExternalAdminTeamsInput = {
@@ -62806,6 +66732,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutExternalMemberTeamsInput = {
@@ -62865,6 +66795,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutExternalMemberTeamsInput = {
@@ -62902,6 +66836,7 @@ export namespace Prisma {
     authTeams?: AuthTeamUpdateManyWithoutApplicationNestedInput
     authRoles?: AuthRoleUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutAuthTeamsExternalInput = {
@@ -62923,6 +66858,7 @@ export namespace Prisma {
     authTeams?: AuthTeamUncheckedUpdateManyWithoutApplicationNestedInput
     authRoles?: AuthRoleUncheckedUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type AccountUpsertWithoutExternalAdminTeamsInput = {
@@ -62993,6 +66929,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutExternalAdminTeamsInput = {
@@ -63052,6 +66992,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUpsertWithoutExternalMemberTeamsInput = {
@@ -63122,6 +67066,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutExternalMemberTeamsInput = {
@@ -63181,6 +67129,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type ApplicationCreateWithoutAuthRolesInput = {
@@ -63202,6 +67154,7 @@ export namespace Prisma {
     authTeams?: AuthTeamCreateNestedManyWithoutApplicationInput
     authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutAuthRolesInput = {
@@ -63223,6 +67176,7 @@ export namespace Prisma {
     authTeams?: AuthTeamUncheckedCreateNestedManyWithoutApplicationInput
     authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutAuthRolesInput = {
@@ -63287,6 +67241,10 @@ export namespace Prisma {
     externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutAuthRolesInternalInput = {
@@ -63346,6 +67304,10 @@ export namespace Prisma {
     externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutAuthRolesInternalInput = {
@@ -63383,6 +67345,7 @@ export namespace Prisma {
     authTeams?: AuthTeamUpdateManyWithoutApplicationNestedInput
     authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutAuthRolesInput = {
@@ -63404,6 +67367,7 @@ export namespace Prisma {
     authTeams?: AuthTeamUncheckedUpdateManyWithoutApplicationNestedInput
     authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type AccountUpsertWithoutAuthRolesInternalInput = {
@@ -63474,6 +67438,10 @@ export namespace Prisma {
     externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutAuthRolesInternalInput = {
@@ -63533,6 +67501,10 @@ export namespace Prisma {
     externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type ApplicationCreateWithoutAuthPermissionRecipientsInput = {
@@ -63554,6 +67526,7 @@ export namespace Prisma {
     authTeams?: AuthTeamCreateNestedManyWithoutApplicationInput
     authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
     authRoles?: AuthRoleCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutAuthPermissionRecipientsInput = {
@@ -63575,6 +67548,7 @@ export namespace Prisma {
     authTeams?: AuthTeamUncheckedCreateNestedManyWithoutApplicationInput
     authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
     authRoles?: AuthRoleUncheckedCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutAuthPermissionRecipientsInput = {
@@ -63639,6 +67613,10 @@ export namespace Prisma {
     externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutRecipientPermissionsInput = {
@@ -63698,6 +67676,10 @@ export namespace Prisma {
     externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutRecipientPermissionsInput = {
@@ -63762,6 +67744,10 @@ export namespace Prisma {
     externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutOwnerPermissionsInput = {
@@ -63821,6 +67807,10 @@ export namespace Prisma {
     externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutOwnerPermissionsInput = {
@@ -63858,6 +67848,7 @@ export namespace Prisma {
     authTeams?: AuthTeamUpdateManyWithoutApplicationNestedInput
     authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
     authRoles?: AuthRoleUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutAuthPermissionRecipientsInput = {
@@ -63879,6 +67870,7 @@ export namespace Prisma {
     authTeams?: AuthTeamUncheckedUpdateManyWithoutApplicationNestedInput
     authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authRoles?: AuthRoleUncheckedUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type AccountUpsertWithoutRecipientPermissionsInput = {
@@ -63949,6 +67941,10 @@ export namespace Prisma {
     externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutRecipientPermissionsInput = {
@@ -64008,6 +68004,10 @@ export namespace Prisma {
     externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUpsertWithoutOwnerPermissionsInput = {
@@ -64078,6 +68078,10 @@ export namespace Prisma {
     externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutOwnerPermissionsInput = {
@@ -64137,6 +68141,1186 @@ export namespace Prisma {
     externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
+  }
+
+  export type AccountCreateWithoutReceivedAccountAccessInput = {
+    id?: string
+    nameFirst?: string | null
+    nameMiddle?: string | null
+    nameLast?: string | null
+    nameDisplay?: string | null
+    displayName?: string | null
+    accountPhoto?: string | null
+    gender?: string | null
+    dateBirth?: Date | string | null
+    dateCreated?: Date | string
+    nationality?: string | null
+    isLegalEntity?: boolean
+    nameLegal?: string | null
+    registrationId?: string | null
+    countryOfOrigin?: string | null
+    dateEstablished?: Date | string | null
+    neupIdPrimary?: string | null
+    verified?: boolean
+    pro?: boolean
+    accountType?: string
+    permit?: string
+    accountStatus?: string | null
+    block?: NullableJsonNullValueInput | InputJsonValue
+    parentBrand?: AccountCreateNestedOneWithoutBranchesInput
+    branches?: AccountCreateNestedManyWithoutParentBrandInput
+    contacts?: ContactCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    permits?: PermitCreateNestedManyWithoutAccountInput
+    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
+    password?: PasswordCreateNestedOneWithoutAccountInput
+    sessions?: SessionCreateNestedManyWithoutAccountInput
+    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
+    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
+    appSessions?: AppSessionCreateNestedManyWithoutAccountInput
+    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
+    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
+    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
+    invitations?: InvitationCreateNestedManyWithoutInviterInput
+    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
+    backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
+    documents?: UserDocumentCreateNestedManyWithoutAccountInput
+    userContents?: UserContentCreateNestedManyWithoutAccountInput
+    totp?: TotpCreateNestedOneWithoutAccountInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    adminTeams?: AuthTeamCreateNestedManyWithoutAccountInput
+    memberTeams?: AuthTeamCreateNestedManyWithoutRecipientInput
+    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
+    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
+    authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
+    recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
+    ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
+  }
+
+  export type AccountUncheckedCreateWithoutReceivedAccountAccessInput = {
+    id?: string
+    nameFirst?: string | null
+    nameMiddle?: string | null
+    nameLast?: string | null
+    nameDisplay?: string | null
+    displayName?: string | null
+    accountPhoto?: string | null
+    gender?: string | null
+    dateBirth?: Date | string | null
+    dateCreated?: Date | string
+    nationality?: string | null
+    isLegalEntity?: boolean
+    nameLegal?: string | null
+    registrationId?: string | null
+    countryOfOrigin?: string | null
+    dateEstablished?: Date | string | null
+    neupIdPrimary?: string | null
+    verified?: boolean
+    pro?: boolean
+    accountType?: string
+    permit?: string
+    accountStatus?: string | null
+    parentBrandId?: string | null
+    block?: NullableJsonNullValueInput | InputJsonValue
+    branches?: AccountUncheckedCreateNestedManyWithoutParentBrandInput
+    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
+    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
+    appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
+    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
+    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
+    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
+    backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
+    totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    adminTeams?: AuthTeamUncheckedCreateNestedManyWithoutAccountInput
+    memberTeams?: AuthTeamUncheckedCreateNestedManyWithoutRecipientInput
+    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
+    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
+    authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
+    recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
+    ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
+  }
+
+  export type AccountCreateOrConnectWithoutReceivedAccountAccessInput = {
+    where: AccountWhereUniqueInput
+    create: XOR<AccountCreateWithoutReceivedAccountAccessInput, AccountUncheckedCreateWithoutReceivedAccountAccessInput>
+  }
+
+  export type ApplicationCreateWithoutAccountAccessesInput = {
+    id: string
+    name: string
+    party?: string
+    description?: string | null
+    icon?: string | null
+    website?: string | null
+    developer?: string | null
+    appSecret?: string | null
+    createdAt?: Date | string
+    connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
+    appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
+    appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
+    externalSessions?: AuthSessionExternalCreateNestedManyWithoutApplicationInput
+    externalRoles?: AuthRoleExternalCreateNestedManyWithoutApplicationInput
+    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutApplicationInput
+    authTeams?: AuthTeamCreateNestedManyWithoutApplicationInput
+    authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
+    authRoles?: AuthRoleCreateNestedManyWithoutApplicationInput
+    authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationUncheckedCreateWithoutAccountAccessesInput = {
+    id: string
+    name: string
+    party?: string
+    description?: string | null
+    icon?: string | null
+    website?: string | null
+    developer?: string | null
+    appSecret?: string | null
+    createdAt?: Date | string
+    connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
+    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
+    appSessions?: AppSessionUncheckedCreateNestedManyWithoutApplicationInput
+    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutApplicationInput
+    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutApplicationInput
+    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutApplicationInput
+    authTeams?: AuthTeamUncheckedCreateNestedManyWithoutApplicationInput
+    authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
+    authRoles?: AuthRoleUncheckedCreateNestedManyWithoutApplicationInput
+    authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationCreateOrConnectWithoutAccountAccessesInput = {
+    where: ApplicationWhereUniqueInput
+    create: XOR<ApplicationCreateWithoutAccountAccessesInput, ApplicationUncheckedCreateWithoutAccountAccessesInput>
+  }
+
+  export type AccountCreateWithoutOwnedAccountAccessInput = {
+    id?: string
+    nameFirst?: string | null
+    nameMiddle?: string | null
+    nameLast?: string | null
+    nameDisplay?: string | null
+    displayName?: string | null
+    accountPhoto?: string | null
+    gender?: string | null
+    dateBirth?: Date | string | null
+    dateCreated?: Date | string
+    nationality?: string | null
+    isLegalEntity?: boolean
+    nameLegal?: string | null
+    registrationId?: string | null
+    countryOfOrigin?: string | null
+    dateEstablished?: Date | string | null
+    neupIdPrimary?: string | null
+    verified?: boolean
+    pro?: boolean
+    accountType?: string
+    permit?: string
+    accountStatus?: string | null
+    block?: NullableJsonNullValueInput | InputJsonValue
+    parentBrand?: AccountCreateNestedOneWithoutBranchesInput
+    branches?: AccountCreateNestedManyWithoutParentBrandInput
+    contacts?: ContactCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    permits?: PermitCreateNestedManyWithoutAccountInput
+    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
+    password?: PasswordCreateNestedOneWithoutAccountInput
+    sessions?: SessionCreateNestedManyWithoutAccountInput
+    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
+    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
+    appSessions?: AppSessionCreateNestedManyWithoutAccountInput
+    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
+    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
+    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
+    invitations?: InvitationCreateNestedManyWithoutInviterInput
+    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
+    backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
+    documents?: UserDocumentCreateNestedManyWithoutAccountInput
+    userContents?: UserContentCreateNestedManyWithoutAccountInput
+    totp?: TotpCreateNestedOneWithoutAccountInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    adminTeams?: AuthTeamCreateNestedManyWithoutAccountInput
+    memberTeams?: AuthTeamCreateNestedManyWithoutRecipientInput
+    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
+    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
+    authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
+    recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
+    ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
+  }
+
+  export type AccountUncheckedCreateWithoutOwnedAccountAccessInput = {
+    id?: string
+    nameFirst?: string | null
+    nameMiddle?: string | null
+    nameLast?: string | null
+    nameDisplay?: string | null
+    displayName?: string | null
+    accountPhoto?: string | null
+    gender?: string | null
+    dateBirth?: Date | string | null
+    dateCreated?: Date | string
+    nationality?: string | null
+    isLegalEntity?: boolean
+    nameLegal?: string | null
+    registrationId?: string | null
+    countryOfOrigin?: string | null
+    dateEstablished?: Date | string | null
+    neupIdPrimary?: string | null
+    verified?: boolean
+    pro?: boolean
+    accountType?: string
+    permit?: string
+    accountStatus?: string | null
+    parentBrandId?: string | null
+    block?: NullableJsonNullValueInput | InputJsonValue
+    branches?: AccountUncheckedCreateNestedManyWithoutParentBrandInput
+    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
+    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
+    appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
+    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
+    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
+    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
+    backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
+    totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    adminTeams?: AuthTeamUncheckedCreateNestedManyWithoutAccountInput
+    memberTeams?: AuthTeamUncheckedCreateNestedManyWithoutRecipientInput
+    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
+    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
+    authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
+    recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
+    ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
+  }
+
+  export type AccountCreateOrConnectWithoutOwnedAccountAccessInput = {
+    where: AccountWhereUniqueInput
+    create: XOR<AccountCreateWithoutOwnedAccountAccessInput, AccountUncheckedCreateWithoutOwnedAccountAccessInput>
+  }
+
+  export type AccountUpsertWithoutReceivedAccountAccessInput = {
+    update: XOR<AccountUpdateWithoutReceivedAccountAccessInput, AccountUncheckedUpdateWithoutReceivedAccountAccessInput>
+    create: XOR<AccountCreateWithoutReceivedAccountAccessInput, AccountUncheckedCreateWithoutReceivedAccountAccessInput>
+    where?: AccountWhereInput
+  }
+
+  export type AccountUpdateToOneWithWhereWithoutReceivedAccountAccessInput = {
+    where?: AccountWhereInput
+    data: XOR<AccountUpdateWithoutReceivedAccountAccessInput, AccountUncheckedUpdateWithoutReceivedAccountAccessInput>
+  }
+
+  export type AccountUpdateWithoutReceivedAccountAccessInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
+    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
+    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
+    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
+    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
+    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
+    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    pro?: BoolFieldUpdateOperationsInput | boolean
+    accountType?: StringFieldUpdateOperationsInput | string
+    permit?: StringFieldUpdateOperationsInput | string
+    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    block?: NullableJsonNullValueInput | InputJsonValue
+    parentBrand?: AccountUpdateOneWithoutBranchesNestedInput
+    branches?: AccountUpdateManyWithoutParentBrandNestedInput
+    contacts?: ContactUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    permits?: PermitUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
+    password?: PasswordUpdateOneWithoutAccountNestedInput
+    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
+    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
+    appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
+    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
+    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
+    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
+    invitations?: InvitationUpdateManyWithoutInviterNestedInput
+    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
+    backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
+    userContents?: UserContentUpdateManyWithoutAccountNestedInput
+    totp?: TotpUpdateOneWithoutAccountNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    adminTeams?: AuthTeamUpdateManyWithoutAccountNestedInput
+    memberTeams?: AuthTeamUpdateManyWithoutRecipientNestedInput
+    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
+    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
+    authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
+    recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
+    ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
+  }
+
+  export type AccountUncheckedUpdateWithoutReceivedAccountAccessInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
+    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
+    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
+    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
+    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
+    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
+    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    pro?: BoolFieldUpdateOperationsInput | boolean
+    accountType?: StringFieldUpdateOperationsInput | string
+    permit?: StringFieldUpdateOperationsInput | string
+    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    parentBrandId?: NullableStringFieldUpdateOperationsInput | string | null
+    block?: NullableJsonNullValueInput | InputJsonValue
+    branches?: AccountUncheckedUpdateManyWithoutParentBrandNestedInput
+    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
+    appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
+    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
+    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
+    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
+    backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
+    totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    adminTeams?: AuthTeamUncheckedUpdateManyWithoutAccountNestedInput
+    memberTeams?: AuthTeamUncheckedUpdateManyWithoutRecipientNestedInput
+    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
+    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
+    authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
+    recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
+    ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
+  }
+
+  export type ApplicationUpsertWithoutAccountAccessesInput = {
+    update: XOR<ApplicationUpdateWithoutAccountAccessesInput, ApplicationUncheckedUpdateWithoutAccountAccessesInput>
+    create: XOR<ApplicationCreateWithoutAccountAccessesInput, ApplicationUncheckedCreateWithoutAccountAccessesInput>
+    where?: ApplicationWhereInput
+  }
+
+  export type ApplicationUpdateToOneWithWhereWithoutAccountAccessesInput = {
+    where?: ApplicationWhereInput
+    data: XOR<ApplicationUpdateWithoutAccountAccessesInput, ApplicationUncheckedUpdateWithoutAccountAccessesInput>
+  }
+
+  export type ApplicationUpdateWithoutAccountAccessesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    party?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    developer?: NullableStringFieldUpdateOperationsInput | string | null
+    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
+    appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
+    appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
+    externalSessions?: AuthSessionExternalUpdateManyWithoutApplicationNestedInput
+    externalRoles?: AuthRoleExternalUpdateManyWithoutApplicationNestedInput
+    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutApplicationNestedInput
+    authTeams?: AuthTeamUpdateManyWithoutApplicationNestedInput
+    authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
+    authRoles?: AuthRoleUpdateManyWithoutApplicationNestedInput
+    authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationUncheckedUpdateWithoutAccountAccessesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    party?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    developer?: NullableStringFieldUpdateOperationsInput | string | null
+    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
+    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
+    appSessions?: AppSessionUncheckedUpdateManyWithoutApplicationNestedInput
+    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutApplicationNestedInput
+    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutApplicationNestedInput
+    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutApplicationNestedInput
+    authTeams?: AuthTeamUncheckedUpdateManyWithoutApplicationNestedInput
+    authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
+    authRoles?: AuthRoleUncheckedUpdateManyWithoutApplicationNestedInput
+    authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type AccountUpsertWithoutOwnedAccountAccessInput = {
+    update: XOR<AccountUpdateWithoutOwnedAccountAccessInput, AccountUncheckedUpdateWithoutOwnedAccountAccessInput>
+    create: XOR<AccountCreateWithoutOwnedAccountAccessInput, AccountUncheckedCreateWithoutOwnedAccountAccessInput>
+    where?: AccountWhereInput
+  }
+
+  export type AccountUpdateToOneWithWhereWithoutOwnedAccountAccessInput = {
+    where?: AccountWhereInput
+    data: XOR<AccountUpdateWithoutOwnedAccountAccessInput, AccountUncheckedUpdateWithoutOwnedAccountAccessInput>
+  }
+
+  export type AccountUpdateWithoutOwnedAccountAccessInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
+    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
+    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
+    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
+    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
+    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
+    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    pro?: BoolFieldUpdateOperationsInput | boolean
+    accountType?: StringFieldUpdateOperationsInput | string
+    permit?: StringFieldUpdateOperationsInput | string
+    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    block?: NullableJsonNullValueInput | InputJsonValue
+    parentBrand?: AccountUpdateOneWithoutBranchesNestedInput
+    branches?: AccountUpdateManyWithoutParentBrandNestedInput
+    contacts?: ContactUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    permits?: PermitUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
+    password?: PasswordUpdateOneWithoutAccountNestedInput
+    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
+    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
+    appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
+    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
+    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
+    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
+    invitations?: InvitationUpdateManyWithoutInviterNestedInput
+    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
+    backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
+    userContents?: UserContentUpdateManyWithoutAccountNestedInput
+    totp?: TotpUpdateOneWithoutAccountNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    adminTeams?: AuthTeamUpdateManyWithoutAccountNestedInput
+    memberTeams?: AuthTeamUpdateManyWithoutRecipientNestedInput
+    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
+    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
+    authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
+    recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
+    ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
+  }
+
+  export type AccountUncheckedUpdateWithoutOwnedAccountAccessInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
+    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
+    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
+    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
+    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
+    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
+    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    pro?: BoolFieldUpdateOperationsInput | boolean
+    accountType?: StringFieldUpdateOperationsInput | string
+    permit?: StringFieldUpdateOperationsInput | string
+    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    parentBrandId?: NullableStringFieldUpdateOperationsInput | string | null
+    block?: NullableJsonNullValueInput | InputJsonValue
+    branches?: AccountUncheckedUpdateManyWithoutParentBrandNestedInput
+    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
+    appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
+    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
+    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
+    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
+    backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
+    totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    adminTeams?: AuthTeamUncheckedUpdateManyWithoutAccountNestedInput
+    memberTeams?: AuthTeamUncheckedUpdateManyWithoutRecipientNestedInput
+    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
+    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
+    authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
+    recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
+    ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
+  }
+
+  export type AccountCreateWithoutAccessMembersOwnedInput = {
+    id?: string
+    nameFirst?: string | null
+    nameMiddle?: string | null
+    nameLast?: string | null
+    nameDisplay?: string | null
+    displayName?: string | null
+    accountPhoto?: string | null
+    gender?: string | null
+    dateBirth?: Date | string | null
+    dateCreated?: Date | string
+    nationality?: string | null
+    isLegalEntity?: boolean
+    nameLegal?: string | null
+    registrationId?: string | null
+    countryOfOrigin?: string | null
+    dateEstablished?: Date | string | null
+    neupIdPrimary?: string | null
+    verified?: boolean
+    pro?: boolean
+    accountType?: string
+    permit?: string
+    accountStatus?: string | null
+    block?: NullableJsonNullValueInput | InputJsonValue
+    parentBrand?: AccountCreateNestedOneWithoutBranchesInput
+    branches?: AccountCreateNestedManyWithoutParentBrandInput
+    contacts?: ContactCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    permits?: PermitCreateNestedManyWithoutAccountInput
+    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
+    password?: PasswordCreateNestedOneWithoutAccountInput
+    sessions?: SessionCreateNestedManyWithoutAccountInput
+    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
+    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
+    appSessions?: AppSessionCreateNestedManyWithoutAccountInput
+    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
+    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
+    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
+    invitations?: InvitationCreateNestedManyWithoutInviterInput
+    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
+    backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
+    documents?: UserDocumentCreateNestedManyWithoutAccountInput
+    userContents?: UserContentCreateNestedManyWithoutAccountInput
+    totp?: TotpCreateNestedOneWithoutAccountInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    adminTeams?: AuthTeamCreateNestedManyWithoutAccountInput
+    memberTeams?: AuthTeamCreateNestedManyWithoutRecipientInput
+    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
+    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
+    authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
+    recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
+    ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
+  }
+
+  export type AccountUncheckedCreateWithoutAccessMembersOwnedInput = {
+    id?: string
+    nameFirst?: string | null
+    nameMiddle?: string | null
+    nameLast?: string | null
+    nameDisplay?: string | null
+    displayName?: string | null
+    accountPhoto?: string | null
+    gender?: string | null
+    dateBirth?: Date | string | null
+    dateCreated?: Date | string
+    nationality?: string | null
+    isLegalEntity?: boolean
+    nameLegal?: string | null
+    registrationId?: string | null
+    countryOfOrigin?: string | null
+    dateEstablished?: Date | string | null
+    neupIdPrimary?: string | null
+    verified?: boolean
+    pro?: boolean
+    accountType?: string
+    permit?: string
+    accountStatus?: string | null
+    parentBrandId?: string | null
+    block?: NullableJsonNullValueInput | InputJsonValue
+    branches?: AccountUncheckedCreateNestedManyWithoutParentBrandInput
+    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
+    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
+    appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
+    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
+    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
+    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
+    backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
+    totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    adminTeams?: AuthTeamUncheckedCreateNestedManyWithoutAccountInput
+    memberTeams?: AuthTeamUncheckedCreateNestedManyWithoutRecipientInput
+    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
+    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
+    authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
+    recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
+    ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
+  }
+
+  export type AccountCreateOrConnectWithoutAccessMembersOwnedInput = {
+    where: AccountWhereUniqueInput
+    create: XOR<AccountCreateWithoutAccessMembersOwnedInput, AccountUncheckedCreateWithoutAccessMembersOwnedInput>
+  }
+
+  export type AccountCreateWithoutAccessMembershipsInput = {
+    id?: string
+    nameFirst?: string | null
+    nameMiddle?: string | null
+    nameLast?: string | null
+    nameDisplay?: string | null
+    displayName?: string | null
+    accountPhoto?: string | null
+    gender?: string | null
+    dateBirth?: Date | string | null
+    dateCreated?: Date | string
+    nationality?: string | null
+    isLegalEntity?: boolean
+    nameLegal?: string | null
+    registrationId?: string | null
+    countryOfOrigin?: string | null
+    dateEstablished?: Date | string | null
+    neupIdPrimary?: string | null
+    verified?: boolean
+    pro?: boolean
+    accountType?: string
+    permit?: string
+    accountStatus?: string | null
+    block?: NullableJsonNullValueInput | InputJsonValue
+    parentBrand?: AccountCreateNestedOneWithoutBranchesInput
+    branches?: AccountCreateNestedManyWithoutParentBrandInput
+    contacts?: ContactCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    permits?: PermitCreateNestedManyWithoutAccountInput
+    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
+    password?: PasswordCreateNestedOneWithoutAccountInput
+    sessions?: SessionCreateNestedManyWithoutAccountInput
+    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
+    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
+    appSessions?: AppSessionCreateNestedManyWithoutAccountInput
+    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
+    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
+    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
+    invitations?: InvitationCreateNestedManyWithoutInviterInput
+    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
+    backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
+    documents?: UserDocumentCreateNestedManyWithoutAccountInput
+    userContents?: UserContentCreateNestedManyWithoutAccountInput
+    totp?: TotpCreateNestedOneWithoutAccountInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    adminTeams?: AuthTeamCreateNestedManyWithoutAccountInput
+    memberTeams?: AuthTeamCreateNestedManyWithoutRecipientInput
+    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
+    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
+    authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
+    recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
+    ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+  }
+
+  export type AccountUncheckedCreateWithoutAccessMembershipsInput = {
+    id?: string
+    nameFirst?: string | null
+    nameMiddle?: string | null
+    nameLast?: string | null
+    nameDisplay?: string | null
+    displayName?: string | null
+    accountPhoto?: string | null
+    gender?: string | null
+    dateBirth?: Date | string | null
+    dateCreated?: Date | string
+    nationality?: string | null
+    isLegalEntity?: boolean
+    nameLegal?: string | null
+    registrationId?: string | null
+    countryOfOrigin?: string | null
+    dateEstablished?: Date | string | null
+    neupIdPrimary?: string | null
+    verified?: boolean
+    pro?: boolean
+    accountType?: string
+    permit?: string
+    accountStatus?: string | null
+    parentBrandId?: string | null
+    block?: NullableJsonNullValueInput | InputJsonValue
+    branches?: AccountUncheckedCreateNestedManyWithoutParentBrandInput
+    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
+    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
+    appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
+    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
+    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
+    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
+    backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
+    totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    adminTeams?: AuthTeamUncheckedCreateNestedManyWithoutAccountInput
+    memberTeams?: AuthTeamUncheckedCreateNestedManyWithoutRecipientInput
+    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
+    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
+    authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
+    recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
+    ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+  }
+
+  export type AccountCreateOrConnectWithoutAccessMembershipsInput = {
+    where: AccountWhereUniqueInput
+    create: XOR<AccountCreateWithoutAccessMembershipsInput, AccountUncheckedCreateWithoutAccessMembershipsInput>
+  }
+
+  export type AccountUpsertWithoutAccessMembersOwnedInput = {
+    update: XOR<AccountUpdateWithoutAccessMembersOwnedInput, AccountUncheckedUpdateWithoutAccessMembersOwnedInput>
+    create: XOR<AccountCreateWithoutAccessMembersOwnedInput, AccountUncheckedCreateWithoutAccessMembersOwnedInput>
+    where?: AccountWhereInput
+  }
+
+  export type AccountUpdateToOneWithWhereWithoutAccessMembersOwnedInput = {
+    where?: AccountWhereInput
+    data: XOR<AccountUpdateWithoutAccessMembersOwnedInput, AccountUncheckedUpdateWithoutAccessMembersOwnedInput>
+  }
+
+  export type AccountUpdateWithoutAccessMembersOwnedInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
+    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
+    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
+    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
+    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
+    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
+    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    pro?: BoolFieldUpdateOperationsInput | boolean
+    accountType?: StringFieldUpdateOperationsInput | string
+    permit?: StringFieldUpdateOperationsInput | string
+    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    block?: NullableJsonNullValueInput | InputJsonValue
+    parentBrand?: AccountUpdateOneWithoutBranchesNestedInput
+    branches?: AccountUpdateManyWithoutParentBrandNestedInput
+    contacts?: ContactUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    permits?: PermitUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
+    password?: PasswordUpdateOneWithoutAccountNestedInput
+    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
+    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
+    appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
+    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
+    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
+    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
+    invitations?: InvitationUpdateManyWithoutInviterNestedInput
+    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
+    backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
+    userContents?: UserContentUpdateManyWithoutAccountNestedInput
+    totp?: TotpUpdateOneWithoutAccountNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    adminTeams?: AuthTeamUpdateManyWithoutAccountNestedInput
+    memberTeams?: AuthTeamUpdateManyWithoutRecipientNestedInput
+    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
+    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
+    authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
+    recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
+    ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
+  }
+
+  export type AccountUncheckedUpdateWithoutAccessMembersOwnedInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
+    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
+    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
+    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
+    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
+    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
+    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    pro?: BoolFieldUpdateOperationsInput | boolean
+    accountType?: StringFieldUpdateOperationsInput | string
+    permit?: StringFieldUpdateOperationsInput | string
+    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    parentBrandId?: NullableStringFieldUpdateOperationsInput | string | null
+    block?: NullableJsonNullValueInput | InputJsonValue
+    branches?: AccountUncheckedUpdateManyWithoutParentBrandNestedInput
+    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
+    appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
+    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
+    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
+    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
+    backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
+    totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    adminTeams?: AuthTeamUncheckedUpdateManyWithoutAccountNestedInput
+    memberTeams?: AuthTeamUncheckedUpdateManyWithoutRecipientNestedInput
+    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
+    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
+    authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
+    recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
+    ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
+  }
+
+  export type AccountUpsertWithoutAccessMembershipsInput = {
+    update: XOR<AccountUpdateWithoutAccessMembershipsInput, AccountUncheckedUpdateWithoutAccessMembershipsInput>
+    create: XOR<AccountCreateWithoutAccessMembershipsInput, AccountUncheckedCreateWithoutAccessMembershipsInput>
+    where?: AccountWhereInput
+  }
+
+  export type AccountUpdateToOneWithWhereWithoutAccessMembershipsInput = {
+    where?: AccountWhereInput
+    data: XOR<AccountUpdateWithoutAccessMembershipsInput, AccountUncheckedUpdateWithoutAccessMembershipsInput>
+  }
+
+  export type AccountUpdateWithoutAccessMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
+    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
+    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
+    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
+    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
+    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
+    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    pro?: BoolFieldUpdateOperationsInput | boolean
+    accountType?: StringFieldUpdateOperationsInput | string
+    permit?: StringFieldUpdateOperationsInput | string
+    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    block?: NullableJsonNullValueInput | InputJsonValue
+    parentBrand?: AccountUpdateOneWithoutBranchesNestedInput
+    branches?: AccountUpdateManyWithoutParentBrandNestedInput
+    contacts?: ContactUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    permits?: PermitUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
+    password?: PasswordUpdateOneWithoutAccountNestedInput
+    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
+    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
+    appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
+    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
+    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
+    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
+    invitations?: InvitationUpdateManyWithoutInviterNestedInput
+    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
+    backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
+    userContents?: UserContentUpdateManyWithoutAccountNestedInput
+    totp?: TotpUpdateOneWithoutAccountNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    adminTeams?: AuthTeamUpdateManyWithoutAccountNestedInput
+    memberTeams?: AuthTeamUpdateManyWithoutRecipientNestedInput
+    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
+    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
+    authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
+    recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
+    ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+  }
+
+  export type AccountUncheckedUpdateWithoutAccessMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
+    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
+    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
+    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
+    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
+    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
+    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    pro?: BoolFieldUpdateOperationsInput | boolean
+    accountType?: StringFieldUpdateOperationsInput | string
+    permit?: StringFieldUpdateOperationsInput | string
+    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    parentBrandId?: NullableStringFieldUpdateOperationsInput | string | null
+    block?: NullableJsonNullValueInput | InputJsonValue
+    branches?: AccountUncheckedUpdateManyWithoutParentBrandNestedInput
+    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
+    appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
+    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
+    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
+    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
+    backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
+    totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    adminTeams?: AuthTeamUncheckedUpdateManyWithoutAccountNestedInput
+    memberTeams?: AuthTeamUncheckedUpdateManyWithoutRecipientNestedInput
+    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
+    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
+    authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
+    recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
+    ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
   }
 
   export type AccountCreateWithoutAppConnectionsInput = {
@@ -64196,6 +69380,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutAppConnectionsInput = {
@@ -64255,6 +69443,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutAppConnectionsInput = {
@@ -64281,6 +69473,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
     authRoles?: AuthRoleCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutConnectionsInput = {
@@ -64302,6 +69495,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
     authRoles?: AuthRoleUncheckedCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutConnectionsInput = {
@@ -64377,6 +69571,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutAppConnectionsInput = {
@@ -64436,6 +69634,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type ApplicationUpsertWithoutConnectionsInput = {
@@ -64468,6 +69670,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
     authRoles?: AuthRoleUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutConnectionsInput = {
@@ -64489,6 +69692,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authRoles?: AuthRoleUncheckedUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type AccountCreateWithoutAppAuthenticationsInput = {
@@ -64548,6 +69752,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutAppAuthenticationsInput = {
@@ -64607,6 +69815,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutAppAuthenticationsInput = {
@@ -64633,6 +69845,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
     authRoles?: AuthRoleCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutAppAuthenticationsInput = {
@@ -64654,6 +69867,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
     authRoles?: AuthRoleUncheckedCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutAppAuthenticationsInput = {
@@ -64729,6 +69943,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutAppAuthenticationsInput = {
@@ -64788,6 +70006,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type ApplicationUpsertWithoutAppAuthenticationsInput = {
@@ -64820,6 +70042,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
     authRoles?: AuthRoleUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutAppAuthenticationsInput = {
@@ -64841,6 +70064,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authRoles?: AuthRoleUncheckedUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type AccountCreateWithoutAppSessionsInput = {
@@ -64900,6 +70124,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutAppSessionsInput = {
@@ -64959,6 +70187,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutAppSessionsInput = {
@@ -64985,6 +70217,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
     authRoles?: AuthRoleCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutAppSessionsInput = {
@@ -65006,6 +70239,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
     authRoles?: AuthRoleUncheckedCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutAppSessionsInput = {
@@ -65116,6 +70350,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutAppSessionsInput = {
@@ -65175,6 +70413,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type ApplicationUpsertWithoutAppSessionsInput = {
@@ -65207,6 +70449,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
     authRoles?: AuthRoleUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutAppSessionsInput = {
@@ -65228,6 +70471,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authRoles?: AuthRoleUncheckedUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type SessionUpsertWithoutAppSessionsInput = {
@@ -65328,6 +70572,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutExternalSessionsInput = {
@@ -65387,6 +70635,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutExternalSessionsInput = {
@@ -65413,6 +70665,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
     authRoles?: AuthRoleCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutExternalSessionsInput = {
@@ -65434,6 +70687,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
     authRoles?: AuthRoleUncheckedCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutExternalSessionsInput = {
@@ -65509,6 +70763,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutExternalSessionsInput = {
@@ -65568,6 +70826,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type ApplicationUpsertWithoutExternalSessionsInput = {
@@ -65600,6 +70862,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
     authRoles?: AuthRoleUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutExternalSessionsInput = {
@@ -65621,6 +70884,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authRoles?: AuthRoleUncheckedUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type AccountCreateWithoutExternalRolesInput = {
@@ -65680,6 +70944,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutExternalRolesInput = {
@@ -65739,6 +71007,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutExternalRolesInput = {
@@ -65765,6 +71037,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
     authRoles?: AuthRoleCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutExternalRolesInput = {
@@ -65786,6 +71059,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
     authRoles?: AuthRoleUncheckedCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutExternalRolesInput = {
@@ -65861,6 +71135,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutExternalRolesInput = {
@@ -65920,6 +71198,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type ApplicationUpsertWithoutExternalRolesInput = {
@@ -65952,6 +71234,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
     authRoles?: AuthRoleUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutExternalRolesInput = {
@@ -65973,6 +71256,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authRoles?: AuthRoleUncheckedUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type AccountCreateWithoutExternalPermissionsInput = {
@@ -66032,6 +71316,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountUncheckedCreateWithoutExternalPermissionsInput = {
@@ -66091,6 +71379,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
   }
 
   export type AccountCreateOrConnectWithoutExternalPermissionsInput = {
@@ -66117,6 +71409,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
     authRoles?: AuthRoleCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutExternalPermissionsInput = {
@@ -66138,6 +71431,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
     authRoles?: AuthRoleUncheckedCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutExternalPermissionsInput = {
@@ -66213,6 +71507,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutExternalPermissionsInput = {
@@ -66272,6 +71570,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type ApplicationUpsertWithoutExternalPermissionsInput = {
@@ -66304,6 +71606,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
     authRoles?: AuthRoleUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutExternalPermissionsInput = {
@@ -66325,6 +71628,7 @@ export namespace Prisma {
     authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authRoles?: AuthRoleUncheckedUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type AccountCreateManyParentBrandInput = {
@@ -66659,6 +71963,44 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type AccountAccessCreateManyAccountInput = {
+    id?: string
+    appId: string
+    resourceId?: string
+    parentOwnerId: string
+    role: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AccountAccessCreateManyParentOwnerInput = {
+    id?: string
+    accountId: string
+    appId: string
+    resourceId?: string
+    role: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AccessMemberCreateManyParentOwnerInput = {
+    id?: string
+    memberAccountId: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AccessMemberCreateManyMemberAccountInput = {
+    id?: string
+    parentOwnerId: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type AccountUpdateWithoutParentBrandInput = {
     id?: StringFieldUpdateOperationsInput | string
     nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
@@ -66716,6 +72058,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutParentBrandInput = {
@@ -66775,6 +72121,10 @@ export namespace Prisma {
     authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
   export type AccountUncheckedUpdateManyWithoutParentBrandInput = {
@@ -67727,6 +73077,120 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type AccountAccessUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    resourceId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    application?: ApplicationUpdateOneRequiredWithoutAccountAccessesNestedInput
+    parentOwner?: AccountUpdateOneRequiredWithoutOwnedAccountAccessNestedInput
+  }
+
+  export type AccountAccessUncheckedUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    appId?: StringFieldUpdateOperationsInput | string
+    resourceId?: StringFieldUpdateOperationsInput | string
+    parentOwnerId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccountAccessUncheckedUpdateManyWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    appId?: StringFieldUpdateOperationsInput | string
+    resourceId?: StringFieldUpdateOperationsInput | string
+    parentOwnerId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccountAccessUpdateWithoutParentOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    resourceId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    account?: AccountUpdateOneRequiredWithoutReceivedAccountAccessNestedInput
+    application?: ApplicationUpdateOneRequiredWithoutAccountAccessesNestedInput
+  }
+
+  export type AccountAccessUncheckedUpdateWithoutParentOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    appId?: StringFieldUpdateOperationsInput | string
+    resourceId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccountAccessUncheckedUpdateManyWithoutParentOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    appId?: StringFieldUpdateOperationsInput | string
+    resourceId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccessMemberUpdateWithoutParentOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberAccount?: AccountUpdateOneRequiredWithoutAccessMembershipsNestedInput
+  }
+
+  export type AccessMemberUncheckedUpdateWithoutParentOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    memberAccountId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccessMemberUncheckedUpdateManyWithoutParentOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    memberAccountId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccessMemberUpdateWithoutMemberAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parentOwner?: AccountUpdateOneRequiredWithoutAccessMembersOwnedNestedInput
+  }
+
+  export type AccessMemberUncheckedUpdateWithoutMemberAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    parentOwnerId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccessMemberUncheckedUpdateManyWithoutMemberAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    parentOwnerId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type NotificationCreateManyRequestInput = {
     id?: string
     accountId: string
@@ -67895,6 +73359,17 @@ export namespace Prisma {
     isPermanent?: boolean
     expiresAt?: Date | string | null
     createdAt?: Date | string
+  }
+
+  export type AccountAccessCreateManyApplicationInput = {
+    id?: string
+    accountId: string
+    resourceId?: string
+    parentOwnerId: string
+    role: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type UserAppConnectionUpdateWithoutApplicationInput = {
@@ -68141,6 +73616,39 @@ export namespace Prisma {
     isPermanent?: BoolFieldUpdateOperationsInput | boolean
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccountAccessUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    resourceId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    account?: AccountUpdateOneRequiredWithoutReceivedAccountAccessNestedInput
+    parentOwner?: AccountUpdateOneRequiredWithoutOwnedAccountAccessNestedInput
+  }
+
+  export type AccountAccessUncheckedUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    resourceId?: StringFieldUpdateOperationsInput | string
+    parentOwnerId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccountAccessUncheckedUpdateManyWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    resourceId?: StringFieldUpdateOperationsInput | string
+    parentOwnerId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

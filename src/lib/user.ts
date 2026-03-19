@@ -231,19 +231,32 @@ export async function getUserPermissions(accountId?: string, appId?: string): Pr
       });
     });
 
-    // --- New System: Fetch permissions from AuthPermissionRecipient ---
+    // Internal apps use the account_access table and expose active roles as app-scoped permissions.
     if (appId) {
-      const directPermissions = await prisma.authPermissionRecipient.findMany({
-        where: {
-          recipientId: activeId,
-          appId,
-          OR: [
-            { isPermanent: true },
-            { expiresAt: { gt: new Date() } }
-          ]
-        }
-      });
-      directPermissions.forEach((dp: { permission: string }) => collectedPermissions.add(dp.permission));
+      if (appId.startsWith('neup.')) {
+        const internalAccess = await prisma.accountAccess.findMany({
+          where: {
+            accountId: activeId,
+            appId,
+            status: 'active',
+          },
+          select: { role: true }
+        });
+
+        internalAccess.forEach((access) => collectedPermissions.add(access.role));
+      } else {
+        const directPermissions = await prisma.authPermissionRecipient.findMany({
+          where: {
+            recipientId: activeId,
+            appId,
+            OR: [
+              { isPermanent: true },
+              { expiresAt: { gt: new Date() } }
+            ]
+          }
+        });
+        directPermissions.forEach((dp: { permission: string }) => collectedPermissions.add(dp.permission));
+      }
     }
 
     // Filter by appId if provided (if your permissions structure supports appId filtering)
