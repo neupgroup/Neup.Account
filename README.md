@@ -15,6 +15,8 @@ This comprehensive guide covers everything from technical specifications for ext
 
 ## 2. Authentication Flow (Handshake)
 
+This is required for external apps and internal apps in domains other than neupgroup.com
+ 
 Before an application can verify a session, it must initiate a handshake to obtain the necessary credentials.
 
 ### Start Handshake
@@ -135,8 +137,8 @@ External apps perform a PATCH request to extend the session's expiry (sid, aid, 
 
 ---
 
-### The "Access" Process (Server-Side Permission Check)
-External applications can verify if a user has a specific permission for an activity. This check **must** be performed from the client application's server-side.
+### The "Access" Process (Server-Side Access Snapshot)
+External applications can fetch the current access snapshot for a user. This call **must** be made from your server.
 
 **Endpoint:** `GET https://neupgroup.com/account/bridge/api.v1/auth/access`
 
@@ -144,7 +146,6 @@ External applications can verify if a user has a specific permission for an acti
 - `aid`: The user's account ID.
 - `sid`: The user's external session ID.
 - `skey`: The user's external session key.
-- `permission_required`: The string identifier of the permission to check.
 
 **Optional Query Parameters:**
 - `appId`: Your application ID (can be inferred from `sid`).
@@ -152,13 +153,28 @@ External applications can verify if a user has a specific permission for an acti
 **Response Body:**
 ```json
 {
+  "success": true,
   "aid": "123",
   "appId": "app_123",
-  "permission_required": "read:profile",
-  "allowed": true,
+  "isInternal": false,
+  "role": "editor",
+  "teams": [],
+  "permissions": ["read:profile", "write:profile"],
+  "assetPermissions": [
+    {
+      "id": "perm_1",
+      "appId": "app_123",
+      "recipientId": "123",
+      "ownerId": "456",
+      "assetId": "profile_22",
+      "permission": "edit"
+    }
+  ],
   "timestamp": "2024-03-12T12:00:00.000Z"
 }
 ```
+
+For external apps, `PATCH /bridge/api.v1/auth/access` still supports permission arrays via `add` and `remove`. The route also accepts `resourceId` and `parentOwnerId` as aliases for the older `assetId` and `ownerId` naming.
 
 ---
 
@@ -270,6 +286,124 @@ service AuthService {
 }
 ```
 
+### Internal Access Model
+
+Internal apps under the Neup ecosystem now use two dedicated tables:
+
+- `access_members`: tracks whether a primary account has added another account as a member.
+- `account_access`: tracks what role that member has inside a specific internal application and resource scope.
+
+**`access_members`**
+
+| Column | Meaning |
+| :--- | :--- |
+| `id` | Unique row ID |
+| `parentOwnerId` | Primary account in the Neup auth system |
+| `memberAccountId` | Account receiving delegated access |
+| `status` | Usually `invited` or `joined` |
+
+**`account_access`**
+
+| Column | Meaning |
+| :--- | :--- |
+| `id` | Unique row ID |
+| `accountId` | Account receiving access |
+| `appId` | Internal application ID |
+| `resourceId` | Resource scope inside the app. Use `null` in the API for app-wide access. |
+| `parentOwnerId` | Owner of the app/resource in the Neup auth system |
+| `role` | Granted role such as `admin`, `editor`, or `viewer` |
+| `status` | Usually `active` or `on_hold` |
+
+### Internal Access API
+
+Internal apps use the same bridge endpoint, but the internal branch now reads and writes `access_members` and `account_access`.
+
+### Create or Update Membership
+
+- **Endpoint**: `POST https://neupgroup.com/account/bridge/api.v1/auth/access`
+- **Purpose**: Create or update a membership row in `access_members`.
+
+**Request Body**
+```json
+{
+  "aid": "PRIMARY_ACCOUNT_ID",
+  "sid": "EXTERNAL_SESSION_ID",
+  "skey": "EXTERNAL_SESSION_KEY",
+  "recipientId": "MEMBER_ACCOUNT_ID",
+  "parentOwnerId": "PRIMARY_ACCOUNT_ID",
+  "status": "joined"
+}
+```
+
+### Grant or Update Internal App Access
+
+- **Endpoint**: `PATCH https://neupgroup.com/account/bridge/api.v1/auth/access`
+- **Purpose**: Create or update a row in `account_access`.
+- **Rule**: a matching `access_members` row must already exist unless the primary account is granting access to itself.
+
+**Request Body**
+```json
+{
+  "aid": "PRIMARY_ACCOUNT_ID",
+  "sid": "EXTERNAL_SESSION_ID",
+  "skey": "EXTERNAL_SESSION_KEY",
+  "recipientId": "MEMBER_ACCOUNT_ID",
+  "parentOwnerId": "PRIMARY_ACCOUNT_ID",
+  "resourceId": "profile_15",
+  "role": "editor",
+  "status": "active"
+}
+```
+
+Notes:
+
+- `resourceId` replaces the older `access_to` and `assetId` naming.
+- `parentOwnerId` replaces the older `ownerId` naming for internal access.
+- If `resourceId` is omitted, the API stores app-wide access internally using a reserved value and returns `resourceId: null` in the response.
+- Internal apps should use `role` and `status` for updates. `add` and `remove` arrays are for external-app permission records, not internal app access rows.
+
+### Read Internal Access
+
+- **Endpoint**: `GET https://neupgroup.com/account/bridge/api.v1/auth/access`
+
+**Response Body**
+```json
+{
+  "success": true,
+  "aid": "MEMBER_ACCOUNT_ID",
+  "appId": "neup_ads",
+  "isInternal": true,
+  "role": "editor",
+  "memberships": [
+    {
+      "parentOwnerId": "PRIMARY_ACCOUNT_ID",
+      "memberAccountId": "MEMBER_ACCOUNT_ID",
+      "status": "joined"
+    }
+  ],
+  "accountAccess": [
+    {
+      "accountId": "MEMBER_ACCOUNT_ID",
+      "application": "neup_ads",
+      "resourceId": "profile_15",
+      "parentOwnerId": "PRIMARY_ACCOUNT_ID",
+      "role": "editor",
+      "status": "active"
+    }
+  ],
+  "permissions": ["editor"]
+}
+```
+
+### Performance Notes
+
+This model scales well for internal apps when the following indexed lookups remain intact:
+
+- membership lookup by `parentOwnerId + memberAccountId`
+- access lookup by `accountId + appId + status`
+- access lookup by `parentOwnerId + appId + status`
+- uniqueness on `accountId + appId + resourceId + parentOwnerId`
+
 ---
 
 ## 6. Signout Implementation
@@ -366,5 +500,35 @@ curl -X POST https://neupgroup.com/account/bridge/api.v1/auth/verify \
     "auth_account_id": "acct_456",
     "auth_session_id": "sess_123",
     "auth_session_key": "key_abc"
+  }'
+```
+
+### Create Internal Membership
+```bash
+curl -X POST https://neupgroup.com/account/bridge/api.v1/auth/access \
+  -H "Content-Type: application/json" \
+  -d '{
+    "aid": "acct_primary",
+    "sid": "ext_sess_123",
+    "skey": "ext_key_abc",
+    "recipientId": "acct_member",
+    "parentOwnerId": "acct_primary",
+    "status": "joined"
+  }'
+```
+
+### Grant Internal App Access
+```bash
+curl -X PATCH https://neupgroup.com/account/bridge/api.v1/auth/access \
+  -H "Content-Type: application/json" \
+  -d '{
+    "aid": "acct_primary",
+    "sid": "ext_sess_123",
+    "skey": "ext_key_abc",
+    "recipientId": "acct_member",
+    "parentOwnerId": "acct_primary",
+    "resourceId": "profile_15",
+    "role": "editor",
+    "status": "active"
   }'
 ```
