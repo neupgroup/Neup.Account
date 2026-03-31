@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from '@/lib/prisma';
-import { Prisma } from '@/generated/client/client';
+import { Prisma } from '../../../prisma/generated/client/client';
 import { logError } from '@/lib/logger';
 import { checkPermissions, getUserNeupIds } from '@/lib/user';
 import { getPersonalAccountId } from '@/lib/auth-actions';
