@@ -93,6 +93,17 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
               </Link>
             )}
 
+            {accounts.length > 0 && (
+              <div className="space-y-2">
+                 {accounts.map((acc) => (
+                    <AccountListItem 
+                        key={acc.accountId || `unknown-${Math.random()}`} 
+                        account={acc}
+                    />
+                ))}
+              </div>
+            )}
+
             <Link
               href={getUrlWithReturn("/auth/signin?step=neupid")}
               className="flex w-full items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
@@ -128,16 +139,6 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
               <ChevronRight className="h-5 w-5 text-muted-foreground" />
             </Link>
 
-            {accounts.length > 0 && (
-              <div className="space-y-2">
-                 {accounts.map((acc) => (
-                    <AccountListItem 
-                        key={acc.accountId || `unknown-${Math.random()}`} 
-                        account={acc}
-                    />
-                ))}
-              </div>
-            )}
           </div>
         </CardContent>
       </Card>
