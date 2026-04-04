@@ -7,7 +7,7 @@ import { cookies } from 'next/headers';
 import { logError } from './logger';
 import type { Session, StoredAccount } from '@/types';
 import { setSessionCookies, setStoredAccountsCookie, getSessionCookies, clearManagingCookie, setManagingCookie } from './cookies';
-import { getUserNeupIds } from './user';
+import { getUserNeupIds, validateNeupId } from './user';
 import { getActiveAccountId, getPersonalAccountId, validateCurrentSession } from './auth-actions';
 
 // --- Constants ---
@@ -102,6 +102,13 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
       try {
         const session = await prisma.session.findUnique({
           where: { id: account.sessionId },
+          select: {
+            id: true,
+            accountId: true,
+            authSessionKey: true,
+            expiresOn: true,
+            isExpired: true,
+          },
         });
 
         if (!session) return { ...account, expired: true };
@@ -130,6 +137,25 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
   return validatedAccounts;
 }
 
+export async function cleanupExpiredStoredSessions(): Promise<StoredAccount[]> {
+  const validatedAccounts = await getValidatedStoredAccounts();
+
+  const cleanedAccounts = validatedAccounts.map((account) => {
+    if (!account.expired) {
+      return account;
+    }
+
+    const { sessionId: _sessionId, sessionKey: _sessionKey, ...rest } = account;
+    return {
+      ...rest,
+      expired: true,
+    };
+  });
+
+  await setStoredAccountsCookie(cleanedAccounts);
+  return cleanedAccounts;
+}
+
 // --- Account Switching ---
 export async function switchToAccount(account: StoredAccount) {
     if (account.expired) {
@@ -146,6 +172,12 @@ export async function switchToAccount(account: StoredAccount) {
     try {
         const session = await prisma.session.findUnique({
           where: { id: account.sessionId },
+          select: {
+            id: true,
+            accountId: true,
+            authSessionKey: true,
+            isExpired: true,
+          },
         });
 
         if (!session || 
@@ -178,6 +210,30 @@ export async function switchToAccount(account: StoredAccount) {
         await logError('database', error, `switchActiveAccount: ${account.accountId}`);
         return { success: false, error: 'An unexpected error occurred.' };
     }
+}
+
+export async function switchToAccountByNeupId(neupId: string): Promise<{ success: boolean; error?: string }> {
+  const normalizedNeupId = neupId.toLowerCase().trim();
+
+  const validity = await validateNeupId(normalizedNeupId);
+  if (!validity.success) {
+    return { success: false, error: validity.error || 'Invalid NeupID.' };
+  }
+
+  const accounts = await getValidatedStoredAccounts();
+  const matchedAccount = accounts.find(
+    (account) => account.neupId?.toLowerCase() === normalizedNeupId
+  );
+
+  if (!matchedAccount) {
+    return { success: false, error: 'No stored session found for this NeupID.' };
+  }
+
+  if (!matchedAccount.sessionId || !matchedAccount.sessionKey || matchedAccount.expired) {
+    return { success: false, error: 'Stored session is missing or expired.' };
+  }
+
+  return switchToAccount(matchedAccount);
 }
 
 export async function switchToBrand(brandId: string) {

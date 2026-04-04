@@ -11,6 +11,7 @@ import { getSignupStepData } from '@/actions/auth/signup';
 import { cancelAccountDeletion } from '@/actions/data/delete';
 import { initializeAuthFlow } from '@/actions/auth/initialize';
 import { verifyMfa } from '@/actions/auth/verify-mfa';
+import { switchActiveAccountByNeupId } from '@/actions/auth/switch';
 import { redirectInApp } from '@/lib/navigation';
 import { appendAuthCallbackContext, appendRedirect, hasAuthCallbackContext } from '@/lib/auth-callback';
 
@@ -22,6 +23,12 @@ import { Loader2 } from '@/components/icons';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 
 // --- Components ---
+
+const EXPIRED_SESSION_ERROR = 'Session Expired, Try again.';
+
+function isExpiredSessionError(error?: string) {
+  return error === EXPIRED_SESSION_ERROR || error === 'Your session has expired. Please try again.';
+}
 
 function NeupIdStep() {
   const router = useRouter();
@@ -90,7 +97,18 @@ function NeupIdStep() {
         params.set('step', 'password');
         redirectInApp(router, `/auth/signin?${params.toString()}`);
       } else {
-        setValidationError(result.error || 'Invalid NeupID.');
+        if (isExpiredSessionError(result.error)) {
+          try {
+            const newId = await initializeAuthFlow(null, 'signin');
+            sessionStorage.setItem('temp_auth_id', newId);
+            setAuthRequestId(newId);
+          } catch (error) {
+            console.error('Failed to refresh signin session:', error);
+          }
+          setValidationError(EXPIRED_SESSION_ERROR);
+        } else {
+          setValidationError(result.error || 'Invalid NeupID.');
+        }
         NProgress.done();
       }
     });
@@ -179,28 +197,94 @@ function PasswordStep() {
   const forgetUrl = appendRedirect(appendAuthCallbackContext('/auth/forget', searchParams), redirects);
 
   useEffect(() => {
-    const id = sessionStorage.getItem('temp_auth_id');
-    if (!id) {
-      redirectInApp(router, '/auth/signin');
-      return;
-    }
-    setAuthRequestId(id);
+    let isMounted = true;
 
-    const savedUserInfo = sessionStorage.getItem('temp_user_info');
-    if (savedUserInfo) {
-      try {
-        const parsed = JSON.parse(savedUserInfo);
-        if (parsed.neupId) {
-          setNeupId(parsed.neupId);
+    const setupPasswordStep = async () => {
+      const requestedNeupId = (searchParams.get('neupId') || '').trim().toLowerCase();
+      let currentRequestId = sessionStorage.getItem('temp_auth_id');
+
+      const setRequestId = (id: string) => {
+        sessionStorage.setItem('temp_auth_id', id);
+        if (isMounted) {
+          setAuthRequestId(id);
         }
-      } catch (e) {
-        // ignore parse error
-      }
-    }
+      };
 
-    const fetchPreviousData = async () => {
-      const { data } = await getSignupStepData(id);
-      if (data?.neupId) {
+      const ensureAuthRequest = async () => {
+        if (currentRequestId) {
+          setRequestId(currentRequestId);
+          return currentRequestId;
+        }
+
+        currentRequestId = await initializeAuthFlow(null, 'signin');
+        setRequestId(currentRequestId);
+        return currentRequestId;
+      };
+
+      const submitRequestedNeupId = async (targetNeupId: string) => {
+        const activeRequestId = await ensureAuthRequest();
+        let result = await submitNeupId({ neupId: targetNeupId, authRequestId: activeRequestId });
+
+        if (!result.success && isExpiredSessionError(result.error)) {
+          currentRequestId = await initializeAuthFlow(null, 'signin');
+          setRequestId(currentRequestId);
+          result = await submitNeupId({ neupId: targetNeupId, authRequestId: currentRequestId });
+        }
+
+        return result;
+      };
+
+      if (requestedNeupId) {
+        try {
+          const neupIdResult = await submitRequestedNeupId(requestedNeupId);
+
+          if (!neupIdResult.success) {
+            toast({
+              variant: 'destructive',
+              title: 'Sign In Failed',
+              description: neupIdResult.error || 'Invalid NeupID.',
+            });
+            return;
+          }
+
+          if (neupIdResult.userInfo) {
+            sessionStorage.setItem('temp_user_info', JSON.stringify(neupIdResult.userInfo));
+          }
+
+          if (isMounted) {
+            setNeupId(requestedNeupId);
+          }
+          return;
+        } catch (error) {
+          console.error('Failed to prepare password step:', error);
+          toast({ variant: 'destructive', title: 'Error', description: 'Failed to initialize sign in. Please try again.' });
+          return;
+        }
+      }
+
+      if (!currentRequestId) {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('step', 'neupid');
+        redirectInApp(router, `/auth/signin?${params.toString()}`);
+        return;
+      }
+
+      setRequestId(currentRequestId);
+
+      const savedUserInfo = sessionStorage.getItem('temp_user_info');
+      if (savedUserInfo) {
+        try {
+          const parsed = JSON.parse(savedUserInfo);
+          if (parsed.neupId && isMounted) {
+            setNeupId(parsed.neupId);
+          }
+        } catch (e) {
+          // ignore parse error
+        }
+      }
+
+      const { data } = await getSignupStepData(currentRequestId);
+      if (data?.neupId && isMounted) {
         setNeupId(data.neupId);
       } else if (!savedUserInfo) {
         const params = new URLSearchParams(searchParams.toString());
@@ -208,8 +292,13 @@ function PasswordStep() {
         redirectInApp(router, `/auth/signin?${params.toString()}`);
       }
     };
-    fetchPreviousData();
-  }, [router, searchParams]);
+
+    setupPasswordStep();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [router, searchParams, toast]);
 
   const handlePasswordSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -219,7 +308,31 @@ function PasswordStep() {
     }
     NProgress.start();
     startPasswordSubmit(async () => {
-      const result = await submitPassword({ password, authRequestId });
+      let result = await submitPassword({ password, authRequestId });
+
+      if (!result.success && isExpiredSessionError(result.error)) {
+        try {
+          const refreshedId = await initializeAuthFlow(null, 'signin');
+          sessionStorage.setItem('temp_auth_id', refreshedId);
+          setAuthRequestId(refreshedId);
+
+          const neupIdResult = await submitNeupId({ neupId, authRequestId: refreshedId });
+          if (!neupIdResult.success) {
+            toast({ variant: 'destructive', title: EXPIRED_SESSION_ERROR, description: 'Please enter your NeupID again.' });
+            const params = new URLSearchParams(searchParams.toString());
+            params.set('step', 'neupid');
+            redirectInApp(router, `/auth/signin?${params.toString()}`);
+            return;
+          }
+
+          result = await submitPassword({ password, authRequestId: refreshedId });
+        } catch (error) {
+          console.error('Failed to refresh signin session:', error);
+          toast({ variant: 'destructive', title: EXPIRED_SESSION_ERROR, description: 'Please try again.' });
+          NProgress.done();
+          return;
+        }
+      }
 
       if (result.success) {
         if (result.isPendingDeletion) {
@@ -247,7 +360,7 @@ function PasswordStep() {
           redirectInApp(router, '/');
         }
       } else {
-        toast({ variant: 'destructive', title: 'Sign In Failed', description: result.error });
+        toast({ variant: 'destructive', title: isExpiredSessionError(result.error) ? EXPIRED_SESSION_ERROR : 'Sign In Failed', description: result.error });
         NProgress.done();
       }
     });
@@ -464,6 +577,40 @@ function SigninFlow() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const step = searchParams.get('step');
+
+  useEffect(() => {
+    const neupId = searchParams.get('neupId');
+    if (!step || !neupId) {
+      return;
+    }
+
+    const attemptAutoSwitch = async () => {
+      const result = await switchActiveAccountByNeupId(neupId);
+      if (!result.success) {
+        return;
+      }
+
+      sessionStorage.clear();
+
+      const redirects = searchParams.get('redirects');
+      if (redirects) {
+        redirectInApp(router, redirects, { replace: true });
+        return;
+      }
+
+      if (hasAuthCallbackContext(searchParams)) {
+        const params = new URLSearchParams(searchParams.toString());
+        params.delete('step');
+        params.delete('neupId');
+        redirectInApp(router, `/auth/sign/permissions?${params.toString()}`, { replace: true });
+        return;
+      }
+
+      redirectInApp(router, '/', { replace: true });
+    };
+
+    attemptAutoSwitch();
+  }, [step, searchParams, router]);
 
   useEffect(() => {
     if (!step) {

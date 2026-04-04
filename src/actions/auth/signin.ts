@@ -29,7 +29,7 @@ export async function submitNeupId(data: z.infer<typeof neupIdSchema>) {
 
     const request = await getAuthRequest(authRequestId);
     if (!request) {
-        return { success: false, error: 'Your session has expired. Please try again.' };
+        return { success: false, error: 'Session Expired, Try again.' };
     }
 
     const validationResult = await validateNeupId(lowerCaseNeupId);
@@ -89,7 +89,7 @@ export async function submitPassword(data: z.infer<typeof passwordSchema>): Prom
 
     const request = await getAuthRequest(authRequestId);
     if (!request || !request.data.accountId) {
-        return { success: false, mfaRequired: false, error: 'Your session has expired. Please try again.' };
+        return { success: false, mfaRequired: false, error: 'Session Expired, Try again.' };
     }
 
     const accountId = request.data.accountId;

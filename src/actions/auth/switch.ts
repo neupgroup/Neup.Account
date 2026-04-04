@@ -29,6 +29,17 @@ export async function switchActiveAccount(account: StoredAccount) {
     return result;
 }
 
+export async function switchActiveAccountByNeupId(neupId: string) {
+    const { switchToAccountByNeupId } = await import('@/lib/session');
+    const result = await switchToAccountByNeupId(neupId);
+
+    if (result.success) {
+        await logActivity('self', `Switched account by NeupID: ${neupId}`, 'Success', undefined, undefined);
+    }
+
+    return result;
+}
+
 export async function logoutStoredSession(sessionId: string): Promise<{ success: boolean; error?: string }> {
     const headersList = await headers();
     const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';

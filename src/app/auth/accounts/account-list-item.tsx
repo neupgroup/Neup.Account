@@ -36,7 +36,7 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
 
     const getSigninUrl = (neupId?: string) => {
         const params = new URLSearchParams();
-        params.set('step', 'neupid');
+        params.set('step', 'password');
 
         if (neupId) {
             params.set('neupId', neupId);

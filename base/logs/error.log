@@ -1,0 +1,99 @@
+[2026-04-04T19:10:25.583Z] [database] [auto] [getValidatedStoredAccounts] [IP: ::1] [Account: null] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.session.findUnique()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async /Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_e3ef9705._.js:1324:29
+    at async Promise.all (index 1)
+    at async getValidatedStoredAccounts (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_e3ef9705._.js:1317:31)
+    at async StartPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__199699fa._.js:95:22)
+--------------------------------------------------------------------------------
+[2026-04-04T19:12:27.098Z] [database] [auto] [getValidatedStoredAccounts] [IP: ::1] [Account: null] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.session.findUnique()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async /Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_e3ef9705._.js:1326:29
+    at async Promise.all (index 1)
+    at async getValidatedStoredAccounts (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_e3ef9705._.js:1319:31)
+    at async StartPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__199699fa._.js:95:22)
+--------------------------------------------------------------------------------
+[2026-04-04T19:12:27.163Z] [database] [auto] [getValidatedStoredAccounts] [IP: ::1] [Account: null] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.session.findUnique()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async /Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_e3ef9705._.js:1326:29
+    at async Promise.all (index 1)
+    at async getValidatedStoredAccounts (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_e3ef9705._.js:1319:31)
+    at async StartPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__199699fa._.js:95:22)
+--------------------------------------------------------------------------------
+[2026-04-04T19:12:31.788Z] [database] [auto] [getValidatedStoredAccounts] [IP: ::1] [Account: null] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.session.findUnique()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async /Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_e3ef9705._.js:1326:29
+    at async Promise.all (index 1)
+    at async getValidatedStoredAccounts (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_e3ef9705._.js:1319:31)
+    at async cleanupExpiredStoredSessions (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_e3ef9705._.js:1355:31)
+    at async StartPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__199699fa._.js:95:22)
+--------------------------------------------------------------------------------
+[2026-04-04T19:13:47.753Z] [database] [auto] [getValidatedStoredAccounts] [IP: ::1] [Account: null] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.session.findUnique()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async /Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_e3ef9705._.js:1326:29
+    at async Promise.all (index 1)
+    at async getValidatedStoredAccounts (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_e3ef9705._.js:1319:31)
+    at async cleanupExpiredStoredSessions (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_e3ef9705._.js:1355:31)
+    at async StartPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__199699fa._.js:95:22)
+--------------------------------------------------------------------------------
+[2026-04-04T19:14:01.199Z] [database] [auto] [getValidatedStoredAccounts] [IP: ::1] [Account: null] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.session.findUnique()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async /Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_e3ef9705._.js:1326:29
+    at async Promise.all (index 1)
+    at async getValidatedStoredAccounts (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_e3ef9705._.js:1319:31)
+    at async cleanupExpiredStoredSessions (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_e3ef9705._.js:1355:31)
+    at async StartPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__199699fa._.js:95:22)
+--------------------------------------------------------------------------------
