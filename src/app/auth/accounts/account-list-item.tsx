@@ -11,6 +11,7 @@ import { ChevronRight } from '@/components/icons';
 import { AccountActions } from './account-actions';
 import { switchToBrand, switchToDependent, switchToDelegated, switchToAccount } from '@/lib/session';
 import { redirectInApp } from '@/lib/navigation';
+import { appendAuthCallbackContext, appendRedirect } from '@/lib/auth-callback';
 
 type CombinedAccount = StoredAccount & {
     displayName?: string;
@@ -32,6 +33,19 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
     const router = useRouter();
     const searchParams = useSearchParams();
     const redirects = searchParams.get('redirects');
+
+    const getSigninUrl = (neupId?: string) => {
+        const params = new URLSearchParams();
+        params.set('step', 'neupid');
+
+        if (neupId) {
+            params.set('neupId', neupId);
+        }
+
+        const baseUrl = `/auth/signin?${params.toString()}`;
+        const withContext = appendAuthCallbackContext(baseUrl, searchParams);
+        return appendRedirect(withContext, redirects);
+    };
 
     useEffect(() => {
         let isMounted = true;
@@ -101,7 +115,7 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
                  }
             } else if (finalAccount.sessionId) {
                 if (finalAccount.expired) {
-                    redirectInApp(router, `/auth/signin?neupId=${finalAccount.neupId}`);
+                    redirectInApp(router, getSigninUrl(finalAccount.neupId));
                 } else {
                     const res = await switchToAccount(finalAccount);
                     if (res.success) {
@@ -111,7 +125,7 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
             } else {
                 // If sessionId is undefined, it means it's a signed-out personal account
                 if (finalAccount.sessionId === undefined) {
-                     redirectInApp(router, `/auth/signin?neupId=${finalAccount.neupId}`);
+                     redirectInApp(router, getSigninUrl(finalAccount.neupId));
                 } else {
                     // If sessionId is empty string (''), it's a managed/delegated account
                      const res = await switchToDelegated(finalAccount.accountId);

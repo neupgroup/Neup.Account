@@ -43,6 +43,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { countries } from "./countries";
 import { redirectInApp } from "@/lib/navigation";
+import { hasAuthCallbackContext } from "@/lib/auth-callback";
 
 // --- Components ---
 
@@ -794,7 +795,19 @@ function TermsStep() {
         if (result.success) {
             sessionStorage.clear();
             const redirects = searchParams.get('redirects');
-            redirectInApp(router, redirects || '/');
+            if (redirects) {
+                redirectInApp(router, redirects);
+                return;
+            }
+
+            if (hasAuthCallbackContext(searchParams)) {
+                const params = new URLSearchParams(searchParams.toString());
+                params.delete('step');
+                redirectInApp(router, `/auth/sign/permissions?${params.toString()}`);
+                return;
+            }
+
+            redirectInApp(router, '/');
         } else {
             toast({ variant: 'destructive', title: 'Error', description: result.error });
             NProgress.done();

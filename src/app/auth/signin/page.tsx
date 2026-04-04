@@ -12,6 +12,7 @@ import { cancelAccountDeletion } from '@/actions/data/delete';
 import { initializeAuthFlow } from '@/actions/auth/initialize';
 import { verifyMfa } from '@/actions/auth/verify-mfa';
 import { redirectInApp } from '@/lib/navigation';
+import { appendAuthCallbackContext, appendRedirect, hasAuthCallbackContext } from '@/lib/auth-callback';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -104,8 +105,8 @@ function NeupIdStep() {
   const getSignupUrl = () => {
     const params = new URLSearchParams();
     params.set('step', 'name');
-    if (redirects) params.set('redirects', redirects);
-    return `/auth/signup?${params.toString()}`;
+    const withContext = appendAuthCallbackContext(`/auth/signup?${params.toString()}`, searchParams);
+    return appendRedirect(withContext, redirects);
   };
 
   return (
@@ -175,6 +176,7 @@ function PasswordStep() {
   const [showDeletionDialog, setShowDeletionDialog] = useState(false);
 
   const redirects = searchParams.get('redirects');
+  const forgetUrl = appendRedirect(appendAuthCallbackContext('/auth/forget', searchParams), redirects);
 
   useEffect(() => {
     const id = sessionStorage.getItem('temp_auth_id');
@@ -229,7 +231,20 @@ function PasswordStep() {
           redirectInApp(router, `/auth/signin?${params.toString()}`);
         } else {
           sessionStorage.clear();
-          redirectInApp(router, redirects || '/');
+          if (redirects) {
+            redirectInApp(router, redirects);
+            return;
+          }
+
+          if (hasAuthCallbackContext(searchParams)) {
+            const params = new URLSearchParams(searchParams.toString());
+            params.delete('step');
+            params.delete('neupId');
+            redirectInApp(router, `/auth/sign/permissions?${params.toString()}`);
+            return;
+          }
+
+          redirectInApp(router, '/');
         }
       } else {
         toast({ variant: 'destructive', title: 'Sign In Failed', description: result.error });
@@ -315,7 +330,7 @@ function PasswordStep() {
               {isSubmitting ? <Loader2 className="animate-spin" /> : 'Sign In'}
             </Button>
             <div className="flex justify-between items-center text-sm">
-              <Link href="/auth/forget" className="underline text-primary">
+              <Link href={forgetUrl} className="underline text-primary">
                 Forget Password
               </Link>
               <Button variant="link" type="button" onClick={handleBack} className="text-primary p-0 h-auto" disabled={isSubmitting}>
@@ -375,7 +390,20 @@ function MfaStep() {
 
         if (result.success) {
           sessionStorage.clear();
-          redirectInApp(router, redirects || '/');
+          if (redirects) {
+            redirectInApp(router, redirects);
+            return;
+          }
+
+          if (hasAuthCallbackContext(searchParams)) {
+            const params = new URLSearchParams(searchParams.toString());
+            params.delete('step');
+            params.delete('neupId');
+            redirectInApp(router, `/auth/sign/permissions?${params.toString()}`);
+            return;
+          }
+
+          redirectInApp(router, '/');
         } else {
           toast({
             variant: 'destructive',
@@ -460,6 +488,13 @@ function SigninFlow() {
              params.set('step', 'neupid');
           }
           if (redirects) params.set('redirects', redirects);
+          const appId = searchParams.get('appId') || searchParams.get('appid');
+          const authenticatesTo = searchParams.get('authenticatesTo');
+          if (appId && authenticatesTo) {
+            const appIdKey = searchParams.get('appid') ? 'appid' : 'appId';
+            params.set(appIdKey, appId);
+            params.set('authenticatesTo', authenticatesTo);
+          }
 
           redirectInApp(router, `/auth/signin?${params.toString()}`);
 

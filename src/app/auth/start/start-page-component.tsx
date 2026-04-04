@@ -12,13 +12,15 @@ import { useSecurityCheck } from '@/hooks/use-security-check';
 import { cn } from '@/lib/utils';
 import { AccountListItem } from '../accounts/account-list-item';
 import type { StoredAccount } from '@/types';
+import { appendAuthCallbackContext, appendRedirect, getAppDisplayName } from '@/lib/auth-callback';
 
 interface StartPageComponentProps {
   accounts: StoredAccount[];
   hasActiveSession: boolean;
+  appName?: string | null;
 }
 
-export function StartPageComponent({ accounts, hasActiveSession }: StartPageComponentProps) {
+export function StartPageComponent({ accounts, hasActiveSession, appName }: StartPageComponentProps) {
   const searchParams = useSearchParams();
   const { toast } = useToast();
   const isSecure = useSecurityCheck();
@@ -48,12 +50,11 @@ export function StartPageComponent({ accounts, hasActiveSession }: StartPageComp
   }, [error, toast, isSecure]);
 
   const getUrlWithReturn = (baseUrl: string) => {
-    if (redirects) {
-      const separator = baseUrl.includes('?') ? '&' : '?';
-      return `${baseUrl}${separator}redirects=${encodeURIComponent(redirects)}`;
-    }
-    return baseUrl;
+    const withContext = appendAuthCallbackContext(baseUrl, searchParams);
+    return appendRedirect(withContext, redirects);
   };
+
+  const displayAppName = getAppDisplayName(appName);
 
   return (
     <div className="flex min-h-screen items-start justify-center bg-card md:bg-background md:items-center">
@@ -64,7 +65,7 @@ export function StartPageComponent({ accounts, hasActiveSession }: StartPageComp
           </div>
           <CardTitle className="text-2xl font-headline">Get Started</CardTitle>
           <CardDescription>
-            Choose an option below to continue with Neup.Account.
+            {appName ? `Continue to ${displayAppName} with your NeupAccount.` : 'Choose an option below to continue with Neup.Account.'}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -115,7 +116,7 @@ export function StartPageComponent({ accounts, hasActiveSession }: StartPageComp
               <ChevronRight className="h-5 w-5 text-muted-foreground" />
             </Link>
             <Link
-              href="/auth/forget"
+              href={getUrlWithReturn('/auth/forget')}
               className="flex w-full items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
             >
               <div>
