@@ -1,8 +1,8 @@
 import React from 'react';
 import { getValidatedStoredAccounts } from '@/lib/session';
-import { getSessionCookies } from '@/lib/cookies';
 import { StartPageComponent } from './start-page-component';
 import prisma from '@/lib/prisma';
+import { getActiveSession } from '@/lib/auth-actions';
 
 type StartPageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
@@ -19,10 +19,10 @@ function getFirstValue(value: string | string[] | undefined) {
 export default async function StartPage({ searchParams }: StartPageProps) {
   const resolvedSearchParams = await searchParams;
   const accounts = await getValidatedStoredAccounts();
-  const { accountId, sessionId, sessionKey } = await getSessionCookies();
+  const activeSession = await getActiveSession();
   const appId = getFirstValue(resolvedSearchParams.appId) || getFirstValue(resolvedSearchParams.appid);
   
-  const hasActiveSession = !!(accountId && sessionId && sessionKey);
+  const hasActiveSession = !!activeSession;
   const application = appId
     ? await prisma.application.findUnique({
         where: { id: appId },

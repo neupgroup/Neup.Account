@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChevronRight, AlertTriangle } from '@/components/icons';
 import { useEffect } from 'react';
@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils';
 import { AccountListItem } from '../accounts/account-list-item';
 import type { StoredAccount } from '@/types';
 import { appendAuthCallbackContext, appendRedirect, getAppDisplayName } from '@/lib/auth-callback';
+import { redirectInApp } from '@/lib/navigation';
 
 interface StartPageComponentProps {
   accounts: StoredAccount[];
@@ -21,6 +22,7 @@ interface StartPageComponentProps {
 }
 
 export function StartPageComponent({ accounts, hasActiveSession, appName }: StartPageComponentProps) {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const { toast } = useToast();
   const isSecure = useSecurityCheck();
@@ -47,7 +49,11 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
         dismissible: false,
       });
     }
-  }, [error, toast, isSecure]);
+
+    if (hasActiveSession && redirects && !error && isSecure) {
+      redirectInApp(router, redirects, { replace: true });
+    }
+  }, [error, toast, isSecure, hasActiveSession, redirects, router]);
 
   const getUrlWithReturn = (baseUrl: string) => {
     const withContext = appendAuthCallbackContext(baseUrl, searchParams);
