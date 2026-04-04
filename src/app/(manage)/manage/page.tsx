@@ -24,6 +24,7 @@ import { PrimaryHeader } from "@/components/ui/primary-header"
 import NProgress from 'nprogress';
 import Link from "next/link"
 import { useSession } from "@/context/session-context"
+import { redirectInApp } from "@/lib/navigation";
 
 function AccountsPageSkeleton() {
     return (
@@ -100,7 +101,7 @@ export default function ManagePage() {
         const searchTerm = searchQuery.trim();
         if (searchTerm) {
             NProgress.start();
-            router.push(`/manage/list?q=${encodeURIComponent(searchTerm)}`);
+            redirectInApp(router, `/manage/list?q=${encodeURIComponent(searchTerm)}`);
         }
     }
     
@@ -257,4 +258,3 @@ export default function ManagePage() {
         </div>
     )
 }
-

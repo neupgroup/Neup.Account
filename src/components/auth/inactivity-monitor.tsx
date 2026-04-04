@@ -3,6 +3,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { logoutActiveSession } from '@/actions/auth/signout';
+import { redirectInApp } from '@/lib/navigation';
 
 // 7 minutes 30 seconds in milliseconds
 const INACTIVITY_LIMIT_MS = 7 * 60 * 1000 + 30 * 1000;
@@ -34,7 +35,7 @@ export function InactivityMonitor() {
 
         // Redirect to start page with error message
         // preventing console logging or visible timers is handled by using internal setTimeout
-        router.push('/auth/start?error=inactivity&error_description=Signed+Out+because+of+Inactvity');
+        redirectInApp(router, '/auth/start?error=inactivity&error_description=Signed+Out+because+of+Inactvity');
     }, [router]);
 
     const resetTimer = useCallback(() => {

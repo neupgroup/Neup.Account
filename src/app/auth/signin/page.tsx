@@ -11,6 +11,7 @@ import { getSignupStepData } from '@/actions/auth/signup';
 import { cancelAccountDeletion } from '@/actions/data/delete';
 import { initializeAuthFlow } from '@/actions/auth/initialize';
 import { verifyMfa } from '@/actions/auth/verify-mfa';
+import { redirectInApp } from '@/lib/navigation';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -86,7 +87,7 @@ function NeupIdStep() {
         }
         const params = new URLSearchParams(searchParams.toString());
         params.set('step', 'password');
-        router.push(`/auth/signin?${params.toString()}`);
+        redirectInApp(router, `/auth/signin?${params.toString()}`);
       } else {
         setValidationError(result.error || 'Invalid NeupID.');
         NProgress.done();
@@ -178,7 +179,7 @@ function PasswordStep() {
   useEffect(() => {
     const id = sessionStorage.getItem('temp_auth_id');
     if (!id) {
-      router.push('/auth/signin');
+      redirectInApp(router, '/auth/signin');
       return;
     }
     setAuthRequestId(id);
@@ -202,7 +203,7 @@ function PasswordStep() {
       } else if (!savedUserInfo) {
         const params = new URLSearchParams(searchParams.toString());
         params.set('step', 'neupid');
-        router.push(`/auth/signin?${params.toString()}`);
+        redirectInApp(router, `/auth/signin?${params.toString()}`);
       }
     };
     fetchPreviousData();
@@ -225,10 +226,10 @@ function PasswordStep() {
         } else if (result.mfaRequired) {
           const params = new URLSearchParams(searchParams.toString());
           params.set('step', 'mfa');
-          router.push(`/auth/signin?${params.toString()}`);
+          redirectInApp(router, `/auth/signin?${params.toString()}`);
         } else {
           sessionStorage.clear();
-          router.push(redirects || '/');
+          redirectInApp(router, redirects || '/');
         }
       } else {
         toast({ variant: 'destructive', title: 'Sign In Failed', description: result.error });
@@ -257,11 +258,11 @@ function PasswordStep() {
           if (loginResult.mfaRequired) {
             const params = new URLSearchParams(searchParams.toString());
             params.set('step', 'mfa');
-            router.push(`/auth/signin?${params.toString()}`);
+            redirectInApp(router, `/auth/signin?${params.toString()}`);
           }
           else {
             sessionStorage.clear();
-            router.push(redirects || '/manage');
+            redirectInApp(router, redirects || '/manage');
           }
         } else {
           toast({ variant: "destructive", title: "Sign In Failed", description: loginResult.error });
@@ -276,13 +277,13 @@ function PasswordStep() {
 
   const handleProceedWithDeletion = () => {
     setShowDeletionDialog(false);
-    router.push('/auth/start');
+    redirectInApp(router, '/auth/start');
   };
 
   const handleBack = () => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('step', 'neupid');
-    router.push(`/auth/signin?${params.toString()}`);
+    redirectInApp(router, `/auth/signin?${params.toString()}`);
   };
 
   return (
@@ -358,7 +359,7 @@ function MfaStep() {
   useEffect(() => {
     const id = sessionStorage.getItem('temp_auth_id');
     if (!id) {
-      router.push('/auth/signin');
+      redirectInApp(router, '/auth/signin');
       return;
     }
     setAuthRequestId(id);
@@ -374,7 +375,7 @@ function MfaStep() {
 
         if (result.success) {
           sessionStorage.clear();
-          router.push(redirects || '/');
+          redirectInApp(router, redirects || '/');
         } else {
           toast({
             variant: 'destructive',
@@ -440,7 +441,7 @@ function SigninFlow() {
     if (!step) {
       const startFlow = async () => {
         if (typeof window !== 'undefined' && !window.isSecureContext) {
-          router.push('/auth/start');
+          redirectInApp(router, '/auth/start');
           return;
         }
         try {
@@ -460,7 +461,7 @@ function SigninFlow() {
           }
           if (redirects) params.set('redirects', redirects);
 
-          router.push(`/auth/signin?${params.toString()}`);
+          redirectInApp(router, `/auth/signin?${params.toString()}`);
 
         } catch (error) {
           console.error('Failed to initialize signin flow:', error);

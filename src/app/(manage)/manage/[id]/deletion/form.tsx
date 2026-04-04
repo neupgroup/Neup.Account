@@ -16,6 +16,7 @@ import { TertiaryHeader } from '@/components/ui/tertiary-header';
 import { approveAccountDeletion, cancelAccountDeletion, getDeletionStatus, requestAccountDeletionByAdmin } from '@/actions/manage/requests/deletion';
 import { useRouter } from 'next/navigation';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { redirectInApp } from '@/lib/navigation';
 
 type DeletionStatus = {
     status: 'none' | 'pending' | 'deleted' | 'is_root';
@@ -56,7 +57,7 @@ export function DeletionManager({ accountId }: { accountId: string }) {
             const result = await approveAccountDeletion(accountId);
             if(result.success) {
                 toast({ title: 'Success', description: 'Account has been permanently deleted.', className: 'bg-accent text-accent-foreground' });
-                router.push('/manage/list');
+                redirectInApp(router, '/manage/list');
             } else {
                 toast({ variant: 'destructive', title: 'Error', description: result.error });
             }

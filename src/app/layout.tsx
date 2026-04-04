@@ -6,6 +6,7 @@ import { GeolocationProvider } from '@/context/geolocation-context';
 import { PageProgressBar } from '@/components/page-progress-bar';
 import { Suspense } from 'react';
 import { UrlErrorBanner } from '@/components/ui/url-error-banner';
+import { PersistentBacksTo } from '@/components/persistent-backs-to';
 
 export const metadata: Metadata = {
   title: 'Neup.Account',
@@ -27,6 +28,7 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased">
         <GeolocationProvider>
+          <PersistentBacksTo />
           <PageProgressBar />
           {children}
           <Toaster />

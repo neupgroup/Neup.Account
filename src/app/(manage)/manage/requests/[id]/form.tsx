@@ -20,6 +20,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Loader2, Terminal } from 'lucide-react';
+import { redirectInApp } from '@/lib/navigation';
 
 
 export function RequestDecisionForm({ request }: { request: PendingNeupIdRequest }) {
@@ -32,7 +33,7 @@ export function RequestDecisionForm({ request }: { request: PendingNeupIdRequest
         const result = await approveNeupIdRequest(request.id, request.accountId, request.requestedNeupId);
         if (result.success) {
             toast({ title: "Success", description: "Request approved successfully.", className: "bg-accent text-accent-foreground" });
-            router.push('/manage/requests');
+            redirectInApp(router, '/manage/requests');
             router.refresh();
         } else {
             toast({ variant: "destructive", title: "Error", description: result.error });
@@ -45,7 +46,7 @@ export function RequestDecisionForm({ request }: { request: PendingNeupIdRequest
         const result = await denyNeupIdRequest(request.id);
         if (result.success) {
             toast({ title: "Success", description: "Request denied successfully." });
-            router.push('/manage/requests');
+            redirectInApp(router, '/manage/requests');
             router.refresh();
         } else {
             toast({ variant: "destructive", title: "Error", description: result.error });

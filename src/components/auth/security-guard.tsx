@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useSecurityCheck } from '@/hooks/use-security-check';
 import { isConnectionSecure } from '@/lib/security-check';
+import { redirectInApp } from '@/lib/navigation';
 
 export function SecurityGuard({ children }: { children: React.ReactNode }) {
     const isSecure = useSecurityCheck();
@@ -14,7 +15,7 @@ export function SecurityGuard({ children }: { children: React.ReactNode }) {
         // Check for specific HTTP + Unsecure condition as requested
         if (!isConnectionSecure()) {
             if (pathname !== '/auth/start') {
-                router.push('/auth/start?error=unsecure');
+                redirectInApp(router, '/auth/start?error=unsecure');
                 return;
             }
         }

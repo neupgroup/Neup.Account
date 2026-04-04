@@ -44,6 +44,7 @@ import { parseDateString } from "@/actions/profile"
 import { BackButton } from "@/components/ui/back-button"
 import { checkPermissions } from "@/lib/user"
 import { Loader2 } from "@/components/icons"
+import { redirectInApp } from "@/lib/navigation";
 
 type FormData = z.infer<typeof dependentFormSchema>;
 
@@ -115,7 +116,7 @@ export default function CreateDependentPage() {
                 description: "Dependent account created successfully.",
                 className: "bg-accent text-accent-foreground"
             });
-            router.push('/accounts/dependent');
+            redirectInApp(router, '/accounts/dependent');
             router.refresh();
         } else {
             toast({

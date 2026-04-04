@@ -30,6 +30,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { redirectInApp } from '@/lib/navigation';
 
 // Helper function to convert dataURL to File object
 function dataURLtoFile(dataurl: string, filename: string): File {
@@ -185,7 +186,7 @@ export default function KycPage() {
                 <CheckCircle2 className="h-16 w-16 text-green-500 mb-4" />
                 <h1 className="text-2xl font-bold">KYC Submitted Successfully!</h1>
                 <p className="text-muted-foreground mt-2">Your information is now under review. We will notify you once the process is complete.</p>
-                <Button onClick={() => router.push('/manage/profile')} className="mt-6">Back to Profile</Button>
+                <Button onClick={() => redirectInApp(router, '/manage/profile')} className="mt-6">Back to Profile</Button>
             </div>
         )
     }

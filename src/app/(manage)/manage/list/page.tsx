@@ -27,6 +27,7 @@ import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React from 'react';
+import { redirectInApp } from '@/lib/navigation';
 
 type SortKey = keyof AccountListItem | null;
 
@@ -75,8 +76,7 @@ function AccountsListPageComponent() {
         }
         newUrl.searchParams.set('dir', sortDirection);
 
-        // Use router.replace to update the URL without adding to history
-        router.replace(newUrl.toString(), { scroll: false });
+        redirectInApp(router, `${newUrl.pathname}${newUrl.search}`, { replace: true, scroll: false });
         fetchData();
     }, [page, debouncedFilter, sortKey, sortDirection, router, fetchData]);
 

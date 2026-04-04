@@ -8,6 +8,7 @@ import type { StoredAccount } from '@/types';
 import { switchActiveAccount } from '@/actions/auth/switch';
 import { useToast } from '@/hooks/use-toast';
 import { getActiveAccountId } from '@/lib/auth-actions';
+import { redirectInApp } from '@/lib/navigation';
 
 type CombinedAccount = StoredAccount & {
     isBrand?: boolean;
@@ -35,7 +36,7 @@ export function SwitchAccountButton({ account }: { account: CombinedAccount }) {
             if (result.success) {
                 toast({ title: "Success", description: "Switched account successfully." });
                 sessionStorage.clear();
-                router.push('/');
+                redirectInApp(router, '/');
                 router.refresh();
             } else {
                 toast({ variant: "destructive", title: "Error", description: result.error });

@@ -24,6 +24,7 @@ import { SecondaryHeader } from "@/components/ui/secondary-header";
 import { getAccountType } from "@/lib/user";
 import { getActiveAccountId } from "@/lib/auth-actions";
 import { useRouter } from "next/navigation";
+import { redirectInApp } from "@/lib/navigation";
 
 
 export default function DeleteAccountPage() {
@@ -59,8 +60,7 @@ export default function DeleteAccountPage() {
           description:
             "Your account is scheduled for deletion. You will be logged out now.",
         });
-        // Redirect to signout page to complete the logout process
-        router.push('/auth/signout');
+        redirectInApp(router, '/auth/signout');
       } else {
         toast({
           variant: "destructive",

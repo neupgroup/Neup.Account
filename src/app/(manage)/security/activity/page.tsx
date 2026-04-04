@@ -26,6 +26,7 @@ import { checkPermissions } from "@/lib/user";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useEffect, useState, useCallback, use } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { redirectInApp } from "@/lib/navigation";
 
 
 const statusVariantMap: { [key: string]: "default" | "destructive" | "secondary" } = {
@@ -108,7 +109,7 @@ function SecurityActivityPageComponent({ after }: { after?: string }) {
             const newHistory = [...pageHistory, lastId];
             setPageHistory(newHistory);
             setPage(p => p + 1);
-            router.push(`/manage/security/activity?after=${lastId}`);
+            redirectInApp(router, `/manage/security/activity?after=${lastId}`);
         }
     };
 
@@ -118,7 +119,7 @@ function SecurityActivityPageComponent({ after }: { after?: string }) {
         setPageHistory(prevPageHistory);
         setPage(p => p - 1);
         const url = prevAfterId ? `/manage/security/activity?after=${prevAfterId}` : '/manage/security/activity';
-        router.push(url);
+        redirectInApp(router, url);
     };
 
     if (permissionState === 'loading') {

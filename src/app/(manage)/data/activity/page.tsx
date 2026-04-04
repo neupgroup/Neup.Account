@@ -26,6 +26,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useEffect, useState, useCallback } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { UserActivityLog } from "@/types";
+import { redirectInApp } from "@/lib/navigation";
 
 const statusVariantMap: { [key: string]: "default" | "destructive" | "secondary" } = {
     Success: "default",
@@ -84,7 +85,7 @@ function DataActivityPageComponent({ after }: { after?: string }) {
             const newHistory = [...pageHistory, lastId];
             setPageHistory(newHistory);
             setPage(p => p + 1);
-            router.push(`/manage/data/activity?after=${lastId}`);
+            redirectInApp(router, `/manage/data/activity?after=${lastId}`);
         }
     };
 
@@ -94,7 +95,7 @@ function DataActivityPageComponent({ after }: { after?: string }) {
         setPageHistory(prevPageHistory);
         setPage(p => p - 1);
         const url = prevAfterId ? `/manage/data/activity?after=${prevAfterId}` : '/manage/data/activity';
-        router.push(url);
+        redirectInApp(router, url);
     };
 
     return (

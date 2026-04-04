@@ -35,6 +35,7 @@ import { BackButton } from "@/components/ui/back-button"
 import { brandCreationSchema } from "@/schemas/auth"
 import { checkNeupIdAvailability } from "@/lib/user"
 import { SecondaryHeader } from "@/components/ui/secondary-header"
+import { redirectInApp } from "@/lib/navigation";
 
 type FormData = z.infer<typeof brandCreationSchema>;
 
@@ -99,7 +100,7 @@ export default function CreateBrandPage() {
 
             if (result.success) {
                 toast({ title: "Success", description: "Brand Account created successfully!", className: "bg-accent text-accent-foreground" });
-                router.push('/accounts/brand');
+                redirectInApp(router, '/accounts/brand');
             } else {
                 toast({
                     variant: "destructive",

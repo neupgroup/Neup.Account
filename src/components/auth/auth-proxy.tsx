@@ -3,6 +3,7 @@
 import { useSession } from "@/context/session-context";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { redirectInApp } from "@/lib/navigation";
 
 /**
  * AuthProxy handles the authentication check and redirection logic.
@@ -21,8 +22,7 @@ export function AuthProxy({ children }: { children: React.ReactNode }) {
         // Since this component is used within the (manage) layout,
         // we assume all routes it wraps require authentication.
         if (!loading && !profile) {
-            // Use router.push which automatically respects basePath from next.config.js
-            router.push('/auth/start');
+            redirectInApp(router, '/auth/start');
         }
     }, [loading, profile, router]);
 

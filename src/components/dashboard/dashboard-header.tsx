@@ -9,6 +9,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { useRouter } from 'next/navigation';
 import { VerifiedBadge } from '../verified-badge';
 import { useSession } from '@/context/session-context';
+import { redirectInApp } from '@/lib/navigation';
 
 function getGreeting() {
     const hour = new Date().getHours();
@@ -25,7 +26,7 @@ export function DashboardHeader() {
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (searchTerm.trim()) {
-            router.push(`/manage/search?q=${encodeURIComponent(searchTerm.trim())}`);
+            redirectInApp(router, `/manage/search?q=${encodeURIComponent(searchTerm.trim())}`);
         }
     };
     

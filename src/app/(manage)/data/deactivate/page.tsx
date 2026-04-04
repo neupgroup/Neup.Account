@@ -13,6 +13,7 @@ import { BackButton } from "@/components/ui/back-button";
 import { GeolocationContext } from "@/context/geolocation-context";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 import { useRouter } from "next/navigation";
+import { redirectInApp } from "@/lib/navigation";
 
 
 export default function DeactivateAccountPage() {
@@ -31,8 +32,7 @@ export default function DeactivateAccountPage() {
           title: "Account Deactivated",
           description: "Your account has been deactivated. You can reactivate it by logging in again.",
         });
-        // Use router.push which automatically respects basePath from next.config.js
-        router.push('/auth/signout');
+        redirectInApp(router, '/auth/signout');
       } else {
         toast({
           variant: "destructive",

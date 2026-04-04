@@ -4,6 +4,7 @@
 import { useEffect, useRef, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { logoutActiveSession } from "@/actions/auth/signout"
+import { redirectInApp } from "@/lib/navigation"
 
 function SignOut() {
     const router = useRouter()
@@ -38,7 +39,7 @@ function SignOut() {
                 redirectUrl = `/auth/signin?error=${errorParam}&error_description=${errorDescParam || 'Please sign in again.'}`;
             }
 
-            router.push(redirectUrl);
+            redirectInApp(router, redirectUrl);
             router.refresh();
         }
     }

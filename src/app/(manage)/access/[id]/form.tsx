@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import type { Permission } from "@/types";
 import { Loader2 } from "@/components/icons";
+import { redirectInApp } from "@/lib/navigation";
 
 export function AccessManagementForm({
   permitId,
@@ -71,7 +72,7 @@ export function AccessManagementForm({
           title: "Access Revoked",
           description: "The user no longer has access to this account.",
         });
-        router.push("/manage/access");
+        redirectInApp(router, "/manage/access");
       } else {
         toast({
           variant: "destructive",

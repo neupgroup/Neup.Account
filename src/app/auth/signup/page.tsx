@@ -42,6 +42,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { countries } from "./countries";
+import { redirectInApp } from "@/lib/navigation";
 
 // --- Components ---
 
@@ -110,7 +111,7 @@ function NameStep() {
         if (result.success) {
             const params = new URLSearchParams(searchParams.toString());
             params.set('step', 'demographics');
-            router.push(`/auth/signup?${params.toString()}`);
+            redirectInApp(router, `/auth/signup?${params.toString()}`);
         } else {
             toast({ variant: 'destructive', title: 'Error', description: result.error });
             NProgress.done();
@@ -183,7 +184,7 @@ function DemographicsStep() {
     useEffect(() => {
         const id = sessionStorage.getItem('temp_auth_id');
         if (!id) {
-            router.push('/auth/signup');
+            redirectInApp(router, '/auth/signup');
             return;
         }
         setAuthRequestId(id);
@@ -344,7 +345,7 @@ function DemographicsStep() {
         if (result.success) {
             const params = new URLSearchParams(searchParams.toString());
             params.set('step', 'nationality');
-            router.push(`/auth/signup?${params.toString()}`);
+            redirectInApp(router, `/auth/signup?${params.toString()}`);
         } else {
             toast({ variant: 'destructive', title: 'Error', description: result.error });
             NProgress.done();
@@ -454,7 +455,7 @@ function NationalityStep() {
     useEffect(() => {
         const id = sessionStorage.getItem('temp_auth_id');
         if (!id) {
-            router.push('/auth/signup');
+            redirectInApp(router, '/auth/signup');
             return;
         }
         setAuthRequestId(id);
@@ -475,7 +476,7 @@ function NationalityStep() {
         if (result.success) {
             const params = new URLSearchParams(searchParams.toString());
             params.set('step', 'contact');
-            router.push(`/auth/signup?${params.toString()}`);
+            redirectInApp(router, `/auth/signup?${params.toString()}`);
         } else {
             toast({ variant: 'destructive', title: 'Error', description: result.error });
             NProgress.done();
@@ -536,7 +537,7 @@ function ContactStep() {
     useEffect(() => {
         const id = sessionStorage.getItem('temp_auth_id');
         if (!id) {
-            router.push('/auth/signup');
+            redirectInApp(router, '/auth/signup');
             return;
         }
         setAuthRequestId(id);
@@ -557,7 +558,7 @@ function ContactStep() {
         if (result.success) {
             const params = new URLSearchParams(searchParams.toString());
             params.set('step', 'neupid');
-            router.push(`/auth/signup?${params.toString()}`);
+            redirectInApp(router, `/auth/signup?${params.toString()}`);
         } else {
             toast({ variant: 'destructive', title: 'Error', description: result.error });
             NProgress.done();
@@ -601,7 +602,7 @@ function OtpStep() {
     useEffect(() => {
         const id = sessionStorage.getItem('temp_auth_id');
         if (!id) {
-            router.push('/auth/signup');
+            redirectInApp(router, '/auth/signup');
             return;
         }
         setAuthRequestId(id);
@@ -614,7 +615,7 @@ function OtpStep() {
         if (result.success) {
             const params = new URLSearchParams(searchParams.toString());
             params.set('step', 'neupid');
-            router.push(`/auth/signup?${params.toString()}`);
+            redirectInApp(router, `/auth/signup?${params.toString()}`);
         } else {
             toast({ variant: 'destructive', title: 'Error', description: result.error });
             NProgress.done();
@@ -658,7 +659,7 @@ function NeupIdStep() {
     useEffect(() => {
         const id = sessionStorage.getItem('temp_auth_id');
         if (!id) {
-            router.push('/auth/signup');
+            redirectInApp(router, '/auth/signup');
             return;
         }
         setAuthRequestId(id);
@@ -679,7 +680,7 @@ function NeupIdStep() {
         if (result.success) {
             const params = new URLSearchParams(searchParams.toString());
             params.set('step', 'password');
-            router.push(`/auth/signup?${params.toString()}`);
+            redirectInApp(router, `/auth/signup?${params.toString()}`);
         } else {
             toast({ variant: 'destructive', title: 'Error', description: result.error });
             NProgress.done();
@@ -723,7 +724,7 @@ function PasswordStep() {
     useEffect(() => {
         const id = sessionStorage.getItem('temp_auth_id');
         if (!id) {
-            router.push('/auth/signup');
+            redirectInApp(router, '/auth/signup');
             return;
         }
         setAuthRequestId(id);
@@ -736,7 +737,7 @@ function PasswordStep() {
         if (result.success) {
             const params = new URLSearchParams(searchParams.toString());
             params.set('step', 'terms');
-            router.push(`/auth/signup?${params.toString()}`);
+            redirectInApp(router, `/auth/signup?${params.toString()}`);
         } else {
             toast({ variant: 'destructive', title: 'Error', description: result.error });
             NProgress.done();
@@ -780,7 +781,7 @@ function TermsStep() {
     useEffect(() => {
         const id = sessionStorage.getItem('temp_auth_id');
         if (!id) {
-            router.push('/auth/signup');
+            redirectInApp(router, '/auth/signup');
             return;
         }
         setAuthRequestId(id);
@@ -793,7 +794,7 @@ function TermsStep() {
         if (result.success) {
             sessionStorage.clear();
             const redirects = searchParams.get('redirects');
-            router.push(redirects || '/');
+            redirectInApp(router, redirects || '/');
         } else {
             toast({ variant: 'destructive', title: 'Error', description: result.error });
             NProgress.done();
@@ -842,7 +843,7 @@ function SignupFlow() {
     if (!step) {
       const startFlow = async () => {
         if (typeof window !== 'undefined' && !window.isSecureContext) {
-          router.push('/auth/start');
+          redirectInApp(router, '/auth/start');
           return;
         }
         try {
@@ -869,7 +870,7 @@ function SignupFlow() {
           if (birthdate) params.set('birthdate', birthdate);
           if (gender) params.set('gender', gender);
           
-          router.push(`/auth/signup?${params.toString()}`);
+          redirectInApp(router, `/auth/signup?${params.toString()}`);
 
         } catch (error) {
           console.error('Failed to initialize signup flow:', error);

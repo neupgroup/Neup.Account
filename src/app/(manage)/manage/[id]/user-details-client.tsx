@@ -9,6 +9,7 @@ import { ActivityList } from './activity/activity-list';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from '@/components/icons';
 import { useRouter } from 'next/navigation';
+import { redirectInApp } from '@/lib/navigation';
 
 interface UserDetailsClientProps {
     initialUserDetails: UserDetails;
@@ -19,7 +20,7 @@ export function UserDetailsClient({ initialUserDetails }: UserDetailsClientProps
     const router = useRouter();
 
     const handleBack = () => {
-        router.push('/manage/list');
+        redirectInApp(router, '/manage/list');
     };
 
     return (
