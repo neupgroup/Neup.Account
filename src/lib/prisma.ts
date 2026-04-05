@@ -11,11 +11,20 @@ const prismaClientSingleton = () => {
   return new PrismaClient({ adapter })
 }
 
+function hasRequiredDelegates(client: ReturnType<typeof prismaClientSingleton> | undefined): boolean {
+  if (!client) return false
+
+  const candidate = client as any
+  return Boolean(candidate.assetGroupInfo && candidate.assetGroupMember && candidate.assetMemberRole)
+}
+
 declare global {
   var prisma: undefined | ReturnType<typeof prismaClientSingleton>
 }
 
-const prisma = globalThis.prisma ?? prismaClientSingleton()
+const prisma = hasRequiredDelegates(globalThis.prisma)
+  ? globalThis.prisma!
+  : prismaClientSingleton()
 
 export default prisma
 

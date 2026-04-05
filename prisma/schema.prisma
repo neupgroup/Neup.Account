@@ -468,6 +468,62 @@ model AuthTeam {
   @@map("auth_teams")
 }
 
+model AssetGroupInfo {
+  id      String  @id @default(uuid())
+  name    String
+  details String?
+
+  members AssetGroupMember[]
+  assets  Asset[]
+
+  @@map("assetGroupInfo")
+}
+
+model AssetGroupMember {
+  id            String    @id @default(uuid())
+  assetGroup    String
+  member        String
+  isPermanent   Boolean   @default(false)
+  validTill     DateTime?
+  hasFullPermit Boolean   @default(false)
+
+  assetGroupInfo AssetGroupInfo   @relation(fields: [assetGroup], references: [id], onDelete: Cascade)
+  roles          AssetMemberRole[]
+
+  @@index([assetGroup])
+  @@unique([assetGroup, member])
+  @@map("assetGroupMember")
+}
+
+model Asset {
+  id         String  @id @default(uuid())
+  asset      String
+  type       String
+  assetGroup String
+  details    String?
+
+  assetGroupInfo AssetGroupInfo    @relation(fields: [assetGroup], references: [id], onDelete: Cascade)
+  roles          AssetMemberRole[] @relation("AssetToMemberRoles")
+
+  @@index([assetGroup])
+  @@map("asset")
+}
+
+model AssetMemberRole {
+  id          String @id @default(uuid())
+  assetMember String
+  asset       String
+  role        String
+
+  member AssetGroupMember @relation(fields: [assetMember], references: [id], onDelete: Cascade)
+  assetRef Asset          @relation("AssetToMemberRoles", fields: [asset], references: [id], onDelete: Cascade)
+
+  @@unique([assetMember, asset])
+  @@index([assetMember])
+  @@index([asset])
+  @@map("assetMemberRole")
+}
+
 model AuthTeamExternal {
   id           String   @id @default(uuid())
   appId        String

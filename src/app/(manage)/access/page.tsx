@@ -1,112 +1,50 @@
-
-
-import { getAccessList, getMasterPermissions } from "@/actions/manage/access/index";
-import { getActiveAccountId } from "@/lib/auth-actions";
-import { getUserNeupIds } from "@/lib/user";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Link from "next/link";
-import { ChevronRight } from "@/components/icons";
-import { notFound } from "next/navigation";
-import { Badge } from "@/components/ui/badge";
-import { AddUserForm } from "./add-user-form";
-import type { Permission } from "@/types";
-import { SecondaryHeader } from "@/components/ui/secondary-header";
-import { PrimaryHeader } from "@/components/ui/primary-header";
+import Link from 'next/link';
+import { PrimaryHeader } from '@/components/ui/primary-header';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ChevronRight } from '@/components/icons';
+import { getAccessAssetGroups } from '@/actions/manage/access/assets';
+import { CreateAssetGroupCard } from './create-asset-group-card';
 
 export default async function AccessControlPage() {
-  const accountId = await getActiveAccountId();
-  if (!accountId) {
-    notFound();
-  }
-
-  const [accessList, neupIds, allPermissions] = await Promise.all([
-    getAccessList(accountId),
-    getUserNeupIds(accountId),
-    getMasterPermissions(),
-  ]);
-
-  const permissionMap = new Map<string, Permission>(allPermissions.map(p => [p.id, p]));
-
-  const currentNeupId = neupIds[0] || "this account";
+  const groups = await getAccessAssetGroups();
 
   return (
     <div className="grid gap-8">
       <PrimaryHeader
         title="Access & Control"
-        description="Review and manage who has access to your account."
+        description="Manage Assets Group and permission mapping for account and app members."
       />
 
-       <div className="space-y-2">
-          <SecondaryHeader
-            title={`People with access to @${currentNeupId}`}
-            description="These people have been granted permissions to manage this account. Invitations are now managed on the Notifications page."
-          />
-        </div>
+      <CreateAssetGroupCard />
 
-      {accessList.length > 0 ? (
-          <Card>
-            <CardContent className="p-0">
-              <div className="divide-y">
-                {accessList.map((user) => (
-                    <Link
-                      key={user.permitId}
-                      href={`/manage/access/${user.permitId}`}
-                      className="flex items-center justify-between py-4 group hover:bg-muted/50 px-6"
-                    >
-                      <div className="flex items-center gap-4">
-                        <Avatar>
-                          <AvatarImage src={user.displayPhoto} data-ai-hint="person" />
-                          <AvatarFallback />
-                        </Avatar>
-                        <div>
-                          <p className="font-medium">{user.displayName}</p>
-                          <div className="flex flex-wrap gap-1 mt-1">
-                              {user.permissions.slice(0, 3).map((pId) => (
-                                  <Badge key={pId} variant="outline" className="text-xs">
-                                    {permissionMap.get(pId)?.name || 'Unknown'}
-                                  </Badge>
-                              ))}
-                              {user.permissions.length > 3 && (
-                                  <Badge variant="outline" className="text-xs">
-                                      +{user.permissions.length - 3} more
-                                  </Badge>
-                              )}
-                          </div>
-                        </div>
-                      </div>
-                      <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-foreground" />
-                    </Link>
-                  ))}
-              </div>
-            </CardContent>
-             <CardFooter className="p-4 border-t">
-                <AddUserForm />
-            </CardFooter>
-          </Card>
-        ) : (
-          <div className="grid gap-4">
-            <Card>
-                <CardContent className="p-6 text-center text-muted-foreground">
-                    <p>No other users have been granted access to this account.</p>
-                </CardContent>
-            </Card>
-            <Card>
+      {groups.length > 0 ? (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {groups.map((group) => (
+            <Link key={group.id} href={`/access/${group.id}`} className="group block">
+              <Card className="h-full transition-colors group-hover:bg-muted/30">
                 <CardHeader>
-                    <h3 className="font-semibold">Grant Access</h3>
-                    <p className="text-sm text-muted-foreground">Enter a user's NeupID to send an invitation to manage this account.</p>
+                  <CardTitle className="flex items-center justify-between gap-3 text-base">
+                    <span className="truncate">{group.name}</span>
+                    <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
+                  </CardTitle>
+                  <CardDescription className="line-clamp-2">
+                    {group.details || 'No details provided.'}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <AddUserForm />
+                  <p className="text-xs text-muted-foreground">
+                    {group._count.members} members | {group._count.assets} assets
+                  </p>
                 </CardContent>
-            </Card>
+              </Card>
+            </Link>
+          ))}
         </div>
-        )}
+      ) : (
+        <Card className="border-2 border-dotted bg-transparent">
+          <CardContent className="p-6 text-center text-sm text-muted-foreground">no assets group</CardContent>
+        </Card>
+      )}
     </div>
   );
 }

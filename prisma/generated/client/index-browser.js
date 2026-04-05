@@ -421,6 +421,36 @@ exports.Prisma.AuthTeamScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.AssetGroupInfoScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  details: 'details'
+};
+
+exports.Prisma.AssetGroupMemberScalarFieldEnum = {
+  id: 'id',
+  assetGroup: 'assetGroup',
+  member: 'member',
+  isPermanent: 'isPermanent',
+  validTill: 'validTill',
+  hasFullPermit: 'hasFullPermit'
+};
+
+exports.Prisma.AssetScalarFieldEnum = {
+  id: 'id',
+  asset: 'asset',
+  type: 'type',
+  assetGroup: 'assetGroup',
+  details: 'details'
+};
+
+exports.Prisma.AssetMemberRoleScalarFieldEnum = {
+  id: 'id',
+  assetMember: 'assetMember',
+  asset: 'asset',
+  role: 'role'
+};
+
 exports.Prisma.AuthTeamExternalScalarFieldEnum = {
   id: 'id',
   appId: 'appId',
@@ -583,6 +613,10 @@ exports.Prisma.ModelName = {
   RecoveryContact: 'RecoveryContact',
   Application: 'Application',
   AuthTeam: 'AuthTeam',
+  AssetGroupInfo: 'AssetGroupInfo',
+  AssetGroupMember: 'AssetGroupMember',
+  Asset: 'Asset',
+  AssetMemberRole: 'AssetMemberRole',
   AuthTeamExternal: 'AuthTeamExternal',
   AuthRole: 'AuthRole',
   AuthPermissionRecipient: 'AuthPermissionRecipient',

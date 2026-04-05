@@ -144,6 +144,26 @@ export type Application = $Result.DefaultSelection<Prisma.$ApplicationPayload>
  */
 export type AuthTeam = $Result.DefaultSelection<Prisma.$AuthTeamPayload>
 /**
+ * Model AssetGroupInfo
+ * 
+ */
+export type AssetGroupInfo = $Result.DefaultSelection<Prisma.$AssetGroupInfoPayload>
+/**
+ * Model AssetGroupMember
+ * 
+ */
+export type AssetGroupMember = $Result.DefaultSelection<Prisma.$AssetGroupMemberPayload>
+/**
+ * Model Asset
+ * 
+ */
+export type Asset = $Result.DefaultSelection<Prisma.$AssetPayload>
+/**
+ * Model AssetMemberRole
+ * 
+ */
+export type AssetMemberRole = $Result.DefaultSelection<Prisma.$AssetMemberRolePayload>
+/**
  * Model AuthTeamExternal
  * 
  */
@@ -575,6 +595,46 @@ export class PrismaClient<
     * ```
     */
   get authTeam(): Prisma.AuthTeamDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.assetGroupInfo`: Exposes CRUD operations for the **AssetGroupInfo** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AssetGroupInfos
+    * const assetGroupInfos = await prisma.assetGroupInfo.findMany()
+    * ```
+    */
+  get assetGroupInfo(): Prisma.AssetGroupInfoDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.assetGroupMember`: Exposes CRUD operations for the **AssetGroupMember** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AssetGroupMembers
+    * const assetGroupMembers = await prisma.assetGroupMember.findMany()
+    * ```
+    */
+  get assetGroupMember(): Prisma.AssetGroupMemberDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.asset`: Exposes CRUD operations for the **Asset** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Assets
+    * const assets = await prisma.asset.findMany()
+    * ```
+    */
+  get asset(): Prisma.AssetDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.assetMemberRole`: Exposes CRUD operations for the **AssetMemberRole** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AssetMemberRoles
+    * const assetMemberRoles = await prisma.assetMemberRole.findMany()
+    * ```
+    */
+  get assetMemberRole(): Prisma.AssetMemberRoleDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.authTeamExternal`: Exposes CRUD operations for the **AuthTeamExternal** model.
@@ -1145,6 +1205,10 @@ export namespace Prisma {
     RecoveryContact: 'RecoveryContact',
     Application: 'Application',
     AuthTeam: 'AuthTeam',
+    AssetGroupInfo: 'AssetGroupInfo',
+    AssetGroupMember: 'AssetGroupMember',
+    Asset: 'Asset',
+    AssetMemberRole: 'AssetMemberRole',
     AuthTeamExternal: 'AuthTeamExternal',
     AuthRole: 'AuthRole',
     AuthPermissionRecipient: 'AuthPermissionRecipient',
@@ -1171,7 +1235,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "totp" | "systemConfig" | "authRequest" | "activityLog" | "accountStatusLog" | "kycRequest" | "invitation" | "neupIdRequest" | "notification" | "request" | "family" | "backupCode" | "verification" | "userDocument" | "contact" | "neupId" | "password" | "permit" | "session" | "errorLog" | "bugReport" | "userContent" | "recoveryContact" | "application" | "authTeam" | "authTeamExternal" | "authRole" | "authPermissionRecipient" | "accountAccess" | "accessMember" | "userAppConnection" | "appAuthentication" | "appSession" | "authSessionExternal" | "authRoleExternal" | "authPermissionsExternal"
+      modelProps: "account" | "totp" | "systemConfig" | "authRequest" | "activityLog" | "accountStatusLog" | "kycRequest" | "invitation" | "neupIdRequest" | "notification" | "request" | "family" | "backupCode" | "verification" | "userDocument" | "contact" | "neupId" | "password" | "permit" | "session" | "errorLog" | "bugReport" | "userContent" | "recoveryContact" | "application" | "authTeam" | "assetGroupInfo" | "assetGroupMember" | "asset" | "assetMemberRole" | "authTeamExternal" | "authRole" | "authPermissionRecipient" | "accountAccess" | "accessMember" | "userAppConnection" | "appAuthentication" | "appSession" | "authSessionExternal" | "authRoleExternal" | "authPermissionsExternal"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3099,6 +3163,302 @@ export namespace Prisma {
           }
         }
       }
+      AssetGroupInfo: {
+        payload: Prisma.$AssetGroupInfoPayload<ExtArgs>
+        fields: Prisma.AssetGroupInfoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AssetGroupInfoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AssetGroupInfoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload>
+          }
+          findFirst: {
+            args: Prisma.AssetGroupInfoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AssetGroupInfoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload>
+          }
+          findMany: {
+            args: Prisma.AssetGroupInfoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload>[]
+          }
+          create: {
+            args: Prisma.AssetGroupInfoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload>
+          }
+          createMany: {
+            args: Prisma.AssetGroupInfoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AssetGroupInfoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload>[]
+          }
+          delete: {
+            args: Prisma.AssetGroupInfoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload>
+          }
+          update: {
+            args: Prisma.AssetGroupInfoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload>
+          }
+          deleteMany: {
+            args: Prisma.AssetGroupInfoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AssetGroupInfoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AssetGroupInfoUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload>[]
+          }
+          upsert: {
+            args: Prisma.AssetGroupInfoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload>
+          }
+          aggregate: {
+            args: Prisma.AssetGroupInfoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAssetGroupInfo>
+          }
+          groupBy: {
+            args: Prisma.AssetGroupInfoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AssetGroupInfoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AssetGroupInfoCountArgs<ExtArgs>
+            result: $Utils.Optional<AssetGroupInfoCountAggregateOutputType> | number
+          }
+        }
+      }
+      AssetGroupMember: {
+        payload: Prisma.$AssetGroupMemberPayload<ExtArgs>
+        fields: Prisma.AssetGroupMemberFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AssetGroupMemberFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AssetGroupMemberFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload>
+          }
+          findFirst: {
+            args: Prisma.AssetGroupMemberFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AssetGroupMemberFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload>
+          }
+          findMany: {
+            args: Prisma.AssetGroupMemberFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload>[]
+          }
+          create: {
+            args: Prisma.AssetGroupMemberCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload>
+          }
+          createMany: {
+            args: Prisma.AssetGroupMemberCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AssetGroupMemberCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload>[]
+          }
+          delete: {
+            args: Prisma.AssetGroupMemberDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload>
+          }
+          update: {
+            args: Prisma.AssetGroupMemberUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload>
+          }
+          deleteMany: {
+            args: Prisma.AssetGroupMemberDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AssetGroupMemberUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AssetGroupMemberUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload>[]
+          }
+          upsert: {
+            args: Prisma.AssetGroupMemberUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload>
+          }
+          aggregate: {
+            args: Prisma.AssetGroupMemberAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAssetGroupMember>
+          }
+          groupBy: {
+            args: Prisma.AssetGroupMemberGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AssetGroupMemberGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AssetGroupMemberCountArgs<ExtArgs>
+            result: $Utils.Optional<AssetGroupMemberCountAggregateOutputType> | number
+          }
+        }
+      }
+      Asset: {
+        payload: Prisma.$AssetPayload<ExtArgs>
+        fields: Prisma.AssetFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AssetFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AssetFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetPayload>
+          }
+          findFirst: {
+            args: Prisma.AssetFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AssetFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetPayload>
+          }
+          findMany: {
+            args: Prisma.AssetFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetPayload>[]
+          }
+          create: {
+            args: Prisma.AssetCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetPayload>
+          }
+          createMany: {
+            args: Prisma.AssetCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AssetCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetPayload>[]
+          }
+          delete: {
+            args: Prisma.AssetDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetPayload>
+          }
+          update: {
+            args: Prisma.AssetUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetPayload>
+          }
+          deleteMany: {
+            args: Prisma.AssetDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AssetUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AssetUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetPayload>[]
+          }
+          upsert: {
+            args: Prisma.AssetUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetPayload>
+          }
+          aggregate: {
+            args: Prisma.AssetAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAsset>
+          }
+          groupBy: {
+            args: Prisma.AssetGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AssetGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AssetCountArgs<ExtArgs>
+            result: $Utils.Optional<AssetCountAggregateOutputType> | number
+          }
+        }
+      }
+      AssetMemberRole: {
+        payload: Prisma.$AssetMemberRolePayload<ExtArgs>
+        fields: Prisma.AssetMemberRoleFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AssetMemberRoleFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AssetMemberRoleFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload>
+          }
+          findFirst: {
+            args: Prisma.AssetMemberRoleFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AssetMemberRoleFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload>
+          }
+          findMany: {
+            args: Prisma.AssetMemberRoleFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload>[]
+          }
+          create: {
+            args: Prisma.AssetMemberRoleCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload>
+          }
+          createMany: {
+            args: Prisma.AssetMemberRoleCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AssetMemberRoleCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload>[]
+          }
+          delete: {
+            args: Prisma.AssetMemberRoleDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload>
+          }
+          update: {
+            args: Prisma.AssetMemberRoleUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload>
+          }
+          deleteMany: {
+            args: Prisma.AssetMemberRoleDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AssetMemberRoleUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AssetMemberRoleUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload>[]
+          }
+          upsert: {
+            args: Prisma.AssetMemberRoleUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload>
+          }
+          aggregate: {
+            args: Prisma.AssetMemberRoleAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAssetMemberRole>
+          }
+          groupBy: {
+            args: Prisma.AssetMemberRoleGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AssetMemberRoleGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AssetMemberRoleCountArgs<ExtArgs>
+            result: $Utils.Optional<AssetMemberRoleCountAggregateOutputType> | number
+          }
+        }
+      }
       AuthTeamExternal: {
         payload: Prisma.$AuthTeamExternalPayload<ExtArgs>
         fields: Prisma.AuthTeamExternalFieldRefs
@@ -4047,6 +4407,10 @@ export namespace Prisma {
     recoveryContact?: RecoveryContactOmit
     application?: ApplicationOmit
     authTeam?: AuthTeamOmit
+    assetGroupInfo?: AssetGroupInfoOmit
+    assetGroupMember?: AssetGroupMemberOmit
+    asset?: AssetOmit
+    assetMemberRole?: AssetMemberRoleOmit
     authTeamExternal?: AuthTeamExternalOmit
     authRole?: AuthRoleOmit
     authPermissionRecipient?: AuthPermissionRecipientOmit
@@ -4659,6 +5023,108 @@ export namespace Prisma {
    */
   export type ApplicationCountOutputTypeCountAccountAccessesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AccountAccessWhereInput
+  }
+
+
+  /**
+   * Count Type AssetGroupInfoCountOutputType
+   */
+
+  export type AssetGroupInfoCountOutputType = {
+    members: number
+    assets: number
+  }
+
+  export type AssetGroupInfoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    members?: boolean | AssetGroupInfoCountOutputTypeCountMembersArgs
+    assets?: boolean | AssetGroupInfoCountOutputTypeCountAssetsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AssetGroupInfoCountOutputType without action
+   */
+  export type AssetGroupInfoCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupInfoCountOutputType
+     */
+    select?: AssetGroupInfoCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AssetGroupInfoCountOutputType without action
+   */
+  export type AssetGroupInfoCountOutputTypeCountMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AssetGroupMemberWhereInput
+  }
+
+  /**
+   * AssetGroupInfoCountOutputType without action
+   */
+  export type AssetGroupInfoCountOutputTypeCountAssetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AssetWhereInput
+  }
+
+
+  /**
+   * Count Type AssetGroupMemberCountOutputType
+   */
+
+  export type AssetGroupMemberCountOutputType = {
+    roles: number
+  }
+
+  export type AssetGroupMemberCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    roles?: boolean | AssetGroupMemberCountOutputTypeCountRolesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AssetGroupMemberCountOutputType without action
+   */
+  export type AssetGroupMemberCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupMemberCountOutputType
+     */
+    select?: AssetGroupMemberCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AssetGroupMemberCountOutputType without action
+   */
+  export type AssetGroupMemberCountOutputTypeCountRolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AssetMemberRoleWhereInput
+  }
+
+
+  /**
+   * Count Type AssetCountOutputType
+   */
+
+  export type AssetCountOutputType = {
+    roles: number
+  }
+
+  export type AssetCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    roles?: boolean | AssetCountOutputTypeCountRolesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AssetCountOutputType without action
+   */
+  export type AssetCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetCountOutputType
+     */
+    select?: AssetCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AssetCountOutputType without action
+   */
+  export type AssetCountOutputTypeCountRolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AssetMemberRoleWhereInput
   }
 
 
@@ -34553,6 +35019,4320 @@ export namespace Prisma {
 
 
   /**
+   * Model AssetGroupInfo
+   */
+
+  export type AggregateAssetGroupInfo = {
+    _count: AssetGroupInfoCountAggregateOutputType | null
+    _min: AssetGroupInfoMinAggregateOutputType | null
+    _max: AssetGroupInfoMaxAggregateOutputType | null
+  }
+
+  export type AssetGroupInfoMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    details: string | null
+  }
+
+  export type AssetGroupInfoMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    details: string | null
+  }
+
+  export type AssetGroupInfoCountAggregateOutputType = {
+    id: number
+    name: number
+    details: number
+    _all: number
+  }
+
+
+  export type AssetGroupInfoMinAggregateInputType = {
+    id?: true
+    name?: true
+    details?: true
+  }
+
+  export type AssetGroupInfoMaxAggregateInputType = {
+    id?: true
+    name?: true
+    details?: true
+  }
+
+  export type AssetGroupInfoCountAggregateInputType = {
+    id?: true
+    name?: true
+    details?: true
+    _all?: true
+  }
+
+  export type AssetGroupInfoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AssetGroupInfo to aggregate.
+     */
+    where?: AssetGroupInfoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssetGroupInfos to fetch.
+     */
+    orderBy?: AssetGroupInfoOrderByWithRelationInput | AssetGroupInfoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AssetGroupInfoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssetGroupInfos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssetGroupInfos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AssetGroupInfos
+    **/
+    _count?: true | AssetGroupInfoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AssetGroupInfoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AssetGroupInfoMaxAggregateInputType
+  }
+
+  export type GetAssetGroupInfoAggregateType<T extends AssetGroupInfoAggregateArgs> = {
+        [P in keyof T & keyof AggregateAssetGroupInfo]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAssetGroupInfo[P]>
+      : GetScalarType<T[P], AggregateAssetGroupInfo[P]>
+  }
+
+
+
+
+  export type AssetGroupInfoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AssetGroupInfoWhereInput
+    orderBy?: AssetGroupInfoOrderByWithAggregationInput | AssetGroupInfoOrderByWithAggregationInput[]
+    by: AssetGroupInfoScalarFieldEnum[] | AssetGroupInfoScalarFieldEnum
+    having?: AssetGroupInfoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AssetGroupInfoCountAggregateInputType | true
+    _min?: AssetGroupInfoMinAggregateInputType
+    _max?: AssetGroupInfoMaxAggregateInputType
+  }
+
+  export type AssetGroupInfoGroupByOutputType = {
+    id: string
+    name: string
+    details: string | null
+    _count: AssetGroupInfoCountAggregateOutputType | null
+    _min: AssetGroupInfoMinAggregateOutputType | null
+    _max: AssetGroupInfoMaxAggregateOutputType | null
+  }
+
+  type GetAssetGroupInfoGroupByPayload<T extends AssetGroupInfoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AssetGroupInfoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AssetGroupInfoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AssetGroupInfoGroupByOutputType[P]>
+            : GetScalarType<T[P], AssetGroupInfoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AssetGroupInfoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    details?: boolean
+    members?: boolean | AssetGroupInfo$membersArgs<ExtArgs>
+    assets?: boolean | AssetGroupInfo$assetsArgs<ExtArgs>
+    _count?: boolean | AssetGroupInfoCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assetGroupInfo"]>
+
+  export type AssetGroupInfoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    details?: boolean
+  }, ExtArgs["result"]["assetGroupInfo"]>
+
+  export type AssetGroupInfoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    details?: boolean
+  }, ExtArgs["result"]["assetGroupInfo"]>
+
+  export type AssetGroupInfoSelectScalar = {
+    id?: boolean
+    name?: boolean
+    details?: boolean
+  }
+
+  export type AssetGroupInfoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "details", ExtArgs["result"]["assetGroupInfo"]>
+  export type AssetGroupInfoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    members?: boolean | AssetGroupInfo$membersArgs<ExtArgs>
+    assets?: boolean | AssetGroupInfo$assetsArgs<ExtArgs>
+    _count?: boolean | AssetGroupInfoCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type AssetGroupInfoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type AssetGroupInfoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $AssetGroupInfoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AssetGroupInfo"
+    objects: {
+      members: Prisma.$AssetGroupMemberPayload<ExtArgs>[]
+      assets: Prisma.$AssetPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      details: string | null
+    }, ExtArgs["result"]["assetGroupInfo"]>
+    composites: {}
+  }
+
+  type AssetGroupInfoGetPayload<S extends boolean | null | undefined | AssetGroupInfoDefaultArgs> = $Result.GetResult<Prisma.$AssetGroupInfoPayload, S>
+
+  type AssetGroupInfoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AssetGroupInfoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AssetGroupInfoCountAggregateInputType | true
+    }
+
+  export interface AssetGroupInfoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AssetGroupInfo'], meta: { name: 'AssetGroupInfo' } }
+    /**
+     * Find zero or one AssetGroupInfo that matches the filter.
+     * @param {AssetGroupInfoFindUniqueArgs} args - Arguments to find a AssetGroupInfo
+     * @example
+     * // Get one AssetGroupInfo
+     * const assetGroupInfo = await prisma.assetGroupInfo.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AssetGroupInfoFindUniqueArgs>(args: SelectSubset<T, AssetGroupInfoFindUniqueArgs<ExtArgs>>): Prisma__AssetGroupInfoClient<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AssetGroupInfo that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AssetGroupInfoFindUniqueOrThrowArgs} args - Arguments to find a AssetGroupInfo
+     * @example
+     * // Get one AssetGroupInfo
+     * const assetGroupInfo = await prisma.assetGroupInfo.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AssetGroupInfoFindUniqueOrThrowArgs>(args: SelectSubset<T, AssetGroupInfoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AssetGroupInfoClient<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AssetGroupInfo that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetGroupInfoFindFirstArgs} args - Arguments to find a AssetGroupInfo
+     * @example
+     * // Get one AssetGroupInfo
+     * const assetGroupInfo = await prisma.assetGroupInfo.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AssetGroupInfoFindFirstArgs>(args?: SelectSubset<T, AssetGroupInfoFindFirstArgs<ExtArgs>>): Prisma__AssetGroupInfoClient<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AssetGroupInfo that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetGroupInfoFindFirstOrThrowArgs} args - Arguments to find a AssetGroupInfo
+     * @example
+     * // Get one AssetGroupInfo
+     * const assetGroupInfo = await prisma.assetGroupInfo.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AssetGroupInfoFindFirstOrThrowArgs>(args?: SelectSubset<T, AssetGroupInfoFindFirstOrThrowArgs<ExtArgs>>): Prisma__AssetGroupInfoClient<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AssetGroupInfos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetGroupInfoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AssetGroupInfos
+     * const assetGroupInfos = await prisma.assetGroupInfo.findMany()
+     * 
+     * // Get first 10 AssetGroupInfos
+     * const assetGroupInfos = await prisma.assetGroupInfo.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const assetGroupInfoWithIdOnly = await prisma.assetGroupInfo.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AssetGroupInfoFindManyArgs>(args?: SelectSubset<T, AssetGroupInfoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AssetGroupInfo.
+     * @param {AssetGroupInfoCreateArgs} args - Arguments to create a AssetGroupInfo.
+     * @example
+     * // Create one AssetGroupInfo
+     * const AssetGroupInfo = await prisma.assetGroupInfo.create({
+     *   data: {
+     *     // ... data to create a AssetGroupInfo
+     *   }
+     * })
+     * 
+     */
+    create<T extends AssetGroupInfoCreateArgs>(args: SelectSubset<T, AssetGroupInfoCreateArgs<ExtArgs>>): Prisma__AssetGroupInfoClient<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AssetGroupInfos.
+     * @param {AssetGroupInfoCreateManyArgs} args - Arguments to create many AssetGroupInfos.
+     * @example
+     * // Create many AssetGroupInfos
+     * const assetGroupInfo = await prisma.assetGroupInfo.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AssetGroupInfoCreateManyArgs>(args?: SelectSubset<T, AssetGroupInfoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AssetGroupInfos and returns the data saved in the database.
+     * @param {AssetGroupInfoCreateManyAndReturnArgs} args - Arguments to create many AssetGroupInfos.
+     * @example
+     * // Create many AssetGroupInfos
+     * const assetGroupInfo = await prisma.assetGroupInfo.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AssetGroupInfos and only return the `id`
+     * const assetGroupInfoWithIdOnly = await prisma.assetGroupInfo.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AssetGroupInfoCreateManyAndReturnArgs>(args?: SelectSubset<T, AssetGroupInfoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AssetGroupInfo.
+     * @param {AssetGroupInfoDeleteArgs} args - Arguments to delete one AssetGroupInfo.
+     * @example
+     * // Delete one AssetGroupInfo
+     * const AssetGroupInfo = await prisma.assetGroupInfo.delete({
+     *   where: {
+     *     // ... filter to delete one AssetGroupInfo
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AssetGroupInfoDeleteArgs>(args: SelectSubset<T, AssetGroupInfoDeleteArgs<ExtArgs>>): Prisma__AssetGroupInfoClient<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AssetGroupInfo.
+     * @param {AssetGroupInfoUpdateArgs} args - Arguments to update one AssetGroupInfo.
+     * @example
+     * // Update one AssetGroupInfo
+     * const assetGroupInfo = await prisma.assetGroupInfo.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AssetGroupInfoUpdateArgs>(args: SelectSubset<T, AssetGroupInfoUpdateArgs<ExtArgs>>): Prisma__AssetGroupInfoClient<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AssetGroupInfos.
+     * @param {AssetGroupInfoDeleteManyArgs} args - Arguments to filter AssetGroupInfos to delete.
+     * @example
+     * // Delete a few AssetGroupInfos
+     * const { count } = await prisma.assetGroupInfo.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AssetGroupInfoDeleteManyArgs>(args?: SelectSubset<T, AssetGroupInfoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AssetGroupInfos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetGroupInfoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AssetGroupInfos
+     * const assetGroupInfo = await prisma.assetGroupInfo.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AssetGroupInfoUpdateManyArgs>(args: SelectSubset<T, AssetGroupInfoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AssetGroupInfos and returns the data updated in the database.
+     * @param {AssetGroupInfoUpdateManyAndReturnArgs} args - Arguments to update many AssetGroupInfos.
+     * @example
+     * // Update many AssetGroupInfos
+     * const assetGroupInfo = await prisma.assetGroupInfo.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AssetGroupInfos and only return the `id`
+     * const assetGroupInfoWithIdOnly = await prisma.assetGroupInfo.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AssetGroupInfoUpdateManyAndReturnArgs>(args: SelectSubset<T, AssetGroupInfoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AssetGroupInfo.
+     * @param {AssetGroupInfoUpsertArgs} args - Arguments to update or create a AssetGroupInfo.
+     * @example
+     * // Update or create a AssetGroupInfo
+     * const assetGroupInfo = await prisma.assetGroupInfo.upsert({
+     *   create: {
+     *     // ... data to create a AssetGroupInfo
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AssetGroupInfo we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AssetGroupInfoUpsertArgs>(args: SelectSubset<T, AssetGroupInfoUpsertArgs<ExtArgs>>): Prisma__AssetGroupInfoClient<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AssetGroupInfos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetGroupInfoCountArgs} args - Arguments to filter AssetGroupInfos to count.
+     * @example
+     * // Count the number of AssetGroupInfos
+     * const count = await prisma.assetGroupInfo.count({
+     *   where: {
+     *     // ... the filter for the AssetGroupInfos we want to count
+     *   }
+     * })
+    **/
+    count<T extends AssetGroupInfoCountArgs>(
+      args?: Subset<T, AssetGroupInfoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AssetGroupInfoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AssetGroupInfo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetGroupInfoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AssetGroupInfoAggregateArgs>(args: Subset<T, AssetGroupInfoAggregateArgs>): Prisma.PrismaPromise<GetAssetGroupInfoAggregateType<T>>
+
+    /**
+     * Group by AssetGroupInfo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetGroupInfoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AssetGroupInfoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AssetGroupInfoGroupByArgs['orderBy'] }
+        : { orderBy?: AssetGroupInfoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AssetGroupInfoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAssetGroupInfoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AssetGroupInfo model
+   */
+  readonly fields: AssetGroupInfoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AssetGroupInfo.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AssetGroupInfoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    members<T extends AssetGroupInfo$membersArgs<ExtArgs> = {}>(args?: Subset<T, AssetGroupInfo$membersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    assets<T extends AssetGroupInfo$assetsArgs<ExtArgs> = {}>(args?: Subset<T, AssetGroupInfo$assetsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AssetGroupInfo model
+   */
+  interface AssetGroupInfoFieldRefs {
+    readonly id: FieldRef<"AssetGroupInfo", 'String'>
+    readonly name: FieldRef<"AssetGroupInfo", 'String'>
+    readonly details: FieldRef<"AssetGroupInfo", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AssetGroupInfo findUnique
+   */
+  export type AssetGroupInfoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupInfo
+     */
+    select?: AssetGroupInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupInfo
+     */
+    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupInfoInclude<ExtArgs> | null
+    /**
+     * Filter, which AssetGroupInfo to fetch.
+     */
+    where: AssetGroupInfoWhereUniqueInput
+  }
+
+  /**
+   * AssetGroupInfo findUniqueOrThrow
+   */
+  export type AssetGroupInfoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupInfo
+     */
+    select?: AssetGroupInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupInfo
+     */
+    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupInfoInclude<ExtArgs> | null
+    /**
+     * Filter, which AssetGroupInfo to fetch.
+     */
+    where: AssetGroupInfoWhereUniqueInput
+  }
+
+  /**
+   * AssetGroupInfo findFirst
+   */
+  export type AssetGroupInfoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupInfo
+     */
+    select?: AssetGroupInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupInfo
+     */
+    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupInfoInclude<ExtArgs> | null
+    /**
+     * Filter, which AssetGroupInfo to fetch.
+     */
+    where?: AssetGroupInfoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssetGroupInfos to fetch.
+     */
+    orderBy?: AssetGroupInfoOrderByWithRelationInput | AssetGroupInfoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AssetGroupInfos.
+     */
+    cursor?: AssetGroupInfoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssetGroupInfos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssetGroupInfos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssetGroupInfos.
+     */
+    distinct?: AssetGroupInfoScalarFieldEnum | AssetGroupInfoScalarFieldEnum[]
+  }
+
+  /**
+   * AssetGroupInfo findFirstOrThrow
+   */
+  export type AssetGroupInfoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupInfo
+     */
+    select?: AssetGroupInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupInfo
+     */
+    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupInfoInclude<ExtArgs> | null
+    /**
+     * Filter, which AssetGroupInfo to fetch.
+     */
+    where?: AssetGroupInfoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssetGroupInfos to fetch.
+     */
+    orderBy?: AssetGroupInfoOrderByWithRelationInput | AssetGroupInfoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AssetGroupInfos.
+     */
+    cursor?: AssetGroupInfoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssetGroupInfos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssetGroupInfos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssetGroupInfos.
+     */
+    distinct?: AssetGroupInfoScalarFieldEnum | AssetGroupInfoScalarFieldEnum[]
+  }
+
+  /**
+   * AssetGroupInfo findMany
+   */
+  export type AssetGroupInfoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupInfo
+     */
+    select?: AssetGroupInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupInfo
+     */
+    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupInfoInclude<ExtArgs> | null
+    /**
+     * Filter, which AssetGroupInfos to fetch.
+     */
+    where?: AssetGroupInfoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssetGroupInfos to fetch.
+     */
+    orderBy?: AssetGroupInfoOrderByWithRelationInput | AssetGroupInfoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AssetGroupInfos.
+     */
+    cursor?: AssetGroupInfoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssetGroupInfos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssetGroupInfos.
+     */
+    skip?: number
+    distinct?: AssetGroupInfoScalarFieldEnum | AssetGroupInfoScalarFieldEnum[]
+  }
+
+  /**
+   * AssetGroupInfo create
+   */
+  export type AssetGroupInfoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupInfo
+     */
+    select?: AssetGroupInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupInfo
+     */
+    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupInfoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AssetGroupInfo.
+     */
+    data: XOR<AssetGroupInfoCreateInput, AssetGroupInfoUncheckedCreateInput>
+  }
+
+  /**
+   * AssetGroupInfo createMany
+   */
+  export type AssetGroupInfoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AssetGroupInfos.
+     */
+    data: AssetGroupInfoCreateManyInput | AssetGroupInfoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AssetGroupInfo createManyAndReturn
+   */
+  export type AssetGroupInfoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupInfo
+     */
+    select?: AssetGroupInfoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupInfo
+     */
+    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    /**
+     * The data used to create many AssetGroupInfos.
+     */
+    data: AssetGroupInfoCreateManyInput | AssetGroupInfoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AssetGroupInfo update
+   */
+  export type AssetGroupInfoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupInfo
+     */
+    select?: AssetGroupInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupInfo
+     */
+    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupInfoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AssetGroupInfo.
+     */
+    data: XOR<AssetGroupInfoUpdateInput, AssetGroupInfoUncheckedUpdateInput>
+    /**
+     * Choose, which AssetGroupInfo to update.
+     */
+    where: AssetGroupInfoWhereUniqueInput
+  }
+
+  /**
+   * AssetGroupInfo updateMany
+   */
+  export type AssetGroupInfoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AssetGroupInfos.
+     */
+    data: XOR<AssetGroupInfoUpdateManyMutationInput, AssetGroupInfoUncheckedUpdateManyInput>
+    /**
+     * Filter which AssetGroupInfos to update
+     */
+    where?: AssetGroupInfoWhereInput
+    /**
+     * Limit how many AssetGroupInfos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AssetGroupInfo updateManyAndReturn
+   */
+  export type AssetGroupInfoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupInfo
+     */
+    select?: AssetGroupInfoSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupInfo
+     */
+    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    /**
+     * The data used to update AssetGroupInfos.
+     */
+    data: XOR<AssetGroupInfoUpdateManyMutationInput, AssetGroupInfoUncheckedUpdateManyInput>
+    /**
+     * Filter which AssetGroupInfos to update
+     */
+    where?: AssetGroupInfoWhereInput
+    /**
+     * Limit how many AssetGroupInfos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AssetGroupInfo upsert
+   */
+  export type AssetGroupInfoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupInfo
+     */
+    select?: AssetGroupInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupInfo
+     */
+    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupInfoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AssetGroupInfo to update in case it exists.
+     */
+    where: AssetGroupInfoWhereUniqueInput
+    /**
+     * In case the AssetGroupInfo found by the `where` argument doesn't exist, create a new AssetGroupInfo with this data.
+     */
+    create: XOR<AssetGroupInfoCreateInput, AssetGroupInfoUncheckedCreateInput>
+    /**
+     * In case the AssetGroupInfo was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AssetGroupInfoUpdateInput, AssetGroupInfoUncheckedUpdateInput>
+  }
+
+  /**
+   * AssetGroupInfo delete
+   */
+  export type AssetGroupInfoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupInfo
+     */
+    select?: AssetGroupInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupInfo
+     */
+    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupInfoInclude<ExtArgs> | null
+    /**
+     * Filter which AssetGroupInfo to delete.
+     */
+    where: AssetGroupInfoWhereUniqueInput
+  }
+
+  /**
+   * AssetGroupInfo deleteMany
+   */
+  export type AssetGroupInfoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AssetGroupInfos to delete
+     */
+    where?: AssetGroupInfoWhereInput
+    /**
+     * Limit how many AssetGroupInfos to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AssetGroupInfo.members
+   */
+  export type AssetGroupInfo$membersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupMember
+     */
+    select?: AssetGroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupMember
+     */
+    omit?: AssetGroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupMemberInclude<ExtArgs> | null
+    where?: AssetGroupMemberWhereInput
+    orderBy?: AssetGroupMemberOrderByWithRelationInput | AssetGroupMemberOrderByWithRelationInput[]
+    cursor?: AssetGroupMemberWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AssetGroupMemberScalarFieldEnum | AssetGroupMemberScalarFieldEnum[]
+  }
+
+  /**
+   * AssetGroupInfo.assets
+   */
+  export type AssetGroupInfo$assetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Asset
+     */
+    select?: AssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Asset
+     */
+    omit?: AssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetInclude<ExtArgs> | null
+    where?: AssetWhereInput
+    orderBy?: AssetOrderByWithRelationInput | AssetOrderByWithRelationInput[]
+    cursor?: AssetWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AssetScalarFieldEnum | AssetScalarFieldEnum[]
+  }
+
+  /**
+   * AssetGroupInfo without action
+   */
+  export type AssetGroupInfoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupInfo
+     */
+    select?: AssetGroupInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupInfo
+     */
+    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupInfoInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AssetGroupMember
+   */
+
+  export type AggregateAssetGroupMember = {
+    _count: AssetGroupMemberCountAggregateOutputType | null
+    _min: AssetGroupMemberMinAggregateOutputType | null
+    _max: AssetGroupMemberMaxAggregateOutputType | null
+  }
+
+  export type AssetGroupMemberMinAggregateOutputType = {
+    id: string | null
+    assetGroup: string | null
+    member: string | null
+    isPermanent: boolean | null
+    validTill: Date | null
+    hasFullPermit: boolean | null
+  }
+
+  export type AssetGroupMemberMaxAggregateOutputType = {
+    id: string | null
+    assetGroup: string | null
+    member: string | null
+    isPermanent: boolean | null
+    validTill: Date | null
+    hasFullPermit: boolean | null
+  }
+
+  export type AssetGroupMemberCountAggregateOutputType = {
+    id: number
+    assetGroup: number
+    member: number
+    isPermanent: number
+    validTill: number
+    hasFullPermit: number
+    _all: number
+  }
+
+
+  export type AssetGroupMemberMinAggregateInputType = {
+    id?: true
+    assetGroup?: true
+    member?: true
+    isPermanent?: true
+    validTill?: true
+    hasFullPermit?: true
+  }
+
+  export type AssetGroupMemberMaxAggregateInputType = {
+    id?: true
+    assetGroup?: true
+    member?: true
+    isPermanent?: true
+    validTill?: true
+    hasFullPermit?: true
+  }
+
+  export type AssetGroupMemberCountAggregateInputType = {
+    id?: true
+    assetGroup?: true
+    member?: true
+    isPermanent?: true
+    validTill?: true
+    hasFullPermit?: true
+    _all?: true
+  }
+
+  export type AssetGroupMemberAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AssetGroupMember to aggregate.
+     */
+    where?: AssetGroupMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssetGroupMembers to fetch.
+     */
+    orderBy?: AssetGroupMemberOrderByWithRelationInput | AssetGroupMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AssetGroupMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssetGroupMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssetGroupMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AssetGroupMembers
+    **/
+    _count?: true | AssetGroupMemberCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AssetGroupMemberMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AssetGroupMemberMaxAggregateInputType
+  }
+
+  export type GetAssetGroupMemberAggregateType<T extends AssetGroupMemberAggregateArgs> = {
+        [P in keyof T & keyof AggregateAssetGroupMember]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAssetGroupMember[P]>
+      : GetScalarType<T[P], AggregateAssetGroupMember[P]>
+  }
+
+
+
+
+  export type AssetGroupMemberGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AssetGroupMemberWhereInput
+    orderBy?: AssetGroupMemberOrderByWithAggregationInput | AssetGroupMemberOrderByWithAggregationInput[]
+    by: AssetGroupMemberScalarFieldEnum[] | AssetGroupMemberScalarFieldEnum
+    having?: AssetGroupMemberScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AssetGroupMemberCountAggregateInputType | true
+    _min?: AssetGroupMemberMinAggregateInputType
+    _max?: AssetGroupMemberMaxAggregateInputType
+  }
+
+  export type AssetGroupMemberGroupByOutputType = {
+    id: string
+    assetGroup: string
+    member: string
+    isPermanent: boolean
+    validTill: Date | null
+    hasFullPermit: boolean
+    _count: AssetGroupMemberCountAggregateOutputType | null
+    _min: AssetGroupMemberMinAggregateOutputType | null
+    _max: AssetGroupMemberMaxAggregateOutputType | null
+  }
+
+  type GetAssetGroupMemberGroupByPayload<T extends AssetGroupMemberGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AssetGroupMemberGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AssetGroupMemberGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AssetGroupMemberGroupByOutputType[P]>
+            : GetScalarType<T[P], AssetGroupMemberGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AssetGroupMemberSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    assetGroup?: boolean
+    member?: boolean
+    isPermanent?: boolean
+    validTill?: boolean
+    hasFullPermit?: boolean
+    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
+    roles?: boolean | AssetGroupMember$rolesArgs<ExtArgs>
+    _count?: boolean | AssetGroupMemberCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assetGroupMember"]>
+
+  export type AssetGroupMemberSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    assetGroup?: boolean
+    member?: boolean
+    isPermanent?: boolean
+    validTill?: boolean
+    hasFullPermit?: boolean
+    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assetGroupMember"]>
+
+  export type AssetGroupMemberSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    assetGroup?: boolean
+    member?: boolean
+    isPermanent?: boolean
+    validTill?: boolean
+    hasFullPermit?: boolean
+    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assetGroupMember"]>
+
+  export type AssetGroupMemberSelectScalar = {
+    id?: boolean
+    assetGroup?: boolean
+    member?: boolean
+    isPermanent?: boolean
+    validTill?: boolean
+    hasFullPermit?: boolean
+  }
+
+  export type AssetGroupMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "assetGroup" | "member" | "isPermanent" | "validTill" | "hasFullPermit", ExtArgs["result"]["assetGroupMember"]>
+  export type AssetGroupMemberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
+    roles?: boolean | AssetGroupMember$rolesArgs<ExtArgs>
+    _count?: boolean | AssetGroupMemberCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type AssetGroupMemberIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
+  }
+  export type AssetGroupMemberIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
+  }
+
+  export type $AssetGroupMemberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AssetGroupMember"
+    objects: {
+      assetGroupInfo: Prisma.$AssetGroupInfoPayload<ExtArgs>
+      roles: Prisma.$AssetMemberRolePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      assetGroup: string
+      member: string
+      isPermanent: boolean
+      validTill: Date | null
+      hasFullPermit: boolean
+    }, ExtArgs["result"]["assetGroupMember"]>
+    composites: {}
+  }
+
+  type AssetGroupMemberGetPayload<S extends boolean | null | undefined | AssetGroupMemberDefaultArgs> = $Result.GetResult<Prisma.$AssetGroupMemberPayload, S>
+
+  type AssetGroupMemberCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AssetGroupMemberFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AssetGroupMemberCountAggregateInputType | true
+    }
+
+  export interface AssetGroupMemberDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AssetGroupMember'], meta: { name: 'AssetGroupMember' } }
+    /**
+     * Find zero or one AssetGroupMember that matches the filter.
+     * @param {AssetGroupMemberFindUniqueArgs} args - Arguments to find a AssetGroupMember
+     * @example
+     * // Get one AssetGroupMember
+     * const assetGroupMember = await prisma.assetGroupMember.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AssetGroupMemberFindUniqueArgs>(args: SelectSubset<T, AssetGroupMemberFindUniqueArgs<ExtArgs>>): Prisma__AssetGroupMemberClient<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AssetGroupMember that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AssetGroupMemberFindUniqueOrThrowArgs} args - Arguments to find a AssetGroupMember
+     * @example
+     * // Get one AssetGroupMember
+     * const assetGroupMember = await prisma.assetGroupMember.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AssetGroupMemberFindUniqueOrThrowArgs>(args: SelectSubset<T, AssetGroupMemberFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AssetGroupMemberClient<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AssetGroupMember that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetGroupMemberFindFirstArgs} args - Arguments to find a AssetGroupMember
+     * @example
+     * // Get one AssetGroupMember
+     * const assetGroupMember = await prisma.assetGroupMember.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AssetGroupMemberFindFirstArgs>(args?: SelectSubset<T, AssetGroupMemberFindFirstArgs<ExtArgs>>): Prisma__AssetGroupMemberClient<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AssetGroupMember that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetGroupMemberFindFirstOrThrowArgs} args - Arguments to find a AssetGroupMember
+     * @example
+     * // Get one AssetGroupMember
+     * const assetGroupMember = await prisma.assetGroupMember.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AssetGroupMemberFindFirstOrThrowArgs>(args?: SelectSubset<T, AssetGroupMemberFindFirstOrThrowArgs<ExtArgs>>): Prisma__AssetGroupMemberClient<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AssetGroupMembers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetGroupMemberFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AssetGroupMembers
+     * const assetGroupMembers = await prisma.assetGroupMember.findMany()
+     * 
+     * // Get first 10 AssetGroupMembers
+     * const assetGroupMembers = await prisma.assetGroupMember.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const assetGroupMemberWithIdOnly = await prisma.assetGroupMember.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AssetGroupMemberFindManyArgs>(args?: SelectSubset<T, AssetGroupMemberFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AssetGroupMember.
+     * @param {AssetGroupMemberCreateArgs} args - Arguments to create a AssetGroupMember.
+     * @example
+     * // Create one AssetGroupMember
+     * const AssetGroupMember = await prisma.assetGroupMember.create({
+     *   data: {
+     *     // ... data to create a AssetGroupMember
+     *   }
+     * })
+     * 
+     */
+    create<T extends AssetGroupMemberCreateArgs>(args: SelectSubset<T, AssetGroupMemberCreateArgs<ExtArgs>>): Prisma__AssetGroupMemberClient<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AssetGroupMembers.
+     * @param {AssetGroupMemberCreateManyArgs} args - Arguments to create many AssetGroupMembers.
+     * @example
+     * // Create many AssetGroupMembers
+     * const assetGroupMember = await prisma.assetGroupMember.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AssetGroupMemberCreateManyArgs>(args?: SelectSubset<T, AssetGroupMemberCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AssetGroupMembers and returns the data saved in the database.
+     * @param {AssetGroupMemberCreateManyAndReturnArgs} args - Arguments to create many AssetGroupMembers.
+     * @example
+     * // Create many AssetGroupMembers
+     * const assetGroupMember = await prisma.assetGroupMember.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AssetGroupMembers and only return the `id`
+     * const assetGroupMemberWithIdOnly = await prisma.assetGroupMember.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AssetGroupMemberCreateManyAndReturnArgs>(args?: SelectSubset<T, AssetGroupMemberCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AssetGroupMember.
+     * @param {AssetGroupMemberDeleteArgs} args - Arguments to delete one AssetGroupMember.
+     * @example
+     * // Delete one AssetGroupMember
+     * const AssetGroupMember = await prisma.assetGroupMember.delete({
+     *   where: {
+     *     // ... filter to delete one AssetGroupMember
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AssetGroupMemberDeleteArgs>(args: SelectSubset<T, AssetGroupMemberDeleteArgs<ExtArgs>>): Prisma__AssetGroupMemberClient<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AssetGroupMember.
+     * @param {AssetGroupMemberUpdateArgs} args - Arguments to update one AssetGroupMember.
+     * @example
+     * // Update one AssetGroupMember
+     * const assetGroupMember = await prisma.assetGroupMember.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AssetGroupMemberUpdateArgs>(args: SelectSubset<T, AssetGroupMemberUpdateArgs<ExtArgs>>): Prisma__AssetGroupMemberClient<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AssetGroupMembers.
+     * @param {AssetGroupMemberDeleteManyArgs} args - Arguments to filter AssetGroupMembers to delete.
+     * @example
+     * // Delete a few AssetGroupMembers
+     * const { count } = await prisma.assetGroupMember.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AssetGroupMemberDeleteManyArgs>(args?: SelectSubset<T, AssetGroupMemberDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AssetGroupMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetGroupMemberUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AssetGroupMembers
+     * const assetGroupMember = await prisma.assetGroupMember.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AssetGroupMemberUpdateManyArgs>(args: SelectSubset<T, AssetGroupMemberUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AssetGroupMembers and returns the data updated in the database.
+     * @param {AssetGroupMemberUpdateManyAndReturnArgs} args - Arguments to update many AssetGroupMembers.
+     * @example
+     * // Update many AssetGroupMembers
+     * const assetGroupMember = await prisma.assetGroupMember.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AssetGroupMembers and only return the `id`
+     * const assetGroupMemberWithIdOnly = await prisma.assetGroupMember.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AssetGroupMemberUpdateManyAndReturnArgs>(args: SelectSubset<T, AssetGroupMemberUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AssetGroupMember.
+     * @param {AssetGroupMemberUpsertArgs} args - Arguments to update or create a AssetGroupMember.
+     * @example
+     * // Update or create a AssetGroupMember
+     * const assetGroupMember = await prisma.assetGroupMember.upsert({
+     *   create: {
+     *     // ... data to create a AssetGroupMember
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AssetGroupMember we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AssetGroupMemberUpsertArgs>(args: SelectSubset<T, AssetGroupMemberUpsertArgs<ExtArgs>>): Prisma__AssetGroupMemberClient<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AssetGroupMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetGroupMemberCountArgs} args - Arguments to filter AssetGroupMembers to count.
+     * @example
+     * // Count the number of AssetGroupMembers
+     * const count = await prisma.assetGroupMember.count({
+     *   where: {
+     *     // ... the filter for the AssetGroupMembers we want to count
+     *   }
+     * })
+    **/
+    count<T extends AssetGroupMemberCountArgs>(
+      args?: Subset<T, AssetGroupMemberCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AssetGroupMemberCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AssetGroupMember.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetGroupMemberAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AssetGroupMemberAggregateArgs>(args: Subset<T, AssetGroupMemberAggregateArgs>): Prisma.PrismaPromise<GetAssetGroupMemberAggregateType<T>>
+
+    /**
+     * Group by AssetGroupMember.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetGroupMemberGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AssetGroupMemberGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AssetGroupMemberGroupByArgs['orderBy'] }
+        : { orderBy?: AssetGroupMemberGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AssetGroupMemberGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAssetGroupMemberGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AssetGroupMember model
+   */
+  readonly fields: AssetGroupMemberFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AssetGroupMember.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AssetGroupMemberClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    assetGroupInfo<T extends AssetGroupInfoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssetGroupInfoDefaultArgs<ExtArgs>>): Prisma__AssetGroupInfoClient<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    roles<T extends AssetGroupMember$rolesArgs<ExtArgs> = {}>(args?: Subset<T, AssetGroupMember$rolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AssetGroupMember model
+   */
+  interface AssetGroupMemberFieldRefs {
+    readonly id: FieldRef<"AssetGroupMember", 'String'>
+    readonly assetGroup: FieldRef<"AssetGroupMember", 'String'>
+    readonly member: FieldRef<"AssetGroupMember", 'String'>
+    readonly isPermanent: FieldRef<"AssetGroupMember", 'Boolean'>
+    readonly validTill: FieldRef<"AssetGroupMember", 'DateTime'>
+    readonly hasFullPermit: FieldRef<"AssetGroupMember", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AssetGroupMember findUnique
+   */
+  export type AssetGroupMemberFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupMember
+     */
+    select?: AssetGroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupMember
+     */
+    omit?: AssetGroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which AssetGroupMember to fetch.
+     */
+    where: AssetGroupMemberWhereUniqueInput
+  }
+
+  /**
+   * AssetGroupMember findUniqueOrThrow
+   */
+  export type AssetGroupMemberFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupMember
+     */
+    select?: AssetGroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupMember
+     */
+    omit?: AssetGroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which AssetGroupMember to fetch.
+     */
+    where: AssetGroupMemberWhereUniqueInput
+  }
+
+  /**
+   * AssetGroupMember findFirst
+   */
+  export type AssetGroupMemberFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupMember
+     */
+    select?: AssetGroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupMember
+     */
+    omit?: AssetGroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which AssetGroupMember to fetch.
+     */
+    where?: AssetGroupMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssetGroupMembers to fetch.
+     */
+    orderBy?: AssetGroupMemberOrderByWithRelationInput | AssetGroupMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AssetGroupMembers.
+     */
+    cursor?: AssetGroupMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssetGroupMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssetGroupMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssetGroupMembers.
+     */
+    distinct?: AssetGroupMemberScalarFieldEnum | AssetGroupMemberScalarFieldEnum[]
+  }
+
+  /**
+   * AssetGroupMember findFirstOrThrow
+   */
+  export type AssetGroupMemberFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupMember
+     */
+    select?: AssetGroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupMember
+     */
+    omit?: AssetGroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which AssetGroupMember to fetch.
+     */
+    where?: AssetGroupMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssetGroupMembers to fetch.
+     */
+    orderBy?: AssetGroupMemberOrderByWithRelationInput | AssetGroupMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AssetGroupMembers.
+     */
+    cursor?: AssetGroupMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssetGroupMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssetGroupMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssetGroupMembers.
+     */
+    distinct?: AssetGroupMemberScalarFieldEnum | AssetGroupMemberScalarFieldEnum[]
+  }
+
+  /**
+   * AssetGroupMember findMany
+   */
+  export type AssetGroupMemberFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupMember
+     */
+    select?: AssetGroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupMember
+     */
+    omit?: AssetGroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which AssetGroupMembers to fetch.
+     */
+    where?: AssetGroupMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssetGroupMembers to fetch.
+     */
+    orderBy?: AssetGroupMemberOrderByWithRelationInput | AssetGroupMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AssetGroupMembers.
+     */
+    cursor?: AssetGroupMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssetGroupMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssetGroupMembers.
+     */
+    skip?: number
+    distinct?: AssetGroupMemberScalarFieldEnum | AssetGroupMemberScalarFieldEnum[]
+  }
+
+  /**
+   * AssetGroupMember create
+   */
+  export type AssetGroupMemberCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupMember
+     */
+    select?: AssetGroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupMember
+     */
+    omit?: AssetGroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupMemberInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AssetGroupMember.
+     */
+    data: XOR<AssetGroupMemberCreateInput, AssetGroupMemberUncheckedCreateInput>
+  }
+
+  /**
+   * AssetGroupMember createMany
+   */
+  export type AssetGroupMemberCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AssetGroupMembers.
+     */
+    data: AssetGroupMemberCreateManyInput | AssetGroupMemberCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AssetGroupMember createManyAndReturn
+   */
+  export type AssetGroupMemberCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupMember
+     */
+    select?: AssetGroupMemberSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupMember
+     */
+    omit?: AssetGroupMemberOmit<ExtArgs> | null
+    /**
+     * The data used to create many AssetGroupMembers.
+     */
+    data: AssetGroupMemberCreateManyInput | AssetGroupMemberCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupMemberIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AssetGroupMember update
+   */
+  export type AssetGroupMemberUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupMember
+     */
+    select?: AssetGroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupMember
+     */
+    omit?: AssetGroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupMemberInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AssetGroupMember.
+     */
+    data: XOR<AssetGroupMemberUpdateInput, AssetGroupMemberUncheckedUpdateInput>
+    /**
+     * Choose, which AssetGroupMember to update.
+     */
+    where: AssetGroupMemberWhereUniqueInput
+  }
+
+  /**
+   * AssetGroupMember updateMany
+   */
+  export type AssetGroupMemberUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AssetGroupMembers.
+     */
+    data: XOR<AssetGroupMemberUpdateManyMutationInput, AssetGroupMemberUncheckedUpdateManyInput>
+    /**
+     * Filter which AssetGroupMembers to update
+     */
+    where?: AssetGroupMemberWhereInput
+    /**
+     * Limit how many AssetGroupMembers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AssetGroupMember updateManyAndReturn
+   */
+  export type AssetGroupMemberUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupMember
+     */
+    select?: AssetGroupMemberSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupMember
+     */
+    omit?: AssetGroupMemberOmit<ExtArgs> | null
+    /**
+     * The data used to update AssetGroupMembers.
+     */
+    data: XOR<AssetGroupMemberUpdateManyMutationInput, AssetGroupMemberUncheckedUpdateManyInput>
+    /**
+     * Filter which AssetGroupMembers to update
+     */
+    where?: AssetGroupMemberWhereInput
+    /**
+     * Limit how many AssetGroupMembers to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupMemberIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AssetGroupMember upsert
+   */
+  export type AssetGroupMemberUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupMember
+     */
+    select?: AssetGroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupMember
+     */
+    omit?: AssetGroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupMemberInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AssetGroupMember to update in case it exists.
+     */
+    where: AssetGroupMemberWhereUniqueInput
+    /**
+     * In case the AssetGroupMember found by the `where` argument doesn't exist, create a new AssetGroupMember with this data.
+     */
+    create: XOR<AssetGroupMemberCreateInput, AssetGroupMemberUncheckedCreateInput>
+    /**
+     * In case the AssetGroupMember was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AssetGroupMemberUpdateInput, AssetGroupMemberUncheckedUpdateInput>
+  }
+
+  /**
+   * AssetGroupMember delete
+   */
+  export type AssetGroupMemberDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupMember
+     */
+    select?: AssetGroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupMember
+     */
+    omit?: AssetGroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupMemberInclude<ExtArgs> | null
+    /**
+     * Filter which AssetGroupMember to delete.
+     */
+    where: AssetGroupMemberWhereUniqueInput
+  }
+
+  /**
+   * AssetGroupMember deleteMany
+   */
+  export type AssetGroupMemberDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AssetGroupMembers to delete
+     */
+    where?: AssetGroupMemberWhereInput
+    /**
+     * Limit how many AssetGroupMembers to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AssetGroupMember.roles
+   */
+  export type AssetGroupMember$rolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetMemberRole
+     */
+    select?: AssetMemberRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetMemberRole
+     */
+    omit?: AssetMemberRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetMemberRoleInclude<ExtArgs> | null
+    where?: AssetMemberRoleWhereInput
+    orderBy?: AssetMemberRoleOrderByWithRelationInput | AssetMemberRoleOrderByWithRelationInput[]
+    cursor?: AssetMemberRoleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AssetMemberRoleScalarFieldEnum | AssetMemberRoleScalarFieldEnum[]
+  }
+
+  /**
+   * AssetGroupMember without action
+   */
+  export type AssetGroupMemberDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetGroupMember
+     */
+    select?: AssetGroupMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetGroupMember
+     */
+    omit?: AssetGroupMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetGroupMemberInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Asset
+   */
+
+  export type AggregateAsset = {
+    _count: AssetCountAggregateOutputType | null
+    _min: AssetMinAggregateOutputType | null
+    _max: AssetMaxAggregateOutputType | null
+  }
+
+  export type AssetMinAggregateOutputType = {
+    id: string | null
+    asset: string | null
+    type: string | null
+    assetGroup: string | null
+    details: string | null
+  }
+
+  export type AssetMaxAggregateOutputType = {
+    id: string | null
+    asset: string | null
+    type: string | null
+    assetGroup: string | null
+    details: string | null
+  }
+
+  export type AssetCountAggregateOutputType = {
+    id: number
+    asset: number
+    type: number
+    assetGroup: number
+    details: number
+    _all: number
+  }
+
+
+  export type AssetMinAggregateInputType = {
+    id?: true
+    asset?: true
+    type?: true
+    assetGroup?: true
+    details?: true
+  }
+
+  export type AssetMaxAggregateInputType = {
+    id?: true
+    asset?: true
+    type?: true
+    assetGroup?: true
+    details?: true
+  }
+
+  export type AssetCountAggregateInputType = {
+    id?: true
+    asset?: true
+    type?: true
+    assetGroup?: true
+    details?: true
+    _all?: true
+  }
+
+  export type AssetAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Asset to aggregate.
+     */
+    where?: AssetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Assets to fetch.
+     */
+    orderBy?: AssetOrderByWithRelationInput | AssetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AssetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Assets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Assets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Assets
+    **/
+    _count?: true | AssetCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AssetMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AssetMaxAggregateInputType
+  }
+
+  export type GetAssetAggregateType<T extends AssetAggregateArgs> = {
+        [P in keyof T & keyof AggregateAsset]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAsset[P]>
+      : GetScalarType<T[P], AggregateAsset[P]>
+  }
+
+
+
+
+  export type AssetGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AssetWhereInput
+    orderBy?: AssetOrderByWithAggregationInput | AssetOrderByWithAggregationInput[]
+    by: AssetScalarFieldEnum[] | AssetScalarFieldEnum
+    having?: AssetScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AssetCountAggregateInputType | true
+    _min?: AssetMinAggregateInputType
+    _max?: AssetMaxAggregateInputType
+  }
+
+  export type AssetGroupByOutputType = {
+    id: string
+    asset: string
+    type: string
+    assetGroup: string
+    details: string | null
+    _count: AssetCountAggregateOutputType | null
+    _min: AssetMinAggregateOutputType | null
+    _max: AssetMaxAggregateOutputType | null
+  }
+
+  type GetAssetGroupByPayload<T extends AssetGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AssetGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AssetGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AssetGroupByOutputType[P]>
+            : GetScalarType<T[P], AssetGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AssetSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    asset?: boolean
+    type?: boolean
+    assetGroup?: boolean
+    details?: boolean
+    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
+    roles?: boolean | Asset$rolesArgs<ExtArgs>
+    _count?: boolean | AssetCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["asset"]>
+
+  export type AssetSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    asset?: boolean
+    type?: boolean
+    assetGroup?: boolean
+    details?: boolean
+    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["asset"]>
+
+  export type AssetSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    asset?: boolean
+    type?: boolean
+    assetGroup?: boolean
+    details?: boolean
+    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["asset"]>
+
+  export type AssetSelectScalar = {
+    id?: boolean
+    asset?: boolean
+    type?: boolean
+    assetGroup?: boolean
+    details?: boolean
+  }
+
+  export type AssetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "asset" | "type" | "assetGroup" | "details", ExtArgs["result"]["asset"]>
+  export type AssetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
+    roles?: boolean | Asset$rolesArgs<ExtArgs>
+    _count?: boolean | AssetCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type AssetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
+  }
+  export type AssetIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
+  }
+
+  export type $AssetPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Asset"
+    objects: {
+      assetGroupInfo: Prisma.$AssetGroupInfoPayload<ExtArgs>
+      roles: Prisma.$AssetMemberRolePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      asset: string
+      type: string
+      assetGroup: string
+      details: string | null
+    }, ExtArgs["result"]["asset"]>
+    composites: {}
+  }
+
+  type AssetGetPayload<S extends boolean | null | undefined | AssetDefaultArgs> = $Result.GetResult<Prisma.$AssetPayload, S>
+
+  type AssetCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AssetFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AssetCountAggregateInputType | true
+    }
+
+  export interface AssetDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Asset'], meta: { name: 'Asset' } }
+    /**
+     * Find zero or one Asset that matches the filter.
+     * @param {AssetFindUniqueArgs} args - Arguments to find a Asset
+     * @example
+     * // Get one Asset
+     * const asset = await prisma.asset.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AssetFindUniqueArgs>(args: SelectSubset<T, AssetFindUniqueArgs<ExtArgs>>): Prisma__AssetClient<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Asset that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AssetFindUniqueOrThrowArgs} args - Arguments to find a Asset
+     * @example
+     * // Get one Asset
+     * const asset = await prisma.asset.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AssetFindUniqueOrThrowArgs>(args: SelectSubset<T, AssetFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AssetClient<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Asset that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetFindFirstArgs} args - Arguments to find a Asset
+     * @example
+     * // Get one Asset
+     * const asset = await prisma.asset.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AssetFindFirstArgs>(args?: SelectSubset<T, AssetFindFirstArgs<ExtArgs>>): Prisma__AssetClient<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Asset that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetFindFirstOrThrowArgs} args - Arguments to find a Asset
+     * @example
+     * // Get one Asset
+     * const asset = await prisma.asset.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AssetFindFirstOrThrowArgs>(args?: SelectSubset<T, AssetFindFirstOrThrowArgs<ExtArgs>>): Prisma__AssetClient<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Assets that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Assets
+     * const assets = await prisma.asset.findMany()
+     * 
+     * // Get first 10 Assets
+     * const assets = await prisma.asset.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const assetWithIdOnly = await prisma.asset.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AssetFindManyArgs>(args?: SelectSubset<T, AssetFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Asset.
+     * @param {AssetCreateArgs} args - Arguments to create a Asset.
+     * @example
+     * // Create one Asset
+     * const Asset = await prisma.asset.create({
+     *   data: {
+     *     // ... data to create a Asset
+     *   }
+     * })
+     * 
+     */
+    create<T extends AssetCreateArgs>(args: SelectSubset<T, AssetCreateArgs<ExtArgs>>): Prisma__AssetClient<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Assets.
+     * @param {AssetCreateManyArgs} args - Arguments to create many Assets.
+     * @example
+     * // Create many Assets
+     * const asset = await prisma.asset.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AssetCreateManyArgs>(args?: SelectSubset<T, AssetCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Assets and returns the data saved in the database.
+     * @param {AssetCreateManyAndReturnArgs} args - Arguments to create many Assets.
+     * @example
+     * // Create many Assets
+     * const asset = await prisma.asset.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Assets and only return the `id`
+     * const assetWithIdOnly = await prisma.asset.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AssetCreateManyAndReturnArgs>(args?: SelectSubset<T, AssetCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Asset.
+     * @param {AssetDeleteArgs} args - Arguments to delete one Asset.
+     * @example
+     * // Delete one Asset
+     * const Asset = await prisma.asset.delete({
+     *   where: {
+     *     // ... filter to delete one Asset
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AssetDeleteArgs>(args: SelectSubset<T, AssetDeleteArgs<ExtArgs>>): Prisma__AssetClient<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Asset.
+     * @param {AssetUpdateArgs} args - Arguments to update one Asset.
+     * @example
+     * // Update one Asset
+     * const asset = await prisma.asset.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AssetUpdateArgs>(args: SelectSubset<T, AssetUpdateArgs<ExtArgs>>): Prisma__AssetClient<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Assets.
+     * @param {AssetDeleteManyArgs} args - Arguments to filter Assets to delete.
+     * @example
+     * // Delete a few Assets
+     * const { count } = await prisma.asset.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AssetDeleteManyArgs>(args?: SelectSubset<T, AssetDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Assets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Assets
+     * const asset = await prisma.asset.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AssetUpdateManyArgs>(args: SelectSubset<T, AssetUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Assets and returns the data updated in the database.
+     * @param {AssetUpdateManyAndReturnArgs} args - Arguments to update many Assets.
+     * @example
+     * // Update many Assets
+     * const asset = await prisma.asset.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Assets and only return the `id`
+     * const assetWithIdOnly = await prisma.asset.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AssetUpdateManyAndReturnArgs>(args: SelectSubset<T, AssetUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Asset.
+     * @param {AssetUpsertArgs} args - Arguments to update or create a Asset.
+     * @example
+     * // Update or create a Asset
+     * const asset = await prisma.asset.upsert({
+     *   create: {
+     *     // ... data to create a Asset
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Asset we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AssetUpsertArgs>(args: SelectSubset<T, AssetUpsertArgs<ExtArgs>>): Prisma__AssetClient<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Assets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetCountArgs} args - Arguments to filter Assets to count.
+     * @example
+     * // Count the number of Assets
+     * const count = await prisma.asset.count({
+     *   where: {
+     *     // ... the filter for the Assets we want to count
+     *   }
+     * })
+    **/
+    count<T extends AssetCountArgs>(
+      args?: Subset<T, AssetCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AssetCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Asset.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AssetAggregateArgs>(args: Subset<T, AssetAggregateArgs>): Prisma.PrismaPromise<GetAssetAggregateType<T>>
+
+    /**
+     * Group by Asset.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AssetGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AssetGroupByArgs['orderBy'] }
+        : { orderBy?: AssetGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AssetGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAssetGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Asset model
+   */
+  readonly fields: AssetFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Asset.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AssetClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    assetGroupInfo<T extends AssetGroupInfoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssetGroupInfoDefaultArgs<ExtArgs>>): Prisma__AssetGroupInfoClient<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    roles<T extends Asset$rolesArgs<ExtArgs> = {}>(args?: Subset<T, Asset$rolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Asset model
+   */
+  interface AssetFieldRefs {
+    readonly id: FieldRef<"Asset", 'String'>
+    readonly asset: FieldRef<"Asset", 'String'>
+    readonly type: FieldRef<"Asset", 'String'>
+    readonly assetGroup: FieldRef<"Asset", 'String'>
+    readonly details: FieldRef<"Asset", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Asset findUnique
+   */
+  export type AssetFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Asset
+     */
+    select?: AssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Asset
+     */
+    omit?: AssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetInclude<ExtArgs> | null
+    /**
+     * Filter, which Asset to fetch.
+     */
+    where: AssetWhereUniqueInput
+  }
+
+  /**
+   * Asset findUniqueOrThrow
+   */
+  export type AssetFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Asset
+     */
+    select?: AssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Asset
+     */
+    omit?: AssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetInclude<ExtArgs> | null
+    /**
+     * Filter, which Asset to fetch.
+     */
+    where: AssetWhereUniqueInput
+  }
+
+  /**
+   * Asset findFirst
+   */
+  export type AssetFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Asset
+     */
+    select?: AssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Asset
+     */
+    omit?: AssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetInclude<ExtArgs> | null
+    /**
+     * Filter, which Asset to fetch.
+     */
+    where?: AssetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Assets to fetch.
+     */
+    orderBy?: AssetOrderByWithRelationInput | AssetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Assets.
+     */
+    cursor?: AssetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Assets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Assets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Assets.
+     */
+    distinct?: AssetScalarFieldEnum | AssetScalarFieldEnum[]
+  }
+
+  /**
+   * Asset findFirstOrThrow
+   */
+  export type AssetFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Asset
+     */
+    select?: AssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Asset
+     */
+    omit?: AssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetInclude<ExtArgs> | null
+    /**
+     * Filter, which Asset to fetch.
+     */
+    where?: AssetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Assets to fetch.
+     */
+    orderBy?: AssetOrderByWithRelationInput | AssetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Assets.
+     */
+    cursor?: AssetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Assets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Assets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Assets.
+     */
+    distinct?: AssetScalarFieldEnum | AssetScalarFieldEnum[]
+  }
+
+  /**
+   * Asset findMany
+   */
+  export type AssetFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Asset
+     */
+    select?: AssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Asset
+     */
+    omit?: AssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetInclude<ExtArgs> | null
+    /**
+     * Filter, which Assets to fetch.
+     */
+    where?: AssetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Assets to fetch.
+     */
+    orderBy?: AssetOrderByWithRelationInput | AssetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Assets.
+     */
+    cursor?: AssetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Assets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Assets.
+     */
+    skip?: number
+    distinct?: AssetScalarFieldEnum | AssetScalarFieldEnum[]
+  }
+
+  /**
+   * Asset create
+   */
+  export type AssetCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Asset
+     */
+    select?: AssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Asset
+     */
+    omit?: AssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Asset.
+     */
+    data: XOR<AssetCreateInput, AssetUncheckedCreateInput>
+  }
+
+  /**
+   * Asset createMany
+   */
+  export type AssetCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Assets.
+     */
+    data: AssetCreateManyInput | AssetCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Asset createManyAndReturn
+   */
+  export type AssetCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Asset
+     */
+    select?: AssetSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Asset
+     */
+    omit?: AssetOmit<ExtArgs> | null
+    /**
+     * The data used to create many Assets.
+     */
+    data: AssetCreateManyInput | AssetCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Asset update
+   */
+  export type AssetUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Asset
+     */
+    select?: AssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Asset
+     */
+    omit?: AssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Asset.
+     */
+    data: XOR<AssetUpdateInput, AssetUncheckedUpdateInput>
+    /**
+     * Choose, which Asset to update.
+     */
+    where: AssetWhereUniqueInput
+  }
+
+  /**
+   * Asset updateMany
+   */
+  export type AssetUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Assets.
+     */
+    data: XOR<AssetUpdateManyMutationInput, AssetUncheckedUpdateManyInput>
+    /**
+     * Filter which Assets to update
+     */
+    where?: AssetWhereInput
+    /**
+     * Limit how many Assets to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Asset updateManyAndReturn
+   */
+  export type AssetUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Asset
+     */
+    select?: AssetSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Asset
+     */
+    omit?: AssetOmit<ExtArgs> | null
+    /**
+     * The data used to update Assets.
+     */
+    data: XOR<AssetUpdateManyMutationInput, AssetUncheckedUpdateManyInput>
+    /**
+     * Filter which Assets to update
+     */
+    where?: AssetWhereInput
+    /**
+     * Limit how many Assets to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Asset upsert
+   */
+  export type AssetUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Asset
+     */
+    select?: AssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Asset
+     */
+    omit?: AssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Asset to update in case it exists.
+     */
+    where: AssetWhereUniqueInput
+    /**
+     * In case the Asset found by the `where` argument doesn't exist, create a new Asset with this data.
+     */
+    create: XOR<AssetCreateInput, AssetUncheckedCreateInput>
+    /**
+     * In case the Asset was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AssetUpdateInput, AssetUncheckedUpdateInput>
+  }
+
+  /**
+   * Asset delete
+   */
+  export type AssetDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Asset
+     */
+    select?: AssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Asset
+     */
+    omit?: AssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetInclude<ExtArgs> | null
+    /**
+     * Filter which Asset to delete.
+     */
+    where: AssetWhereUniqueInput
+  }
+
+  /**
+   * Asset deleteMany
+   */
+  export type AssetDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Assets to delete
+     */
+    where?: AssetWhereInput
+    /**
+     * Limit how many Assets to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Asset.roles
+   */
+  export type Asset$rolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetMemberRole
+     */
+    select?: AssetMemberRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetMemberRole
+     */
+    omit?: AssetMemberRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetMemberRoleInclude<ExtArgs> | null
+    where?: AssetMemberRoleWhereInput
+    orderBy?: AssetMemberRoleOrderByWithRelationInput | AssetMemberRoleOrderByWithRelationInput[]
+    cursor?: AssetMemberRoleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AssetMemberRoleScalarFieldEnum | AssetMemberRoleScalarFieldEnum[]
+  }
+
+  /**
+   * Asset without action
+   */
+  export type AssetDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Asset
+     */
+    select?: AssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Asset
+     */
+    omit?: AssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AssetMemberRole
+   */
+
+  export type AggregateAssetMemberRole = {
+    _count: AssetMemberRoleCountAggregateOutputType | null
+    _min: AssetMemberRoleMinAggregateOutputType | null
+    _max: AssetMemberRoleMaxAggregateOutputType | null
+  }
+
+  export type AssetMemberRoleMinAggregateOutputType = {
+    id: string | null
+    assetMember: string | null
+    asset: string | null
+    role: string | null
+  }
+
+  export type AssetMemberRoleMaxAggregateOutputType = {
+    id: string | null
+    assetMember: string | null
+    asset: string | null
+    role: string | null
+  }
+
+  export type AssetMemberRoleCountAggregateOutputType = {
+    id: number
+    assetMember: number
+    asset: number
+    role: number
+    _all: number
+  }
+
+
+  export type AssetMemberRoleMinAggregateInputType = {
+    id?: true
+    assetMember?: true
+    asset?: true
+    role?: true
+  }
+
+  export type AssetMemberRoleMaxAggregateInputType = {
+    id?: true
+    assetMember?: true
+    asset?: true
+    role?: true
+  }
+
+  export type AssetMemberRoleCountAggregateInputType = {
+    id?: true
+    assetMember?: true
+    asset?: true
+    role?: true
+    _all?: true
+  }
+
+  export type AssetMemberRoleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AssetMemberRole to aggregate.
+     */
+    where?: AssetMemberRoleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssetMemberRoles to fetch.
+     */
+    orderBy?: AssetMemberRoleOrderByWithRelationInput | AssetMemberRoleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AssetMemberRoleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssetMemberRoles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssetMemberRoles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AssetMemberRoles
+    **/
+    _count?: true | AssetMemberRoleCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AssetMemberRoleMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AssetMemberRoleMaxAggregateInputType
+  }
+
+  export type GetAssetMemberRoleAggregateType<T extends AssetMemberRoleAggregateArgs> = {
+        [P in keyof T & keyof AggregateAssetMemberRole]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAssetMemberRole[P]>
+      : GetScalarType<T[P], AggregateAssetMemberRole[P]>
+  }
+
+
+
+
+  export type AssetMemberRoleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AssetMemberRoleWhereInput
+    orderBy?: AssetMemberRoleOrderByWithAggregationInput | AssetMemberRoleOrderByWithAggregationInput[]
+    by: AssetMemberRoleScalarFieldEnum[] | AssetMemberRoleScalarFieldEnum
+    having?: AssetMemberRoleScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AssetMemberRoleCountAggregateInputType | true
+    _min?: AssetMemberRoleMinAggregateInputType
+    _max?: AssetMemberRoleMaxAggregateInputType
+  }
+
+  export type AssetMemberRoleGroupByOutputType = {
+    id: string
+    assetMember: string
+    asset: string
+    role: string
+    _count: AssetMemberRoleCountAggregateOutputType | null
+    _min: AssetMemberRoleMinAggregateOutputType | null
+    _max: AssetMemberRoleMaxAggregateOutputType | null
+  }
+
+  type GetAssetMemberRoleGroupByPayload<T extends AssetMemberRoleGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AssetMemberRoleGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AssetMemberRoleGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AssetMemberRoleGroupByOutputType[P]>
+            : GetScalarType<T[P], AssetMemberRoleGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AssetMemberRoleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    assetMember?: boolean
+    asset?: boolean
+    role?: boolean
+    member?: boolean | AssetGroupMemberDefaultArgs<ExtArgs>
+    assetRef?: boolean | AssetDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assetMemberRole"]>
+
+  export type AssetMemberRoleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    assetMember?: boolean
+    asset?: boolean
+    role?: boolean
+    member?: boolean | AssetGroupMemberDefaultArgs<ExtArgs>
+    assetRef?: boolean | AssetDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assetMemberRole"]>
+
+  export type AssetMemberRoleSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    assetMember?: boolean
+    asset?: boolean
+    role?: boolean
+    member?: boolean | AssetGroupMemberDefaultArgs<ExtArgs>
+    assetRef?: boolean | AssetDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assetMemberRole"]>
+
+  export type AssetMemberRoleSelectScalar = {
+    id?: boolean
+    assetMember?: boolean
+    asset?: boolean
+    role?: boolean
+  }
+
+  export type AssetMemberRoleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "assetMember" | "asset" | "role", ExtArgs["result"]["assetMemberRole"]>
+  export type AssetMemberRoleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    member?: boolean | AssetGroupMemberDefaultArgs<ExtArgs>
+    assetRef?: boolean | AssetDefaultArgs<ExtArgs>
+  }
+  export type AssetMemberRoleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    member?: boolean | AssetGroupMemberDefaultArgs<ExtArgs>
+    assetRef?: boolean | AssetDefaultArgs<ExtArgs>
+  }
+  export type AssetMemberRoleIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    member?: boolean | AssetGroupMemberDefaultArgs<ExtArgs>
+    assetRef?: boolean | AssetDefaultArgs<ExtArgs>
+  }
+
+  export type $AssetMemberRolePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AssetMemberRole"
+    objects: {
+      member: Prisma.$AssetGroupMemberPayload<ExtArgs>
+      assetRef: Prisma.$AssetPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      assetMember: string
+      asset: string
+      role: string
+    }, ExtArgs["result"]["assetMemberRole"]>
+    composites: {}
+  }
+
+  type AssetMemberRoleGetPayload<S extends boolean | null | undefined | AssetMemberRoleDefaultArgs> = $Result.GetResult<Prisma.$AssetMemberRolePayload, S>
+
+  type AssetMemberRoleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AssetMemberRoleFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AssetMemberRoleCountAggregateInputType | true
+    }
+
+  export interface AssetMemberRoleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AssetMemberRole'], meta: { name: 'AssetMemberRole' } }
+    /**
+     * Find zero or one AssetMemberRole that matches the filter.
+     * @param {AssetMemberRoleFindUniqueArgs} args - Arguments to find a AssetMemberRole
+     * @example
+     * // Get one AssetMemberRole
+     * const assetMemberRole = await prisma.assetMemberRole.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AssetMemberRoleFindUniqueArgs>(args: SelectSubset<T, AssetMemberRoleFindUniqueArgs<ExtArgs>>): Prisma__AssetMemberRoleClient<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AssetMemberRole that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AssetMemberRoleFindUniqueOrThrowArgs} args - Arguments to find a AssetMemberRole
+     * @example
+     * // Get one AssetMemberRole
+     * const assetMemberRole = await prisma.assetMemberRole.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AssetMemberRoleFindUniqueOrThrowArgs>(args: SelectSubset<T, AssetMemberRoleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AssetMemberRoleClient<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AssetMemberRole that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetMemberRoleFindFirstArgs} args - Arguments to find a AssetMemberRole
+     * @example
+     * // Get one AssetMemberRole
+     * const assetMemberRole = await prisma.assetMemberRole.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AssetMemberRoleFindFirstArgs>(args?: SelectSubset<T, AssetMemberRoleFindFirstArgs<ExtArgs>>): Prisma__AssetMemberRoleClient<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AssetMemberRole that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetMemberRoleFindFirstOrThrowArgs} args - Arguments to find a AssetMemberRole
+     * @example
+     * // Get one AssetMemberRole
+     * const assetMemberRole = await prisma.assetMemberRole.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AssetMemberRoleFindFirstOrThrowArgs>(args?: SelectSubset<T, AssetMemberRoleFindFirstOrThrowArgs<ExtArgs>>): Prisma__AssetMemberRoleClient<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AssetMemberRoles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetMemberRoleFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AssetMemberRoles
+     * const assetMemberRoles = await prisma.assetMemberRole.findMany()
+     * 
+     * // Get first 10 AssetMemberRoles
+     * const assetMemberRoles = await prisma.assetMemberRole.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const assetMemberRoleWithIdOnly = await prisma.assetMemberRole.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AssetMemberRoleFindManyArgs>(args?: SelectSubset<T, AssetMemberRoleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AssetMemberRole.
+     * @param {AssetMemberRoleCreateArgs} args - Arguments to create a AssetMemberRole.
+     * @example
+     * // Create one AssetMemberRole
+     * const AssetMemberRole = await prisma.assetMemberRole.create({
+     *   data: {
+     *     // ... data to create a AssetMemberRole
+     *   }
+     * })
+     * 
+     */
+    create<T extends AssetMemberRoleCreateArgs>(args: SelectSubset<T, AssetMemberRoleCreateArgs<ExtArgs>>): Prisma__AssetMemberRoleClient<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AssetMemberRoles.
+     * @param {AssetMemberRoleCreateManyArgs} args - Arguments to create many AssetMemberRoles.
+     * @example
+     * // Create many AssetMemberRoles
+     * const assetMemberRole = await prisma.assetMemberRole.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AssetMemberRoleCreateManyArgs>(args?: SelectSubset<T, AssetMemberRoleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AssetMemberRoles and returns the data saved in the database.
+     * @param {AssetMemberRoleCreateManyAndReturnArgs} args - Arguments to create many AssetMemberRoles.
+     * @example
+     * // Create many AssetMemberRoles
+     * const assetMemberRole = await prisma.assetMemberRole.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AssetMemberRoles and only return the `id`
+     * const assetMemberRoleWithIdOnly = await prisma.assetMemberRole.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AssetMemberRoleCreateManyAndReturnArgs>(args?: SelectSubset<T, AssetMemberRoleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AssetMemberRole.
+     * @param {AssetMemberRoleDeleteArgs} args - Arguments to delete one AssetMemberRole.
+     * @example
+     * // Delete one AssetMemberRole
+     * const AssetMemberRole = await prisma.assetMemberRole.delete({
+     *   where: {
+     *     // ... filter to delete one AssetMemberRole
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AssetMemberRoleDeleteArgs>(args: SelectSubset<T, AssetMemberRoleDeleteArgs<ExtArgs>>): Prisma__AssetMemberRoleClient<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AssetMemberRole.
+     * @param {AssetMemberRoleUpdateArgs} args - Arguments to update one AssetMemberRole.
+     * @example
+     * // Update one AssetMemberRole
+     * const assetMemberRole = await prisma.assetMemberRole.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AssetMemberRoleUpdateArgs>(args: SelectSubset<T, AssetMemberRoleUpdateArgs<ExtArgs>>): Prisma__AssetMemberRoleClient<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AssetMemberRoles.
+     * @param {AssetMemberRoleDeleteManyArgs} args - Arguments to filter AssetMemberRoles to delete.
+     * @example
+     * // Delete a few AssetMemberRoles
+     * const { count } = await prisma.assetMemberRole.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AssetMemberRoleDeleteManyArgs>(args?: SelectSubset<T, AssetMemberRoleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AssetMemberRoles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetMemberRoleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AssetMemberRoles
+     * const assetMemberRole = await prisma.assetMemberRole.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AssetMemberRoleUpdateManyArgs>(args: SelectSubset<T, AssetMemberRoleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AssetMemberRoles and returns the data updated in the database.
+     * @param {AssetMemberRoleUpdateManyAndReturnArgs} args - Arguments to update many AssetMemberRoles.
+     * @example
+     * // Update many AssetMemberRoles
+     * const assetMemberRole = await prisma.assetMemberRole.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AssetMemberRoles and only return the `id`
+     * const assetMemberRoleWithIdOnly = await prisma.assetMemberRole.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AssetMemberRoleUpdateManyAndReturnArgs>(args: SelectSubset<T, AssetMemberRoleUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AssetMemberRole.
+     * @param {AssetMemberRoleUpsertArgs} args - Arguments to update or create a AssetMemberRole.
+     * @example
+     * // Update or create a AssetMemberRole
+     * const assetMemberRole = await prisma.assetMemberRole.upsert({
+     *   create: {
+     *     // ... data to create a AssetMemberRole
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AssetMemberRole we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AssetMemberRoleUpsertArgs>(args: SelectSubset<T, AssetMemberRoleUpsertArgs<ExtArgs>>): Prisma__AssetMemberRoleClient<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AssetMemberRoles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetMemberRoleCountArgs} args - Arguments to filter AssetMemberRoles to count.
+     * @example
+     * // Count the number of AssetMemberRoles
+     * const count = await prisma.assetMemberRole.count({
+     *   where: {
+     *     // ... the filter for the AssetMemberRoles we want to count
+     *   }
+     * })
+    **/
+    count<T extends AssetMemberRoleCountArgs>(
+      args?: Subset<T, AssetMemberRoleCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AssetMemberRoleCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AssetMemberRole.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetMemberRoleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AssetMemberRoleAggregateArgs>(args: Subset<T, AssetMemberRoleAggregateArgs>): Prisma.PrismaPromise<GetAssetMemberRoleAggregateType<T>>
+
+    /**
+     * Group by AssetMemberRole.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssetMemberRoleGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AssetMemberRoleGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AssetMemberRoleGroupByArgs['orderBy'] }
+        : { orderBy?: AssetMemberRoleGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AssetMemberRoleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAssetMemberRoleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AssetMemberRole model
+   */
+  readonly fields: AssetMemberRoleFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AssetMemberRole.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AssetMemberRoleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    member<T extends AssetGroupMemberDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssetGroupMemberDefaultArgs<ExtArgs>>): Prisma__AssetGroupMemberClient<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    assetRef<T extends AssetDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssetDefaultArgs<ExtArgs>>): Prisma__AssetClient<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AssetMemberRole model
+   */
+  interface AssetMemberRoleFieldRefs {
+    readonly id: FieldRef<"AssetMemberRole", 'String'>
+    readonly assetMember: FieldRef<"AssetMemberRole", 'String'>
+    readonly asset: FieldRef<"AssetMemberRole", 'String'>
+    readonly role: FieldRef<"AssetMemberRole", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AssetMemberRole findUnique
+   */
+  export type AssetMemberRoleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetMemberRole
+     */
+    select?: AssetMemberRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetMemberRole
+     */
+    omit?: AssetMemberRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetMemberRoleInclude<ExtArgs> | null
+    /**
+     * Filter, which AssetMemberRole to fetch.
+     */
+    where: AssetMemberRoleWhereUniqueInput
+  }
+
+  /**
+   * AssetMemberRole findUniqueOrThrow
+   */
+  export type AssetMemberRoleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetMemberRole
+     */
+    select?: AssetMemberRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetMemberRole
+     */
+    omit?: AssetMemberRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetMemberRoleInclude<ExtArgs> | null
+    /**
+     * Filter, which AssetMemberRole to fetch.
+     */
+    where: AssetMemberRoleWhereUniqueInput
+  }
+
+  /**
+   * AssetMemberRole findFirst
+   */
+  export type AssetMemberRoleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetMemberRole
+     */
+    select?: AssetMemberRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetMemberRole
+     */
+    omit?: AssetMemberRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetMemberRoleInclude<ExtArgs> | null
+    /**
+     * Filter, which AssetMemberRole to fetch.
+     */
+    where?: AssetMemberRoleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssetMemberRoles to fetch.
+     */
+    orderBy?: AssetMemberRoleOrderByWithRelationInput | AssetMemberRoleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AssetMemberRoles.
+     */
+    cursor?: AssetMemberRoleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssetMemberRoles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssetMemberRoles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssetMemberRoles.
+     */
+    distinct?: AssetMemberRoleScalarFieldEnum | AssetMemberRoleScalarFieldEnum[]
+  }
+
+  /**
+   * AssetMemberRole findFirstOrThrow
+   */
+  export type AssetMemberRoleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetMemberRole
+     */
+    select?: AssetMemberRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetMemberRole
+     */
+    omit?: AssetMemberRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetMemberRoleInclude<ExtArgs> | null
+    /**
+     * Filter, which AssetMemberRole to fetch.
+     */
+    where?: AssetMemberRoleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssetMemberRoles to fetch.
+     */
+    orderBy?: AssetMemberRoleOrderByWithRelationInput | AssetMemberRoleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AssetMemberRoles.
+     */
+    cursor?: AssetMemberRoleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssetMemberRoles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssetMemberRoles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssetMemberRoles.
+     */
+    distinct?: AssetMemberRoleScalarFieldEnum | AssetMemberRoleScalarFieldEnum[]
+  }
+
+  /**
+   * AssetMemberRole findMany
+   */
+  export type AssetMemberRoleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetMemberRole
+     */
+    select?: AssetMemberRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetMemberRole
+     */
+    omit?: AssetMemberRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetMemberRoleInclude<ExtArgs> | null
+    /**
+     * Filter, which AssetMemberRoles to fetch.
+     */
+    where?: AssetMemberRoleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AssetMemberRoles to fetch.
+     */
+    orderBy?: AssetMemberRoleOrderByWithRelationInput | AssetMemberRoleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AssetMemberRoles.
+     */
+    cursor?: AssetMemberRoleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AssetMemberRoles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AssetMemberRoles.
+     */
+    skip?: number
+    distinct?: AssetMemberRoleScalarFieldEnum | AssetMemberRoleScalarFieldEnum[]
+  }
+
+  /**
+   * AssetMemberRole create
+   */
+  export type AssetMemberRoleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetMemberRole
+     */
+    select?: AssetMemberRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetMemberRole
+     */
+    omit?: AssetMemberRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetMemberRoleInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AssetMemberRole.
+     */
+    data: XOR<AssetMemberRoleCreateInput, AssetMemberRoleUncheckedCreateInput>
+  }
+
+  /**
+   * AssetMemberRole createMany
+   */
+  export type AssetMemberRoleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AssetMemberRoles.
+     */
+    data: AssetMemberRoleCreateManyInput | AssetMemberRoleCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AssetMemberRole createManyAndReturn
+   */
+  export type AssetMemberRoleCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetMemberRole
+     */
+    select?: AssetMemberRoleSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetMemberRole
+     */
+    omit?: AssetMemberRoleOmit<ExtArgs> | null
+    /**
+     * The data used to create many AssetMemberRoles.
+     */
+    data: AssetMemberRoleCreateManyInput | AssetMemberRoleCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetMemberRoleIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AssetMemberRole update
+   */
+  export type AssetMemberRoleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetMemberRole
+     */
+    select?: AssetMemberRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetMemberRole
+     */
+    omit?: AssetMemberRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetMemberRoleInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AssetMemberRole.
+     */
+    data: XOR<AssetMemberRoleUpdateInput, AssetMemberRoleUncheckedUpdateInput>
+    /**
+     * Choose, which AssetMemberRole to update.
+     */
+    where: AssetMemberRoleWhereUniqueInput
+  }
+
+  /**
+   * AssetMemberRole updateMany
+   */
+  export type AssetMemberRoleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AssetMemberRoles.
+     */
+    data: XOR<AssetMemberRoleUpdateManyMutationInput, AssetMemberRoleUncheckedUpdateManyInput>
+    /**
+     * Filter which AssetMemberRoles to update
+     */
+    where?: AssetMemberRoleWhereInput
+    /**
+     * Limit how many AssetMemberRoles to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AssetMemberRole updateManyAndReturn
+   */
+  export type AssetMemberRoleUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetMemberRole
+     */
+    select?: AssetMemberRoleSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetMemberRole
+     */
+    omit?: AssetMemberRoleOmit<ExtArgs> | null
+    /**
+     * The data used to update AssetMemberRoles.
+     */
+    data: XOR<AssetMemberRoleUpdateManyMutationInput, AssetMemberRoleUncheckedUpdateManyInput>
+    /**
+     * Filter which AssetMemberRoles to update
+     */
+    where?: AssetMemberRoleWhereInput
+    /**
+     * Limit how many AssetMemberRoles to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetMemberRoleIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AssetMemberRole upsert
+   */
+  export type AssetMemberRoleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetMemberRole
+     */
+    select?: AssetMemberRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetMemberRole
+     */
+    omit?: AssetMemberRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetMemberRoleInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AssetMemberRole to update in case it exists.
+     */
+    where: AssetMemberRoleWhereUniqueInput
+    /**
+     * In case the AssetMemberRole found by the `where` argument doesn't exist, create a new AssetMemberRole with this data.
+     */
+    create: XOR<AssetMemberRoleCreateInput, AssetMemberRoleUncheckedCreateInput>
+    /**
+     * In case the AssetMemberRole was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AssetMemberRoleUpdateInput, AssetMemberRoleUncheckedUpdateInput>
+  }
+
+  /**
+   * AssetMemberRole delete
+   */
+  export type AssetMemberRoleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetMemberRole
+     */
+    select?: AssetMemberRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetMemberRole
+     */
+    omit?: AssetMemberRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetMemberRoleInclude<ExtArgs> | null
+    /**
+     * Filter which AssetMemberRole to delete.
+     */
+    where: AssetMemberRoleWhereUniqueInput
+  }
+
+  /**
+   * AssetMemberRole deleteMany
+   */
+  export type AssetMemberRoleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AssetMemberRoles to delete
+     */
+    where?: AssetMemberRoleWhereInput
+    /**
+     * Limit how many AssetMemberRoles to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AssetMemberRole without action
+   */
+  export type AssetMemberRoleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AssetMemberRole
+     */
+    select?: AssetMemberRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AssetMemberRole
+     */
+    omit?: AssetMemberRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssetMemberRoleInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model AuthTeamExternal
    */
 
@@ -46903,6 +51683,48 @@ export namespace Prisma {
   export type AuthTeamScalarFieldEnum = (typeof AuthTeamScalarFieldEnum)[keyof typeof AuthTeamScalarFieldEnum]
 
 
+  export const AssetGroupInfoScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    details: 'details'
+  };
+
+  export type AssetGroupInfoScalarFieldEnum = (typeof AssetGroupInfoScalarFieldEnum)[keyof typeof AssetGroupInfoScalarFieldEnum]
+
+
+  export const AssetGroupMemberScalarFieldEnum: {
+    id: 'id',
+    assetGroup: 'assetGroup',
+    member: 'member',
+    isPermanent: 'isPermanent',
+    validTill: 'validTill',
+    hasFullPermit: 'hasFullPermit'
+  };
+
+  export type AssetGroupMemberScalarFieldEnum = (typeof AssetGroupMemberScalarFieldEnum)[keyof typeof AssetGroupMemberScalarFieldEnum]
+
+
+  export const AssetScalarFieldEnum: {
+    id: 'id',
+    asset: 'asset',
+    type: 'type',
+    assetGroup: 'assetGroup',
+    details: 'details'
+  };
+
+  export type AssetScalarFieldEnum = (typeof AssetScalarFieldEnum)[keyof typeof AssetScalarFieldEnum]
+
+
+  export const AssetMemberRoleScalarFieldEnum: {
+    id: 'id',
+    assetMember: 'assetMember',
+    asset: 'asset',
+    role: 'role'
+  };
+
+  export type AssetMemberRoleScalarFieldEnum = (typeof AssetMemberRoleScalarFieldEnum)[keyof typeof AssetMemberRoleScalarFieldEnum]
+
+
   export const AuthTeamExternalScalarFieldEnum: {
     id: 'id',
     appId: 'appId',
@@ -49219,6 +54041,230 @@ export namespace Prisma {
     recipientId?: StringWithAggregatesFilter<"AuthTeam"> | string
     isPermanent?: BoolWithAggregatesFilter<"AuthTeam"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"AuthTeam"> | Date | string
+  }
+
+  export type AssetGroupInfoWhereInput = {
+    AND?: AssetGroupInfoWhereInput | AssetGroupInfoWhereInput[]
+    OR?: AssetGroupInfoWhereInput[]
+    NOT?: AssetGroupInfoWhereInput | AssetGroupInfoWhereInput[]
+    id?: StringFilter<"AssetGroupInfo"> | string
+    name?: StringFilter<"AssetGroupInfo"> | string
+    details?: StringNullableFilter<"AssetGroupInfo"> | string | null
+    members?: AssetGroupMemberListRelationFilter
+    assets?: AssetListRelationFilter
+  }
+
+  export type AssetGroupInfoOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    details?: SortOrderInput | SortOrder
+    members?: AssetGroupMemberOrderByRelationAggregateInput
+    assets?: AssetOrderByRelationAggregateInput
+  }
+
+  export type AssetGroupInfoWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AssetGroupInfoWhereInput | AssetGroupInfoWhereInput[]
+    OR?: AssetGroupInfoWhereInput[]
+    NOT?: AssetGroupInfoWhereInput | AssetGroupInfoWhereInput[]
+    name?: StringFilter<"AssetGroupInfo"> | string
+    details?: StringNullableFilter<"AssetGroupInfo"> | string | null
+    members?: AssetGroupMemberListRelationFilter
+    assets?: AssetListRelationFilter
+  }, "id">
+
+  export type AssetGroupInfoOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    details?: SortOrderInput | SortOrder
+    _count?: AssetGroupInfoCountOrderByAggregateInput
+    _max?: AssetGroupInfoMaxOrderByAggregateInput
+    _min?: AssetGroupInfoMinOrderByAggregateInput
+  }
+
+  export type AssetGroupInfoScalarWhereWithAggregatesInput = {
+    AND?: AssetGroupInfoScalarWhereWithAggregatesInput | AssetGroupInfoScalarWhereWithAggregatesInput[]
+    OR?: AssetGroupInfoScalarWhereWithAggregatesInput[]
+    NOT?: AssetGroupInfoScalarWhereWithAggregatesInput | AssetGroupInfoScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AssetGroupInfo"> | string
+    name?: StringWithAggregatesFilter<"AssetGroupInfo"> | string
+    details?: StringNullableWithAggregatesFilter<"AssetGroupInfo"> | string | null
+  }
+
+  export type AssetGroupMemberWhereInput = {
+    AND?: AssetGroupMemberWhereInput | AssetGroupMemberWhereInput[]
+    OR?: AssetGroupMemberWhereInput[]
+    NOT?: AssetGroupMemberWhereInput | AssetGroupMemberWhereInput[]
+    id?: StringFilter<"AssetGroupMember"> | string
+    assetGroup?: StringFilter<"AssetGroupMember"> | string
+    member?: StringFilter<"AssetGroupMember"> | string
+    isPermanent?: BoolFilter<"AssetGroupMember"> | boolean
+    validTill?: DateTimeNullableFilter<"AssetGroupMember"> | Date | string | null
+    hasFullPermit?: BoolFilter<"AssetGroupMember"> | boolean
+    assetGroupInfo?: XOR<AssetGroupInfoScalarRelationFilter, AssetGroupInfoWhereInput>
+    roles?: AssetMemberRoleListRelationFilter
+  }
+
+  export type AssetGroupMemberOrderByWithRelationInput = {
+    id?: SortOrder
+    assetGroup?: SortOrder
+    member?: SortOrder
+    isPermanent?: SortOrder
+    validTill?: SortOrderInput | SortOrder
+    hasFullPermit?: SortOrder
+    assetGroupInfo?: AssetGroupInfoOrderByWithRelationInput
+    roles?: AssetMemberRoleOrderByRelationAggregateInput
+  }
+
+  export type AssetGroupMemberWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    assetGroup_member?: AssetGroupMemberAssetGroupMemberCompoundUniqueInput
+    AND?: AssetGroupMemberWhereInput | AssetGroupMemberWhereInput[]
+    OR?: AssetGroupMemberWhereInput[]
+    NOT?: AssetGroupMemberWhereInput | AssetGroupMemberWhereInput[]
+    assetGroup?: StringFilter<"AssetGroupMember"> | string
+    member?: StringFilter<"AssetGroupMember"> | string
+    isPermanent?: BoolFilter<"AssetGroupMember"> | boolean
+    validTill?: DateTimeNullableFilter<"AssetGroupMember"> | Date | string | null
+    hasFullPermit?: BoolFilter<"AssetGroupMember"> | boolean
+    assetGroupInfo?: XOR<AssetGroupInfoScalarRelationFilter, AssetGroupInfoWhereInput>
+    roles?: AssetMemberRoleListRelationFilter
+  }, "id" | "assetGroup_member">
+
+  export type AssetGroupMemberOrderByWithAggregationInput = {
+    id?: SortOrder
+    assetGroup?: SortOrder
+    member?: SortOrder
+    isPermanent?: SortOrder
+    validTill?: SortOrderInput | SortOrder
+    hasFullPermit?: SortOrder
+    _count?: AssetGroupMemberCountOrderByAggregateInput
+    _max?: AssetGroupMemberMaxOrderByAggregateInput
+    _min?: AssetGroupMemberMinOrderByAggregateInput
+  }
+
+  export type AssetGroupMemberScalarWhereWithAggregatesInput = {
+    AND?: AssetGroupMemberScalarWhereWithAggregatesInput | AssetGroupMemberScalarWhereWithAggregatesInput[]
+    OR?: AssetGroupMemberScalarWhereWithAggregatesInput[]
+    NOT?: AssetGroupMemberScalarWhereWithAggregatesInput | AssetGroupMemberScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AssetGroupMember"> | string
+    assetGroup?: StringWithAggregatesFilter<"AssetGroupMember"> | string
+    member?: StringWithAggregatesFilter<"AssetGroupMember"> | string
+    isPermanent?: BoolWithAggregatesFilter<"AssetGroupMember"> | boolean
+    validTill?: DateTimeNullableWithAggregatesFilter<"AssetGroupMember"> | Date | string | null
+    hasFullPermit?: BoolWithAggregatesFilter<"AssetGroupMember"> | boolean
+  }
+
+  export type AssetWhereInput = {
+    AND?: AssetWhereInput | AssetWhereInput[]
+    OR?: AssetWhereInput[]
+    NOT?: AssetWhereInput | AssetWhereInput[]
+    id?: StringFilter<"Asset"> | string
+    asset?: StringFilter<"Asset"> | string
+    type?: StringFilter<"Asset"> | string
+    assetGroup?: StringFilter<"Asset"> | string
+    details?: StringNullableFilter<"Asset"> | string | null
+    assetGroupInfo?: XOR<AssetGroupInfoScalarRelationFilter, AssetGroupInfoWhereInput>
+    roles?: AssetMemberRoleListRelationFilter
+  }
+
+  export type AssetOrderByWithRelationInput = {
+    id?: SortOrder
+    asset?: SortOrder
+    type?: SortOrder
+    assetGroup?: SortOrder
+    details?: SortOrderInput | SortOrder
+    assetGroupInfo?: AssetGroupInfoOrderByWithRelationInput
+    roles?: AssetMemberRoleOrderByRelationAggregateInput
+  }
+
+  export type AssetWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AssetWhereInput | AssetWhereInput[]
+    OR?: AssetWhereInput[]
+    NOT?: AssetWhereInput | AssetWhereInput[]
+    asset?: StringFilter<"Asset"> | string
+    type?: StringFilter<"Asset"> | string
+    assetGroup?: StringFilter<"Asset"> | string
+    details?: StringNullableFilter<"Asset"> | string | null
+    assetGroupInfo?: XOR<AssetGroupInfoScalarRelationFilter, AssetGroupInfoWhereInput>
+    roles?: AssetMemberRoleListRelationFilter
+  }, "id">
+
+  export type AssetOrderByWithAggregationInput = {
+    id?: SortOrder
+    asset?: SortOrder
+    type?: SortOrder
+    assetGroup?: SortOrder
+    details?: SortOrderInput | SortOrder
+    _count?: AssetCountOrderByAggregateInput
+    _max?: AssetMaxOrderByAggregateInput
+    _min?: AssetMinOrderByAggregateInput
+  }
+
+  export type AssetScalarWhereWithAggregatesInput = {
+    AND?: AssetScalarWhereWithAggregatesInput | AssetScalarWhereWithAggregatesInput[]
+    OR?: AssetScalarWhereWithAggregatesInput[]
+    NOT?: AssetScalarWhereWithAggregatesInput | AssetScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Asset"> | string
+    asset?: StringWithAggregatesFilter<"Asset"> | string
+    type?: StringWithAggregatesFilter<"Asset"> | string
+    assetGroup?: StringWithAggregatesFilter<"Asset"> | string
+    details?: StringNullableWithAggregatesFilter<"Asset"> | string | null
+  }
+
+  export type AssetMemberRoleWhereInput = {
+    AND?: AssetMemberRoleWhereInput | AssetMemberRoleWhereInput[]
+    OR?: AssetMemberRoleWhereInput[]
+    NOT?: AssetMemberRoleWhereInput | AssetMemberRoleWhereInput[]
+    id?: StringFilter<"AssetMemberRole"> | string
+    assetMember?: StringFilter<"AssetMemberRole"> | string
+    asset?: StringFilter<"AssetMemberRole"> | string
+    role?: StringFilter<"AssetMemberRole"> | string
+    member?: XOR<AssetGroupMemberScalarRelationFilter, AssetGroupMemberWhereInput>
+    assetRef?: XOR<AssetScalarRelationFilter, AssetWhereInput>
+  }
+
+  export type AssetMemberRoleOrderByWithRelationInput = {
+    id?: SortOrder
+    assetMember?: SortOrder
+    asset?: SortOrder
+    role?: SortOrder
+    member?: AssetGroupMemberOrderByWithRelationInput
+    assetRef?: AssetOrderByWithRelationInput
+  }
+
+  export type AssetMemberRoleWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    assetMember_asset?: AssetMemberRoleAssetMemberAssetCompoundUniqueInput
+    AND?: AssetMemberRoleWhereInput | AssetMemberRoleWhereInput[]
+    OR?: AssetMemberRoleWhereInput[]
+    NOT?: AssetMemberRoleWhereInput | AssetMemberRoleWhereInput[]
+    assetMember?: StringFilter<"AssetMemberRole"> | string
+    asset?: StringFilter<"AssetMemberRole"> | string
+    role?: StringFilter<"AssetMemberRole"> | string
+    member?: XOR<AssetGroupMemberScalarRelationFilter, AssetGroupMemberWhereInput>
+    assetRef?: XOR<AssetScalarRelationFilter, AssetWhereInput>
+  }, "id" | "assetMember_asset">
+
+  export type AssetMemberRoleOrderByWithAggregationInput = {
+    id?: SortOrder
+    assetMember?: SortOrder
+    asset?: SortOrder
+    role?: SortOrder
+    _count?: AssetMemberRoleCountOrderByAggregateInput
+    _max?: AssetMemberRoleMaxOrderByAggregateInput
+    _min?: AssetMemberRoleMinOrderByAggregateInput
+  }
+
+  export type AssetMemberRoleScalarWhereWithAggregatesInput = {
+    AND?: AssetMemberRoleScalarWhereWithAggregatesInput | AssetMemberRoleScalarWhereWithAggregatesInput[]
+    OR?: AssetMemberRoleScalarWhereWithAggregatesInput[]
+    NOT?: AssetMemberRoleScalarWhereWithAggregatesInput | AssetMemberRoleScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AssetMemberRole"> | string
+    assetMember?: StringWithAggregatesFilter<"AssetMemberRole"> | string
+    asset?: StringWithAggregatesFilter<"AssetMemberRole"> | string
+    role?: StringWithAggregatesFilter<"AssetMemberRole"> | string
   }
 
   export type AuthTeamExternalWhereInput = {
@@ -52245,6 +57291,228 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type AssetGroupInfoCreateInput = {
+    id?: string
+    name: string
+    details?: string | null
+    members?: AssetGroupMemberCreateNestedManyWithoutAssetGroupInfoInput
+    assets?: AssetCreateNestedManyWithoutAssetGroupInfoInput
+  }
+
+  export type AssetGroupInfoUncheckedCreateInput = {
+    id?: string
+    name: string
+    details?: string | null
+    members?: AssetGroupMemberUncheckedCreateNestedManyWithoutAssetGroupInfoInput
+    assets?: AssetUncheckedCreateNestedManyWithoutAssetGroupInfoInput
+  }
+
+  export type AssetGroupInfoUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    members?: AssetGroupMemberUpdateManyWithoutAssetGroupInfoNestedInput
+    assets?: AssetUpdateManyWithoutAssetGroupInfoNestedInput
+  }
+
+  export type AssetGroupInfoUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    members?: AssetGroupMemberUncheckedUpdateManyWithoutAssetGroupInfoNestedInput
+    assets?: AssetUncheckedUpdateManyWithoutAssetGroupInfoNestedInput
+  }
+
+  export type AssetGroupInfoCreateManyInput = {
+    id?: string
+    name: string
+    details?: string | null
+  }
+
+  export type AssetGroupInfoUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AssetGroupInfoUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AssetGroupMemberCreateInput = {
+    id?: string
+    member: string
+    isPermanent?: boolean
+    validTill?: Date | string | null
+    hasFullPermit?: boolean
+    assetGroupInfo: AssetGroupInfoCreateNestedOneWithoutMembersInput
+    roles?: AssetMemberRoleCreateNestedManyWithoutMemberInput
+  }
+
+  export type AssetGroupMemberUncheckedCreateInput = {
+    id?: string
+    assetGroup: string
+    member: string
+    isPermanent?: boolean
+    validTill?: Date | string | null
+    hasFullPermit?: boolean
+    roles?: AssetMemberRoleUncheckedCreateNestedManyWithoutMemberInput
+  }
+
+  export type AssetGroupMemberUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    member?: StringFieldUpdateOperationsInput | string
+    isPermanent?: BoolFieldUpdateOperationsInput | boolean
+    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    hasFullPermit?: BoolFieldUpdateOperationsInput | boolean
+    assetGroupInfo?: AssetGroupInfoUpdateOneRequiredWithoutMembersNestedInput
+    roles?: AssetMemberRoleUpdateManyWithoutMemberNestedInput
+  }
+
+  export type AssetGroupMemberUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    assetGroup?: StringFieldUpdateOperationsInput | string
+    member?: StringFieldUpdateOperationsInput | string
+    isPermanent?: BoolFieldUpdateOperationsInput | boolean
+    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    hasFullPermit?: BoolFieldUpdateOperationsInput | boolean
+    roles?: AssetMemberRoleUncheckedUpdateManyWithoutMemberNestedInput
+  }
+
+  export type AssetGroupMemberCreateManyInput = {
+    id?: string
+    assetGroup: string
+    member: string
+    isPermanent?: boolean
+    validTill?: Date | string | null
+    hasFullPermit?: boolean
+  }
+
+  export type AssetGroupMemberUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    member?: StringFieldUpdateOperationsInput | string
+    isPermanent?: BoolFieldUpdateOperationsInput | boolean
+    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    hasFullPermit?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AssetGroupMemberUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    assetGroup?: StringFieldUpdateOperationsInput | string
+    member?: StringFieldUpdateOperationsInput | string
+    isPermanent?: BoolFieldUpdateOperationsInput | boolean
+    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    hasFullPermit?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AssetCreateInput = {
+    id?: string
+    asset: string
+    type: string
+    details?: string | null
+    assetGroupInfo: AssetGroupInfoCreateNestedOneWithoutAssetsInput
+    roles?: AssetMemberRoleCreateNestedManyWithoutAssetRefInput
+  }
+
+  export type AssetUncheckedCreateInput = {
+    id?: string
+    asset: string
+    type: string
+    assetGroup: string
+    details?: string | null
+    roles?: AssetMemberRoleUncheckedCreateNestedManyWithoutAssetRefInput
+  }
+
+  export type AssetUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    asset?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    assetGroupInfo?: AssetGroupInfoUpdateOneRequiredWithoutAssetsNestedInput
+    roles?: AssetMemberRoleUpdateManyWithoutAssetRefNestedInput
+  }
+
+  export type AssetUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    asset?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    assetGroup?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    roles?: AssetMemberRoleUncheckedUpdateManyWithoutAssetRefNestedInput
+  }
+
+  export type AssetCreateManyInput = {
+    id?: string
+    asset: string
+    type: string
+    assetGroup: string
+    details?: string | null
+  }
+
+  export type AssetUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    asset?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AssetUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    asset?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    assetGroup?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AssetMemberRoleCreateInput = {
+    id?: string
+    role: string
+    member: AssetGroupMemberCreateNestedOneWithoutRolesInput
+    assetRef: AssetCreateNestedOneWithoutRolesInput
+  }
+
+  export type AssetMemberRoleUncheckedCreateInput = {
+    id?: string
+    assetMember: string
+    asset: string
+    role: string
+  }
+
+  export type AssetMemberRoleUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    member?: AssetGroupMemberUpdateOneRequiredWithoutRolesNestedInput
+    assetRef?: AssetUpdateOneRequiredWithoutRolesNestedInput
+  }
+
+  export type AssetMemberRoleUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    assetMember?: StringFieldUpdateOperationsInput | string
+    asset?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AssetMemberRoleCreateManyInput = {
+    id?: string
+    assetMember: string
+    asset: string
+    role: string
+  }
+
+  export type AssetMemberRoleUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AssetMemberRoleUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    assetMember?: StringFieldUpdateOperationsInput | string
+    asset?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+  }
+
   export type AuthTeamExternalCreateInput = {
     id?: string
     isPermanent?: boolean
@@ -54425,6 +59693,151 @@ export namespace Prisma {
     recipientId?: SortOrder
     isPermanent?: SortOrder
     createdAt?: SortOrder
+  }
+
+  export type AssetGroupMemberListRelationFilter = {
+    every?: AssetGroupMemberWhereInput
+    some?: AssetGroupMemberWhereInput
+    none?: AssetGroupMemberWhereInput
+  }
+
+  export type AssetListRelationFilter = {
+    every?: AssetWhereInput
+    some?: AssetWhereInput
+    none?: AssetWhereInput
+  }
+
+  export type AssetGroupMemberOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AssetOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AssetGroupInfoCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    details?: SortOrder
+  }
+
+  export type AssetGroupInfoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    details?: SortOrder
+  }
+
+  export type AssetGroupInfoMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    details?: SortOrder
+  }
+
+  export type AssetGroupInfoScalarRelationFilter = {
+    is?: AssetGroupInfoWhereInput
+    isNot?: AssetGroupInfoWhereInput
+  }
+
+  export type AssetMemberRoleListRelationFilter = {
+    every?: AssetMemberRoleWhereInput
+    some?: AssetMemberRoleWhereInput
+    none?: AssetMemberRoleWhereInput
+  }
+
+  export type AssetMemberRoleOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AssetGroupMemberAssetGroupMemberCompoundUniqueInput = {
+    assetGroup: string
+    member: string
+  }
+
+  export type AssetGroupMemberCountOrderByAggregateInput = {
+    id?: SortOrder
+    assetGroup?: SortOrder
+    member?: SortOrder
+    isPermanent?: SortOrder
+    validTill?: SortOrder
+    hasFullPermit?: SortOrder
+  }
+
+  export type AssetGroupMemberMaxOrderByAggregateInput = {
+    id?: SortOrder
+    assetGroup?: SortOrder
+    member?: SortOrder
+    isPermanent?: SortOrder
+    validTill?: SortOrder
+    hasFullPermit?: SortOrder
+  }
+
+  export type AssetGroupMemberMinOrderByAggregateInput = {
+    id?: SortOrder
+    assetGroup?: SortOrder
+    member?: SortOrder
+    isPermanent?: SortOrder
+    validTill?: SortOrder
+    hasFullPermit?: SortOrder
+  }
+
+  export type AssetCountOrderByAggregateInput = {
+    id?: SortOrder
+    asset?: SortOrder
+    type?: SortOrder
+    assetGroup?: SortOrder
+    details?: SortOrder
+  }
+
+  export type AssetMaxOrderByAggregateInput = {
+    id?: SortOrder
+    asset?: SortOrder
+    type?: SortOrder
+    assetGroup?: SortOrder
+    details?: SortOrder
+  }
+
+  export type AssetMinOrderByAggregateInput = {
+    id?: SortOrder
+    asset?: SortOrder
+    type?: SortOrder
+    assetGroup?: SortOrder
+    details?: SortOrder
+  }
+
+  export type AssetGroupMemberScalarRelationFilter = {
+    is?: AssetGroupMemberWhereInput
+    isNot?: AssetGroupMemberWhereInput
+  }
+
+  export type AssetScalarRelationFilter = {
+    is?: AssetWhereInput
+    isNot?: AssetWhereInput
+  }
+
+  export type AssetMemberRoleAssetMemberAssetCompoundUniqueInput = {
+    assetMember: string
+    asset: string
+  }
+
+  export type AssetMemberRoleCountOrderByAggregateInput = {
+    id?: SortOrder
+    assetMember?: SortOrder
+    asset?: SortOrder
+    role?: SortOrder
+  }
+
+  export type AssetMemberRoleMaxOrderByAggregateInput = {
+    id?: SortOrder
+    assetMember?: SortOrder
+    asset?: SortOrder
+    role?: SortOrder
+  }
+
+  export type AssetMemberRoleMinOrderByAggregateInput = {
+    id?: SortOrder
+    assetMember?: SortOrder
+    asset?: SortOrder
+    role?: SortOrder
   }
 
   export type AuthTeamExternalAppIdAccountIdRecipientIdCompoundUniqueInput = {
@@ -57318,6 +62731,230 @@ export namespace Prisma {
     upsert?: AccountUpsertWithoutMemberTeamsInput
     connect?: AccountWhereUniqueInput
     update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutMemberTeamsInput, AccountUpdateWithoutMemberTeamsInput>, AccountUncheckedUpdateWithoutMemberTeamsInput>
+  }
+
+  export type AssetGroupMemberCreateNestedManyWithoutAssetGroupInfoInput = {
+    create?: XOR<AssetGroupMemberCreateWithoutAssetGroupInfoInput, AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput> | AssetGroupMemberCreateWithoutAssetGroupInfoInput[] | AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput[]
+    connectOrCreate?: AssetGroupMemberCreateOrConnectWithoutAssetGroupInfoInput | AssetGroupMemberCreateOrConnectWithoutAssetGroupInfoInput[]
+    createMany?: AssetGroupMemberCreateManyAssetGroupInfoInputEnvelope
+    connect?: AssetGroupMemberWhereUniqueInput | AssetGroupMemberWhereUniqueInput[]
+  }
+
+  export type AssetCreateNestedManyWithoutAssetGroupInfoInput = {
+    create?: XOR<AssetCreateWithoutAssetGroupInfoInput, AssetUncheckedCreateWithoutAssetGroupInfoInput> | AssetCreateWithoutAssetGroupInfoInput[] | AssetUncheckedCreateWithoutAssetGroupInfoInput[]
+    connectOrCreate?: AssetCreateOrConnectWithoutAssetGroupInfoInput | AssetCreateOrConnectWithoutAssetGroupInfoInput[]
+    createMany?: AssetCreateManyAssetGroupInfoInputEnvelope
+    connect?: AssetWhereUniqueInput | AssetWhereUniqueInput[]
+  }
+
+  export type AssetGroupMemberUncheckedCreateNestedManyWithoutAssetGroupInfoInput = {
+    create?: XOR<AssetGroupMemberCreateWithoutAssetGroupInfoInput, AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput> | AssetGroupMemberCreateWithoutAssetGroupInfoInput[] | AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput[]
+    connectOrCreate?: AssetGroupMemberCreateOrConnectWithoutAssetGroupInfoInput | AssetGroupMemberCreateOrConnectWithoutAssetGroupInfoInput[]
+    createMany?: AssetGroupMemberCreateManyAssetGroupInfoInputEnvelope
+    connect?: AssetGroupMemberWhereUniqueInput | AssetGroupMemberWhereUniqueInput[]
+  }
+
+  export type AssetUncheckedCreateNestedManyWithoutAssetGroupInfoInput = {
+    create?: XOR<AssetCreateWithoutAssetGroupInfoInput, AssetUncheckedCreateWithoutAssetGroupInfoInput> | AssetCreateWithoutAssetGroupInfoInput[] | AssetUncheckedCreateWithoutAssetGroupInfoInput[]
+    connectOrCreate?: AssetCreateOrConnectWithoutAssetGroupInfoInput | AssetCreateOrConnectWithoutAssetGroupInfoInput[]
+    createMany?: AssetCreateManyAssetGroupInfoInputEnvelope
+    connect?: AssetWhereUniqueInput | AssetWhereUniqueInput[]
+  }
+
+  export type AssetGroupMemberUpdateManyWithoutAssetGroupInfoNestedInput = {
+    create?: XOR<AssetGroupMemberCreateWithoutAssetGroupInfoInput, AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput> | AssetGroupMemberCreateWithoutAssetGroupInfoInput[] | AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput[]
+    connectOrCreate?: AssetGroupMemberCreateOrConnectWithoutAssetGroupInfoInput | AssetGroupMemberCreateOrConnectWithoutAssetGroupInfoInput[]
+    upsert?: AssetGroupMemberUpsertWithWhereUniqueWithoutAssetGroupInfoInput | AssetGroupMemberUpsertWithWhereUniqueWithoutAssetGroupInfoInput[]
+    createMany?: AssetGroupMemberCreateManyAssetGroupInfoInputEnvelope
+    set?: AssetGroupMemberWhereUniqueInput | AssetGroupMemberWhereUniqueInput[]
+    disconnect?: AssetGroupMemberWhereUniqueInput | AssetGroupMemberWhereUniqueInput[]
+    delete?: AssetGroupMemberWhereUniqueInput | AssetGroupMemberWhereUniqueInput[]
+    connect?: AssetGroupMemberWhereUniqueInput | AssetGroupMemberWhereUniqueInput[]
+    update?: AssetGroupMemberUpdateWithWhereUniqueWithoutAssetGroupInfoInput | AssetGroupMemberUpdateWithWhereUniqueWithoutAssetGroupInfoInput[]
+    updateMany?: AssetGroupMemberUpdateManyWithWhereWithoutAssetGroupInfoInput | AssetGroupMemberUpdateManyWithWhereWithoutAssetGroupInfoInput[]
+    deleteMany?: AssetGroupMemberScalarWhereInput | AssetGroupMemberScalarWhereInput[]
+  }
+
+  export type AssetUpdateManyWithoutAssetGroupInfoNestedInput = {
+    create?: XOR<AssetCreateWithoutAssetGroupInfoInput, AssetUncheckedCreateWithoutAssetGroupInfoInput> | AssetCreateWithoutAssetGroupInfoInput[] | AssetUncheckedCreateWithoutAssetGroupInfoInput[]
+    connectOrCreate?: AssetCreateOrConnectWithoutAssetGroupInfoInput | AssetCreateOrConnectWithoutAssetGroupInfoInput[]
+    upsert?: AssetUpsertWithWhereUniqueWithoutAssetGroupInfoInput | AssetUpsertWithWhereUniqueWithoutAssetGroupInfoInput[]
+    createMany?: AssetCreateManyAssetGroupInfoInputEnvelope
+    set?: AssetWhereUniqueInput | AssetWhereUniqueInput[]
+    disconnect?: AssetWhereUniqueInput | AssetWhereUniqueInput[]
+    delete?: AssetWhereUniqueInput | AssetWhereUniqueInput[]
+    connect?: AssetWhereUniqueInput | AssetWhereUniqueInput[]
+    update?: AssetUpdateWithWhereUniqueWithoutAssetGroupInfoInput | AssetUpdateWithWhereUniqueWithoutAssetGroupInfoInput[]
+    updateMany?: AssetUpdateManyWithWhereWithoutAssetGroupInfoInput | AssetUpdateManyWithWhereWithoutAssetGroupInfoInput[]
+    deleteMany?: AssetScalarWhereInput | AssetScalarWhereInput[]
+  }
+
+  export type AssetGroupMemberUncheckedUpdateManyWithoutAssetGroupInfoNestedInput = {
+    create?: XOR<AssetGroupMemberCreateWithoutAssetGroupInfoInput, AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput> | AssetGroupMemberCreateWithoutAssetGroupInfoInput[] | AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput[]
+    connectOrCreate?: AssetGroupMemberCreateOrConnectWithoutAssetGroupInfoInput | AssetGroupMemberCreateOrConnectWithoutAssetGroupInfoInput[]
+    upsert?: AssetGroupMemberUpsertWithWhereUniqueWithoutAssetGroupInfoInput | AssetGroupMemberUpsertWithWhereUniqueWithoutAssetGroupInfoInput[]
+    createMany?: AssetGroupMemberCreateManyAssetGroupInfoInputEnvelope
+    set?: AssetGroupMemberWhereUniqueInput | AssetGroupMemberWhereUniqueInput[]
+    disconnect?: AssetGroupMemberWhereUniqueInput | AssetGroupMemberWhereUniqueInput[]
+    delete?: AssetGroupMemberWhereUniqueInput | AssetGroupMemberWhereUniqueInput[]
+    connect?: AssetGroupMemberWhereUniqueInput | AssetGroupMemberWhereUniqueInput[]
+    update?: AssetGroupMemberUpdateWithWhereUniqueWithoutAssetGroupInfoInput | AssetGroupMemberUpdateWithWhereUniqueWithoutAssetGroupInfoInput[]
+    updateMany?: AssetGroupMemberUpdateManyWithWhereWithoutAssetGroupInfoInput | AssetGroupMemberUpdateManyWithWhereWithoutAssetGroupInfoInput[]
+    deleteMany?: AssetGroupMemberScalarWhereInput | AssetGroupMemberScalarWhereInput[]
+  }
+
+  export type AssetUncheckedUpdateManyWithoutAssetGroupInfoNestedInput = {
+    create?: XOR<AssetCreateWithoutAssetGroupInfoInput, AssetUncheckedCreateWithoutAssetGroupInfoInput> | AssetCreateWithoutAssetGroupInfoInput[] | AssetUncheckedCreateWithoutAssetGroupInfoInput[]
+    connectOrCreate?: AssetCreateOrConnectWithoutAssetGroupInfoInput | AssetCreateOrConnectWithoutAssetGroupInfoInput[]
+    upsert?: AssetUpsertWithWhereUniqueWithoutAssetGroupInfoInput | AssetUpsertWithWhereUniqueWithoutAssetGroupInfoInput[]
+    createMany?: AssetCreateManyAssetGroupInfoInputEnvelope
+    set?: AssetWhereUniqueInput | AssetWhereUniqueInput[]
+    disconnect?: AssetWhereUniqueInput | AssetWhereUniqueInput[]
+    delete?: AssetWhereUniqueInput | AssetWhereUniqueInput[]
+    connect?: AssetWhereUniqueInput | AssetWhereUniqueInput[]
+    update?: AssetUpdateWithWhereUniqueWithoutAssetGroupInfoInput | AssetUpdateWithWhereUniqueWithoutAssetGroupInfoInput[]
+    updateMany?: AssetUpdateManyWithWhereWithoutAssetGroupInfoInput | AssetUpdateManyWithWhereWithoutAssetGroupInfoInput[]
+    deleteMany?: AssetScalarWhereInput | AssetScalarWhereInput[]
+  }
+
+  export type AssetGroupInfoCreateNestedOneWithoutMembersInput = {
+    create?: XOR<AssetGroupInfoCreateWithoutMembersInput, AssetGroupInfoUncheckedCreateWithoutMembersInput>
+    connectOrCreate?: AssetGroupInfoCreateOrConnectWithoutMembersInput
+    connect?: AssetGroupInfoWhereUniqueInput
+  }
+
+  export type AssetMemberRoleCreateNestedManyWithoutMemberInput = {
+    create?: XOR<AssetMemberRoleCreateWithoutMemberInput, AssetMemberRoleUncheckedCreateWithoutMemberInput> | AssetMemberRoleCreateWithoutMemberInput[] | AssetMemberRoleUncheckedCreateWithoutMemberInput[]
+    connectOrCreate?: AssetMemberRoleCreateOrConnectWithoutMemberInput | AssetMemberRoleCreateOrConnectWithoutMemberInput[]
+    createMany?: AssetMemberRoleCreateManyMemberInputEnvelope
+    connect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+  }
+
+  export type AssetMemberRoleUncheckedCreateNestedManyWithoutMemberInput = {
+    create?: XOR<AssetMemberRoleCreateWithoutMemberInput, AssetMemberRoleUncheckedCreateWithoutMemberInput> | AssetMemberRoleCreateWithoutMemberInput[] | AssetMemberRoleUncheckedCreateWithoutMemberInput[]
+    connectOrCreate?: AssetMemberRoleCreateOrConnectWithoutMemberInput | AssetMemberRoleCreateOrConnectWithoutMemberInput[]
+    createMany?: AssetMemberRoleCreateManyMemberInputEnvelope
+    connect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+  }
+
+  export type AssetGroupInfoUpdateOneRequiredWithoutMembersNestedInput = {
+    create?: XOR<AssetGroupInfoCreateWithoutMembersInput, AssetGroupInfoUncheckedCreateWithoutMembersInput>
+    connectOrCreate?: AssetGroupInfoCreateOrConnectWithoutMembersInput
+    upsert?: AssetGroupInfoUpsertWithoutMembersInput
+    connect?: AssetGroupInfoWhereUniqueInput
+    update?: XOR<XOR<AssetGroupInfoUpdateToOneWithWhereWithoutMembersInput, AssetGroupInfoUpdateWithoutMembersInput>, AssetGroupInfoUncheckedUpdateWithoutMembersInput>
+  }
+
+  export type AssetMemberRoleUpdateManyWithoutMemberNestedInput = {
+    create?: XOR<AssetMemberRoleCreateWithoutMemberInput, AssetMemberRoleUncheckedCreateWithoutMemberInput> | AssetMemberRoleCreateWithoutMemberInput[] | AssetMemberRoleUncheckedCreateWithoutMemberInput[]
+    connectOrCreate?: AssetMemberRoleCreateOrConnectWithoutMemberInput | AssetMemberRoleCreateOrConnectWithoutMemberInput[]
+    upsert?: AssetMemberRoleUpsertWithWhereUniqueWithoutMemberInput | AssetMemberRoleUpsertWithWhereUniqueWithoutMemberInput[]
+    createMany?: AssetMemberRoleCreateManyMemberInputEnvelope
+    set?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+    disconnect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+    delete?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+    connect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+    update?: AssetMemberRoleUpdateWithWhereUniqueWithoutMemberInput | AssetMemberRoleUpdateWithWhereUniqueWithoutMemberInput[]
+    updateMany?: AssetMemberRoleUpdateManyWithWhereWithoutMemberInput | AssetMemberRoleUpdateManyWithWhereWithoutMemberInput[]
+    deleteMany?: AssetMemberRoleScalarWhereInput | AssetMemberRoleScalarWhereInput[]
+  }
+
+  export type AssetMemberRoleUncheckedUpdateManyWithoutMemberNestedInput = {
+    create?: XOR<AssetMemberRoleCreateWithoutMemberInput, AssetMemberRoleUncheckedCreateWithoutMemberInput> | AssetMemberRoleCreateWithoutMemberInput[] | AssetMemberRoleUncheckedCreateWithoutMemberInput[]
+    connectOrCreate?: AssetMemberRoleCreateOrConnectWithoutMemberInput | AssetMemberRoleCreateOrConnectWithoutMemberInput[]
+    upsert?: AssetMemberRoleUpsertWithWhereUniqueWithoutMemberInput | AssetMemberRoleUpsertWithWhereUniqueWithoutMemberInput[]
+    createMany?: AssetMemberRoleCreateManyMemberInputEnvelope
+    set?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+    disconnect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+    delete?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+    connect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+    update?: AssetMemberRoleUpdateWithWhereUniqueWithoutMemberInput | AssetMemberRoleUpdateWithWhereUniqueWithoutMemberInput[]
+    updateMany?: AssetMemberRoleUpdateManyWithWhereWithoutMemberInput | AssetMemberRoleUpdateManyWithWhereWithoutMemberInput[]
+    deleteMany?: AssetMemberRoleScalarWhereInput | AssetMemberRoleScalarWhereInput[]
+  }
+
+  export type AssetGroupInfoCreateNestedOneWithoutAssetsInput = {
+    create?: XOR<AssetGroupInfoCreateWithoutAssetsInput, AssetGroupInfoUncheckedCreateWithoutAssetsInput>
+    connectOrCreate?: AssetGroupInfoCreateOrConnectWithoutAssetsInput
+    connect?: AssetGroupInfoWhereUniqueInput
+  }
+
+  export type AssetMemberRoleCreateNestedManyWithoutAssetRefInput = {
+    create?: XOR<AssetMemberRoleCreateWithoutAssetRefInput, AssetMemberRoleUncheckedCreateWithoutAssetRefInput> | AssetMemberRoleCreateWithoutAssetRefInput[] | AssetMemberRoleUncheckedCreateWithoutAssetRefInput[]
+    connectOrCreate?: AssetMemberRoleCreateOrConnectWithoutAssetRefInput | AssetMemberRoleCreateOrConnectWithoutAssetRefInput[]
+    createMany?: AssetMemberRoleCreateManyAssetRefInputEnvelope
+    connect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+  }
+
+  export type AssetMemberRoleUncheckedCreateNestedManyWithoutAssetRefInput = {
+    create?: XOR<AssetMemberRoleCreateWithoutAssetRefInput, AssetMemberRoleUncheckedCreateWithoutAssetRefInput> | AssetMemberRoleCreateWithoutAssetRefInput[] | AssetMemberRoleUncheckedCreateWithoutAssetRefInput[]
+    connectOrCreate?: AssetMemberRoleCreateOrConnectWithoutAssetRefInput | AssetMemberRoleCreateOrConnectWithoutAssetRefInput[]
+    createMany?: AssetMemberRoleCreateManyAssetRefInputEnvelope
+    connect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+  }
+
+  export type AssetGroupInfoUpdateOneRequiredWithoutAssetsNestedInput = {
+    create?: XOR<AssetGroupInfoCreateWithoutAssetsInput, AssetGroupInfoUncheckedCreateWithoutAssetsInput>
+    connectOrCreate?: AssetGroupInfoCreateOrConnectWithoutAssetsInput
+    upsert?: AssetGroupInfoUpsertWithoutAssetsInput
+    connect?: AssetGroupInfoWhereUniqueInput
+    update?: XOR<XOR<AssetGroupInfoUpdateToOneWithWhereWithoutAssetsInput, AssetGroupInfoUpdateWithoutAssetsInput>, AssetGroupInfoUncheckedUpdateWithoutAssetsInput>
+  }
+
+  export type AssetMemberRoleUpdateManyWithoutAssetRefNestedInput = {
+    create?: XOR<AssetMemberRoleCreateWithoutAssetRefInput, AssetMemberRoleUncheckedCreateWithoutAssetRefInput> | AssetMemberRoleCreateWithoutAssetRefInput[] | AssetMemberRoleUncheckedCreateWithoutAssetRefInput[]
+    connectOrCreate?: AssetMemberRoleCreateOrConnectWithoutAssetRefInput | AssetMemberRoleCreateOrConnectWithoutAssetRefInput[]
+    upsert?: AssetMemberRoleUpsertWithWhereUniqueWithoutAssetRefInput | AssetMemberRoleUpsertWithWhereUniqueWithoutAssetRefInput[]
+    createMany?: AssetMemberRoleCreateManyAssetRefInputEnvelope
+    set?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+    disconnect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+    delete?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+    connect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+    update?: AssetMemberRoleUpdateWithWhereUniqueWithoutAssetRefInput | AssetMemberRoleUpdateWithWhereUniqueWithoutAssetRefInput[]
+    updateMany?: AssetMemberRoleUpdateManyWithWhereWithoutAssetRefInput | AssetMemberRoleUpdateManyWithWhereWithoutAssetRefInput[]
+    deleteMany?: AssetMemberRoleScalarWhereInput | AssetMemberRoleScalarWhereInput[]
+  }
+
+  export type AssetMemberRoleUncheckedUpdateManyWithoutAssetRefNestedInput = {
+    create?: XOR<AssetMemberRoleCreateWithoutAssetRefInput, AssetMemberRoleUncheckedCreateWithoutAssetRefInput> | AssetMemberRoleCreateWithoutAssetRefInput[] | AssetMemberRoleUncheckedCreateWithoutAssetRefInput[]
+    connectOrCreate?: AssetMemberRoleCreateOrConnectWithoutAssetRefInput | AssetMemberRoleCreateOrConnectWithoutAssetRefInput[]
+    upsert?: AssetMemberRoleUpsertWithWhereUniqueWithoutAssetRefInput | AssetMemberRoleUpsertWithWhereUniqueWithoutAssetRefInput[]
+    createMany?: AssetMemberRoleCreateManyAssetRefInputEnvelope
+    set?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+    disconnect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+    delete?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+    connect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+    update?: AssetMemberRoleUpdateWithWhereUniqueWithoutAssetRefInput | AssetMemberRoleUpdateWithWhereUniqueWithoutAssetRefInput[]
+    updateMany?: AssetMemberRoleUpdateManyWithWhereWithoutAssetRefInput | AssetMemberRoleUpdateManyWithWhereWithoutAssetRefInput[]
+    deleteMany?: AssetMemberRoleScalarWhereInput | AssetMemberRoleScalarWhereInput[]
+  }
+
+  export type AssetGroupMemberCreateNestedOneWithoutRolesInput = {
+    create?: XOR<AssetGroupMemberCreateWithoutRolesInput, AssetGroupMemberUncheckedCreateWithoutRolesInput>
+    connectOrCreate?: AssetGroupMemberCreateOrConnectWithoutRolesInput
+    connect?: AssetGroupMemberWhereUniqueInput
+  }
+
+  export type AssetCreateNestedOneWithoutRolesInput = {
+    create?: XOR<AssetCreateWithoutRolesInput, AssetUncheckedCreateWithoutRolesInput>
+    connectOrCreate?: AssetCreateOrConnectWithoutRolesInput
+    connect?: AssetWhereUniqueInput
+  }
+
+  export type AssetGroupMemberUpdateOneRequiredWithoutRolesNestedInput = {
+    create?: XOR<AssetGroupMemberCreateWithoutRolesInput, AssetGroupMemberUncheckedCreateWithoutRolesInput>
+    connectOrCreate?: AssetGroupMemberCreateOrConnectWithoutRolesInput
+    upsert?: AssetGroupMemberUpsertWithoutRolesInput
+    connect?: AssetGroupMemberWhereUniqueInput
+    update?: XOR<XOR<AssetGroupMemberUpdateToOneWithWhereWithoutRolesInput, AssetGroupMemberUpdateWithoutRolesInput>, AssetGroupMemberUncheckedUpdateWithoutRolesInput>
+  }
+
+  export type AssetUpdateOneRequiredWithoutRolesNestedInput = {
+    create?: XOR<AssetCreateWithoutRolesInput, AssetUncheckedCreateWithoutRolesInput>
+    connectOrCreate?: AssetCreateOrConnectWithoutRolesInput
+    upsert?: AssetUpsertWithoutRolesInput
+    connect?: AssetWhereUniqueInput
+    update?: XOR<XOR<AssetUpdateToOneWithWhereWithoutRolesInput, AssetUpdateWithoutRolesInput>, AssetUncheckedUpdateWithoutRolesInput>
   }
 
   export type ApplicationCreateNestedOneWithoutAuthTeamsExternalInput = {
@@ -67219,6 +72856,389 @@ export namespace Prisma {
     accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
   }
 
+  export type AssetGroupMemberCreateWithoutAssetGroupInfoInput = {
+    id?: string
+    member: string
+    isPermanent?: boolean
+    validTill?: Date | string | null
+    hasFullPermit?: boolean
+    roles?: AssetMemberRoleCreateNestedManyWithoutMemberInput
+  }
+
+  export type AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput = {
+    id?: string
+    member: string
+    isPermanent?: boolean
+    validTill?: Date | string | null
+    hasFullPermit?: boolean
+    roles?: AssetMemberRoleUncheckedCreateNestedManyWithoutMemberInput
+  }
+
+  export type AssetGroupMemberCreateOrConnectWithoutAssetGroupInfoInput = {
+    where: AssetGroupMemberWhereUniqueInput
+    create: XOR<AssetGroupMemberCreateWithoutAssetGroupInfoInput, AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput>
+  }
+
+  export type AssetGroupMemberCreateManyAssetGroupInfoInputEnvelope = {
+    data: AssetGroupMemberCreateManyAssetGroupInfoInput | AssetGroupMemberCreateManyAssetGroupInfoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AssetCreateWithoutAssetGroupInfoInput = {
+    id?: string
+    asset: string
+    type: string
+    details?: string | null
+    roles?: AssetMemberRoleCreateNestedManyWithoutAssetRefInput
+  }
+
+  export type AssetUncheckedCreateWithoutAssetGroupInfoInput = {
+    id?: string
+    asset: string
+    type: string
+    details?: string | null
+    roles?: AssetMemberRoleUncheckedCreateNestedManyWithoutAssetRefInput
+  }
+
+  export type AssetCreateOrConnectWithoutAssetGroupInfoInput = {
+    where: AssetWhereUniqueInput
+    create: XOR<AssetCreateWithoutAssetGroupInfoInput, AssetUncheckedCreateWithoutAssetGroupInfoInput>
+  }
+
+  export type AssetCreateManyAssetGroupInfoInputEnvelope = {
+    data: AssetCreateManyAssetGroupInfoInput | AssetCreateManyAssetGroupInfoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AssetGroupMemberUpsertWithWhereUniqueWithoutAssetGroupInfoInput = {
+    where: AssetGroupMemberWhereUniqueInput
+    update: XOR<AssetGroupMemberUpdateWithoutAssetGroupInfoInput, AssetGroupMemberUncheckedUpdateWithoutAssetGroupInfoInput>
+    create: XOR<AssetGroupMemberCreateWithoutAssetGroupInfoInput, AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput>
+  }
+
+  export type AssetGroupMemberUpdateWithWhereUniqueWithoutAssetGroupInfoInput = {
+    where: AssetGroupMemberWhereUniqueInput
+    data: XOR<AssetGroupMemberUpdateWithoutAssetGroupInfoInput, AssetGroupMemberUncheckedUpdateWithoutAssetGroupInfoInput>
+  }
+
+  export type AssetGroupMemberUpdateManyWithWhereWithoutAssetGroupInfoInput = {
+    where: AssetGroupMemberScalarWhereInput
+    data: XOR<AssetGroupMemberUpdateManyMutationInput, AssetGroupMemberUncheckedUpdateManyWithoutAssetGroupInfoInput>
+  }
+
+  export type AssetGroupMemberScalarWhereInput = {
+    AND?: AssetGroupMemberScalarWhereInput | AssetGroupMemberScalarWhereInput[]
+    OR?: AssetGroupMemberScalarWhereInput[]
+    NOT?: AssetGroupMemberScalarWhereInput | AssetGroupMemberScalarWhereInput[]
+    id?: StringFilter<"AssetGroupMember"> | string
+    assetGroup?: StringFilter<"AssetGroupMember"> | string
+    member?: StringFilter<"AssetGroupMember"> | string
+    isPermanent?: BoolFilter<"AssetGroupMember"> | boolean
+    validTill?: DateTimeNullableFilter<"AssetGroupMember"> | Date | string | null
+    hasFullPermit?: BoolFilter<"AssetGroupMember"> | boolean
+  }
+
+  export type AssetUpsertWithWhereUniqueWithoutAssetGroupInfoInput = {
+    where: AssetWhereUniqueInput
+    update: XOR<AssetUpdateWithoutAssetGroupInfoInput, AssetUncheckedUpdateWithoutAssetGroupInfoInput>
+    create: XOR<AssetCreateWithoutAssetGroupInfoInput, AssetUncheckedCreateWithoutAssetGroupInfoInput>
+  }
+
+  export type AssetUpdateWithWhereUniqueWithoutAssetGroupInfoInput = {
+    where: AssetWhereUniqueInput
+    data: XOR<AssetUpdateWithoutAssetGroupInfoInput, AssetUncheckedUpdateWithoutAssetGroupInfoInput>
+  }
+
+  export type AssetUpdateManyWithWhereWithoutAssetGroupInfoInput = {
+    where: AssetScalarWhereInput
+    data: XOR<AssetUpdateManyMutationInput, AssetUncheckedUpdateManyWithoutAssetGroupInfoInput>
+  }
+
+  export type AssetScalarWhereInput = {
+    AND?: AssetScalarWhereInput | AssetScalarWhereInput[]
+    OR?: AssetScalarWhereInput[]
+    NOT?: AssetScalarWhereInput | AssetScalarWhereInput[]
+    id?: StringFilter<"Asset"> | string
+    asset?: StringFilter<"Asset"> | string
+    type?: StringFilter<"Asset"> | string
+    assetGroup?: StringFilter<"Asset"> | string
+    details?: StringNullableFilter<"Asset"> | string | null
+  }
+
+  export type AssetGroupInfoCreateWithoutMembersInput = {
+    id?: string
+    name: string
+    details?: string | null
+    assets?: AssetCreateNestedManyWithoutAssetGroupInfoInput
+  }
+
+  export type AssetGroupInfoUncheckedCreateWithoutMembersInput = {
+    id?: string
+    name: string
+    details?: string | null
+    assets?: AssetUncheckedCreateNestedManyWithoutAssetGroupInfoInput
+  }
+
+  export type AssetGroupInfoCreateOrConnectWithoutMembersInput = {
+    where: AssetGroupInfoWhereUniqueInput
+    create: XOR<AssetGroupInfoCreateWithoutMembersInput, AssetGroupInfoUncheckedCreateWithoutMembersInput>
+  }
+
+  export type AssetMemberRoleCreateWithoutMemberInput = {
+    id?: string
+    role: string
+    assetRef: AssetCreateNestedOneWithoutRolesInput
+  }
+
+  export type AssetMemberRoleUncheckedCreateWithoutMemberInput = {
+    id?: string
+    asset: string
+    role: string
+  }
+
+  export type AssetMemberRoleCreateOrConnectWithoutMemberInput = {
+    where: AssetMemberRoleWhereUniqueInput
+    create: XOR<AssetMemberRoleCreateWithoutMemberInput, AssetMemberRoleUncheckedCreateWithoutMemberInput>
+  }
+
+  export type AssetMemberRoleCreateManyMemberInputEnvelope = {
+    data: AssetMemberRoleCreateManyMemberInput | AssetMemberRoleCreateManyMemberInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AssetGroupInfoUpsertWithoutMembersInput = {
+    update: XOR<AssetGroupInfoUpdateWithoutMembersInput, AssetGroupInfoUncheckedUpdateWithoutMembersInput>
+    create: XOR<AssetGroupInfoCreateWithoutMembersInput, AssetGroupInfoUncheckedCreateWithoutMembersInput>
+    where?: AssetGroupInfoWhereInput
+  }
+
+  export type AssetGroupInfoUpdateToOneWithWhereWithoutMembersInput = {
+    where?: AssetGroupInfoWhereInput
+    data: XOR<AssetGroupInfoUpdateWithoutMembersInput, AssetGroupInfoUncheckedUpdateWithoutMembersInput>
+  }
+
+  export type AssetGroupInfoUpdateWithoutMembersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    assets?: AssetUpdateManyWithoutAssetGroupInfoNestedInput
+  }
+
+  export type AssetGroupInfoUncheckedUpdateWithoutMembersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    assets?: AssetUncheckedUpdateManyWithoutAssetGroupInfoNestedInput
+  }
+
+  export type AssetMemberRoleUpsertWithWhereUniqueWithoutMemberInput = {
+    where: AssetMemberRoleWhereUniqueInput
+    update: XOR<AssetMemberRoleUpdateWithoutMemberInput, AssetMemberRoleUncheckedUpdateWithoutMemberInput>
+    create: XOR<AssetMemberRoleCreateWithoutMemberInput, AssetMemberRoleUncheckedCreateWithoutMemberInput>
+  }
+
+  export type AssetMemberRoleUpdateWithWhereUniqueWithoutMemberInput = {
+    where: AssetMemberRoleWhereUniqueInput
+    data: XOR<AssetMemberRoleUpdateWithoutMemberInput, AssetMemberRoleUncheckedUpdateWithoutMemberInput>
+  }
+
+  export type AssetMemberRoleUpdateManyWithWhereWithoutMemberInput = {
+    where: AssetMemberRoleScalarWhereInput
+    data: XOR<AssetMemberRoleUpdateManyMutationInput, AssetMemberRoleUncheckedUpdateManyWithoutMemberInput>
+  }
+
+  export type AssetMemberRoleScalarWhereInput = {
+    AND?: AssetMemberRoleScalarWhereInput | AssetMemberRoleScalarWhereInput[]
+    OR?: AssetMemberRoleScalarWhereInput[]
+    NOT?: AssetMemberRoleScalarWhereInput | AssetMemberRoleScalarWhereInput[]
+    id?: StringFilter<"AssetMemberRole"> | string
+    assetMember?: StringFilter<"AssetMemberRole"> | string
+    asset?: StringFilter<"AssetMemberRole"> | string
+    role?: StringFilter<"AssetMemberRole"> | string
+  }
+
+  export type AssetGroupInfoCreateWithoutAssetsInput = {
+    id?: string
+    name: string
+    details?: string | null
+    members?: AssetGroupMemberCreateNestedManyWithoutAssetGroupInfoInput
+  }
+
+  export type AssetGroupInfoUncheckedCreateWithoutAssetsInput = {
+    id?: string
+    name: string
+    details?: string | null
+    members?: AssetGroupMemberUncheckedCreateNestedManyWithoutAssetGroupInfoInput
+  }
+
+  export type AssetGroupInfoCreateOrConnectWithoutAssetsInput = {
+    where: AssetGroupInfoWhereUniqueInput
+    create: XOR<AssetGroupInfoCreateWithoutAssetsInput, AssetGroupInfoUncheckedCreateWithoutAssetsInput>
+  }
+
+  export type AssetMemberRoleCreateWithoutAssetRefInput = {
+    id?: string
+    role: string
+    member: AssetGroupMemberCreateNestedOneWithoutRolesInput
+  }
+
+  export type AssetMemberRoleUncheckedCreateWithoutAssetRefInput = {
+    id?: string
+    assetMember: string
+    role: string
+  }
+
+  export type AssetMemberRoleCreateOrConnectWithoutAssetRefInput = {
+    where: AssetMemberRoleWhereUniqueInput
+    create: XOR<AssetMemberRoleCreateWithoutAssetRefInput, AssetMemberRoleUncheckedCreateWithoutAssetRefInput>
+  }
+
+  export type AssetMemberRoleCreateManyAssetRefInputEnvelope = {
+    data: AssetMemberRoleCreateManyAssetRefInput | AssetMemberRoleCreateManyAssetRefInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AssetGroupInfoUpsertWithoutAssetsInput = {
+    update: XOR<AssetGroupInfoUpdateWithoutAssetsInput, AssetGroupInfoUncheckedUpdateWithoutAssetsInput>
+    create: XOR<AssetGroupInfoCreateWithoutAssetsInput, AssetGroupInfoUncheckedCreateWithoutAssetsInput>
+    where?: AssetGroupInfoWhereInput
+  }
+
+  export type AssetGroupInfoUpdateToOneWithWhereWithoutAssetsInput = {
+    where?: AssetGroupInfoWhereInput
+    data: XOR<AssetGroupInfoUpdateWithoutAssetsInput, AssetGroupInfoUncheckedUpdateWithoutAssetsInput>
+  }
+
+  export type AssetGroupInfoUpdateWithoutAssetsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    members?: AssetGroupMemberUpdateManyWithoutAssetGroupInfoNestedInput
+  }
+
+  export type AssetGroupInfoUncheckedUpdateWithoutAssetsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    members?: AssetGroupMemberUncheckedUpdateManyWithoutAssetGroupInfoNestedInput
+  }
+
+  export type AssetMemberRoleUpsertWithWhereUniqueWithoutAssetRefInput = {
+    where: AssetMemberRoleWhereUniqueInput
+    update: XOR<AssetMemberRoleUpdateWithoutAssetRefInput, AssetMemberRoleUncheckedUpdateWithoutAssetRefInput>
+    create: XOR<AssetMemberRoleCreateWithoutAssetRefInput, AssetMemberRoleUncheckedCreateWithoutAssetRefInput>
+  }
+
+  export type AssetMemberRoleUpdateWithWhereUniqueWithoutAssetRefInput = {
+    where: AssetMemberRoleWhereUniqueInput
+    data: XOR<AssetMemberRoleUpdateWithoutAssetRefInput, AssetMemberRoleUncheckedUpdateWithoutAssetRefInput>
+  }
+
+  export type AssetMemberRoleUpdateManyWithWhereWithoutAssetRefInput = {
+    where: AssetMemberRoleScalarWhereInput
+    data: XOR<AssetMemberRoleUpdateManyMutationInput, AssetMemberRoleUncheckedUpdateManyWithoutAssetRefInput>
+  }
+
+  export type AssetGroupMemberCreateWithoutRolesInput = {
+    id?: string
+    member: string
+    isPermanent?: boolean
+    validTill?: Date | string | null
+    hasFullPermit?: boolean
+    assetGroupInfo: AssetGroupInfoCreateNestedOneWithoutMembersInput
+  }
+
+  export type AssetGroupMemberUncheckedCreateWithoutRolesInput = {
+    id?: string
+    assetGroup: string
+    member: string
+    isPermanent?: boolean
+    validTill?: Date | string | null
+    hasFullPermit?: boolean
+  }
+
+  export type AssetGroupMemberCreateOrConnectWithoutRolesInput = {
+    where: AssetGroupMemberWhereUniqueInput
+    create: XOR<AssetGroupMemberCreateWithoutRolesInput, AssetGroupMemberUncheckedCreateWithoutRolesInput>
+  }
+
+  export type AssetCreateWithoutRolesInput = {
+    id?: string
+    asset: string
+    type: string
+    details?: string | null
+    assetGroupInfo: AssetGroupInfoCreateNestedOneWithoutAssetsInput
+  }
+
+  export type AssetUncheckedCreateWithoutRolesInput = {
+    id?: string
+    asset: string
+    type: string
+    assetGroup: string
+    details?: string | null
+  }
+
+  export type AssetCreateOrConnectWithoutRolesInput = {
+    where: AssetWhereUniqueInput
+    create: XOR<AssetCreateWithoutRolesInput, AssetUncheckedCreateWithoutRolesInput>
+  }
+
+  export type AssetGroupMemberUpsertWithoutRolesInput = {
+    update: XOR<AssetGroupMemberUpdateWithoutRolesInput, AssetGroupMemberUncheckedUpdateWithoutRolesInput>
+    create: XOR<AssetGroupMemberCreateWithoutRolesInput, AssetGroupMemberUncheckedCreateWithoutRolesInput>
+    where?: AssetGroupMemberWhereInput
+  }
+
+  export type AssetGroupMemberUpdateToOneWithWhereWithoutRolesInput = {
+    where?: AssetGroupMemberWhereInput
+    data: XOR<AssetGroupMemberUpdateWithoutRolesInput, AssetGroupMemberUncheckedUpdateWithoutRolesInput>
+  }
+
+  export type AssetGroupMemberUpdateWithoutRolesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    member?: StringFieldUpdateOperationsInput | string
+    isPermanent?: BoolFieldUpdateOperationsInput | boolean
+    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    hasFullPermit?: BoolFieldUpdateOperationsInput | boolean
+    assetGroupInfo?: AssetGroupInfoUpdateOneRequiredWithoutMembersNestedInput
+  }
+
+  export type AssetGroupMemberUncheckedUpdateWithoutRolesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    assetGroup?: StringFieldUpdateOperationsInput | string
+    member?: StringFieldUpdateOperationsInput | string
+    isPermanent?: BoolFieldUpdateOperationsInput | boolean
+    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    hasFullPermit?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AssetUpsertWithoutRolesInput = {
+    update: XOR<AssetUpdateWithoutRolesInput, AssetUncheckedUpdateWithoutRolesInput>
+    create: XOR<AssetCreateWithoutRolesInput, AssetUncheckedCreateWithoutRolesInput>
+    where?: AssetWhereInput
+  }
+
+  export type AssetUpdateToOneWithWhereWithoutRolesInput = {
+    where?: AssetWhereInput
+    data: XOR<AssetUpdateWithoutRolesInput, AssetUncheckedUpdateWithoutRolesInput>
+  }
+
+  export type AssetUpdateWithoutRolesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    asset?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    assetGroupInfo?: AssetGroupInfoUpdateOneRequiredWithoutAssetsNestedInput
+  }
+
+  export type AssetUncheckedUpdateWithoutRolesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    asset?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    assetGroup?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type ApplicationCreateWithoutAuthTeamsExternalInput = {
     id: string
     name: string
@@ -74677,6 +80697,118 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AssetGroupMemberCreateManyAssetGroupInfoInput = {
+    id?: string
+    member: string
+    isPermanent?: boolean
+    validTill?: Date | string | null
+    hasFullPermit?: boolean
+  }
+
+  export type AssetCreateManyAssetGroupInfoInput = {
+    id?: string
+    asset: string
+    type: string
+    details?: string | null
+  }
+
+  export type AssetGroupMemberUpdateWithoutAssetGroupInfoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    member?: StringFieldUpdateOperationsInput | string
+    isPermanent?: BoolFieldUpdateOperationsInput | boolean
+    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    hasFullPermit?: BoolFieldUpdateOperationsInput | boolean
+    roles?: AssetMemberRoleUpdateManyWithoutMemberNestedInput
+  }
+
+  export type AssetGroupMemberUncheckedUpdateWithoutAssetGroupInfoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    member?: StringFieldUpdateOperationsInput | string
+    isPermanent?: BoolFieldUpdateOperationsInput | boolean
+    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    hasFullPermit?: BoolFieldUpdateOperationsInput | boolean
+    roles?: AssetMemberRoleUncheckedUpdateManyWithoutMemberNestedInput
+  }
+
+  export type AssetGroupMemberUncheckedUpdateManyWithoutAssetGroupInfoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    member?: StringFieldUpdateOperationsInput | string
+    isPermanent?: BoolFieldUpdateOperationsInput | boolean
+    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    hasFullPermit?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AssetUpdateWithoutAssetGroupInfoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    asset?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    roles?: AssetMemberRoleUpdateManyWithoutAssetRefNestedInput
+  }
+
+  export type AssetUncheckedUpdateWithoutAssetGroupInfoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    asset?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    roles?: AssetMemberRoleUncheckedUpdateManyWithoutAssetRefNestedInput
+  }
+
+  export type AssetUncheckedUpdateManyWithoutAssetGroupInfoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    asset?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AssetMemberRoleCreateManyMemberInput = {
+    id?: string
+    asset: string
+    role: string
+  }
+
+  export type AssetMemberRoleUpdateWithoutMemberInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    assetRef?: AssetUpdateOneRequiredWithoutRolesNestedInput
+  }
+
+  export type AssetMemberRoleUncheckedUpdateWithoutMemberInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    asset?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AssetMemberRoleUncheckedUpdateManyWithoutMemberInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    asset?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AssetMemberRoleCreateManyAssetRefInput = {
+    id?: string
+    assetMember: string
+    role: string
+  }
+
+  export type AssetMemberRoleUpdateWithoutAssetRefInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    member?: AssetGroupMemberUpdateOneRequiredWithoutRolesNestedInput
+  }
+
+  export type AssetMemberRoleUncheckedUpdateWithoutAssetRefInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    assetMember?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AssetMemberRoleUncheckedUpdateManyWithoutAssetRefInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    assetMember?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
   }
 
 

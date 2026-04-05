@@ -1,92 +1,214 @@
-
-import { getAccessDetails, getDelegatablePermissions } from "@/actions/manage/access";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from 'next/navigation';
+import { BackButton } from '@/components/ui/back-button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { AccessManagementForm } from "./form";
-import { BackButton } from "@/components/ui/back-button";
-import type { Permission } from "@/types";
+  addAssetGroupMember,
+  addAssetToGroup,
+  assignAssetMemberRole,
+  getAccessAssetGroup,
+} from '@/actions/manage/access/assets';
 
-export default async function AccessDetailsPage({
-  params,
-}: {
+type PageProps = {
   params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
-  const [details, delegatablePermissionsResponse] = await Promise.all([
-    getAccessDetails(id),
-    getDelegatablePermissions(),
-  ]);
+};
 
-  if (!details) {
+export default async function AssetGroupPage({ params }: PageProps) {
+  const { id } = await params;
+  const group = await getAccessAssetGroup(id);
+
+  if (!group) {
     notFound();
   }
 
-  const delegatablePermissionMap = new Map(delegatablePermissionsResponse.map(p => [p.id, p]));
+  const assetsById = new Map(group.assets.map((asset) => [asset.id, asset]));
 
-  // Filter out any permissions the current user can't delegate
-  const masterPermissions = delegatablePermissionsResponse;
-  
-  // Create a map of only the permissions the current user can delegate for display purposes
-  const currentPermissionNames = details.permissions
-    .map(pId => delegatablePermissionMap.get(pId)?.name)
-    .filter(Boolean) as string[];
+  async function addMemberAction(formData: FormData) {
+    'use server';
+
+    await addAssetGroupMember({
+      groupId: id,
+      member: String(formData.get('member') || ''),
+      isPermanent: formData.get('isPermanent') === 'on',
+      validTill: String(formData.get('validTill') || ''),
+      hasFullPermit: formData.get('hasFullPermit') === 'on',
+    });
+
+    redirect(`/access/${id}`);
+  }
+
+  async function addAssetAction(formData: FormData) {
+    'use server';
+
+    await addAssetToGroup({
+      groupId: id,
+      asset: String(formData.get('asset') || ''),
+      type: String(formData.get('type') || ''),
+      details: String(formData.get('details') || ''),
+    });
+
+    redirect(`/access/${id}`);
+  }
+
+  async function assignRoleAction(formData: FormData) {
+    'use server';
+
+    await assignAssetMemberRole({
+      groupId: id,
+      assetMember: String(formData.get('assetMember') || ''),
+      asset: String(formData.get('asset') || ''),
+      role: String(formData.get('role') || ''),
+    });
+
+    redirect(`/access/${id}`);
+  }
 
   return (
     <div className="grid gap-6">
-       <BackButton href="/manage/access" />
-      <div className="flex items-center gap-4">
-          <Avatar className="h-12 w-12">
-            <AvatarImage src={details.grantedTo.name} data-ai-hint="person" />
-            <AvatarFallback />
-          </Avatar>
-          <div>
-            <h1 className="text-2xl font-bold tracking-tight">
-              {details.grantedTo.name}
-            </h1>
-            <p className="text-muted-foreground font-mono">
-              @{details.grantedTo.neupId}
-            </p>
-          </div>
+      <BackButton href="/access" />
+
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight">{group.name}</h1>
+        <p className="text-muted-foreground">{group.details || 'Manage members, assets, and roles for this group.'}</p>
       </div>
+
       <Card>
         <CardHeader>
-            <CardTitle>Access Details</CardTitle>
+          <CardTitle>Group Members</CardTitle>
+          <CardDescription>
+            Format: type "app:appid" or type "account:id".
+          </CardDescription>
         </CardHeader>
-        <CardContent className="text-sm space-y-4">
-            <div>
-                <p className="text-muted-foreground">Granted On</p>
-                <p>{details.grantedOn}</p>
+        <CardContent className="space-y-4">
+          <form action={addMemberAction} className="grid gap-3 md:grid-cols-2">
+            <Input name="member" placeholder="account:63b6151e-... or app:neup.account" required />
+            <Input name="validTill" type="datetime-local" />
+            <div className="flex items-center gap-2">
+              <Checkbox id="isPermanent" name="isPermanent" />
+              <Label htmlFor="isPermanent">isPermanent</Label>
             </div>
-             <div>
-                <p className="text-muted-foreground">Granted To Manage</p>
-                <p>{details.grantedBy.name}</p>
+            <div className="flex items-center gap-2">
+              <Checkbox id="hasFullPermit" name="hasFullPermit" />
+              <Label htmlFor="hasFullPermit">hasFullPermit</Label>
             </div>
-             <div>
-                <p className="text-muted-foreground">Current Permissions</p>
-                <div className="flex flex-wrap gap-2 mt-1">
-                    {currentPermissionNames.length > 0 ? currentPermissionNames.map(p => (
-                        <Badge key={p} variant="secondary">{p}</Badge>
-                    )) : (
-                        <p className="text-muted-foreground text-xs">No individual permissions granted.</p>
-                    )}
+            <div className="md:col-span-2">
+              <Button type="submit">Add Member</Button>
+            </div>
+          </form>
+
+          {group.members.length > 0 ? (
+            <div className="overflow-hidden rounded-lg border">
+              {group.members.map((member) => (
+                <div key={member.id} className="border-b px-4 py-3 text-sm last:border-b-0">
+                  <p className="font-medium">{member.member}</p>
+                  <p className="text-muted-foreground">
+                    permanent: {member.isPermanent ? 'yes' : 'no'} | validTill: {member.validTill ? member.validTill.toLocaleString() : 'not set'} | fullPermit: {member.hasFullPermit ? 'yes' : 'no'}
+                  </p>
                 </div>
+              ))}
             </div>
+          ) : (
+            <p className="text-sm text-muted-foreground">No members in this group yet.</p>
+          )}
         </CardContent>
       </Card>
 
-      <AccessManagementForm 
-        permitId={details.permitId} 
-        allPermissions={masterPermissions}
-        currentPermissionIds={details.permissions}
-      />
+      <Card>
+        <CardHeader>
+          <CardTitle>Assets</CardTitle>
+          <CardDescription>Add assets that belong to this group.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <form action={addAssetAction} className="grid gap-3 md:grid-cols-2">
+            <Input name="asset" placeholder="Asset identifier" required />
+            <Input name="type" placeholder="Type" required />
+            <Input className="md:col-span-2" name="details" placeholder="Details (optional)" />
+            <div className="md:col-span-2">
+              <Button type="submit">Add Asset</Button>
+            </div>
+          </form>
+
+          {group.assets.length > 0 ? (
+            <div className="overflow-hidden rounded-lg border">
+              {group.assets.map((asset) => (
+                <div key={asset.id} className="border-b px-4 py-3 text-sm last:border-b-0">
+                  <p className="font-medium">{asset.asset}</p>
+                  <p className="text-muted-foreground">type: {asset.type}</p>
+                  <p className="text-muted-foreground">{asset.details || 'No details.'}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-muted-foreground">No assets in this group yet.</p>
+          )}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Permission Management</CardTitle>
+          <CardDescription>Assign role per member and asset.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <form action={assignRoleAction} className="grid gap-3 md:grid-cols-3">
+            <div>
+              <Label htmlFor="assetMember">assetMember</Label>
+              <select id="assetMember" name="assetMember" className="mt-1 w-full rounded-md border bg-background px-3 py-2 text-sm" required>
+                <option value="">Select member</option>
+                {group.members.map((member) => (
+                  <option key={member.id} value={member.id}>
+                    {member.member}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <Label htmlFor="asset">asset</Label>
+              <select id="asset" name="asset" className="mt-1 w-full rounded-md border bg-background px-3 py-2 text-sm" required>
+                <option value="">Select asset</option>
+                {group.assets.map((asset) => (
+                  <option key={asset.id} value={asset.id}>
+                    {asset.asset}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <Label htmlFor="role">role</Label>
+              <Input id="role" name="role" placeholder="manager.read" required />
+            </div>
+            <div className="md:col-span-3">
+              <Button type="submit">Set Role</Button>
+            </div>
+          </form>
+
+          {group.members.length > 0 ? (
+            <div className="overflow-hidden rounded-lg border">
+              {group.members.map((member) => (
+                <div key={member.id} className="border-b px-4 py-3 text-sm last:border-b-0">
+                  <p className="font-medium mb-1">{member.member}</p>
+                  {member.roles.length > 0 ? (
+                    <ul className="space-y-1 text-muted-foreground">
+                      {member.roles.map((roleRow) => (
+                        <li key={roleRow.id}>
+                          {assetsById.get(roleRow.asset)?.asset || roleRow.asset}: {roleRow.role}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-muted-foreground">No roles assigned yet.</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-muted-foreground">Add members first to assign roles.</p>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }
