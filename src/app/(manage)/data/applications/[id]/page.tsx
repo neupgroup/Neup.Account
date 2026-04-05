@@ -66,6 +66,7 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
     : details.configuredAccess;
 
   const termsTitle = details.hasUsedApp ? 'Terms agreed by user' : 'Terms to agree before using app';
+  const authFlowPreviewUrl = `/auth/sign?appId=${encodeURIComponent(details.id)}&authenticatesTo=${encodeURIComponent(`/data/applications/${details.id}`)}`;
 
   return (
     <div className="grid gap-6">
@@ -90,6 +91,18 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
         </CardHeader>
         <CardContent className="text-sm">
           Company or individual: {details.developer || 'Not provided'}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Auth Server</CardTitle>
+          <CardDescription>Preview how the sign flow will look for this application.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Button asChild>
+            <Link href={authFlowPreviewUrl}>Preview Sign Flow</Link>
+          </Button>
         </CardContent>
       </Card>
 
