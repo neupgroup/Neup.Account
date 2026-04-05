@@ -337,18 +337,106 @@ export async function createManagedApplication(input: { name: string }) {
   }
 
   try {
-    const application = await prisma.application.create({
-      data: {
-        id: randomUUID(),
-        name: parsed.data.name,
-        ownerAccountId: accountId,
-      },
-      select: {
-        id: true,
-      },
+    const application = await prisma.$transaction(async (tx) => {
+      const createdApp = await tx.application.create({
+        data: {
+          id: randomUUID(),
+          name: parsed.data.name,
+          ownerAccountId: accountId,
+        },
+        select: {
+          id: true,
+          name: true,
+        },
+      });
+
+      const memberKey = `account:${accountId}`;
+
+      let assetGroup = await tx.assetGroupInfo.findFirst({
+        where: {
+          members: {
+            some: {
+              member: memberKey,
+            },
+          },
+        },
+        select: { id: true },
+      });
+
+      if (!assetGroup) {
+        assetGroup = await tx.assetGroupInfo.create({
+          data: {
+            name: 'My Assets Group',
+            details: 'Default asset group for your owned applications.',
+          },
+          select: { id: true },
+        });
+      }
+
+      let groupMember = await tx.assetGroupMember.findFirst({
+        where: {
+          assetGroup: assetGroup.id,
+          member: memberKey,
+        },
+        select: { id: true },
+      });
+
+      if (!groupMember) {
+        groupMember = await tx.assetGroupMember.create({
+          data: {
+            assetGroup: assetGroup.id,
+            member: memberKey,
+            isPermanent: true,
+            hasFullPermit: true,
+          },
+          select: { id: true },
+        });
+      }
+
+      let appAsset = await tx.asset.findFirst({
+        where: {
+          assetGroup: assetGroup.id,
+          asset: createdApp.id,
+          type: 'app',
+        },
+        select: { id: true },
+      });
+
+      if (!appAsset) {
+        appAsset = await tx.asset.create({
+          data: {
+            asset: createdApp.id,
+            type: 'app',
+            assetGroup: assetGroup.id,
+            details: `Application asset for ${createdApp.name}`,
+          },
+          select: { id: true },
+        });
+      }
+
+      await tx.assetMemberRole.upsert({
+        where: {
+          assetMember_asset: {
+            assetMember: groupMember.id,
+            asset: appAsset.id,
+          },
+        },
+        create: {
+          assetMember: groupMember.id,
+          asset: appAsset.id,
+          role: 'application.owner',
+        },
+        update: {
+          role: 'application.owner',
+        },
+      });
+
+      return { id: createdApp.id, groupId: assetGroup.id };
     });
 
     revalidatePath('/data/applications');
+    revalidatePath('/access');
+    revalidatePath(`/access/${application.groupId}`);
     return { success: true, appId: application.id };
   } catch (error) {
     await logError('database', error, 'createManagedApplication');
