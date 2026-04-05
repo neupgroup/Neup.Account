@@ -7,6 +7,7 @@ import { createAndSetSession } from '@/lib/session';
 import { validateNeupId } from '@/lib/user';
 import { getAuthRequest, extendAuthRequest } from './utils';
 import prisma from '@/lib/prisma';
+import { makeNotification } from '@/actions/notifications';
 
 const neupIdSchema = z.object({
     neupId: z.string().min(1, "NeupID is required."),
@@ -126,6 +127,11 @@ export async function submitPassword(data: z.infer<typeof passwordSchema>): Prom
         const userAgent = headersList.get('user-agent') || 'Unknown User-Agent';
 
         await createAndSetSession(accountId, 'Password', ipAddress, userAgent);
+        await makeNotification({
+            recipient_id: accountId,
+            action: 'informative.login',
+            message: 'A new sign-in was completed.',
+        });
 
         await prisma.authRequest.update({
             where: { id: request.id },

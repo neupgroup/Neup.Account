@@ -7,7 +7,7 @@ import { headers } from 'next/headers';
 import { switchToAccount as switchToAccountAction, switchToBrand as switchToBrandAction, switchToPersonal as switchToPersonalAction, switchToDependent as switchToDependentAction } from '@/lib/session';
 import type { StoredAccount } from '@/types';
 import { getSessionCookies, setStoredAccountsCookie, clearSessionCookies } from '@/lib/cookies';
-import { createNotification } from '../notifications';
+import { makeNotification } from '../notifications';
 
 // This function is now just a wrapper or re-export if needed, but the main logic is in lib/session
 // However, the client uses this file for actions.
@@ -20,10 +20,10 @@ export async function switchActiveAccount(account: StoredAccount) {
     const result = await switchToAccountAction(account);
     if(result.success) {
         await logActivity(account.accountId, `Switched to account: ${account.neupId}`, 'Success', undefined, undefined);
-        await createNotification({
+        await makeNotification({
             recipient_id: account.accountId,
-            action: 'informative.login',
-            message: `Your account was accessed from a new device.`,
+            action: 'informative.switch',
+            message: 'You switched to this account.',
         });
     }
     return result;
@@ -34,7 +34,20 @@ export async function switchActiveAccountByNeupId(neupId: string) {
     const result = await switchToAccountByNeupId(neupId);
 
     if (result.success) {
+        const matchedNeupId = await prisma.neupId.findUnique({
+            where: { id: neupId.toLowerCase().trim() },
+            select: { accountId: true },
+        });
+
         await logActivity('self', `Switched account by NeupID: ${neupId}`, 'Success', undefined, undefined);
+
+        if (matchedNeupId?.accountId) {
+            await makeNotification({
+                recipient_id: matchedNeupId.accountId,
+                action: 'informative.switch',
+                message: `You switched to this account using NeupID ${neupId}.`,
+            });
+        }
     }
 
     return result;
@@ -66,7 +79,7 @@ export async function logoutStoredSession(sessionId: string): Promise<{ success:
         ]);
 
         await logActivity(accountId, 'Signout', 'Success', ipAddress);
-        await createNotification({
+        await makeNotification({
             recipient_id: accountId,
             action: 'informative.logout',
             message: `A session was logged out.`,
@@ -126,15 +139,50 @@ export async function removeStoredAccount(accountId: string): Promise<{ success:
 }
 
 export async function switchToBrand(brandId: string) {
-    return switchToBrandAction(brandId);
+    const result = await switchToBrandAction(brandId);
+
+    if (result.success) {
+        const { accountId } = await getSessionCookies();
+        if (accountId) {
+            await makeNotification({
+                recipient_id: accountId,
+                action: 'informative.switch',
+                message: `You switched context to brand ${brandId}.`,
+            });
+        }
+    }
+
+    return result;
 }
 
 export async function switchToDependent(dependentId: string) {
-    return switchToDependentAction(dependentId);
+    const result = await switchToDependentAction(dependentId);
+
+    if (result.success) {
+        const { accountId } = await getSessionCookies();
+        if (accountId) {
+            await makeNotification({
+                recipient_id: accountId,
+                action: 'informative.switch',
+                message: `You switched context to dependent ${dependentId}.`,
+            });
+        }
+    }
+
+    return result;
 }
 
 export async function switchToPersonal() {
     await switchToPersonalAction();
+
+    const { accountId } = await getSessionCookies();
+    if (accountId) {
+        await makeNotification({
+            recipient_id: accountId,
+            action: 'informative.switch',
+            message: 'You switched context back to personal account.',
+        });
+    }
 }
 
 // Local helper to validate accounts using Prisma

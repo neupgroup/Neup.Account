@@ -38,7 +38,7 @@ export type NotificationCreate = {
     sender_id?: string;
 };
 
-export async function createNotification(data: NotificationCreate) {
+export async function makeNotification(data: NotificationCreate) {
     try {
         const now = new Date();
         let deletable_on: Date | null = data.expiresOn || null;
@@ -67,8 +67,13 @@ export async function createNotification(data: NotificationCreate) {
             },
         });
     } catch (e) {
-        await logError('database', e, `createNotification for ${data.recipient_id}`);
+        await logError('database', e, `makeNotification for ${data.recipient_id}`);
     }
+}
+
+// Backward compatibility for existing call sites.
+export async function createNotification(data: NotificationCreate) {
+    return makeNotification(data);
 }
 
 

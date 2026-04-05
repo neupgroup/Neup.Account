@@ -4,6 +4,7 @@ import prisma from '@/lib/prisma';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import { logError } from '@/lib/logger';
+import { makeNotification } from '@/actions/notifications';
 
 export const dynamic = 'force-dynamic';
 
@@ -135,6 +136,12 @@ export async function POST(request: NextRequest) {
         jwt: token,
         expiresOn: sessionExpiresOn,
       },
+    });
+
+    await makeNotification({
+      recipient_id: sessionWithToken.accountId,
+      action: 'informative.application_authorized',
+      message: `Application ${application.name} was authorized.`,
     });
 
     // 8. Return response
