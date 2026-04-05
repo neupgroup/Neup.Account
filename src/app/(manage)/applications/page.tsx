@@ -1,8 +1,11 @@
 import Link from 'next/link';
 import { format } from 'date-fns';
+import { getManagedApplications } from '@/actions/manage/applications';
 import { getSignedApplications } from '@/actions/data/signed-applications';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { AppWindow, ExternalLink, Share2 } from '@/components/icons';
+import { Badge } from '@/components/ui/badge';
 
 function EmptyState({ label }: { label: string }) {
   return (
@@ -19,6 +22,13 @@ type AppItem = {
   website?: string;
   developer?: string;
   signedAt: Date;
+};
+
+type OwnedAppItem = {
+  id: string;
+  name: string;
+  createdAt: Date;
+  hasSecretKey: boolean;
 };
 
 function AppList({ apps }: { apps: AppItem[] }) {
@@ -54,18 +64,58 @@ function AppList({ apps }: { apps: AppItem[] }) {
   );
 }
 
+function OwnedAppList({ apps }: { apps: OwnedAppItem[] }) {
+  return (
+    <div className="divide-y rounded-md border">
+      {apps.map((app) => (
+        <div key={app.id} className="flex items-start justify-between gap-4 p-4">
+          <div className="space-y-1">
+            <p className="font-medium">{app.name}</p>
+            <p className="text-xs text-muted-foreground">Created on {format(app.createdAt, 'PPP')}</p>
+          </div>
+          <div className="flex shrink-0 items-center gap-2">
+            <Badge variant={app.hasSecretKey ? 'secondary' : 'outline'}>
+              {app.hasSecretKey ? 'Secret saved' : 'No secret yet'}
+            </Badge>
+            <code className="rounded bg-muted px-2 py-1 text-xs">{app.id}</code>
+            <Button variant="outline" asChild size="sm">
+              <Link href={`/applications/${app.id}`}>Open</Link>
+            </Button>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default async function ApplicationsPage() {
+  const managedApplications = await getManagedApplications();
   const { internal, external } = await getSignedApplications();
   const total = internal.length + external.length;
 
   return (
     <div className="grid gap-8">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Applications</h1>
-        <p className="text-muted-foreground">
-          Applications you have signed in to using NeupAccount. Total connected: {total}.
-        </p>
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Applications</h1>
+          <p className="text-muted-foreground">
+            Create your own applications and review apps you have already signed into. Connected apps: {total}.
+          </p>
+        </div>
+        <Button asChild>
+          <Link href="/applications/add">Create Application</Link>
+        </Button>
       </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Your Applications</CardTitle>
+          <CardDescription>Applications you own and configure yourself.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {managedApplications.length > 0 ? <OwnedAppList apps={managedApplications} /> : <EmptyState label="Owned" />}
+        </CardContent>
+      </Card>
 
       <Card>
         <CardHeader>

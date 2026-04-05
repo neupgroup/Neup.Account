@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ApplicationAccessForm } from '@/app/(manage)/applications/_components/application-access-form';
+import { ApplicationCreateForm } from '@/app/(manage)/applications/_components/application-create-form';
 
 export default function AddApplicationPage() {
   return (
@@ -18,11 +18,11 @@ export default function AddApplicationPage() {
 
       <Card className="max-w-2xl">
         <CardHeader>
-          <CardTitle>Application Access</CardTitle>
-          <CardDescription>Add by app id and optional permissions.</CardDescription>
+          <CardTitle>Name your application</CardTitle>
+          <CardDescription>Enter only the application name to create it.</CardDescription>
         </CardHeader>
         <CardContent>
-          <ApplicationAccessForm mode="add" />
+          <ApplicationCreateForm />
         </CardContent>
       </Card>
     </div>

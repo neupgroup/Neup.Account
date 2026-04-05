@@ -1,23 +1,18 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { format } from 'date-fns';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { getManagedApplication } from '@/actions/manage/applications';
 import { getUserApplicationAccess } from '@/actions/data/application-access';
+import { ApplicationManagementPanel } from '@/app/(manage)/applications/_components/application-management-panel';
 
 type ApplicationDetailPageProps = {
   params: Promise<{ id: string }>;
 };
 
-export default async function ApplicationDetailPage({ params }: ApplicationDetailPageProps) {
-  const { id } = await params;
-  const app = await getUserApplicationAccess(id);
-
-  if (!app) {
-    notFound();
-  }
-
+function LegacyApplicationDetails({ app }: { app: NonNullable<Awaited<ReturnType<typeof getUserApplicationAccess>>> }) {
   return (
     <div className="grid gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -93,4 +88,34 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
       </Card>
     </div>
   );
+}
+
+export default async function ApplicationDetailPage({ params }: ApplicationDetailPageProps) {
+  const { id } = await params;
+
+  const managedApplication = await getManagedApplication(id);
+  if (managedApplication) {
+    return (
+      <div className="grid gap-6">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">{managedApplication.name}</h1>
+            <p className="text-muted-foreground">Configure the application you just created.</p>
+          </div>
+          <Button variant="outline" asChild>
+            <Link href="/applications">Back to Applications</Link>
+          </Button>
+        </div>
+
+        <ApplicationManagementPanel application={managedApplication} />
+      </div>
+    );
+  }
+
+  const legacyApplication = await getUserApplicationAccess(id);
+  if (!legacyApplication) {
+    notFound();
+  }
+
+  return <LegacyApplicationDetails app={legacyApplication} />;
 }

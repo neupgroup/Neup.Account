@@ -4152,6 +4152,7 @@ export namespace Prisma {
     externalSessions: number
     externalRoles: number
     externalPermissions: number
+    ownedApplications: number
     kycRequests: number
     invitations: number
     neupIdRequests: number
@@ -4190,6 +4191,7 @@ export namespace Prisma {
     externalSessions?: boolean | AccountCountOutputTypeCountExternalSessionsArgs
     externalRoles?: boolean | AccountCountOutputTypeCountExternalRolesArgs
     externalPermissions?: boolean | AccountCountOutputTypeCountExternalPermissionsArgs
+    ownedApplications?: boolean | AccountCountOutputTypeCountOwnedApplicationsArgs
     kycRequests?: boolean | AccountCountOutputTypeCountKycRequestsArgs
     invitations?: boolean | AccountCountOutputTypeCountInvitationsArgs
     neupIdRequests?: boolean | AccountCountOutputTypeCountNeupIdRequestsArgs
@@ -4320,6 +4322,13 @@ export namespace Prisma {
    */
   export type AccountCountOutputTypeCountExternalPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AuthPermissionsExternalWhereInput
+  }
+
+  /**
+   * AccountCountOutputType without action
+   */
+  export type AccountCountOutputTypeCountOwnedApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationWhereInput
   }
 
   /**
@@ -4985,6 +4994,7 @@ export namespace Prisma {
     externalSessions?: boolean | Account$externalSessionsArgs<ExtArgs>
     externalRoles?: boolean | Account$externalRolesArgs<ExtArgs>
     externalPermissions?: boolean | Account$externalPermissionsArgs<ExtArgs>
+    ownedApplications?: boolean | Account$ownedApplicationsArgs<ExtArgs>
     kycRequests?: boolean | Account$kycRequestsArgs<ExtArgs>
     invitations?: boolean | Account$invitationsArgs<ExtArgs>
     neupIdRequests?: boolean | Account$neupIdRequestsArgs<ExtArgs>
@@ -5111,6 +5121,7 @@ export namespace Prisma {
     externalSessions?: boolean | Account$externalSessionsArgs<ExtArgs>
     externalRoles?: boolean | Account$externalRolesArgs<ExtArgs>
     externalPermissions?: boolean | Account$externalPermissionsArgs<ExtArgs>
+    ownedApplications?: boolean | Account$ownedApplicationsArgs<ExtArgs>
     kycRequests?: boolean | Account$kycRequestsArgs<ExtArgs>
     invitations?: boolean | Account$invitationsArgs<ExtArgs>
     neupIdRequests?: boolean | Account$neupIdRequestsArgs<ExtArgs>
@@ -5161,6 +5172,7 @@ export namespace Prisma {
       externalSessions: Prisma.$AuthSessionExternalPayload<ExtArgs>[]
       externalRoles: Prisma.$AuthRoleExternalPayload<ExtArgs>[]
       externalPermissions: Prisma.$AuthPermissionsExternalPayload<ExtArgs>[]
+      ownedApplications: Prisma.$ApplicationPayload<ExtArgs>[]
       kycRequests: Prisma.$KycRequestPayload<ExtArgs>[]
       invitations: Prisma.$InvitationPayload<ExtArgs>[]
       neupIdRequests: Prisma.$NeupIdRequestPayload<ExtArgs>[]
@@ -5619,6 +5631,7 @@ export namespace Prisma {
     externalSessions<T extends Account$externalSessionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$externalSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthSessionExternalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     externalRoles<T extends Account$externalRolesArgs<ExtArgs> = {}>(args?: Subset<T, Account$externalRolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthRoleExternalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     externalPermissions<T extends Account$externalPermissionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$externalPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthPermissionsExternalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ownedApplications<T extends Account$ownedApplicationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$ownedApplicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     kycRequests<T extends Account$kycRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Account$kycRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KycRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     invitations<T extends Account$invitationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$invitationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     neupIdRequests<T extends Account$neupIdRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Account$neupIdRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NeupIdRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -6461,6 +6474,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AuthPermissionsExternalScalarFieldEnum | AuthPermissionsExternalScalarFieldEnum[]
+  }
+
+  /**
+   * Account.ownedApplications
+   */
+  export type Account$ownedApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Application
+     */
+    select?: ApplicationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Application
+     */
+    omit?: ApplicationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationInclude<ExtArgs> | null
+    where?: ApplicationWhereInput
+    orderBy?: ApplicationOrderByWithRelationInput | ApplicationOrderByWithRelationInput[]
+    cursor?: ApplicationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApplicationScalarFieldEnum | ApplicationScalarFieldEnum[]
   }
 
   /**
@@ -31968,6 +32005,7 @@ export namespace Prisma {
     website: string | null
     developer: string | null
     appSecret: string | null
+    ownerAccountId: string | null
     createdAt: Date | null
   }
 
@@ -31980,6 +32018,7 @@ export namespace Prisma {
     website: string | null
     developer: string | null
     appSecret: string | null
+    ownerAccountId: string | null
     createdAt: Date | null
   }
 
@@ -31992,6 +32031,10 @@ export namespace Prisma {
     website: number
     developer: number
     appSecret: number
+    access: number
+    policies: number
+    endpoints: number
+    ownerAccountId: number
     createdAt: number
     _all: number
   }
@@ -32006,6 +32049,7 @@ export namespace Prisma {
     website?: true
     developer?: true
     appSecret?: true
+    ownerAccountId?: true
     createdAt?: true
   }
 
@@ -32018,6 +32062,7 @@ export namespace Prisma {
     website?: true
     developer?: true
     appSecret?: true
+    ownerAccountId?: true
     createdAt?: true
   }
 
@@ -32030,6 +32075,10 @@ export namespace Prisma {
     website?: true
     developer?: true
     appSecret?: true
+    access?: true
+    policies?: true
+    endpoints?: true
+    ownerAccountId?: true
     createdAt?: true
     _all?: true
   }
@@ -32115,6 +32164,10 @@ export namespace Prisma {
     website: string | null
     developer: string | null
     appSecret: string | null
+    access: JsonValue | null
+    policies: JsonValue | null
+    endpoints: JsonValue | null
+    ownerAccountId: string | null
     createdAt: Date
     _count: ApplicationCountAggregateOutputType | null
     _min: ApplicationMinAggregateOutputType | null
@@ -32144,7 +32197,12 @@ export namespace Prisma {
     website?: boolean
     developer?: boolean
     appSecret?: boolean
+    access?: boolean
+    policies?: boolean
+    endpoints?: boolean
+    ownerAccountId?: boolean
     createdAt?: boolean
+    owner?: boolean | Application$ownerArgs<ExtArgs>
     connections?: boolean | Application$connectionsArgs<ExtArgs>
     appAuthentications?: boolean | Application$appAuthenticationsArgs<ExtArgs>
     appSessions?: boolean | Application$appSessionsArgs<ExtArgs>
@@ -32168,7 +32226,12 @@ export namespace Prisma {
     website?: boolean
     developer?: boolean
     appSecret?: boolean
+    access?: boolean
+    policies?: boolean
+    endpoints?: boolean
+    ownerAccountId?: boolean
     createdAt?: boolean
+    owner?: boolean | Application$ownerArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
 
   export type ApplicationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -32180,7 +32243,12 @@ export namespace Prisma {
     website?: boolean
     developer?: boolean
     appSecret?: boolean
+    access?: boolean
+    policies?: boolean
+    endpoints?: boolean
+    ownerAccountId?: boolean
     createdAt?: boolean
+    owner?: boolean | Application$ownerArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
 
   export type ApplicationSelectScalar = {
@@ -32192,11 +32260,16 @@ export namespace Prisma {
     website?: boolean
     developer?: boolean
     appSecret?: boolean
+    access?: boolean
+    policies?: boolean
+    endpoints?: boolean
+    ownerAccountId?: boolean
     createdAt?: boolean
   }
 
-  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "party" | "description" | "icon" | "website" | "developer" | "appSecret" | "createdAt", ExtArgs["result"]["application"]>
+  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "party" | "description" | "icon" | "website" | "developer" | "appSecret" | "access" | "policies" | "endpoints" | "ownerAccountId" | "createdAt", ExtArgs["result"]["application"]>
   export type ApplicationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | Application$ownerArgs<ExtArgs>
     connections?: boolean | Application$connectionsArgs<ExtArgs>
     appAuthentications?: boolean | Application$appAuthenticationsArgs<ExtArgs>
     appSessions?: boolean | Application$appSessionsArgs<ExtArgs>
@@ -32210,12 +32283,17 @@ export namespace Prisma {
     accountAccesses?: boolean | Application$accountAccessesArgs<ExtArgs>
     _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type ApplicationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type ApplicationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ApplicationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | Application$ownerArgs<ExtArgs>
+  }
+  export type ApplicationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | Application$ownerArgs<ExtArgs>
+  }
 
   export type $ApplicationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Application"
     objects: {
+      owner: Prisma.$AccountPayload<ExtArgs> | null
       connections: Prisma.$UserAppConnectionPayload<ExtArgs>[]
       appAuthentications: Prisma.$AppAuthenticationPayload<ExtArgs>[]
       appSessions: Prisma.$AppSessionPayload<ExtArgs>[]
@@ -32237,6 +32315,10 @@ export namespace Prisma {
       website: string | null
       developer: string | null
       appSecret: string | null
+      access: Prisma.JsonValue | null
+      policies: Prisma.JsonValue | null
+      endpoints: Prisma.JsonValue | null
+      ownerAccountId: string | null
       createdAt: Date
     }, ExtArgs["result"]["application"]>
     composites: {}
@@ -32632,6 +32714,7 @@ export namespace Prisma {
    */
   export interface Prisma__ApplicationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    owner<T extends Application$ownerArgs<ExtArgs> = {}>(args?: Subset<T, Application$ownerArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     connections<T extends Application$connectionsArgs<ExtArgs> = {}>(args?: Subset<T, Application$connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAppConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     appAuthentications<T extends Application$appAuthenticationsArgs<ExtArgs> = {}>(args?: Subset<T, Application$appAuthenticationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppAuthenticationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     appSessions<T extends Application$appSessionsArgs<ExtArgs> = {}>(args?: Subset<T, Application$appSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -32680,6 +32763,10 @@ export namespace Prisma {
     readonly website: FieldRef<"Application", 'String'>
     readonly developer: FieldRef<"Application", 'String'>
     readonly appSecret: FieldRef<"Application", 'String'>
+    readonly access: FieldRef<"Application", 'Json'>
+    readonly policies: FieldRef<"Application", 'Json'>
+    readonly endpoints: FieldRef<"Application", 'Json'>
+    readonly ownerAccountId: FieldRef<"Application", 'String'>
     readonly createdAt: FieldRef<"Application", 'DateTime'>
   }
     
@@ -32930,6 +33017,10 @@ export namespace Prisma {
      */
     data: ApplicationCreateManyInput | ApplicationCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -33000,6 +33091,10 @@ export namespace Prisma {
      * Limit how many Applications to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -33066,6 +33161,25 @@ export namespace Prisma {
      * Limit how many Applications to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Application.owner
+   */
+  export type Application$ownerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Account
+     */
+    select?: AccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Account
+     */
+    omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    where?: AccountWhereInput
   }
 
   /**
@@ -46767,6 +46881,10 @@ export namespace Prisma {
     website: 'website',
     developer: 'developer',
     appSecret: 'appSecret',
+    access: 'access',
+    policies: 'policies',
+    endpoints: 'endpoints',
+    ownerAccountId: 'ownerAccountId',
     createdAt: 'createdAt'
   };
 
@@ -47099,6 +47217,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalListRelationFilter
     externalRoles?: AuthRoleExternalListRelationFilter
     externalPermissions?: AuthPermissionsExternalListRelationFilter
+    ownedApplications?: ApplicationListRelationFilter
     kycRequests?: KycRequestListRelationFilter
     invitations?: InvitationListRelationFilter
     neupIdRequests?: NeupIdRequestListRelationFilter
@@ -47164,6 +47283,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalOrderByRelationAggregateInput
     externalRoles?: AuthRoleExternalOrderByRelationAggregateInput
     externalPermissions?: AuthPermissionsExternalOrderByRelationAggregateInput
+    ownedApplications?: ApplicationOrderByRelationAggregateInput
     kycRequests?: KycRequestOrderByRelationAggregateInput
     invitations?: InvitationOrderByRelationAggregateInput
     neupIdRequests?: NeupIdRequestOrderByRelationAggregateInput
@@ -47232,6 +47352,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalListRelationFilter
     externalRoles?: AuthRoleExternalListRelationFilter
     externalPermissions?: AuthPermissionsExternalListRelationFilter
+    ownedApplications?: ApplicationListRelationFilter
     kycRequests?: KycRequestListRelationFilter
     invitations?: InvitationListRelationFilter
     neupIdRequests?: NeupIdRequestListRelationFilter
@@ -48917,7 +49038,12 @@ export namespace Prisma {
     website?: StringNullableFilter<"Application"> | string | null
     developer?: StringNullableFilter<"Application"> | string | null
     appSecret?: StringNullableFilter<"Application"> | string | null
+    access?: JsonNullableFilter<"Application">
+    policies?: JsonNullableFilter<"Application">
+    endpoints?: JsonNullableFilter<"Application">
+    ownerAccountId?: StringNullableFilter<"Application"> | string | null
     createdAt?: DateTimeFilter<"Application"> | Date | string
+    owner?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
     connections?: UserAppConnectionListRelationFilter
     appAuthentications?: AppAuthenticationListRelationFilter
     appSessions?: AppSessionListRelationFilter
@@ -48940,7 +49066,12 @@ export namespace Prisma {
     website?: SortOrderInput | SortOrder
     developer?: SortOrderInput | SortOrder
     appSecret?: SortOrderInput | SortOrder
+    access?: SortOrderInput | SortOrder
+    policies?: SortOrderInput | SortOrder
+    endpoints?: SortOrderInput | SortOrder
+    ownerAccountId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    owner?: AccountOrderByWithRelationInput
     connections?: UserAppConnectionOrderByRelationAggregateInput
     appAuthentications?: AppAuthenticationOrderByRelationAggregateInput
     appSessions?: AppSessionOrderByRelationAggregateInput
@@ -48966,7 +49097,12 @@ export namespace Prisma {
     website?: StringNullableFilter<"Application"> | string | null
     developer?: StringNullableFilter<"Application"> | string | null
     appSecret?: StringNullableFilter<"Application"> | string | null
+    access?: JsonNullableFilter<"Application">
+    policies?: JsonNullableFilter<"Application">
+    endpoints?: JsonNullableFilter<"Application">
+    ownerAccountId?: StringNullableFilter<"Application"> | string | null
     createdAt?: DateTimeFilter<"Application"> | Date | string
+    owner?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
     connections?: UserAppConnectionListRelationFilter
     appAuthentications?: AppAuthenticationListRelationFilter
     appSessions?: AppSessionListRelationFilter
@@ -48989,6 +49125,10 @@ export namespace Prisma {
     website?: SortOrderInput | SortOrder
     developer?: SortOrderInput | SortOrder
     appSecret?: SortOrderInput | SortOrder
+    access?: SortOrderInput | SortOrder
+    policies?: SortOrderInput | SortOrder
+    endpoints?: SortOrderInput | SortOrder
+    ownerAccountId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: ApplicationCountOrderByAggregateInput
     _max?: ApplicationMaxOrderByAggregateInput
@@ -49007,6 +49147,10 @@ export namespace Prisma {
     website?: StringNullableWithAggregatesFilter<"Application"> | string | null
     developer?: StringNullableWithAggregatesFilter<"Application"> | string | null
     appSecret?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    access?: JsonNullableWithAggregatesFilter<"Application">
+    policies?: JsonNullableWithAggregatesFilter<"Application">
+    endpoints?: JsonNullableWithAggregatesFilter<"Application">
+    ownerAccountId?: StringNullableWithAggregatesFilter<"Application"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Application"> | Date | string
   }
 
@@ -49855,6 +49999,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -49919,6 +50064,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -49983,6 +50129,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -50047,6 +50194,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -51891,7 +52039,11 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
@@ -51914,6 +52066,10 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: string | null
     createdAt?: Date | string
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
@@ -51937,7 +52093,11 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
@@ -51960,6 +52120,10 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
@@ -51983,6 +52147,10 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: string | null
     createdAt?: Date | string
   }
 
@@ -51995,6 +52163,9 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -52007,6 +52178,10 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -52940,6 +53115,12 @@ export namespace Prisma {
     none?: AuthPermissionsExternalWhereInput
   }
 
+  export type ApplicationListRelationFilter = {
+    every?: ApplicationWhereInput
+    some?: ApplicationWhereInput
+    none?: ApplicationWhereInput
+  }
+
   export type KycRequestListRelationFilter = {
     every?: KycRequestWhereInput
     some?: KycRequestWhereInput
@@ -53089,6 +53270,10 @@ export namespace Prisma {
   }
 
   export type AuthPermissionsExternalOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ApplicationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -54171,6 +54356,10 @@ export namespace Prisma {
     website?: SortOrder
     developer?: SortOrder
     appSecret?: SortOrder
+    access?: SortOrder
+    policies?: SortOrder
+    endpoints?: SortOrder
+    ownerAccountId?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -54183,6 +54372,7 @@ export namespace Prisma {
     website?: SortOrder
     developer?: SortOrder
     appSecret?: SortOrder
+    ownerAccountId?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -54195,6 +54385,7 @@ export namespace Prisma {
     website?: SortOrder
     developer?: SortOrder
     appSecret?: SortOrder
+    ownerAccountId?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -54702,6 +54893,13 @@ export namespace Prisma {
     connect?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
   }
 
+  export type ApplicationCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<ApplicationCreateWithoutOwnerInput, ApplicationUncheckedCreateWithoutOwnerInput> | ApplicationCreateWithoutOwnerInput[] | ApplicationUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: ApplicationCreateOrConnectWithoutOwnerInput | ApplicationCreateOrConnectWithoutOwnerInput[]
+    createMany?: ApplicationCreateManyOwnerInputEnvelope
+    connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+  }
+
   export type KycRequestCreateNestedManyWithoutAccountInput = {
     create?: XOR<KycRequestCreateWithoutAccountInput, KycRequestUncheckedCreateWithoutAccountInput> | KycRequestCreateWithoutAccountInput[] | KycRequestUncheckedCreateWithoutAccountInput[]
     connectOrCreate?: KycRequestCreateOrConnectWithoutAccountInput | KycRequestCreateOrConnectWithoutAccountInput[]
@@ -54957,6 +55155,13 @@ export namespace Prisma {
     connectOrCreate?: AuthPermissionsExternalCreateOrConnectWithoutAccountInput | AuthPermissionsExternalCreateOrConnectWithoutAccountInput[]
     createMany?: AuthPermissionsExternalCreateManyAccountInputEnvelope
     connect?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
+  }
+
+  export type ApplicationUncheckedCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<ApplicationCreateWithoutOwnerInput, ApplicationUncheckedCreateWithoutOwnerInput> | ApplicationCreateWithoutOwnerInput[] | ApplicationUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: ApplicationCreateOrConnectWithoutOwnerInput | ApplicationCreateOrConnectWithoutOwnerInput[]
+    createMany?: ApplicationCreateManyOwnerInputEnvelope
+    connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
   }
 
   export type KycRequestUncheckedCreateNestedManyWithoutAccountInput = {
@@ -55346,6 +55551,20 @@ export namespace Prisma {
     update?: AuthPermissionsExternalUpdateWithWhereUniqueWithoutAccountInput | AuthPermissionsExternalUpdateWithWhereUniqueWithoutAccountInput[]
     updateMany?: AuthPermissionsExternalUpdateManyWithWhereWithoutAccountInput | AuthPermissionsExternalUpdateManyWithWhereWithoutAccountInput[]
     deleteMany?: AuthPermissionsExternalScalarWhereInput | AuthPermissionsExternalScalarWhereInput[]
+  }
+
+  export type ApplicationUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<ApplicationCreateWithoutOwnerInput, ApplicationUncheckedCreateWithoutOwnerInput> | ApplicationCreateWithoutOwnerInput[] | ApplicationUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: ApplicationCreateOrConnectWithoutOwnerInput | ApplicationCreateOrConnectWithoutOwnerInput[]
+    upsert?: ApplicationUpsertWithWhereUniqueWithoutOwnerInput | ApplicationUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: ApplicationCreateManyOwnerInputEnvelope
+    set?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    disconnect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    delete?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    update?: ApplicationUpdateWithWhereUniqueWithoutOwnerInput | ApplicationUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: ApplicationUpdateManyWithWhereWithoutOwnerInput | ApplicationUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
   }
 
   export type KycRequestUpdateManyWithoutAccountNestedInput = {
@@ -55856,6 +56075,20 @@ export namespace Prisma {
     update?: AuthPermissionsExternalUpdateWithWhereUniqueWithoutAccountInput | AuthPermissionsExternalUpdateWithWhereUniqueWithoutAccountInput[]
     updateMany?: AuthPermissionsExternalUpdateManyWithWhereWithoutAccountInput | AuthPermissionsExternalUpdateManyWithWhereWithoutAccountInput[]
     deleteMany?: AuthPermissionsExternalScalarWhereInput | AuthPermissionsExternalScalarWhereInput[]
+  }
+
+  export type ApplicationUncheckedUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<ApplicationCreateWithoutOwnerInput, ApplicationUncheckedCreateWithoutOwnerInput> | ApplicationCreateWithoutOwnerInput[] | ApplicationUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: ApplicationCreateOrConnectWithoutOwnerInput | ApplicationCreateOrConnectWithoutOwnerInput[]
+    upsert?: ApplicationUpsertWithWhereUniqueWithoutOwnerInput | ApplicationUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: ApplicationCreateManyOwnerInputEnvelope
+    set?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    disconnect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    delete?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    update?: ApplicationUpdateWithWhereUniqueWithoutOwnerInput | ApplicationUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: ApplicationUpdateManyWithWhereWithoutOwnerInput | ApplicationUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
   }
 
   export type KycRequestUncheckedUpdateManyWithoutAccountNestedInput = {
@@ -56567,6 +56800,12 @@ export namespace Prisma {
     update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutUserContentsInput, AccountUpdateWithoutUserContentsInput>, AccountUncheckedUpdateWithoutUserContentsInput>
   }
 
+  export type AccountCreateNestedOneWithoutOwnedApplicationsInput = {
+    create?: XOR<AccountCreateWithoutOwnedApplicationsInput, AccountUncheckedCreateWithoutOwnedApplicationsInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutOwnedApplicationsInput
+    connect?: AccountWhereUniqueInput
+  }
+
   export type UserAppConnectionCreateNestedManyWithoutApplicationInput = {
     create?: XOR<UserAppConnectionCreateWithoutApplicationInput, UserAppConnectionUncheckedCreateWithoutApplicationInput> | UserAppConnectionCreateWithoutApplicationInput[] | UserAppConnectionUncheckedCreateWithoutApplicationInput[]
     connectOrCreate?: UserAppConnectionCreateOrConnectWithoutApplicationInput | UserAppConnectionCreateOrConnectWithoutApplicationInput[]
@@ -56719,6 +56958,16 @@ export namespace Prisma {
     connectOrCreate?: AccountAccessCreateOrConnectWithoutApplicationInput | AccountAccessCreateOrConnectWithoutApplicationInput[]
     createMany?: AccountAccessCreateManyApplicationInputEnvelope
     connect?: AccountAccessWhereUniqueInput | AccountAccessWhereUniqueInput[]
+  }
+
+  export type AccountUpdateOneWithoutOwnedApplicationsNestedInput = {
+    create?: XOR<AccountCreateWithoutOwnedApplicationsInput, AccountUncheckedCreateWithoutOwnedApplicationsInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutOwnedApplicationsInput
+    upsert?: AccountUpsertWithoutOwnedApplicationsInput
+    disconnect?: AccountWhereInput | boolean
+    delete?: AccountWhereInput | boolean
+    connect?: AccountWhereUniqueInput
+    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutOwnedApplicationsInput, AccountUpdateWithoutOwnedApplicationsInput>, AccountUncheckedUpdateWithoutOwnedApplicationsInput>
   }
 
   export type UserAppConnectionUpdateManyWithoutApplicationNestedInput = {
@@ -57694,6 +57943,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -57757,6 +58007,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -57825,6 +58076,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -57888,6 +58140,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -58332,6 +58585,68 @@ export namespace Prisma {
 
   export type AuthPermissionsExternalCreateManyAccountInputEnvelope = {
     data: AuthPermissionsExternalCreateManyAccountInput | AuthPermissionsExternalCreateManyAccountInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ApplicationCreateWithoutOwnerInput = {
+    id: string
+    name: string
+    party?: string
+    description?: string | null
+    icon?: string | null
+    website?: string | null
+    developer?: string | null
+    appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
+    appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
+    appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
+    externalSessions?: AuthSessionExternalCreateNestedManyWithoutApplicationInput
+    externalRoles?: AuthRoleExternalCreateNestedManyWithoutApplicationInput
+    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutApplicationInput
+    authTeams?: AuthTeamCreateNestedManyWithoutApplicationInput
+    authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
+    authRoles?: AuthRoleCreateNestedManyWithoutApplicationInput
+    authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationUncheckedCreateWithoutOwnerInput = {
+    id: string
+    name: string
+    party?: string
+    description?: string | null
+    icon?: string | null
+    website?: string | null
+    developer?: string | null
+    appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
+    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
+    appSessions?: AppSessionUncheckedCreateNestedManyWithoutApplicationInput
+    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutApplicationInput
+    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutApplicationInput
+    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutApplicationInput
+    authTeams?: AuthTeamUncheckedCreateNestedManyWithoutApplicationInput
+    authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
+    authRoles?: AuthRoleUncheckedCreateNestedManyWithoutApplicationInput
+    authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
+    accountAccesses?: AccountAccessUncheckedCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationCreateOrConnectWithoutOwnerInput = {
+    where: ApplicationWhereUniqueInput
+    create: XOR<ApplicationCreateWithoutOwnerInput, ApplicationUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type ApplicationCreateManyOwnerInputEnvelope = {
+    data: ApplicationCreateManyOwnerInput | ApplicationCreateManyOwnerInput[]
     skipDuplicates?: boolean
   }
 
@@ -59036,6 +59351,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -59099,6 +59415,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -59558,6 +59875,41 @@ export namespace Prisma {
     appId?: StringFilter<"AuthPermissionsExternal"> | string
     permissions?: JsonFilter<"AuthPermissionsExternal">
     createdAt?: DateTimeFilter<"AuthPermissionsExternal"> | Date | string
+  }
+
+  export type ApplicationUpsertWithWhereUniqueWithoutOwnerInput = {
+    where: ApplicationWhereUniqueInput
+    update: XOR<ApplicationUpdateWithoutOwnerInput, ApplicationUncheckedUpdateWithoutOwnerInput>
+    create: XOR<ApplicationCreateWithoutOwnerInput, ApplicationUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type ApplicationUpdateWithWhereUniqueWithoutOwnerInput = {
+    where: ApplicationWhereUniqueInput
+    data: XOR<ApplicationUpdateWithoutOwnerInput, ApplicationUncheckedUpdateWithoutOwnerInput>
+  }
+
+  export type ApplicationUpdateManyWithWhereWithoutOwnerInput = {
+    where: ApplicationScalarWhereInput
+    data: XOR<ApplicationUpdateManyMutationInput, ApplicationUncheckedUpdateManyWithoutOwnerInput>
+  }
+
+  export type ApplicationScalarWhereInput = {
+    AND?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
+    OR?: ApplicationScalarWhereInput[]
+    NOT?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
+    id?: StringFilter<"Application"> | string
+    name?: StringFilter<"Application"> | string
+    party?: StringFilter<"Application"> | string
+    description?: StringNullableFilter<"Application"> | string | null
+    icon?: StringNullableFilter<"Application"> | string | null
+    website?: StringNullableFilter<"Application"> | string | null
+    developer?: StringNullableFilter<"Application"> | string | null
+    appSecret?: StringNullableFilter<"Application"> | string | null
+    access?: JsonNullableFilter<"Application">
+    policies?: JsonNullableFilter<"Application">
+    endpoints?: JsonNullableFilter<"Application">
+    ownerAccountId?: StringNullableFilter<"Application"> | string | null
+    createdAt?: DateTimeFilter<"Application"> | Date | string
   }
 
   export type KycRequestUpsertWithWhereUniqueWithoutAccountInput = {
@@ -60171,6 +60523,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -60234,6 +60587,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -60313,6 +60667,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -60376,6 +60731,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -60438,6 +60794,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -60501,6 +60858,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -60580,6 +60938,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -60643,6 +61002,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -60707,6 +61067,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
@@ -60770,6 +61131,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
@@ -60849,6 +61211,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
@@ -60912,6 +61275,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -60975,6 +61339,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
@@ -61038,6 +61403,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
@@ -61117,6 +61483,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
@@ -61180,6 +61547,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -61243,6 +61611,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
@@ -61306,6 +61675,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
@@ -61385,6 +61755,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
@@ -61448,6 +61819,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -61511,6 +61883,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -61574,6 +61947,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -61682,6 +62056,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -61745,6 +62120,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -61843,6 +62219,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -61906,6 +62283,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -61974,6 +62352,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -62037,6 +62416,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -62152,6 +62532,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -62215,6 +62596,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -62289,6 +62671,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -62352,6 +62735,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -62431,6 +62815,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -62494,6 +62879,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -62573,6 +62959,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -62636,6 +63023,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -62699,6 +63087,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -62762,6 +63151,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -62841,6 +63231,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -62904,6 +63295,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -62967,6 +63359,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -63030,6 +63423,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -63109,6 +63503,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -63172,6 +63567,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -63234,6 +63630,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -63297,6 +63694,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -63376,6 +63774,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -63439,6 +63838,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -63502,6 +63902,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -63565,6 +63966,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -63644,6 +64046,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -63707,6 +64110,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -63770,6 +64174,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -63833,6 +64238,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -63912,6 +64318,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -63975,6 +64382,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -64038,6 +64446,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -64101,6 +64510,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -64169,6 +64579,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -64232,6 +64643,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -64311,6 +64723,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -64374,6 +64787,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -64448,6 +64862,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -64511,6 +64926,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -64602,6 +65018,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -64665,6 +65082,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -64760,6 +65178,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -64823,6 +65242,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -64886,6 +65306,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -64949,6 +65370,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -65028,6 +65450,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -65091,6 +65514,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -65155,6 +65579,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -65218,6 +65643,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -65297,6 +65723,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -65360,6 +65787,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -65381,6 +65809,139 @@ export namespace Prisma {
     ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
     accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
     accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
+  }
+
+  export type AccountCreateWithoutOwnedApplicationsInput = {
+    id?: string
+    nameFirst?: string | null
+    nameMiddle?: string | null
+    nameLast?: string | null
+    nameDisplay?: string | null
+    displayName?: string | null
+    accountPhoto?: string | null
+    gender?: string | null
+    dateBirth?: Date | string | null
+    dateCreated?: Date | string
+    nationality?: string | null
+    isLegalEntity?: boolean
+    nameLegal?: string | null
+    registrationId?: string | null
+    countryOfOrigin?: string | null
+    dateEstablished?: Date | string | null
+    neupIdPrimary?: string | null
+    verified?: boolean
+    pro?: boolean
+    accountType?: string
+    permit?: string
+    accountStatus?: string | null
+    block?: NullableJsonNullValueInput | InputJsonValue
+    parentBrand?: AccountCreateNestedOneWithoutBranchesInput
+    branches?: AccountCreateNestedManyWithoutParentBrandInput
+    contacts?: ContactCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    permits?: PermitCreateNestedManyWithoutAccountInput
+    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
+    password?: PasswordCreateNestedOneWithoutAccountInput
+    sessions?: SessionCreateNestedManyWithoutAccountInput
+    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
+    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
+    appSessions?: AppSessionCreateNestedManyWithoutAccountInput
+    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
+    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
+    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
+    invitations?: InvitationCreateNestedManyWithoutInviterInput
+    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
+    backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
+    documents?: UserDocumentCreateNestedManyWithoutAccountInput
+    userContents?: UserContentCreateNestedManyWithoutAccountInput
+    totp?: TotpCreateNestedOneWithoutAccountInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    adminTeams?: AuthTeamCreateNestedManyWithoutAccountInput
+    memberTeams?: AuthTeamCreateNestedManyWithoutRecipientInput
+    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
+    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
+    authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
+    recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
+    ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberCreateNestedManyWithoutMemberAccountInput
+  }
+
+  export type AccountUncheckedCreateWithoutOwnedApplicationsInput = {
+    id?: string
+    nameFirst?: string | null
+    nameMiddle?: string | null
+    nameLast?: string | null
+    nameDisplay?: string | null
+    displayName?: string | null
+    accountPhoto?: string | null
+    gender?: string | null
+    dateBirth?: Date | string | null
+    dateCreated?: Date | string
+    nationality?: string | null
+    isLegalEntity?: boolean
+    nameLegal?: string | null
+    registrationId?: string | null
+    countryOfOrigin?: string | null
+    dateEstablished?: Date | string | null
+    neupIdPrimary?: string | null
+    verified?: boolean
+    pro?: boolean
+    accountType?: string
+    permit?: string
+    accountStatus?: string | null
+    parentBrandId?: string | null
+    block?: NullableJsonNullValueInput | InputJsonValue
+    branches?: AccountUncheckedCreateNestedManyWithoutParentBrandInput
+    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
+    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
+    appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
+    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
+    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
+    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
+    backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
+    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
+    totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    adminTeams?: AuthTeamUncheckedCreateNestedManyWithoutAccountInput
+    memberTeams?: AuthTeamUncheckedCreateNestedManyWithoutRecipientInput
+    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
+    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
+    authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
+    recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
+    ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
+    receivedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutAccountInput
+    ownedAccountAccess?: AccountAccessUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMembersOwned?: AccessMemberUncheckedCreateNestedManyWithoutParentOwnerInput
+    accessMemberships?: AccessMemberUncheckedCreateNestedManyWithoutMemberAccountInput
+  }
+
+  export type AccountCreateOrConnectWithoutOwnedApplicationsInput = {
+    where: AccountWhereUniqueInput
+    create: XOR<AccountCreateWithoutOwnedApplicationsInput, AccountUncheckedCreateWithoutOwnedApplicationsInput>
   }
 
   export type UserAppConnectionCreateWithoutApplicationInput = {
@@ -65679,6 +66240,145 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type AccountUpsertWithoutOwnedApplicationsInput = {
+    update: XOR<AccountUpdateWithoutOwnedApplicationsInput, AccountUncheckedUpdateWithoutOwnedApplicationsInput>
+    create: XOR<AccountCreateWithoutOwnedApplicationsInput, AccountUncheckedCreateWithoutOwnedApplicationsInput>
+    where?: AccountWhereInput
+  }
+
+  export type AccountUpdateToOneWithWhereWithoutOwnedApplicationsInput = {
+    where?: AccountWhereInput
+    data: XOR<AccountUpdateWithoutOwnedApplicationsInput, AccountUncheckedUpdateWithoutOwnedApplicationsInput>
+  }
+
+  export type AccountUpdateWithoutOwnedApplicationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
+    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
+    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
+    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
+    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
+    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
+    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    pro?: BoolFieldUpdateOperationsInput | boolean
+    accountType?: StringFieldUpdateOperationsInput | string
+    permit?: StringFieldUpdateOperationsInput | string
+    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    block?: NullableJsonNullValueInput | InputJsonValue
+    parentBrand?: AccountUpdateOneWithoutBranchesNestedInput
+    branches?: AccountUpdateManyWithoutParentBrandNestedInput
+    contacts?: ContactUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    permits?: PermitUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
+    password?: PasswordUpdateOneWithoutAccountNestedInput
+    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
+    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
+    appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
+    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
+    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
+    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
+    invitations?: InvitationUpdateManyWithoutInviterNestedInput
+    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
+    backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
+    userContents?: UserContentUpdateManyWithoutAccountNestedInput
+    totp?: TotpUpdateOneWithoutAccountNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    adminTeams?: AuthTeamUpdateManyWithoutAccountNestedInput
+    memberTeams?: AuthTeamUpdateManyWithoutRecipientNestedInput
+    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
+    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
+    authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
+    recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
+    ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUpdateManyWithoutMemberAccountNestedInput
+  }
+
+  export type AccountUncheckedUpdateWithoutOwnedApplicationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
+    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
+    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
+    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    nationality?: NullableStringFieldUpdateOperationsInput | string | null
+    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
+    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
+    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
+    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
+    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    pro?: BoolFieldUpdateOperationsInput | boolean
+    accountType?: StringFieldUpdateOperationsInput | string
+    permit?: StringFieldUpdateOperationsInput | string
+    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    parentBrandId?: NullableStringFieldUpdateOperationsInput | string | null
+    block?: NullableJsonNullValueInput | InputJsonValue
+    branches?: AccountUncheckedUpdateManyWithoutParentBrandNestedInput
+    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
+    appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
+    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
+    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
+    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
+    backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
+    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
+    totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    adminTeams?: AuthTeamUncheckedUpdateManyWithoutAccountNestedInput
+    memberTeams?: AuthTeamUncheckedUpdateManyWithoutRecipientNestedInput
+    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
+    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
+    authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
+    recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
+    ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    receivedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutAccountNestedInput
+    ownedAccountAccess?: AccountAccessUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMembersOwned?: AccessMemberUncheckedUpdateManyWithoutParentOwnerNestedInput
+    accessMemberships?: AccessMemberUncheckedUpdateManyWithoutMemberAccountNestedInput
+  }
+
   export type UserAppConnectionUpsertWithWhereUniqueWithoutApplicationInput = {
     where: UserAppConnectionWhereUniqueInput
     update: XOR<UserAppConnectionUpdateWithoutApplicationInput, UserAppConnectionUncheckedUpdateWithoutApplicationInput>
@@ -65864,7 +66564,11 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
@@ -65886,6 +66590,10 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: string | null
     createdAt?: Date | string
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
@@ -65944,6 +66652,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -66007,6 +66716,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -66075,6 +66785,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -66138,6 +66849,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -66186,7 +66898,11 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
@@ -66208,6 +66924,10 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
@@ -66272,6 +66992,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -66335,6 +67056,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -66409,6 +67131,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -66472,6 +67195,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -66504,7 +67228,11 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
@@ -66526,6 +67254,10 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: string | null
     createdAt?: Date | string
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
@@ -66584,6 +67316,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -66647,6 +67380,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -66715,6 +67449,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -66778,6 +67513,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -66826,7 +67562,11 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
@@ -66848,6 +67588,10 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
@@ -66912,6 +67656,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -66975,6 +67720,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -67049,6 +67795,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -67112,6 +67859,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -67144,7 +67892,11 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
@@ -67166,6 +67918,10 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: string | null
     createdAt?: Date | string
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
@@ -67224,6 +67980,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -67287,6 +68044,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -67335,7 +68093,11 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
@@ -67357,6 +68119,10 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
@@ -67421,6 +68187,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -67484,6 +68251,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -67516,7 +68284,11 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
@@ -67538,6 +68310,10 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: string | null
     createdAt?: Date | string
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
@@ -67596,6 +68372,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -67659,6 +68436,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -67727,6 +68505,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -67790,6 +68569,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -67838,7 +68618,11 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
@@ -67860,6 +68644,10 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
@@ -67924,6 +68712,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -67987,6 +68776,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -68061,6 +68851,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -68124,6 +68915,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -68187,6 +68979,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -68250,6 +69043,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -68287,7 +69081,11 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
@@ -68309,6 +69107,10 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: string | null
     createdAt?: Date | string
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
@@ -68367,6 +69169,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -68430,6 +69233,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -68509,6 +69313,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -68572,6 +69377,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -68615,7 +69421,11 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
@@ -68637,6 +69447,10 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
@@ -68701,6 +69515,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -68764,6 +69579,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -68827,6 +69643,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -68890,6 +69707,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -68958,6 +69776,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -69021,6 +69840,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -69100,6 +69920,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -69163,6 +69984,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -69237,6 +70059,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -69300,6 +70123,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -69362,6 +70186,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -69425,6 +70250,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -69463,7 +70289,11 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutApplicationInput
@@ -69485,6 +70315,10 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: string | null
     createdAt?: Date | string
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutApplicationInput
@@ -69553,6 +70387,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -69616,6 +70451,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -69660,7 +70496,11 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
     externalSessions?: AuthSessionExternalUpdateManyWithoutApplicationNestedInput
@@ -69682,6 +70522,10 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutApplicationNestedInput
@@ -69734,6 +70578,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -69797,6 +70642,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -69835,7 +70681,11 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutApplicationInput
@@ -69857,6 +70707,10 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: string | null
     createdAt?: Date | string
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutApplicationInput
@@ -69925,6 +70779,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -69988,6 +70843,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -70032,7 +70888,11 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
     externalSessions?: AuthSessionExternalUpdateManyWithoutApplicationNestedInput
@@ -70054,6 +70914,10 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutApplicationNestedInput
@@ -70106,6 +70970,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -70169,6 +71034,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -70207,7 +71073,11 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutApplicationInput
@@ -70229,6 +71099,10 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: string | null
     createdAt?: Date | string
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
@@ -70332,6 +71206,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -70395,6 +71270,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -70439,7 +71315,11 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
     externalSessions?: AuthSessionExternalUpdateManyWithoutApplicationNestedInput
@@ -70461,6 +71341,10 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
@@ -70554,6 +71438,7 @@ export namespace Prisma {
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -70617,6 +71502,7 @@ export namespace Prisma {
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -70655,7 +71541,11 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
@@ -70677,6 +71567,10 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: string | null
     createdAt?: Date | string
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
@@ -70745,6 +71639,7 @@ export namespace Prisma {
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -70808,6 +71703,7 @@ export namespace Prisma {
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -70852,7 +71748,11 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
@@ -70874,6 +71774,10 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
@@ -70926,6 +71830,7 @@ export namespace Prisma {
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -70989,6 +71894,7 @@ export namespace Prisma {
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -71027,7 +71933,11 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
@@ -71049,6 +71959,10 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: string | null
     createdAt?: Date | string
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
@@ -71117,6 +72031,7 @@ export namespace Prisma {
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -71180,6 +72095,7 @@ export namespace Prisma {
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -71224,7 +72140,11 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
@@ -71246,6 +72166,10 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
@@ -71298,6 +72222,7 @@ export namespace Prisma {
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
@@ -71361,6 +72286,7 @@ export namespace Prisma {
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
     neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
@@ -71399,7 +72325,11 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
@@ -71421,6 +72351,10 @@ export namespace Prisma {
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: string | null
     createdAt?: Date | string
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
@@ -71489,6 +72423,7 @@ export namespace Prisma {
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -71552,6 +72487,7 @@ export namespace Prisma {
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -71596,7 +72532,11 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
@@ -71618,6 +72558,10 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
@@ -71787,6 +72731,21 @@ export namespace Prisma {
     id?: string
     appId: string
     permissions?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type ApplicationCreateManyOwnerInput = {
+    id: string
+    name: string
+    party?: string
+    description?: string | null
+    icon?: string | null
+    website?: string | null
+    developer?: string | null
+    appSecret?: string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
   }
 
@@ -72040,6 +72999,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
@@ -72103,6 +73063,7 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
     neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
@@ -72551,6 +73512,73 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
     permissions?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationUpdateWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    party?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    developer?: NullableStringFieldUpdateOperationsInput | string | null
+    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
+    appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
+    appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
+    externalSessions?: AuthSessionExternalUpdateManyWithoutApplicationNestedInput
+    externalRoles?: AuthRoleExternalUpdateManyWithoutApplicationNestedInput
+    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutApplicationNestedInput
+    authTeams?: AuthTeamUpdateManyWithoutApplicationNestedInput
+    authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
+    authRoles?: AuthRoleUpdateManyWithoutApplicationNestedInput
+    authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationUncheckedUpdateWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    party?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    developer?: NullableStringFieldUpdateOperationsInput | string | null
+    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
+    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
+    appSessions?: AppSessionUncheckedUpdateManyWithoutApplicationNestedInput
+    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutApplicationNestedInput
+    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutApplicationNestedInput
+    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutApplicationNestedInput
+    authTeams?: AuthTeamUncheckedUpdateManyWithoutApplicationNestedInput
+    authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
+    authRoles?: AuthRoleUncheckedUpdateManyWithoutApplicationNestedInput
+    authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
+    accountAccesses?: AccountAccessUncheckedUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationUncheckedUpdateManyWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    party?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    developer?: NullableStringFieldUpdateOperationsInput | string | null
+    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    access?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

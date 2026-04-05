@@ -26,6 +26,17 @@ export type Application = {
   slug?: string;
   dataAccessed?: string[];
   icon?: 'app-window' | 'building' | 'bar-chart' | 'share-2';
+    access?: Array<'neupid' | 'firstName' | 'lastName' | 'middleName' | 'displayName' | 'dateBirth' | 'age' | 'isMinor' | 'gender'>;
+    policies?: Array<{ name: string; policy: string }>;
+    endpoints?: {
+        dataDeletionApi?: string;
+        dataDeletionPage?: string;
+        accountBlock?: string;
+        accountBlockApi?: string;
+        logoutPage?: string;
+        logoutApi?: string;
+    };
+    ownerAccountId?: string;
 };
 
 export type Permission = {

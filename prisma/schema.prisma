@@ -55,6 +55,7 @@ model Account {
   externalSessions AuthSessionExternal[]
   externalRoles   AuthRoleExternal[]
   externalPermissions AuthPermissionsExternal[]
+  ownedApplications Application[]
   kycRequests     KycRequest[]
   invitations     Invitation[]   @relation("Inviter")
   neupIdRequests  NeupIdRequest[]
@@ -427,8 +428,13 @@ model Application {
   website     String?
   developer   String?
   appSecret   String?
+  access      Json?
+  policies    Json?
+  endpoints   Json?
+  ownerAccountId String?
   createdAt   DateTime @default(now())
 
+  owner       Account? @relation(fields: [ownerAccountId], references: [id])
   connections UserAppConnection[]
   appAuthentications AppAuthentication[]
   appSessions     AppSession[]

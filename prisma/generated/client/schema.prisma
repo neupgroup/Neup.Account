@@ -3,7 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/client"
+  output   = "./generated/client"
 }
 
 datasource db {
@@ -55,6 +55,7 @@ model Account {
   externalSessions    AuthSessionExternal[]
   externalRoles       AuthRoleExternal[]
   externalPermissions AuthPermissionsExternal[]
+  ownedApplications   Application[]
   kycRequests         KycRequest[]
   invitations         Invitation[]              @relation("Inviter")
   neupIdRequests      NeupIdRequest[]
@@ -419,16 +420,21 @@ model RecoveryContact {
 }
 
 model Application {
-  id          String   @id
-  name        String
-  party       String   @default("third") // 'first' | 'third'
-  description String?
-  icon        String?
-  website     String?
-  developer   String?
-  appSecret   String?
-  createdAt   DateTime @default(now())
+  id             String   @id
+  name           String
+  party          String   @default("third") // 'first' | 'third'
+  description    String?
+  icon           String?
+  website        String?
+  developer      String?
+  appSecret      String?
+  access         Json?
+  policies       Json?
+  endpoints      Json?
+  ownerAccountId String?
+  createdAt      DateTime @default(now())
 
+  owner               Account?                  @relation(fields: [ownerAccountId], references: [id])
   connections         UserAppConnection[]
   appAuthentications  AppAuthentication[]
   appSessions         AppSession[]
