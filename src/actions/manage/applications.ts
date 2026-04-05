@@ -52,6 +52,7 @@ const saveEndpointsSchema = z.object({
 const applicationAssetTypes = ['app', 'application'];
 const viewRoleKeys = new Set(['application.view', 'app.view', 'application.edit', 'app.edit', 'application.manage', 'app.manage', 'manage', '*']);
 const editRoleKeys = new Set(['application.edit', 'app.edit', 'application.manage', 'app.manage', 'manage', '*']);
+const ownerRoleKeys = new Set(['application.owner', 'app.owner', 'owner', '*']);
 
 function normalizeText(value: unknown): string | undefined {
   if (typeof value !== 'string') {
@@ -171,6 +172,152 @@ async function getApplicationAuthorization(accountId: string, appId: string): Pr
 
   const access = await resolveApplicationAccessForAccount(accountId, appId);
   return { exists: true, canView: access.canView, canEdit: access.canEdit };
+}
+
+async function isApplicationOwnerForAccount(accountId: string, appId: string): Promise<boolean> {
+  const app = await prisma.application.findUnique({
+    where: { id: appId },
+    select: { ownerAccountId: true },
+  });
+
+  if (!app) return false;
+  if (app.ownerAccountId === accountId) return true;
+
+  const ownerRoleRows = await prisma.assetMemberRole.findMany({
+    where: {
+      assetRef: {
+        asset: appId,
+        type: { in: applicationAssetTypes },
+      },
+      member: {
+        member: `account:${accountId}`,
+        OR: [{ isPermanent: true }, { validTill: { gt: new Date() } }],
+      },
+    },
+    select: {
+      role: true,
+    },
+  });
+
+  return ownerRoleRows.some((row) => ownerRoleKeys.has(row.role.trim().toLowerCase()));
+}
+
+export type ApplicationDetailsForViewer = {
+  id: string;
+  name: string;
+  description?: string;
+  icon?: string;
+  developer?: string;
+  configuredAccess: ApplicationAccessField[];
+  accessedData: string[];
+  hasUsedApp: boolean;
+  policies: ApplicationPolicyEntry[];
+  endpoints: ApplicationEndpointConfig;
+  canDelete: boolean;
+};
+
+export async function getApplicationDetailsForViewer(appId: string): Promise<ApplicationDetailsForViewer | null> {
+  const activeAccountId = await getActiveAccountId();
+  if (!activeAccountId) return null;
+
+  const personalAccountId = await getPersonalAccountId();
+
+  try {
+    const authorization = await getApplicationAuthorization(activeAccountId, appId);
+    if (!authorization.exists || !authorization.canView) return null;
+
+    const [application, appAuthentication, externalSession, canDelete] = await Promise.all([
+      prisma.application.findUnique({
+        where: { id: appId },
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          icon: true,
+          developer: true,
+          access: true,
+          policies: true,
+          endpoints: true,
+        },
+      }),
+      personalAccountId
+        ? prisma.appAuthentication.findUnique({
+            where: {
+              appId_accountId: {
+                appId,
+                accountId: personalAccountId,
+              },
+            },
+            select: {
+              permissions: true,
+            },
+          })
+        : null,
+      personalAccountId
+        ? prisma.authSessionExternal.findFirst({
+            where: {
+              appId,
+              accountId: personalAccountId,
+            },
+            select: {
+              id: true,
+            },
+          })
+        : null,
+      isApplicationOwnerForAccount(activeAccountId, appId),
+    ]);
+
+    if (!application) return null;
+
+    const configuredAccess = normalizeAccess(application.access);
+    const policies = normalizePolicies(application.policies);
+    const endpoints = normalizeEndpoints(application.endpoints);
+
+    const accessedData = Array.isArray(appAuthentication?.permissions)
+      ? (appAuthentication?.permissions as string[])
+      : [];
+
+    return {
+      id: application.id,
+      name: application.name,
+      description: application.description || undefined,
+      icon: application.icon || undefined,
+      developer: application.developer || undefined,
+      configuredAccess,
+      accessedData,
+      hasUsedApp: Boolean(appAuthentication || externalSession),
+      policies,
+      endpoints,
+      canDelete,
+    };
+  } catch (error) {
+    await logError('database', error, `getApplicationDetailsForViewer:${appId}`);
+    return null;
+  }
+}
+
+export async function deleteManagedApplication(appId: string): Promise<{ success: boolean; error?: string }> {
+  const activeAccountId = await getActiveAccountId();
+  if (!activeAccountId) {
+    return { success: false, error: 'Not signed in.' };
+  }
+
+  try {
+    const canDelete = await isApplicationOwnerForAccount(activeAccountId, appId);
+    if (!canDelete) {
+      return { success: false, error: 'Only the application owner can delete this app.' };
+    }
+
+    await prisma.application.delete({
+      where: { id: appId },
+    });
+
+    revalidatePath('/data/applications');
+    return { success: true };
+  } catch (error) {
+    await logError('database', error, `deleteManagedApplication:${appId}`);
+    return { success: false, error: 'Failed to delete application.' };
+  }
 }
 
 export async function createManagedApplication(input: { name: string }) {

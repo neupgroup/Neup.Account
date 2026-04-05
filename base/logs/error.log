@@ -3542,3 +3542,55 @@ Unknown field `slug` for select statement on model `Application`. Available opti
     at async getManagedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1207:30)
     at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__f4f8b809._.js:245:33)
 --------------------------------------------------------------------------------
+[2026-04-05T19:48:44.218Z] [database] [auto] [getManagedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.application.findMany()` invocation:
+
+{
+  where: {
+    ownerAccountId: "63b6151e-2fa0-482d-8b63-4c5293b8bed0"
+  },
+  orderBy: {
+    createdAt: "desc"
+  },
+  select: {
+    id: true,
+    name: true,
+    slug: true,
+    ~~~~
+    icon: true,
+    developer: true,
+    createdAt: true,
+    appSecret: true,
+?   party?: true,
+?   description?: true,
+?   website?: true,
+?   access?: true,
+?   policies?: true,
+?   endpoints?: true,
+?   ownerAccountId?: true,
+?   owner?: true,
+?   connections?: true,
+?   appAuthentications?: true,
+?   appSessions?: true,
+?   externalSessions?: true,
+?   externalRoles?: true,
+?   externalPermissions?: true,
+?   authTeams?: true,
+?   authTeamsExternal?: true,
+?   authRoles?: true,
+?   authPermissionRecipients?: true,
+?   accountAccesses?: true,
+?   _count?: true
+  }
+}
+
+Unknown field `slug` for select statement on model `Application`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getManagedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1471:35)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__f4f8b809._.js:245:33)
+--------------------------------------------------------------------------------
