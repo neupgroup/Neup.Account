@@ -1,20 +1,13 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  basePath: '',
-  assetPrefix: '',
+  // assetPrefix: '',
+  basePath: '/account',
   typescript: {
-    // Run `npm run typecheck` separately to keep build fast.
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'neupgroup.com',
-        port: '',
-        pathname: '/**',
-      },
       {
         protocol: 'https',
         hostname: 'neupcdn.com',
