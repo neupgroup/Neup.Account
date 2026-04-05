@@ -3,6 +3,10 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   basePath: '',
   assetPrefix: '',
+  typescript: {
+    // Run `npm run typecheck` separately to keep build fast.
+    ignoreBuildErrors: true,
+  },
   images: {
     remotePatterns: [
       {

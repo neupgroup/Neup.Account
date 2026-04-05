@@ -4,12 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "npx next dev --turbopack --port 2226",
-    "genkit:dev": "genkit start -- tsx src/ai/dev.ts",
-    "genkit:watch": "genkit start -- tsx --watch src/ai/dev.ts",
     "build": "next build --webpack",
+    "build:strict": "npm run validate && next build --webpack",
     "start": "next start --port 2226",
-    "lint": "next lint .",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "validate": "npm run lint && npm run typecheck",
     "seed": "tsx prisma/seed.ts"
   },
   "prisma": {
@@ -85,11 +85,14 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/ua-parser-js": "^0.7.39",
+    "eslint": "^9.39.4",
     "genkit-cli": "^1.13.0",
+    "globals": "^17.4.0",
     "postcss": "^8",
     "prisma": "^7.4.0",
     "tailwindcss": "^3.4.1",
     "tsx": "^4.7.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "typescript-eslint": "^8.58.0"
   }
 }
