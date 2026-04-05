@@ -9,7 +9,7 @@ import { z } from "zod"
 import { format } from "date-fns"
 
 import { getUserProfile, type UserProfile } from "@/lib/user"
-import { updateBrandProfile } from "@/actions/profile"
+import { parseDateString, updateBrandProfile } from "@/actions/profile"
 import { brandProfileFormSchema } from "@/schemas/auth"
 import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
@@ -84,6 +84,34 @@ export function BrandProfileForm({ accountId, children }: { accountId: string, c
 
         fetchData();
     }, [accountId, form]);
+
+    const handleDateInputBlur = async () => {
+        if (!dateInput) return;
+
+        if (dateInput.length > 30) {
+            form.setError("dateEstablished", { type: "manual", message: "Input must be 30 characters or less." });
+            return;
+        }
+
+        const currentDate = form.getValues("dateEstablished");
+        if (currentDate && dateInput === format(currentDate, 'yyyy-MM-dd')) {
+            form.clearErrors('dateEstablished');
+            return;
+        }
+
+        setIsParsingDate(true);
+        form.clearErrors('dateEstablished');
+        const result = await parseDateString(dateInput);
+        setIsParsingDate(false);
+
+        if (result.success && result.date) {
+            const newDate = new Date(result.date + 'T00:00:00');
+            form.setValue('dateEstablished', newDate, { shouldDirty: true, shouldValidate: true });
+            setDateInput(format(newDate, 'yyyy-MM-dd'));
+        } else {
+            form.setError('dateEstablished', { type: 'manual', message: result.error || 'Invalid date format.' });
+        }
+    };
     
     async function onSubmit(data: BrandFormValues) {
         const locationString = geo?.latitude && geo?.longitude ? `${geo.latitude},${geo.longitude}` : undefined;
@@ -239,6 +267,7 @@ export function BrandProfileForm({ accountId, children }: { accountId: string, c
                                                 placeholder="YYYY-MM-DD or e.g. June 12 2002"
                                                 value={dateInput}
                                                 onChange={(e) => setDateInput(e.target.value)}
+                                                onBlur={handleDateInputBlur}
                                                 disabled={isParsingDate}
                                                 className="pr-10"
                                             />

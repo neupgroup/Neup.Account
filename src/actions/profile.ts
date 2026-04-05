@@ -9,6 +9,7 @@ import { format, isValid, parse as parseWithFormat } from 'date-fns';
 import { brandProfileFormSchema } from '@/schemas/auth';
 import { getUserProfile, checkPermissions, checkNeupIdAvailability, getUserNeupIds } from '@/lib/user';
 import { logActivity } from '@/lib/log-actions';
+import { getAITextResponse } from '@/services/shared/ai';
 
 
 export async function getDisplayNameSuggestions(accountId: string): Promise<string[]> {
@@ -301,6 +302,24 @@ export async function parseDateString(dateString: string): Promise<{ success: bo
     const fallback = new Date(normalized);
     if (!isNaN(fallback.getTime())) {
         return { success: true, date: fallback.toISOString().slice(0, 10) };
+    }
+
+    try {
+        const aiResult = await getAITextResponse({
+            context: { value: normalized },
+            query: 'convert to date in YYYY-MM-DD',
+        });
+
+        const aiDateMatch = aiResult.match(/\b\d{4}-\d{2}-\d{2}\b/);
+        if (aiDateMatch) {
+            const aiDate = aiDateMatch[0];
+            const parsed = new Date(`${aiDate}T00:00:00Z`);
+            if (!isNaN(parsed.getTime())) {
+                return { success: true, date: aiDate };
+            }
+        }
+    } catch (error) {
+        await logError('ai', error, `parseDateString ai fallback: ${dateString}`);
     }
 
     return { success: false, date: null, error: "Invalid date format." };
