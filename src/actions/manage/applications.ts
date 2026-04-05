@@ -4,7 +4,7 @@ import { randomUUID } from 'crypto';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import prisma from '@/lib/prisma';
-import { getPersonalAccountId } from '@/lib/auth-actions';
+import { getActiveAccountId, getPersonalAccountId } from '@/lib/auth-actions';
 import { checkPermissions } from '@/lib/user';
 import { logError } from '@/lib/logger';
 import {
@@ -48,6 +48,10 @@ const saveEndpointsSchema = z.object({
   logoutPage: z.string().trim().max(500).optional().or(z.literal('')),
   logoutApi: z.string().trim().max(500).optional().or(z.literal('')),
 });
+
+const applicationAssetTypes = ['app', 'application'];
+const viewRoleKeys = new Set(['application.view', 'app.view', 'application.edit', 'app.edit', 'application.manage', 'app.manage', 'manage', '*']);
+const editRoleKeys = new Set(['application.edit', 'app.edit', 'application.manage', 'app.manage', 'manage', '*']);
 
 function normalizeText(value: unknown): string | undefined {
   if (typeof value !== 'string') {
@@ -108,6 +112,67 @@ function normalizeEndpoints(value: unknown): ApplicationEndpointConfig {
   };
 }
 
+async function resolveApplicationAccessForAccount(accountId: string, appId: string): Promise<{ canView: boolean; canEdit: boolean }> {
+  try {
+    const memberKey = `account:${accountId}`;
+    const memberRoles = await prisma.assetMemberRole.findMany({
+      where: {
+        assetRef: {
+          asset: appId,
+          type: { in: applicationAssetTypes },
+        },
+        member: {
+          member: memberKey,
+          OR: [{ isPermanent: true }, { validTill: { gt: new Date() } }],
+        },
+      },
+      select: {
+        role: true,
+        member: {
+          select: {
+            hasFullPermit: true,
+          },
+        },
+      },
+    });
+
+    if (memberRoles.length === 0) {
+      return { canView: false, canEdit: false };
+    }
+
+    if (memberRoles.some((row) => row.member.hasFullPermit)) {
+      return { canView: true, canEdit: true };
+    }
+
+    const normalizedRoles = new Set(memberRoles.map((row) => row.role.trim().toLowerCase()));
+    const canEdit = Array.from(normalizedRoles).some((role) => editRoleKeys.has(role));
+    const canView = canEdit || Array.from(normalizedRoles).some((role) => viewRoleKeys.has(role));
+
+    return { canView, canEdit };
+  } catch (error) {
+    await logError('database', error, `resolveApplicationAccessForAccount:${accountId}:${appId}`);
+    return { canView: false, canEdit: false };
+  }
+}
+
+async function getApplicationAuthorization(accountId: string, appId: string): Promise<{ exists: boolean; canView: boolean; canEdit: boolean }> {
+  const application = await prisma.application.findUnique({
+    where: { id: appId },
+    select: { id: true, ownerAccountId: true },
+  });
+
+  if (!application) {
+    return { exists: false, canView: false, canEdit: false };
+  }
+
+  if (application.ownerAccountId === accountId) {
+    return { exists: true, canView: true, canEdit: true };
+  }
+
+  const access = await resolveApplicationAccessForAccount(accountId, appId);
+  return { exists: true, canView: access.canView, canEdit: access.canEdit };
+}
+
 export async function createManagedApplication(input: { name: string }) {
   const parsed = createApplicationSchema.safeParse(input);
   if (!parsed.success) {
@@ -145,13 +210,13 @@ export async function createManagedApplication(input: { name: string }) {
 }
 
 export async function getManagedApplications(): Promise<Array<{ id: string; name: string; slug?: string; icon?: string; developer?: string; createdAt: Date; hasSecretKey: boolean }>> {
-  const accountId = await getPersonalAccountId();
+  const accountId = await getActiveAccountId();
   if (!accountId) {
     return [];
   }
 
   try {
-    const applications = await prisma.application.findMany({
+    const ownedApplications = await prisma.application.findMany({
       where: { ownerAccountId: accountId },
       orderBy: { createdAt: 'desc' },
       select: {
@@ -164,6 +229,64 @@ export async function getManagedApplications(): Promise<Array<{ id: string; name
         appSecret: true,
       },
     });
+
+    const ownedIds = new Set(ownedApplications.map((app) => app.id));
+
+    const roleRows = await prisma.assetMemberRole.findMany({
+      where: {
+        member: {
+          member: `account:${accountId}`,
+          OR: [{ isPermanent: true }, { validTill: { gt: new Date() } }],
+        },
+        assetRef: {
+          type: { in: applicationAssetTypes },
+        },
+      },
+      select: {
+        role: true,
+        member: {
+          select: {
+            hasFullPermit: true,
+          },
+        },
+        assetRef: {
+          select: {
+            asset: true,
+          },
+        },
+      },
+    });
+
+    const permittedViewAppIds = new Set<string>();
+    for (const row of roleRows) {
+      const normalizedRole = row.role.trim().toLowerCase();
+      if (row.member.hasFullPermit || viewRoleKeys.has(normalizedRole)) {
+        permittedViewAppIds.add(row.assetRef.asset);
+      }
+    }
+
+    const permittedApplications = permittedViewAppIds.size
+      ? await prisma.application.findMany({
+          where: {
+            id: { in: Array.from(permittedViewAppIds) },
+          },
+          orderBy: { createdAt: 'desc' },
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            icon: true,
+            developer: true,
+            createdAt: true,
+            appSecret: true,
+          },
+        })
+      : [];
+
+    const applications = [
+      ...ownedApplications,
+      ...permittedApplications.filter((app) => !ownedIds.has(app.id)),
+    ];
 
     return applications.map((application) => ({
       id: application.id,
@@ -181,16 +304,20 @@ export async function getManagedApplications(): Promise<Array<{ id: string; name
 }
 
 export async function getManagedApplication(appId: string): Promise<ManagedApplication | null> {
-  const accountId = await getPersonalAccountId();
+  const accountId = await getActiveAccountId();
   if (!accountId) {
     return null;
   }
 
   try {
+    const authorization = await getApplicationAuthorization(accountId, appId);
+    if (!authorization.exists || !authorization.canView) {
+      return null;
+    }
+
     const application = await prisma.application.findFirst({
       where: {
         id: appId,
-        ownerAccountId: accountId,
       },
       select: {
         id: true,
@@ -228,16 +355,23 @@ export async function saveApplicationSecret(input: { appId: string; secretKey: s
     return { success: false, error: 'Invalid secret key.' };
   }
 
-  const accountId = await getPersonalAccountId();
+  const accountId = await getActiveAccountId();
   if (!accountId) {
     return { success: false, error: 'Not signed in.' };
   }
 
   try {
+    const authorization = await getApplicationAuthorization(accountId, parsed.data.appId);
+    if (!authorization.exists) {
+      return { success: false, error: 'Application not found.' };
+    }
+    if (!authorization.canEdit) {
+      return { success: false, error: 'Permission denied.' };
+    }
+
     const result = await prisma.application.updateMany({
       where: {
         id: parsed.data.appId,
-        ownerAccountId: accountId,
       },
       data: {
         appSecret: parsed.data.secretKey,
@@ -264,16 +398,23 @@ export async function saveApplicationAccess(input: { appId: string; access: Appl
     return { success: false, error: 'Invalid access list.' };
   }
 
-  const accountId = await getPersonalAccountId();
+  const accountId = await getActiveAccountId();
   if (!accountId) {
     return { success: false, error: 'Not signed in.' };
   }
 
   try {
+    const authorization = await getApplicationAuthorization(accountId, parsed.data.appId);
+    if (!authorization.exists) {
+      return { success: false, error: 'Application not found.' };
+    }
+    if (!authorization.canEdit) {
+      return { success: false, error: 'Permission denied.' };
+    }
+
     const result = await prisma.application.updateMany({
       where: {
         id: parsed.data.appId,
-        ownerAccountId: accountId,
       },
       data: {
         access: parsed.data.access,
@@ -300,16 +441,23 @@ export async function saveApplicationPolicies(input: { appId: string; policies: 
     return { success: false, error: 'Invalid policies.' };
   }
 
-  const accountId = await getPersonalAccountId();
+  const accountId = await getActiveAccountId();
   if (!accountId) {
     return { success: false, error: 'Not signed in.' };
   }
 
   try {
+    const authorization = await getApplicationAuthorization(accountId, parsed.data.appId);
+    if (!authorization.exists) {
+      return { success: false, error: 'Application not found.' };
+    }
+    if (!authorization.canEdit) {
+      return { success: false, error: 'Permission denied.' };
+    }
+
     const result = await prisma.application.updateMany({
       where: {
         id: parsed.data.appId,
-        ownerAccountId: accountId,
       },
       data: {
         policies: parsed.data.policies,
@@ -336,16 +484,23 @@ export async function saveApplicationEndpoints(input: { appId: string } & Applic
     return { success: false, error: 'Invalid endpoint information.' };
   }
 
-  const accountId = await getPersonalAccountId();
+  const accountId = await getActiveAccountId();
   if (!accountId) {
     return { success: false, error: 'Not signed in.' };
   }
 
   try {
+    const authorization = await getApplicationAuthorization(accountId, parsed.data.appId);
+    if (!authorization.exists) {
+      return { success: false, error: 'Application not found.' };
+    }
+    if (!authorization.canEdit) {
+      return { success: false, error: 'Permission denied.' };
+    }
+
     const result = await prisma.application.updateMany({
       where: {
         id: parsed.data.appId,
-        ownerAccountId: accountId,
       },
       data: {
         endpoints: {
