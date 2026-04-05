@@ -5,10 +5,10 @@ import { getPersonalAccountId } from '@/lib/auth-actions';
 import { logError } from '@/lib/logger';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
+import { format, isValid, parse as parseWithFormat } from 'date-fns';
 import { brandProfileFormSchema } from '@/schemas/auth';
 import { getUserProfile, checkPermissions, checkNeupIdAvailability, getUserNeupIds } from '@/lib/user';
 import { logActivity } from '@/lib/log-actions';
-import { parseDate } from '@/ai/flows/parse-date';
 
 
 export async function getDisplayNameSuggestions(accountId: string): Promise<string[]> {
@@ -275,17 +275,33 @@ export async function parseDateString(dateString: string): Promise<{ success: bo
         }
     }
 
-    try {
-        const result = await parseDate(dateString);
-        if (result.parsedDate !== 'invalid') {
-            const d = new Date(result.parsedDate + 'T00:00:00');
-            if (!isNaN(d.getTime())) {
-                return { success: true, date: result.parsedDate };
-            }
+    const normalized = dateString.trim().replace(/\s+/g, ' ');
+    const acceptedFormats = [
+        'yyyy-MM-dd',
+        'yyyy/MM/dd',
+        'dd-MM-yyyy',
+        'dd/MM/yyyy',
+        'MM-dd-yyyy',
+        'MM/dd/yyyy',
+        'd MMM yyyy',
+        'd MMMM yyyy',
+        'MMM d yyyy',
+        'MMMM d yyyy',
+        'd-MMM-yyyy',
+        'd-MMMM-yyyy',
+    ];
+
+    for (const dateFormat of acceptedFormats) {
+        const parsed = parseWithFormat(normalized, dateFormat, new Date());
+        if (isValid(parsed)) {
+            return { success: true, date: format(parsed, 'yyyy-MM-dd') };
         }
-        return { success: false, date: null, error: "Invalid date format." };
-    } catch (error) {
-        await logError('ai', error, `parseDateString: ${dateString}`);
-        return { success: false, date: null, error: "Could not parse date. The AI service may be unavailable." };
     }
+
+    const fallback = new Date(normalized);
+    if (!isNaN(fallback.getTime())) {
+        return { success: true, date: fallback.toISOString().slice(0, 10) };
+    }
+
+    return { success: false, date: null, error: "Invalid date format." };
 }
