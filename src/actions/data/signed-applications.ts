@@ -7,6 +7,8 @@ import { logError } from '@/lib/logger';
 type SignedApplication = {
   id: string;
   name: string;
+  slug?: string;
+  icon?: string;
   description: string;
   website?: string;
   developer?: string;
@@ -54,6 +56,8 @@ export async function getSignedApplications(): Promise<SignedApplicationsResult>
       byAppId.set(row.appId, {
         id: row.appId,
         name: row.application.name,
+        slug: row.application.slug || undefined,
+        icon: row.application.icon || undefined,
         description: row.application.description || '',
         website: row.application.website || undefined,
         developer: row.application.developer || undefined,
@@ -68,6 +72,8 @@ export async function getSignedApplications(): Promise<SignedApplicationsResult>
         byAppId.set(row.appId, {
           id: row.appId,
           name: row.application.name,
+          slug: row.application.slug || undefined,
+          icon: row.application.icon || undefined,
           description: row.application.description || '',
           website: row.application.website || undefined,
           developer: row.application.developer || undefined,

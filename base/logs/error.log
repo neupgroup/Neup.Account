@@ -97,3 +97,941 @@ The column `(not available)` does not exist in the current database.
     at async cleanupExpiredStoredSessions (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_e3ef9705._.js:1355:31)
     at async StartPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__199699fa._.js:95:22)
 --------------------------------------------------------------------------------
+[2026-04-05T18:35:31.645Z] [database] [auto] [getConnectedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.userAppConnection.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getConnectedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_c8c22a31._.js:1054:29)
+    at async DataAndPrivacyPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__1f6872d3._.js:431:40)
+--------------------------------------------------------------------------------
+[2026-04-05T18:35:45.716Z] [database] [auto] [getConnectedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.userAppConnection.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getConnectedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_c8c22a31._.js:1054:29)
+    at async DataAndPrivacyPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__1f6872d3._.js:431:40)
+--------------------------------------------------------------------------------
+[2026-04-05T18:39:46.140Z] [database] [auto] [getConnectedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.userAppConnection.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getConnectedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_c8c22a31._.js:1054:29)
+    at async DataAndPrivacyPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__1f6872d3._.js:431:40)
+--------------------------------------------------------------------------------
+[2026-04-05T18:39:54.973Z] [database] [auto] [getManagedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.application.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getManagedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1190:30)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__b7c0ab71._.js:486:33)
+--------------------------------------------------------------------------------
+[2026-04-05T18:39:55.304Z] [database] [auto] [getSignedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.appAuthentication.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 0)
+    at async getSignedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1491:53)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__b7c0ab71._.js:487:36)
+--------------------------------------------------------------------------------
+[2026-04-05T18:40:46.612Z] [database] [auto] [getManagedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.application.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getManagedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1190:30)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__b7c0ab71._.js:489:33)
+--------------------------------------------------------------------------------
+[2026-04-05T18:40:46.939Z] [database] [auto] [getSignedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.appAuthentication.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 0)
+    at async getSignedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1491:53)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__b7c0ab71._.js:490:36)
+--------------------------------------------------------------------------------
+[2026-04-05T18:40:54.181Z] [database] [auto] [getManagedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.application.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getManagedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1202:30)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__b7c0ab71._.js:489:33)
+--------------------------------------------------------------------------------
+[2026-04-05T18:40:54.485Z] [database] [auto] [getSignedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.authSessionExternal.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getSignedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1503:53)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__b7c0ab71._.js:490:36)
+--------------------------------------------------------------------------------
+[2026-04-05T18:42:37.806Z] [database] [auto] [getManagedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.application.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getManagedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1202:30)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__b7c0ab71._.js:489:33)
+--------------------------------------------------------------------------------
+[2026-04-05T18:42:38.130Z] [database] [auto] [getSignedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.appAuthentication.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 0)
+    at async getSignedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1503:53)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__b7c0ab71._.js:490:36)
+--------------------------------------------------------------------------------
+[2026-04-05T18:42:54.990Z] [database] [auto] [getManagedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.application.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getManagedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1202:30)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__b7c0ab71._.js:489:33)
+--------------------------------------------------------------------------------
+[2026-04-05T18:42:55.319Z] [database] [auto] [getSignedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.appAuthentication.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 0)
+    at async getSignedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1503:53)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__b7c0ab71._.js:490:36)
+--------------------------------------------------------------------------------
+[2026-04-05T18:45:08.046Z] [database] [auto] [getManagedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.application.findMany()` invocation:
+
+{
+  where: {
+    ownerAccountId: "63b6151e-2fa0-482d-8b63-4c5293b8bed0"
+  },
+  orderBy: {
+    createdAt: "desc"
+  },
+  select: {
+    id: true,
+    name: true,
+    slug: true,
+    ~~~~
+    icon: true,
+    developer: true,
+    createdAt: true,
+    appSecret: true,
+?   party?: true,
+?   description?: true,
+?   website?: true,
+?   access?: true,
+?   policies?: true,
+?   endpoints?: true,
+?   ownerAccountId?: true,
+?   owner?: true,
+?   connections?: true,
+?   appAuthentications?: true,
+?   appSessions?: true,
+?   externalSessions?: true,
+?   externalRoles?: true,
+?   externalPermissions?: true,
+?   authTeams?: true,
+?   authTeamsExternal?: true,
+?   authRoles?: true,
+?   authPermissionRecipients?: true,
+?   accountAccesses?: true,
+?   _count?: true
+  }
+}
+
+Unknown field `slug` for select statement on model `Application`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getManagedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1202:30)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__b7c0ab71._.js:489:33)
+--------------------------------------------------------------------------------
+[2026-04-05T18:45:08.875Z] [database] [auto] [getSignedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.appAuthentication.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 0)
+    at async getSignedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1509:53)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__b7c0ab71._.js:490:36)
+--------------------------------------------------------------------------------
+[2026-04-05T18:45:19.100Z] [database] [auto] [getManagedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.application.findMany()` invocation:
+
+{
+  where: {
+    ownerAccountId: "63b6151e-2fa0-482d-8b63-4c5293b8bed0"
+  },
+  orderBy: {
+    createdAt: "desc"
+  },
+  select: {
+    id: true,
+    name: true,
+    slug: true,
+    ~~~~
+    icon: true,
+    developer: true,
+    createdAt: true,
+    appSecret: true,
+?   party?: true,
+?   description?: true,
+?   website?: true,
+?   access?: true,
+?   policies?: true,
+?   endpoints?: true,
+?   ownerAccountId?: true,
+?   owner?: true,
+?   connections?: true,
+?   appAuthentications?: true,
+?   appSessions?: true,
+?   externalSessions?: true,
+?   externalRoles?: true,
+?   externalPermissions?: true,
+?   authTeams?: true,
+?   authTeamsExternal?: true,
+?   authRoles?: true,
+?   authPermissionRecipients?: true,
+?   accountAccesses?: true,
+?   _count?: true
+  }
+}
+
+Unknown field `slug` for select statement on model `Application`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getManagedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1202:30)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__b7c0ab71._.js:489:33)
+--------------------------------------------------------------------------------
+[2026-04-05T18:45:19.226Z] [database] [auto] [getSignedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.appAuthentication.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 0)
+    at async getSignedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1509:53)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__b7c0ab71._.js:490:36)
+--------------------------------------------------------------------------------
+[2026-04-05T18:45:43.365Z] [database] [auto] [getManagedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.application.findMany()` invocation:
+
+{
+  where: {
+    ownerAccountId: "63b6151e-2fa0-482d-8b63-4c5293b8bed0"
+  },
+  orderBy: {
+    createdAt: "desc"
+  },
+  select: {
+    id: true,
+    name: true,
+    slug: true,
+    ~~~~
+    icon: true,
+    developer: true,
+    createdAt: true,
+    appSecret: true,
+?   party?: true,
+?   description?: true,
+?   website?: true,
+?   access?: true,
+?   policies?: true,
+?   endpoints?: true,
+?   ownerAccountId?: true,
+?   owner?: true,
+?   connections?: true,
+?   appAuthentications?: true,
+?   appSessions?: true,
+?   externalSessions?: true,
+?   externalRoles?: true,
+?   externalPermissions?: true,
+?   authTeams?: true,
+?   authTeamsExternal?: true,
+?   authRoles?: true,
+?   authPermissionRecipients?: true,
+?   accountAccesses?: true,
+?   _count?: true
+  }
+}
+
+Unknown field `slug` for select statement on model `Application`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getManagedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1202:30)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__be8c93c6._.js:352:33)
+--------------------------------------------------------------------------------
+[2026-04-05T18:45:43.695Z] [database] [auto] [getSignedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.authSessionExternal.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getSignedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1509:53)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__be8c93c6._.js:353:36)
+--------------------------------------------------------------------------------
+[2026-04-05T18:48:18.513Z] [database] [auto] [getManagedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.application.findMany()` invocation:
+
+{
+  where: {
+    ownerAccountId: "63b6151e-2fa0-482d-8b63-4c5293b8bed0"
+  },
+  orderBy: {
+    createdAt: "desc"
+  },
+  select: {
+    id: true,
+    name: true,
+    slug: true,
+    ~~~~
+    icon: true,
+    developer: true,
+    createdAt: true,
+    appSecret: true,
+?   party?: true,
+?   description?: true,
+?   website?: true,
+?   access?: true,
+?   policies?: true,
+?   endpoints?: true,
+?   ownerAccountId?: true,
+?   owner?: true,
+?   connections?: true,
+?   appAuthentications?: true,
+?   appSessions?: true,
+?   externalSessions?: true,
+?   externalRoles?: true,
+?   externalPermissions?: true,
+?   authTeams?: true,
+?   authTeamsExternal?: true,
+?   authRoles?: true,
+?   authPermissionRecipients?: true,
+?   accountAccesses?: true,
+?   _count?: true
+  }
+}
+
+Unknown field `slug` for select statement on model `Application`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getManagedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1202:30)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__be8c93c6._.js:352:33)
+--------------------------------------------------------------------------------
+[2026-04-05T18:48:18.634Z] [database] [auto] [getSignedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.appAuthentication.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 0)
+    at async getSignedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1509:53)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__be8c93c6._.js:353:36)
+--------------------------------------------------------------------------------
+[2026-04-05T18:49:08.983Z] [database] [auto] [getManagedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.application.findMany()` invocation:
+
+{
+  where: {
+    ownerAccountId: "63b6151e-2fa0-482d-8b63-4c5293b8bed0"
+  },
+  orderBy: {
+    createdAt: "desc"
+  },
+  select: {
+    id: true,
+    name: true,
+    slug: true,
+    ~~~~
+    icon: true,
+    developer: true,
+    createdAt: true,
+    appSecret: true,
+?   party?: true,
+?   description?: true,
+?   website?: true,
+?   access?: true,
+?   policies?: true,
+?   endpoints?: true,
+?   ownerAccountId?: true,
+?   owner?: true,
+?   connections?: true,
+?   appAuthentications?: true,
+?   appSessions?: true,
+?   externalSessions?: true,
+?   externalRoles?: true,
+?   externalPermissions?: true,
+?   authTeams?: true,
+?   authTeamsExternal?: true,
+?   authRoles?: true,
+?   authPermissionRecipients?: true,
+?   accountAccesses?: true,
+?   _count?: true
+  }
+}
+
+Unknown field `slug` for select statement on model `Application`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getManagedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1202:30)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__f4f8b809._.js:255:33)
+--------------------------------------------------------------------------------
+[2026-04-05T18:49:09.360Z] [database] [auto] [getSignedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.authSessionExternal.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getSignedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1509:53)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__f4f8b809._.js:256:36)
+--------------------------------------------------------------------------------
+[2026-04-05T18:49:22.285Z] [database] [auto] [getManagedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.application.findMany()` invocation:
+
+{
+  where: {
+    ownerAccountId: "63b6151e-2fa0-482d-8b63-4c5293b8bed0"
+  },
+  orderBy: {
+    createdAt: "desc"
+  },
+  select: {
+    id: true,
+    name: true,
+    slug: true,
+    ~~~~
+    icon: true,
+    developer: true,
+    createdAt: true,
+    appSecret: true,
+?   party?: true,
+?   description?: true,
+?   website?: true,
+?   access?: true,
+?   policies?: true,
+?   endpoints?: true,
+?   ownerAccountId?: true,
+?   owner?: true,
+?   connections?: true,
+?   appAuthentications?: true,
+?   appSessions?: true,
+?   externalSessions?: true,
+?   externalRoles?: true,
+?   externalPermissions?: true,
+?   authTeams?: true,
+?   authTeamsExternal?: true,
+?   authRoles?: true,
+?   authPermissionRecipients?: true,
+?   accountAccesses?: true,
+?   _count?: true
+  }
+}
+
+Unknown field `slug` for select statement on model `Application`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at listOnTimeout (node:internal/timers:567:9)
+    at process.processTimers (node:internal/timers:541:7)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getManagedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1202:30)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__f4f8b809._.js:255:33)
+--------------------------------------------------------------------------------
+[2026-04-05T18:49:22.603Z] [database] [auto] [getSignedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.appAuthentication.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 0)
+    at async getSignedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1509:53)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__f4f8b809._.js:256:36)
+--------------------------------------------------------------------------------
+[2026-04-05T18:51:05.932Z] [database] [auto] [getManagedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.application.findMany()` invocation:
+
+{
+  where: {
+    ownerAccountId: "63b6151e-2fa0-482d-8b63-4c5293b8bed0"
+  },
+  orderBy: {
+    createdAt: "desc"
+  },
+  select: {
+    id: true,
+    name: true,
+    slug: true,
+    ~~~~
+    icon: true,
+    developer: true,
+    createdAt: true,
+    appSecret: true,
+?   party?: true,
+?   description?: true,
+?   website?: true,
+?   access?: true,
+?   policies?: true,
+?   endpoints?: true,
+?   ownerAccountId?: true,
+?   owner?: true,
+?   connections?: true,
+?   appAuthentications?: true,
+?   appSessions?: true,
+?   externalSessions?: true,
+?   externalRoles?: true,
+?   externalPermissions?: true,
+?   authTeams?: true,
+?   authTeamsExternal?: true,
+?   authRoles?: true,
+?   authPermissionRecipients?: true,
+?   accountAccesses?: true,
+?   _count?: true
+  }
+}
+
+Unknown field `slug` for select statement on model `Application`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getManagedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1202:30)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__f4f8b809._.js:245:33)
+--------------------------------------------------------------------------------
+[2026-04-05T18:51:06.078Z] [database] [auto] [getSignedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.appAuthentication.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 0)
+    at async getSignedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1509:53)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__f4f8b809._.js:246:36)
+--------------------------------------------------------------------------------
+[2026-04-05T18:51:13.071Z] [database] [auto] [getManagedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.application.findMany()` invocation:
+
+{
+  where: {
+    ownerAccountId: "63b6151e-2fa0-482d-8b63-4c5293b8bed0"
+  },
+  orderBy: {
+    createdAt: "desc"
+  },
+  select: {
+    id: true,
+    name: true,
+    slug: true,
+    ~~~~
+    icon: true,
+    developer: true,
+    createdAt: true,
+    appSecret: true,
+?   party?: true,
+?   description?: true,
+?   website?: true,
+?   access?: true,
+?   policies?: true,
+?   endpoints?: true,
+?   ownerAccountId?: true,
+?   owner?: true,
+?   connections?: true,
+?   appAuthentications?: true,
+?   appSessions?: true,
+?   externalSessions?: true,
+?   externalRoles?: true,
+?   externalPermissions?: true,
+?   authTeams?: true,
+?   authTeamsExternal?: true,
+?   authRoles?: true,
+?   authPermissionRecipients?: true,
+?   accountAccesses?: true,
+?   _count?: true
+  }
+}
+
+Unknown field `slug` for select statement on model `Application`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at listOnTimeout (node:internal/timers:567:9)
+    at process.processTimers (node:internal/timers:541:7)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getManagedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1202:30)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__f4f8b809._.js:245:33)
+--------------------------------------------------------------------------------
+[2026-04-05T18:51:13.188Z] [database] [auto] [getSignedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.appAuthentication.findMany()` invocation:
+
+
+The column `(not available)` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 0)
+    at async getSignedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1509:53)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__f4f8b809._.js:246:36)
+--------------------------------------------------------------------------------
+[2026-04-05T18:51:20.245Z] [database] [auto] [createManagedApplication] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.application.create()` invocation:
+
+
+The column `ownerAccountId` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async createManagedApplication (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_64544784._.js:1173:29)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neupaccount/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/node_modules_next_dist_89c2f78c._.js:3010:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/node_modules_next_dist_89c2f78c._.js:3216:32)
+    at async Module.handler (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/node_modules_next_dist_89c2f78c._.js:3587:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-04-05T18:51:43.991Z] [database] [auto] [createManagedApplication] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.application.create()` invocation:
+
+
+The column `ownerAccountId` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async createManagedApplication (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_53ab8f87._.js:1173:29)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neupaccount/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/node_modules_next_dist_89c2f78c._.js:3010:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/node_modules_next_dist_89c2f78c._.js:3216:32)
+    at async Module.handler (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/node_modules_next_dist_89c2f78c._.js:3587:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-04-05T18:52:12.166Z] [database] [auto] [createManagedApplication] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.application.create()` invocation:
+
+
+The column `ownerAccountId` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async createManagedApplication (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_53ab8f87._.js:1173:29)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neupaccount/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/node_modules_next_dist_89c2f78c._.js:3010:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/node_modules_next_dist_89c2f78c._.js:3216:32)
+    at async Module.handler (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/node_modules_next_dist_89c2f78c._.js:3587:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neupaccount/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-04-05T18:56:24.069Z] [database] [auto] [getManagedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.application.findMany()` invocation:
+
+{
+  where: {
+    ownerAccountId: "63b6151e-2fa0-482d-8b63-4c5293b8bed0"
+  },
+  orderBy: {
+    createdAt: "desc"
+  },
+  select: {
+    id: true,
+    name: true,
+    slug: true,
+    ~~~~
+    icon: true,
+    developer: true,
+    createdAt: true,
+    appSecret: true,
+?   party?: true,
+?   description?: true,
+?   website?: true,
+?   access?: true,
+?   policies?: true,
+?   endpoints?: true,
+?   ownerAccountId?: true,
+?   owner?: true,
+?   connections?: true,
+?   appAuthentications?: true,
+?   appSessions?: true,
+?   externalSessions?: true,
+?   externalRoles?: true,
+?   externalPermissions?: true,
+?   authTeams?: true,
+?   authTeamsExternal?: true,
+?   authRoles?: true,
+?   authPermissionRecipients?: true,
+?   accountAccesses?: true,
+?   _count?: true
+  }
+}
+
+Unknown field `slug` for select statement on model `Application`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getManagedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_53ab8f87._.js:1202:30)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__f4f8b809._.js:245:33)
+--------------------------------------------------------------------------------
+[2026-04-05T18:56:30.550Z] [database] [auto] [getManagedApplications] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: cb0eef9d8233da7e00624b7bf151ee53]
+Message: PrismaClientValidationError: 
+Invalid `prisma.application.findMany()` invocation:
+
+{
+  where: {
+    ownerAccountId: "63b6151e-2fa0-482d-8b63-4c5293b8bed0"
+  },
+  orderBy: {
+    createdAt: "desc"
+  },
+  select: {
+    id: true,
+    name: true,
+    slug: true,
+    ~~~~
+    icon: true,
+    developer: true,
+    createdAt: true,
+    appSecret: true,
+?   party?: true,
+?   description?: true,
+?   website?: true,
+?   access?: true,
+?   policies?: true,
+?   endpoints?: true,
+?   ownerAccountId?: true,
+?   owner?: true,
+?   connections?: true,
+?   appAuthentications?: true,
+?   appSessions?: true,
+?   externalSessions?: true,
+?   externalRoles?: true,
+?   externalPermissions?: true,
+?   authTeams?: true,
+?   authTeamsExternal?: true,
+?   authRoles?: true,
+?   authPermissionRecipients?: true,
+?   accountAccesses?: true,
+?   _count?: true
+  }
+}
+
+Unknown field `slug` for select statement on model `Application`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at listOnTimeout (node:internal/timers:567:9)
+    at process.processTimers (node:internal/timers:541:7)
+    at async a (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getManagedApplications (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/_53ab8f87._.js:1202:30)
+    at async ApplicationsPage (/Users/neupkishor/Code/neupaccount/.next/dev/server/chunks/ssr/[root-of-the-server]__f4f8b809._.js:245:33)
+--------------------------------------------------------------------------------

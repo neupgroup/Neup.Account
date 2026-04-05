@@ -6,5 +6,5 @@ type EditApplicationPageProps = {
 
 export default async function EditApplicationPage({ params }: EditApplicationPageProps) {
   const { id } = await params;
-  redirect(`/applications/${id}`);
+  redirect(`/data/applications/${id}`);
 }

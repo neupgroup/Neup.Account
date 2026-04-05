@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import prisma from '@/lib/prisma';
 import { getPersonalAccountId } from '@/lib/auth-actions';
+import { checkPermissions } from '@/lib/user';
 import { logError } from '@/lib/logger';
 import {
   applicationAccessFields,
@@ -113,6 +114,11 @@ export async function createManagedApplication(input: { name: string }) {
     return { success: false, error: 'Invalid application name.' };
   }
 
+  const canCreateApplication = await checkPermissions(['root.app.create']);
+  if (!canCreateApplication) {
+    return { success: false, error: 'Permission denied.' };
+  }
+
   const accountId = await getPersonalAccountId();
   if (!accountId) {
     return { success: false, error: 'Not signed in.' };
@@ -130,7 +136,7 @@ export async function createManagedApplication(input: { name: string }) {
       },
     });
 
-    revalidatePath('/applications');
+    revalidatePath('/data/applications');
     return { success: true, appId: application.id };
   } catch (error) {
     await logError('database', error, 'createManagedApplication');
@@ -138,7 +144,7 @@ export async function createManagedApplication(input: { name: string }) {
   }
 }
 
-export async function getManagedApplications(): Promise<Array<{ id: string; name: string; createdAt: Date; hasSecretKey: boolean }>> {
+export async function getManagedApplications(): Promise<Array<{ id: string; name: string; slug?: string; icon?: string; developer?: string; createdAt: Date; hasSecretKey: boolean }>> {
   const accountId = await getPersonalAccountId();
   if (!accountId) {
     return [];
@@ -151,6 +157,9 @@ export async function getManagedApplications(): Promise<Array<{ id: string; name
       select: {
         id: true,
         name: true,
+        slug: true,
+        icon: true,
+        developer: true,
         createdAt: true,
         appSecret: true,
       },
@@ -159,6 +168,9 @@ export async function getManagedApplications(): Promise<Array<{ id: string; name
     return applications.map((application) => ({
       id: application.id,
       name: application.name,
+      slug: application.slug || undefined,
+      icon: application.icon || undefined,
+      developer: application.developer || undefined,
       createdAt: application.createdAt,
       hasSecretKey: Boolean(application.appSecret),
     }));
@@ -236,8 +248,8 @@ export async function saveApplicationSecret(input: { appId: string; secretKey: s
       return { success: false, error: 'Application not found.' };
     }
 
-    revalidatePath('/applications');
-    revalidatePath(`/applications/${parsed.data.appId}`);
+    revalidatePath('/data/applications');
+    revalidatePath(`/data/applications/${parsed.data.appId}`);
 
     return { success: true };
   } catch (error) {
@@ -272,8 +284,8 @@ export async function saveApplicationAccess(input: { appId: string; access: Appl
       return { success: false, error: 'Application not found.' };
     }
 
-    revalidatePath('/applications');
-    revalidatePath(`/applications/${parsed.data.appId}`);
+    revalidatePath('/data/applications');
+    revalidatePath(`/data/applications/${parsed.data.appId}`);
 
     return { success: true };
   } catch (error) {
@@ -308,8 +320,8 @@ export async function saveApplicationPolicies(input: { appId: string; policies: 
       return { success: false, error: 'Application not found.' };
     }
 
-    revalidatePath('/applications');
-    revalidatePath(`/applications/${parsed.data.appId}`);
+    revalidatePath('/data/applications');
+    revalidatePath(`/data/applications/${parsed.data.appId}`);
 
     return { success: true };
   } catch (error) {
@@ -351,8 +363,8 @@ export async function saveApplicationEndpoints(input: { appId: string } & Applic
       return { success: false, error: 'Application not found.' };
     }
 
-    revalidatePath('/applications');
-    revalidatePath(`/applications/${parsed.data.appId}`);
+    revalidatePath('/data/applications');
+    revalidatePath(`/data/applications/${parsed.data.appId}`);
 
     return { success: true };
   } catch (error) {

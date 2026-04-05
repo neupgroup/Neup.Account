@@ -66,7 +66,7 @@ export function ApplicationAccessForm({ mode, initialAppId = '', initialPermissi
         description: mode === 'add' ? 'Application access is now connected.' : 'Application permissions were updated.',
       });
 
-      router.push(`/applications/${normalizedAppId}`);
+      router.push(`/data/applications/${normalizedAppId}`);
       router.refresh();
     });
   };

@@ -127,9 +127,9 @@ export async function addUserApplicationAccess(input: { appId: string; permissio
       },
     });
 
-    revalidatePath('/applications');
-    revalidatePath(`/applications/${appId}`);
-    revalidatePath(`/applications/${appId}/edit`);
+    revalidatePath('/data/applications');
+    revalidatePath(`/data/applications/${appId}`);
+    revalidatePath(`/data/applications/${appId}/edit`);
 
     return { success: true, appId };
   } catch (error) {
@@ -178,9 +178,9 @@ export async function updateUserApplicationPermissions(input: { appId: string; p
       },
     });
 
-    revalidatePath('/applications');
-    revalidatePath(`/applications/${appId}`);
-    revalidatePath(`/applications/${appId}/edit`);
+    revalidatePath('/data/applications');
+    revalidatePath(`/data/applications/${appId}`);
+    revalidatePath(`/data/applications/${appId}/edit`);
 
     return { success: true, appId };
   } catch (error) {

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { getManagedApplication } from '@/actions/manage/applications';
 import { getUserApplicationAccess } from '@/actions/data/application-access';
-import { ApplicationManagementPanel } from '@/app/(manage)/applications/_components/application-management-panel';
+import { ApplicationManagementPanel } from '@/app/(manage)/data/applications/_components/application-management-panel';
 
 type ApplicationDetailPageProps = {
   params: Promise<{ id: string }>;
@@ -22,10 +22,10 @@ function LegacyApplicationDetails({ app }: { app: NonNullable<Awaited<ReturnType
         </div>
         <div className="flex items-center gap-2">
           <Button variant="outline" asChild>
-            <Link href="/applications">Back</Link>
+            <Link href="/data/applications">Back</Link>
           </Button>
           <Button asChild>
-            <Link href={`/applications/${app.id}/edit`}>Edit</Link>
+            <Link href={`/data/applications/${app.id}/edit`}>Edit</Link>
           </Button>
         </div>
       </div>
@@ -103,7 +103,7 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
             <p className="text-muted-foreground">Configure the application you just created.</p>
           </div>
           <Button variant="outline" asChild>
-            <Link href="/applications">Back to Applications</Link>
+            <Link href="/data/applications">Back to Applications</Link>
           </Button>
         </div>
 

@@ -41,6 +41,12 @@ export default async function DataAndPrivacyPage() {
             description: "Request data deletion after a period of inactivity.",
             href: "/data/materialization",
         },
+        {
+            icon: AppWindow,
+            title: "Applications",
+            description: "Manage your applications and connected application access.",
+            href: "/data/applications",
+        },
     ];
 
     const appIconMap: Record<string, LucideIcon> = {
