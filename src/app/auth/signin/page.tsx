@@ -353,7 +353,8 @@ function PasswordStep() {
             const params = new URLSearchParams(searchParams.toString());
             params.delete('step');
             params.delete('neupId');
-            redirectInApp(router, `/auth/sign/permissions?${params.toString()}`);
+            params.set('step', 'access');
+            redirectInApp(router, `/auth/sign?${params.toString()}`);
             return;
           }
 
@@ -512,7 +513,8 @@ function MfaStep() {
             const params = new URLSearchParams(searchParams.toString());
             params.delete('step');
             params.delete('neupId');
-            redirectInApp(router, `/auth/sign/permissions?${params.toString()}`);
+            params.set('step', 'access');
+            redirectInApp(router, `/auth/sign?${params.toString()}`);
             return;
           }
 
@@ -602,7 +604,8 @@ function SigninFlow() {
         const params = new URLSearchParams(searchParams.toString());
         params.delete('step');
         params.delete('neupId');
-        redirectInApp(router, `/auth/sign/permissions?${params.toString()}`, { replace: true });
+        params.set('step', 'access');
+        redirectInApp(router, `/auth/sign?${params.toString()}`, { replace: true });
         return;
       }
 

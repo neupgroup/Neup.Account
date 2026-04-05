@@ -803,7 +803,8 @@ function TermsStep() {
             if (hasAuthCallbackContext(searchParams)) {
                 const params = new URLSearchParams(searchParams.toString());
                 params.delete('step');
-                redirectInApp(router, `/auth/sign/permissions?${params.toString()}`);
+                params.set('step', 'access');
+                redirectInApp(router, `/auth/sign?${params.toString()}`);
                 return;
             }
 
