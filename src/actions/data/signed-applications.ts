@@ -56,7 +56,6 @@ export async function getSignedApplications(): Promise<SignedApplicationsResult>
       byAppId.set(row.appId, {
         id: row.appId,
         name: row.application.name,
-        slug: row.application.slug || undefined,
         icon: row.application.icon || undefined,
         description: row.application.description || '',
         website: row.application.website || undefined,
@@ -72,7 +71,6 @@ export async function getSignedApplications(): Promise<SignedApplicationsResult>
         byAppId.set(row.appId, {
           id: row.appId,
           name: row.application.name,
-          slug: row.application.slug || undefined,
           icon: row.application.icon || undefined,
           description: row.application.description || '',
           website: row.application.website || undefined,

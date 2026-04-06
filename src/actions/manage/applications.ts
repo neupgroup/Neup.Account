@@ -457,7 +457,6 @@ export async function getManagedApplications(): Promise<Array<{ id: string; name
       select: {
         id: true,
         name: true,
-        slug: true,
         icon: true,
         developer: true,
         createdAt: true,
@@ -509,7 +508,6 @@ export async function getManagedApplications(): Promise<Array<{ id: string; name
           select: {
             id: true,
             name: true,
-            slug: true,
             icon: true,
             developer: true,
             createdAt: true,
@@ -526,7 +524,6 @@ export async function getManagedApplications(): Promise<Array<{ id: string; name
     return applications.map((application) => ({
       id: application.id,
       name: application.name,
-      slug: application.slug || undefined,
       icon: application.icon || undefined,
       developer: application.developer || undefined,
       createdAt: application.createdAt,
