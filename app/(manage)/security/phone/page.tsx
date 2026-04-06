@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { phoneFormSchema } from "@/schemas/security";
-import { getRecoveryPhone, addRecoveryPhone, removeRecoveryPhone } from "@/actions/security/phone";
+import { getRecoveryPhone, addRecoveryPhone, removeRecoveryPhone } from "@/services/security/phone";
 
 import { Button } from "@/components/ui/button";
 import {

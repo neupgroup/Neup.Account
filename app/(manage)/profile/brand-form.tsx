@@ -9,7 +9,7 @@ import { z } from "zod"
 import { format } from "date-fns"
 
 import { getUserProfile, type UserProfile } from "@/lib/user"
-import { parseDateString, updateBrandProfile } from "@/actions/profile"
+import { parseDateString, updateBrandProfile } from "@/services/profile"
 import { brandProfileFormSchema } from "@/schemas/auth"
 import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"

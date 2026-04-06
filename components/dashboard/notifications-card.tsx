@@ -1,5 +1,5 @@
 import { Card, CardContent } from '@/components/ui/card';
-import { getNotifications } from '@/actions/notifications';
+import { getNotifications } from '@/services/notifications';
 import { ListItem } from '@/components/ui/list-item';
 import { SecondaryHeader } from '@/components/ui/secondary-header';
 import type { Notification as NotificationType } from '@/types';

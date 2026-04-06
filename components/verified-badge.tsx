@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { getAccountVerification } from '@/actions/manage/verifications';
+import { getAccountVerification } from '@/services/manage/verifications';
 
 type VerificationDetails = {
     category: string;

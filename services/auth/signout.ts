@@ -5,7 +5,7 @@ import { logActivity } from '@/lib/log-actions';
 import { headers } from 'next/headers';
 import { logError } from '@/lib/logger';
 import { getSessionCookies, clearSessionCookies, setStoredAccountsCookie } from '@/lib/cookies';
-import { makeNotification } from '@/actions/notifications';
+import { makeNotification } from '@/services/notifications';
 
 export async function logoutActiveSession() {
     const { sessionId, accountId, allAccounts } = await getSessionCookies();

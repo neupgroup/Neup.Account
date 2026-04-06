@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
 import { getUserNeupIdDetails as fetchUserNeupIdDetails } from "@/lib/user"
-import { addNeupId, removeNeupId, setPrimaryNeupId } from '@/actions/manage/accounts/neupid';
+import { addNeupId, removeNeupId, setPrimaryNeupId } from '@/services/manage/accounts/neupid';
 import { useToast } from "@/hooks/use-toast"
 
 import { Skeleton } from '@/components/ui/skeleton'

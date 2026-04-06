@@ -20,7 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, ArrowUpDown, ChevronLeft, ChevronRight } from "@/components/icons";
-import { getAllAccounts, type AccountListItem } from '@/actions/manage/accounts';
+import { getAllAccounts, type AccountListItem } from '@/services/manage/accounts';
 import { Skeleton } from '@/components/ui/skeleton';
 import { BackButton } from '@/components/ui/back-button';
 import { Badge } from '@/components/ui/badge';

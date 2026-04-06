@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import prisma from '@/lib/prisma';
 import { logError } from '@/lib/logger';
-import { validateExternalRequest } from '@/actions/auth/validate';
+import { validateExternalRequest } from '@/services/auth/validate';
 import { getUserProfile } from '@/lib/user';
 import { randomBytes } from 'crypto';
 

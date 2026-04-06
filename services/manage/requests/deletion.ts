@@ -4,7 +4,7 @@ import prisma from '@/lib/prisma';
 import { getUserProfile, checkPermissions, isRootUser } from '@/lib/user';
 import { logError } from '@/lib/logger';
 import { revalidatePath } from 'next/cache';
-import { deleteUserAccount } from '@/actions/manage/user-actions';
+import { deleteUserAccount } from '@/services/manage/user-actions';
 import { getPersonalAccountId } from '@/lib/auth-actions';
 import { logActivity } from '@/lib/log-actions';
 import { z } from 'zod';

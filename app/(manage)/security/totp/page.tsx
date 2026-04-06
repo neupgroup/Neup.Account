@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { getTotpStatus, generateTotpSecret, verifyAndEnableTotp, disableTotp, getServerTime } from '@/actions/security/totp';
+import { getTotpStatus, generateTotpSecret, verifyAndEnableTotp, disableTotp, getServerTime } from '@/services/security/totp';
 import { Smartphone, Loader2, Clock } from '@/components/icons';
 import { BackButton } from '@/components/ui/back-button';
 import { SecondaryHeader } from '@/components/ui/secondary-header';

@@ -7,7 +7,7 @@ import { createAndSetSession } from '@/lib/session';
 import { validateNeupId } from '@/lib/user';
 import { getAuthRequest, extendAuthRequest } from './utils';
 import prisma from '@/lib/prisma';
-import { makeNotification } from '@/actions/notifications';
+import { makeNotification } from '@/services/notifications';
 
 const neupIdSchema = z.object({
     neupId: z.string().min(1, "NeupID is required."),

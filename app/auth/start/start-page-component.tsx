@@ -14,7 +14,7 @@ import { AccountListItem } from '../accounts/account-list-item';
 import type { StoredAccount } from '@/types';
 import { appendAuthCallbackContext, appendRedirect, getAppDisplayName, shouldReturnToAuthStartForExternalAuthentication } from '@/lib/auth-callback';
 import { redirectInApp } from '@/lib/navigation';
-import { cleanupStoredSessionsAction } from '@/actions/auth/cleanup-stored-sessions';
+import { cleanupStoredSessionsAction } from '@/services/auth/cleanup-stored-sessions';
 
 interface StartPageComponentProps {
   accounts: StoredAccount[];

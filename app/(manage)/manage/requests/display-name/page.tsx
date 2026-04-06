@@ -12,7 +12,7 @@ import { BackButton } from '@/components/ui/back-button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { checkPermissions } from '@/lib/user';
 import { useToast } from '@/hooks/use-toast';
-import { getDisplayNameRequests, processDisplayNameRequest, type DisplayNameRequest } from '@/actions/manage/requests/display-name';
+import { getDisplayNameRequests, processDisplayNameRequest, type DisplayNameRequest } from '@/services/manage/requests/display-name';
 
 
 export default function DisplayNameRequestsPage() {

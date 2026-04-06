@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Laptop, MapPin } from 'lucide-react';
-import { logoutSessionById, logoutAllOtherSessions } from '@/actions/security/sessions';
+import { logoutSessionById, logoutAllOtherSessions } from '@/services/security/sessions';
 import type { Session } from '@/types';
 import { useToast } from '@/hooks/use-toast';
 import { CardFooter } from '@/components/ui/card';

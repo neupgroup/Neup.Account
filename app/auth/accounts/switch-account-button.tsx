@@ -5,7 +5,7 @@ import { useState, useTransition, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import type { StoredAccount } from '@/types';
-import { switchActiveAccount } from '@/actions/auth/switch';
+import { switchActiveAccount } from '@/services/auth/switch';
 import { useToast } from '@/hooks/use-toast';
 import { getActiveAccountId } from '@/lib/auth-actions';
 import { redirectInApp } from '@/lib/navigation';

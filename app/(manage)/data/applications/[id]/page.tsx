@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import {
   deleteManagedApplication,
   getApplicationDetailsForViewer,
-} from '@/actions/manage/applications';
+} from '@/services/manage/applications';
 import { AppWindow, Building, BarChart, Share2, ExternalLink, type LucideIcon } from '@/components/icons';
 
 type ApplicationDetailPageProps = {

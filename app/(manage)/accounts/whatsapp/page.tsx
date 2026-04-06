@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { whatsAppFormSchema, verifyCodeSchema } from "./schema";
-import { sendVerificationCode, linkWhatsAppAccount } from '@/actions/manage/accounts/whatsapp';
+import { sendVerificationCode, linkWhatsAppAccount } from '@/services/manage/accounts/whatsapp';
 
 import { Button } from "@/components/ui/button";
 import {

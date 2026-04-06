@@ -1,5 +1,5 @@
 
-import { getBrandAccounts } from "@/actions/manage/accounts/brand";
+import { getBrandAccounts } from "@/services/manage/accounts/brand";
 import { notFound } from "next/navigation";
 import { getPersonalAccountId } from "@/lib/auth-actions";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";

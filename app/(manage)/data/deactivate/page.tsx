@@ -2,7 +2,7 @@
 
 import { useState, useTransition, useContext } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { deactivateAccount } from "@/actions/data/deactivate";
+import { deactivateAccount } from "@/services/data/deactivate";
 import {  Card, CardContent, CardFooter, CardHeader} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";

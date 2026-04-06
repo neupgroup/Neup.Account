@@ -4,7 +4,7 @@ import prisma from '@/lib/prisma';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import { logError } from '@/lib/logger';
-import { makeNotification } from '@/actions/notifications';
+import { makeNotification } from '@/services/notifications';
 
 export const dynamic = 'force-dynamic';
 

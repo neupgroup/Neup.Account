@@ -17,7 +17,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Plus, Loader2 } from '@/components/icons';
-import { createAssetGroup } from '@/actions/manage/access/assets';
+import { createAssetGroup } from '@/services/manage/access/assets';
 
 export function CreateAssetGroupCard() {
   const router = useRouter();

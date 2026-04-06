@@ -7,7 +7,7 @@ import {
   getDeletionRequests,
   approveAccountDeletion,
   cancelAccountDeletion,
-} from '@/actions/manage/requests/deletion';
+} from '@/services/manage/requests/deletion';
 import type { DeletionRequest } from '@/types';
 import { checkPermissions } from '@/lib/user';
 import { useToast } from '@/hooks/use-toast';

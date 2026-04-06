@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/form"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useToast } from "@/hooks/use-toast"
-import { createBrandAccount } from "@/actions/manage/accounts/brand"
+import { createBrandAccount } from "@/services/manage/accounts/brand"
 import { Textarea } from "@/components/ui/textarea"
 import { CheckCircle2, XCircle, Loader2 } from "@/components/icons"
 import { BackButton } from "@/components/ui/back-button"

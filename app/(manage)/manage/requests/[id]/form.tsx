@@ -5,7 +5,7 @@ import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { approveNeupIdRequest, denyNeupIdRequest } from '@/actions/manage/requests/neupid';
+import { approveNeupIdRequest, denyNeupIdRequest } from '@/services/manage/requests/neupid';
 import type { PendingNeupIdRequest } from '@/types';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import {

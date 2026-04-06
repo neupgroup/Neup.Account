@@ -2,7 +2,7 @@
 import {
     Card,
 } from "@/components/ui/card";
-import { getUserSessions } from "@/actions/security/sessions";
+import { getUserSessions } from "@/services/security/sessions";
 import { SessionManager } from "@/app/(manage)/security/session-manager";
 import { getActiveSession } from "@/lib/auth-actions";
 import { BackButton } from "@/components/ui/back-button";

@@ -3,7 +3,7 @@
 
 import { useState, useTransition } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { updateUserPermissions } from "@/actions/manage/users";
+import { updateUserPermissions } from "@/services/manage/users";
 import type { Permission } from "@/types";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";

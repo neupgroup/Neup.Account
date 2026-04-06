@@ -4,7 +4,7 @@
 
 import { useState, useTransition, useContext, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { requestAccountDeletion } from "@/actions/data/delete";
+import { requestAccountDeletion } from "@/services/data/delete";
 import {
   Card,
   CardContent,

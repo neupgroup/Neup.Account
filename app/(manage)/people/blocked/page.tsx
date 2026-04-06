@@ -11,7 +11,7 @@ import {
   restrictUser,
   unrestrictUser,
   type BlockedUser,
-} from '@/actions/manage/people/blocked';
+} from '@/services/manage/people/blocked';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';

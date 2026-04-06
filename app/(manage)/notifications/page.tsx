@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { getNotifications, markNotificationAsRead, deleteNotification } from '@/actions/notifications';
+import { getNotifications, markNotificationAsRead, deleteNotification } from '@/services/notifications';
 import type { Notification, AllNotifications } from '@/types';
 import { NotificationManager } from '@/app/(manage)/notifications/notification-manager';
 import { Skeleton } from '@/components/ui/skeleton';

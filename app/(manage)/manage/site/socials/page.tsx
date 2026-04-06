@@ -1,7 +1,7 @@
 import { BackButton } from "@/components/ui/back-button";
 import { checkPermissions } from "@/lib/user";
 import { notFound } from "next/navigation";
-import { getSocialLinks } from "@/actions/manage/site/socials";
+import { getSocialLinks } from "@/services/manage/site/socials";
 import { SocialLinksManager } from "./social-links-manager";
 
 export default async function SocialSitesPage() {

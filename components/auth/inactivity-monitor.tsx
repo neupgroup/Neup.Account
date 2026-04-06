@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { logoutActiveSession } from '@/actions/auth/signout';
+import { logoutActiveSession } from '@/services/auth/signout';
 import { redirectInApp } from '@/lib/navigation';
 
 // 7 minutes 30 seconds in milliseconds

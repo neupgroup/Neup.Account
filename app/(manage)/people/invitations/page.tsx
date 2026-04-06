@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useTransition } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { getInvitations, acceptRequest, rejectRequest } from '@/actions/manage/people/invitations';
+import { getInvitations, acceptRequest, rejectRequest } from '@/services/manage/people/invitations';
 import type { Invitation } from '@/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';

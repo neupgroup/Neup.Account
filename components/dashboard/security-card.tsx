@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { getUserSessions } from '@/actions/security/sessions';
+import { getUserSessions } from '@/services/security/sessions';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Laptop, ChevronRight } from '@/components/icons';

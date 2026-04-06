@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { grantVerification, revokeVerification, getAccountVerification } from '@/actions/manage/verifications';
+import { grantVerification, revokeVerification, getAccountVerification } from '@/services/manage/verifications';
 import { getUserProfile } from '@/lib/user';
 import { CheckCircle2, Loader2, ShieldCheck, XCircle } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';

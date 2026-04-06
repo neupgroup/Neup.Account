@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getApplicationDetails } from '@/actions/data/applications';
+import { getApplicationDetails } from '@/services/data/applications';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check, ShieldQuestion, Trash2 } from '@/components/icons';

@@ -3,7 +3,7 @@
 
 import { useEffect, useState, useTransition } from 'react';
 import Image from 'next/image';
-import { getPendingKycRequests, approveKycRequest, rejectKycRequest } from '@/actions/manage/requests/kyc';
+import { getPendingKycRequests, approveKycRequest, rejectKycRequest } from '@/services/manage/requests/kyc';
 import type { KycRequest } from '@/types';
 import { checkPermissions } from '@/lib/user';
 import { notFound } from 'next/navigation';

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { createManagedApplication } from '@/actions/manage/applications';
+import { createManagedApplication } from '@/services/manage/applications';
 
 export function ApplicationCreateForm() {
   const router = useRouter();

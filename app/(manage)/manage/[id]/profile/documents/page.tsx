@@ -2,7 +2,7 @@
 import { notFound } from 'next/navigation';
 import { BackButton } from '@/components/ui/back-button';
 import { PrimaryHeader } from '@/components/ui/primary-header';
-import { getUserDetails } from '@/actions/manage/users';
+import { getUserDetails } from '@/services/manage/users';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default async function RootUserKycPage({ params }: { params: Promise<{ id: string }> }) {

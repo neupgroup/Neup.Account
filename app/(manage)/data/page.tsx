@@ -1,7 +1,7 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import React from "react";
-import { getConnectedApplications } from "@/actions/data/applications";
+import { getConnectedApplications } from "@/services/data/applications";
 import { ListItem } from "@/components/ui/list-item";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 import { History, FileText, Trash2, PowerOff, CalendarClock, AppWindow, Share2, type LucideIcon } from "@/components/icons";

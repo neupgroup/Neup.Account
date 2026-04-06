@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card"
 
 import { Button } from "@/components/ui/button"
-import { getUserStats } from "@/actions/manage/accounts"
+import { getUserStats } from "@/services/manage/accounts"
 import type { UserStats } from "@/types"
 import { Users, UserCheck, UserPlus, ShieldCheck, Search, Ban, List } from "@/components/icons"
 import { Input } from "@/components/ui/input"

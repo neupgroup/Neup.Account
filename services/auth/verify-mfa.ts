@@ -3,7 +3,7 @@
 import prisma from '@/lib/prisma';
 import { headers } from 'next/headers';
 import { authenticator } from 'otplib';
-import { decrypt } from '@/actions/security/totp';
+import { decrypt } from '@/services/security/totp';
 import { z } from 'zod';
 import { createAndSetSession } from '@/lib/session';
 import { logActivity } from '@/lib/log-actions';

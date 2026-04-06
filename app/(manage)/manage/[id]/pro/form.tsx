@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { setProStatus } from '@/actions/manage/user-actions';
+import { setProStatus } from '@/services/manage/user-actions';
 import { getUserProfile } from '@/lib/user';
 import { Gem, Loader2 } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';

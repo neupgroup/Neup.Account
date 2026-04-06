@@ -4,7 +4,7 @@
 
 import { useState, useTransition, useRef } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { addPartner, removeFamilyMember } from '@/actions/manage/people/family';
+import { addPartner, removeFamilyMember } from '@/services/manage/people/family';
 import type { FamilyMember, FamilyGroup } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

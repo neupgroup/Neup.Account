@@ -1,8 +1,8 @@
 
 import { notFound } from "next/navigation";
-import { getPermissions, getUserDetails } from "@/actions/manage/users";
+import { getPermissions, getUserDetails } from "@/services/manage/users";
 import { getAccountType } from "@/lib/user";
-import { getMasterPermissions } from "@/actions/manage/access/index";
+import { getMasterPermissions } from "@/services/manage/access/index";
 import { PERMISSION_METADATA } from "@/lib/permissions";
 import { BackButton } from "@/components/ui/back-button";
 import { PermissionEditor } from "./form";

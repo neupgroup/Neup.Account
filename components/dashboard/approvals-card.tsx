@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { getNotifications } from '@/actions/notifications';
+import { getNotifications } from '@/services/notifications';
 import { Badge } from '@/components/ui/badge';
 import { UserCheck } from '@/components/icons';
 

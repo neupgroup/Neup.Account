@@ -13,7 +13,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { grantVerification, revokeVerification, getAccountVerification } from '@/actions/manage/verifications';
+import { grantVerification, revokeVerification, getAccountVerification } from '@/services/manage/verifications';
 import { CheckCircle2, Loader2, ShieldCheck, XCircle } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 

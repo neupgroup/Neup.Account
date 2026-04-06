@@ -20,9 +20,9 @@ import {
     submitNeupIdStep, 
     submitPasswordStep, 
     submitTermsStep 
-} from "@/actions/auth/signup";
-import { initializeAuthFlow } from "@/actions/auth/initialize";
-import { parseDateString } from "@/actions/profile";
+} from "@/services/auth/signup";
+import { initializeAuthFlow } from "@/services/auth/initialize";
+import { parseDateString } from "@/services/profile";
 import { 
     nameSchema, 
     demographicsSchema, 

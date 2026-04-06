@@ -8,7 +8,7 @@ import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
 
 import { getUserProfile, getUserNeupIds, getUserContacts, type UserProfile, type UserContacts } from "@/lib/user"
-import { updateUserProfile, parseDateString } from "@/actions/profile"
+import { updateUserProfile, parseDateString } from "@/services/profile"
 import { profileFormSchema } from "@/schemas/profile"
 import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"

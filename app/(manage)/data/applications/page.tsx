@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { getManagedApplications } from '@/actions/manage/applications';
-import { getSignedApplications } from '@/actions/data/signed-applications';
+import { getManagedApplications } from '@/services/manage/applications';
+import { getSignedApplications } from '@/services/data/signed-applications';
 import { Button } from '@/components/ui/button';
 import { AppWindow, Building, BarChart, Share2, ChevronRight, type LucideIcon } from '@/components/icons';
 import { checkPermissions } from '@/lib/user';

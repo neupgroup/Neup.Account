@@ -7,7 +7,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { getDependentAccounts } from "@/actions/manage/accounts/dependent";
+import { getDependentAccounts } from "@/services/manage/accounts/dependent";
 import { User, Plus } from "lucide-react";
 import { notFound } from "next/navigation";
 import { AccountListItem } from "@/app/auth/accounts/account-list-item";

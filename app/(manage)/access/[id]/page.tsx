@@ -10,7 +10,7 @@ import {
   addAssetToGroup,
   assignAssetMemberRole,
   getAccessAssetGroup,
-} from '@/actions/manage/access/assets';
+} from '@/services/manage/access/assets';
 
 type PageProps = {
   params: Promise<{ id: string }>;

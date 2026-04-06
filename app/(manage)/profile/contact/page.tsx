@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
 import { getUserContacts } from "@/lib/user"
-import { updateUserProfile } from "@/actions/profile"
+import { updateUserProfile } from "@/services/profile"
 import { useToast } from "@/hooks/use-toast"
 
 import { Skeleton } from '@/components/ui/skeleton'

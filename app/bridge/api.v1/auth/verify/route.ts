@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { validateExternalRequest } from '@/actions/auth/validate';
+import { validateExternalRequest } from '@/services/auth/validate';
 
 export async function POST(req: NextRequest) {
   try {

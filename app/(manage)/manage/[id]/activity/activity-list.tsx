@@ -9,7 +9,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import { getActivity } from "@/actions/manage/users";
+import { getActivity } from "@/services/manage/users";
 import { Ban, MapPin } from "@/components/icons";
 import { checkPermissions } from "@/lib/user";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";

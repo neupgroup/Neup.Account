@@ -4,7 +4,7 @@
 import { useEffect, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
-import { getPendingVerificationRequests, grantVerification, revokeVerification } from '@/actions/manage/verifications';
+import { getPendingVerificationRequests, grantVerification, revokeVerification } from '@/services/manage/verifications';
 import type { VerificationRequest } from '@/types';
 import { checkPermissions } from '@/lib/user';
 import { BackButton } from '@/components/ui/back-button';

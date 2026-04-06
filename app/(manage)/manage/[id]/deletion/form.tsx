@@ -13,7 +13,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Loader2, ShieldAlert, Trash2 } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { TertiaryHeader } from '@/components/ui/tertiary-header';
-import { approveAccountDeletion, cancelAccountDeletion, getDeletionStatus, requestAccountDeletionByAdmin } from '@/actions/manage/requests/deletion';
+import { approveAccountDeletion, cancelAccountDeletion, getDeletionStatus, requestAccountDeletionByAdmin } from '@/services/manage/requests/deletion';
 import { useRouter } from 'next/navigation';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { redirectInApp } from '@/lib/navigation';

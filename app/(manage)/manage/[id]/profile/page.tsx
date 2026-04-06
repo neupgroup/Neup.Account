@@ -2,7 +2,7 @@
 import { notFound } from 'next/navigation';
 import { Card, CardContent } from '@/components/ui/card';
 import { ListItem } from '@/components/ui/list-item';
-import { getUserDetails } from '@/actions/manage/users';
+import { getUserDetails } from '@/services/manage/users';
 import { checkPermissions } from '@/lib/user';
 import { BackButton } from '@/components/ui/back-button';
 import { PrimaryHeader } from '@/components/ui/primary-header';

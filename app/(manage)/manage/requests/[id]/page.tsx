@@ -1,7 +1,7 @@
 
 'use client';
 
-import { getNeupIdRequestDetails } from '@/actions/manage/requests/neupid';
+import { getNeupIdRequestDetails } from '@/services/manage/requests/neupid';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { RequestDecisionForm } from './form';

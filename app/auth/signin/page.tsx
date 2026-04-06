@@ -6,12 +6,12 @@ import React, { useState, useEffect, useTransition, Suspense } from 'react';
 import NProgress from 'nprogress';
 
 import { useToast } from '@/hooks/use-toast';
-import { submitNeupId, submitPassword } from '@/actions/auth/signin';
-import { getSignupStepData } from '@/actions/auth/signup';
-import { cancelAccountDeletion } from '@/actions/data/delete';
-import { initializeAuthFlow } from '@/actions/auth/initialize';
-import { verifyMfa } from '@/actions/auth/verify-mfa';
-import { switchActiveAccountByNeupId } from '@/actions/auth/switch';
+import { submitNeupId, submitPassword } from '@/services/auth/signin';
+import { getSignupStepData } from '@/services/auth/signup';
+import { cancelAccountDeletion } from '@/services/data/delete';
+import { initializeAuthFlow } from '@/services/auth/initialize';
+import { verifyMfa } from '@/services/auth/verify-mfa';
+import { switchActiveAccountByNeupId } from '@/services/auth/switch';
 import { redirectInApp } from '@/lib/navigation';
 import { appendAuthCallbackContext, appendRedirect, hasAuthCallbackContext, shouldReturnToAuthStartForExternalAuthentication } from '@/lib/auth-callback';
 

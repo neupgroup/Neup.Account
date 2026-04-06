@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getUserDetails, getAccountDetails } from "@/actions/manage/users";
+import { getUserDetails, getAccountDetails } from "@/services/manage/users";
 import { VerificationManager } from "./form";
 import { BackButton } from "@/components/ui/back-button";
 import { PrimaryHeader } from "@/components/ui/primary-header";

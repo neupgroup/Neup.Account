@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
-import { changePassword } from "@/actions/security/password";
+import { changePassword } from "@/services/security/password";
 import { changePasswordSchema } from "@/schemas/security";
 
 import { Button } from "@/components/ui/button";

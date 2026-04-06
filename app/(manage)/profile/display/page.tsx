@@ -8,9 +8,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import Image from 'next/image'
 
-import { updateUserProfile, getDisplayNameSuggestions, getPastProfilePhotos } from "@/actions/profile"
+import { updateUserProfile, getDisplayNameSuggestions, getPastProfilePhotos } from "@/services/profile"
 import { useToast } from "@/hooks/use-toast"
-import { uploadFile } from '@/actions/upload'
+import { uploadFile } from '@/services/upload'
 
 import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from "@/components/ui/button"

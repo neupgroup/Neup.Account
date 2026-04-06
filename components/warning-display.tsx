@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useTransition } from 'react';
-import { getNotifications, markNotificationAsRead } from '@/actions/notifications';
+import { getNotifications, markNotificationAsRead } from '@/services/notifications';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, X, Bell } from '@/components/icons';

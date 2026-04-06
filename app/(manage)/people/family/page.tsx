@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { getFamilyGroups } from "@/actions/manage/people/family";
+import { getFamilyGroups } from "@/services/manage/people/family";
 import { FamilyManager } from "./family-manager";
 import Link from "next/link";
 import { PartnerManager } from "./partner-manager";

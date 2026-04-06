@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useToast } from '@/hooks/use-toast';
-import { addSocialLink, deleteSocialLink, toggleSocialLinkVisibility } from "@/actions/manage/site/socials";
+import { addSocialLink, deleteSocialLink, toggleSocialLinkVisibility } from "@/services/manage/site/socials";
 import type { SocialLink } from '@/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';

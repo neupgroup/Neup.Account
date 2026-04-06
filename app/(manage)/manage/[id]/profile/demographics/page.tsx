@@ -8,7 +8,7 @@ import { z } from "zod"
 import { format } from "date-fns"
 
 import { getUserProfile } from "@/lib/user"
-import { updateUserProfile, parseDateString } from "@/actions/profile"
+import { updateUserProfile, parseDateString } from "@/services/profile"
 import { useToast } from "@/hooks/use-toast"
 import { cn } from '@/lib/utils'
 

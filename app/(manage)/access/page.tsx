@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { PrimaryHeader } from '@/components/ui/primary-header';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChevronRight } from '@/components/icons';
-import { getAccessAssetGroups } from '@/actions/manage/access/assets';
+import { getAccessAssetGroups } from '@/services/manage/access/assets';
 import { CreateAssetGroupCard } from './create-asset-group-card';
 
 export default async function AccessControlPage() {
