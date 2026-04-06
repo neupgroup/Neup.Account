@@ -26,6 +26,20 @@ const sanitizeName = (name: string | undefined | null): string => {
   return name.trim().replace(/\s+/g, ' ');
 };
 
+type SignupRequestData = Record<string, unknown>;
+
+type SignupCompletionData = {
+  nameFirst?: string;
+  nameLast?: string;
+  nameMiddle?: string;
+  dateBirth?: string | Date;
+  gender?: string;
+  nationality?: string;
+  phone?: string;
+  neupId?: string;
+  password?: string;
+};
+
 
 async function isFirstUser() {
   const count = await prisma.account.count();
@@ -40,7 +54,7 @@ export async function getSignupStepData(authRequestId: string) {
   if (!request) {
     return { success: false, data: null };
   }
-  return { success: true, data: request.data.data as Record<string, any> };
+  return { success: true, data: request.data.data as SignupRequestData };
 }
 
 export async function submitNameStep(authRequestId: string, data: z.infer<typeof nameSchema>) {
@@ -63,7 +77,7 @@ export async function submitNameStep(authRequestId: string, data: z.infer<typeof
   const nameMiddle = sanitizeName(validation.data.middleName);
   const nameLast = sanitizeName(validation.data.lastName);
 
-  const currentData = request.data.data as Record<string, any>;
+  const currentData = request.data.data as SignupRequestData;
   const newData = {
     ...currentData,
     nameFirst,
@@ -107,7 +121,7 @@ export async function submitDemographicsStep(authRequestId: string, data: z.infe
     finalCustomGender = undefined;
   }
 
-  const currentData = request.data.data as Record<string, any>;
+  const currentData = request.data.data as SignupRequestData;
   const newData = {
     ...currentData,
     dateBirth: validation.data.dob instanceof Date 
@@ -145,7 +159,7 @@ export async function submitNationalityStep(authRequestId: string, data: z.infer
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
-  const currentData = request.data.data as Record<string, any>;
+  const currentData = request.data.data as SignupRequestData;
   const newData = {
     ...currentData,
     nationality: validation.data.nationality,
@@ -183,7 +197,7 @@ export async function submitContactStep(authRequestId: string, data: z.infer<typ
   // Skip OTP verification - directly mark phone as verified
   console.log(`Phone number saved: ${validation.data.phone} (OTP verification skipped)`);
 
-  const currentData = request.data.data as Record<string, any>;
+  const currentData = request.data.data as SignupRequestData;
   const newData = {
     ...currentData,
     phone: validation.data.phone,
@@ -223,7 +237,7 @@ export async function submitOtpStep(authRequestId: string, data: z.infer<typeof 
     return { success: false, error: 'Invalid OTP code.' };
   }
 
-  const currentData = request.data.data as Record<string, any>;
+  const currentData = request.data.data as SignupRequestData;
   const newData = {
     ...currentData,
     phoneVerified: true,
@@ -266,7 +280,7 @@ export async function submitNeupIdStep(authRequestId: string, data: z.infer<type
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
-  const currentData = request.data.data as Record<string, any>;
+  const currentData = request.data.data as SignupRequestData;
   const newData = {
     ...currentData,
     neupId: neupId,
@@ -302,7 +316,7 @@ export async function submitPasswordStep(authRequestId: string, data: z.infer<ty
 
   const hashedPassword = await bcrypt.hash(validation.data.password, 10);
 
-  const currentData = request.data.data as Record<string, any>;
+  const currentData = request.data.data as SignupRequestData;
   const newData = {
     ...currentData,
     password: hashedPassword,
@@ -336,7 +350,7 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
-  const requestData = request.data.data as Record<string, any>;
+  const requestData = request.data.data as SignupCompletionData;
 
   if (!requestData || Object.keys(requestData).length === 0) {
       return { success: false, error: 'Session data lost. Please restart signup.' };
@@ -348,7 +362,6 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
     nameMiddle,
     dateBirth,
     gender,
-    customGender,
     nationality,
     phone,
     neupId,

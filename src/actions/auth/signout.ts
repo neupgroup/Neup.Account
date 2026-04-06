@@ -34,8 +34,12 @@ export async function logoutActiveSession() {
                 const updatedAccounts = allAccounts.map(acc => {
                     if (acc.sessionId === sessionId) {
                         // Remove session details for the signed out account
-                        const { sessionId: _, sessionKey: __, ...rest } = acc;
-                        return { ...rest, expired: true };
+                        return {
+                            ...acc,
+                            sessionId: undefined,
+                            sessionKey: undefined,
+                            expired: true,
+                        };
                     }
                     return acc;
                 });

@@ -27,7 +27,8 @@ export async function verifyMfa(data: z.infer<typeof mfaSchema>): Promise<{ succ
         return { success: false, error: 'Your session has expired. Please try again.' };
     }
 
-    const { accountId, status } = request.data as any;
+    const requestData = request.data as { accountId?: string; status?: string };
+    const { accountId, status } = requestData;
     if (status !== 'pending_mfa') {
         return { success: false, error: 'Invalid authentication request state.' };
     }

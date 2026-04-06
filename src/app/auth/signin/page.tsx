@@ -278,7 +278,7 @@ function PasswordStep() {
           if (parsed.neupId && isMounted) {
             setNeupId(parsed.neupId);
           }
-        } catch (e) {
+        } catch {
           // ignore parse error
         }
       }

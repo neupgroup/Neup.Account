@@ -19,6 +19,8 @@ const passwordSchema = z.object({
     authRequestId: z.string(),
 });
 
+type SigninRequestData = Record<string, unknown>;
+
 export async function submitNeupId(data: z.infer<typeof neupIdSchema>) {
     const validation = neupIdSchema.safeParse(data);
     if (!validation.success) {
@@ -47,7 +49,7 @@ export async function submitNeupId(data: z.infer<typeof neupIdSchema>) {
         return { success: false, error: "Account mapping is missing." };
     }
 
-    const currentData = (request.data.data as Record<string, any>) || {};
+    const currentData = (request.data.data as SigninRequestData) || {};
     
     await prisma.authRequest.update({
         where: { id: request.id },
@@ -94,7 +96,7 @@ export async function submitPassword(data: z.infer<typeof passwordSchema>): Prom
     }
 
     const accountId = request.data.accountId;
-    const requestData = (request.data.data as Record<string, any>) || {};
+    const requestData = (request.data.data as SigninRequestData) || {};
     const isPendingDeletion = requestData.isPendingDeletion;
 
     const passwordRecord = await prisma.password.findUnique({

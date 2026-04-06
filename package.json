@@ -5,11 +5,8 @@
   "scripts": {
     "dev": "npx next dev --turbopack --experimental-https --port 2226",
     "build": "next build --webpack",
-    "build:strict": "npm run validate && next build --webpack",
+    "build:strict": "eslint . && npm run typecheck && next build --webpack",
     "start": "next start --port 2226",
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
-    "validate": "npm run lint && npm run typecheck",
     "seed": "tsx prisma/seed.ts"
   },
   "prisma": {

@@ -197,7 +197,7 @@ function DemographicsStep() {
             const genderParam = searchParams.get('gender');
 
             if (data) {
-                let formGender = data.gender;
+                const formGender = data.gender;
                 let formCustomGender = data.customGender || "";
                 
                 let dobDate: Date | undefined;
@@ -269,7 +269,7 @@ function DemographicsStep() {
                      }
                  }
                  
-                 let formGender = genderParam?.toLowerCase();
+                 const formGender = genderParam?.toLowerCase();
                  let formCustomGender = "";
                  
                  let finalGender: "male" | "female" | "prefer_not_to_say" | "custom" | undefined;
@@ -416,7 +416,7 @@ function DemographicsStep() {
                  <FormField
                     control={form.control}
                     name="dob"
-                    render={({ field }) => (
+                    render={() => (
                     <FormItem className="flex flex-col">
                         <FormLabel>Date of birth</FormLabel>
                             <div className="relative w-full">

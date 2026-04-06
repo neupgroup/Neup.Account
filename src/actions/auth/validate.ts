@@ -138,11 +138,19 @@ export async function validateExternalRequest(input: ValidateInput): Promise<Val
   let validKeyFound = false;
   let sessionIdToUpdate: string | null = null;
   let keyIndexToUpdate = -1;
-  let dependentKeysToUpdate: any[] = [];
+  type DependentKey = {
+    expiresOn: string | Date;
+    key: string;
+    app: string;
+    isUsed?: boolean;
+  };
+  let dependentKeysToUpdate: DependentKey[] = [];
 
   for (const session of sessions) {
-    const dependentKeys = Array.isArray(session.dependentKeys) ? session.dependentKeys : [];
-    const keyIndex = dependentKeys.findIndex((k: any) => {
+    const dependentKeys = Array.isArray(session.dependentKeys)
+      ? (session.dependentKeys as DependentKey[])
+      : [];
+    const keyIndex = dependentKeys.findIndex((k) => {
       const expiresOn = new Date(k.expiresOn);
       return k.key === key && k.app === appId && !k.isUsed && expiresOn > new Date();
     });
