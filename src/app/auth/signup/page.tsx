@@ -43,7 +43,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { countries } from "./countries";
 import { redirectInApp } from "@/lib/navigation";
-import { hasAuthCallbackContext } from "@/lib/auth-callback";
+import { appendAuthCallbackContext, hasAuthCallbackContext, shouldReturnToAuthStartForExternalAuthentication } from "@/lib/auth-callback";
 
 // --- Components ---
 
@@ -736,6 +736,11 @@ function PasswordStep() {
         NProgress.start();
         const result = await submitPasswordStep(authRequestId, data);
         if (result.success) {
+            if (shouldReturnToAuthStartForExternalAuthentication(searchParams)) {
+                redirectInApp(router, appendAuthCallbackContext('/auth/start', searchParams));
+                return;
+            }
+
             const params = new URLSearchParams(searchParams.toString());
             params.set('step', 'terms');
             redirectInApp(router, `/auth/signup?${params.toString()}`);

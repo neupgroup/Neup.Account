@@ -12,7 +12,7 @@ import { useSecurityCheck } from '@/hooks/use-security-check';
 import { cn } from '@/lib/utils';
 import { AccountListItem } from '../accounts/account-list-item';
 import type { StoredAccount } from '@/types';
-import { appendAuthCallbackContext, appendRedirect, getAppDisplayName } from '@/lib/auth-callback';
+import { appendAuthCallbackContext, appendRedirect, getAppDisplayName, shouldReturnToAuthStartForExternalAuthentication } from '@/lib/auth-callback';
 import { redirectInApp } from '@/lib/navigation';
 import { cleanupStoredSessionsAction } from '@/actions/auth/cleanup-stored-sessions';
 
@@ -53,10 +53,15 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
       });
     }
 
+    if (hasActiveSession && shouldReturnToAuthStartForExternalAuthentication(searchParams) && !error && isSecure) {
+      redirectInApp(router, appendAuthCallbackContext('/auth/sign', searchParams), { replace: true });
+      return;
+    }
+
     if (hasActiveSession && redirects && !error && isSecure) {
       redirectInApp(router, redirects, { replace: true });
     }
-  }, [error, toast, isSecure, hasActiveSession, redirects, router]);
+  }, [error, toast, isSecure, hasActiveSession, redirects, router, searchParams]);
 
   const getUrlWithReturn = (baseUrl: string) => {
     const withContext = appendAuthCallbackContext(baseUrl, searchParams);

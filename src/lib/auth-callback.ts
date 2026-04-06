@@ -6,17 +6,20 @@ export type AuthCallbackContext = {
   appId: string | null;
   appIdKey: 'appId' | 'appid';
   authenticatesTo: string | null;
+  purpose: 'externalAuthentication' | null;
 };
 
 export function getAuthCallbackContext(searchParams: SearchParamsLike): AuthCallbackContext {
   const appId = searchParams.get('appId') || searchParams.get('appid');
   const appIdKey = searchParams.get('appid') ? 'appid' : 'appId';
-  const authenticatesTo = searchParams.get('authenticatesTo');
+  const authenticatesTo = searchParams.get('authenticatesTo') || searchParams.get('authenticatesto');
+  const purpose = searchParams.get('purpose') === 'externalAuthentication' ? 'externalAuthentication' : null;
 
   return {
     appId,
     appIdKey,
     authenticatesTo,
+    purpose,
   };
 }
 
@@ -25,8 +28,13 @@ export function hasAuthCallbackContext(searchParams: SearchParamsLike): boolean 
   return Boolean(appId && authenticatesTo);
 }
 
+export function shouldReturnToAuthStartForExternalAuthentication(searchParams: SearchParamsLike): boolean {
+  const { appId, authenticatesTo, purpose } = getAuthCallbackContext(searchParams);
+  return Boolean(appId && authenticatesTo && purpose === 'externalAuthentication');
+}
+
 export function appendAuthCallbackContext(path: string, searchParams: SearchParamsLike): string {
-  const { appId, appIdKey, authenticatesTo } = getAuthCallbackContext(searchParams);
+  const { appId, appIdKey, authenticatesTo, purpose } = getAuthCallbackContext(searchParams);
 
   if (!appId || !authenticatesTo) {
     return path;
@@ -35,6 +43,10 @@ export function appendAuthCallbackContext(path: string, searchParams: SearchPara
   const params = new URLSearchParams();
   params.set(appIdKey, appId);
   params.set('authenticatesTo', authenticatesTo);
+
+  if (purpose) {
+    params.set('purpose', purpose);
+  }
 
   const separator = path.includes('?') ? '&' : '?';
   return `${path}${separator}${params.toString()}`;

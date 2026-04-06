@@ -7,6 +7,7 @@ type ServerAuthContext = {
   appId: string | null;
   appIdKey: 'appId' | 'appid';
   authenticatesTo: string | null;
+  purpose: 'externalAuthentication' | null;
 };
 
 function pickFirst(value: string | string[] | undefined): string | undefined {
@@ -20,12 +21,14 @@ function pickFirst(value: string | string[] | undefined): string | undefined {
 export function getServerAuthContext(searchParams: SearchParamsRecord): ServerAuthContext {
   const appId = pickFirst(searchParams.appId) || pickFirst(searchParams.appid) || null;
   const appIdKey: 'appId' | 'appid' = pickFirst(searchParams.appid) ? 'appid' : 'appId';
-  const authenticatesTo = pickFirst(searchParams.authenticatesTo) || null;
+  const authenticatesTo = pickFirst(searchParams.authenticatesTo) || pickFirst(searchParams.authenticatesto) || null;
+  const purpose = pickFirst(searchParams.purpose) === 'externalAuthentication' ? 'externalAuthentication' : null;
 
   return {
     appId,
     appIdKey,
     authenticatesTo,
+    purpose,
   };
 }
 
@@ -38,6 +41,10 @@ export function buildAuthQuery(context: ServerAuthContext): string {
 
   if (context.authenticatesTo) {
     params.set('authenticatesTo', context.authenticatesTo);
+  }
+
+  if (context.purpose) {
+    params.set('purpose', context.purpose);
   }
 
   return params.toString();

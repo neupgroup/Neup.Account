@@ -13,7 +13,7 @@ import { initializeAuthFlow } from '@/actions/auth/initialize';
 import { verifyMfa } from '@/actions/auth/verify-mfa';
 import { switchActiveAccountByNeupId } from '@/actions/auth/switch';
 import { redirectInApp } from '@/lib/navigation';
-import { appendAuthCallbackContext, appendRedirect, hasAuthCallbackContext } from '@/lib/auth-callback';
+import { appendAuthCallbackContext, appendRedirect, hasAuthCallbackContext, shouldReturnToAuthStartForExternalAuthentication } from '@/lib/auth-callback';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -344,6 +344,12 @@ function PasswordStep() {
           redirectInApp(router, `/auth/signin?${params.toString()}`);
         } else {
           sessionStorage.clear();
+
+          if (shouldReturnToAuthStartForExternalAuthentication(searchParams)) {
+            redirectInApp(router, appendAuthCallbackContext('/auth/start', searchParams));
+            return;
+          }
+
           if (redirects) {
             redirectInApp(router, redirects);
             return;
@@ -504,6 +510,12 @@ function MfaStep() {
 
         if (result.success) {
           sessionStorage.clear();
+
+          if (shouldReturnToAuthStartForExternalAuthentication(searchParams)) {
+            redirectInApp(router, appendAuthCallbackContext('/auth/start', searchParams));
+            return;
+          }
+
           if (redirects) {
             redirectInApp(router, redirects);
             return;
@@ -593,6 +605,11 @@ function SigninFlow() {
       }
 
       sessionStorage.clear();
+
+      if (shouldReturnToAuthStartForExternalAuthentication(searchParams)) {
+        redirectInApp(router, appendAuthCallbackContext('/auth/start', searchParams), { replace: true });
+        return;
+      }
 
       const redirects = searchParams.get('redirects');
       if (redirects) {
