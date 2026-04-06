@@ -4,7 +4,7 @@ import path from 'path';
 import prisma from '@/lib/prisma';
 import { getUserProfile } from '@/lib/user';
 
-const PROTO_PATH = path.resolve(process.cwd(), 'src/grpc/proto/auth.proto');
+const PROTO_PATH = path.resolve(process.cwd(), 'grpc/proto/auth.proto');
 
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
     keepCase: true,

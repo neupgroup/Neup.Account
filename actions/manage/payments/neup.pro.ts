@@ -20,7 +20,7 @@ export type PaymentDetails = {
 
 export async function getAppInfo(): Promise<AppInfo | null> {
     try {
-        const filePath = path.join(process.cwd(), 'src/base/config/appInfo.json');
+        const filePath = path.join(process.cwd(), 'base/config/appInfo.json');
         const fileContent = await fs.readFile(filePath, 'utf8');
         return JSON.parse(fileContent) as AppInfo;
     } catch (error) {
@@ -31,7 +31,7 @@ export async function getAppInfo(): Promise<AppInfo | null> {
 
 export async function getPaymentDetails(): Promise<PaymentDetails | null> {
     try {
-        const filePath = path.join(process.cwd(), 'src/base/config/payInfo.json');
+        const filePath = path.join(process.cwd(), 'base/config/payInfo.json');
         const fileContent = await fs.readFile(filePath, 'utf8');
         return JSON.parse(fileContent) as PaymentDetails;
     } catch (error) {
