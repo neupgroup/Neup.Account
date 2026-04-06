@@ -1,12 +1,12 @@
 'use server';
 
 import prisma from '@/lib/prisma';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 
 const AUTH_REQUEST_EXPIRATION_MINUTES = 7;
 
 async function createAuthRequest(type: 'signup' | 'signin' | 'forgot_password') {
-    const requestId = uuidv4();
+    const requestId = randomUUID();
     const expiresAt = new Date();
     expiresAt.setMinutes(expiresAt.getMinutes() + AUTH_REQUEST_EXPIRATION_MINUTES);
 

@@ -26,18 +26,20 @@ const sanitizeName = (name: string | undefined | null): string => {
   return name.trim().replace(/\s+/g, ' ');
 };
 
-type SignupRequestData = Record<string, unknown>;
-
-type SignupCompletionData = {
+type SignupRequestData = {
   nameFirst?: string;
   nameLast?: string;
   nameMiddle?: string;
   dateBirth?: string | Date;
   gender?: string;
+  customGender?: string | null;
   nationality?: string;
   phone?: string;
+  phoneVerified?: boolean;
   neupId?: string;
   password?: string;
+  accountId?: string;
+  isPendingDeletion?: boolean;
 };
 
 
@@ -350,7 +352,7 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
-  const requestData = request.data.data as SignupCompletionData;
+  const requestData = request.data.data as SignupRequestData;
 
   if (!requestData || Object.keys(requestData).length === 0) {
       return { success: false, error: 'Session data lost. Please restart signup.' };
@@ -373,8 +375,10 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
   if (typeof dateBirth === 'string' && !dateBirth.includes('T')) {
       // It's a YYYY-MM-DD string
       birthDateObj = new Date(dateBirth + 'T00:00:00');
-  } else {
+    } else if (dateBirth instanceof Date) {
       birthDateObj = new Date(dateBirth);
+  } else {
+      return { success: false, error: 'Invalid date of birth in session data.' };
   }
 
   if (isNaN(birthDateObj.getTime())) {

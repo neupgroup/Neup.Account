@@ -19,7 +19,10 @@ const passwordSchema = z.object({
     authRequestId: z.string(),
 });
 
-type SigninRequestData = Record<string, unknown>;
+type SigninRequestData = {
+    neupId?: string;
+    isPendingDeletion?: boolean;
+};
 
 export async function submitNeupId(data: z.infer<typeof neupIdSchema>) {
     const validation = neupIdSchema.safeParse(data);
