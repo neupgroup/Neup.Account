@@ -3,7 +3,7 @@
 
 import { useEffect, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/core/hooks/use-toast';
 import { getPendingVerificationRequests, grantVerification, revokeVerification } from '@/services/manage/verifications';
 import type { VerificationRequest } from '@/types';
 import { checkPermissions } from '@/lib/user';

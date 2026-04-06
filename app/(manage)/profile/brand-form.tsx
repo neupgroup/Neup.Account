@@ -11,7 +11,7 @@ import { format } from "date-fns"
 import { getUserProfile, type UserProfile } from "@/lib/user"
 import { parseDateString, updateBrandProfile } from "@/services/profile"
 import { brandProfileFormSchema } from "@/schemas/auth"
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from "@/core/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
 import { Skeleton } from '@/components/ui/skeleton'

@@ -5,7 +5,7 @@ import { useState, useTransition, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/core/hooks/use-toast';
 import { kycFormSchema, type KycFormValues } from '@/schemas/kyc';
 import { submitKyc } from '@/services/manage/profile/documents';
 import { uploadFile } from '@/services/upload';

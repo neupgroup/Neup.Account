@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect, useTransition, useRef, useCallback } from 'react';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/core/hooks/use-toast';
 import {
   getBlockedUsers,
   getRestrictedUsers,

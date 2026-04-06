@@ -9,7 +9,7 @@ import { format } from "date-fns"
 
 import { getUserProfile } from "@/lib/user"
 import { updateUserProfile, parseDateString } from "@/services/profile"
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from "@/core/hooks/use-toast"
 import { cn } from '@/lib/utils'
 
 import { Skeleton } from '@/components/ui/skeleton'

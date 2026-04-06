@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { useSecurityCheck } from '@/hooks/use-security-check';
+import { useSecurityCheck } from '@/core/hooks/use-security-check';
 import { isConnectionSecure } from '@/lib/security-check';
 import { redirectInApp } from '@/lib/navigation';
 

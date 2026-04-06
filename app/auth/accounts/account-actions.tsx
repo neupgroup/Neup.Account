@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import type { StoredAccount } from "@/types";
 import { logoutStoredSession, removeStoredAccount } from "@/services/auth/switch";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/core/hooks/use-toast";
 import { Loader2 } from "@/components/icons";
 
 export function AccountActions({ account }: { account: StoredAccount }) {

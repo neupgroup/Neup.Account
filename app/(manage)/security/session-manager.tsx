@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Laptop, MapPin } from 'lucide-react';
 import { logoutSessionById, logoutAllOtherSessions } from '@/services/security/sessions';
 import type { Session } from '@/types';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/core/hooks/use-toast';
 import { CardFooter } from '@/components/ui/card';
 
 export function SessionManager({ initialSessions, currentSessionId }: { initialSessions: Session[], currentSessionId: string | null }) {

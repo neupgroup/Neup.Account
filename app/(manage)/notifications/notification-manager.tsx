@@ -4,7 +4,7 @@
 
 import { useState, useTransition, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/core/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, X, Bell, type LucideIcon, Handshake, UserPlus, MessageSquareWarning } from '@/components/icons';
 import type { AllNotifications, Notification } from '@/types';

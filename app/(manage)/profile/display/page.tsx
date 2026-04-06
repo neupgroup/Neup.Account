@@ -9,7 +9,7 @@ import { z } from "zod"
 import Image from 'next/image'
 
 import { updateUserProfile, getDisplayNameSuggestions, getPastProfilePhotos } from "@/services/profile"
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from "@/core/hooks/use-toast"
 import { uploadFile } from '@/services/upload'
 
 import { Skeleton } from '@/components/ui/skeleton'

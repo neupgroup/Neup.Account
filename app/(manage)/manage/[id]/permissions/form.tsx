@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/core/hooks/use-toast";
 import { updateUserPermissions } from "@/services/manage/users";
 import type { Permission } from "@/types";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";

@@ -36,7 +36,7 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Checkbox } from "@/components/ui/checkbox"
 import { cn } from "@/lib/utils"
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from "@/core/hooks/use-toast"
 import { createDependentAccount } from "@/services/manage/accounts/dependent"
 import { dependentFormSchema } from "@/schemas/dependent"
 import { Label } from "@/components/ui/label"

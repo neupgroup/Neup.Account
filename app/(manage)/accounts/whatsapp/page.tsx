@@ -5,7 +5,7 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/core/hooks/use-toast";
 import { whatsAppFormSchema, verifyCodeSchema } from "./schema";
 import { sendVerificationCode, linkWhatsAppAccount } from '@/services/manage/accounts/whatsapp';
 
