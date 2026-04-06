@@ -1,7 +1,7 @@
 "use client";
 
 import {useContext} from 'react';
-import {GeolocationContext} from '@/context/geolocation-context';
+import {GeolocationContext} from '@/core/providers/geolocation-context';
 import {logActivity} from '@/lib/log-actions';
 
 

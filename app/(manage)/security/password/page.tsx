@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useState, useContext, useTransition } from "react";
 import { BackButton } from "@/components/ui/back-button";
-import { GeolocationContext } from "@/context/geolocation-context";
+import { GeolocationContext } from "@/core/providers/geolocation-context";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 import { Loader2 } from "@/components/icons";
 

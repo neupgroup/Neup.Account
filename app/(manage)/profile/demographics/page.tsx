@@ -20,7 +20,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar"
 import { Label } from '@/components/ui/label'
 import { Loader2 } from "@/components/icons"
-import { useSession } from '@/context/session-context'
+import { useSession } from '@/core/providers/session-context'
 import { BackButton } from '@/components/ui/back-button'
 
 

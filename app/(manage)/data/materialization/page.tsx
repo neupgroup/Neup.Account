@@ -35,7 +35,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BackButton } from "@/components/ui/back-button";
-import { GeolocationContext } from "@/context/geolocation-context";
+import { GeolocationContext } from "@/core/providers/geolocation-context";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 
 const formSchema = z.object({

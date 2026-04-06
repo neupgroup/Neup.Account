@@ -6,7 +6,7 @@ import React from "react"
 import { DashboardNav } from "@/components/dashboard-nav"
 import { UserNav } from "@/components/user-nav"
 import { NeupIdLogo } from "@/components/neupid-logo"
-import { SessionProvider } from "@/context/session-context"
+import { SessionProvider } from "@/core/providers/session-context"
 import { AuthProxy } from "@/components/auth/auth-proxy"
 
 function DashboardLayoutContent({ children }: { children: React.ReactNode }) {

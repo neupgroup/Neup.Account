@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form"
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
-import { useSession } from '@/context/session-context'
+import { useSession } from '@/core/providers/session-context'
 import { BackButton } from '@/components/ui/back-button'
 
 

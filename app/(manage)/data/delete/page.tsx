@@ -19,7 +19,7 @@ import { Loader2, Trash2 } from "@/components/icons";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BackButton } from "@/components/ui/back-button";
-import { GeolocationContext } from "@/context/geolocation-context";
+import { GeolocationContext } from "@/core/providers/geolocation-context";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 import { getAccountType } from "@/lib/user";
 import { getActiveAccountId } from "@/lib/auth-actions";

@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from './ui/skeleton';
-import { useSession } from '@/context/session-context';
+import { useSession } from '@/core/providers/session-context';
 
 export function UserNav() {
   const { profile, loading } = useSession();

@@ -8,7 +8,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { useRouter } from 'next/navigation';
 import { VerifiedBadge } from '../verified-badge';
-import { useSession } from '@/context/session-context';
+import { useSession } from '@/core/providers/session-context';
 import { redirectInApp } from '@/lib/navigation';
 
 function getGreeting() {

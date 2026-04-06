@@ -1,6 +1,6 @@
 'use client';
 
-import { useSession } from "@/context/session-context";
+import { useSession } from "@/core/providers/session-context";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { redirectInApp } from "@/lib/navigation";
