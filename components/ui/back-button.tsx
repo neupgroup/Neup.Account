@@ -1,7 +1,7 @@
 
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/core/helpers/utils';
 
 export function BackButton({ href, className }: { href: string, className?: string }) {
   return (

@@ -1,12 +1,12 @@
 'use server';
 
-import prisma from '@/lib/prisma';
+import prisma from '@/core/helpers/prisma';
 import { headers } from 'next/headers';
 import { authenticator } from 'otplib';
 import { decrypt } from '@/services/security/totp';
 import { z } from 'zod';
-import { createAndSetSession } from '@/lib/session';
-import { logActivity } from '@/lib/log-actions';
+import { createAndSetSession } from '@/core/helpers/session';
+import { logActivity } from '@/core/helpers/log-actions';
 import { getAuthRequest } from './utils';
 
 const mfaSchema = z.object({

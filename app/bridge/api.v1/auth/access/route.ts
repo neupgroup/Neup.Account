@@ -1,7 +1,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
-import { logError } from '@/lib/logger';
+import prisma from '@/core/helpers/prisma';
+import { logError } from '@/core/helpers/logger';
 
 export const dynamic = 'force-dynamic';
 

@@ -14,14 +14,14 @@ import type { UserStats } from "@/types"
 import { Users, UserCheck, UserPlus, ShieldCheck, Search, Ban, List } from "@/components/icons"
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/core/hooks/use-toast"
-import { checkPermissions } from "@/lib/user"
+import { checkPermissions } from "@/core/helpers/user"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { ListItem } from "@/components/ui/list-item"
 import { TertiaryHeader } from "@/components/ui/tertiary-header"
 import { PrimaryHeader } from "@/components/ui/primary-header"
 import NProgress from 'nprogress';
-import { redirectInApp } from "@/lib/navigation";
+import { redirectInApp } from "@/core/helpers/navigation";
 
 function AccountsPageSkeleton() {
     return (

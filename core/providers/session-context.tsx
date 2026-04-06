@@ -1,8 +1,8 @@
 "use client";
 
 import { createContext, useState, useEffect, type ReactNode, useContext } from 'react';
-import { type UserProfile, getEncodedUserPermissions, getUserProfile as fetchUserProfile } from '@/lib/user';
-import { getActiveAccountId, getPersonalAccountId } from '@/lib/auth-actions';
+import { type UserProfile, getEncodedUserPermissions, getUserProfile as fetchUserProfile } from '@/core/helpers/user';
+import { getActiveAccountId, getPersonalAccountId } from '@/core/helpers/auth-actions';
 
 type SessionState = {
     loading: boolean;

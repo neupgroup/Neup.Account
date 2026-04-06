@@ -8,11 +8,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { format } from "date-fns"
 
-import { getUserProfile, type UserProfile } from "@/lib/user"
+import { getUserProfile, type UserProfile } from "@/core/helpers/user"
 import { parseDateString, updateBrandProfile } from "@/services/profile"
 import { brandProfileFormSchema } from "@/schemas/auth"
 import { useToast } from "@/core/hooks/use-toast"
-import { cn } from "@/lib/utils"
+import { cn } from "@/core/helpers/utils"
 
 import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from "@/components/ui/button"

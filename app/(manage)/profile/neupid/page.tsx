@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
-import { getUserNeupIds, getUserProfile } from "@/lib/user"
+import { getUserNeupIds, getUserProfile } from "@/core/helpers/user"
 import { updateUserProfile } from "@/services/profile"
 import { useToast } from "@/core/hooks/use-toast"
 

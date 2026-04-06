@@ -21,7 +21,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Loader2, UserPlus, Trash2, Ban, EyeOff } from 'lucide-react';
 import { BackButton } from '@/components/ui/back-button';
 import { SecondaryHeader } from '@/components/ui/secondary-header';
-import { cn } from '@/lib/utils';
+import { cn } from '@/core/helpers/utils';
 
 function UserListSkeleton() {
   return (

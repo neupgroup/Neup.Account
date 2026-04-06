@@ -1,12 +1,12 @@
 'use server';
 
-import prisma from '@/lib/prisma';
-import { logActivity } from '@/lib/log-actions';
-import { logError } from '@/lib/logger';
+import prisma from '@/core/helpers/prisma';
+import { logActivity } from '@/core/helpers/log-actions';
+import { logError } from '@/core/helpers/logger';
 import { headers } from 'next/headers';
-import { switchToAccount as switchToAccountAction, switchToBrand as switchToBrandAction, switchToPersonal as switchToPersonalAction, switchToDependent as switchToDependentAction } from '@/lib/session';
+import { switchToAccount as switchToAccountAction, switchToBrand as switchToBrandAction, switchToPersonal as switchToPersonalAction, switchToDependent as switchToDependentAction } from '@/core/helpers/session';
 import type { StoredAccount } from '@/types';
-import { getSessionCookies, setStoredAccountsCookie, clearSessionCookies } from '@/lib/cookies';
+import { getSessionCookies, setStoredAccountsCookie, clearSessionCookies } from '@/core/helpers/cookies';
 import { makeNotification } from '../notifications';
 
 // This function is now just a wrapper or re-export if needed, but the main logic is in lib/session
@@ -30,7 +30,7 @@ export async function switchActiveAccount(account: StoredAccount) {
 }
 
 export async function switchActiveAccountByNeupId(neupId: string) {
-    const { switchToAccountByNeupId } = await import('@/lib/session');
+    const { switchToAccountByNeupId } = await import('@/core/helpers/session');
     const result = await switchToAccountByNeupId(neupId);
 
     if (result.success) {

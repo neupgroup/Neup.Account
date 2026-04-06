@@ -35,16 +35,16 @@ import {
 } from "@/components/ui/select"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Checkbox } from "@/components/ui/checkbox"
-import { cn } from "@/lib/utils"
+import { cn } from "@/core/helpers/utils"
 import { useToast } from "@/core/hooks/use-toast"
 import { createDependentAccount } from "@/services/manage/accounts/dependent"
 import { dependentFormSchema } from "@/schemas/dependent"
 import { Label } from "@/components/ui/label"
 import { parseDateString } from "@/services/profile"
 import { BackButton } from "@/components/ui/back-button"
-import { checkPermissions } from "@/lib/user"
+import { checkPermissions } from "@/core/helpers/user"
 import { Loader2 } from "@/components/icons"
-import { redirectInApp } from "@/lib/navigation";
+import { redirectInApp } from "@/core/helpers/navigation";
 
 type FormData = z.infer<typeof dependentFormSchema>;
 

@@ -1,12 +1,12 @@
 'use server';
 
-import prisma from '@/lib/prisma';
-import { getPersonalAccountId } from '@/lib/auth-actions';
-import { logActivity } from '@/lib/log-actions';
-import { logError } from '@/lib/logger';
+import prisma from '@/core/helpers/prisma';
+import { getPersonalAccountId } from '@/core/helpers/auth-actions';
+import { logActivity } from '@/core/helpers/log-actions';
+import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
 import crypto from 'crypto';
-import { checkPermissions } from '@/lib/user';
+import { checkPermissions } from '@/core/helpers/user';
 import { createNotification } from '../notifications';
 
 export type BackupCode = {

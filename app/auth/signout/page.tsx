@@ -4,7 +4,7 @@
 import { useEffect, useRef, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { logoutActiveSession } from "@/services/auth/signout"
-import { redirectInApp } from "@/lib/navigation"
+import { redirectInApp } from "@/core/helpers/navigation"
 
 function SignOut() {
     const router = useRouter()

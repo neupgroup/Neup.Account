@@ -7,10 +7,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { format } from "date-fns"
 
-import { getUserProfile } from "@/lib/user"
+import { getUserProfile } from "@/core/helpers/user"
 import { updateUserProfile, parseDateString } from "@/services/profile"
 import { useToast } from "@/core/hooks/use-toast"
-import { cn } from '@/lib/utils'
+import { cn } from '@/core/helpers/utils'
 
 import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from "@/components/ui/button"

@@ -1,6 +1,6 @@
 'use server';
 
-import prisma from '@/lib/prisma';
+import prisma from '@/core/helpers/prisma';
 
 const AUTH_REQUEST_EXPIRATION_MINUTES = 7;
 

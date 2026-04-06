@@ -27,7 +27,7 @@ import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React from 'react';
-import { redirectInApp } from '@/lib/navigation';
+import { redirectInApp } from '@/core/helpers/navigation';
 
 type SortKey = keyof AccountListItem | null;
 

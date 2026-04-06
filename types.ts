@@ -251,7 +251,7 @@ export type UserStats = {
 export type UserDetails = {
     accountId: string;
     neupId: string;
-    profile: import('@/lib/user').UserProfile;
+    profile: import('@/core/helpers/user').UserProfile;
     accountType?: string;
 };
 

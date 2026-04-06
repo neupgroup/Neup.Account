@@ -1,9 +1,9 @@
 'use server';
 
-import prisma from '@/lib/prisma';
-import { getPersonalAccountId } from '@/lib/auth-actions';
-import { checkPermissions } from '@/lib/user';
-import { logError } from '@/lib/logger';
+import prisma from '@/core/helpers/prisma';
+import { getPersonalAccountId } from '@/core/helpers/auth-actions';
+import { checkPermissions } from '@/core/helpers/user';
+import { logError } from '@/core/helpers/logger';
 import type { Application } from '@/types';
 
 type ConnectedApplications = {

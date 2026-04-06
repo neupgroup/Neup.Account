@@ -2,12 +2,12 @@
 'use server';
 
 import { z } from "zod";
-import { getActiveAccountId } from "@/lib/auth-actions";
-import { logActivity } from "@/lib/log-actions";
-import { logError } from "@/lib/logger";
-import prisma from "@/lib/prisma";
+import { getActiveAccountId } from "@/core/helpers/auth-actions";
+import { logActivity } from "@/core/helpers/log-actions";
+import { logError } from "@/core/helpers/logger";
+import prisma from "@/core/helpers/prisma";
 import bcrypt from "bcryptjs";
-import { checkPermissions } from "@/lib/user";
+import { checkPermissions } from "@/core/helpers/user";
 import { logoutActiveSession } from "../auth/signout";
 
 const formSchema = z.object({

@@ -12,7 +12,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import { checkPermissions } from "@/lib/user"
+import { checkPermissions } from "@/core/helpers/user"
 import { notFound } from "next/navigation"
 import { BackButton } from "@/components/ui/back-button"
 

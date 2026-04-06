@@ -1,6 +1,6 @@
 'use server';
 
-import prisma from '@/lib/prisma';
+import prisma from '@/core/helpers/prisma';
 import { headers } from 'next/headers';
 import { getUserProfile } from './user';
 import { logError } from './logger';

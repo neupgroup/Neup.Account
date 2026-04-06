@@ -4,7 +4,7 @@ import { getPaymentDetails, getAppInfo } from "@/services/manage/payments/neup.p
 import Image from "next/image";
 import { Bot, Instagram, Linkedin, Ban } from "lucide-react";
 import { BackButton } from "@/components/ui/back-button";
-import { checkPermissions } from "@/lib/user";
+import { checkPermissions } from "@/core/helpers/user";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { notFound } from "next/navigation";
 

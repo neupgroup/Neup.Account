@@ -1,12 +1,12 @@
 'use server';
 
-import prisma from '@/lib/prisma';
-import { getUserProfile, checkPermissions, isRootUser } from '@/lib/user';
-import { logError } from '@/lib/logger';
+import prisma from '@/core/helpers/prisma';
+import { getUserProfile, checkPermissions, isRootUser } from '@/core/helpers/user';
+import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
 import { deleteUserAccount } from '@/services/manage/user-actions';
-import { getPersonalAccountId } from '@/lib/auth-actions';
-import { logActivity } from '@/lib/log-actions';
+import { getPersonalAccountId } from '@/core/helpers/auth-actions';
+import { logActivity } from '@/core/helpers/log-actions';
 import { z } from 'zod';
 
 export type DeletionRequest = {

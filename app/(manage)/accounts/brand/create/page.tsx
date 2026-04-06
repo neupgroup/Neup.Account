@@ -33,9 +33,9 @@ import { Textarea } from "@/components/ui/textarea"
 import { CheckCircle2, XCircle, Loader2 } from "@/components/icons"
 import { BackButton } from "@/components/ui/back-button"
 import { brandCreationSchema } from "@/schemas/auth"
-import { checkNeupIdAvailability } from "@/lib/user"
+import { checkNeupIdAvailability } from "@/core/helpers/user"
 import { SecondaryHeader } from "@/components/ui/secondary-header"
-import { redirectInApp } from "@/lib/navigation";
+import { redirectInApp } from "@/core/helpers/navigation";
 
 type FormData = z.infer<typeof brandCreationSchema>;
 

@@ -19,14 +19,14 @@ import {
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge"
-import { getActivities, ActivityLog } from "@/lib/log-actions"
+import { getActivities, ActivityLog } from "@/core/helpers/log-actions"
 import { ChevronLeft, ChevronRight, Ban } from "lucide-react";
 import { BackButton } from "@/components/ui/back-button";
-import { checkPermissions } from "@/lib/user";
+import { checkPermissions } from "@/core/helpers/user";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useEffect, useState, useCallback, use } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { redirectInApp } from "@/lib/navigation";
+import { redirectInApp } from "@/core/helpers/navigation";
 
 
 const statusVariantMap: { [key: string]: "default" | "destructive" | "secondary" } = {

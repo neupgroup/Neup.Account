@@ -1,5 +1,5 @@
-import prisma from '@/lib/prisma';
-import { buildCallbackUrl } from '@/lib/auth-callback';
+import prisma from '@/core/helpers/prisma';
+import { buildCallbackUrl } from '@/core/helpers/auth-callback';
 
 type SearchParamsRecord = Record<string, string | string[] | undefined>;
 

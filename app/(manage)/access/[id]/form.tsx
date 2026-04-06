@@ -29,7 +29,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import type { Permission } from "@/types";
 import { Loader2 } from "@/components/icons";
-import { redirectInApp } from "@/lib/navigation";
+import { redirectInApp } from "@/core/helpers/navigation";
 
 export function AccessManagementForm({
   permitId,

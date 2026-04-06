@@ -21,10 +21,10 @@ import { Label } from "@/components/ui/label";
 import { BackButton } from "@/components/ui/back-button";
 import { GeolocationContext } from "@/core/providers/geolocation-context";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
-import { getAccountType } from "@/lib/user";
-import { getActiveAccountId } from "@/lib/auth-actions";
+import { getAccountType } from "@/core/helpers/user";
+import { getActiveAccountId } from "@/core/helpers/auth-actions";
 import { useRouter } from "next/navigation";
-import { redirectInApp } from "@/lib/navigation";
+import { redirectInApp } from "@/core/helpers/navigation";
 
 
 export default function DeleteAccountPage() {

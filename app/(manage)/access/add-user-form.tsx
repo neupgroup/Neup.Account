@@ -8,7 +8,7 @@ import { grantAccessByNeupId } from "@/services/manage/access";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2, UserPlus } from "@/components/icons";
-import { cn } from "@/lib/utils";
+import { cn } from "@/core/helpers/utils";
 
 export function AddUserForm() {
     const [isPending, startTransition] = useTransition();

@@ -1,14 +1,14 @@
 'use server';
 
-import prisma from '@/lib/prisma';
-import { getActiveAccountId, getPersonalAccountId } from '@/lib/auth-actions';
-import { getUserProfile, getUserNeupIds, getAccountType, getUserPermissions, checkPermissions } from '@/lib/user';
-import { logError } from '@/lib/logger';
+import prisma from '@/core/helpers/prisma';
+import { getActiveAccountId, getPersonalAccountId } from '@/core/helpers/auth-actions';
+import { getUserProfile, getUserNeupIds, getAccountType, getUserPermissions, checkPermissions } from '@/core/helpers/user';
+import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
-import { logActivity } from '@/lib/log-actions';
+import { logActivity } from '@/core/helpers/log-actions';
 import type { UserAccess, AccessDetails, Permission } from '@/types';
-import { PERMISSION_SET } from '@/lib/permissions';
+import { PERMISSION_SET } from '@/core/helpers/permissions';
 
 export async function getMasterPermissions(): Promise<Permission[]> {
     // Collect all unique permission set keys (roles) and unique permissions from roles

@@ -1,8 +1,8 @@
 import React from 'react';
-import { getValidatedStoredAccounts } from '@/lib/session';
+import { getValidatedStoredAccounts } from '@/core/helpers/session';
 import { StartPageComponent } from './start-page-component';
-import prisma from '@/lib/prisma';
-import { getActiveSession } from '@/lib/auth-actions';
+import prisma from '@/core/helpers/prisma';
+import { getActiveSession } from '@/core/helpers/auth-actions';
 
 type StartPageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;

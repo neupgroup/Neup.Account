@@ -2,9 +2,9 @@
 
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
-import prisma from '@/lib/prisma';
-import { getPersonalAccountId } from '@/lib/auth-actions';
-import { logError } from '@/lib/logger';
+import prisma from '@/core/helpers/prisma';
+import { getPersonalAccountId } from '@/core/helpers/auth-actions';
+import { logError } from '@/core/helpers/logger';
 
 const manageApplicationSchema = z.object({
   appId: z.string().min(1, 'Application ID is required.'),

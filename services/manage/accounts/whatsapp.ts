@@ -1,7 +1,7 @@
  'use server';
  
- import { getActiveAccountId } from '@/lib/auth-actions';
- import { logError } from '@/lib/logger';
+ import { getActiveAccountId } from '@/core/helpers/auth-actions';
+ import { logError } from '@/core/helpers/logger';
  import { z } from 'zod';
  import { whatsAppFormSchema, verifyCodeSchema } from '@/app/(manage)/accounts/whatsapp/schema';
  import { revalidatePath } from 'next/cache';

@@ -9,7 +9,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { useRouter } from 'next/navigation';
 import { VerifiedBadge } from '../verified-badge';
 import { useSession } from '@/core/providers/session-context';
-import { redirectInApp } from '@/lib/navigation';
+import { redirectInApp } from '@/core/helpers/navigation';
 
 function getGreeting() {
     const hour = new Date().getHours();

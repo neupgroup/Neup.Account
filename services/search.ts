@@ -1,11 +1,11 @@
 
 'use server';
 
-import { logError } from '@/lib/logger';
-import { checkPermissions } from '@/lib/user';
+import { logError } from '@/core/helpers/logger';
+import { checkPermissions } from '@/core/helpers/user';
 import type { SearchResult } from '@/types';
-import prisma from '@/lib/prisma';
-import { PERMISSION_SET } from '@/lib/permissions';
+import prisma from '@/core/helpers/prisma';
+import { PERMISSION_SET } from '@/core/helpers/permissions';
 
 
 // A very basic search function. In a real-world scenario,

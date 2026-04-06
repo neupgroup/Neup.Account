@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { Card, CardContent } from '@/components/ui/card';
 import { ListItem } from '@/components/ui/list-item';
 import { getUserDetails } from '@/services/manage/users';
-import { checkPermissions } from '@/lib/user';
+import { checkPermissions } from '@/core/helpers/user';
 import { BackButton } from '@/components/ui/back-button';
 import { PrimaryHeader } from '@/components/ui/primary-header';
 import { UserCircle, FileText, HeartHandshake, AtSign, Contact, ShieldCheck } from '@/components/icons';

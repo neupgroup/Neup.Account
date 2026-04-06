@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { getActiveSession } from '@/lib/auth-actions';
-import { logError } from '@/lib/logger';
-import prisma from '@/lib/prisma';
+import { getActiveSession } from '@/core/helpers/auth-actions';
+import { logError } from '@/core/helpers/logger';
+import prisma from '@/core/helpers/prisma';
 
 export async function POST(request: NextRequest) {
     try {

@@ -1,5 +1,5 @@
 import { headers } from 'next/headers';
-import prisma from '@/lib/prisma';
+import prisma from '@/core/helpers/prisma';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const stepOrder = [

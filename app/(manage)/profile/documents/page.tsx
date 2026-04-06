@@ -9,7 +9,7 @@ import { useToast } from '@/core/hooks/use-toast';
 import { kycFormSchema, type KycFormValues } from '@/schemas/kyc';
 import { submitKyc } from '@/services/manage/profile/documents';
 import { uploadFile } from '@/services/upload';
-import { getPersonalAccountId } from '@/lib/auth-actions';
+import { getPersonalAccountId } from '@/core/helpers/auth-actions';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -30,7 +30,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { redirectInApp } from '@/lib/navigation';
+import { redirectInApp } from '@/core/helpers/navigation';
 
 // Helper function to convert dataURL to File object
 function dataURLtoFile(dataurl: string, filename: string): File {

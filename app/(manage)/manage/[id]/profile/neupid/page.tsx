@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
-import { getUserNeupIdDetails as fetchUserNeupIdDetails } from "@/lib/user"
+import { getUserNeupIdDetails as fetchUserNeupIdDetails } from "@/core/helpers/user"
 import { addNeupId, removeNeupId, setPrimaryNeupId } from '@/services/manage/accounts/neupid';
 import { useToast } from "@/core/hooks/use-toast"
 
@@ -21,7 +21,7 @@ import { BackButton } from '@/components/ui/back-button'
 import { PrimaryHeader } from '@/components/ui/primary-header'
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { Loader2, Plus } from '@/components/icons'
-import { checkNeupIdAvailability } from '@/lib/user';
+import { checkNeupIdAvailability } from '@/core/helpers/user';
 
 type NeupId = {
     id: string;

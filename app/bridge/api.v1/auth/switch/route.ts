@@ -1,6 +1,6 @@
 
 import { NextResponse, type NextRequest } from 'next/server';
-import { switchToAccount, getStoredAccounts } from '@/lib/session';
+import { switchToAccount, getStoredAccounts } from '@/core/helpers/session';
 import { revalidatePath } from 'next/cache';
 
 export const dynamic = 'force-dynamic';

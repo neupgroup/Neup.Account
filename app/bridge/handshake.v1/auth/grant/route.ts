@@ -1,9 +1,9 @@
 
 import { NextResponse, type NextRequest } from 'next/server';
-import { getActiveSession } from '@/lib/auth-actions';
+import { getActiveSession } from '@/core/helpers/auth-actions';
 import crypto from 'crypto';
-import { logError } from '@/lib/logger';
-import prisma from '@/lib/prisma';
+import { logError } from '@/core/helpers/logger';
+import prisma from '@/core/helpers/prisma';
 
 export const dynamic = 'force-dynamic'; // Ensure this route is always dynamically rendered
 

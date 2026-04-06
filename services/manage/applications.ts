@@ -3,10 +3,10 @@
 import { randomUUID } from 'crypto';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
-import prisma from '@/lib/prisma';
-import { getActiveAccountId, getPersonalAccountId } from '@/lib/auth-actions';
-import { checkPermissions } from '@/lib/user';
-import { logError } from '@/lib/logger';
+import prisma from '@/core/helpers/prisma';
+import { getActiveAccountId, getPersonalAccountId } from '@/core/helpers/auth-actions';
+import { checkPermissions } from '@/core/helpers/user';
+import { logError } from '@/core/helpers/logger';
 import {
   applicationAccessFields,
   type ApplicationAccessField,

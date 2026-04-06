@@ -1,8 +1,8 @@
 'use server';
 
-import prisma from '@/lib/prisma';
-import { getPersonalAccountId } from '@/lib/auth-actions';
-import { logError } from '@/lib/logger';
+import prisma from '@/core/helpers/prisma';
+import { getPersonalAccountId } from '@/core/helpers/auth-actions';
+import { logError } from '@/core/helpers/logger';
 
 type SignedApplication = {
   id: string;

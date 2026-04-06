@@ -1,9 +1,9 @@
 
 import { NextRequest, NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
+import prisma from '@/core/helpers/prisma';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
-import { logError } from '@/lib/logger';
+import { logError } from '@/core/helpers/logger';
 import { makeNotification } from '@/services/notifications';
 
 export const dynamic = 'force-dynamic';

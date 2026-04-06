@@ -1,11 +1,11 @@
 'use server';
 
-import prisma from '@/lib/prisma';
+import prisma from '@/core/helpers/prisma';
 import { Prisma } from '../../prisma/generated/client/client';
-import { logError } from '@/lib/logger';
-import { checkPermissions, getUserNeupIds } from '@/lib/user';
-import { getPersonalAccountId } from '@/lib/auth-actions';
-import { logActivity } from '@/lib/log-actions';
+import { logError } from '@/core/helpers/logger';
+import { checkPermissions, getUserNeupIds } from '@/core/helpers/user';
+import { getPersonalAccountId } from '@/core/helpers/auth-actions';
+import { logActivity } from '@/core/helpers/log-actions';
 import { cookies, headers } from 'next/headers';
 import crypto from 'crypto';
 import { z } from 'zod';

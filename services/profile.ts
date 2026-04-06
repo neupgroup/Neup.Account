@@ -1,14 +1,14 @@
 'use server';
 
-import prisma from '@/lib/prisma';
-import { getPersonalAccountId } from '@/lib/auth-actions';
-import { logError } from '@/lib/logger';
+import prisma from '@/core/helpers/prisma';
+import { getPersonalAccountId } from '@/core/helpers/auth-actions';
+import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { format, isValid, parse as parseWithFormat } from 'date-fns';
 import { brandProfileFormSchema } from '@/schemas/auth';
-import { getUserProfile, checkPermissions, checkNeupIdAvailability, getUserNeupIds } from '@/lib/user';
-import { logActivity } from '@/lib/log-actions';
+import { getUserProfile, checkPermissions, checkNeupIdAvailability, getUserNeupIds } from '@/core/helpers/user';
+import { logActivity } from '@/core/helpers/log-actions';
 import { getAITextResponse } from '@/services/shared/ai';
 
 

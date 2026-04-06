@@ -18,15 +18,15 @@ import {
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge"
-import { getActivities } from "@/lib/log-actions"
+import { getActivities } from "@/core/helpers/log-actions"
 import { ChevronLeft, ChevronRight, Ban } from "@/components/icons";
 import { BackButton } from "@/components/ui/back-button";
-import { checkPermissions } from "@/lib/user";
+import { checkPermissions } from "@/core/helpers/user";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useEffect, useState, useCallback } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { UserActivityLog } from "@/types";
-import { redirectInApp } from "@/lib/navigation";
+import { redirectInApp } from "@/core/helpers/navigation";
 
 const statusVariantMap: { [key: string]: "default" | "destructive" | "secondary" } = {
     Success: "default",

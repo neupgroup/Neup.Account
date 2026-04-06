@@ -1,5 +1,5 @@
 import { BackButton } from "@/components/ui/back-button";
-import { checkPermissions } from "@/lib/user";
+import { checkPermissions } from "@/core/helpers/user";
 import { notFound } from "next/navigation";
 import { getSocialLinks } from "@/services/manage/site/socials";
 import { SocialLinksManager } from "./social-links-manager";

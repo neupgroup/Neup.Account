@@ -2,9 +2,9 @@
 
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import prisma from '@/lib/prisma';
-import { logError } from '@/lib/logger';
-import { getSessionCookies } from '@/lib/cookies';
+import prisma from '@/core/helpers/prisma';
+import { logError } from '@/core/helpers/logger';
+import { getSessionCookies } from '@/core/helpers/cookies';
 
 export type Session = {
   accountId: string;

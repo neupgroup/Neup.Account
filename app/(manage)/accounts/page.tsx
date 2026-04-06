@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card';
 import React from 'react';
-import { getActiveAccountId } from '@/lib/auth-actions';
+import { getActiveAccountId } from '@/core/helpers/auth-actions';
 import { notFound } from 'next/navigation';
 import { getAccessibleAccounts } from '@/services/manage/accounts/accessible';
 import { cookies } from 'next/headers';

@@ -7,8 +7,8 @@ import { Button } from '@/components/ui/button';
 import type { StoredAccount } from '@/types';
 import { switchActiveAccount } from '@/services/auth/switch';
 import { useToast } from '@/core/hooks/use-toast';
-import { getActiveAccountId } from '@/lib/auth-actions';
-import { redirectInApp } from '@/lib/navigation';
+import { getActiveAccountId } from '@/core/helpers/auth-actions';
+import { redirectInApp } from '@/core/helpers/navigation';
 
 type CombinedAccount = StoredAccount & {
     isBrand?: boolean;

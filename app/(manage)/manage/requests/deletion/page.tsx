@@ -9,7 +9,7 @@ import {
   cancelAccountDeletion,
 } from '@/services/manage/requests/deletion';
 import type { DeletionRequest } from '@/types';
-import { checkPermissions } from '@/lib/user';
+import { checkPermissions } from '@/core/helpers/user';
 import { useToast } from '@/core/hooks/use-toast';
 import { BackButton } from '@/components/ui/back-button';
 import {

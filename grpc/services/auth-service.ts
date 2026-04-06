@@ -1,8 +1,8 @@
 import * as grpc from '@grpc/grpc-js';
 import * as protoLoader from '@grpc/proto-loader';
 import path from 'path';
-import prisma from '@/lib/prisma';
-import { getUserProfile } from '@/lib/user';
+import prisma from '@/core/helpers/prisma';
+import { getUserProfile } from '@/core/helpers/user';
 
 const PROTO_PATH = path.resolve(process.cwd(), 'grpc/proto/auth.proto');
 

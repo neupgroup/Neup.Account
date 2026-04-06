@@ -1,13 +1,13 @@
 'use server';
 
-import prisma from '@/lib/prisma';
-import { getActiveAccountId } from '@/lib/auth-actions';
-import { getUserNeupIds, checkPermissions } from '@/lib/user';
+import prisma from '@/core/helpers/prisma';
+import { getActiveAccountId } from '@/core/helpers/auth-actions';
+import { getUserNeupIds, checkPermissions } from '@/core/helpers/user';
 import { authenticator } from 'otplib';
 import qrcode from 'qrcode';
 import bcrypt from 'bcryptjs';
-import { logActivity } from '@/lib/log-actions';
-import { logError } from '@/lib/logger';
+import { logActivity } from '@/core/helpers/log-actions';
+import { logError } from '@/core/helpers/logger';
 import { z } from 'zod';
 import crypto from 'crypto';
 import { totpEnableSchema, totpDisableSchema } from '@/schemas/security';

@@ -1,9 +1,9 @@
 
 'use server';
 
-import prisma from '@/lib/prisma';
-import { getActiveAccountId, getPersonalAccountId } from '@/lib/auth-actions';
-import { logError } from '@/lib/logger';
+import prisma from '@/core/helpers/prisma';
+import { getActiveAccountId, getPersonalAccountId } from '@/core/helpers/auth-actions';
+import { logError } from '@/core/helpers/logger';
 
 // Make sure to set this in your environment variables
 const UPLOAD_URL = process.env.NEXT_PUBLIC_UPLOAD_URL || 'https://neupgroup.com/usercontent/bridge/api/upload.php';

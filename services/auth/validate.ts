@@ -1,8 +1,8 @@
 'use server';
 
-import prisma from '@/lib/prisma';
+import prisma from '@/core/helpers/prisma';
 import { z } from 'zod';
-import { getUserProfile, getUserNeupIds } from '@/lib/user';
+import { getUserProfile, getUserNeupIds } from '@/core/helpers/user';
 
 const ValidateInputSchema = z.object({
   appId: z.string().min(1),

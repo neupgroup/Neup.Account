@@ -1,16 +1,16 @@
 'use server';
 
-import prisma from '@/lib/prisma';
-import { checkPermissions, getUserProfile } from '@/lib/user';
-import { logError } from '@/lib/logger';
-import { switchToBrand as switchToBrandAction, switchToPersonal as switchToPersonalAction } from '@/lib/session';
-import { getPersonalAccountId } from '@/lib/auth-actions';
+import prisma from '@/core/helpers/prisma';
+import { checkPermissions, getUserProfile } from '@/core/helpers/user';
+import { logError } from '@/core/helpers/logger';
+import { switchToBrand as switchToBrandAction, switchToPersonal as switchToPersonalAction } from '@/core/helpers/session';
+import { getPersonalAccountId } from '@/core/helpers/auth-actions';
 import { z } from 'zod';
 import { headers } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import { brandCreationSchema } from '@/schemas/auth';
 import type { BrandAccount } from '@/types';
-import { logActivity } from '@/lib/log-actions';
+import { logActivity } from '@/core/helpers/log-actions';
 
 export async function getBrandAccounts(): Promise<BrandAccount[]> {
     const canView = await checkPermissions(['linked_accounts.brand.view']);

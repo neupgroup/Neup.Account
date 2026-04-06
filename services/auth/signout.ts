@@ -1,10 +1,10 @@
 'use server';
 
-import prisma from '@/lib/prisma';
-import { logActivity } from '@/lib/log-actions';
+import prisma from '@/core/helpers/prisma';
+import { logActivity } from '@/core/helpers/log-actions';
 import { headers } from 'next/headers';
-import { logError } from '@/lib/logger';
-import { getSessionCookies, clearSessionCookies, setStoredAccountsCookie } from '@/lib/cookies';
+import { logError } from '@/core/helpers/logger';
+import { getSessionCookies, clearSessionCookies, setStoredAccountsCookie } from '@/core/helpers/cookies';
 import { makeNotification } from '@/services/notifications';
 
 export async function logoutActiveSession() {

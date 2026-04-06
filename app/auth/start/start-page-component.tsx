@@ -9,11 +9,11 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import React from 'react';
 import { useToast } from '@/core/hooks/use-toast';
 import { useSecurityCheck } from '@/core/hooks/use-security-check';
-import { cn } from '@/lib/utils';
+import { cn } from '@/core/helpers/utils';
 import { AccountListItem } from '../accounts/account-list-item';
 import type { StoredAccount } from '@/types';
-import { appendAuthCallbackContext, appendRedirect, getAppDisplayName, shouldReturnToAuthStartForExternalAuthentication } from '@/lib/auth-callback';
-import { redirectInApp } from '@/lib/navigation';
+import { appendAuthCallbackContext, appendRedirect, getAppDisplayName, shouldReturnToAuthStartForExternalAuthentication } from '@/core/helpers/auth-callback';
+import { redirectInApp } from '@/core/helpers/navigation';
 import { cleanupStoredSessionsAction } from '@/services/auth/cleanup-stored-sessions';
 
 interface StartPageComponentProps {

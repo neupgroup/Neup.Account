@@ -1,7 +1,7 @@
 'use server';
 
-import prisma from '@/lib/prisma';
-import { logError } from '@/lib/logger';
+import prisma from '@/core/helpers/prisma';
+import { logError } from '@/core/helpers/logger';
 import type { Application } from '@/types';
 
 export async function getApps(searchQuery?: string): Promise<Application[]> {

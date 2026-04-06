@@ -1,10 +1,10 @@
 
 'use server';
 
-import prisma from '@/lib/prisma';
-import { checkPermissions } from '@/lib/user';
-import { logActivity } from '@/lib/log-actions';
-import { logError } from '@/lib/logger';
+import prisma from '@/core/helpers/prisma';
+import { checkPermissions } from '@/core/helpers/user';
+import { logActivity } from '@/core/helpers/log-actions';
+import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
 
 export type KycSubmissionData = {

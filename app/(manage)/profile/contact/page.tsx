@@ -6,7 +6,7 @@ import { useForm, useWatch } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
-import { getUserContacts } from "@/lib/user"
+import { getUserContacts } from "@/core/helpers/user"
 import { updateUserProfile } from "@/services/profile"
 import { useToast } from "@/core/hooks/use-toast"
 

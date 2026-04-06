@@ -2,7 +2,7 @@
 
 import {useContext} from 'react';
 import {GeolocationContext} from '@/core/providers/geolocation-context';
-import {logActivity} from '@/lib/log-actions';
+import {logActivity} from '@/core/helpers/log-actions';
 
 
 // Client-side hook to wrap logActivity and inject geolocation

@@ -20,7 +20,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Loader2, Terminal } from 'lucide-react';
-import { redirectInApp } from '@/lib/navigation';
+import { redirectInApp } from '@/core/helpers/navigation';
 
 
 export function RequestDecisionForm({ request }: { request: PendingNeupIdRequest }) {

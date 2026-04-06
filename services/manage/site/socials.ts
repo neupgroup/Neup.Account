@@ -1,10 +1,10 @@
 'use server';
 
-import prisma from '@/lib/prisma';
+import prisma from '@/core/helpers/prisma';
 import {z} from 'zod';
 import {revalidatePath} from 'next/cache';
-import {logError} from '@/lib/logger';
-import {checkPermissions} from '@/lib/user';
+import {logError} from '@/core/helpers/logger';
+import {checkPermissions} from '@/core/helpers/user';
 import crypto from 'crypto';
 import type {SocialLink} from '@/types';
 

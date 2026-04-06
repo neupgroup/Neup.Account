@@ -1,8 +1,8 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import prisma from '@/lib/prisma';
-import { logError } from '@/lib/logger';
+import prisma from '@/core/helpers/prisma';
+import { logError } from '@/core/helpers/logger';
 import { validateExternalRequest } from '@/services/auth/validate';
-import { getUserProfile } from '@/lib/user';
+import { getUserProfile } from '@/core/helpers/user';
 import { randomBytes } from 'crypto';
 
 export async function POST(request: NextRequest) {

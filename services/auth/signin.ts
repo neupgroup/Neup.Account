@@ -3,10 +3,10 @@
 import { headers } from 'next/headers';
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
-import { createAndSetSession } from '@/lib/session';
-import { validateNeupId } from '@/lib/user';
+import { createAndSetSession } from '@/core/helpers/session';
+import { validateNeupId } from '@/core/helpers/user';
 import { getAuthRequest, extendAuthRequest } from './utils';
-import prisma from '@/lib/prisma';
+import prisma from '@/core/helpers/prisma';
 import { makeNotification } from '@/services/notifications';
 
 const neupIdSchema = z.object({
@@ -69,7 +69,7 @@ export async function submitNeupId(data: z.infer<typeof neupIdSchema>) {
 
     await extendAuthRequest(request.id);
 
-    const { getUserProfile, getUserContacts } = await import('@/lib/user');
+    const { getUserProfile, getUserContacts } = await import('@/core/helpers/user');
     const profile = await getUserProfile(accountId);
     const contacts = await getUserContacts(accountId);
 

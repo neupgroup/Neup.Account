@@ -1,9 +1,9 @@
 'use server';
 
-import prisma from '@/lib/prisma';
-import { getPersonalAccountId } from '@/lib/auth-actions';
-import { logError } from '@/lib/logger';
-import { getUserProfile, checkPermissions } from '@/lib/user';
+import prisma from '@/core/helpers/prisma';
+import { getPersonalAccountId } from '@/core/helpers/auth-actions';
+import { logError } from '@/core/helpers/logger';
+import { getUserProfile, checkPermissions } from '@/core/helpers/user';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import type { FamilyMember, FamilyGroup } from '@/types';

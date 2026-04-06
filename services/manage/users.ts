@@ -2,11 +2,11 @@
 
 'use server';
 
-import prisma from '@/lib/prisma';
-import { getUserNeupIds, getUserProfile as fetchUserProfile, checkPermissions } from '@/lib/user';
-import { getPersonalAccountId } from '@/lib/auth-actions';
+import prisma from '@/core/helpers/prisma';
+import { getUserNeupIds, getUserProfile as fetchUserProfile, checkPermissions } from '@/core/helpers/user';
+import { getPersonalAccountId } from '@/core/helpers/auth-actions';
 import { revalidatePath } from 'next/cache';
-import { logActivity } from '@/lib/log-actions';
+import { logActivity } from '@/core/helpers/log-actions';
 
 import type {
   UserDetails,
@@ -71,7 +71,7 @@ export async function getActivity(accountId: string): Promise<UserActivityLog[]>
     });
 }
 
-import { PERMISSION_SET } from '@/lib/permissions';
+import { PERMISSION_SET } from '@/core/helpers/permissions';
 
 export async function getPermissions(accountId: string): Promise<UserPermissions> {
     const permit = await prisma.permit.findFirst({

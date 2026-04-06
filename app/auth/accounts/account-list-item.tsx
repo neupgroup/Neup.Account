@@ -2,16 +2,16 @@
 "use client";
 
 import { useEffect, useState, useTransition } from 'react';
-import { getUserProfile } from '@/lib/user';
+import { getUserProfile } from '@/core/helpers/user';
 import type { StoredAccount } from '@/types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronRight } from '@/components/icons';
 import { AccountActions } from './account-actions';
-import { switchToBrand, switchToDependent, switchToDelegated, switchToAccount } from '@/lib/session';
-import { redirectInApp } from '@/lib/navigation';
-import { appendAuthCallbackContext, appendRedirect } from '@/lib/auth-callback';
+import { switchToBrand, switchToDependent, switchToDelegated, switchToAccount } from '@/core/helpers/session';
+import { redirectInApp } from '@/core/helpers/navigation';
+import { appendAuthCallbackContext, appendRedirect } from '@/core/helpers/auth-callback';
 
 type CombinedAccount = StoredAccount & {
     displayName?: string;

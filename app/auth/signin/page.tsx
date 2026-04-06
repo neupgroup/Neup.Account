@@ -12,8 +12,8 @@ import { cancelAccountDeletion } from '@/services/data/delete';
 import { initializeAuthFlow } from '@/services/auth/initialize';
 import { verifyMfa } from '@/services/auth/verify-mfa';
 import { switchActiveAccountByNeupId } from '@/services/auth/switch';
-import { redirectInApp } from '@/lib/navigation';
-import { appendAuthCallbackContext, appendRedirect, hasAuthCallbackContext, shouldReturnToAuthStartForExternalAuthentication } from '@/lib/auth-callback';
+import { redirectInApp } from '@/core/helpers/navigation';
+import { appendAuthCallbackContext, appendRedirect, hasAuthCallbackContext, shouldReturnToAuthStartForExternalAuthentication } from '@/core/helpers/auth-callback';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';

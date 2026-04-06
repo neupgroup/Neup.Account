@@ -8,7 +8,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { getActiveAccountId } from "@/lib/auth-actions";
+import { getActiveAccountId } from "@/core/helpers/auth-actions";
 import { getBranches } from "@/services/manage/accounts/branches";
 import {
     Table,

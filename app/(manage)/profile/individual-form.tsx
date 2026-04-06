@@ -7,11 +7,11 @@ import { z } from "zod"
 import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
 
-import { getUserProfile, getUserNeupIds, getUserContacts, type UserProfile, type UserContacts } from "@/lib/user"
+import { getUserProfile, getUserNeupIds, getUserContacts, type UserProfile, type UserContacts } from "@/core/helpers/user"
 import { updateUserProfile, parseDateString } from "@/services/profile"
 import { profileFormSchema } from "@/schemas/profile"
 import { useToast } from "@/core/hooks/use-toast"
-import { cn } from "@/lib/utils"
+import { cn } from "@/core/helpers/utils"
 
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'

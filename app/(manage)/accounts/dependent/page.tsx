@@ -12,7 +12,7 @@ import { User, Plus } from "lucide-react";
 import { notFound } from "next/navigation";
 import { AccountListItem } from "@/app/auth/accounts/account-list-item";
 import { BackButton } from "@/components/ui/back-button";
-import { checkPermissions } from "@/lib/user";
+import { checkPermissions } from "@/core/helpers/user";
 
 export default async function DependentAccountsPage() {
     const canView = await checkPermissions(['linked_accounts.dependent.view']);

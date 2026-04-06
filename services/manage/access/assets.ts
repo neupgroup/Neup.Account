@@ -2,9 +2,9 @@
 
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
-import prisma from '@/lib/prisma';
-import { getActiveAccountId } from '@/lib/auth-actions';
-import { logError } from '@/lib/logger';
+import prisma from '@/core/helpers/prisma';
+import { getActiveAccountId } from '@/core/helpers/auth-actions';
+import { logError } from '@/core/helpers/logger';
 
 const memberPattern = /^(app|account):[^\s:]+$/;
 

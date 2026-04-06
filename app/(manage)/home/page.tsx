@@ -1,11 +1,11 @@
 
-import { checkPermissions } from '@/lib/user';
+import { checkPermissions } from '@/core/helpers/user';
 import { notFound } from 'next/navigation';
 import { DashboardHeader } from '@/components/dashboard/dashboard-header';
 import { BillingCard } from '@/components/dashboard/billing-card';
 import { SettingsCard } from '@/components/dashboard/settings-card';
 import { WarningDisplay } from '@/components/warning-display';
-import { getActiveAccountId } from '@/lib/auth-actions';
+import { getActiveAccountId } from '@/core/helpers/auth-actions';
 import { NotificationsCard } from '@/components/dashboard/notifications-card';
 
 export default async function HomePage() {

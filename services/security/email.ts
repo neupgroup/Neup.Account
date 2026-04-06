@@ -1,14 +1,14 @@
 'use server';
 
-import { logActivity } from '@/lib/log-actions';
-import { logError } from '@/lib/logger';
+import { logActivity } from '@/core/helpers/log-actions';
+import { logError } from '@/core/helpers/logger';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
-import { getPersonalAccountId } from '@/lib/auth-actions';
-import { checkPermissions } from '@/lib/user';
+import { getPersonalAccountId } from '@/core/helpers/auth-actions';
+import { checkPermissions } from '@/core/helpers/user';
 import { emailFormSchema } from '@/schemas/security';
 import { createNotification } from '../notifications';
-import prisma from '@/lib/prisma';
+import prisma from '@/core/helpers/prisma';
 
 const CONTACT_TYPE = 'recoveryEmail';
 

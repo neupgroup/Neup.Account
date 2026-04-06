@@ -1,6 +1,6 @@
 'use server';
 
-import prisma from '@/lib/prisma';
+import prisma from '@/core/helpers/prisma';
 import { logError } from './logger';
 import { getActiveAccountId, getPersonalAccountId } from './auth-actions';
 import { encodePermissions } from './crypto';

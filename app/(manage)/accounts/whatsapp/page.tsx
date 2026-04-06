@@ -28,7 +28,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Loader2, MessageSquareText, Link2 } from "@/components/icons";
-import { cn } from "@/lib/utils";
+import { cn } from "@/core/helpers/utils";
 import { BackButton } from "@/components/ui/back-button";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 

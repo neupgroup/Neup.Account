@@ -1,9 +1,9 @@
 'use server';
 
-import prisma from '@/lib/prisma';
-import { getActiveAccountId, getActiveSession } from '@/lib/auth-actions';
-import { logActivity } from '@/lib/log-actions';
-import { logError } from '@/lib/logger';
+import prisma from '@/core/helpers/prisma';
+import { getActiveAccountId, getActiveSession } from '@/core/helpers/auth-actions';
+import { logActivity } from '@/core/helpers/log-actions';
+import { logError } from '@/core/helpers/logger';
 import type { Session } from '@/types';
 
 export async function getUserSessions(): Promise<Session[]> {

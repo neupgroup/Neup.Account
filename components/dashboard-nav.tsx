@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
-import { cn } from "@/lib/utils"
+import { cn } from "@/core/helpers/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { type NavSection, navItems, allPermissionsMap } from "./nav-data"
 import { Skeleton } from "./ui/skeleton";

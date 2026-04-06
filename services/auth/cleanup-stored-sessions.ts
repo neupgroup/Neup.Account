@@ -1,6 +1,6 @@
 'use server';
 
-import { cleanupExpiredStoredSessions } from '@/lib/session';
+import { cleanupExpiredStoredSessions } from '@/core/helpers/session';
 
 export async function cleanupStoredSessionsAction() {
   await cleanupExpiredStoredSessions();

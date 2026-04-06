@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import prisma from '@/lib/prisma';
-import { logError } from '@/lib/logger';
+import prisma from '@/core/helpers/prisma';
+import { logError } from '@/core/helpers/logger';
 
 export async function POST(request: NextRequest) {
     try {

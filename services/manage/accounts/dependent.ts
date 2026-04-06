@@ -1,15 +1,15 @@
 'use server';
 
 import { z } from 'zod';
-import prisma from '@/lib/prisma';
-import { getPersonalAccountId } from '@/lib/auth-actions';
-import { logActivity } from '@/lib/log-actions';
-import { logError } from '@/lib/logger';
+import prisma from '@/core/helpers/prisma';
+import { getPersonalAccountId } from '@/core/helpers/auth-actions';
+import { logActivity } from '@/core/helpers/log-actions';
+import { logError } from '@/core/helpers/logger';
 import { headers } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import bcrypt from 'bcryptjs';
 import { dependentFormSchema } from '@/schemas/dependent';
-import { checkPermissions, getUserProfile, getUserNeupIds } from '@/lib/user';
+import { checkPermissions, getUserProfile, getUserNeupIds } from '@/core/helpers/user';
 
 
 export type DependentAccount = {

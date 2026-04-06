@@ -4,7 +4,7 @@
 
 import { cookies } from 'next/headers';
 import type { StoredAccount } from '@/types';
-import type { Session } from "@/lib/auth-actions";
+import type { Session } from "@/core/helpers/auth-actions";
 
 
 /**

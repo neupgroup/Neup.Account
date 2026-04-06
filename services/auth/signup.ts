@@ -1,12 +1,12 @@
 
 'use server';
 
-import prisma from '@/lib/prisma';
+import prisma from '@/core/helpers/prisma';
 import bcrypt from 'bcryptjs';
-import { logActivity } from '@/lib/log-actions';
+import { logActivity } from '@/core/helpers/log-actions';
 import { headers } from 'next/headers';
-import { createAndSetSession } from '@/lib/session';
-import { logError } from '@/lib/logger';
+import { createAndSetSession } from '@/core/helpers/session';
+import { logError } from '@/core/helpers/logger';
 import type { z } from 'zod';
 import { getAuthRequest, extendAuthRequest } from './utils';
 import {

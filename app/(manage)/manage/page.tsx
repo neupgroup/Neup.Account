@@ -15,7 +15,7 @@ import { getUserStats } from "@/services/manage/accounts"
 import type { UserStats } from "@/types"
 import { Users, UserCheck, UserPlus, ShieldCheck, Search, Ban, List, Terminal, ArrowRight } from "@/components/icons"
 import { Input } from "@/components/ui/input"
-import { checkPermissions } from "@/lib/user"
+import { checkPermissions } from "@/core/helpers/user"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { ListItem } from "@/components/ui/list-item"
@@ -24,7 +24,7 @@ import { PrimaryHeader } from "@/components/ui/primary-header"
 import NProgress from 'nprogress';
 import Link from "next/link"
 import { useSession } from "@/core/providers/session-context"
-import { redirectInApp } from "@/lib/navigation";
+import { redirectInApp } from "@/core/helpers/navigation";
 
 function AccountsPageSkeleton() {
     return (

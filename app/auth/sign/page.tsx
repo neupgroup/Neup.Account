@@ -1,17 +1,17 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { getSessionCookies } from '@/lib/cookies';
-import { getValidatedStoredAccounts } from '@/lib/session';
+import { getSessionCookies } from '@/core/helpers/cookies';
+import { getValidatedStoredAccounts } from '@/core/helpers/session';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { getAppDisplayName } from '@/lib/auth-callback';
+import { getAppDisplayName } from '@/core/helpers/auth-callback';
 import {
   buildAuthCallbackWithStatus,
   buildAuthQuery,
   getServerAuthContext,
-} from '@/lib/auth-callback-server';
-import prisma from '@/lib/prisma';
+} from '@/core/helpers/auth-callback-server';
+import prisma from '@/core/helpers/prisma';
 
 type AuthSignStep = 'profile' | 'access' | 'terms';
 

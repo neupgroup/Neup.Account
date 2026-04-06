@@ -2,13 +2,13 @@
 
 import { z } from 'zod';
 import bcrypt from 'bcryptjs';
-import { getActiveAccountId } from '@/lib/auth-actions';
-import { checkPermissions } from '@/lib/user';
-import { logActivity } from '@/lib/log-actions';
-import { logError } from '@/lib/logger';
+import { getActiveAccountId } from '@/core/helpers/auth-actions';
+import { checkPermissions } from '@/core/helpers/user';
+import { logActivity } from '@/core/helpers/log-actions';
+import { logError } from '@/core/helpers/logger';
 import { changePasswordSchema } from '@/schemas/security';
 import { createNotification } from '../notifications';
-import prisma from '@/lib/prisma';
+import prisma from '@/core/helpers/prisma';
 
 export async function changePassword(data: z.infer<typeof changePasswordSchema>, geolocation?: string) {
     const hasPermission = await checkPermissions(['security.pass.modify']);

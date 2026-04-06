@@ -42,8 +42,8 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { countries } from "./countries";
-import { redirectInApp } from "@/lib/navigation";
-import { appendAuthCallbackContext, hasAuthCallbackContext, shouldReturnToAuthStartForExternalAuthentication } from "@/lib/auth-callback";
+import { redirectInApp } from "@/core/helpers/navigation";
+import { appendAuthCallbackContext, hasAuthCallbackContext, shouldReturnToAuthStartForExternalAuthentication } from "@/core/helpers/auth-callback";
 
 // --- Components ---
 
