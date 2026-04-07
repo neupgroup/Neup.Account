@@ -3,10 +3,13 @@ import './globals.css';
 import 'nprogress/nprogress.css';
 import { Toaster } from "@/components/ui/toaster"
 import { GeolocationProvider } from '@/core/providers/geolocation-context';
+import { SessionProvider } from '@/core/providers/session-context';
 import { PageProgressBar } from '@/components/page-progress-bar';
 import { Suspense } from 'react';
 import { UrlErrorBanner } from '@/components/ui/url-error-banner';
 import { PersistentBacksTo } from '@/components/persistent-backs-to';
+import { HeaderV1 } from '@/components/layout/header.v1';
+import { FooterV1 } from '@/components/layout/footer.v1';
 
 export const metadata: Metadata = {
   title: 'Neup.Account',
@@ -28,13 +31,19 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased">
         <GeolocationProvider>
-          <PersistentBacksTo />
-          <PageProgressBar />
-          {children}
-          <Toaster />
-          <Suspense>
-            <UrlErrorBanner />
-          </Suspense>
+          <SessionProvider>
+            <PersistentBacksTo />
+            <PageProgressBar />
+            <div className="flex min-h-screen flex-col">
+              <HeaderV1 />
+              <main className="flex-1">{children}</main>
+              <FooterV1 />
+            </div>
+            <Toaster />
+            <Suspense>
+              <UrlErrorBanner />
+            </Suspense>
+          </SessionProvider>
         </GeolocationProvider>
       </body>
     </html>
