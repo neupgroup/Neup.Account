@@ -61,6 +61,7 @@ export const navItems = {
     managementNav: [
         { href: "/manage", label: "Home", description: "Manage account roles and permissions." },
         { href: "/manage/requests", label: "Requests", description: "Review and act on pending user requests." },
+        { href: "/manage/config", label: "Configurations", description: "Manage payment settings and footer social accounts." },
     ],
     accountNav: [
         { href: "/auth/start", label: "Switch Account", description: "Switch between different NeupID accounts." },
@@ -90,6 +91,7 @@ export const allPermissionsMap: Record<string, string[]> = {
     "Payment & Subscription": ['payment.method.show', 'payment.transactions.show', 'payment.subscriptions.show', 'payment.purchase_neup_pro.view'],
     "Account": ["root.account.search", "root.account.create_individual"],
     "Requests": ["root.requests.view"],
+    "Configurations": ["root.payment_config.view"],
     "Permissions": ["root.permission.view"],
     "Applications": ["root.app.view"],
     "Site Config": ["root.payment_config.view", "root.errors.view"],

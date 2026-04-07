@@ -66,9 +66,9 @@ const otherManagementItems = [
         permission: "root.requests.view"
     },
     { 
-        href: "/manage/site", 
-        label: "Site Config", 
-        description: "Manage site-wide settings and error logs.",
+        href: "/manage/config", 
+        label: "Configurations", 
+        description: "Manage payment settings and footer social accounts.",
         icon: Terminal,
         permission: "root.payment_config.view"
     },

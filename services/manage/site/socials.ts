@@ -22,7 +22,9 @@ const SOCIALS_DOC_ID = 'company_socials';
 
 // Fetch all social media links.
 export async function getSocialLinks(): Promise<SocialLink[]> {
-    const canView = await checkPermissions(['root.site.social_accounts.read']);
+    const canView =
+        (await checkPermissions(['root.site.social_accounts.read'])) ||
+        (await checkPermissions(['root.payment_config.view']));
     if (!canView) return [];
 
     try {
@@ -46,7 +48,9 @@ export async function addSocialLink(formData: FormData): Promise<{
     error?: string;
     newLink?: SocialLink
 }> {
-    const canAdd = await checkPermissions(['root.site.social_accounts.add']);
+    const canAdd =
+        (await checkPermissions(['root.site.social_accounts.add'])) ||
+        (await checkPermissions(['root.payment_config.view']));
     if (!canAdd) return {success: false, error: 'Permission denied.'};
     
     const rawData = Object.fromEntries(formData.entries());
@@ -99,6 +103,7 @@ export async function addSocialLink(formData: FormData): Promise<{
         });
 
         revalidatePath('/manage/site/socials');
+        revalidatePath('/manage/config/socials');
         return {success: true, newLink};
     } catch (error: any) {
         await logError('database', error, 'addSocialLink');
@@ -110,7 +115,9 @@ export async function toggleSocialLinkVisibility(id: string, isVisible: boolean)
     success: boolean;
     error?: string
 }> {
-    const canEdit = await checkPermissions(['root.site.social_accounts.edit']);
+    const canEdit =
+        (await checkPermissions(['root.site.social_accounts.edit'])) ||
+        (await checkPermissions(['root.payment_config.view']));
     if (!canEdit) return {success: false, error: 'Permission denied.'};
 
     try {
@@ -138,6 +145,7 @@ export async function toggleSocialLinkVisibility(id: string, isVisible: boolean)
         });
 
         revalidatePath('/manage/site/socials');
+        revalidatePath('/manage/config/socials');
         return {success: true};
     } catch (error) {
         await logError('database', error, `toggleSocialLinkVisibility: ${id}`);
@@ -146,7 +154,9 @@ export async function toggleSocialLinkVisibility(id: string, isVisible: boolean)
 }
 
 export async function deleteSocialLink(id: string): Promise<{ success: boolean; error?: string }> {
-    const canDelete = await checkPermissions(['root.site.social_accounts.delete']);
+    const canDelete =
+        (await checkPermissions(['root.site.social_accounts.delete'])) ||
+        (await checkPermissions(['root.payment_config.view']));
     if (!canDelete) return {success: false, error: 'Permission denied.'};
 
     try {
@@ -172,6 +182,7 @@ export async function deleteSocialLink(id: string): Promise<{ success: boolean; 
         });
 
         revalidatePath('/manage/site/socials');
+        revalidatePath('/manage/config/socials');
         return {success: true};
     } catch (error) {
         await logError('database', error, `deleteSocialLink: ${id}`);
