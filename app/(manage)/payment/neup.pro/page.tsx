@@ -19,6 +19,20 @@ export default async function NeupProPage() {
         getAppInfo(),
     ]);
 
+    const whatsappHref = appInfo?.whatsappContact
+        ? (appInfo.whatsappContact.startsWith('http')
+            ? appInfo.whatsappContact
+            : `https://wa.me/${appInfo.whatsappContact.replace(/\D/g, '')}`)
+        : undefined;
+
+    const instagramHref = appInfo?.instagramContact
+        ? (appInfo.instagramContact.startsWith('http')
+            ? appInfo.instagramContact
+            : `https://ig.me/m/${appInfo.instagramContact.replace(/^@/, '')}`)
+        : undefined;
+
+    const linkedinHref = appInfo?.linkedinContact;
+
     if (!details || !appInfo) {
         return (
              <Card>
@@ -83,18 +97,18 @@ export default async function NeupProPage() {
                             Send us a screenshot or statement of your transaction from your registered phone number via one of the following channels.
                         </p>
                          <div className="flex flex-wrap gap-4">
-                            {appInfo.whatsappContact && (
-                                <a href={`https://wa.me/${appInfo.whatsappContact.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-medium text-green-500 hover:underline">
+                            {whatsappHref && (
+                                <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-medium text-green-500 hover:underline">
                                     <Bot className="h-5 w-5" /> WhatsApp
                                 </a>
                             )}
-                             {appInfo.instagramContact && (
-                                <a href={`https://ig.me/m/${appInfo.instagramContact}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-medium text-pink-500 hover:underline">
+                             {instagramHref && (
+                                <a href={instagramHref} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-medium text-pink-500 hover:underline">
                                     <Instagram className="h-5 w-5" /> Instagram
                                 </a>
                             )}
-                            {appInfo.linkedinContact && (
-                                <a href={appInfo.linkedinContact} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-medium text-sky-500 hover:underline">
+                            {linkedinHref && (
+                                <a href={linkedinHref} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-medium text-sky-500 hover:underline">
                                     <Linkedin className="h-5 w-5" /> LinkedIn
                                 </a>
                             )}

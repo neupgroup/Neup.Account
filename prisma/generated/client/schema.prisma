@@ -102,6 +102,14 @@ model SystemConfig {
   @@map("system_configs")
 }
 
+model AppProfile {
+  key       String   @id
+  data      Json
+  updatedAt DateTime @updatedAt
+
+  @@map("app_profiles")
+}
+
 model AuthRequest {
   id        String   @id @default(uuid())
   type      String

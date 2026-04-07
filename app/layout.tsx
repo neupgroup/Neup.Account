@@ -10,6 +10,7 @@ import { UrlErrorBanner } from '@/components/ui/url-error-banner';
 import { PersistentBacksTo } from '@/components/persistent-backs-to';
 import { HeaderV1 } from '@/components/layout/header.v1';
 import { FooterV1 } from '@/components/layout/footer.v1';
+import { getSiteLogoUrl } from '@/services/manage/site/logo';
 
 export const metadata: Metadata = {
   title: 'Neup.Account',
@@ -17,11 +18,13 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://neupgroup.com/account'),
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const logoUrl = await getSiteLogoUrl();
+
   return (
     <html lang="en">
       <head>
@@ -35,7 +38,7 @@ export default function RootLayout({
             <PersistentBacksTo />
             <PageProgressBar />
             <div className="flex min-h-screen flex-col">
-              <HeaderV1 />
+              <HeaderV1 logoUrl={logoUrl} />
               <main className="flex-1">{children}</main>
               <FooterV1 />
             </div>

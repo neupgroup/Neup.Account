@@ -15,7 +15,12 @@ function hasRequiredDelegates(client: ReturnType<typeof prismaClientSingleton> |
   if (!client) return false
 
   const candidate = client as any
-  return Boolean(candidate.assetGroupInfo && candidate.assetGroupMember && candidate.assetMemberRole)
+  return Boolean(
+    candidate.assetGroupInfo &&
+    candidate.assetGroupMember &&
+    candidate.assetMemberRole &&
+    candidate.appProfile,
+  )
 }
 
 declare global {

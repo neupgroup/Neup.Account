@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { CreditCard, Globe, ArrowRight } from '@/components/icons';
+import { CreditCard, Globe, ArrowRight, AppWindow } from '@/components/icons';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { BackButton } from '@/components/ui/back-button';
 import { checkPermissions } from '@/core/helpers/user';
@@ -19,6 +19,12 @@ const configItems = [
     description: 'Define payment details used across the website.',
     icon: CreditCard,
   },
+  {
+    href: '/manage/config/app',
+    title: 'App Settings',
+    description: 'Update the site logo used across the application.',
+    icon: AppWindow,
+  },
 ];
 
 export default async function ManageConfigPage() {
@@ -33,10 +39,10 @@ export default async function ManageConfigPage() {
 
       <PrimaryHeader
         title="Configurations"
-        description="Set website payment settings and footer social media accounts."
+        description="Set website payment settings, footer social media accounts, and app branding."
       />
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-3">
         {configItems.map((item) => (
           <Link key={item.href} href={item.href}>
             <Card className="h-full cursor-pointer transition-all hover:border-primary/50 hover:bg-accent/40">

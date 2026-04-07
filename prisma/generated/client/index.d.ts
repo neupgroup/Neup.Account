@@ -29,6 +29,11 @@ export type Totp = $Result.DefaultSelection<Prisma.$TotpPayload>
  */
 export type SystemConfig = $Result.DefaultSelection<Prisma.$SystemConfigPayload>
 /**
+ * Model AppProfile
+ * 
+ */
+export type AppProfile = $Result.DefaultSelection<Prisma.$AppProfilePayload>
+/**
  * Model AuthRequest
  * 
  */
@@ -365,6 +370,16 @@ export class PrismaClient<
     * ```
     */
   get systemConfig(): Prisma.SystemConfigDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.appProfile`: Exposes CRUD operations for the **AppProfile** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AppProfiles
+    * const appProfiles = await prisma.appProfile.findMany()
+    * ```
+    */
+  get appProfile(): Prisma.AppProfileDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.authRequest`: Exposes CRUD operations for the **AuthRequest** model.
@@ -1182,6 +1197,7 @@ export namespace Prisma {
     Account: 'Account',
     Totp: 'Totp',
     SystemConfig: 'SystemConfig',
+    AppProfile: 'AppProfile',
     AuthRequest: 'AuthRequest',
     ActivityLog: 'ActivityLog',
     AccountStatusLog: 'AccountStatusLog',
@@ -1235,7 +1251,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "totp" | "systemConfig" | "authRequest" | "activityLog" | "accountStatusLog" | "kycRequest" | "invitation" | "neupIdRequest" | "notification" | "request" | "family" | "backupCode" | "verification" | "userDocument" | "contact" | "neupId" | "password" | "permit" | "session" | "errorLog" | "bugReport" | "userContent" | "recoveryContact" | "application" | "authTeam" | "assetGroupInfo" | "assetGroupMember" | "asset" | "assetMemberRole" | "authTeamExternal" | "authRole" | "authPermissionRecipient" | "accountAccess" | "accessMember" | "userAppConnection" | "appAuthentication" | "appSession" | "authSessionExternal" | "authRoleExternal" | "authPermissionsExternal"
+      modelProps: "account" | "totp" | "systemConfig" | "appProfile" | "authRequest" | "activityLog" | "accountStatusLog" | "kycRequest" | "invitation" | "neupIdRequest" | "notification" | "request" | "family" | "backupCode" | "verification" | "userDocument" | "contact" | "neupId" | "password" | "permit" | "session" | "errorLog" | "bugReport" | "userContent" | "recoveryContact" | "application" | "authTeam" | "assetGroupInfo" | "assetGroupMember" | "asset" | "assetMemberRole" | "authTeamExternal" | "authRole" | "authPermissionRecipient" | "accountAccess" | "accessMember" | "userAppConnection" | "appAuthentication" | "appSession" | "authSessionExternal" | "authRoleExternal" | "authPermissionsExternal"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1458,6 +1474,80 @@ export namespace Prisma {
           count: {
             args: Prisma.SystemConfigCountArgs<ExtArgs>
             result: $Utils.Optional<SystemConfigCountAggregateOutputType> | number
+          }
+        }
+      }
+      AppProfile: {
+        payload: Prisma.$AppProfilePayload<ExtArgs>
+        fields: Prisma.AppProfileFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AppProfileFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppProfilePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AppProfileFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppProfilePayload>
+          }
+          findFirst: {
+            args: Prisma.AppProfileFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppProfilePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AppProfileFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppProfilePayload>
+          }
+          findMany: {
+            args: Prisma.AppProfileFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppProfilePayload>[]
+          }
+          create: {
+            args: Prisma.AppProfileCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppProfilePayload>
+          }
+          createMany: {
+            args: Prisma.AppProfileCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AppProfileCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppProfilePayload>[]
+          }
+          delete: {
+            args: Prisma.AppProfileDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppProfilePayload>
+          }
+          update: {
+            args: Prisma.AppProfileUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppProfilePayload>
+          }
+          deleteMany: {
+            args: Prisma.AppProfileDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AppProfileUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AppProfileUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppProfilePayload>[]
+          }
+          upsert: {
+            args: Prisma.AppProfileUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppProfilePayload>
+          }
+          aggregate: {
+            args: Prisma.AppProfileAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAppProfile>
+          }
+          groupBy: {
+            args: Prisma.AppProfileGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AppProfileGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AppProfileCountArgs<ExtArgs>
+            result: $Utils.Optional<AppProfileCountAggregateOutputType> | number
           }
         }
       }
@@ -4384,6 +4474,7 @@ export namespace Prisma {
     account?: AccountOmit
     totp?: TotpOmit
     systemConfig?: SystemConfigOmit
+    appProfile?: AppProfileOmit
     authRequest?: AuthRequestOmit
     activityLog?: ActivityLogOmit
     accountStatusLog?: AccountStatusLogOmit
@@ -9502,6 +9593,971 @@ export namespace Prisma {
      * Omit specific fields from the SystemConfig
      */
     omit?: SystemConfigOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AppProfile
+   */
+
+  export type AggregateAppProfile = {
+    _count: AppProfileCountAggregateOutputType | null
+    _min: AppProfileMinAggregateOutputType | null
+    _max: AppProfileMaxAggregateOutputType | null
+  }
+
+  export type AppProfileMinAggregateOutputType = {
+    key: string | null
+    updatedAt: Date | null
+  }
+
+  export type AppProfileMaxAggregateOutputType = {
+    key: string | null
+    updatedAt: Date | null
+  }
+
+  export type AppProfileCountAggregateOutputType = {
+    key: number
+    data: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AppProfileMinAggregateInputType = {
+    key?: true
+    updatedAt?: true
+  }
+
+  export type AppProfileMaxAggregateInputType = {
+    key?: true
+    updatedAt?: true
+  }
+
+  export type AppProfileCountAggregateInputType = {
+    key?: true
+    data?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AppProfileAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AppProfile to aggregate.
+     */
+    where?: AppProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AppProfiles to fetch.
+     */
+    orderBy?: AppProfileOrderByWithRelationInput | AppProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AppProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AppProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AppProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AppProfiles
+    **/
+    _count?: true | AppProfileCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AppProfileMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AppProfileMaxAggregateInputType
+  }
+
+  export type GetAppProfileAggregateType<T extends AppProfileAggregateArgs> = {
+        [P in keyof T & keyof AggregateAppProfile]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAppProfile[P]>
+      : GetScalarType<T[P], AggregateAppProfile[P]>
+  }
+
+
+
+
+  export type AppProfileGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AppProfileWhereInput
+    orderBy?: AppProfileOrderByWithAggregationInput | AppProfileOrderByWithAggregationInput[]
+    by: AppProfileScalarFieldEnum[] | AppProfileScalarFieldEnum
+    having?: AppProfileScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AppProfileCountAggregateInputType | true
+    _min?: AppProfileMinAggregateInputType
+    _max?: AppProfileMaxAggregateInputType
+  }
+
+  export type AppProfileGroupByOutputType = {
+    key: string
+    data: JsonValue
+    updatedAt: Date
+    _count: AppProfileCountAggregateOutputType | null
+    _min: AppProfileMinAggregateOutputType | null
+    _max: AppProfileMaxAggregateOutputType | null
+  }
+
+  type GetAppProfileGroupByPayload<T extends AppProfileGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AppProfileGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AppProfileGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AppProfileGroupByOutputType[P]>
+            : GetScalarType<T[P], AppProfileGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AppProfileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    key?: boolean
+    data?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["appProfile"]>
+
+  export type AppProfileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    key?: boolean
+    data?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["appProfile"]>
+
+  export type AppProfileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    key?: boolean
+    data?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["appProfile"]>
+
+  export type AppProfileSelectScalar = {
+    key?: boolean
+    data?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AppProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"key" | "data" | "updatedAt", ExtArgs["result"]["appProfile"]>
+
+  export type $AppProfilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AppProfile"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      key: string
+      data: Prisma.JsonValue
+      updatedAt: Date
+    }, ExtArgs["result"]["appProfile"]>
+    composites: {}
+  }
+
+  type AppProfileGetPayload<S extends boolean | null | undefined | AppProfileDefaultArgs> = $Result.GetResult<Prisma.$AppProfilePayload, S>
+
+  type AppProfileCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AppProfileFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AppProfileCountAggregateInputType | true
+    }
+
+  export interface AppProfileDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AppProfile'], meta: { name: 'AppProfile' } }
+    /**
+     * Find zero or one AppProfile that matches the filter.
+     * @param {AppProfileFindUniqueArgs} args - Arguments to find a AppProfile
+     * @example
+     * // Get one AppProfile
+     * const appProfile = await prisma.appProfile.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AppProfileFindUniqueArgs>(args: SelectSubset<T, AppProfileFindUniqueArgs<ExtArgs>>): Prisma__AppProfileClient<$Result.GetResult<Prisma.$AppProfilePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AppProfile that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AppProfileFindUniqueOrThrowArgs} args - Arguments to find a AppProfile
+     * @example
+     * // Get one AppProfile
+     * const appProfile = await prisma.appProfile.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AppProfileFindUniqueOrThrowArgs>(args: SelectSubset<T, AppProfileFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AppProfileClient<$Result.GetResult<Prisma.$AppProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AppProfile that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppProfileFindFirstArgs} args - Arguments to find a AppProfile
+     * @example
+     * // Get one AppProfile
+     * const appProfile = await prisma.appProfile.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AppProfileFindFirstArgs>(args?: SelectSubset<T, AppProfileFindFirstArgs<ExtArgs>>): Prisma__AppProfileClient<$Result.GetResult<Prisma.$AppProfilePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AppProfile that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppProfileFindFirstOrThrowArgs} args - Arguments to find a AppProfile
+     * @example
+     * // Get one AppProfile
+     * const appProfile = await prisma.appProfile.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AppProfileFindFirstOrThrowArgs>(args?: SelectSubset<T, AppProfileFindFirstOrThrowArgs<ExtArgs>>): Prisma__AppProfileClient<$Result.GetResult<Prisma.$AppProfilePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AppProfiles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppProfileFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AppProfiles
+     * const appProfiles = await prisma.appProfile.findMany()
+     * 
+     * // Get first 10 AppProfiles
+     * const appProfiles = await prisma.appProfile.findMany({ take: 10 })
+     * 
+     * // Only select the `key`
+     * const appProfileWithKeyOnly = await prisma.appProfile.findMany({ select: { key: true } })
+     * 
+     */
+    findMany<T extends AppProfileFindManyArgs>(args?: SelectSubset<T, AppProfileFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AppProfile.
+     * @param {AppProfileCreateArgs} args - Arguments to create a AppProfile.
+     * @example
+     * // Create one AppProfile
+     * const AppProfile = await prisma.appProfile.create({
+     *   data: {
+     *     // ... data to create a AppProfile
+     *   }
+     * })
+     * 
+     */
+    create<T extends AppProfileCreateArgs>(args: SelectSubset<T, AppProfileCreateArgs<ExtArgs>>): Prisma__AppProfileClient<$Result.GetResult<Prisma.$AppProfilePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AppProfiles.
+     * @param {AppProfileCreateManyArgs} args - Arguments to create many AppProfiles.
+     * @example
+     * // Create many AppProfiles
+     * const appProfile = await prisma.appProfile.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AppProfileCreateManyArgs>(args?: SelectSubset<T, AppProfileCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AppProfiles and returns the data saved in the database.
+     * @param {AppProfileCreateManyAndReturnArgs} args - Arguments to create many AppProfiles.
+     * @example
+     * // Create many AppProfiles
+     * const appProfile = await prisma.appProfile.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AppProfiles and only return the `key`
+     * const appProfileWithKeyOnly = await prisma.appProfile.createManyAndReturn({
+     *   select: { key: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AppProfileCreateManyAndReturnArgs>(args?: SelectSubset<T, AppProfileCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppProfilePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AppProfile.
+     * @param {AppProfileDeleteArgs} args - Arguments to delete one AppProfile.
+     * @example
+     * // Delete one AppProfile
+     * const AppProfile = await prisma.appProfile.delete({
+     *   where: {
+     *     // ... filter to delete one AppProfile
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AppProfileDeleteArgs>(args: SelectSubset<T, AppProfileDeleteArgs<ExtArgs>>): Prisma__AppProfileClient<$Result.GetResult<Prisma.$AppProfilePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AppProfile.
+     * @param {AppProfileUpdateArgs} args - Arguments to update one AppProfile.
+     * @example
+     * // Update one AppProfile
+     * const appProfile = await prisma.appProfile.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AppProfileUpdateArgs>(args: SelectSubset<T, AppProfileUpdateArgs<ExtArgs>>): Prisma__AppProfileClient<$Result.GetResult<Prisma.$AppProfilePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AppProfiles.
+     * @param {AppProfileDeleteManyArgs} args - Arguments to filter AppProfiles to delete.
+     * @example
+     * // Delete a few AppProfiles
+     * const { count } = await prisma.appProfile.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AppProfileDeleteManyArgs>(args?: SelectSubset<T, AppProfileDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AppProfiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppProfileUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AppProfiles
+     * const appProfile = await prisma.appProfile.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AppProfileUpdateManyArgs>(args: SelectSubset<T, AppProfileUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AppProfiles and returns the data updated in the database.
+     * @param {AppProfileUpdateManyAndReturnArgs} args - Arguments to update many AppProfiles.
+     * @example
+     * // Update many AppProfiles
+     * const appProfile = await prisma.appProfile.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AppProfiles and only return the `key`
+     * const appProfileWithKeyOnly = await prisma.appProfile.updateManyAndReturn({
+     *   select: { key: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AppProfileUpdateManyAndReturnArgs>(args: SelectSubset<T, AppProfileUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppProfilePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AppProfile.
+     * @param {AppProfileUpsertArgs} args - Arguments to update or create a AppProfile.
+     * @example
+     * // Update or create a AppProfile
+     * const appProfile = await prisma.appProfile.upsert({
+     *   create: {
+     *     // ... data to create a AppProfile
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AppProfile we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AppProfileUpsertArgs>(args: SelectSubset<T, AppProfileUpsertArgs<ExtArgs>>): Prisma__AppProfileClient<$Result.GetResult<Prisma.$AppProfilePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AppProfiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppProfileCountArgs} args - Arguments to filter AppProfiles to count.
+     * @example
+     * // Count the number of AppProfiles
+     * const count = await prisma.appProfile.count({
+     *   where: {
+     *     // ... the filter for the AppProfiles we want to count
+     *   }
+     * })
+    **/
+    count<T extends AppProfileCountArgs>(
+      args?: Subset<T, AppProfileCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AppProfileCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AppProfile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppProfileAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AppProfileAggregateArgs>(args: Subset<T, AppProfileAggregateArgs>): Prisma.PrismaPromise<GetAppProfileAggregateType<T>>
+
+    /**
+     * Group by AppProfile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppProfileGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AppProfileGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AppProfileGroupByArgs['orderBy'] }
+        : { orderBy?: AppProfileGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AppProfileGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAppProfileGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AppProfile model
+   */
+  readonly fields: AppProfileFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AppProfile.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AppProfileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AppProfile model
+   */
+  interface AppProfileFieldRefs {
+    readonly key: FieldRef<"AppProfile", 'String'>
+    readonly data: FieldRef<"AppProfile", 'Json'>
+    readonly updatedAt: FieldRef<"AppProfile", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AppProfile findUnique
+   */
+  export type AppProfileFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppProfile
+     */
+    select?: AppProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppProfile
+     */
+    omit?: AppProfileOmit<ExtArgs> | null
+    /**
+     * Filter, which AppProfile to fetch.
+     */
+    where: AppProfileWhereUniqueInput
+  }
+
+  /**
+   * AppProfile findUniqueOrThrow
+   */
+  export type AppProfileFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppProfile
+     */
+    select?: AppProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppProfile
+     */
+    omit?: AppProfileOmit<ExtArgs> | null
+    /**
+     * Filter, which AppProfile to fetch.
+     */
+    where: AppProfileWhereUniqueInput
+  }
+
+  /**
+   * AppProfile findFirst
+   */
+  export type AppProfileFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppProfile
+     */
+    select?: AppProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppProfile
+     */
+    omit?: AppProfileOmit<ExtArgs> | null
+    /**
+     * Filter, which AppProfile to fetch.
+     */
+    where?: AppProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AppProfiles to fetch.
+     */
+    orderBy?: AppProfileOrderByWithRelationInput | AppProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AppProfiles.
+     */
+    cursor?: AppProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AppProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AppProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AppProfiles.
+     */
+    distinct?: AppProfileScalarFieldEnum | AppProfileScalarFieldEnum[]
+  }
+
+  /**
+   * AppProfile findFirstOrThrow
+   */
+  export type AppProfileFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppProfile
+     */
+    select?: AppProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppProfile
+     */
+    omit?: AppProfileOmit<ExtArgs> | null
+    /**
+     * Filter, which AppProfile to fetch.
+     */
+    where?: AppProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AppProfiles to fetch.
+     */
+    orderBy?: AppProfileOrderByWithRelationInput | AppProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AppProfiles.
+     */
+    cursor?: AppProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AppProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AppProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AppProfiles.
+     */
+    distinct?: AppProfileScalarFieldEnum | AppProfileScalarFieldEnum[]
+  }
+
+  /**
+   * AppProfile findMany
+   */
+  export type AppProfileFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppProfile
+     */
+    select?: AppProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppProfile
+     */
+    omit?: AppProfileOmit<ExtArgs> | null
+    /**
+     * Filter, which AppProfiles to fetch.
+     */
+    where?: AppProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AppProfiles to fetch.
+     */
+    orderBy?: AppProfileOrderByWithRelationInput | AppProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AppProfiles.
+     */
+    cursor?: AppProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AppProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AppProfiles.
+     */
+    skip?: number
+    distinct?: AppProfileScalarFieldEnum | AppProfileScalarFieldEnum[]
+  }
+
+  /**
+   * AppProfile create
+   */
+  export type AppProfileCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppProfile
+     */
+    select?: AppProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppProfile
+     */
+    omit?: AppProfileOmit<ExtArgs> | null
+    /**
+     * The data needed to create a AppProfile.
+     */
+    data: XOR<AppProfileCreateInput, AppProfileUncheckedCreateInput>
+  }
+
+  /**
+   * AppProfile createMany
+   */
+  export type AppProfileCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AppProfiles.
+     */
+    data: AppProfileCreateManyInput | AppProfileCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AppProfile createManyAndReturn
+   */
+  export type AppProfileCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppProfile
+     */
+    select?: AppProfileSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppProfile
+     */
+    omit?: AppProfileOmit<ExtArgs> | null
+    /**
+     * The data used to create many AppProfiles.
+     */
+    data: AppProfileCreateManyInput | AppProfileCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AppProfile update
+   */
+  export type AppProfileUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppProfile
+     */
+    select?: AppProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppProfile
+     */
+    omit?: AppProfileOmit<ExtArgs> | null
+    /**
+     * The data needed to update a AppProfile.
+     */
+    data: XOR<AppProfileUpdateInput, AppProfileUncheckedUpdateInput>
+    /**
+     * Choose, which AppProfile to update.
+     */
+    where: AppProfileWhereUniqueInput
+  }
+
+  /**
+   * AppProfile updateMany
+   */
+  export type AppProfileUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AppProfiles.
+     */
+    data: XOR<AppProfileUpdateManyMutationInput, AppProfileUncheckedUpdateManyInput>
+    /**
+     * Filter which AppProfiles to update
+     */
+    where?: AppProfileWhereInput
+    /**
+     * Limit how many AppProfiles to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AppProfile updateManyAndReturn
+   */
+  export type AppProfileUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppProfile
+     */
+    select?: AppProfileSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppProfile
+     */
+    omit?: AppProfileOmit<ExtArgs> | null
+    /**
+     * The data used to update AppProfiles.
+     */
+    data: XOR<AppProfileUpdateManyMutationInput, AppProfileUncheckedUpdateManyInput>
+    /**
+     * Filter which AppProfiles to update
+     */
+    where?: AppProfileWhereInput
+    /**
+     * Limit how many AppProfiles to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AppProfile upsert
+   */
+  export type AppProfileUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppProfile
+     */
+    select?: AppProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppProfile
+     */
+    omit?: AppProfileOmit<ExtArgs> | null
+    /**
+     * The filter to search for the AppProfile to update in case it exists.
+     */
+    where: AppProfileWhereUniqueInput
+    /**
+     * In case the AppProfile found by the `where` argument doesn't exist, create a new AppProfile with this data.
+     */
+    create: XOR<AppProfileCreateInput, AppProfileUncheckedCreateInput>
+    /**
+     * In case the AppProfile was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AppProfileUpdateInput, AppProfileUncheckedUpdateInput>
+  }
+
+  /**
+   * AppProfile delete
+   */
+  export type AppProfileDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppProfile
+     */
+    select?: AppProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppProfile
+     */
+    omit?: AppProfileOmit<ExtArgs> | null
+    /**
+     * Filter which AppProfile to delete.
+     */
+    where: AppProfileWhereUniqueInput
+  }
+
+  /**
+   * AppProfile deleteMany
+   */
+  export type AppProfileDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AppProfiles to delete
+     */
+    where?: AppProfileWhereInput
+    /**
+     * Limit how many AppProfiles to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AppProfile without action
+   */
+  export type AppProfileDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppProfile
+     */
+    select?: AppProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppProfile
+     */
+    omit?: AppProfileOmit<ExtArgs> | null
   }
 
 
@@ -51352,6 +52408,15 @@ export namespace Prisma {
   export type SystemConfigScalarFieldEnum = (typeof SystemConfigScalarFieldEnum)[keyof typeof SystemConfigScalarFieldEnum]
 
 
+  export const AppProfileScalarFieldEnum: {
+    key: 'key',
+    data: 'data',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AppProfileScalarFieldEnum = (typeof AppProfileScalarFieldEnum)[keyof typeof AppProfileScalarFieldEnum]
+
+
   export const AuthRequestScalarFieldEnum: {
     id: 'id',
     type: 'type',
@@ -52344,6 +53409,48 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"SystemConfig"> | string
     data?: JsonWithAggregatesFilter<"SystemConfig">
     updatedAt?: DateTimeWithAggregatesFilter<"SystemConfig"> | Date | string
+  }
+
+  export type AppProfileWhereInput = {
+    AND?: AppProfileWhereInput | AppProfileWhereInput[]
+    OR?: AppProfileWhereInput[]
+    NOT?: AppProfileWhereInput | AppProfileWhereInput[]
+    key?: StringFilter<"AppProfile"> | string
+    data?: JsonFilter<"AppProfile">
+    updatedAt?: DateTimeFilter<"AppProfile"> | Date | string
+  }
+
+  export type AppProfileOrderByWithRelationInput = {
+    key?: SortOrder
+    data?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AppProfileWhereUniqueInput = Prisma.AtLeast<{
+    key?: string
+    AND?: AppProfileWhereInput | AppProfileWhereInput[]
+    OR?: AppProfileWhereInput[]
+    NOT?: AppProfileWhereInput | AppProfileWhereInput[]
+    data?: JsonFilter<"AppProfile">
+    updatedAt?: DateTimeFilter<"AppProfile"> | Date | string
+  }, "key">
+
+  export type AppProfileOrderByWithAggregationInput = {
+    key?: SortOrder
+    data?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AppProfileCountOrderByAggregateInput
+    _max?: AppProfileMaxOrderByAggregateInput
+    _min?: AppProfileMinOrderByAggregateInput
+  }
+
+  export type AppProfileScalarWhereWithAggregatesInput = {
+    AND?: AppProfileScalarWhereWithAggregatesInput | AppProfileScalarWhereWithAggregatesInput[]
+    OR?: AppProfileScalarWhereWithAggregatesInput[]
+    NOT?: AppProfileScalarWhereWithAggregatesInput | AppProfileScalarWhereWithAggregatesInput[]
+    key?: StringWithAggregatesFilter<"AppProfile"> | string
+    data?: JsonWithAggregatesFilter<"AppProfile">
+    updatedAt?: DateTimeWithAggregatesFilter<"AppProfile"> | Date | string
   }
 
   export type AuthRequestWhereInput = {
@@ -55424,6 +56531,48 @@ export namespace Prisma {
 
   export type SystemConfigUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    data?: JsonNullValueInput | InputJsonValue
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AppProfileCreateInput = {
+    key: string
+    data: JsonNullValueInput | InputJsonValue
+    updatedAt?: Date | string
+  }
+
+  export type AppProfileUncheckedCreateInput = {
+    key: string
+    data: JsonNullValueInput | InputJsonValue
+    updatedAt?: Date | string
+  }
+
+  export type AppProfileUpdateInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    data?: JsonNullValueInput | InputJsonValue
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AppProfileUncheckedUpdateInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    data?: JsonNullValueInput | InputJsonValue
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AppProfileCreateManyInput = {
+    key: string
+    data: JsonNullValueInput | InputJsonValue
+    updatedAt?: Date | string
+  }
+
+  export type AppProfileUpdateManyMutationInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    data?: JsonNullValueInput | InputJsonValue
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AppProfileUncheckedUpdateManyInput = {
+    key?: StringFieldUpdateOperationsInput | string
     data?: JsonNullValueInput | InputJsonValue
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -58868,6 +60017,22 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedJsonFilter<$PrismaModel>
     _max?: NestedJsonFilter<$PrismaModel>
+  }
+
+  export type AppProfileCountOrderByAggregateInput = {
+    key?: SortOrder
+    data?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AppProfileMaxOrderByAggregateInput = {
+    key?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AppProfileMinOrderByAggregateInput = {
+    key?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type AuthRequestCountOrderByAggregateInput = {

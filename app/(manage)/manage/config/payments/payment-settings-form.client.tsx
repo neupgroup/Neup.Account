@@ -10,7 +10,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/core/hooks/use-toast';
 import { updatePaymentSettings, type PaymentSettings } from '@/services/manage/site/payments';
 
-export function PaymentSettingsForm({ initialSettings }: { initialSettings: PaymentSettings }) {
+type PaymentSettingsFormProps = {
+  initialSettings: PaymentSettings;
+};
+
+export function PaymentSettingsForm({ initialSettings }: PaymentSettingsFormProps) {
   const [isPending, startTransition] = useTransition();
   const [settings, setSettings] = useState<PaymentSettings>(initialSettings);
   const { toast } = useToast();

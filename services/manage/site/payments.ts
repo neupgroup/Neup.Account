@@ -2,11 +2,9 @@
 
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
-import prisma from '@/core/helpers/prisma';
 import { checkPermissions } from '@/core/helpers/user';
 import { logError } from '@/core/helpers/logger';
-
-const PAYMENT_CONFIG_DOC_ID = 'site_payment_settings';
+import { APP_PROFILE_KEYS, readAppProfileData, writeAppProfileData } from '@/services/manage/site/app-profile';
 
 const optionalText = z
   .string()
@@ -52,20 +50,16 @@ const defaultPaymentSettings: PaymentSettings = {
   notes: undefined,
 };
 
-export async function getPaymentSettings(): Promise<PaymentSettings> {
-  const canView = await checkPermissions(['root.payment_config.view']);
-  if (!canView) return defaultPaymentSettings;
+export async function getPaymentSettings(options?: { requirePermission?: boolean }): Promise<PaymentSettings> {
+  const requirePermission = options?.requirePermission ?? true;
+  if (requirePermission) {
+    const canView = await checkPermissions(['root.payment_config.view']);
+    if (!canView) return defaultPaymentSettings;
+  }
 
   try {
-    const config = await prisma.systemConfig.findUnique({
-      where: { id: PAYMENT_CONFIG_DOC_ID },
-    });
-
-    if (!config || !config.data || typeof config.data !== 'object') {
-      return defaultPaymentSettings;
-    }
-
-    const parsed = paymentSettingsSchema.safeParse(config.data);
+    const data = await readAppProfileData(APP_PROFILE_KEYS.payments, defaultPaymentSettings);
+    const parsed = paymentSettingsSchema.safeParse(data);
     if (!parsed.success) {
       return defaultPaymentSettings;
     }
@@ -95,19 +89,19 @@ export async function updatePaymentSettings(
   }
 
   try {
-    await prisma.systemConfig.upsert({
-      where: { id: PAYMENT_CONFIG_DOC_ID },
-      update: { data: validation.data },
-      create: {
-        id: PAYMENT_CONFIG_DOC_ID,
-        data: validation.data,
-      },
-    });
+    const paymentWrite = await writeAppProfileData(APP_PROFILE_KEYS.payments, validation.data);
+    if (!paymentWrite) {
+      return { success: false, error: 'Failed to save payment settings.' };
+    }
 
     revalidatePath('/manage/config');
     revalidatePath('/manage/config/payments');
+    revalidatePath('/payment/neup.pro');
 
-    return { success: true, data: validation.data };
+    return {
+      success: true,
+      data: validation.data,
+    };
   } catch (error) {
     await logError('database', error, 'updatePaymentSettings');
     return { success: false, error: 'Failed to save payment settings.' };

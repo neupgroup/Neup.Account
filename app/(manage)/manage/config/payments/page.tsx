@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { BackButton } from '@/components/ui/back-button';
 import { checkPermissions } from '@/core/helpers/user';
 import { getPaymentSettings } from '@/services/manage/site/payments';
-import { PaymentSettingsForm } from './payment-settings-form';
+import { PaymentSettingsForm } from './payment-settings-form.client';
 
 export default async function ConfigPaymentsPage() {
   const canView = await checkPermissions(['root.payment_config.view']);

@@ -1,12 +1,12 @@
 'use server';
 
-import prisma from '@/core/helpers/prisma';
 import {z} from 'zod';
 import {revalidatePath} from 'next/cache';
 import {logError} from '@/core/helpers/logger';
 import {checkPermissions} from '@/core/helpers/user';
 import crypto from 'crypto';
 import type {SocialLink} from '@/types';
+import { APP_PROFILE_KEYS, readAppProfileData, writeAppProfileData } from '@/services/manage/site/app-profile';
 
 
 // Database schema for social links.
@@ -14,10 +14,6 @@ const formSchema = z.object({
     type: z.enum(['instagram', 'linkedin', 'twitter', 'facebook', 'whatsapp', 'other']),
     url: z.string().url("Please enter a valid URL."),
 });
-
-
-// Document ID for storing social links.
-const SOCIALS_DOC_ID = 'company_socials';
 
 
 // Fetch all social media links.
@@ -28,15 +24,12 @@ export async function getSocialLinks(): Promise<SocialLink[]> {
     if (!canView) return [];
 
     try {
-        const config = await prisma.systemConfig.findUnique({
-            where: { id: SOCIALS_DOC_ID }
-        });
-        
-        if (config && config.data && typeof config.data === 'object') {
-            const data = config.data as any;
-            if (data.links) return data.links as SocialLink[];
-        }
-        return [];
+        const data = await readAppProfileData<{ links?: SocialLink[] }>(
+            APP_PROFILE_KEYS.socials,
+            {},
+        );
+
+        return data.links || [];
     } catch (error) {
         await logError('database', error, 'getSocialLinks');
         return [];
@@ -73,34 +66,18 @@ export async function addSocialLink(formData: FormData): Promise<{
             isVisible: true
         };
 
-        await prisma.$transaction(async (tx) => {
-            const config = await tx.systemConfig.findUnique({
-                where: { id: SOCIALS_DOC_ID }
-            });
-
-            if (config) {
-                const currentData = config.data as any;
-                const currentLinks = (currentData.links || []) as SocialLink[];
-                await tx.systemConfig.update({
-                    where: { id: SOCIALS_DOC_ID },
-                    data: {
-                        data: {
-                            ...currentData,
-                            links: [...currentLinks, newLink]
-                        }
-                    }
-                });
-            } else {
-                await tx.systemConfig.create({
-                    data: {
-                        id: SOCIALS_DOC_ID,
-                        data: {
-                            links: [newLink]
-                        }
-                    }
-                });
-            }
+        const currentData = await readAppProfileData<{ links?: SocialLink[] }>(
+            APP_PROFILE_KEYS.socials,
+            {},
+        );
+        const currentLinks = currentData.links || [];
+        const success = await writeAppProfileData(APP_PROFILE_KEYS.socials, {
+            ...currentData,
+            links: [...currentLinks, newLink],
         });
+        if (!success) {
+            return {success: false, error: 'Failed to add new link.'};
+        }
 
         revalidatePath('/manage/site/socials');
         revalidatePath('/manage/config/socials');
@@ -121,28 +98,21 @@ export async function toggleSocialLinkVisibility(id: string, isVisible: boolean)
     if (!canEdit) return {success: false, error: 'Permission denied.'};
 
     try {
-        await prisma.$transaction(async (tx) => {
-            const config = await tx.systemConfig.findUnique({
-                where: { id: SOCIALS_DOC_ID }
-            });
-
-            if (config) {
-                const currentData = config.data as any;
-                const links = (currentData.links || []) as SocialLink[];
-                const updatedLinks = links.map(link =>
-                    link.id === id ? {...link, isVisible: !link.isVisible} : link
-                );
-                await tx.systemConfig.update({
-                    where: { id: SOCIALS_DOC_ID },
-                    data: {
-                        data: {
-                            ...currentData,
-                            links: updatedLinks
-                        }
-                    }
-                });
-            }
+        const currentData = await readAppProfileData<{ links?: SocialLink[] }>(
+            APP_PROFILE_KEYS.socials,
+            {},
+        );
+        const links = currentData.links || [];
+        const updatedLinks = links.map(link =>
+            link.id === id ? {...link, isVisible: !link.isVisible} : link
+        );
+        const success = await writeAppProfileData(APP_PROFILE_KEYS.socials, {
+            ...currentData,
+            links: updatedLinks,
         });
+        if (!success) {
+            return {success: false, error: 'Failed to update visibility.'};
+        }
 
         revalidatePath('/manage/site/socials');
         revalidatePath('/manage/config/socials');
@@ -160,26 +130,19 @@ export async function deleteSocialLink(id: string): Promise<{ success: boolean; 
     if (!canDelete) return {success: false, error: 'Permission denied.'};
 
     try {
-        await prisma.$transaction(async (tx) => {
-            const config = await tx.systemConfig.findUnique({
-                where: { id: SOCIALS_DOC_ID }
-            });
-
-            if (config) {
-                const currentData = config.data as any;
-                const links = (currentData.links || []) as SocialLink[];
-                const updatedLinks = links.filter(link => link.id !== id);
-                await tx.systemConfig.update({
-                    where: { id: SOCIALS_DOC_ID },
-                    data: {
-                        data: {
-                            ...currentData,
-                            links: updatedLinks
-                        }
-                    }
-                });
-            }
+        const currentData = await readAppProfileData<{ links?: SocialLink[] }>(
+            APP_PROFILE_KEYS.socials,
+            {},
+        );
+        const links = currentData.links || [];
+        const updatedLinks = links.filter(link => link.id !== id);
+        const success = await writeAppProfileData(APP_PROFILE_KEYS.socials, {
+            ...currentData,
+            links: updatedLinks,
         });
+        if (!success) {
+            return {success: false, error: 'Failed to delete link.'};
+        }
 
         revalidatePath('/manage/site/socials');
         revalidatePath('/manage/config/socials');

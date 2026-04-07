@@ -159,6 +159,12 @@ exports.Prisma.SystemConfigScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.AppProfileScalarFieldEnum = {
+  key: 'key',
+  data: 'data',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.AuthRequestScalarFieldEnum = {
   id: 'id',
   type: 'type',
@@ -590,6 +596,7 @@ exports.Prisma.ModelName = {
   Account: 'Account',
   Totp: 'Totp',
   SystemConfig: 'SystemConfig',
+  AppProfile: 'AppProfile',
   AuthRequest: 'AuthRequest',
   ActivityLog: 'ActivityLog',
   AccountStatusLog: 'AccountStatusLog',
