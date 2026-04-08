@@ -5,7 +5,7 @@ import { logActivity } from '@/core/helpers/log-actions';
 import { headers } from 'next/headers';
 import { logError } from '@/core/helpers/logger';
 import { getSessionCookies, clearSessionCookies, setStoredAccountsCookie } from '@/core/helpers/cookies';
-import { expireSession } from './expireSession';
+import { expireSession } from './session';
 
 export async function logoutActiveSession() {
     const { sid, aid, allAccounts } = await getSessionCookies();

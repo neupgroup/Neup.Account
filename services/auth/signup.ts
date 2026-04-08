@@ -9,7 +9,7 @@ import { logError } from '@/core/helpers/logger';
 import type { z } from 'zod';
 import { getAuthRequest, extendAuthRequest } from './utils';
 import { verifyPassword } from './verifyPassword';
-import { makeSession } from './makeSession';
+import { makeSession } from './session';
 import {
   nameSchema,
   demographicsSchema,
