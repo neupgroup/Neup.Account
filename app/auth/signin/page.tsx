@@ -10,7 +10,7 @@ import { submitNeupId, submitPassword } from '@/services/auth/signin';
 import { getSignupStepData } from '@/services/auth/signup';
 import { cancelAccountDeletion } from '@/services/data/delete';
 import { initializeAuthFlow } from '@/services/auth/initialize';
-import { verifyMfa } from '@/services/auth/verify-mfa';
+import { verifyMfa } from '@/services/auth/verifyMfa';
 import { switchActiveAccountByNeupId } from '@/services/auth/switch';
 import { redirectInApp } from '@/core/helpers/navigation';
 import { appendAuthCallbackContext, appendRedirect, hasAuthCallbackContext, shouldReturnToAuthStartForExternalAuthentication } from '@/core/helpers/auth-callback';

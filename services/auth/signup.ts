@@ -9,6 +9,7 @@ import { createAndSetSession } from '@/core/helpers/session';
 import { logError } from '@/core/helpers/logger';
 import type { z } from 'zod';
 import { getAuthRequest, extendAuthRequest } from './utils';
+import { verifyPassword } from './verifyPassword';
 import {
   nameSchema,
   demographicsSchema,
@@ -311,6 +312,15 @@ export async function submitPasswordStep(authRequestId: string, data: z.infer<ty
       error: 'Invalid data.',
       details: validation.error.flatten(),
     };
+
+  const passwordCheck = await verifyPassword({
+    password: validation.data.password,
+    minLength: 8,
+  });
+
+  if (passwordCheck.status !== 'valid') {
+    return { success: false, error: 'Invalid password.' };
+  }
 
   const request = await getAuthRequest(authRequestId);
   if (!request)

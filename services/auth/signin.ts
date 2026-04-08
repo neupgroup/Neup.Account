@@ -1,13 +1,13 @@
 'use server';
 
 import { headers } from 'next/headers';
-import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 import { createAndSetSession } from '@/core/helpers/session';
 import { validateNeupId } from '@/core/helpers/user';
 import { getAuthRequest, extendAuthRequest } from './utils';
 import prisma from '@/core/helpers/prisma';
 import { makeNotification } from '@/services/notifications';
+import { verifyPassword } from './verifyPassword';
 
 const neupIdSchema = z.object({
     neupId: z.string().min(1, "NeupID is required."),
@@ -109,8 +109,12 @@ export async function submitPassword(data: z.infer<typeof passwordSchema>): Prom
         return { success: false, mfaRequired: false, error: "Invalid credentials." };
     }
 
-    const isMatch = await bcrypt.compare(password, passwordRecord.hash);
-    if (!isMatch) {
+    const passwordCheck = await verifyPassword({
+        password,
+        storedHash: passwordRecord.hash,
+    });
+
+    if (passwordCheck.status !== 'valid') {
         return { success: false, mfaRequired: false, error: "Invalid credentials." };
     }
 
