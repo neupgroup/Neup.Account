@@ -42,9 +42,9 @@ export async function createAndSetSession(
     });
 
     const newSession = {
-      accountId: accountId,
-      sessionId: session.id,
-      sessionKey: sessionKey,
+      aid: accountId,
+      sid: session.id,
+      skey: sessionKey,
     };
 
     await setSessionCookies(newSession, expiresOn);
@@ -58,9 +58,9 @@ export async function createAndSetSession(
     const updatedExistingAccounts = existingAccounts.map(acc => ({ ...acc, active: false }));
 
     const newStoredAccount: StoredAccount & { active: boolean } = {
-      accountId: accountId,
-      sessionId: session.id,
-      sessionKey: sessionKey,
+      aid: accountId,
+      sid: session.id,
+      skey: sessionKey,
       expired: false,
       neupId: primaryNeupId,
       active: true, // This new session is the active one
@@ -68,7 +68,7 @@ export async function createAndSetSession(
     
     // Remove any previous sessions for this accountId and add the new one.
     const filteredAccounts = updatedExistingAccounts
-        .filter(acc => acc.accountId !== accountId);
+      .filter(acc => acc.aid !== accountId);
 
     const allAccounts = [...filteredAccounts, newStoredAccount];
     
@@ -97,11 +97,11 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
   const validatedAccounts = await Promise.all(
     allAccounts.map(async (account) => {
       if (account.expired) return account;
-      if (!account.sessionId || !account.sessionKey) return { ...account, expired: true };
+      if (!account.sid || !account.skey) return { ...account, expired: true };
 
       try {
         const session = await prisma.session.findUnique({
-          where: { id: account.sessionId },
+          where: { id: account.sid },
           select: {
             id: true,
             accountId: true,
@@ -119,8 +119,8 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
           !dbExpiresOn ||
           dbExpiresOn < new Date() ||
           session.isExpired ||
-          session.accountId !== account.accountId ||
-          session.authSessionKey !== account.sessionKey;
+          session.accountId !== account.aid ||
+          session.authSessionKey !== account.skey;
 
         if (isInvalid) {
             return { ...account, expired: true };
@@ -145,7 +145,7 @@ export async function cleanupExpiredStoredSessions(): Promise<StoredAccount[]> {
       return account;
     }
 
-    const { sessionId: _sessionId, sessionKey: _sessionKey, ...rest } = account;
+    const { sid: _sid, skey: _skey, ...rest } = account;
     return {
       ...rest,
       expired: true,
@@ -162,7 +162,7 @@ export async function switchToAccount(account: StoredAccount) {
         return { success: false, error: 'Cannot switch to an expired session. Please sign in.' };
     }
     
-    if (!account.sessionId || !account.sessionKey) {
+    if (!account.sid || !account.skey) {
         return { success: false, error: 'Invalid session information. Please sign in.' };
     }
     
@@ -171,7 +171,7 @@ export async function switchToAccount(account: StoredAccount) {
     
     try {
         const session = await prisma.session.findUnique({
-          where: { id: account.sessionId },
+          where: { id: account.sid },
           select: {
             id: true,
             accountId: true,
@@ -181,8 +181,8 @@ export async function switchToAccount(account: StoredAccount) {
         });
 
         if (!session || 
-            session.accountId !== account.accountId ||
-            session.authSessionKey !== account.sessionKey ||
+          session.accountId !== account.aid ||
+          session.authSessionKey !== account.skey ||
             session.isExpired) {
             return { success: false, error: 'Invalid or expired session.' };
         }
@@ -192,22 +192,22 @@ export async function switchToAccount(account: StoredAccount) {
         
         // Set the primary session cookies to the new account's details
         await setSessionCookies({
-            accountId: account.accountId,
-            sessionId: account.sessionId,
-            sessionKey: account.sessionKey,
+          aid: account.aid,
+          sid: account.sid,
+          skey: account.skey,
         }, expiresOn);
         
         const { allAccounts } = await getSessionCookies();
         const updatedAccounts = allAccounts.map(acc => ({
             ...acc,
-            active: acc.accountId === account.accountId
+          active: acc.aid === account.aid
         }));
         await setStoredAccountsCookie(updatedAccounts);
 
 
         return { success: true };
     } catch (error) {
-        await logError('database', error, `switchActiveAccount: ${account.accountId}`);
+        await logError('database', error, `switchActiveAccount: ${account.aid}`);
         return { success: false, error: 'An unexpected error occurred.' };
     }
 }
@@ -229,7 +229,7 @@ export async function switchToAccountByNeupId(neupId: string): Promise<{ success
     return { success: false, error: 'No stored session found for this NeupID.' };
   }
 
-  if (!matchedAccount.sessionId || !matchedAccount.sessionKey || matchedAccount.expired) {
+  if (!matchedAccount.sid || !matchedAccount.skey || matchedAccount.expired) {
     return { success: false, error: 'Stored session is missing or expired.' };
   }
 

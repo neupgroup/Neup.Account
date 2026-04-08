@@ -8,36 +8,36 @@ import { getSessionCookies, clearSessionCookies, setStoredAccountsCookie } from 
 import { makeNotification } from '@/services/notifications';
 
 export async function logoutActiveSession() {
-    const { sessionId, accountId, allAccounts } = await getSessionCookies();
+    const { sid, aid, allAccounts } = await getSessionCookies();
     const headersList = await headers();
     const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';
 
-    if (sessionId && accountId) {
+    if (sid && aid) {
         try {
             await prisma.$transaction([
                 prisma.session.update({
-                    where: { id: sessionId },
+                    where: { id: sid },
                     data: { isExpired: true }
                 }),
                 prisma.appSession.deleteMany({
-                    where: { sessionId: sessionId }
+                    where: { sessionId: sid }
                 })
             ]);
-            await logActivity(accountId, 'Signout', 'Success', ipAddress);
+            await logActivity(aid, 'Signout', 'Success', ipAddress);
             await makeNotification({
-                recipient_id: accountId,
+                recipient_id: aid,
                 action: 'informative.logout',
                 message: 'Your active session was signed out.',
             });
 
             if (allAccounts.length > 0) {
                 const updatedAccounts = allAccounts.map(acc => {
-                    if (acc.sessionId === sessionId) {
+                    if (acc.sid === sid) {
                         // Remove session details for the signed out account
                         return {
                             ...acc,
-                            sessionId: undefined,
-                            sessionKey: undefined,
+                            sid: undefined,
+                            skey: undefined,
                             expired: true,
                         };
                     }

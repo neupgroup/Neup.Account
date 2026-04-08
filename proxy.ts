@@ -42,8 +42,8 @@ export function proxy(request: NextRequest) {
 
   // 5. Auth Check (existence)
   // For all other routes, check for is the auth creds exists or not.
-  const hasSession = request.cookies.has('auth_session_id') && request.cookies.has('auth_session_key');
-  const hasAccount = request.cookies.has('auth_account_id');
+  const hasSession = request.cookies.has('auth_sid') && request.cookies.has('auth_skey');
+  const hasAccount = request.cookies.has('auth_aid');
 
   if (!hasSession || !hasAccount) {
     const url = request.nextUrl.clone();

@@ -7,20 +7,32 @@ import { logError } from '@/core/helpers/logger';
 import { getSessionCookies } from '@/core/helpers/cookies';
 
 export type Session = {
+  aid?: string;
+  sid?: string;
+  skey?: string;
   accountId: string;
   sessionId: string;
   sessionKey: string;
+  jwt?: string;
 };
 
 const SESSION_DURATION_DAYS = 30;
 
 export async function hasActiveSessionCookies(): Promise<boolean> {
   const cookieStore = await cookies();
-  return (
+  const hasNewKeys = (
+    cookieStore.has('auth_aid') &&
+    cookieStore.has('auth_sid') &&
+    cookieStore.has('auth_skey')
+  );
+
+  const hasLegacyKeys = (
     cookieStore.has('auth_account_id') &&
     cookieStore.has('auth_session_id') &&
     cookieStore.has('auth_session_key')
   );
+
+  return hasNewKeys || hasLegacyKeys;
 }
 
 export async function getActiveSession(): Promise<Session | null> {
@@ -53,6 +65,9 @@ export async function getActiveSession(): Promise<Session | null> {
     }
 
     return {
+      aid: session.accountId,
+      sid: sessionId,
+      skey: session.authSessionKey || '',
       accountId: session.accountId,
       sessionId: sessionId,
       sessionKey: session.authSessionKey || '',

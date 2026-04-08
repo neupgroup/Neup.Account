@@ -19,9 +19,9 @@ export async function getStoredAccounts(): Promise<StoredAccount[]> {
 export async function switchActiveAccount(account: StoredAccount) {
     const result = await switchToAccountAction(account);
     if(result.success) {
-        await logActivity(account.accountId, `Switched to account: ${account.neupId}`, 'Success', undefined, undefined);
+        await logActivity(account.aid, `Switched to account: ${account.neupId}`, 'Success', undefined, undefined);
         await makeNotification({
-            recipient_id: account.accountId,
+            recipient_id: account.aid,
             action: 'informative.switch',
             message: 'You switched to this account.',
         });
@@ -86,7 +86,7 @@ export async function logoutStoredSession(sessionId: string): Promise<{ success:
         });
 
 
-        const { allAccounts, sessionId: currentSessionId } = await getSessionCookies();
+        const { allAccounts, sid: currentSessionId } = await getSessionCookies();
         
         // If signing out the active session, clear session cookies
         if (currentSessionId === sessionId) {
@@ -95,12 +95,12 @@ export async function logoutStoredSession(sessionId: string): Promise<{ success:
 
         if (allAccounts.length > 0) {
             const updatedAccounts = allAccounts.map(acc => {
-                if (acc.sessionId === sessionId) {
+                if (acc.sid === sessionId) {
                     // Remove session details but keep account in list
                     return { 
                         ...acc, 
-                        sessionId: undefined, 
-                        sessionKey: undefined, 
+                        sid: undefined, 
+                        skey: undefined, 
                         expired: true,
                         active: false 
                     };
@@ -118,7 +118,7 @@ export async function logoutStoredSession(sessionId: string): Promise<{ success:
 
 export async function removeStoredAccount(accountId: string): Promise<{ success: boolean; error?: string }> {
     try {
-        const { allAccounts, accountId: activeAccountId } = await getSessionCookies();
+        const { allAccounts, aid: activeAccountId } = await getSessionCookies();
         
         // If removing the active account, clear session cookies
         if (accountId === activeAccountId) {
@@ -126,7 +126,7 @@ export async function removeStoredAccount(accountId: string): Promise<{ success:
         }
 
         if (allAccounts.length > 0) {
-            const filteredAccounts = allAccounts.filter(acc => acc.accountId !== accountId);
+            const filteredAccounts = allAccounts.filter(acc => acc.aid !== accountId);
             await setStoredAccountsCookie(filteredAccounts);
         }
         
@@ -196,11 +196,11 @@ async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
     allAccounts.map(async (account) => {
       if (account.expired) return account;
       // If session info is missing, mark as expired but keep account
-      if (!account.sessionId || !account.sessionKey) return { ...account, expired: true };
+    if (!account.sid || !account.skey) return { ...account, expired: true };
 
       try {
         const session = await prisma.session.findUnique({
-            where: { id: account.sessionId }
+            where: { id: account.sid }
         });
 
         if (!session) return { ...account, expired: true };
@@ -211,8 +211,8 @@ async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
           !dbExpiresOn ||
           dbExpiresOn < new Date() ||
           session.isExpired ||
-          session.accountId !== account.accountId ||
-          session.authSessionKey !== account.sessionKey;
+          session.accountId !== account.aid ||
+          session.authSessionKey !== account.skey;
 
         if (isInvalid) {
             return { ...account, expired: true };

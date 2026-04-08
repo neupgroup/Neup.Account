@@ -63,10 +63,10 @@ export async function POST(request: NextRequest) {
         // 4. Handle External App Session (appSessions table)
         // External apps are not on the same domain and need a specific session mapping
         if (appType === 'external') {
-            const { auth_session_id } = body;
+              const authSid = body?.auth_sid || body?.auth_session_id;
             
-            if (!auth_session_id) {
-                 return NextResponse.json({ success: false, error: 'auth_session_id is required for external apps.' }, { status: 400 });
+              if (!authSid) {
+                  return NextResponse.json({ success: false, error: 'auth_sid is required for external apps.' }, { status: 400 });
             }
 
             // Generate a unique sessionValue for the external app
@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
                 data: {
                     accountId,
                     appId,
-                    sessionId: auth_session_id,
+                    sessionId: authSid,
                     sessionValue,
                     activeTill,
                 }

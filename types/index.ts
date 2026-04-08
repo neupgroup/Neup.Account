@@ -10,13 +10,20 @@ export type ApiResponse<T = any> = {
 
 // --- Authentication & Session ---
 export type Session = {
-    accountId: string;
-    sessionId: string;
-    sessionKey: string;
+    aid: string;
+    sid: string;
+    skey: string;
+    jwt?: string;
+    accountId?: string;
+    sessionId?: string;
+    sessionKey?: string;
 };
 
 export type StoredAccount = {
-    accountId: string;
+    aid: string;
+    sid?: string;
+    skey?: string;
+    accountId?: string;
     sessionId?: string;
     sessionKey?: string;
     neupId: string;

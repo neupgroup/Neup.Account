@@ -250,9 +250,10 @@ export async function impersonateUser(userId: string, neupId: string): Promise<{
         const cookieStore = await cookies();
         const cookieOptions = { path: '/', expires: expiresOn, sameSite: 'lax' as const, secure: true, httpOnly: true };
 
-        cookieStore.set('auth_account_id', userId, cookieOptions);
-        cookieStore.set('auth_session_id', newSession.id, cookieOptions);
-        cookieStore.set('auth_session_key', sessionKey, cookieOptions);
+        cookieStore.set('auth_aid', userId, cookieOptions);
+        cookieStore.set('auth_sid', newSession.id, cookieOptions);
+        cookieStore.set('auth_skey', sessionKey, cookieOptions);
+        cookieStore.delete('auth_jwt');
 
         await logActivity(userId, `Admin impersonation started by ${adminId}`, 'Alert', undefined, adminId);
 

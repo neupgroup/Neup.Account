@@ -12,6 +12,9 @@ const ValidateInputSchema = z.object({
   key: z.string().min(1).optional(),
   accountId: z.string().min(1).optional(),
   // Internal/Fast Auth Params
+  auth_aid: z.string().min(1).optional(),
+  auth_sid: z.string().min(1).optional(),
+  auth_skey: z.string().min(1).optional(),
   auth_account_id: z.string().min(1).optional(),
   auth_session_id: z.string().min(1).optional(),
   auth_session_key: z.string().min(1).optional(),
@@ -47,11 +50,18 @@ export async function validateExternalRequest(input: ValidateInput): Promise<Val
     appSecret, 
     key, 
     accountId, 
+    auth_aid,
+    auth_sid,
+    auth_skey,
     auth_account_id, 
     auth_session_id, 
     auth_session_key,
     signup
   } = parsed.data;
+
+  const internalAid = auth_aid || auth_account_id;
+  const internalSid = auth_sid || auth_session_id;
+  const internalSkey = auth_skey || auth_session_key;
 
   // 1. App Validation
   const app = await prisma.application.findUnique({
@@ -64,18 +74,18 @@ export async function validateExternalRequest(input: ValidateInput): Promise<Val
 
   // 2. Handle Internal or Fast Application Validation
   if (appType === 'internal' || appType === 'fast') {
-    if (!auth_account_id || !auth_session_id || !auth_session_key) {
+    if (!internalAid || !internalSid || !internalSkey) {
       return { success: false, error: 'Missing authentication parameters.', status: 400 };
     }
 
     const session = await prisma.session.findUnique({
-      where: { id: auth_session_id },
+      where: { id: internalSid },
     });
 
     if (
       !session ||
-      session.accountId !== auth_account_id ||
-      session.authSessionKey !== auth_session_key ||
+      session.accountId !== internalAid ||
+      session.authSessionKey !== internalSkey ||
       session.isExpired ||
       !session.expiresOn ||
       session.expiresOn < new Date()
@@ -88,7 +98,7 @@ export async function validateExternalRequest(input: ValidateInput): Promise<Val
       return {
         success: true,
         user: {
-          accountId: auth_account_id,
+          accountId: internalAid,
           displayName: '', // Not needed for fast check
           neupId: null,    // Not needed for fast check
         },
@@ -97,8 +107,8 @@ export async function validateExternalRequest(input: ValidateInput): Promise<Val
     }
 
     const [userProfile, userNeupIds] = await Promise.all([
-      getUserProfile(auth_account_id), 
-      getUserNeupIds(auth_account_id)
+      getUserProfile(internalAid), 
+      getUserNeupIds(internalAid)
     ]);
 
     if (!userProfile) {
@@ -108,7 +118,7 @@ export async function validateExternalRequest(input: ValidateInput): Promise<Val
     return {
       success: true,
       user: {
-        accountId: auth_account_id,
+        accountId: internalAid,
         displayName: userProfile?.nameDisplay || `${userProfile?.nameFirst || ''} ${userProfile?.nameLast || ''} `.trim(),
         neupId: userNeupIds[0] || null,
       },

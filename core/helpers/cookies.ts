@@ -35,17 +35,36 @@ const LONG_LIVED_COOKIE_OPTIONS = {
  */
 export async function getSessionCookies() {
     const cookieStore = await cookies();
-    const accountId = cookieStore.get('auth_account_id')?.value;
-    const sessionId = cookieStore.get('auth_session_id')?.value;
-    const sessionKey = cookieStore.get('auth_session_key')?.value;
+    const aid = cookieStore.get('auth_aid')?.value || cookieStore.get('auth_account_id')?.value;
+    const sid = cookieStore.get('auth_sid')?.value || cookieStore.get('auth_session_id')?.value;
+    const skey = cookieStore.get('auth_skey')?.value || cookieStore.get('auth_session_key')?.value;
+    const jwt = cookieStore.get('auth_jwt')?.value;
     const managingCookie = cookieStore.get('auth_managing')?.value;
     const allAccountsCookie = cookieStore.get('auth_accounts');
 
     let allAccounts: StoredAccount[] = [];
     if (allAccountsCookie?.value) {
         try {
-            allAccounts = JSON.parse(allAccountsCookie.value);
-            if (!Array.isArray(allAccounts)) allAccounts = [];
+            const parsed = JSON.parse(allAccountsCookie.value);
+            if (!Array.isArray(parsed)) {
+                allAccounts = [];
+            } else {
+                allAccounts = parsed
+                    .map((account: any) => {
+                        const normalizedAid = account?.aid || account?.accountId;
+                        if (!normalizedAid) return null;
+
+                        return {
+                            aid: normalizedAid,
+                            sid: account?.sid || account?.sessionId,
+                            skey: account?.skey || account?.sessionKey,
+                            neupId: account?.neupId || '',
+                            expired: Boolean(account?.expired),
+                            active: Boolean(account?.active),
+                        } as StoredAccount;
+                    })
+                    .filter(Boolean) as StoredAccount[];
+            }
         } catch (e) {
             allAccounts = [];
         }
@@ -57,9 +76,13 @@ export async function getSessionCookies() {
     }
 
     return {
-        accountId,
-        sessionId,
-        sessionKey,
+        aid,
+        sid,
+        skey,
+        jwt,
+        accountId: aid,
+        sessionId: sid,
+        sessionKey: skey,
         managingAccountId,
         allAccounts,
     };
@@ -73,9 +96,28 @@ export async function setSessionCookies(session: Session, expires: Date) {
     const cookieStore = await cookies();
     const options = { ...COOKIE_OPTIONS, expires };
 
-    cookieStore.set('auth_account_id', session.accountId, options);
-    cookieStore.set('auth_session_id', session.sessionId, options);
-    cookieStore.set('auth_session_key', session.sessionKey, options);
+    const aid = session.aid || session.accountId;
+    const sid = session.sid || session.sessionId;
+    const skey = session.skey || session.sessionKey;
+
+    if (!aid || !sid || !skey) {
+        throw new Error('Missing session values for cookie set.');
+    }
+
+    cookieStore.set('auth_aid', aid, options);
+    cookieStore.set('auth_sid', sid, options);
+    cookieStore.set('auth_skey', skey, options);
+
+    if (session.jwt) {
+        cookieStore.set('auth_jwt', session.jwt, options);
+    } else {
+        cookieStore.delete('auth_jwt');
+    }
+
+    // Remove legacy cookie keys after writing the new keys.
+    cookieStore.delete('auth_account_id');
+    cookieStore.delete('auth_session_id');
+    cookieStore.delete('auth_session_key');
 }
 
 
@@ -84,7 +126,16 @@ export async function setSessionCookies(session: Session, expires: Date) {
  */
 export async function setStoredAccountsCookie(accounts: StoredAccount[]) {
     const cookieStore = await cookies();
-    cookieStore.set('auth_accounts', JSON.stringify(accounts), LONG_LIVED_COOKIE_OPTIONS);
+    const normalizedAccounts = accounts.map((account) => ({
+        aid: account.aid || account.accountId,
+        sid: account.sid || account.sessionId,
+        skey: account.skey || account.sessionKey,
+        neupId: account.neupId,
+        expired: account.expired,
+        active: account.active,
+    }));
+
+    cookieStore.set('auth_accounts', JSON.stringify(normalizedAccounts), LONG_LIVED_COOKIE_OPTIONS);
 }
 
 
@@ -111,6 +162,10 @@ export async function clearManagingCookie() {
  */
 export async function clearSessionCookies() {
     const cookieStore = await cookies();
+    cookieStore.delete('auth_aid');
+    cookieStore.delete('auth_sid');
+    cookieStore.delete('auth_skey');
+    cookieStore.delete('auth_jwt');
     cookieStore.delete('auth_account_id');
     cookieStore.delete('auth_session_id');
     cookieStore.delete('auth_session_key');
