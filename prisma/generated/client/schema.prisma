@@ -430,6 +430,7 @@ model RecoveryContact {
 model Application {
   id             String   @id
   name           String
+  status         String   @default("development")
   party          String   @default("third") // 'first' | 'third'
   description    String?
   icon           String?

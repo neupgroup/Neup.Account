@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { getUserStats } from "@/services/manage/accounts"
 import type { UserStats } from "@/types"
-import { Users, UserCheck, UserPlus, ShieldCheck, Search, Ban, List, Terminal, ArrowRight } from "@/components/icons"
+import { Users, UserCheck, UserPlus, ShieldCheck, Search, Ban, List, Terminal, ArrowRight, AppWindow } from "@/components/icons"
 import { Input } from "@/components/ui/input"
 import { checkPermissions } from "@/core/helpers/user"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -64,6 +64,13 @@ const otherManagementItems = [
         description: "Review and act on pending user requests.",
         icon: List,
         permission: "root.requests.view"
+    },
+    {
+        href: "/manage/applications",
+        label: "Applications",
+        description: "Approve, reject, block, or activate applications.",
+        icon: AppWindow,
+        permission: "root.app.view"
     },
     { 
         href: "/manage/config", 

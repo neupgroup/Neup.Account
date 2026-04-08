@@ -61,6 +61,7 @@ export const navItems = {
     managementNav: [
         { href: "/manage", label: "Home", description: "Manage account roles and permissions." },
         { href: "/manage/requests", label: "Requests", description: "Review and act on pending user requests." },
+        { href: "/manage/applications", label: "Applications", description: "Approve, reject, block, or activate applications." },
         { href: "/manage/config", label: "Configurations", description: "Manage payment settings and footer social accounts." },
     ],
     accountNav: [

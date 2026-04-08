@@ -405,6 +405,7 @@ exports.Prisma.RecoveryContactScalarFieldEnum = {
 exports.Prisma.ApplicationScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  status: 'status',
   party: 'party',
   description: 'description',
   icon: 'icon',

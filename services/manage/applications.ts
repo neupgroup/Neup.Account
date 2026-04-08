@@ -49,6 +49,11 @@ const saveEndpointsSchema = z.object({
   logoutApi: z.string().trim().max(500).optional().or(z.literal('')),
 });
 
+const updateApplicationStatusSchema = z.object({
+  appId: z.string().min(1, 'Application ID is required.'),
+  status: z.enum(['development', 'active', 'rejected', 'blocked']),
+});
+
 const applicationAssetTypes = ['app', 'application'];
 const viewRoleKeys = new Set(['application.view', 'app.view', 'application.edit', 'app.edit', 'application.manage', 'app.manage', 'manage', '*']);
 const editRoleKeys = new Set(['application.edit', 'app.edit', 'application.manage', 'app.manage', 'manage', '*']);
@@ -343,6 +348,7 @@ export async function createManagedApplication(input: { name: string }) {
           id: randomUUID(),
           name: parsed.data.name,
           ownerAccountId: accountId,
+          status: 'development',
         },
         select: {
           id: true,
@@ -444,7 +450,7 @@ export async function createManagedApplication(input: { name: string }) {
   }
 }
 
-export async function getManagedApplications(): Promise<Array<{ id: string; name: string; slug?: string; icon?: string; developer?: string; createdAt: Date; hasSecretKey: boolean }>> {
+export async function getManagedApplications(): Promise<Array<{ id: string; name: string; slug?: string; icon?: string; developer?: string; createdAt: Date; hasSecretKey: boolean; status?: string }>> {
   const accountId = await getActiveAccountId();
   if (!accountId) {
     return [];
@@ -461,6 +467,7 @@ export async function getManagedApplications(): Promise<Array<{ id: string; name
         developer: true,
         createdAt: true,
         appSecret: true,
+        status: true,
       },
     });
 
@@ -512,6 +519,7 @@ export async function getManagedApplications(): Promise<Array<{ id: string; name
             developer: true,
             createdAt: true,
             appSecret: true,
+            status: true,
           },
         })
       : [];
@@ -528,6 +536,7 @@ export async function getManagedApplications(): Promise<Array<{ id: string; name
       developer: application.developer || undefined,
       createdAt: application.createdAt,
       hasSecretKey: Boolean(application.appSecret),
+      status: application.status || undefined,
     }));
   } catch (error) {
     await logError('database', error, 'getManagedApplications');
@@ -757,5 +766,42 @@ export async function saveApplicationEndpoints(input: { appId: string } & Applic
   } catch (error) {
     await logError('database', error, `saveApplicationEndpoints:${parsed.data.appId}`);
     return { success: false, error: 'Failed to save endpoint information.' };
+  }
+}
+
+export async function updateManagedApplicationStatus(input: { appId: string; status: 'development' | 'active' | 'rejected' | 'blocked' }) {
+  const parsed = updateApplicationStatusSchema.safeParse(input);
+  if (!parsed.success) {
+    return { success: false, error: 'Invalid application status.' };
+  }
+
+  const isRootAppManager = await checkPermissions(['root.app.view']);
+  const isBrandManager = await checkPermissions(['linked_accounts.brand.manager']);
+  if (!isRootAppManager && !isBrandManager) {
+    return { success: false, error: 'Permission denied.' };
+  }
+
+  try {
+    const result = await prisma.application.updateMany({
+      where: {
+        id: parsed.data.appId,
+      },
+      data: {
+        status: parsed.data.status,
+      },
+    });
+
+    if (result.count === 0) {
+      return { success: false, error: 'Application not found.' };
+    }
+
+    revalidatePath('/manage/applications');
+    revalidatePath('/data/applications');
+    revalidatePath(`/data/applications/${parsed.data.appId}`);
+
+    return { success: true };
+  } catch (error) {
+    await logError('database', error, `updateManagedApplicationStatus:${parsed.data.appId}`);
+    return { success: false, error: 'Failed to update application status.' };
   }
 }

@@ -33521,6 +33521,7 @@ export namespace Prisma {
   export type ApplicationMinAggregateOutputType = {
     id: string | null
     name: string | null
+    status: string | null
     party: string | null
     description: string | null
     icon: string | null
@@ -33534,6 +33535,7 @@ export namespace Prisma {
   export type ApplicationMaxAggregateOutputType = {
     id: string | null
     name: string | null
+    status: string | null
     party: string | null
     description: string | null
     icon: string | null
@@ -33547,6 +33549,7 @@ export namespace Prisma {
   export type ApplicationCountAggregateOutputType = {
     id: number
     name: number
+    status: number
     party: number
     description: number
     icon: number
@@ -33565,6 +33568,7 @@ export namespace Prisma {
   export type ApplicationMinAggregateInputType = {
     id?: true
     name?: true
+    status?: true
     party?: true
     description?: true
     icon?: true
@@ -33578,6 +33582,7 @@ export namespace Prisma {
   export type ApplicationMaxAggregateInputType = {
     id?: true
     name?: true
+    status?: true
     party?: true
     description?: true
     icon?: true
@@ -33591,6 +33596,7 @@ export namespace Prisma {
   export type ApplicationCountAggregateInputType = {
     id?: true
     name?: true
+    status?: true
     party?: true
     description?: true
     icon?: true
@@ -33680,6 +33686,7 @@ export namespace Prisma {
   export type ApplicationGroupByOutputType = {
     id: string
     name: string
+    status: string
     party: string
     description: string | null
     icon: string | null
@@ -33713,6 +33720,7 @@ export namespace Prisma {
   export type ApplicationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    status?: boolean
     party?: boolean
     description?: boolean
     icon?: boolean
@@ -33742,6 +33750,7 @@ export namespace Prisma {
   export type ApplicationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    status?: boolean
     party?: boolean
     description?: boolean
     icon?: boolean
@@ -33759,6 +33768,7 @@ export namespace Prisma {
   export type ApplicationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    status?: boolean
     party?: boolean
     description?: boolean
     icon?: boolean
@@ -33776,6 +33786,7 @@ export namespace Prisma {
   export type ApplicationSelectScalar = {
     id?: boolean
     name?: boolean
+    status?: boolean
     party?: boolean
     description?: boolean
     icon?: boolean
@@ -33789,7 +33800,7 @@ export namespace Prisma {
     createdAt?: boolean
   }
 
-  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "party" | "description" | "icon" | "website" | "developer" | "appSecret" | "access" | "policies" | "endpoints" | "ownerAccountId" | "createdAt", ExtArgs["result"]["application"]>
+  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "status" | "party" | "description" | "icon" | "website" | "developer" | "appSecret" | "access" | "policies" | "endpoints" | "ownerAccountId" | "createdAt", ExtArgs["result"]["application"]>
   export type ApplicationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     owner?: boolean | Application$ownerArgs<ExtArgs>
     connections?: boolean | Application$connectionsArgs<ExtArgs>
@@ -33831,6 +33842,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
+      status: string
       party: string
       description: string | null
       icon: string | null
@@ -34279,6 +34291,7 @@ export namespace Prisma {
   interface ApplicationFieldRefs {
     readonly id: FieldRef<"Application", 'String'>
     readonly name: FieldRef<"Application", 'String'>
+    readonly status: FieldRef<"Application", 'String'>
     readonly party: FieldRef<"Application", 'String'>
     readonly description: FieldRef<"Application", 'String'>
     readonly icon: FieldRef<"Application", 'String'>
@@ -52720,6 +52733,7 @@ export namespace Prisma {
   export const ApplicationScalarFieldEnum: {
     id: 'id',
     name: 'name',
+    status: 'status',
     party: 'party',
     description: 'description',
     icon: 'icon',
@@ -54961,6 +54975,7 @@ export namespace Prisma {
     NOT?: ApplicationWhereInput | ApplicationWhereInput[]
     id?: StringFilter<"Application"> | string
     name?: StringFilter<"Application"> | string
+    status?: StringFilter<"Application"> | string
     party?: StringFilter<"Application"> | string
     description?: StringNullableFilter<"Application"> | string | null
     icon?: StringNullableFilter<"Application"> | string | null
@@ -54989,6 +55004,7 @@ export namespace Prisma {
   export type ApplicationOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
+    status?: SortOrder
     party?: SortOrder
     description?: SortOrderInput | SortOrder
     icon?: SortOrderInput | SortOrder
@@ -55020,6 +55036,7 @@ export namespace Prisma {
     OR?: ApplicationWhereInput[]
     NOT?: ApplicationWhereInput | ApplicationWhereInput[]
     name?: StringFilter<"Application"> | string
+    status?: StringFilter<"Application"> | string
     party?: StringFilter<"Application"> | string
     description?: StringNullableFilter<"Application"> | string | null
     icon?: StringNullableFilter<"Application"> | string | null
@@ -55048,6 +55065,7 @@ export namespace Prisma {
   export type ApplicationOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+    status?: SortOrder
     party?: SortOrder
     description?: SortOrderInput | SortOrder
     icon?: SortOrderInput | SortOrder
@@ -55070,6 +55088,7 @@ export namespace Prisma {
     NOT?: ApplicationScalarWhereWithAggregatesInput | ApplicationScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Application"> | string
     name?: StringWithAggregatesFilter<"Application"> | string
+    status?: StringWithAggregatesFilter<"Application"> | string
     party?: StringWithAggregatesFilter<"Application"> | string
     description?: StringNullableWithAggregatesFilter<"Application"> | string | null
     icon?: StringNullableWithAggregatesFilter<"Application"> | string | null
@@ -58228,6 +58247,7 @@ export namespace Prisma {
   export type ApplicationCreateInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -58255,6 +58275,7 @@ export namespace Prisma {
   export type ApplicationUncheckedCreateInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -58282,6 +58303,7 @@ export namespace Prisma {
   export type ApplicationUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -58309,6 +58331,7 @@ export namespace Prisma {
   export type ApplicationUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -58336,6 +58359,7 @@ export namespace Prisma {
   export type ApplicationCreateManyInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -58352,6 +58376,7 @@ export namespace Prisma {
   export type ApplicationUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -58367,6 +58392,7 @@ export namespace Prisma {
   export type ApplicationUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60783,6 +60809,7 @@ export namespace Prisma {
   export type ApplicationCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    status?: SortOrder
     party?: SortOrder
     description?: SortOrder
     icon?: SortOrder
@@ -60799,6 +60826,7 @@ export namespace Prisma {
   export type ApplicationMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    status?: SortOrder
     party?: SortOrder
     description?: SortOrder
     icon?: SortOrder
@@ -60812,6 +60840,7 @@ export namespace Prisma {
   export type ApplicationMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    status?: SortOrder
     party?: SortOrder
     description?: SortOrder
     icon?: SortOrder
@@ -65393,6 +65422,7 @@ export namespace Prisma {
   export type ApplicationCreateWithoutOwnerInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -65419,6 +65449,7 @@ export namespace Prisma {
   export type ApplicationUncheckedCreateWithoutOwnerInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -66701,6 +66732,7 @@ export namespace Prisma {
     NOT?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
     id?: StringFilter<"Application"> | string
     name?: StringFilter<"Application"> | string
+    status?: StringFilter<"Application"> | string
     party?: StringFilter<"Application"> | string
     description?: StringNullableFilter<"Application"> | string | null
     icon?: StringNullableFilter<"Application"> | string | null
@@ -73360,6 +73392,7 @@ export namespace Prisma {
   export type ApplicationCreateWithoutAuthTeamsInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -73386,6 +73419,7 @@ export namespace Prisma {
   export type ApplicationUncheckedCreateWithoutAuthTeamsInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -73694,6 +73728,7 @@ export namespace Prisma {
   export type ApplicationUpdateWithoutAuthTeamsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -73720,6 +73755,7 @@ export namespace Prisma {
   export type ApplicationUncheckedUpdateWithoutAuthTeamsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -74407,6 +74443,7 @@ export namespace Prisma {
   export type ApplicationCreateWithoutAuthTeamsExternalInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -74433,6 +74470,7 @@ export namespace Prisma {
   export type ApplicationUncheckedCreateWithoutAuthTeamsExternalInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -74741,6 +74779,7 @@ export namespace Prisma {
   export type ApplicationUpdateWithoutAuthTeamsExternalInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -74767,6 +74806,7 @@ export namespace Prisma {
   export type ApplicationUncheckedUpdateWithoutAuthTeamsExternalInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -75071,6 +75111,7 @@ export namespace Prisma {
   export type ApplicationCreateWithoutAuthRolesInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -75097,6 +75138,7 @@ export namespace Prisma {
   export type ApplicationUncheckedCreateWithoutAuthRolesInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -75272,6 +75314,7 @@ export namespace Prisma {
   export type ApplicationUpdateWithoutAuthRolesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -75298,6 +75341,7 @@ export namespace Prisma {
   export type ApplicationUncheckedUpdateWithoutAuthRolesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -75463,6 +75507,7 @@ export namespace Prisma {
   export type ApplicationCreateWithoutAuthPermissionRecipientsInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -75489,6 +75534,7 @@ export namespace Prisma {
   export type ApplicationUncheckedCreateWithoutAuthPermissionRecipientsInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -75797,6 +75843,7 @@ export namespace Prisma {
   export type ApplicationUpdateWithoutAuthPermissionRecipientsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -75823,6 +75870,7 @@ export namespace Prisma {
   export type ApplicationUncheckedUpdateWithoutAuthPermissionRecipientsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -76260,6 +76308,7 @@ export namespace Prisma {
   export type ApplicationCreateWithoutAccountAccessesInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -76286,6 +76335,7 @@ export namespace Prisma {
   export type ApplicationUncheckedCreateWithoutAccountAccessesInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -76600,6 +76650,7 @@ export namespace Prisma {
   export type ApplicationUpdateWithoutAccountAccessesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -76626,6 +76677,7 @@ export namespace Prisma {
   export type ApplicationUncheckedUpdateWithoutAccountAccessesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -77468,6 +77520,7 @@ export namespace Prisma {
   export type ApplicationCreateWithoutConnectionsInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -77494,6 +77547,7 @@ export namespace Prisma {
   export type ApplicationUncheckedCreateWithoutConnectionsInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -77675,6 +77729,7 @@ export namespace Prisma {
   export type ApplicationUpdateWithoutConnectionsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -77701,6 +77756,7 @@ export namespace Prisma {
   export type ApplicationUncheckedUpdateWithoutConnectionsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -77860,6 +77916,7 @@ export namespace Prisma {
   export type ApplicationCreateWithoutAppAuthenticationsInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -77886,6 +77943,7 @@ export namespace Prisma {
   export type ApplicationUncheckedCreateWithoutAppAuthenticationsInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -78067,6 +78125,7 @@ export namespace Prisma {
   export type ApplicationUpdateWithoutAppAuthenticationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -78093,6 +78152,7 @@ export namespace Prisma {
   export type ApplicationUncheckedUpdateWithoutAppAuthenticationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -78252,6 +78312,7 @@ export namespace Prisma {
   export type ApplicationCreateWithoutAppSessionsInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -78278,6 +78339,7 @@ export namespace Prisma {
   export type ApplicationUncheckedCreateWithoutAppSessionsInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -78494,6 +78556,7 @@ export namespace Prisma {
   export type ApplicationUpdateWithoutAppSessionsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -78520,6 +78583,7 @@ export namespace Prisma {
   export type ApplicationUncheckedUpdateWithoutAppSessionsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -78720,6 +78784,7 @@ export namespace Prisma {
   export type ApplicationCreateWithoutExternalSessionsInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -78746,6 +78811,7 @@ export namespace Prisma {
   export type ApplicationUncheckedCreateWithoutExternalSessionsInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -78927,6 +78993,7 @@ export namespace Prisma {
   export type ApplicationUpdateWithoutExternalSessionsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -78953,6 +79020,7 @@ export namespace Prisma {
   export type ApplicationUncheckedUpdateWithoutExternalSessionsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -79112,6 +79180,7 @@ export namespace Prisma {
   export type ApplicationCreateWithoutExternalRolesInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -79138,6 +79207,7 @@ export namespace Prisma {
   export type ApplicationUncheckedCreateWithoutExternalRolesInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -79319,6 +79389,7 @@ export namespace Prisma {
   export type ApplicationUpdateWithoutExternalRolesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -79345,6 +79416,7 @@ export namespace Prisma {
   export type ApplicationUncheckedUpdateWithoutExternalRolesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -79504,6 +79576,7 @@ export namespace Prisma {
   export type ApplicationCreateWithoutExternalPermissionsInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -79530,6 +79603,7 @@ export namespace Prisma {
   export type ApplicationUncheckedCreateWithoutExternalPermissionsInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -79711,6 +79785,7 @@ export namespace Prisma {
   export type ApplicationUpdateWithoutExternalPermissionsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -79737,6 +79812,7 @@ export namespace Prisma {
   export type ApplicationUncheckedUpdateWithoutExternalPermissionsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -79922,6 +79998,7 @@ export namespace Prisma {
   export type ApplicationCreateManyOwnerInput = {
     id: string
     name: string
+    status?: string
     party?: string
     description?: string | null
     icon?: string | null
@@ -80703,6 +80780,7 @@ export namespace Prisma {
   export type ApplicationUpdateWithoutOwnerInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -80729,6 +80807,7 @@ export namespace Prisma {
   export type ApplicationUncheckedUpdateWithoutOwnerInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
@@ -80755,6 +80834,7 @@ export namespace Prisma {
   export type ApplicationUncheckedUpdateManyWithoutOwnerInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
