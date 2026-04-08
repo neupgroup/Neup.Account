@@ -5,7 +5,7 @@ import { logActivity } from '@/core/helpers/log-actions';
 import { headers } from 'next/headers';
 import { logError } from '@/core/helpers/logger';
 import { getSessionCookies, clearSessionCookies, setStoredAccountsCookie } from '@/core/helpers/cookies';
-import { makeNotification } from '@/services/notifications';
+import { expireSession } from './expireSession';
 
 export async function logoutActiveSession() {
     const { sid, aid, allAccounts } = await getSessionCookies();
@@ -14,21 +14,20 @@ export async function logoutActiveSession() {
 
     if (sid && aid) {
         try {
-            await prisma.$transaction([
-                prisma.session.update({
-                    where: { id: sid },
-                    data: { isExpired: true }
-                }),
-                prisma.appSession.deleteMany({
-                    where: { sessionId: sid }
-                })
-            ]);
-            await logActivity(aid, 'Signout', 'Success', ipAddress);
-            await makeNotification({
-                recipient_id: aid,
-                action: 'informative.logout',
-                message: 'Your active session was signed out.',
+            const expireResult = await expireSession({
+                aid,
+                sid,
+                skey: allAccounts.find((acc) => acc.sid === sid)?.skey || '',
             });
+
+            if (!expireResult.success) {
+                await logError('auth', expireResult.error || 'Unknown error', 'logoutActiveSession:expireSession');
+            }
+
+            await prisma.appSession.deleteMany({
+                where: { sessionId: sid }
+            });
+            await logActivity(aid, 'Signout', 'Success', ipAddress);
 
             if (allAccounts.length > 0) {
                 const updatedAccounts = allAccounts.map(acc => {

@@ -1,13 +1,11 @@
 'use server';
 
-import { headers } from 'next/headers';
 import { z } from 'zod';
-import { createAndSetSession } from '@/core/helpers/session';
 import { validateNeupId } from '@/core/helpers/user';
 import { getAuthRequest, extendAuthRequest } from './utils';
 import prisma from '@/core/helpers/prisma';
-import { makeNotification } from '@/services/notifications';
 import { verifyPassword } from './verifyPassword';
+import { makeSession } from './makeSession';
 
 const neupIdSchema = z.object({
     neupId: z.string().min(1, "NeupID is required."),
@@ -131,16 +129,14 @@ export async function submitPassword(data: z.infer<typeof passwordSchema>): Prom
         await extendAuthRequest(request.id);
         return { success: true, mfaRequired: true };
     } else {
-        const headersList = await headers();
-        const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';
-        const userAgent = headersList.get('user-agent') || 'Unknown User-Agent';
-
-        await createAndSetSession(accountId, 'Password', ipAddress, userAgent);
-        await makeNotification({
-            recipient_id: accountId,
-            action: 'informative.login',
-            message: 'A new sign-in was completed.',
+        const sessionResult = await makeSession({
+            accountId,
+            loginType: 'Password',
         });
+
+        if (!sessionResult.success) {
+            return { success: false, mfaRequired: false, error: sessionResult.error || 'Failed to create session.' };
+        }
 
         await prisma.authRequest.update({
             where: { id: request.id },

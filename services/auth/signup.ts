@@ -5,11 +5,11 @@ import prisma from '@/core/helpers/prisma';
 import bcrypt from 'bcryptjs';
 import { logActivity } from '@/core/helpers/log-actions';
 import { headers } from 'next/headers';
-import { createAndSetSession } from '@/core/helpers/session';
 import { logError } from '@/core/helpers/logger';
 import type { z } from 'zod';
 import { getAuthRequest, extendAuthRequest } from './utils';
 import { verifyPassword } from './verifyPassword';
+import { makeSession } from './makeSession';
 import {
   nameSchema,
   demographicsSchema,
@@ -502,7 +502,15 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
       'Success',
       ipAddress
     );
-    await createAndSetSession(accountId, 'Registration', ipAddress, userAgent);
+
+    const sessionResult = await makeSession({
+      accountId,
+      loginType: 'Registration',
+    });
+
+    if (!sessionResult.success) {
+      return { success: false, error: sessionResult.error || 'Failed to create session.' };
+    }
 
     // Mark the auth request as completed
     await prisma.authRequest.update({
