@@ -1,14 +1,13 @@
 'use server';
 
 import { z } from 'zod';
-import bcrypt from 'bcryptjs';
 import { getActiveAccountId } from '@/core/helpers/auth-actions';
 import { checkPermissions } from '@/core/helpers/user';
 import { logActivity } from '@/core/helpers/log-actions';
 import { logError } from '@/core/helpers/logger';
 import { changePasswordSchema } from '@/schemas/security';
 import { createNotification } from '../notifications';
-import prisma from '@/core/helpers/prisma';
+import { changePassword as changePasswordForAccount } from '@/services/auth/password';
 
 export async function changePassword(data: z.infer<typeof changePasswordSchema>, geolocation?: string) {
     const hasPermission = await checkPermissions(['security.pass.modify']);
@@ -29,30 +28,17 @@ export async function changePassword(data: z.infer<typeof changePasswordSchema>,
     const { currentPassword, newPassword } = validation.data;
 
     try {
-        const passwordRecord = await prisma.password.findUnique({
-            where: { accountId }
+        const changeResult = await changePasswordForAccount({
+            accountId,
+            currentPassword,
+            newPassword,
+            minLength: 8,
         });
 
-        if (!passwordRecord) {
-            return { success: false, error: "Authentication data not found." };
-        }
-
-        const isMatch = await bcrypt.compare(currentPassword, passwordRecord.hash);
-
-        if (!isMatch) {
+        if (!changeResult.success) {
             await logActivity(accountId, 'Password Change Failed', 'Failed', undefined, undefined, geolocation);
-            return { success: false, error: "The current password you entered is incorrect." };
+            return { success: false, error: changeResult.error || "The current password you entered is incorrect." };
         }
-
-        const newHashedPassword = await bcrypt.hash(newPassword, 10);
-
-        await prisma.password.update({
-            where: { accountId },
-            data: {
-                hash: newHashedPassword,
-                passwordLastChanged: new Date()
-            }
-        });
         
         await logActivity(accountId, 'Password Change', 'Success', undefined, undefined, geolocation);
         

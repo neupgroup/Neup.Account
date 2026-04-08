@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { validateNeupId } from '@/core/helpers/user';
 import { getAuthRequest, extendAuthRequest } from './utils';
 import prisma from '@/core/helpers/prisma';
-import { verifyPassword } from './verifyPassword';
+import { verifyPassword } from './password';
 import { makeSession } from './session';
 
 const neupIdSchema = z.object({

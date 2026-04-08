@@ -8,7 +8,7 @@ import { headers } from 'next/headers';
 import { logError } from '@/core/helpers/logger';
 import type { z } from 'zod';
 import { getAuthRequest, extendAuthRequest } from './utils';
-import { verifyPassword } from './verifyPassword';
+import { verifyPassword } from './password';
 import { makeSession } from './session';
 import {
   nameSchema,

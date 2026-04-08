@@ -1,6 +1,7 @@
 "use server";
 
 import bcrypt from 'bcryptjs';
+import prisma from '@/core/helpers/prisma';
 
 /**
  * Status returned by password validation.
@@ -32,12 +33,41 @@ export type VerifyPasswordInput = {
 
 
 /**
+ * Backward-compatible alias for verify input.
+ */
+export type CheckPasswordInput = VerifyPasswordInput;
+
+
+
+/**
  * Password payload extracted from a POST body or a form submission.
  */
 export type PasswordPayload = {
 	password?: string | null;
 	currentPassword?: string | null;
 	newPassword?: string | null;
+};
+
+
+
+/**
+ * Input required to change an account password.
+ */
+export type ChangePasswordInput = {
+	accountId: string;
+	currentPassword: string;
+	newPassword: string;
+	minLength?: number;
+};
+
+
+
+/**
+ * Result returned by password change.
+ */
+export type ChangePasswordResult = {
+	success: boolean;
+	error?: string;
 };
 
 
@@ -107,6 +137,15 @@ export async function verifyPassword(input: VerifyPasswordInput): Promise<Passwo
 
 
 /**
+ * Backward-compatible alias for verifyPassword.
+ */
+export async function checkPassword(input: CheckPasswordInput): Promise<PasswordCheckResult> {
+	return verifyPassword(input);
+}
+
+
+
+/**
  * Validates a password from a POST body.
  */
 export async function verifyPasswordFromPost(
@@ -128,6 +167,18 @@ export async function verifyPasswordFromPost(
 
 
 /**
+ * Backward-compatible alias for verifyPasswordFromPost.
+ */
+export async function checkPasswordFromPost(
+	input: Request | PasswordPayload,
+	options: Omit<CheckPasswordInput, 'password'> & { fieldName?: string } = {}
+): Promise<PasswordCheckResult> {
+	return verifyPasswordFromPost(input, options);
+}
+
+
+
+/**
  * Validates a password from a form submission.
  */
 export async function verifyPasswordFromForm(
@@ -143,4 +194,76 @@ export async function verifyPasswordFromForm(
 		minLength: options.minLength,
 		requireHash: options.requireHash,
 	});
+}
+
+
+
+/**
+ * Backward-compatible alias for verifyPasswordFromForm.
+ */
+export async function checkPasswordFromForm(
+	formData: FormData,
+	options: Omit<CheckPasswordInput, 'password'> & { fieldName?: string } = {}
+): Promise<PasswordCheckResult> {
+	return verifyPasswordFromForm(formData, options);
+}
+
+
+
+/**
+ * Changes a password by verifying current credentials and storing a new hash.
+ */
+export async function changePassword(input: ChangePasswordInput): Promise<ChangePasswordResult> {
+	const accountId = input.accountId?.trim();
+	const currentPassword = input.currentPassword || '';
+	const newPassword = input.newPassword || '';
+	const minLength = input.minLength ?? 8;
+
+	if (!accountId) {
+		return { success: false, error: 'Missing accountId.' };
+	}
+
+	const newPasswordCheck = await verifyPassword({
+		password: newPassword,
+		minLength,
+	});
+
+	if (newPasswordCheck.status !== 'valid') {
+		return { success: false, error: 'Invalid new password.' };
+	}
+
+	try {
+		const passwordRecord = await prisma.password.findUnique({
+			where: { accountId },
+			select: { hash: true },
+		});
+
+		if (!passwordRecord?.hash) {
+			return { success: false, error: 'Authentication data not found.' };
+		}
+
+		const currentPasswordCheck = await verifyPassword({
+			password: currentPassword,
+			storedHash: passwordRecord.hash,
+			requireHash: true,
+		});
+
+		if (currentPasswordCheck.status !== 'valid') {
+			return { success: false, error: 'Current password is incorrect.' };
+		}
+
+		const newHashedPassword = await bcrypt.hash(newPassword, 10);
+
+		await prisma.password.update({
+			where: { accountId },
+			data: {
+				hash: newHashedPassword,
+				passwordLastChanged: new Date(),
+			},
+		});
+
+		return { success: true };
+	} catch {
+		return { success: false, error: 'Failed to change password.' };
+	}
 }
