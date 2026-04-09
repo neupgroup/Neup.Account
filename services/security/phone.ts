@@ -3,7 +3,7 @@
 import prisma from '@/core/helpers/prisma';
 import { logActivity } from '@/core/helpers/log-actions';
 import { logError } from '@/core/helpers/logger';
-import { phoneFormSchema } from '@/schemas/security';
+import { phoneFormSchema } from '@/services/security/schema';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { getPersonalAccountId } from '@/core/helpers/auth-actions';

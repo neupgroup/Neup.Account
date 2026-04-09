@@ -8,7 +8,7 @@ import { logError } from '@/core/helpers/logger';
 import { headers } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import bcrypt from 'bcryptjs';
-import { dependentFormSchema } from '@/schemas/dependent';
+import { dependentFormSchema } from '@/services/manage/accounts/schema';
 import { checkPermissions, getUserProfile, getUserNeupIds } from '@/core/helpers/user';
 
 

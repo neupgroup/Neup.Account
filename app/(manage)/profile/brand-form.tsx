@@ -10,7 +10,7 @@ import { format } from "date-fns"
 
 import { getUserProfile, type UserProfile } from "@/core/helpers/user"
 import { parseDateString, updateBrandProfile } from "@/services/profile"
-import { brandProfileFormSchema } from "@/schemas/auth"
+import { brandProfileFormSchema } from "@/services/profile/schema"
 import { useToast } from "@/core/hooks/use-toast"
 import { cn } from "@/core/helpers/utils"
 

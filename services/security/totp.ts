@@ -10,7 +10,7 @@ import { logActivity } from '@/core/helpers/log-actions';
 import { logError } from '@/core/helpers/logger';
 import { z } from 'zod';
 import crypto from 'crypto';
-import { totpEnableSchema, totpDisableSchema } from '@/schemas/security';
+import { totpEnableSchema, totpDisableSchema } from '@/services/security/schema';
 import { createNotification } from '../notifications';
 import { createHash, randomBytes } from 'crypto';
 

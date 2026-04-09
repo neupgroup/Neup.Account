@@ -4,7 +4,7 @@ import prisma from '@/core/helpers/prisma';
 import { getPersonalAccountId } from '@/core/helpers/auth-actions';
 import { logActivity } from '@/core/helpers/log-actions';
 import { logError } from '@/core/helpers/logger';
-import { emailFormSchema } from '@/schemas/security';
+import { emailFormSchema } from '@/services/security/schema';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { checkPermissions } from '@/core/helpers/user-actions';

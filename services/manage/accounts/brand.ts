@@ -8,7 +8,7 @@ import { getPersonalAccountId } from '@/core/helpers/auth-actions';
 import { z } from 'zod';
 import { headers } from 'next/headers';
 import { revalidatePath } from 'next/cache';
-import { brandCreationSchema } from '@/schemas/auth';
+import { brandCreationSchema } from '@/services/manage/accounts/schema';
 import type { BrandAccount } from '@/types';
 import { logActivity } from '@/core/helpers/log-actions';
 

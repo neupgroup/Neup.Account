@@ -29,7 +29,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Loader2, Plus, Trash2 } from "@/components/icons";
 import { cn } from "@/core/helpers/utils";
 import { BackButton } from "@/components/ui/back-button";
-import { emailFormSchema } from "@/schemas/security";
+import { emailFormSchema } from "@/services/security/schema";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 
 type EmailFormValues = z.infer<typeof emailFormSchema>;

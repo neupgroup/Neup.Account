@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { getPersonalAccountId } from '@/core/helpers/auth-actions';
 import { checkPermissions } from '@/core/helpers/user';
-import { emailFormSchema } from '@/schemas/security';
+import { emailFormSchema } from '@/services/security/schema';
 import { createNotification } from '../notifications';
 import prisma from '@/core/helpers/prisma';
 

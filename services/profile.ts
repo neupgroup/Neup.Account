@@ -6,7 +6,7 @@ import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { format, isValid, parse as parseWithFormat } from 'date-fns';
-import { brandProfileFormSchema } from '@/schemas/auth';
+import { brandProfileFormSchema } from '@/services/profile/schema';
 import { getUserProfile, checkPermissions, checkNeupIdAvailability, getUserNeupIds } from '@/core/helpers/user';
 import { logActivity } from '@/core/helpers/log-actions';
 import { getAITextResponse } from '@/services/shared/ai';
