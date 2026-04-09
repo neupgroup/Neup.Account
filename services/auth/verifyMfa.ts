@@ -1,3 +1,3 @@
 'use server';
 
-export { verifyTotpFromPost as verifyMfa } from './verifyTotp';
+export { verifyTotpFromPost as verifyMfa } from './totp';
