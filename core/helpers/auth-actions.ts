@@ -1,10 +1,9 @@
 'use server';
 
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import prisma from '@/core/helpers/prisma';
 import { logError } from '@/core/helpers/logger';
-import { getSessionCookies } from '@/core/helpers/cookies';
+import { authCookies, getSessionCookies } from '@/core/helpers/cookies';
 
 export type Session = {
   aid?: string;
@@ -19,17 +18,16 @@ export type Session = {
 const SESSION_DURATION_DAYS = 30;
 
 export async function hasActiveSessionCookies(): Promise<boolean> {
-  const cookieStore = await cookies();
   const hasNewKeys = (
-    cookieStore.has('auth_aid') &&
-    cookieStore.has('auth_sid') &&
-    cookieStore.has('auth_skey')
+    Boolean(await authCookies.get('auth_aid')) &&
+    Boolean(await authCookies.get('auth_sid')) &&
+    Boolean(await authCookies.get('auth_skey'))
   );
 
   const hasLegacyKeys = (
-    cookieStore.has('auth_account_id') &&
-    cookieStore.has('auth_session_id') &&
-    cookieStore.has('auth_session_key')
+    Boolean(await authCookies.get('auth_account_id')) &&
+    Boolean(await authCookies.get('auth_session_id')) &&
+    Boolean(await authCookies.get('auth_session_key'))
   );
 
   return hasNewKeys || hasLegacyKeys;

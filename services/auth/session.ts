@@ -1,8 +1,9 @@
 "use server";
 
-import { cookies, headers } from 'next/headers';
+import { headers } from 'next/headers';
 import prisma from '@/core/helpers/prisma';
 import { createAndSetSession } from '@/core/helpers/session';
+import { authCookies } from '@/core/helpers/cookies';
 import { makeNotification } from '@/services/notifications';
 
 /**
@@ -188,12 +189,10 @@ export async function validateAuthSession(input: ValidateAuthSessionInput): Prom
  * Reads auth cookies and validates them using validateAuthSession().
  */
 export async function validateAuthSessionFromCookies(): Promise<AuthValidationResult> {
-	const cookieStore = await cookies();
-
 	return validateAuthSession({
-		auth_aid: cookieStore.get('auth_aid')?.value || '',
-		auth_sid: cookieStore.get('auth_sid')?.value || '',
-		auth_skey: cookieStore.get('auth_skey')?.value || '',
+		auth_aid: (await authCookies.get('auth_aid')) || '',
+		auth_sid: (await authCookies.get('auth_sid')) || '',
+		auth_skey: (await authCookies.get('auth_skey')) || '',
 	});
 }
 
@@ -254,12 +253,10 @@ export async function expireSession(input: ExpireSessionInput): Promise<ExpireSe
  * Reads the active auth cookies and expires the matching session.
  */
 export async function expireSessionFromCookies(): Promise<ExpireSessionResult> {
-	const cookieStore = await cookies();
-
 	return expireSession({
-		aid: cookieStore.get('auth_aid')?.value || cookieStore.get('aid')?.value || '',
-		sid: cookieStore.get('auth_sid')?.value || cookieStore.get('sid')?.value || '',
-		skey: cookieStore.get('auth_skey')?.value || cookieStore.get('skey')?.value || '',
+		aid: (await authCookies.get('auth_aid')) || (await authCookies.get('aid')) || '',
+		sid: (await authCookies.get('auth_sid')) || (await authCookies.get('sid')) || '',
+		skey: (await authCookies.get('auth_skey')) || (await authCookies.get('skey')) || '',
 	});
 }
 

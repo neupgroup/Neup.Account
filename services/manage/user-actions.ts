@@ -6,11 +6,12 @@ import { logError } from '@/core/helpers/logger';
 import { checkPermissions, getUserNeupIds } from '@/core/helpers/user';
 import { getPersonalAccountId } from '@/core/helpers/auth-actions';
 import { logActivity } from '@/core/helpers/log-actions';
-import { cookies, headers } from 'next/headers';
+import { headers } from 'next/headers';
 import crypto from 'crypto';
 import { z } from 'zod';
 import { createNotification } from '../notifications';
 import { warningReasons } from '@/app/(manage)/manage/[id]/forms';
+import { setSessionCookies } from '@/core/helpers/cookies';
 
 
 // --- Administrative Actions ---
@@ -247,13 +248,11 @@ export async function impersonateUser(userId: string, neupId: string): Promise<{
             }
         });
 
-        const cookieStore = await cookies();
-        const cookieOptions = { path: '/', expires: expiresOn, sameSite: 'lax' as const, secure: true, httpOnly: true };
-
-        cookieStore.set('auth_aid', userId, cookieOptions);
-        cookieStore.set('auth_sid', newSession.id, cookieOptions);
-        cookieStore.set('auth_skey', sessionKey, cookieOptions);
-        cookieStore.delete('auth_jwt');
+        await setSessionCookies({
+            aid: userId,
+            sid: newSession.id,
+            skey: sessionKey,
+        }, expiresOn);
 
         await logActivity(userId, `Admin impersonation started by ${adminId}`, 'Alert', undefined, adminId);
 

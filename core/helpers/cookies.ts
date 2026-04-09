@@ -34,7 +34,7 @@ const LONG_LIVED_COOKIE_OPTIONS = {
 };
 
 
-class AuthCookiesHelper extends Singleton {
+export class AuthCookiesHelper extends Singleton {
     public constructor() {
         super();
     }
@@ -193,7 +193,8 @@ class AuthCookiesHelper extends Singleton {
     }
 }
 
-const authCookies = AuthCookiesHelper.getInstance();
+// Shared singleton used by all server helpers and services.
+export const authCookies = AuthCookiesHelper.getInstance();
 
 
 /**

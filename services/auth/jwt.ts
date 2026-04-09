@@ -1,8 +1,8 @@
 "use server";
 
-import { cookies } from 'next/headers';
 import jwt, { TokenExpiredError } from 'jsonwebtoken';
 import prisma from '@/core/helpers/prisma';
+import { authCookies } from '@/core/helpers/cookies';
 
 
 
@@ -102,12 +102,10 @@ export async function validateJwt(input: ValidateJwtInput): Promise<JwtValidatio
  * Reads JWT session values from cookies and validates them.
  */
 export async function validateJwtFromCookies(): Promise<JwtValidationResult> {
-	const cookieStore = await cookies();
-
-	const aid = cookieStore.get('aid')?.value || cookieStore.get('auth_aid')?.value || '';
-	const sid = cookieStore.get('sid')?.value || cookieStore.get('auth_sid')?.value || '';
-	const skey = cookieStore.get('skey')?.value || cookieStore.get('auth_skey')?.value || '';
-	const token = cookieStore.get('jwt')?.value || cookieStore.get('auth_jwt')?.value || '';
+	const aid = (await authCookies.get('aid')) || (await authCookies.get('auth_aid')) || '';
+	const sid = (await authCookies.get('sid')) || (await authCookies.get('auth_sid')) || '';
+	const skey = (await authCookies.get('skey')) || (await authCookies.get('auth_skey')) || '';
+	const token = (await authCookies.get('jwt')) || (await authCookies.get('auth_jwt')) || '';
 
 	return validateJwt({
 		aid,

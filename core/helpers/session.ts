@@ -2,7 +2,6 @@
 
 import prisma from '@/core/helpers/prisma';
 import crypto from 'crypto';
-import { cookies } from 'next/headers';
 
 import { logError } from './logger';
 import type { Session, StoredAccount } from '@/types';

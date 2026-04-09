@@ -3,7 +3,7 @@ import React from 'react';
 import { getActiveAccountId } from '@/core/helpers/auth-actions';
 import { notFound } from 'next/navigation';
 import { getAccessibleAccounts } from '@/services/manage/accounts/accessible';
-import { cookies } from 'next/headers';
+import { authCookies } from '@/core/helpers/cookies';
 import { ListItem } from '@/components/ui/list-item';
 import { SecondaryHeader } from '@/components/ui/secondary-header';
 import { Bot, Building, UserPlus, FolderGit2 } from '@/components/icons';
@@ -41,8 +41,7 @@ export default async function AccountsPage() {
     notFound();
   }
 
-  const cookieStore = await cookies();
-  const isManaging = !!cookieStore.get('auth_managing')?.value;
+  const isManaging = Boolean(await authCookies.get('auth_managing'));
 
   let accountsToShow: any[] = [];
 
