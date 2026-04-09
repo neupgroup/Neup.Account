@@ -14,7 +14,7 @@ import { AccountListItem } from '../accounts/account-list-item';
 import type { StoredAccount } from '@/types';
 import { appendAuthCallbackContext, appendRedirect, getAppDisplayName, shouldReturnToAuthStartForExternalAuthentication } from '@/core/helpers/auth-callback';
 import { redirectInApp } from '@/core/helpers/navigation';
-import { cleanupStoredSessionsAction } from '@/services/auth/cleanup-stored-sessions';
+import { cleanupExpiredStoredSessions } from '@/core/helpers/session';
 
 interface StartPageComponentProps {
   accounts: StoredAccount[];
@@ -32,7 +32,7 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
   const redirects = searchParams.get('redirects');
 
   useEffect(() => {
-    void cleanupStoredSessionsAction();
+    void cleanupExpiredStoredSessions();
 
     if (error === 'inactivity') {
       toast({

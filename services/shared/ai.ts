@@ -1,5 +1,8 @@
 const AI_TEXT_ENDPOINT = 'https://neupgroup.com/cloud/bridge/api.v1/getResponse?type=text';
 
+/**
+ * Type AITextResponsePayload.
+ */
 export type AITextResponsePayload = {
   context: unknown;
   query?: string;
@@ -7,6 +10,10 @@ export type AITextResponsePayload = {
 
 const DEFAULT_QUERY = 'convert to date in YYYY-MM-DD';
 
+
+/**
+ * Function extractTextFromResponse.
+ */
 function extractTextFromResponse(payload: unknown): string | null {
   if (typeof payload === 'string') {
     return payload.trim();
@@ -35,6 +42,10 @@ function extractTextFromResponse(payload: unknown): string | null {
   return null;
 }
 
+
+/**
+ * Function getAITextResponse.
+ */
 export async function getAITextResponse({
   context,
   query = DEFAULT_QUERY,

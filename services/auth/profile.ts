@@ -1,6 +1,9 @@
 import prisma from '@/core/helpers/prisma';
 import { logError } from '@/core/helpers/logger';
 
+/**
+ * Function bridgeGetProfile.
+ */
 export async function bridgeGetProfile(input: {
   searchParams: URLSearchParams;
   headers: Headers;

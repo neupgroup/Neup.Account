@@ -15,6 +15,10 @@ export type AccessibleAccount = StoredAccount & {
     active: boolean;
 };
 
+
+/**
+ * Function getAccessibleAccounts.
+ */
 export async function getAccessibleAccounts(): Promise<AccessibleAccount[]> {
     const personalAccountId = await getPersonalAccountId();
     if (!personalAccountId) return [];

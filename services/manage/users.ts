@@ -22,6 +22,10 @@ export type UserDetailsLimited = {
   nameDisplay: string;
 };
 
+
+/**
+ * Function getUserDetails.
+ */
 export async function getUserDetails(
   accountId: string
 ): Promise<UserDetails | null> {
@@ -39,6 +43,10 @@ export async function getUserDetails(
   };
 }
 
+
+/**
+ * Function getAccountDetails.
+ */
 export async function getAccountDetails(accountId: string) {
     const account = await prisma.account.findUnique({
         where: { id: accountId },
@@ -51,6 +59,9 @@ export async function getAccountDetails(accountId: string) {
 }
 
 
+/**
+ * Function getActivity.
+ */
 export async function getActivity(accountId: string): Promise<UserActivityLog[]> {
     const rows = await prisma.activityLog.findMany({
         where: { targetAccountId: accountId },
@@ -73,6 +84,10 @@ export async function getActivity(accountId: string): Promise<UserActivityLog[]>
 
 import { PERMISSION_SET } from '@/core/helpers/permissions';
 
+
+/**
+ * Function getPermissions.
+ */
 export async function getPermissions(accountId: string): Promise<UserPermissions> {
     const permit = await prisma.permit.findFirst({
         where: { accountId, forSelf: true },
@@ -114,6 +129,10 @@ export async function getPermissions(accountId: string): Promise<UserPermissions
     };
 }
 
+
+/**
+ * Function updateUserPermissions.
+ */
 export async function updateUserPermissions(accountId: string, newPermissionIds: string[], newRestrictionIds: string[]): Promise<{success: boolean, error?: string}> {
     const canUpdate = await checkPermissions(['root.permission.edit']);
     if (!canUpdate) {
@@ -158,6 +177,9 @@ export async function updateUserPermissions(accountId: string, newPermissionIds:
 }
 
 
+/**
+ * Function getUserDashboardStats.
+ */
 export async function getUserDashboardStats(accountId: string): Promise<UserDashboardStats> {
     const last = await prisma.activityLog.findFirst({
         where: { targetAccountId: accountId },

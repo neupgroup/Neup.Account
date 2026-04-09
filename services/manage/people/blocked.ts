@@ -11,6 +11,9 @@ const neupIdSchema = z.object({
   neupId: z.string().min(3, 'NeupID must be at least 3 characters.'),
 });
 
+/**
+ * Type BlockedUser.
+ */
 export type BlockedUser = {
   accountId: string;
   neupId: string;
@@ -18,7 +21,12 @@ export type BlockedUser = {
   displayPhoto?: string;
 };
 
+
+/**
+ * Type BlockJson.
+ */
 type BlockJson = { blockList?: string[]; restrictList?: string[] } | null;
+
 
 // Helper function to find a user's account ID by their NeupID
 async function findAccountIdByNeupId(neupId: string): Promise<string | null> {
@@ -30,6 +38,7 @@ async function findAccountIdByNeupId(neupId: string): Promise<string | null> {
     return null;
   }
 }
+
 
 // Unified function to fetch either blocked or restricted users
 async function getList(type: 'blockList' | 'restrictList'): Promise<BlockedUser[]> {
@@ -63,13 +72,22 @@ async function getList(type: 'blockList' | 'restrictList'): Promise<BlockedUser[
   }
 }
 
+
+/**
+ * Function getBlockedUsers.
+ */
 export async function getBlockedUsers(): Promise<BlockedUser[]> {
   return getList('blockList');
 }
 
+
+/**
+ * Function getRestrictedUsers.
+ */
 export async function getRestrictedUsers(): Promise<BlockedUser[]> {
   return getList('restrictList');
 }
+
 
 // Unified function to add a user to a list
 async function addUserToList(neupId: string, type: 'blockList' | 'restrictList'): Promise<{ success: boolean; error?: string; }> {
@@ -106,13 +124,22 @@ async function addUserToList(neupId: string, type: 'blockList' | 'restrictList')
   }
 }
 
+
+/**
+ * Function blockUser.
+ */
 export async function blockUser(neupId: string) {
   return addUserToList(neupId, 'blockList');
 }
 
+
+/**
+ * Function restrictUser.
+ */
 export async function restrictUser(neupId: string) {
   return addUserToList(neupId, 'restrictList');
 }
+
 
 // Unified function to remove a user from a list
 async function removeUserFromList(accountId: string, type: 'blockList' | 'restrictList'): Promise<{ success: boolean; error?: string; }> {
@@ -137,10 +164,18 @@ async function removeUserFromList(accountId: string, type: 'blockList' | 'restri
   }
 }
 
+
+/**
+ * Function unblockUser.
+ */
 export async function unblockUser(accountId: string) {
   return removeUserFromList(accountId, 'blockList');
 }
 
+
+/**
+ * Function unrestrictUser.
+ */
 export async function unrestrictUser(accountId: string) {
   return removeUserFromList(accountId, 'restrictList');
 }

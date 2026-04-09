@@ -3,8 +3,15 @@
 import { updateManagedApplicationStatus } from '@/services/manage/applications';
 
 const statusOptions = ['development', 'active', 'rejected', 'blocked'] as const;
+/**
+ * Type AppStatus.
+ */
 type AppStatus = (typeof statusOptions)[number];
 
+
+/**
+ * Function updateManagedApplicationStatusFromForm.
+ */
 export async function updateManagedApplicationStatusFromForm(formData: FormData) {
   const appId = String(formData.get('appId') || '');
   const status = String(formData.get('status') || '') as AppStatus;

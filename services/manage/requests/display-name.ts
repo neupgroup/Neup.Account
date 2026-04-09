@@ -7,6 +7,9 @@ import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
 import { getPersonalAccountId } from '@/core/helpers/auth-actions';
 
+/**
+ * Type DisplayNameRequest.
+ */
 export type DisplayNameRequest = {
   id: string;
   accountId: string;
@@ -15,6 +18,10 @@ export type DisplayNameRequest = {
   createdAt: string;
 };
 
+
+/**
+ * Function getDisplayNameRequests.
+ */
 export async function getDisplayNameRequests(): Promise<DisplayNameRequest[]> {
     const canView = await checkPermissions(['root.requests.view']);
     if (!canView) return [];
@@ -54,6 +61,10 @@ export async function getDisplayNameRequests(): Promise<DisplayNameRequest[]> {
     }
 }
 
+
+/**
+ * Function processDisplayNameRequest.
+ */
 export async function processDisplayNameRequest(requestId: string, accountId: string, displayName: string, approve: boolean) {
     const canApprove = await checkPermissions(['root.requests.approve']);
     if (!canApprove) return { success: false, error: 'Permission denied.' };

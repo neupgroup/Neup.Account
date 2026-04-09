@@ -12,6 +12,9 @@ import prisma from '@/core/helpers/prisma';
 
 const CONTACT_TYPE = 'recoveryEmail';
 
+/**
+ * Function getRecoveryEmail.
+ */
 export async function getRecoveryEmail(): Promise<string | null> {
     try {
         const canView = await checkPermissions(['security.recovery_email.view']);
@@ -33,6 +36,10 @@ export async function getRecoveryEmail(): Promise<string | null> {
     }
 }
 
+
+/**
+ * Function addRecoveryEmail.
+ */
 export async function addRecoveryEmail(data: z.infer<typeof emailFormSchema>): Promise<{ success: boolean; error?: string; }> {
     const accountId = await getPersonalAccountId();
     if (!accountId) {
@@ -80,6 +87,10 @@ export async function addRecoveryEmail(data: z.infer<typeof emailFormSchema>): P
     }
 }
 
+
+/**
+ * Function removeRecoveryEmail.
+ */
 export async function removeRecoveryEmail(): Promise<{ success: boolean; error?: string; }> {
     const accountId = await getPersonalAccountId();
     if (!accountId) {

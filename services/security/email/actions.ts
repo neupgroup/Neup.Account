@@ -11,6 +11,9 @@ import { checkPermissions } from '@/core/helpers/user-actions';
 
 const CONTACT_TYPE = 'recoveryEmail';
 
+/**
+ * Function getRecoveryEmail.
+ */
 export async function getRecoveryEmail(): Promise<string | null> {
     const canView = await checkPermissions(['security.recovery_email.view']);
     if (!canView) return null;
@@ -33,6 +36,10 @@ export async function getRecoveryEmail(): Promise<string | null> {
     }
 }
 
+
+/**
+ * Function addRecoveryEmail.
+ */
 export async function addRecoveryEmail(data: z.infer<typeof emailFormSchema>): Promise<{ success: boolean; error?: string; }> {
     const canAdd = await checkPermissions(['security.recovery_email.add']);
     if (!canAdd) return { success: false, error: "Permission denied." };
@@ -79,6 +86,10 @@ export async function addRecoveryEmail(data: z.infer<typeof emailFormSchema>): P
     }
 }
 
+
+/**
+ * Function removeRecoveryEmail.
+ */
 export async function removeRecoveryEmail(): Promise<{ success: boolean; error?: string; }> {
     const canRemove = await checkPermissions(['security.recovery_email.remove']);
     if (!canRemove) return { success: false, error: "Permission denied." };

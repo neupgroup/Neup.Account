@@ -32,6 +32,10 @@ export async function encrypt(text: string): Promise<string> {
     return `${iv.toString('hex')}:${Buffer.from(encrypted).toString('hex')}`;
 }
 
+
+/**
+ * Function decrypt.
+ */
 export async function decrypt(encryptedText: string): Promise<string> {
     const { subtle } = await import('crypto');
     const [ivHex, encryptedHex] = encryptedText.split(':');
@@ -58,6 +62,7 @@ export async function getTotpStatus(): Promise<{ isEnabled: boolean }> {
     return { isEnabled: !!totp };
 }
 
+
 // Generate a new secret and QR code for setup
 export async function generateTotpSecret(): Promise<{ secret: string; qrCodeUrl: string }> {
     const accountId = await getActiveAccountId();
@@ -73,6 +78,7 @@ export async function generateTotpSecret(): Promise<{ secret: string; qrCodeUrl:
 
     return { secret, qrCodeUrl };
 }
+
 
 // Verify the token and enable TOTP
 export async function verifyAndEnableTotp(data: z.infer<typeof totpEnableSchema>): Promise<{ success: boolean; error?: string }> {
@@ -168,6 +174,7 @@ export async function disableTotp(data: z.infer<typeof totpDisableSchema>): Prom
         return { success: false, error: 'Could not disable TOTP.' };
     }
 }
+
 
 // Gets the current server time
 export async function getServerTime(): Promise<string> {

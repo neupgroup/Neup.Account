@@ -12,6 +12,9 @@ import { logActivity } from '@/core/helpers/log-actions';
 import { getAITextResponse } from '@/services/shared/ai';
 
 
+/**
+ * Function getDisplayNameSuggestions.
+ */
 export async function getDisplayNameSuggestions(accountId: string): Promise<string[]> {
     const profile = await getUserProfile(accountId);
     if (!profile) return [];
@@ -37,6 +40,10 @@ export async function getDisplayNameSuggestions(accountId: string): Promise<stri
     return Array.from(suggestions);
 }
 
+
+/**
+ * Function getPastProfilePhotos.
+ */
 export async function getPastProfilePhotos(accountId: string): Promise<string[]> {
     try {
         const items = await prisma.userContent.findMany({
@@ -51,6 +58,10 @@ export async function getPastProfilePhotos(accountId: string): Promise<string[]>
     }
 }
 
+
+/**
+ * Function updateOrCreateContact.
+ */
 async function updateOrCreateContact(tx: any, accountId: string, type: string, value: string | undefined, hasPermission: boolean) {
     if (!hasPermission) return;
 
@@ -79,6 +90,9 @@ async function updateOrCreateContact(tx: any, accountId: string, type: string, v
 }
 
 
+/**
+ * Function updateUserProfile.
+ */
 export async function updateUserProfile(accountId: string, data: Record<string, any>, geolocation?: string) {
     const [canModifyProfile, canModifyContact, canModifyNeupId] = await Promise.all([
         checkPermissions(['profile.modify']),
@@ -215,6 +229,10 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
     }
 }
 
+
+/**
+ * Function updateBrandProfile.
+ */
 export async function updateBrandProfile(accountId: string, data: z.infer<typeof brandProfileFormSchema>, locationString?: string) {
     const personalAccountId = await getPersonalAccountId();
     if (!personalAccountId) {
@@ -251,6 +269,9 @@ export async function updateBrandProfile(accountId: string, data: z.infer<typeof
 }
 
 
+/**
+ * Function parseDateString.
+ */
 export async function parseDateString(dateString: string): Promise<{ success: boolean; date: string | null; error?: string }> {
     if (dateString.length > 30) {
         return { success: false, date: null, error: "Date input is too long (max 30 characters)." };

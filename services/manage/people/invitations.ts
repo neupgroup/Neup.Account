@@ -7,6 +7,9 @@ import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
 import type { Invitation } from '@/types';
 
+/**
+ * Function getInvitations.
+ */
 export async function getInvitations(): Promise<Invitation[]> {
     const accountId = await getPersonalAccountId();
     if (!accountId) return [];
@@ -48,6 +51,10 @@ export async function getInvitations(): Promise<Invitation[]> {
     }
 }
 
+
+/**
+ * Function acceptRequest.
+ */
 export async function acceptRequest(requestId: string, notificationId: string): Promise<{ success: boolean; error?: string }> {
      const inviteeId = await getPersonalAccountId();
     if (!inviteeId) return { success: false, error: 'User not authenticated.' };
@@ -153,6 +160,10 @@ export async function acceptRequest(requestId: string, notificationId: string): 
     }
 }
 
+
+/**
+ * Function rejectRequest.
+ */
 export async function rejectRequest(requestId: string, notificationId: string): Promise<{ success: boolean; error?: string }> {
     const inviteeId = await getPersonalAccountId();
     if (!inviteeId) return { success: false, error: 'User not authenticated.' };

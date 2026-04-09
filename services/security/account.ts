@@ -7,6 +7,9 @@
  import { revalidatePath } from 'next/cache';
  import { z } from 'zod';
  
+ /**
+  * Type RecoveryAccount.
+  */
  export type RecoveryAccount = {
    id: string;
    recoveryAccountId: string;
@@ -25,7 +28,11 @@
    pending: 2,
    rejected: 3,
  };
- 
+
+
+ /**
+  * Function getRecoveryAccounts.
+  */
  export async function getRecoveryAccounts(): Promise<RecoveryAccount[]> {
    const canView = await checkPermissions(['security.recovery_accounts.view']);
    if (!canView) return [];
@@ -65,7 +72,11 @@
      return [];
    }
  }
- 
+
+
+ /**
+  * Function addRecoveryAccount.
+  */
  export async function addRecoveryAccount(formData: FormData): Promise<{ success: boolean; error?: string; newAccount?: RecoveryAccount }> {
    const canAdd = await checkPermissions(['security.recovery_accounts.add']);
    if (!canAdd) return { success: false, error: 'Permission denied.' };
@@ -136,7 +147,11 @@
      return { success: false, error: 'An unexpected error occurred.' };
    }
  }
- 
+
+
+ /**
+  * Function removeRecoveryAccount.
+  */
  export async function removeRecoveryAccount(id: string): Promise<{ success: boolean; error?: string }> {
    const canRemove = await checkPermissions(['security.recovery_accounts.remove']);
    if (!canRemove) return { success: false, error: 'Permission denied.' };

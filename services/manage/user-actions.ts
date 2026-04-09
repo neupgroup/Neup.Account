@@ -25,6 +25,9 @@ const sendWarningSchema = z.object({
     days: z.number().optional(),
 });
 
+/**
+ * Function sendWarning.
+ */
 export async function sendWarning(userId: string, data: z.infer<typeof sendWarningSchema>): Promise<{ success: boolean, error?: string }> {
     const canWarn = await checkPermissions(['root.account.send_warning']);
     if (!canWarn) return { success: false, error: 'Permission denied.' };
@@ -103,6 +106,10 @@ const blockServiceSchema = z.object({
     remarks: z.string().min(1, "Remarks are required"),
 });
 
+
+/**
+ * Function blockServiceAccess.
+ */
 export async function blockServiceAccess(userId: string, data: z.infer<typeof blockServiceSchema>): Promise<{ success: boolean, error?: string }> {
     const canBlock = await checkPermissions(['root.account.give_block_account']);
     if (!canBlock) return { success: false, error: 'Permission denied.' };
@@ -176,6 +183,9 @@ export async function blockServiceAccess(userId: string, data: z.infer<typeof bl
 }
 
 
+/**
+ * Function unblockServiceAccess.
+ */
 export async function unblockServiceAccess(userId: string): Promise<{ success: boolean, error?: string }> {
     const canUnblock = await checkPermissions(['root.account.remove_block_account']);
     if (!canUnblock) return { success: false, error: 'Permission denied.' };
@@ -219,6 +229,10 @@ export async function unblockServiceAccess(userId: string): Promise<{ success: b
     }
 }
 
+
+/**
+ * Function impersonateUser.
+ */
 export async function impersonateUser(userId: string, neupId: string): Promise<{ success: boolean, error?: string }> {
     const canImpersonate = await checkPermissions(['root.account.impersonate']);
     if (!canImpersonate) return { success: false, error: 'Permission denied.' };
@@ -273,6 +287,9 @@ export async function impersonateUser(userId: string, neupId: string): Promise<{
 }
 
 
+/**
+ * Function deleteUserAccount.
+ */
 export async function deleteUserAccount(userId: string): Promise<{ success: boolean; error?: string }> {
     const canDelete = await checkPermissions(['root.account.delete']);
     if (!canDelete) {
@@ -329,6 +346,10 @@ export async function deleteUserAccount(userId: string): Promise<{ success: bool
     }
 }
 
+
+/**
+ * Function setProStatus.
+ */
 export async function setProStatus(accountId: string, isPro: boolean, reason: string): Promise<{ success: boolean; error?: string }> {
     const canModify = await checkPermissions(['root.account.edit_pro_status']);
     if (!canModify) return { success: false, error: 'Permission denied.' };

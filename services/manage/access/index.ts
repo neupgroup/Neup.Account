@@ -10,6 +10,9 @@ import { logActivity } from '@/core/helpers/log-actions';
 import type { UserAccess, AccessDetails, Permission } from '@/types';
 import { PERMISSION_SET } from '@/core/helpers/permissions';
 
+/**
+ * Function getMasterPermissions.
+ */
 export async function getMasterPermissions(): Promise<Permission[]> {
     // Collect all unique permission set keys (roles) and unique permissions from roles
     const allSetKeys = Object.keys(PERMISSION_SET);
@@ -24,6 +27,10 @@ export async function getMasterPermissions(): Promise<Permission[]> {
     }));
 }
 
+
+/**
+ * Type Invitation.
+ */
 export type Invitation = {
     permitId: string;
     grantedBy: {
@@ -45,6 +52,9 @@ const statusOrder: Record<UserAccess['status'], number> = {
 };
 
 
+/**
+ * Function getAccessList.
+ */
 export async function getAccessList(accountId: string): Promise<UserAccess[]> {
   try {
     const permits = await prisma.permit.findMany({
@@ -83,6 +93,10 @@ export async function getAccessList(accountId: string): Promise<UserAccess[]> {
   }
 }
 
+
+/**
+ * Function getAccessDetails.
+ */
 export async function getAccessDetails(permitId: string): Promise<AccessDetails | null> {
     try {
         const permit = await prisma.permit.findUnique({
@@ -124,6 +138,10 @@ export async function getAccessDetails(permitId: string): Promise<AccessDetails 
     }
 }
 
+
+/**
+ * Function removeAccess.
+ */
 export async function removeAccess(permitId: string, geolocation?: string): Promise<{ success: boolean; error?: string }> {
     const currentAccountId = await getActiveAccountId();
      if (!currentAccountId) {
@@ -155,6 +173,10 @@ export async function removeAccess(permitId: string, geolocation?: string): Prom
     }
 }
 
+
+/**
+ * Function getDelegatablePermissions.
+ */
 export async function getDelegatablePermissions(): Promise<Permission[]> {
     const managedAccountId = await getActiveAccountId();
     if (!managedAccountId) return [];
@@ -170,6 +192,9 @@ export async function getDelegatablePermissions(): Promise<Permission[]> {
 }
 
 
+/**
+ * Function updatePermissions.
+ */
 export async function updatePermissions(permitId: string, newPermissionIds: string[], geolocation?: string): Promise<{ success: boolean, error?: string}> {
     const currentAccountId = await getActiveAccountId();
     if (!currentAccountId) {
@@ -217,6 +242,10 @@ export async function updatePermissions(permitId: string, newPermissionIds: stri
     }
 }
 
+
+/**
+ * Function grantAccessByNeupId.
+ */
 export async function grantAccessByNeupId(formData: FormData, geolocation?: string): Promise<{ success: boolean; error?: string; }> {
     const ownerAccountId = await getActiveAccountId();
     if (!ownerAccountId) {

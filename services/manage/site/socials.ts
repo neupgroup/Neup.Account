@@ -36,6 +36,10 @@ export async function getSocialLinks(): Promise<SocialLink[]> {
     }
 }
 
+
+/**
+ * Function addSocialLink.
+ */
 export async function addSocialLink(formData: FormData): Promise<{
     success: boolean;
     error?: string;
@@ -88,6 +92,10 @@ export async function addSocialLink(formData: FormData): Promise<{
     }
 }
 
+
+/**
+ * Function toggleSocialLinkVisibility.
+ */
 export async function toggleSocialLinkVisibility(id: string, isVisible: boolean): Promise<{
     success: boolean;
     error?: string
@@ -123,6 +131,10 @@ export async function toggleSocialLinkVisibility(id: string, isVisible: boolean)
     }
 }
 
+
+/**
+ * Function deleteSocialLink.
+ */
 export async function deleteSocialLink(id: string): Promise<{ success: boolean; error?: string }> {
     const canDelete =
         (await checkPermissions(['root.site.social_accounts.delete'])) ||

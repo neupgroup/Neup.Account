@@ -10,13 +10,24 @@ export const applicationAccessFields = [
   'gender',
 ] as const;
 
+/**
+ * Type ApplicationAccessField.
+ */
 export type ApplicationAccessField = (typeof applicationAccessFields)[number];
 
+
+/**
+ * Type ApplicationPolicyEntry.
+ */
 export type ApplicationPolicyEntry = {
   name: string;
   policy: string;
 };
 
+
+/**
+ * Type ApplicationEndpointConfig.
+ */
 export type ApplicationEndpointConfig = {
   dataDeletionApi?: string;
   dataDeletionPage?: string;
@@ -26,6 +37,10 @@ export type ApplicationEndpointConfig = {
   logoutApi?: string;
 };
 
+
+/**
+ * Type ManagedApplication.
+ */
 export type ManagedApplication = {
   id: string;
   name: string;

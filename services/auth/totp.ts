@@ -23,7 +23,6 @@ export type TotpActionResult = {
 };
 
 
-
 /**
  * Input for adding/enabling TOTP.
  */
@@ -31,7 +30,6 @@ export type AddTotpInput = {
 	secret: string;
 	token: string;
 };
-
 
 
 /**
@@ -42,7 +40,6 @@ export type RevokeTotpInput = {
 };
 
 
-
 /**
  * Input for direct token verification.
  */
@@ -50,7 +47,6 @@ export type VerifyTotpInput = {
 	accountId: string;
 	token: string;
 };
-
 
 
 /**
@@ -67,7 +63,6 @@ const verifyTotpRequestSchema = z.object({
 	token: z.string().length(6, 'Your one-time password must be 6 characters.'),
 	authRequestId: z.string().min(1),
 });
-
 
 
 /**
@@ -114,7 +109,6 @@ export async function addTotp(input: AddTotpInput): Promise<TotpActionResult> {
 		return { success: false, error: 'Could not enable TOTP.' };
 	}
 }
-
 
 
 /**
@@ -165,7 +159,6 @@ export async function revokeTotp(input: RevokeTotpInput): Promise<TotpActionResu
 }
 
 
-
 /**
  * Verifies a TOTP token for a specific account.
  */
@@ -200,7 +193,6 @@ export async function verifyTotp(input: VerifyTotpInput): Promise<TotpActionResu
 		return { success: false, error: 'Could not verify TOTP.' };
 	}
 }
-
 
 
 /**
@@ -243,7 +235,6 @@ export async function verifyTotpFromPost(
 
 	return { success: true };
 }
-
 
 
 /**

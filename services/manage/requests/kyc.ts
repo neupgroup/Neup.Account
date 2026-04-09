@@ -8,6 +8,9 @@ import { revalidatePath } from 'next/cache';
 import type { KycRequest } from '@/types';
 
 
+/**
+ * Function getPendingKycRequests.
+ */
 export async function getPendingKycRequests(): Promise<KycRequest[]> {
     const canView = await checkPermissions(['root.requests.view']);
     if (!canView) return [];
@@ -50,6 +53,10 @@ export async function getPendingKycRequests(): Promise<KycRequest[]> {
     }
 }
 
+
+/**
+ * Function approveKycRequest.
+ */
 export async function approveKycRequest(kycId: string, accountId: string): Promise<{ success: boolean; error?: string }> {
     const canApprove = await checkPermissions(['root.requests.approve']);
     if (!canApprove) return { success: false, error: 'Permission denied.' };
@@ -75,6 +82,10 @@ export async function approveKycRequest(kycId: string, accountId: string): Promi
     }
 }
 
+
+/**
+ * Function rejectKycRequest.
+ */
 export async function rejectKycRequest(kycId: string, accountId: string, reason: string): Promise<{ success: boolean; error?: string }> {
     const canDeny = await checkPermissions(['root.requests.deny']);
     if (!canDeny) return { success: false, error: 'Permission denied.' };

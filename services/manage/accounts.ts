@@ -7,6 +7,9 @@ import { logError } from '@/core/helpers/logger';
 import { checkPermissions } from '@/core/helpers/user';
 import type { UserStats } from '@/types';
 
+/**
+ * Type AccountListItem.
+ */
 export type AccountListItem = {
     id: string; // accountId
     name: string;
@@ -15,11 +18,19 @@ export type AccountListItem = {
     isRoot: boolean;
 };
 
+
+/**
+ * Type GetAccountsResponse.
+ */
 export type GetAccountsResponse = {
     accounts: AccountListItem[];
     hasNextPage: boolean;
 };
 
+
+/**
+ * Function getUserStats.
+ */
 export async function getUserStats(): Promise<UserStats> {
     const canView = await checkPermissions(['root.dashboard.view']);
     if (!canView) return { totalUsers: 0, activeUsers: 0, signedUpToday: 0 };
@@ -43,6 +54,9 @@ export async function getUserStats(): Promise<UserStats> {
 }
 
 
+/**
+ * Function getAllAccounts.
+ */
 export async function getAllAccounts(
   searchQuery: string,
   page: number,

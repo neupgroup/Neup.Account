@@ -3,6 +3,9 @@
 import { redirect } from 'next/navigation';
 import { addAssetGroupMember, addAssetToGroup, assignAssetMemberRole } from '@/services/manage/access/assets';
 
+/**
+ * Function addMemberToAssetGroupFromForm.
+ */
 export async function addMemberToAssetGroupFromForm(groupId: string, formData: FormData) {
   await addAssetGroupMember({
     groupId,
@@ -15,6 +18,10 @@ export async function addMemberToAssetGroupFromForm(groupId: string, formData: F
   redirect(`/access/${groupId}`);
 }
 
+
+/**
+ * Function addAssetToGroupFromForm.
+ */
 export async function addAssetToGroupFromForm(groupId: string, formData: FormData) {
   await addAssetToGroup({
     groupId,
@@ -26,6 +33,10 @@ export async function addAssetToGroupFromForm(groupId: string, formData: FormDat
   redirect(`/access/${groupId}`);
 }
 
+
+/**
+ * Function assignRoleToAssetMemberFromForm.
+ */
 export async function assignRoleToAssetMemberFromForm(groupId: string, formData: FormData) {
   await assignAssetMemberRole({
     groupId,

@@ -14,6 +14,9 @@ const verificationActionSchema = z.object({
     category: z.string().min(3, "Category is required."),
 });
 
+/**
+ * Function getPendingVerificationRequests.
+ */
 export async function getPendingVerificationRequests(): Promise<VerificationRequest[]> {
     const canView = await checkPermissions(['root.requests.view']);
     if (!canView) return [];
@@ -42,6 +45,10 @@ export async function getPendingVerificationRequests(): Promise<VerificationRequ
     }
 }
 
+
+/**
+ * Function grantVerification.
+ */
 export async function grantVerification(accountId: string, data: z.infer<typeof verificationActionSchema>): Promise<{ success: boolean; error?: string }> {
     const canApprove = await checkPermissions(['root.requests.approve']);
     if (!canApprove) return { success: false, error: 'Permission denied.' };
@@ -100,6 +107,10 @@ export async function grantVerification(accountId: string, data: z.infer<typeof 
     }
 }
 
+
+/**
+ * Function revokeVerification.
+ */
 export async function revokeVerification(accountId: string, reason: string): Promise<{ success: boolean; error?: string }> {
     const canDeny = await checkPermissions(['root.requests.deny']);
     if (!canDeny) return { success: false, error: 'Permission denied.' };
@@ -137,6 +148,10 @@ export async function revokeVerification(accountId: string, reason: string): Pro
     }
 }
 
+
+/**
+ * Function getAccountVerification.
+ */
 export async function getAccountVerification(accountId: string): Promise<{ verified: boolean; category?: string; verifiedAt?: string } | null> {
     try {
         const account = await prisma.account.findUnique({

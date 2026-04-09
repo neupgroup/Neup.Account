@@ -59,6 +59,9 @@ const viewRoleKeys = new Set(['application.view', 'app.view', 'application.edit'
 const editRoleKeys = new Set(['application.edit', 'app.edit', 'application.manage', 'app.manage', 'manage', '*']);
 const ownerRoleKeys = new Set(['application.owner', 'app.owner', 'owner', '*']);
 
+/**
+ * Function normalizeText.
+ */
 function normalizeText(value: unknown): string | undefined {
   if (typeof value !== 'string') {
     return undefined;
@@ -68,6 +71,10 @@ function normalizeText(value: unknown): string | undefined {
   return trimmed.length > 0 ? trimmed : undefined;
 }
 
+
+/**
+ * Function normalizeAccess.
+ */
 function normalizeAccess(value: unknown): ApplicationAccessField[] {
   if (!Array.isArray(value)) {
     return [];
@@ -78,6 +85,10 @@ function normalizeAccess(value: unknown): ApplicationAccessField[] {
   );
 }
 
+
+/**
+ * Function normalizePolicies.
+ */
 function normalizePolicies(value: unknown): ApplicationPolicyEntry[] {
   if (!Array.isArray(value)) {
     return [];
@@ -102,6 +113,10 @@ function normalizePolicies(value: unknown): ApplicationPolicyEntry[] {
     .filter((entry): entry is ApplicationPolicyEntry => entry !== null);
 }
 
+
+/**
+ * Function normalizeEndpoints.
+ */
 function normalizeEndpoints(value: unknown): ApplicationEndpointConfig {
   if (!value || typeof value !== 'object') {
     return {};
@@ -118,6 +133,10 @@ function normalizeEndpoints(value: unknown): ApplicationEndpointConfig {
   };
 }
 
+
+/**
+ * Function resolveApplicationAccessForAccount.
+ */
 async function resolveApplicationAccessForAccount(accountId: string, appId: string): Promise<{ canView: boolean; canEdit: boolean }> {
   try {
     const memberKey = `account:${accountId}`;
@@ -161,6 +180,10 @@ async function resolveApplicationAccessForAccount(accountId: string, appId: stri
   }
 }
 
+
+/**
+ * Function getApplicationAuthorization.
+ */
 async function getApplicationAuthorization(accountId: string, appId: string): Promise<{ exists: boolean; canView: boolean; canEdit: boolean }> {
   const application = await prisma.application.findUnique({
     where: { id: appId },
@@ -179,6 +202,10 @@ async function getApplicationAuthorization(accountId: string, appId: string): Pr
   return { exists: true, canView: access.canView, canEdit: access.canEdit };
 }
 
+
+/**
+ * Function isApplicationOwnerForAccount.
+ */
 async function isApplicationOwnerForAccount(accountId: string, appId: string): Promise<boolean> {
   const app = await prisma.application.findUnique({
     where: { id: appId },
@@ -207,6 +234,10 @@ async function isApplicationOwnerForAccount(accountId: string, appId: string): P
   return ownerRoleRows.some((row) => ownerRoleKeys.has(row.role.trim().toLowerCase()));
 }
 
+
+/**
+ * Type ApplicationDetailsForViewer.
+ */
 export type ApplicationDetailsForViewer = {
   id: string;
   name: string;
@@ -221,6 +252,10 @@ export type ApplicationDetailsForViewer = {
   canDelete: boolean;
 };
 
+
+/**
+ * Function getApplicationDetailsForViewer.
+ */
 export async function getApplicationDetailsForViewer(appId: string): Promise<ApplicationDetailsForViewer | null> {
   const activeAccountId = await getActiveAccountId();
   if (!activeAccountId) return null;
@@ -301,6 +336,10 @@ export async function getApplicationDetailsForViewer(appId: string): Promise<App
   }
 }
 
+
+/**
+ * Function deleteManagedApplication.
+ */
 export async function deleteManagedApplication(appId: string): Promise<{ success: boolean; error?: string }> {
   const activeAccountId = await getActiveAccountId();
   if (!activeAccountId) {
@@ -325,6 +364,10 @@ export async function deleteManagedApplication(appId: string): Promise<{ success
   }
 }
 
+
+/**
+ * Function createManagedApplication.
+ */
 export async function createManagedApplication(input: { name: string }) {
   const parsed = createApplicationSchema.safeParse(input);
   if (!parsed.success) {
@@ -450,6 +493,10 @@ export async function createManagedApplication(input: { name: string }) {
   }
 }
 
+
+/**
+ * Function getManagedApplications.
+ */
 export async function getManagedApplications(): Promise<Array<{ id: string; name: string; slug?: string; icon?: string; developer?: string; createdAt: Date; hasSecretKey: boolean; status?: string }>> {
   const accountId = await getActiveAccountId();
   if (!accountId) {
@@ -544,6 +591,10 @@ export async function getManagedApplications(): Promise<Array<{ id: string; name
   }
 }
 
+
+/**
+ * Function getManagedApplication.
+ */
 export async function getManagedApplication(appId: string): Promise<ManagedApplication | null> {
   const accountId = await getActiveAccountId();
   if (!accountId) {
@@ -590,6 +641,10 @@ export async function getManagedApplication(appId: string): Promise<ManagedAppli
   }
 }
 
+
+/**
+ * Function saveApplicationSecret.
+ */
 export async function saveApplicationSecret(input: { appId: string; secretKey: string }) {
   const parsed = saveSecretSchema.safeParse(input);
   if (!parsed.success) {
@@ -633,6 +688,10 @@ export async function saveApplicationSecret(input: { appId: string; secretKey: s
   }
 }
 
+
+/**
+ * Function saveApplicationAccess.
+ */
 export async function saveApplicationAccess(input: { appId: string; access: ApplicationAccessField[] }) {
   const parsed = saveAccessSchema.safeParse(input);
   if (!parsed.success) {
@@ -676,6 +735,10 @@ export async function saveApplicationAccess(input: { appId: string; access: Appl
   }
 }
 
+
+/**
+ * Function saveApplicationPolicies.
+ */
 export async function saveApplicationPolicies(input: { appId: string; policies: ApplicationPolicyEntry[] }) {
   const parsed = savePoliciesSchema.safeParse(input);
   if (!parsed.success) {
@@ -719,6 +782,10 @@ export async function saveApplicationPolicies(input: { appId: string; policies: 
   }
 }
 
+
+/**
+ * Function saveApplicationEndpoints.
+ */
 export async function saveApplicationEndpoints(input: { appId: string } & ApplicationEndpointConfig) {
   const parsed = saveEndpointsSchema.safeParse(input);
   if (!parsed.success) {
@@ -769,6 +836,10 @@ export async function saveApplicationEndpoints(input: { appId: string } & Applic
   }
 }
 
+
+/**
+ * Function updateManagedApplicationStatus.
+ */
 export async function updateManagedApplicationStatus(input: { appId: string; status: 'development' | 'active' | 'rejected' | 'blocked' }) {
   const parsed = updateApplicationStatusSchema.safeParse(input);
   if (!parsed.success) {

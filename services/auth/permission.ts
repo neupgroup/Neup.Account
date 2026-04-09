@@ -9,7 +9,6 @@ import { logError } from '@/core/helpers/logger';
 type PermissionCheckReason = '404' | 'accountBlocked' | 'invalidSource' | 'forbidden';
 
 
-
 /**
  * Standard response shape for permission checks.
  */
@@ -28,7 +27,6 @@ export type PermissionCheckResult =
 	};
 
 
-
 /**
  * Generic mutation result for permission updates/revocations.
  */
@@ -37,7 +35,6 @@ export type PermissionMutationResult = {
 	error?: string;
 	permissions?: string[];
 };
-
 
 
 /**
@@ -53,7 +50,6 @@ export type CheckPermissionInput = {
 };
 
 
-
 /**
  * Inputs required to replace permissions for an account within an app/api scope.
  */
@@ -65,7 +61,6 @@ export type UpdatePermissionInput = {
 	for_account?: string;
 	permissions: string[];
 };
-
 
 
 /**
@@ -81,7 +76,6 @@ export type RevokePermissionInput = {
 };
 
 
-
 /**
  * Minimal block metadata used to determine whether an account is blocked.
  */
@@ -91,7 +85,6 @@ type BlockInfo = {
 } | null;
 
 
-
 /**
  * Session identity after auth validation.
  */
@@ -99,7 +92,6 @@ type ResolvedAuth = {
 	accountId: string;
 	validTill: Date;
 };
-
 
 
 /**
@@ -118,7 +110,6 @@ function hasActiveBlock(block: BlockInfo, now: Date): boolean {
 }
 
 
-
 /**
  * Normalizes a list of permission strings.
  */
@@ -134,14 +125,12 @@ function normalizePermissionList(input: string | string[]): string[] {
 }
 
 
-
 /**
  * Normalizes a permission or role string for comparisons.
  */
 function normalizePermission(value: string): string {
 	return value.trim().toLowerCase();
 }
-
 
 
 /**
@@ -163,7 +152,6 @@ function hasPermission(granted: Set<string>, required: string): boolean {
 
 	return false;
 }
-
 
 
 /**
@@ -224,7 +212,6 @@ async function resolveAuthenticatedAccount(input: { app: string; sid: string; sk
 		validTill: internalSession.expiresOn,
 	};
 }
-
 
 
 /**
@@ -395,7 +382,6 @@ async function resolvePermissionSet(input: {
 }
 
 
-
 /**
  * Ensures actor can manage permission records for target account.
  */
@@ -414,7 +400,6 @@ async function canManagePermissions(actorAccountId: string, targetAccountId: str
 	const granted = new Set(actorPermissions.permissions.map(normalizePermission));
 	return hasPermission(granted, 'application.manage') || hasPermission(granted, 'application.owner') || hasPermission(granted, 'app.manage') || hasPermission(granted, 'app.owner');
 }
-
 
 
 /**
@@ -492,7 +477,6 @@ export async function checkPermission(input: CheckPermissionInput): Promise<Perm
 }
 
 
-
 /**
  * Replaces permission records for a target account within app/api scope.
  */
@@ -553,7 +537,6 @@ export async function updatePermission(input: UpdatePermissionInput): Promise<Pe
 		return { success: false, error: 'Failed to update permission.' };
 	}
 }
-
 
 
 /**

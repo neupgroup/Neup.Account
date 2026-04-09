@@ -12,14 +12,12 @@ import { authCookies } from '@/core/helpers/cookies';
 export type JwtValidationStatus = 'expired' | 'invalid' | 'valid' | 'unauthorized';
 
 
-
 /**
  * Standard response for JWT checks.
  */
 export type JwtValidationResult = {
 	status: JwtValidationStatus;
 };
-
 
 
 /**
@@ -31,7 +29,6 @@ export type ValidateJwtInput = {
 	skey: string;
 	jwt: string;
 };
-
 
 
 /**
@@ -95,7 +92,6 @@ export async function validateJwt(input: ValidateJwtInput): Promise<JwtValidatio
 		return { status: 'invalid' };
 	}
 }
-
 
 
 /**

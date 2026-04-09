@@ -6,6 +6,9 @@
  import { whatsAppFormSchema, verifyCodeSchema } from '@/app/(manage)/accounts/whatsapp/schema';
  import { revalidatePath } from 'next/cache';
  
+ /**
+  * Function sendVerificationCode.
+  */
  export async function sendVerificationCode(data: z.infer<typeof whatsAppFormSchema>): Promise<{ success: boolean; error?: string }> {
    const accountId = await getActiveAccountId();
    if (!accountId) {
@@ -27,7 +30,11 @@
      return { success: false, error: 'An unexpected error occurred.' };
    }
  }
- 
+
+
+ /**
+  * Function linkWhatsAppAccount.
+  */
  export async function linkWhatsAppAccount(data: z.infer<typeof verifyCodeSchema>): Promise<{ success: boolean; error?: string }> {
    const accountId = await getActiveAccountId();
    if (!accountId) {

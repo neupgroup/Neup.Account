@@ -17,7 +17,6 @@ export type BackupCode = {
 };
 
 
-
 /**
  * Generic backup operation result.
  */
@@ -29,7 +28,6 @@ export type BackupCodeActionResult = {
 };
 
 
-
 /**
  * Input for verifying a backup code.
  */
@@ -37,7 +35,6 @@ export type VerifyBackupCodeInput = {
 	accountId: string;
 	code: string;
 };
-
 
 
 /**
@@ -49,11 +46,12 @@ export type ExpireBackupCodeInput = {
 };
 
 
-
+/**
+ * Function generateSingleCode.
+ */
 function generateSingleCode(): string {
 	return crypto.randomBytes(4).toString('hex').toUpperCase();
 }
-
 
 
 /**
@@ -92,7 +90,6 @@ export async function verifyBackupCode(input: VerifyBackupCodeInput): Promise<Ba
 		return { success: false, error: 'Could not verify backup code.' };
 	}
 }
-
 
 
 /**
@@ -137,7 +134,6 @@ export async function generateBackupCode(): Promise<BackupCodeActionResult> {
 }
 
 
-
 /**
  * Returns backup codes for the active account.
  */
@@ -167,7 +163,6 @@ export async function getBackupCode(): Promise<BackupCodeActionResult> {
 		return { success: false, error: 'Could not fetch backup codes.' };
 	}
 }
-
 
 
 /**

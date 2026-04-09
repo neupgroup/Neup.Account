@@ -35,11 +35,18 @@ const assignRoleSchema = z.object({
   role: z.string().trim().min(1, 'Role is required.').max(120, 'Role is too long.'),
 });
 
+/**
+ * Function normalizeDetails.
+ */
 function normalizeDetails(value?: string): string | null {
   const trimmed = (value || '').trim();
   return trimmed.length > 0 ? trimmed : null;
 }
 
+
+/**
+ * Function canAccessGroup.
+ */
 async function canAccessGroup(groupId: string, accountId: string): Promise<boolean> {
   const memberKey = `account:${accountId}`;
 
@@ -54,6 +61,10 @@ async function canAccessGroup(groupId: string, accountId: string): Promise<boole
   return Boolean(member);
 }
 
+
+/**
+ * Function getAccessAssetGroups.
+ */
 export async function getAccessAssetGroups() {
   const accountId = await getActiveAccountId();
   if (!accountId) return [];
@@ -87,6 +98,10 @@ export async function getAccessAssetGroups() {
   }
 }
 
+
+/**
+ * Function getAccessAssetGroup.
+ */
 export async function getAccessAssetGroup(groupId: string) {
   const accountId = await getActiveAccountId();
   if (!accountId) return null;
@@ -119,6 +134,10 @@ export async function getAccessAssetGroup(groupId: string) {
   }
 }
 
+
+/**
+ * Function createAssetGroup.
+ */
 export async function createAssetGroup(input: { name: string; details?: string }) {
   const accountId = await getActiveAccountId();
   if (!accountId) {
@@ -161,6 +180,10 @@ export async function createAssetGroup(input: { name: string; details?: string }
   }
 }
 
+
+/**
+ * Function addAssetGroupMember.
+ */
 export async function addAssetGroupMember(input: {
   groupId: string;
   member: string;
@@ -216,6 +239,10 @@ export async function addAssetGroupMember(input: {
   }
 }
 
+
+/**
+ * Function addAssetToGroup.
+ */
 export async function addAssetToGroup(input: { groupId: string; asset: string; type: string; details?: string }) {
   const accountId = await getActiveAccountId();
   if (!accountId) {
@@ -251,6 +278,10 @@ export async function addAssetToGroup(input: { groupId: string; asset: string; t
   }
 }
 
+
+/**
+ * Function assignAssetMemberRole.
+ */
 export async function assignAssetMemberRole(input: {
   groupId: string;
   assetMember: string;

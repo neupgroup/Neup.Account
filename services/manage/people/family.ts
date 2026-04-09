@@ -16,7 +16,6 @@ const addAccountSchema = z.object({
 });
 
 // --- NEW INVITATION-BASED LOGIC ---
-
 async function createInvite(
   neupId: string,
   type: 'member' | 'partner'
@@ -93,6 +92,10 @@ async function createInvite(
   }
 }
 
+
+/**
+ * Function addFamilyMember.
+ */
 export async function addFamilyMember(
   formData: FormData
 ): Promise<{ success: boolean; error?: string }> {
@@ -110,6 +113,10 @@ export async function addFamilyMember(
   return createInvite(validation.data.neupId, 'member');
 }
 
+
+/**
+ * Function addPartner.
+ */
 export async function addPartner(
   formData: FormData
 ): Promise<{ success: boolean; error?: string }> {
@@ -129,7 +136,6 @@ export async function addPartner(
 
 
 // --- DATA FETCHING FOR DISPLAY ---
-
 async function fetchFamilyGroups(): Promise<FamilyGroup[]> {
   const canView = await checkPermissions(['people.family.view']);
   if (!canView) return [];
@@ -191,10 +197,18 @@ async function fetchFamilyGroups(): Promise<FamilyGroup[]> {
   }
 }
 
+
+/**
+ * Function getFamilyGroups.
+ */
 export async function getFamilyGroups(): Promise<FamilyGroup[]> {
   return fetchFamilyGroups();
 }
 
+
+/**
+ * Function removeFamilyMember.
+ */
 export async function removeFamilyMember(
   familyId: string,
   memberAccountId: string

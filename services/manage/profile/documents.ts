@@ -7,6 +7,9 @@ import { logActivity } from '@/core/helpers/log-actions';
 import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
 
+/**
+ * Type KycSubmissionData.
+ */
 export type KycSubmissionData = {
     documentType: 'passport' | 'license' | 'national_id';
     documentId: string;
@@ -17,6 +20,9 @@ export type KycSubmissionData = {
 };
 
 
+/**
+ * Function submitKyc.
+ */
 export async function submitKyc(accountId: string, data: KycSubmissionData): Promise<{ success: boolean; error?: string }> {
     const canSubmit = await checkPermissions(['profile.kyc.submit']);
     if (!canSubmit) {

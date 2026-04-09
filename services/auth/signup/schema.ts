@@ -7,10 +7,18 @@ export const nameSchema = z.object({
   lastName: z.string().min(1, 'Last name is required'),
 });
 
+
+/**
+ * Schema displayNameSchema.
+ */
 export const displayNameSchema = z.object({
   displayName: z.string().min(3, 'Display name must be at least 3 characters.'),
 });
 
+
+/**
+ * Schema demographicsSchema.
+ */
 export const demographicsSchema = z.object({
   gender: z.enum(['male', 'female', 'custom', 'prefer_not_to_say'], { required_error: 'Please select a gender.' }),
   customGender: z.string().optional(),
@@ -20,26 +28,50 @@ export const demographicsSchema = z.object({
   }, { message: 'Date of birth is required.' }),
 });
 
+
+/**
+ * Schema nationalitySchema.
+ */
 export const nationalitySchema = z.object({
   nationality: z.string().min(2, 'Please select a country.'),
 });
 
+
+/**
+ * Schema contactSchema.
+ */
 export const contactSchema = z.object({
   phone: z.string().min(10, 'A valid phone number is required.'),
 });
 
+
+/**
+ * Schema otpSchema.
+ */
 export const otpSchema = z.object({
   code: z.string().length(6, 'Code must be 6 digits.'),
 });
 
+
+/**
+ * Schema neupidSchema.
+ */
 export const neupidSchema = z.object({
   neupId: z.string().min(3, 'NeupID must be at least 3 characters.'),
 });
 
+
+/**
+ * Schema passwordSchema.
+ */
 export const passwordSchema = z.object({
   password: z.string().min(8, 'Password must be at least 8 characters.'),
 });
 
+
+/**
+ * Schema termsSchema.
+ */
 export const termsSchema = z.object({
   agreement: z.boolean().refine((val) => val === true, {
     message: 'You must agree to the terms and conditions.',

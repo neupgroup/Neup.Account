@@ -14,6 +14,9 @@ const formSchema = z.object({
     password: z.string().min(1, "Password is required to request deletion."),
 });
 
+/**
+ * Function requestAccountDeletion.
+ */
 export async function requestAccountDeletion(data: z.infer<typeof formSchema>, geolocation?: string): Promise<{ success: boolean; error?: string; }> {
   const canDelete = await checkPermissions(['data.delete_account.start']);
   if (!canDelete) {
@@ -81,6 +84,9 @@ export async function requestAccountDeletion(data: z.infer<typeof formSchema>, g
 }
 
 
+/**
+ * Function cancelAccountDeletion.
+ */
 export async function cancelAccountDeletion(accountId: string): Promise<{ success: boolean; error?: string }> {
     try {
         await prisma.account.update({

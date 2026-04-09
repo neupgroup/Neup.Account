@@ -13,6 +13,9 @@ import { randomBytes } from 'crypto';
 import { getUserProfile } from '@/services/shared/user';
 import { validateExternalRequest } from '@/services/auth/validate';
 
+/**
+ * Type AuthSignStep.
+ */
 export type AuthSignStep = 'profile' | 'access' | 'terms';
 
 export const authSignStepOrder: AuthSignStep[] = ['profile', 'access', 'terms'];
@@ -32,8 +35,16 @@ const accessLabelMap: Record<string, string> = {
 	phone: 'Phone',
 };
 
+
+/**
+ * Type AuthSignContext.
+ */
 export type AuthSignContext = ReturnType<typeof getServerAuthContext>;
 
+
+/**
+ * Type AuthSignPageData.
+ */
 export type AuthSignPageData = {
 	redirectTo?: string;
 	context: AuthSignContext;
@@ -63,6 +74,10 @@ export type AuthSignPageData = {
 	} | null;
 };
 
+
+/**
+ * Function getFirst.
+ */
 function getFirst(value: string | string[] | undefined): string | undefined {
 	if (Array.isArray(value)) {
 		return value[0] ?? undefined;
@@ -71,6 +86,10 @@ function getFirst(value: string | string[] | undefined): string | undefined {
 	return value;
 }
 
+
+/**
+ * Function getStep.
+ */
 function getStep(value: string | string[] | undefined): AuthSignStep {
 	const first = getFirst(value);
 	if (first === 'access' || first === 'terms' || first === 'profile') {
@@ -80,6 +99,10 @@ function getStep(value: string | string[] | undefined): AuthSignStep {
 	return 'profile';
 }
 
+
+/**
+ * Function buildSignUrl.
+ */
 function buildSignUrl(
 	context: AuthSignContext,
 	step: AuthSignStep,
@@ -96,6 +119,10 @@ function buildSignUrl(
 	return query ? `/auth/sign?${query}` : '/auth/sign';
 }
 
+
+/**
+ * Function normalizeAccess.
+ */
 function normalizeAccess(access: unknown): string[] {
 	if (!Array.isArray(access)) {
 		return ['Name', 'Email', 'NeupID', 'Phone'];
@@ -109,6 +136,10 @@ function normalizeAccess(access: unknown): string[] {
 	return values.length > 0 ? values : ['Name', 'Email', 'NeupID', 'Phone'];
 }
 
+
+/**
+ * Function getTermsText.
+ */
 function getTermsText(policies: unknown): string {
 	if (!Array.isArray(policies)) {
 		return 'By continuing, you agree to this application\'s terms and data usage rules.';
@@ -135,6 +166,10 @@ function getTermsText(policies: unknown): string {
 		: 'By continuing, you agree to this application\'s terms and data usage rules.';
 }
 
+
+/**
+ * Function getAuthSignPageData.
+ */
 export async function getAuthSignPageData(
 	searchParams: Record<string, string | string[] | undefined>
 ): Promise<AuthSignPageData> {
@@ -262,6 +297,10 @@ export async function getAuthSignPageData(
 	};
 }
 
+
+/**
+ * Function bridgeSignIntoApplication.
+ */
 export async function bridgeSignIntoApplication(input: { appId?: string; appType?: string; [key: string]: any }): Promise<{ status: number; body: Record<string, any> }> {
 	try {
 		const appId = input?.appId;

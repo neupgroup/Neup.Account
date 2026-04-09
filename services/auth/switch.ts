@@ -11,11 +11,14 @@ import { makeNotification } from '../notifications';
 
 // This function is now just a wrapper or re-export if needed, but the main logic is in lib/session
 // However, the client uses this file for actions.
-
 export async function getStoredAccounts(): Promise<StoredAccount[]> {
     return getValidatedStoredAccounts();
 }
 
+
+/**
+ * Function switchActiveAccount.
+ */
 export async function switchActiveAccount(account: StoredAccount) {
     const result = await switchToAccountAction(account);
     if(result.success) {
@@ -29,6 +32,10 @@ export async function switchActiveAccount(account: StoredAccount) {
     return result;
 }
 
+
+/**
+ * Function switchActiveAccountByNeupId.
+ */
 export async function switchActiveAccountByNeupId(neupId: string) {
     const { switchToAccountByNeupId } = await import('@/core/helpers/session');
     const result = await switchToAccountByNeupId(neupId);
@@ -53,6 +60,10 @@ export async function switchActiveAccountByNeupId(neupId: string) {
     return result;
 }
 
+
+/**
+ * Function logoutStoredSession.
+ */
 export async function logoutStoredSession(sessionId: string): Promise<{ success: boolean; error?: string }> {
     const headersList = await headers();
     const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';
@@ -116,6 +127,10 @@ export async function logoutStoredSession(sessionId: string): Promise<{ success:
     }
 }
 
+
+/**
+ * Function removeStoredAccount.
+ */
 export async function removeStoredAccount(accountId: string): Promise<{ success: boolean; error?: string }> {
     try {
         const { allAccounts, aid: activeAccountId } = await getSessionCookies();
@@ -138,6 +153,10 @@ export async function removeStoredAccount(accountId: string): Promise<{ success:
     }
 }
 
+
+/**
+ * Function switchToBrand.
+ */
 export async function switchToBrand(brandId: string) {
     const result = await switchToBrandAction(brandId);
 
@@ -155,6 +174,10 @@ export async function switchToBrand(brandId: string) {
     return result;
 }
 
+
+/**
+ * Function switchToDependent.
+ */
 export async function switchToDependent(dependentId: string) {
     const result = await switchToDependentAction(dependentId);
 
@@ -172,6 +195,10 @@ export async function switchToDependent(dependentId: string) {
     return result;
 }
 
+
+/**
+ * Function switchToPersonal.
+ */
 export async function switchToPersonal() {
     await switchToPersonalAction();
 
@@ -185,6 +212,10 @@ export async function switchToPersonal() {
     }
 }
 
+
+/**
+ * Function bridgeSwitchAccountBySessionId.
+ */
 export async function bridgeSwitchAccountBySessionId(input: {
     requestUrl: string;
     sessionId?: string | null;
@@ -221,6 +252,7 @@ export async function bridgeSwitchAccountBySessionId(input: {
 
     return { redirectTo: errorUrl.toString() };
 }
+
 
 // Local helper to validate accounts using Prisma
 async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {

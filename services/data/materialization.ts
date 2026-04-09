@@ -14,6 +14,9 @@ const formSchema = z.object({
 });
 
 
+/**
+ * Function scheduleMaterialization.
+ */
 export async function scheduleMaterialization(data: z.infer<typeof formSchema>, geolocation?: string): Promise<{ success: boolean; error?: string; }> {
     const canModify = await checkPermissions(['data.materialization.modify']);
     if (!canModify) {

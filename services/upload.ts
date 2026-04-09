@@ -8,6 +8,9 @@ import { logError } from '@/core/helpers/logger';
 // Make sure to set this in your environment variables
 const UPLOAD_URL = process.env.NEXT_PUBLIC_UPLOAD_URL || 'https://neupgroup.com/usercontent/bridge/api/upload.php';
 
+/**
+ * Function compressImage.
+ */
 async function compressImage(file: File): Promise<File> {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -58,6 +61,9 @@ async function compressImage(file: File): Promise<File> {
 }
 
 
+/**
+ * Function uploadFile.
+ */
 export async function uploadFile(
   file: File,
   platform: string,

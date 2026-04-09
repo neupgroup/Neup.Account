@@ -1,5 +1,8 @@
 import { z } from 'zod';
 
+/**
+ * Schema profileFormSchema.
+ */
 export const profileFormSchema = z.object({
   nameFirst: z.string().min(1, 'First name is required'),
   nameMiddle: z.string().optional(),
@@ -16,6 +19,10 @@ export const profileFormSchema = z.object({
   newNeupIdRequest: z.string().optional(),
 });
 
+
+/**
+ * Schema brandProfileFormSchema.
+ */
 export const brandProfileFormSchema = z.object({
   nameDisplay: z.string().min(1, 'Display name is required'),
   accountPhoto: z.string().url().optional().or(z.literal('')),

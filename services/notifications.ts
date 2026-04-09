@@ -6,6 +6,9 @@ import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
 import { checkPermissions } from '@/core/helpers/user';
 
+/**
+ * Type Notification.
+ */
 export type Notification = {
     id: string;
     isRead: boolean;
@@ -21,12 +24,20 @@ export type Notification = {
     senderNeupId?: string;
 };
 
+
+/**
+ * Type AllNotifications.
+ */
 export type AllNotifications = {
     sticky: Notification[];
     requests: Notification[];
     other: Notification[];
 };
 
+
+/**
+ * Type NotificationCreate.
+ */
 export type NotificationCreate = {
     recipient_id: string;
     action: string;
@@ -38,6 +49,10 @@ export type NotificationCreate = {
     sender_id?: string;
 };
 
+
+/**
+ * Function makeNotification.
+ */
 export async function makeNotification(data: NotificationCreate) {
     try {
         const now = new Date();
@@ -71,12 +86,16 @@ export async function makeNotification(data: NotificationCreate) {
     }
 }
 
+
 // Backward compatibility for existing call sites.
 export async function createNotification(data: NotificationCreate) {
     return makeNotification(data);
 }
 
 
+/**
+ * Function getNotifications.
+ */
 export async function getNotifications(): Promise<AllNotifications> {
     const accountId = await getPersonalAccountId();
     if (!accountId) return { sticky: [], requests: [], other: [] };
@@ -146,6 +165,10 @@ export async function getNotifications(): Promise<AllNotifications> {
     return { sticky, requests, other };
 }
 
+
+/**
+ * Function markNotificationAsRead.
+ */
 export async function markNotificationAsRead(notificationId: string): Promise<{ success: boolean }> {
     const canMarkAsRead = await checkPermissions(['notification.read']);
     if (!canMarkAsRead) return { success: false };
@@ -163,6 +186,10 @@ export async function markNotificationAsRead(notificationId: string): Promise<{ 
     }
 }
 
+
+/**
+ * Function deleteNotification.
+ */
 export async function deleteNotification(notificationId: string): Promise<{ success: boolean; error?: string; }> {
     const canDelete = await checkPermissions(['notification.delete']);
     if (!canDelete) return { success: false, error: "Permission denied." };

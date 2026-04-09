@@ -18,6 +18,9 @@ const siteLogoSchema = z.object({
     }),
 });
 
+/**
+ * Function getSiteLogoUrl.
+ */
 export async function getSiteLogoUrl(): Promise<string | undefined> {
   try {
     const data = await readAppProfileData<{ siteLogoUrl?: string }>(
@@ -36,6 +39,10 @@ export async function getSiteLogoUrl(): Promise<string | undefined> {
   }
 }
 
+
+/**
+ * Function updateSiteLogoUrl.
+ */
 export async function updateSiteLogoUrl(
   formData: FormData,
 ): Promise<{ success: boolean; error?: string; siteLogoUrl?: string }> {

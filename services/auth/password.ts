@@ -9,14 +9,12 @@ import prisma from '@/core/helpers/prisma';
 export type PasswordCheckStatus = 'valid' | 'invalid' | 'expired' | 'unauthorized';
 
 
-
 /**
  * Standard password-check response.
  */
 export type PasswordCheckResult = {
 	status: PasswordCheckStatus;
 };
-
 
 
 /**
@@ -31,12 +29,10 @@ export type VerifyPasswordInput = {
 };
 
 
-
 /**
  * Backward-compatible alias for verify input.
  */
 export type CheckPasswordInput = VerifyPasswordInput;
-
 
 
 /**
@@ -47,7 +43,6 @@ export type PasswordPayload = {
 	currentPassword?: string | null;
 	newPassword?: string | null;
 };
-
 
 
 /**
@@ -61,7 +56,6 @@ export type ChangePasswordInput = {
 };
 
 
-
 /**
  * Result returned by password change.
  */
@@ -71,14 +65,18 @@ export type ChangePasswordResult = {
 };
 
 
-
+/**
+ * Function normalizeExpiresOn.
+ */
 function normalizeExpiresOn(expiresOn?: Date | string | null): Date | null {
 	if (!expiresOn) return null;
 	return expiresOn instanceof Date ? expiresOn : new Date(expiresOn);
 }
 
 
-
+/**
+ * Function extractPassword.
+ */
 function extractPassword(payload: PasswordPayload | FormData, fieldName?: string): string {
 	if (payload instanceof FormData) {
 		const preferredKeys = fieldName ? [fieldName] : ['password', 'currentPassword', 'newPassword'];
@@ -95,7 +93,6 @@ function extractPassword(payload: PasswordPayload | FormData, fieldName?: string
 
 	return payload.password || payload.currentPassword || payload.newPassword || '';
 }
-
 
 
 /**
@@ -135,14 +132,12 @@ export async function verifyPassword(input: VerifyPasswordInput): Promise<Passwo
 }
 
 
-
 /**
  * Backward-compatible alias for verifyPassword.
  */
 export async function checkPassword(input: CheckPasswordInput): Promise<PasswordCheckResult> {
 	return verifyPassword(input);
 }
-
 
 
 /**
@@ -165,7 +160,6 @@ export async function verifyPasswordFromPost(
 }
 
 
-
 /**
  * Backward-compatible alias for verifyPasswordFromPost.
  */
@@ -175,7 +169,6 @@ export async function checkPasswordFromPost(
 ): Promise<PasswordCheckResult> {
 	return verifyPasswordFromPost(input, options);
 }
-
 
 
 /**
@@ -197,7 +190,6 @@ export async function verifyPasswordFromForm(
 }
 
 
-
 /**
  * Backward-compatible alias for verifyPasswordFromForm.
  */
@@ -207,7 +199,6 @@ export async function checkPasswordFromForm(
 ): Promise<PasswordCheckResult> {
 	return verifyPasswordFromForm(formData, options);
 }
-
 
 
 /**

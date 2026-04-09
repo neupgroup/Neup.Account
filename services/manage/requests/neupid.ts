@@ -12,6 +12,9 @@ type PendingRequestInternal = PendingNeupIdRequest & {
 };
 
 
+/**
+ * Function getPendingNeupIdRequests.
+ */
 export async function getPendingNeupIdRequests(): Promise<PendingNeupIdRequest[]> {
     const canView = await checkPermissions(['root.requests.view']);
     if (!canView) return [];
@@ -64,6 +67,10 @@ export async function getPendingNeupIdRequests(): Promise<PendingNeupIdRequest[]
     }
 }
 
+
+/**
+ * Function getNeupIdRequestDetails.
+ */
 export async function getNeupIdRequestDetails(id: string): Promise<PendingNeupIdRequest | null> {
     const canView = await checkPermissions(['root.requests.view']);
     if (!canView) return null;
@@ -105,6 +112,10 @@ export async function getNeupIdRequestDetails(id: string): Promise<PendingNeupId
     }
 }
 
+
+/**
+ * Function approveNeupIdRequest.
+ */
 export async function approveNeupIdRequest(requestId: string, accountId: string, newNeupId: string): Promise<{success: boolean, error?: string}> {
     const canApprove = await checkPermissions(['root.requests.approve']);
     if (!canApprove) {
@@ -135,6 +146,10 @@ export async function approveNeupIdRequest(requestId: string, accountId: string,
     }
 }
 
+
+/**
+ * Function denyNeupIdRequest.
+ */
 export async function denyNeupIdRequest(requestId: string): Promise<{success: boolean, error?: string}> {
     const canDeny = await checkPermissions(['root.requests.deny']);
     if (!canDeny) {

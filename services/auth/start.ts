@@ -2,6 +2,9 @@ import prisma from '@/core/helpers/prisma';
 import { getActiveSession } from '@/core/helpers/auth-actions';
 import { getValidatedStoredAccounts } from '@/core/helpers/session';
 
+/**
+ * Function getFirstValue.
+ */
 function getFirstValue(value: string | string[] | undefined) {
   if (Array.isArray(value)) {
     return value[0] ?? undefined;
@@ -10,6 +13,10 @@ function getFirstValue(value: string | string[] | undefined) {
   return value;
 }
 
+
+/**
+ * Function getAuthStartPageData.
+ */
 export async function getAuthStartPageData(searchParams: Record<string, string | string[] | undefined>) {
   const accounts = await getValidatedStoredAccounts();
   const activeSession = await getActiveSession();

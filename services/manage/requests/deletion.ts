@@ -9,6 +9,9 @@ import { getPersonalAccountId } from '@/core/helpers/auth-actions';
 import { logActivity } from '@/core/helpers/log-actions';
 import { z } from 'zod';
 
+/**
+ * Type DeletionRequest.
+ */
 export type DeletionRequest = {
   accountId: string;
   userFullName: string;
@@ -20,6 +23,10 @@ const requestByAdminSchema = z.object({
     reason: z.string().min(10, "A reason of at least 10 characters is required."),
 });
 
+
+/**
+ * Function getDeletionRequests.
+ */
 export async function getDeletionRequests(): Promise<DeletionRequest[]> {
   const canView = await checkPermissions(['root.requests.view']);
   if (!canView) return [];
@@ -65,6 +72,10 @@ export async function getDeletionRequests(): Promise<DeletionRequest[]> {
   }
 }
 
+
+/**
+ * Function getDeletionStatus.
+ */
 export async function getDeletionStatus(accountId: string): Promise<{status: 'none' | 'pending' | 'deleted' | 'is_root', requestedAt?: string | null}> {
     try {
         const isTargetRoot = await isRootUser(accountId);
@@ -101,6 +112,9 @@ export async function getDeletionStatus(accountId: string): Promise<{status: 'no
 }
 
 
+/**
+ * Function approveAccountDeletion.
+ */
 export async function approveAccountDeletion(
   accountId: string
 ): Promise<{ success: boolean; error?: string }> {
@@ -126,6 +140,9 @@ export async function approveAccountDeletion(
 }
 
 
+/**
+ * Function cancelAccountDeletion.
+ */
 export async function cancelAccountDeletion(
   accountId: string
 ): Promise<{ success: boolean; error?: string }> {
@@ -172,6 +189,9 @@ export async function cancelAccountDeletion(
 }
 
 
+/**
+ * Function requestAccountDeletionByAdmin.
+ */
 export async function requestAccountDeletionByAdmin(accountId: string, data: z.infer<typeof requestByAdminSchema>): Promise<{ success: boolean; error?: string; }> {
     const canDelete = await checkPermissions(['root.account.delete']);
     if (!canDelete) {

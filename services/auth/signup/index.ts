@@ -7,9 +7,9 @@ import { logActivity } from '@/core/helpers/log-actions';
 import { headers } from 'next/headers';
 import { logError } from '@/core/helpers/logger';
 import type { z } from 'zod';
-import { getAuthRequest, extendAuthRequest } from './utils';
-import { verifyPassword } from './password';
-import { makeSession } from './session';
+import { getAuthRequest, extendAuthRequest } from '../utils';
+import { verifyPassword } from '../password';
+import { makeSession } from '../session';
 import {
   nameSchema,
   demographicsSchema,
@@ -27,6 +27,9 @@ const sanitizeName = (name: string | undefined | null): string => {
   return name.trim().replace(/\s+/g, ' ');
 };
 
+/**
+ * Type SignupRequestData.
+ */
 type SignupRequestData = {
   nameFirst?: string;
   nameLast?: string;
@@ -44,11 +47,18 @@ type SignupRequestData = {
 };
 
 
+/**
+ * Function isFirstUser.
+ */
 async function isFirstUser() {
   const count = await prisma.account.count();
   return count === 0;
 }
 
+
+/**
+ * Function getSignupStepData.
+ */
 export async function getSignupStepData(authRequestId: string) {
   if (!authRequestId) {
     return { success: false, data: null };
@@ -60,6 +70,10 @@ export async function getSignupStepData(authRequestId: string) {
   return { success: true, data: request.data.data as SignupRequestData };
 }
 
+
+/**
+ * Function submitNameStep.
+ */
 export async function submitNameStep(authRequestId: string, data: z.infer<typeof nameSchema>) {
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };
@@ -100,6 +114,10 @@ export async function submitNameStep(authRequestId: string, data: z.infer<typeof
   return { success: true };
 }
 
+
+/**
+ * Function submitDemographicsStep.
+ */
 export async function submitDemographicsStep(authRequestId: string, data: z.infer<typeof demographicsSchema>) {
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };
@@ -146,6 +164,10 @@ export async function submitDemographicsStep(authRequestId: string, data: z.infe
   return { success: true };
 }
 
+
+/**
+ * Function submitNationalityStep.
+ */
 export async function submitNationalityStep(authRequestId: string, data: z.infer<typeof nationalitySchema>) {
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };
@@ -181,6 +203,9 @@ export async function submitNationalityStep(authRequestId: string, data: z.infer
 }
 
 
+/**
+ * Function submitContactStep.
+ */
 export async function submitContactStep(authRequestId: string, data: z.infer<typeof contactSchema>) {
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };
@@ -219,6 +244,10 @@ export async function submitContactStep(authRequestId: string, data: z.infer<typ
   return { success: true };
 }
 
+
+/**
+ * Function submitOtpStep.
+ */
 export async function submitOtpStep(authRequestId: string, data: z.infer<typeof otpSchema>) {
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };
@@ -258,6 +287,10 @@ export async function submitOtpStep(authRequestId: string, data: z.infer<typeof 
   return { success: true };
 }
 
+
+/**
+ * Function submitNeupIdStep.
+ */
 export async function submitNeupIdStep(authRequestId: string, data: z.infer<typeof neupidSchema>) {
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };
@@ -301,6 +334,10 @@ export async function submitNeupIdStep(authRequestId: string, data: z.infer<type
   return { success: true };
 }
 
+
+/**
+ * Function submitPasswordStep.
+ */
 export async function submitPasswordStep(authRequestId: string, data: z.infer<typeof passwordSchema>) {
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };
@@ -346,6 +383,10 @@ export async function submitPasswordStep(authRequestId: string, data: z.infer<ty
   return { success: true };
 }
 
+
+/**
+ * Function submitTermsStep.
+ */
 export async function submitTermsStep(authRequestId: string, data: z.infer<typeof termsSchema>) {
   if (!authRequestId)
     return { success: false, error: 'Signup session not found.' };

@@ -5,6 +5,9 @@ import type { SocialLink } from '@/types';
 import { getPaymentSettings } from '@/services/manage/site/payments';
 import { APP_PROFILE_KEYS, readAppProfileData } from '@/services/manage/site/app-profile';
 
+/**
+ * Type AppInfo.
+ */
 export type AppInfo = {
     name: string;
     version: string;
@@ -14,11 +17,19 @@ export type AppInfo = {
     linkedinContact?: string;
 };
 
+
+/**
+ * Type PaymentDetails.
+ */
 export type PaymentDetails = {
     qrCodeUrl?: string;
     bankDetails?: string;
 };
 
+
+/**
+ * Function getAppInfo.
+ */
 export async function getAppInfo(): Promise<AppInfo | null> {
     const data = await readAppProfileData<{ links?: SocialLink[] }>(APP_PROFILE_KEYS.socials, {});
     const links = data.links || [];
@@ -40,6 +51,10 @@ export async function getAppInfo(): Promise<AppInfo | null> {
     };
 }
 
+
+/**
+ * Function getPaymentDetails.
+ */
 export async function getPaymentDetails(): Promise<PaymentDetails | null> {
     try {
         const settings = await getPaymentSettings({ requirePermission: false });

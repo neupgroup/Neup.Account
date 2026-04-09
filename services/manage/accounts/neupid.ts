@@ -7,6 +7,9 @@
  import { checkPermissions, getUserNeupIds } from '@/core/helpers/user';
  import { revalidatePath } from 'next/cache';
  
+ /**
+  * Function addNeupId.
+  */
  export async function addNeupId(accountId: string, neupId: string): Promise<{ success: boolean; error?: string }> {
    const canModify = await checkPermissions(['root.account.edit_neupid']);
    if (!canModify) return { success: false, error: 'Permission denied.' };
@@ -40,7 +43,11 @@
      return { success: false, error: 'An unexpected error occurred.' };
    }
  }
- 
+
+
+ /**
+  * Function removeNeupId.
+  */
  export async function removeNeupId(neupId: string): Promise<{ success: boolean; error?: string }> {
    const canModify = await checkPermissions(['root.account.edit_neupid']);
    if (!canModify) return { success: false, error: 'Permission denied.' };
@@ -73,7 +80,11 @@
      return { success: false, error: 'An unexpected error occurred.' };
    }
  }
- 
+
+
+ /**
+  * Function setPrimaryNeupId.
+  */
  export async function setPrimaryNeupId(accountId: string, newPrimaryNeupId: string): Promise<{ success: boolean; error?: string }> {
    const canModify = await checkPermissions(['root.account.edit_neupid']);
    if (!canModify) return { success: false, error: 'Permission denied.' };

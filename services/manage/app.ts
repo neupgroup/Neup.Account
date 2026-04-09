@@ -4,6 +4,9 @@ import prisma from '@/core/helpers/prisma';
 import { logError } from '@/core/helpers/logger';
 import type { Application } from '@/types';
 
+/**
+ * Function getApps.
+ */
 export async function getApps(searchQuery?: string): Promise<Application[]> {
     // Note: Management UI has been removed, but this helper may still be used internally.
     try {
@@ -28,6 +31,10 @@ export async function getApps(searchQuery?: string): Promise<Application[]> {
     }
 }
 
+
+/**
+ * Function getAppDetails.
+ */
 export async function getAppDetails(appId: string): Promise<Application | null> {
     try {
         const app = await prisma.application.findUnique({

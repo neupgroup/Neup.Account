@@ -6,10 +6,14 @@ import { checkPermissions } from '@/core/helpers/user';
 import { logError } from '@/core/helpers/logger';
 import type { Application } from '@/types';
 
+/**
+ * Type ConnectedApplications.
+ */
 type ConnectedApplications = {
     firstParty: Application[];
     thirdParty: Application[];
 };
+
 
 // Fetches applications the user is connected to.
 export async function getConnectedApplications(): Promise<ConnectedApplications> {
@@ -49,6 +53,7 @@ export async function getConnectedApplications(): Promise<ConnectedApplications>
         return { firstParty: [], thirdParty: [] };
     }
 }
+
 
 // Fetches details for a single application by its ID.
 export async function getApplicationDetails(appId: string): Promise<Application | null> {

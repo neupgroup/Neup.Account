@@ -4,6 +4,9 @@ import jwt from 'jsonwebtoken';
 import { logError } from '@/core/helpers/logger';
 import { makeNotification } from '@/services/notifications';
 
+/**
+ * Function bridgeIssueGrant.
+ */
 export async function bridgeIssueGrant(input: {
   tempToken?: string;
   appId?: string;
@@ -149,6 +152,10 @@ export async function bridgeIssueGrant(input: {
   }
 }
 
+
+/**
+ * Function bridgeRefreshGrant.
+ */
 export async function bridgeRefreshGrant(input: {
   sid?: string;
   aid?: string;
@@ -252,6 +259,10 @@ export async function bridgeRefreshGrant(input: {
   }
 }
 
+
+/**
+ * Function bridgeCheckGrant.
+ */
 export async function bridgeCheckGrant(input: {
   aid?: string;
   sid?: string;

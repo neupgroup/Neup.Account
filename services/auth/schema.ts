@@ -7,6 +7,10 @@ export const registrationSchema = z.object({
   password: z.string().min(8),
 });
 
+
+/**
+ * Schema loginFormSchema.
+ */
 export const loginFormSchema = z.object({
   neupId: z.string().min(1, 'NeupID is required'),
   password: z.string().min(1, 'Password is required'),

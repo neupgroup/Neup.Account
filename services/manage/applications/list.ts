@@ -2,6 +2,9 @@ import { checkPermissions } from '@/core/helpers/user';
 import { getManagedApplications } from '@/services/manage/applications';
 import { getSignedApplications } from '@/services/data/signed-applications';
 
+/**
+ * Type FlatAppItem.
+ */
 export type FlatAppItem = {
   id: string;
   name: string;
@@ -11,6 +14,10 @@ export type FlatAppItem = {
   source: 'managed' | 'connected';
 };
 
+
+/**
+ * Function getApplicationsPageData.
+ */
 export async function getApplicationsPageData() {
   const managedApplications = await getManagedApplications();
   const { internal, external } = await getSignedApplications();

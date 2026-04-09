@@ -9,6 +9,9 @@ import { revalidatePath } from 'next/cache';
 import { getUserNeupIds, getUserProfile, checkPermissions } from '@/core/helpers/user';
 import { getActiveAccountId, getPersonalAccountId } from '@/core/helpers/auth-actions';
 
+/**
+ * Type BranchAccount.
+ */
 export type BranchAccount = {
     id: string;
     name: string;
@@ -25,6 +28,10 @@ const formSchema = z.object({
     location: z.string().optional(),
 });
 
+
+/**
+ * Function createBranchAccount.
+ */
 export async function createBranchAccount(data: z.infer<typeof formSchema>, geolocation?: string) {
     const canManage = await checkPermissions(['linked_accounts.brand.manage']);
     if (!canManage) {
@@ -119,6 +126,10 @@ export async function createBranchAccount(data: z.infer<typeof formSchema>, geol
     }
 }
 
+
+/**
+ * Function checkBranchNeupIdAvailability.
+ */
 export async function checkBranchNeupIdAvailability(neupIdSubdomain: string): Promise<{ available: boolean; fullNeupId?: string }> {
     const parentBrandId = await getActiveAccountId();
     if (!parentBrandId) return { available: false };
@@ -148,6 +159,10 @@ export async function checkBranchNeupIdAvailability(neupIdSubdomain: string): Pr
     }
 }
 
+
+/**
+ * Function getBranches.
+ */
 export async function getBranches(brandId: string): Promise<BranchAccount[]> {
     if (!brandId) return [];
 

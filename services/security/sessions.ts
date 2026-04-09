@@ -6,6 +6,9 @@ import { logActivity } from '@/core/helpers/log-actions';
 import { logError } from '@/core/helpers/logger';
 import type { Session } from '@/types';
 
+/**
+ * Function getUserSessions.
+ */
 export async function getUserSessions(): Promise<Session[]> {
     try {
         const accountId = await getActiveAccountId();
@@ -47,6 +50,9 @@ export async function getUserSessions(): Promise<Session[]> {
 }
 
 
+/**
+ * Function logoutSessionById.
+ */
 export async function logoutSessionById(sessionId: string): Promise<{ success: boolean, error?: string }> {
     if (!sessionId) {
         return { success: false, error: "Session ID is required." };
@@ -74,6 +80,10 @@ export async function logoutSessionById(sessionId: string): Promise<{ success: b
     }
 }
 
+
+/**
+ * Function logoutAllOtherSessions.
+ */
 export async function logoutAllOtherSessions(): Promise<{ success: boolean, error?: string }> {
     try {
         const currentSession = await getActiveSession();

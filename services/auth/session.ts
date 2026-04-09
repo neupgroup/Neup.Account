@@ -13,7 +13,6 @@ import { makeNotification } from '@/services/notifications';
 type AuthValidationReason = '404' | 'accountBlocked' | 'invalidSource';
 
 
-
 /**
  * Standard response shape for auth validation.
  */
@@ -28,7 +27,6 @@ export type AuthValidationResult =
 	};
 
 
-
 /**
  * Inputs required to validate a session without reading cookies.
  */
@@ -39,7 +37,6 @@ export type ValidateAuthSessionInput = {
 };
 
 
-
 /**
  * Standard response returned after expiring a session.
  */
@@ -47,7 +44,6 @@ export type ExpireSessionResult = {
 	success: boolean;
 	error?: string;
 };
-
 
 
 /**
@@ -60,7 +56,6 @@ export type ExpireSessionInput = {
 };
 
 
-
 /**
  * Input required to create a session.
  */
@@ -71,7 +66,6 @@ export type MakeSessionInput = {
 };
 
 
-
 /**
  * Standard response returned by session creation helper.
  */
@@ -80,11 +74,14 @@ export type MakeSessionResult = {
 	error?: string;
 };
 
+
+/**
+ * Type BridgeAuthSessionError.
+ */
 export type BridgeAuthSessionError = {
 	error: string;
 	error_description?: string;
 };
-
 
 
 /**
@@ -94,7 +91,6 @@ type BlockInfo = {
 	is_permanent?: boolean;
 	until?: string | Date;
 } | null;
-
 
 
 /**
@@ -111,7 +107,6 @@ function hasActiveBlock(block: BlockInfo, now: Date): boolean {
 
 	return false;
 }
-
 
 
 /**
@@ -190,7 +185,6 @@ export async function validateAuthSession(input: ValidateAuthSessionInput): Prom
 }
 
 
-
 /**
  * Reads auth cookies and validates them using validateAuthSession().
  */
@@ -201,7 +195,6 @@ export async function validateAuthSessionFromCookies(): Promise<AuthValidationRe
 		auth_skey: (await authCookies.get('auth_skey')) || '',
 	});
 }
-
 
 
 /**
@@ -254,7 +247,6 @@ export async function expireSession(input: ExpireSessionInput): Promise<ExpireSe
 }
 
 
-
 /**
  * Reads the active auth cookies and expires the matching session.
  */
@@ -265,7 +257,6 @@ export async function expireSessionFromCookies(): Promise<ExpireSessionResult> {
 		skey: (await authCookies.get('auth_skey')) || (await authCookies.get('skey')) || '',
 	});
 }
-
 
 
 /**
@@ -297,6 +288,10 @@ export async function makeSession(input: MakeSessionInput): Promise<MakeSessionR
 	}
 }
 
+
+/**
+ * Function bridgeValidateAndRefreshSession.
+ */
 export async function bridgeValidateAndRefreshSession(input: {
 	aid?: string;
 	sid?: string;
@@ -361,6 +356,10 @@ export async function bridgeValidateAndRefreshSession(input: {
 	}
 }
 
+
+/**
+ * Function bridgeInvalidateSession.
+ */
 export async function bridgeInvalidateSession(input: {
 	aid?: string;
 	sid?: string;
@@ -401,6 +400,10 @@ export async function bridgeInvalidateSession(input: {
 	}
 }
 
+
+/**
+ * Function bridgeRefreshSessionExpiry.
+ */
 export async function bridgeRefreshSessionExpiry(): Promise<{ status: number; body: { success: boolean; error?: string; newExpiresOn?: string } }> {
 	try {
 		const session = await getActiveSession();

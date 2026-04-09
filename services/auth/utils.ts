@@ -4,6 +4,9 @@ import prisma from '@/core/helpers/prisma';
 
 const AUTH_REQUEST_EXPIRATION_MINUTES = 7;
 
+/**
+ * Function getAuthRequest.
+ */
 export async function getAuthRequest(
   id: string
 ) {
@@ -20,6 +23,10 @@ export async function getAuthRequest(
   return { data: authRequest, id: authRequest.id };
 }
 
+
+/**
+ * Function extendAuthRequest.
+ */
 export async function extendAuthRequest(id: string) {
     const expiresAt = new Date();
     expiresAt.setMinutes(expiresAt.getMinutes() + AUTH_REQUEST_EXPIRATION_MINUTES);

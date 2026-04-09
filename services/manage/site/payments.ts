@@ -38,6 +38,9 @@ const paymentSettingsSchema = z.object({
     .transform((value) => (value ? value : undefined)),
 });
 
+/**
+ * Type PaymentSettings.
+ */
 export type PaymentSettings = z.infer<typeof paymentSettingsSchema>;
 
 const defaultPaymentSettings: PaymentSettings = {
@@ -50,6 +53,10 @@ const defaultPaymentSettings: PaymentSettings = {
   notes: undefined,
 };
 
+
+/**
+ * Function getPaymentSettings.
+ */
 export async function getPaymentSettings(options?: { requirePermission?: boolean }): Promise<PaymentSettings> {
   const requirePermission = options?.requirePermission ?? true;
   if (requirePermission) {
@@ -71,6 +78,10 @@ export async function getPaymentSettings(options?: { requirePermission?: boolean
   }
 }
 
+
+/**
+ * Function updatePaymentSettings.
+ */
 export async function updatePaymentSettings(
   formData: FormData,
 ): Promise<{ success: boolean; error?: string; data?: PaymentSettings }> {

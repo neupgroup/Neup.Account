@@ -21,8 +21,15 @@ const ValidateInputSchema = z.object({
   signup: z.boolean().optional(),
 });
 
+/**
+ * Type ValidateInput.
+ */
 export type ValidateInput = z.infer<typeof ValidateInputSchema>;
 
+
+/**
+ * Type ValidateResult.
+ */
 export type ValidateResult =
   | {
       success: true;
@@ -39,6 +46,10 @@ export type ValidateResult =
       status?: number;
     };
 
+
+/**
+ * Function validateExternalRequest.
+ */
 export async function validateExternalRequest(input: ValidateInput): Promise<ValidateResult> {
   const parsed = ValidateInputSchema.safeParse(input);
   if (!parsed.success) {

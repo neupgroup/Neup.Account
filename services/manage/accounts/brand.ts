@@ -12,6 +12,9 @@ import { brandCreationSchema } from '@/services/manage/accounts/schema';
 import type { BrandAccount } from '@/types';
 import { logActivity } from '@/core/helpers/log-actions';
 
+/**
+ * Function getBrandAccounts.
+ */
 export async function getBrandAccounts(): Promise<BrandAccount[]> {
     const canView = await checkPermissions(['linked_accounts.brand.view']);
     if (!canView) return [];
@@ -78,6 +81,10 @@ export async function getBrandAccounts(): Promise<BrandAccount[]> {
     }
 }
 
+
+/**
+ * Function createBrandAccount.
+ */
 export async function createBrandAccount(data: z.infer<typeof brandCreationSchema>, geolocation?: string) {
     const canCreate = await checkPermissions(['linked_accounts.brand.create']);
     if (!canCreate) {
@@ -160,6 +167,9 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
 }
 
 
+/**
+ * Function switchToBrand.
+ */
 export async function switchToBrand(brandId: string) {
     try {
         return await switchToBrandAction(brandId);
@@ -169,6 +179,10 @@ export async function switchToBrand(brandId: string) {
     }
 }
 
+
+/**
+ * Function switchToPersonal.
+ */
 export async function switchToPersonal() {
     try {
         await switchToPersonalAction();

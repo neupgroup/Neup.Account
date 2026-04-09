@@ -11,6 +11,9 @@ const manageApplicationSchema = z.object({
   permissions: z.array(z.string().min(1)).default([]),
 });
 
+/**
+ * Type UserApplicationAccess.
+ */
 export type UserApplicationAccess = {
   id: string;
   name: string;
@@ -22,6 +25,10 @@ export type UserApplicationAccess = {
   connectedOn: Date;
 };
 
+
+/**
+ * Function getUserApplicationAccess.
+ */
 export async function getUserApplicationAccess(appId: string): Promise<UserApplicationAccess | null> {
   const accountId = await getPersonalAccountId();
   if (!accountId) {
@@ -87,6 +94,10 @@ export async function getUserApplicationAccess(appId: string): Promise<UserAppli
   }
 }
 
+
+/**
+ * Function addUserApplicationAccess.
+ */
 export async function addUserApplicationAccess(input: { appId: string; permissions: string[] }) {
   const parsed = manageApplicationSchema.safeParse(input);
   if (!parsed.success) {
@@ -138,6 +149,10 @@ export async function addUserApplicationAccess(input: { appId: string; permissio
   }
 }
 
+
+/**
+ * Function updateUserApplicationPermissions.
+ */
 export async function updateUserApplicationPermissions(input: { appId: string; permissions: string[] }) {
   const parsed = manageApplicationSchema.safeParse(input);
   if (!parsed.success) {

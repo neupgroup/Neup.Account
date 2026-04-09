@@ -27,4 +27,8 @@ export const kycFormSchema = z.object({
     ),
 });
 
+
+/**
+ * Type KycFormValues.
+ */
 export type KycFormValues = z.infer<typeof kycFormSchema>;

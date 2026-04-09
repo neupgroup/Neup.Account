@@ -4,6 +4,9 @@ import prisma from '@/core/helpers/prisma';
 import { getPersonalAccountId } from '@/core/helpers/auth-actions';
 import { logError } from '@/core/helpers/logger';
 
+/**
+ * Type SignedApplication.
+ */
 type SignedApplication = {
   id: string;
   name: string;
@@ -15,15 +18,27 @@ type SignedApplication = {
   signedAt: Date;
 };
 
+
+/**
+ * Type SignedApplicationsResult.
+ */
 type SignedApplicationsResult = {
   internal: SignedApplication[];
   external: SignedApplication[];
 };
 
+
+/**
+ * Function isInternalApp.
+ */
 function isInternalApp(appId: string): boolean {
   return appId.startsWith('neup.');
 }
 
+
+/**
+ * Function getSignedApplications.
+ */
 export async function getSignedApplications(): Promise<SignedApplicationsResult> {
   const accountId = await getPersonalAccountId();
   if (!accountId) {

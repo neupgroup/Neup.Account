@@ -1,5 +1,8 @@
 import { z } from 'zod';
 
+/**
+ * Schema brandCreationSchema.
+ */
 export const brandCreationSchema = z.object({
   nameBrand: z.string().min(1, 'Brand name is required'),
   isLegalEntity: z.boolean(),
@@ -12,6 +15,10 @@ export const brandCreationSchema = z.object({
   agreement: z.boolean().refine((val) => val === true, 'You must agree to the terms'),
 });
 
+
+/**
+ * Schema dependentFormSchema.
+ */
 export const dependentFormSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
   middleName: z.string().optional(),

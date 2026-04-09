@@ -7,6 +7,9 @@ import { logError } from '@/core/helpers/logger';
 import { getSessionCookies, clearSessionCookies, setStoredAccountsCookie } from '@/core/helpers/cookies';
 import { expireSession } from './session';
 
+/**
+ * Function logoutActiveSession.
+ */
 export async function logoutActiveSession() {
     const { sid, aid, allAccounts } = await getSessionCookies();
     const headersList = await headers();
@@ -53,6 +56,10 @@ export async function logoutActiveSession() {
     await clearSessionCookies();
 }
 
+
+/**
+ * Function bridgeSignoutExternalSession.
+ */
 export async function bridgeSignoutExternalSession(input: {
     sessionValue?: string;
     appId?: string;

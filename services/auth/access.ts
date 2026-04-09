@@ -5,10 +5,17 @@ const INTERNAL_APP_PREFIX = 'neup.';
 const GLOBAL_RESOURCE_ID = '__app__';
 const ACTIVE_MEMBER_STATUSES = new Set(['invited', 'joined']);
 
+/**
+ * Function isInternalApp.
+ */
 function isInternalApp(appId: string) {
   return appId.startsWith(INTERNAL_APP_PREFIX);
 }
 
+
+/**
+ * Function normalizeResourceId.
+ */
 function normalizeResourceId(resourceId?: string | null) {
   if (!resourceId?.trim()) {
     return GLOBAL_RESOURCE_ID;
@@ -17,10 +24,18 @@ function normalizeResourceId(resourceId?: string | null) {
   return resourceId.trim();
 }
 
+
+/**
+ * Function presentResourceId.
+ */
 function presentResourceId(resourceId: string) {
   return resourceId === GLOBAL_RESOURCE_ID ? null : resourceId;
 }
 
+
+/**
+ * Function mapMembership.
+ */
 function mapMembership(member: {
   id: string;
   parentOwnerId: string;
@@ -39,6 +54,10 @@ function mapMembership(member: {
   };
 }
 
+
+/**
+ * Function mapAccountAccess.
+ */
 function mapAccountAccess(access: {
   id: string;
   accountId: string;
@@ -63,6 +82,10 @@ function mapAccountAccess(access: {
   };
 }
 
+
+/**
+ * Function hasJoinedOrInvitedMembership.
+ */
 async function hasJoinedOrInvitedMembership(parentOwnerId: string, memberAccountId: string) {
   if (parentOwnerId === memberAccountId) {
     return true;
@@ -80,6 +103,10 @@ async function hasJoinedOrInvitedMembership(parentOwnerId: string, memberAccount
   return !!membership && ACTIVE_MEMBER_STATUSES.has(membership.status);
 }
 
+
+/**
+ * Function bridgeGetAuthAccess.
+ */
 export async function bridgeGetAuthAccess(input: {
   aid?: string | null;
   sid?: string | null;
@@ -189,6 +216,10 @@ export async function bridgeGetAuthAccess(input: {
   }
 }
 
+
+/**
+ * Function bridgeCreateAuthAccess.
+ */
 export async function bridgeCreateAuthAccess(input: Record<string, any>): Promise<{ status: number; body: Record<string, any> }> {
   const { aid, sid, skey, recipientId, isPermanent, status, parentOwnerId, appId: appIdOverride } = input;
 
@@ -253,6 +284,10 @@ export async function bridgeCreateAuthAccess(input: Record<string, any>): Promis
   }
 }
 
+
+/**
+ * Function bridgeUpdateAuthAccess.
+ */
 export async function bridgeUpdateAuthAccess(input: Record<string, any>): Promise<{ status: number; body: Record<string, any> }> {
   const {
     aid,

@@ -12,6 +12,9 @@ import { createNotification } from '../notifications';
 
 const CONTACT_TYPE = 'recoveryPhone';
 
+/**
+ * Function getRecoveryPhone.
+ */
 export async function getRecoveryPhone(): Promise<string | null> {
     const canView = await checkPermissions(['security.recovery_phone.view']);
     if (!canView) return null;
@@ -34,6 +37,10 @@ export async function getRecoveryPhone(): Promise<string | null> {
     }
 }
 
+
+/**
+ * Function addRecoveryPhone.
+ */
 export async function addRecoveryPhone(data: z.infer<typeof phoneFormSchema>): Promise<{ success: boolean; error?: string; }> {
     const canAdd = await checkPermissions(['security.recovery_phone.add']);
     if (!canAdd) return { success: false, error: "Permission denied." };
@@ -87,6 +94,10 @@ export async function addRecoveryPhone(data: z.infer<typeof phoneFormSchema>): P
     }
 }
 
+
+/**
+ * Function removeRecoveryPhone.
+ */
 export async function removeRecoveryPhone(): Promise<{ success: boolean; error?: string; }> {
     const canRemove = await checkPermissions(['security.recovery_phone.remove']);
     if (!canRemove) return { success: false, error: "Permission denied." };

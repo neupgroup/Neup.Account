@@ -17,11 +17,18 @@ const passwordSchema = z.object({
     authRequestId: z.string(),
 });
 
+/**
+ * Type SigninRequestData.
+ */
 type SigninRequestData = {
     neupId?: string;
     isPendingDeletion?: boolean;
 };
 
+
+/**
+ * Function submitNeupId.
+ */
 export async function submitNeupId(data: z.infer<typeof neupIdSchema>) {
     const validation = neupIdSchema.safeParse(data);
     if (!validation.success) {
@@ -83,6 +90,10 @@ export async function submitNeupId(data: z.infer<typeof neupIdSchema>) {
     };
 }
 
+
+/**
+ * Function submitPassword.
+ */
 export async function submitPassword(data: z.infer<typeof passwordSchema>): Promise<{ success: boolean; mfaRequired: boolean; error?: string; isPendingDeletion?: boolean }> {
     const validation = passwordSchema.safeParse(data);
     if (!validation.success) {

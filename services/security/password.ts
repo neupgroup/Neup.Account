@@ -9,6 +9,9 @@ import { changePasswordSchema } from '@/services/security/schema';
 import { createNotification } from '../notifications';
 import { changePassword as changePasswordForAccount } from '@/services/auth/password';
 
+/**
+ * Function changePassword.
+ */
 export async function changePassword(data: z.infer<typeof changePasswordSchema>, geolocation?: string) {
     const hasPermission = await checkPermissions(['security.pass.modify']);
     if (!hasPermission) {

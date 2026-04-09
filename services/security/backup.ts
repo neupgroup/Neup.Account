@@ -9,16 +9,27 @@ import crypto from 'crypto';
 import { checkPermissions } from '@/core/helpers/user';
 import { createNotification } from '../notifications';
 
+/**
+ * Type BackupCode.
+ */
 export type BackupCode = {
     code: string;
     used: boolean;
 };
 
+
+/**
+ * Function generateSingleCode.
+ */
 function generateSingleCode(): string {
     // Generates an 8-character alphanumeric code.
     return crypto.randomBytes(4).toString('hex').toUpperCase();
 }
 
+
+/**
+ * Function getBackupCodes.
+ */
 export async function getBackupCodes(): Promise<BackupCode[]> {
     const canView = await checkPermissions(['security.backup_codes.view']);
     if (!canView) return [];
@@ -43,6 +54,10 @@ export async function getBackupCodes(): Promise<BackupCode[]> {
     }
 }
 
+
+/**
+ * Function generateBackupCodes.
+ */
 export async function generateBackupCodes(): Promise<BackupCode[]> {
     const canCreate = await checkPermissions(['security.backup_codes.create']);
     if (!canCreate) throw new Error("Permission denied.");

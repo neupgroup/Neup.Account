@@ -12,6 +12,9 @@ import { dependentFormSchema } from '@/services/manage/accounts/schema';
 import { checkPermissions, getUserProfile, getUserNeupIds } from '@/core/helpers/user';
 
 
+/**
+ * Type DependentAccount.
+ */
 export type DependentAccount = {
     id: string;
     nameDisplay?: string;
@@ -19,6 +22,10 @@ export type DependentAccount = {
     accountPhoto?: string;
 };
 
+
+/**
+ * Function getDependentAccounts.
+ */
 export async function getDependentAccounts(): Promise<DependentAccount[]> {
     const canView = await checkPermissions(['linked_accounts.dependent.view']);
     if (!canView) return [];
@@ -86,6 +93,9 @@ export async function getDependentAccounts(): Promise<DependentAccount[]> {
 }
 
 
+/**
+ * Function createDependentAccount.
+ */
 export async function createDependentAccount(data: z.infer<typeof dependentFormSchema>, geolocation?: string) {
     const canCreate = await checkPermissions(['linked_accounts.dependent.create']);
     if (!canCreate) {

@@ -14,6 +14,9 @@ const formSchema = z.object({
 });
 
 
+/**
+ * Function deactivateAccount.
+ */
 export async function deactivateAccount(data: z.infer<typeof formSchema>, geolocation?: string): Promise<{ success: boolean; error?: string; }> {
   const canDeactivate = await checkPermissions(['data.deactivate_account.start']);
   if (!canDeactivate) {

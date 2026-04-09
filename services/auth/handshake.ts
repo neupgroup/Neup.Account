@@ -3,6 +3,9 @@ import { logError } from '@/core/helpers/logger';
 import prisma from '@/core/helpers/prisma';
 import crypto from 'crypto';
 
+/**
+ * Function bridgeBuildGrantRedirect.
+ */
 export async function bridgeBuildGrantRedirect(input: {
   requestUrl: string;
   pathname: string;

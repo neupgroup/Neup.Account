@@ -5,6 +5,9 @@ import { randomUUID } from 'crypto';
 
 const AUTH_REQUEST_EXPIRATION_MINUTES = 7;
 
+/**
+ * Function createAuthRequest.
+ */
 async function createAuthRequest(type: 'signup' | 'signin' | 'forgot_password') {
     const requestId = randomUUID();
     const expiresAt = new Date();
@@ -24,6 +27,10 @@ async function createAuthRequest(type: 'signup' | 'signin' | 'forgot_password') 
     return requestId;
 }
 
+
+/**
+ * Function initializeAuthFlow.
+ */
 export async function initializeAuthFlow(
     currentId: string | null,
     flowType: 'signup' | 'signin' | 'forgot_password'
