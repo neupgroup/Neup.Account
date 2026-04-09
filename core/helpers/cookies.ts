@@ -5,6 +5,10 @@
 import { cookies } from 'next/headers';
 import type { StoredAccount } from '@/types';
 import type { Session } from "@/core/helpers/auth-actions";
+import { Singleton } from '@/core/interface/singleton';
+
+type CookieStore = Awaited<ReturnType<typeof cookies>>;
+type CookieSetOptions = Parameters<CookieStore['set']>[2];
 
 
 /**
@@ -30,62 +34,173 @@ const LONG_LIVED_COOKIE_OPTIONS = {
 };
 
 
+class AuthCookiesHelper extends Singleton {
+    public constructor() {
+        super();
+    }
+
+    public static getInstance(): AuthCookiesHelper {
+        return this.instanceFor<AuthCookiesHelper>();
+    }
+
+    private async getStore() {
+        return cookies();
+    }
+
+    public async get(name: string) {
+        const cookieStore = await this.getStore();
+        return cookieStore.get(name)?.value;
+    }
+
+    public async set(name: string, value: string, options?: CookieSetOptions) {
+        const cookieStore = await this.getStore();
+        if (options) {
+            cookieStore.set(name, value, options);
+            return;
+        }
+
+        cookieStore.set(name, value);
+    }
+
+    public async del(name: string) {
+        const cookieStore = await this.getStore();
+        cookieStore.delete(name);
+    }
+
+    public async getJson<T>(name: string, fallback: T): Promise<T> {
+        const raw = await this.get(name);
+        if (!raw) {
+            return fallback;
+        }
+
+        try {
+            return JSON.parse(raw) as T;
+        } catch {
+            return fallback;
+        }
+    }
+
+    public async setJson(name: string, value: unknown, options?: CookieSetOptions) {
+        await this.set(name, JSON.stringify(value), options);
+    }
+
+    public async getSessionCookies() {
+        const aid = (await this.get('auth_aid')) || (await this.get('auth_account_id'));
+        const sid = (await this.get('auth_sid')) || (await this.get('auth_session_id'));
+        const skey = (await this.get('auth_skey')) || (await this.get('auth_session_key'));
+        const jwt = await this.get('auth_jwt');
+        const managingCookie = await this.get('auth_managing');
+
+        const parsedAccounts = await this.getJson<unknown[]>('auth_accounts', []);
+        const allAccounts = Array.isArray(parsedAccounts)
+            ? parsedAccounts
+                .map((account: any) => {
+                    const normalizedAid = account?.aid || account?.accountId;
+                    if (!normalizedAid) return null;
+
+                    return {
+                        aid: normalizedAid,
+                        sid: account?.sid || account?.sessionId,
+                        skey: account?.skey || account?.sessionKey,
+                        neupId: account?.neupId || '',
+                        expired: Boolean(account?.expired),
+                        active: Boolean(account?.active),
+                    } as StoredAccount;
+                })
+                .filter(Boolean) as StoredAccount[]
+            : [];
+
+        let managingAccountId: string | undefined = undefined;
+        if (managingCookie && (managingCookie.startsWith('brand.') || managingCookie.startsWith('dependent.') || managingCookie.startsWith('delegated.'))) {
+            managingAccountId = managingCookie.split('.')[1];
+        }
+
+        return {
+            aid,
+            sid,
+            skey,
+            jwt,
+            accountId: aid,
+            sessionId: sid,
+            sessionKey: skey,
+            managingAccountId,
+            allAccounts,
+        };
+    }
+
+    public async setSessionCookies(session: Session, expires: Date) {
+        const options = { ...COOKIE_OPTIONS, expires };
+
+        const aid = session.aid || session.accountId;
+        const sid = session.sid || session.sessionId;
+        const skey = session.skey || session.sessionKey;
+
+        if (!aid || !sid || !skey) {
+            throw new Error('Missing session values for cookie set.');
+        }
+
+        await this.set('auth_aid', aid, options);
+        await this.set('auth_sid', sid, options);
+        await this.set('auth_skey', skey, options);
+
+        if (session.jwt) {
+            await this.set('auth_jwt', session.jwt, options);
+        } else {
+            await this.del('auth_jwt');
+        }
+
+        // Remove legacy cookie keys after writing the new keys.
+        await this.del('auth_account_id');
+        await this.del('auth_session_id');
+        await this.del('auth_session_key');
+    }
+
+    public async setStoredAccountsCookie(accounts: StoredAccount[]) {
+        const normalizedAccounts = accounts.map((account) => ({
+            aid: account.aid || account.accountId,
+            sid: account.sid || account.sessionId,
+            skey: account.skey || account.sessionKey,
+            neupId: account.neupId,
+            expired: account.expired,
+            active: account.active,
+        }));
+
+        await this.setJson('auth_accounts', normalizedAccounts, LONG_LIVED_COOKIE_OPTIONS);
+    }
+
+    public async setManagingCookie(value: string, expires: Date) {
+        await this.set('auth_managing', value, { ...COOKIE_OPTIONS, expires });
+    }
+
+    public async clearManagingCookie() {
+        await this.del('auth_managing');
+    }
+
+    public async clearSessionCookies() {
+        await this.del('auth_aid');
+        await this.del('auth_sid');
+        await this.del('auth_skey');
+        await this.del('auth_jwt');
+        await this.del('auth_account_id');
+        await this.del('auth_session_id');
+        await this.del('auth_session_key');
+        await this.del('auth_managing');
+
+        // Also remove old, unnecessary cookies if they exist.
+        await this.del('auth_permit');
+        await this.del('profile_name');
+        await this.del('profile_neupid');
+    }
+}
+
+const authCookies = AuthCookiesHelper.getInstance();
+
+
 /**
  * Retrieves all authentication-related cookies.
  */
 export async function getSessionCookies() {
-    const cookieStore = await cookies();
-    const aid = cookieStore.get('auth_aid')?.value || cookieStore.get('auth_account_id')?.value;
-    const sid = cookieStore.get('auth_sid')?.value || cookieStore.get('auth_session_id')?.value;
-    const skey = cookieStore.get('auth_skey')?.value || cookieStore.get('auth_session_key')?.value;
-    const jwt = cookieStore.get('auth_jwt')?.value;
-    const managingCookie = cookieStore.get('auth_managing')?.value;
-    const allAccountsCookie = cookieStore.get('auth_accounts');
-
-    let allAccounts: StoredAccount[] = [];
-    if (allAccountsCookie?.value) {
-        try {
-            const parsed = JSON.parse(allAccountsCookie.value);
-            if (!Array.isArray(parsed)) {
-                allAccounts = [];
-            } else {
-                allAccounts = parsed
-                    .map((account: any) => {
-                        const normalizedAid = account?.aid || account?.accountId;
-                        if (!normalizedAid) return null;
-
-                        return {
-                            aid: normalizedAid,
-                            sid: account?.sid || account?.sessionId,
-                            skey: account?.skey || account?.sessionKey,
-                            neupId: account?.neupId || '',
-                            expired: Boolean(account?.expired),
-                            active: Boolean(account?.active),
-                        } as StoredAccount;
-                    })
-                    .filter(Boolean) as StoredAccount[];
-            }
-        } catch (e) {
-            allAccounts = [];
-        }
-    }
-
-    let managingAccountId: string | undefined = undefined;
-    if (managingCookie && (managingCookie.startsWith('brand.') || managingCookie.startsWith('dependent.') || managingCookie.startsWith('delegated.'))) {
-        managingAccountId = managingCookie.split('.')[1];
-    }
-
-    return {
-        aid,
-        sid,
-        skey,
-        jwt,
-        accountId: aid,
-        sessionId: sid,
-        sessionKey: skey,
-        managingAccountId,
-        allAccounts,
-    };
+    return authCookies.getSessionCookies();
 }
 
 
@@ -93,31 +208,7 @@ export async function getSessionCookies() {
  * Sets the main session cookies.
  */
 export async function setSessionCookies(session: Session, expires: Date) {
-    const cookieStore = await cookies();
-    const options = { ...COOKIE_OPTIONS, expires };
-
-    const aid = session.aid || session.accountId;
-    const sid = session.sid || session.sessionId;
-    const skey = session.skey || session.sessionKey;
-
-    if (!aid || !sid || !skey) {
-        throw new Error('Missing session values for cookie set.');
-    }
-
-    cookieStore.set('auth_aid', aid, options);
-    cookieStore.set('auth_sid', sid, options);
-    cookieStore.set('auth_skey', skey, options);
-
-    if (session.jwt) {
-        cookieStore.set('auth_jwt', session.jwt, options);
-    } else {
-        cookieStore.delete('auth_jwt');
-    }
-
-    // Remove legacy cookie keys after writing the new keys.
-    cookieStore.delete('auth_account_id');
-    cookieStore.delete('auth_session_id');
-    cookieStore.delete('auth_session_key');
+    return authCookies.setSessionCookies(session, expires);
 }
 
 
@@ -125,17 +216,7 @@ export async function setSessionCookies(session: Session, expires: Date) {
  * Sets the long-lived cookie for storing all known accounts on the device.
  */
 export async function setStoredAccountsCookie(accounts: StoredAccount[]) {
-    const cookieStore = await cookies();
-    const normalizedAccounts = accounts.map((account) => ({
-        aid: account.aid || account.accountId,
-        sid: account.sid || account.sessionId,
-        skey: account.skey || account.sessionKey,
-        neupId: account.neupId,
-        expired: account.expired,
-        active: account.active,
-    }));
-
-    cookieStore.set('auth_accounts', JSON.stringify(normalizedAccounts), LONG_LIVED_COOKIE_OPTIONS);
+    return authCookies.setStoredAccountsCookie(accounts);
 }
 
 
@@ -143,8 +224,7 @@ export async function setStoredAccountsCookie(accounts: StoredAccount[]) {
  * Sets the cookie to indicate which brand/dependent account is being managed.
  */
 export async function setManagingCookie(value: string, expires: Date) {
-    const cookieStore = await cookies();
-    cookieStore.set('auth_managing', value, { ...COOKIE_OPTIONS, expires });
+    return authCookies.setManagingCookie(value, expires);
 }
 
 
@@ -152,8 +232,7 @@ export async function setManagingCookie(value: string, expires: Date) {
  * Clears the managing cookie to return to the personal account view.
  */
 export async function clearManagingCookie() {
-    const cookieStore = await cookies();
-    cookieStore.delete('auth_managing');
+    return authCookies.clearManagingCookie();
 }
 
 
@@ -161,18 +240,5 @@ export async function clearManagingCookie() {
  * Clears all active session cookies, effectively logging the user out.
  */
 export async function clearSessionCookies() {
-    const cookieStore = await cookies();
-    cookieStore.delete('auth_aid');
-    cookieStore.delete('auth_sid');
-    cookieStore.delete('auth_skey');
-    cookieStore.delete('auth_jwt');
-    cookieStore.delete('auth_account_id');
-    cookieStore.delete('auth_session_id');
-    cookieStore.delete('auth_session_key');
-    cookieStore.delete('auth_managing');
-
-    // Also remove old, unnecessary cookies if they exist
-    cookieStore.delete('auth_permit');
-    cookieStore.delete('profile_name');
-    cookieStore.delete('profile_neupid');
+    return authCookies.clearSessionCookies();
 }
