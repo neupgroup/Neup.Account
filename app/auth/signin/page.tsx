@@ -10,7 +10,7 @@ import { submitNeupId, submitPassword } from '@/services/auth/signin';
 import { getSignupStepData } from '@/services/auth/signup';
 import { cancelAccountDeletion } from '@/services/data/delete';
 import { initializeAuthFlow } from '@/services/auth/initialize';
-import { verifyMfa } from '@/services/auth/verifyMfa';
+import { verifyTotpFromPost } from '@/services/auth/totp';
 import { switchActiveAccountByNeupId } from '@/services/auth/switch';
 import { redirectInApp } from '@/core/helpers/navigation';
 import { appendAuthCallbackContext, appendRedirect, hasAuthCallbackContext, shouldReturnToAuthStartForExternalAuthentication } from '@/core/helpers/auth-callback';
@@ -506,7 +506,7 @@ function MfaStep() {
     NProgress.start();
     startSubmit(async () => {
       try {
-        const result = await verifyMfa({ token, authRequestId });
+        const result = await verifyTotpFromPost({ token, authRequestId });
 
         if (result.success) {
           sessionStorage.clear();
