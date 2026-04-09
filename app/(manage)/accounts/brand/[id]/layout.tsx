@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getUserProfile, checkPermissions } from '@/core/helpers/user';
+import { getUserProfile, checkPermissions } from '@/services/shared/user';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { BrandNav } from './brand-nav';
 import { BackButton } from '@/components/ui/back-button';

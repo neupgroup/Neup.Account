@@ -3,8 +3,9 @@ import { BackButton } from '@/components/ui/back-button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { checkPermissions } from '@/core/helpers/user';
-import { getManagedApplications, updateManagedApplicationStatus } from '@/services/manage/applications';
+import { checkPermissions } from '@/services/shared/user';
+import { getManagedApplications } from '@/services/manage/applications';
+import { updateManagedApplicationStatusFromForm } from '@/services/manage/applications/status-action';
 
 const statusOptions = ['development', 'active', 'rejected', 'blocked'] as const;
 
@@ -66,17 +67,7 @@ export default async function ManageApplicationsPage() {
                 </CardHeader>
                 <CardContent>
                   <form
-                    action={async (formData: FormData) => {
-                      'use server';
-
-                      const appId = String(formData.get('appId') || '');
-                      const status = String(formData.get('status') || '') as AppStatus;
-                      if (!statusOptions.includes(status)) {
-                        return;
-                      }
-
-                      await updateManagedApplicationStatus({ appId, status });
-                    }}
+                    action={updateManagedApplicationStatusFromForm}
                     className="flex flex-wrap items-center gap-3"
                   >
                     <input type="hidden" name="appId" value={app.id} />

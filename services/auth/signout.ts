@@ -52,3 +52,34 @@ export async function logoutActiveSession() {
     
     await clearSessionCookies();
 }
+
+export async function bridgeSignoutExternalSession(input: {
+    sessionValue?: string;
+    appId?: string;
+}): Promise<{ status: number; body: { success: boolean; error?: string; message?: string } }> {
+    const { sessionValue, appId } = input;
+
+    if (!sessionValue) {
+        return { status: 400, body: { success: false, error: 'sessionValue is required.' } };
+    }
+
+    try {
+        const appSession = await prisma.appSession.findUnique({
+            where: { sessionValue },
+        });
+
+        if (appSession) {
+            if (appId && appSession.appId !== appId) {
+                return { status: 403, body: { success: false, error: 'Unauthorized session.' } };
+            }
+
+            await prisma.appSession.delete({
+                where: { sessionValue },
+            });
+        }
+
+        return { status: 200, body: { success: true, message: 'Signed out successfully.' } };
+    } catch {
+        return { status: 500, body: { success: false, error: 'Internal server error.' } };
+    }
+}

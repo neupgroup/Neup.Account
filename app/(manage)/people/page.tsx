@@ -1,7 +1,7 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import React from "react";
-import { checkPermissions } from "@/core/helpers/user";
+import { checkPermissions } from "@/services/shared/user";
 import { ListItem } from "@/components/ui/list-item";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 import { PrimaryHeader } from "@/components/ui/primary-header";

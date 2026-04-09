@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { BackButton } from '@/components/ui/back-button'
 import { PrimaryHeader } from '@/components/ui/primary-header'
-import { getUserProfile } from '@/core/helpers/user'
+import { getUserProfile } from '@/services/shared/user'
 
 
 const nameFormSchema = z.object({

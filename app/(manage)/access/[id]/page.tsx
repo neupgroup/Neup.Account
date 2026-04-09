@@ -1,4 +1,4 @@
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { BackButton } from '@/components/ui/back-button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -6,9 +6,11 @@ import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import {
-  addAssetGroupMember,
-  addAssetToGroup,
-  assignAssetMemberRole,
+  addAssetToGroupFromForm,
+  addMemberToAssetGroupFromForm,
+  assignRoleToAssetMemberFromForm,
+} from '@/services/manage/access/actions';
+import {
   getAccessAssetGroup,
 } from '@/services/manage/access/assets';
 
@@ -26,45 +28,9 @@ export default async function AssetGroupPage({ params }: PageProps) {
 
   const assetsById = new Map(group.assets.map((asset) => [asset.id, asset]));
 
-  async function addMemberAction(formData: FormData) {
-    'use server';
-
-    await addAssetGroupMember({
-      groupId: id,
-      member: String(formData.get('member') || ''),
-      isPermanent: formData.get('isPermanent') === 'on',
-      validTill: String(formData.get('validTill') || ''),
-      hasFullPermit: formData.get('hasFullPermit') === 'on',
-    });
-
-    redirect(`/access/${id}`);
-  }
-
-  async function addAssetAction(formData: FormData) {
-    'use server';
-
-    await addAssetToGroup({
-      groupId: id,
-      asset: String(formData.get('asset') || ''),
-      type: String(formData.get('type') || ''),
-      details: String(formData.get('details') || ''),
-    });
-
-    redirect(`/access/${id}`);
-  }
-
-  async function assignRoleAction(formData: FormData) {
-    'use server';
-
-    await assignAssetMemberRole({
-      groupId: id,
-      assetMember: String(formData.get('assetMember') || ''),
-      asset: String(formData.get('asset') || ''),
-      role: String(formData.get('role') || ''),
-    });
-
-    redirect(`/access/${id}`);
-  }
+  const addMemberAction = addMemberToAssetGroupFromForm.bind(null, id);
+  const addAssetAction = addAssetToGroupFromForm.bind(null, id);
+  const assignRoleAction = assignRoleToAssetMemberFromForm.bind(null, id);
 
   return (
     <div className="grid gap-6">

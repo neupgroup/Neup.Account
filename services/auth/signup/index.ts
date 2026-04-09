@@ -19,7 +19,7 @@ import {
   neupidSchema,
   passwordSchema,
   termsSchema,
-} from '@/services/auth/signup.schema';
+} from '@/services/auth/signup/schema';
 
 // Helper to sanitize name fields
 const sanitizeName = (name: string | undefined | null): string => {

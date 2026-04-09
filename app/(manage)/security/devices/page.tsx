@@ -4,9 +4,9 @@ import {
 } from "@/components/ui/card";
 import { getUserSessions } from "@/services/security/sessions";
 import { SessionManager } from "@/app/(manage)/security/session-manager";
-import { getActiveSession } from "@/core/helpers/auth-actions";
+import { getActiveSession } from "@/services/shared/auth";
 import { BackButton } from "@/components/ui/back-button";
-import { checkPermissions } from "@/core/helpers/user";
+import { checkPermissions } from "@/services/shared/user";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Ban } from "lucide-react";
 import { PrimaryHeader } from "@/components/ui/primary-header";

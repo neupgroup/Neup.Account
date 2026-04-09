@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { BackButton } from '@/components/ui/back-button';
-import { checkPermissions } from '@/core/helpers/user';
+import { checkPermissions } from '@/services/shared/user';
 import { getSocialLinks } from '@/services/manage/site/socials';
 import { SocialLinksManager } from '../../site/socials/social-links-manager';
 

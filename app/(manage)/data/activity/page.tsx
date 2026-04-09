@@ -21,7 +21,7 @@ import { Badge } from "@/components/ui/badge"
 import { getActivities } from "@/core/helpers/log-actions"
 import { ChevronLeft, ChevronRight, Ban } from "@/components/icons";
 import { BackButton } from "@/components/ui/back-button";
-import { checkPermissions } from "@/core/helpers/user";
+import { checkPermissions } from "@/services/shared/user";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useEffect, useState, useCallback } from "react";
 import { Skeleton } from "@/components/ui/skeleton";

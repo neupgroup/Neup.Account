@@ -1,31 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { getActiveSession } from '@/core/helpers/auth-actions';
-import { logError } from '@/core/helpers/logger';
-import prisma from '@/core/helpers/prisma';
+import { bridgeRefreshSessionExpiry } from '@/services/auth/session';
 
 export async function POST(request: NextRequest) {
-    try {
-        const session = await getActiveSession();
-
-        if (!session) {
-            return NextResponse.json({ success: false, error: 'Unauthenticated.' }, { status: 401 });
-        }
-
-        const newExpiresOn = new Date();
-        newExpiresOn.setDate(newExpiresOn.getDate() + 30); // Extend by 30 days
-
-        await prisma.session.update({
-            where: { id: session.sessionId },
-            data: { expiresOn: newExpiresOn }
-        });
-
-        return NextResponse.json({ 
-            success: true, 
-            newExpiresOn: newExpiresOn.toISOString() 
-        });
-
-    } catch (error) {
-        await logError('database', error, 'refresh_token');
-        return NextResponse.json({ success: false, error: 'Internal server error.' }, { status: 500 });
-    }
+    const result = await bridgeRefreshSessionExpiry();
+    return NextResponse.json(result.body, { status: result.status });
 }

@@ -12,7 +12,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { setProStatus } from '@/services/manage/user-actions';
-import { getUserProfile } from '@/core/helpers/user';
+import { getUserProfile } from '@/services/shared/user';
 import { Gem, Loader2 } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { TertiaryHeader } from '@/components/ui/tertiary-header';

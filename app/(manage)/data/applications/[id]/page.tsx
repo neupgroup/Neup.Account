@@ -1,11 +1,11 @@
 import Link from 'next/link';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
-  deleteManagedApplication,
   getApplicationDetailsForViewer,
 } from '@/services/manage/applications';
+import { deleteManagedApplicationFromDetailsPage } from '@/services/manage/applications/actions';
 import { AppWindow, Building, BarChart, Share2, ExternalLink, type LucideIcon } from '@/components/icons';
 
 type ApplicationDetailPageProps = {
@@ -52,14 +52,7 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
 
   const Icon = iconFor(details.icon);
 
-  async function deleteAction() {
-    'use server';
-
-    const result = await deleteManagedApplication(id);
-    if (result.success) {
-      redirect('/data/applications');
-    }
-  }
+  const deleteAction = deleteManagedApplicationFromDetailsPage.bind(null, id);
 
   const accessItems = details.hasUsedApp
     ? details.accessedData

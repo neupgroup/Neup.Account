@@ -185,6 +185,43 @@ export async function switchToPersonal() {
     }
 }
 
+export async function bridgeSwitchAccountBySessionId(input: {
+    requestUrl: string;
+    sessionId?: string | null;
+}): Promise<{ redirectTo: string }> {
+    const { requestUrl, sessionId } = input;
+
+    if (!sessionId) {
+        const errorUrl = new URL('/auth/start', requestUrl);
+        errorUrl.searchParams.set('error', 'invalid_request');
+        return { redirectTo: errorUrl.toString() };
+    }
+
+    const storedAccounts = await getStoredAccounts();
+    const accountToSwitch = storedAccounts.find((acc) => acc.sessionId === sessionId);
+
+    if (!accountToSwitch) {
+        const errorUrl = new URL('/auth/start', requestUrl);
+        errorUrl.searchParams.set('error', 'session_not_found');
+        return { redirectTo: errorUrl.toString() };
+    }
+
+    const result = await switchToAccountAction(accountToSwitch);
+
+    if (result.success) {
+        const manageUrl = new URL('/', requestUrl);
+        return { redirectTo: manageUrl.toString() };
+    }
+
+    const errorUrl = new URL('/auth/start', requestUrl);
+    errorUrl.searchParams.set('error', 'switch_failed');
+    if (result.error) {
+        errorUrl.searchParams.set('error_description', result.error);
+    }
+
+    return { redirectTo: errorUrl.toString() };
+}
+
 // Local helper to validate accounts using Prisma
 async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
   const { allAccounts } = await getSessionCookies();

@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@/core/hooks/use-toast';
 import { getPendingVerificationRequests, grantVerification, revokeVerification } from '@/services/manage/verifications';
 import type { VerificationRequest } from '@/types';
-import { checkPermissions } from '@/core/helpers/user';
+import { checkPermissions } from '@/services/shared/user';
 import { BackButton } from '@/components/ui/back-button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';

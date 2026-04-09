@@ -19,7 +19,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { getPendingNeupIdRequests } from "@/services/manage/requests/neupid"
-import { checkPermissions } from "@/core/helpers/user"
+import { checkPermissions } from "@/services/shared/user"
 import { notFound } from "next/navigation"
 import { BackButton } from "@/components/ui/back-button"
 

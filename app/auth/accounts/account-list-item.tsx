@@ -2,16 +2,16 @@
 "use client";
 
 import { useEffect, useState, useTransition } from 'react';
-import { getUserProfile } from '@/core/helpers/user';
+import { getUserProfile } from '@/services/shared/user';
 import type { StoredAccount } from '@/types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronRight } from '@/components/icons';
 import { AccountActions } from './account-actions';
-import { switchToBrand, switchToDependent, switchToDelegated, switchToAccount } from '@/core/helpers/session';
-import { redirectInApp } from '@/core/helpers/navigation';
+import { switchActiveAccount, switchToBrand, switchToDependent, switchToDelegated } from '@/services/auth/switch';
 import { appendAuthCallbackContext, appendRedirect } from '@/core/helpers/auth-callback';
+import { redirectInApp } from '@/core/helpers/navigation';
 
 type CombinedAccount = StoredAccount & {
     displayName?: string;
@@ -107,33 +107,40 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
                     if (redirects) redirectInApp(router, redirects);
                     else router.refresh();
                  }
-            } else if (finalAccount.isDependent) {
+                 return;
+            }
+
+            if (finalAccount.isDependent) {
                  const res = await switchToDependent(finalAccount.accountId);
                  if (res.success) {
                     if (redirects) redirectInApp(router, redirects);
                     else router.refresh();
                  }
-            } else if (finalAccount.sessionId) {
+                 return;
+            }
+
+            if (finalAccount.sessionId) {
                 if (finalAccount.expired) {
                     redirectInApp(router, getSigninUrl(finalAccount.neupId));
-                } else {
-                    const res = await switchToAccount(finalAccount);
-                    if (res.success) {
-                        redirectInApp(router, redirects || '/');
-                    }
+                    return;
                 }
-            } else {
-                // If sessionId is undefined, it means it's a signed-out personal account
-                if (finalAccount.sessionId === undefined) {
-                     redirectInApp(router, getSigninUrl(finalAccount.neupId));
-                } else {
-                    // If sessionId is empty string (''), it's a managed/delegated account
-                     const res = await switchToDelegated(finalAccount.accountId);
-                     if (res.success) {
-                        if (redirects) redirectInApp(router, redirects);
-                        else router.refresh();
-                     }
+
+                const res = await switchActiveAccount(finalAccount);
+                if (res.success) {
+                    redirectInApp(router, redirects || '/');
                 }
+                return;
+            }
+
+            if (finalAccount.sessionId === undefined) {
+                redirectInApp(router, getSigninUrl(finalAccount.neupId));
+                return;
+            }
+
+            const res = await switchToDelegated(finalAccount.accountId);
+            if (res.success) {
+                if (redirects) redirectInApp(router, redirects);
+                else router.refresh();
             }
         });
     };

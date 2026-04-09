@@ -4,6 +4,7 @@ import { headers } from 'next/headers';
 import prisma from '@/core/helpers/prisma';
 import { createAndSetSession } from '@/core/helpers/session';
 import { authCookies } from '@/core/helpers/cookies';
+import { getActiveSession } from '@/services/shared/auth';
 import { makeNotification } from '@/services/notifications';
 
 /**
@@ -77,6 +78,11 @@ export type MakeSessionInput = {
 export type MakeSessionResult = {
 	success: boolean;
 	error?: string;
+};
+
+export type BridgeAuthSessionError = {
+	error: string;
+	error_description?: string;
 };
 
 
@@ -288,5 +294,131 @@ export async function makeSession(input: MakeSessionInput): Promise<MakeSessionR
 		return { success: true };
 	} catch {
 		return { success: false, error: 'Failed to create session.' };
+	}
+}
+
+export async function bridgeValidateAndRefreshSession(input: {
+	aid?: string;
+	sid?: string;
+	skey?: string;
+	deviceType?: string;
+	activity?: string;
+}): Promise<{ status: number; body: BridgeAuthSessionError | { success: true; session: { aid: string; sid: string; expiresOn: Date | null; deviceType: string | null } } }> {
+	const { aid, sid, skey, deviceType } = input;
+
+	if (!aid || !sid || !skey) {
+		return {
+			status: 400,
+			body: { error: 'invalid_request', error_description: 'Missing aid, sid, or skey' },
+		};
+	}
+
+	try {
+		const session = await prisma.session.findUnique({
+			where: { id: sid },
+			include: { account: true },
+		});
+
+		if (!session || session.accountId !== aid || session.authSessionKey !== skey || session.isExpired) {
+			return {
+				status: 401,
+				body: { error: 'invalid_session', error_description: 'Session not found or invalid' },
+			};
+		}
+
+		if (session.expiresOn && session.expiresOn < new Date()) {
+			return {
+				status: 401,
+				body: { error: 'session_expired', error_description: 'Session has expired' },
+			};
+		}
+
+		const newExpiry = new Date();
+		newExpiry.setDate(newExpiry.getDate() + 30);
+
+		const updatedSession = await prisma.session.update({
+			where: { id: sid },
+			data: {
+				expiresOn: newExpiry,
+				...(deviceType ? { deviceType } : {}),
+			},
+		});
+
+		return {
+			status: 200,
+			body: {
+				success: true,
+				session: {
+					aid: updatedSession.accountId,
+					sid: updatedSession.id,
+					expiresOn: updatedSession.expiresOn,
+					deviceType: updatedSession.deviceType,
+				},
+			},
+		};
+	} catch (error) {
+		return { status: 500, body: { error: 'internal_server_error' } };
+	}
+}
+
+export async function bridgeInvalidateSession(input: {
+	aid?: string;
+	sid?: string;
+	skey?: string;
+}): Promise<{ status: number; body: BridgeAuthSessionError | { success: true; message: string } }> {
+	const { aid, sid, skey } = input;
+
+	if (!aid || !sid || !skey) {
+		return {
+			status: 400,
+			body: { error: 'invalid_request', error_description: 'Missing aid, sid, or skey' },
+		};
+	}
+
+	try {
+		const session = await prisma.session.updateMany({
+			where: {
+				id: sid,
+				accountId: aid,
+				authSessionKey: skey,
+			},
+			data: {
+				isExpired: true,
+				expiresOn: new Date(),
+			},
+		});
+
+		if (session.count === 0) {
+			return {
+				status: 404,
+				body: { error: 'not_found', error_description: 'Session not found' },
+			};
+		}
+
+		return { status: 200, body: { success: true, message: 'Session invalidated' } };
+	} catch (error) {
+		return { status: 500, body: { error: 'internal_server_error' } };
+	}
+}
+
+export async function bridgeRefreshSessionExpiry(): Promise<{ status: number; body: { success: boolean; error?: string; newExpiresOn?: string } }> {
+	try {
+		const session = await getActiveSession();
+
+		if (!session) {
+			return { status: 401, body: { success: false, error: 'Unauthenticated.' } };
+		}
+
+		const newExpiresOn = new Date();
+		newExpiresOn.setDate(newExpiresOn.getDate() + 30);
+
+		await prisma.session.update({
+			where: { id: session.sessionId },
+			data: { expiresOn: newExpiresOn },
+		});
+
+		return { status: 200, body: { success: true, newExpiresOn: newExpiresOn.toISOString() } };
+	} catch {
+		return { status: 500, body: { success: false, error: 'Internal server error.' } };
 	}
 }

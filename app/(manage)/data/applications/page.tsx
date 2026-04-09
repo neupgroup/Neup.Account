@@ -1,18 +1,7 @@
 import Link from 'next/link';
-import { getManagedApplications } from '@/services/manage/applications';
-import { getSignedApplications } from '@/services/data/signed-applications';
+import { getApplicationsPageData, type FlatAppItem } from '@/services/manage/applications/list';
 import { Button } from '@/components/ui/button';
 import { AppWindow, Building, BarChart, Share2, ChevronRight, type LucideIcon } from '@/components/icons';
-import { checkPermissions } from '@/core/helpers/user';
-
-type FlatAppItem = {
-  id: string;
-  name: string;
-  slug?: string;
-  icon?: string;
-  developer?: string;
-  source: 'managed' | 'connected';
-};
 
 function iconFor(appIcon?: string): LucideIcon {
   const appIconMap: Record<string, LucideIcon> = {
@@ -56,33 +45,7 @@ function SingleList({ apps }: { apps: FlatAppItem[] }) {
 }
 
 export default async function ApplicationsPage() {
-  const managedApplications = await getManagedApplications();
-  const { internal, external } = await getSignedApplications();
-  const canCreateApplication = await checkPermissions(['root.app.create']);
-  const connectedApplications = [...internal, ...external];
-
-  const managedItems: FlatAppItem[] = managedApplications.map((app) => ({
-    id: app.id,
-    name: app.name,
-    slug: app.slug,
-    icon: app.icon,
-    developer: app.developer,
-    source: 'managed',
-  }));
-
-  const managedIds = new Set(managedItems.map((app) => app.id));
-  const connectedItems: FlatAppItem[] = connectedApplications
-    .filter((app) => !managedIds.has(app.id))
-    .map((app) => ({
-      id: app.id,
-      name: app.name,
-      slug: app.slug,
-      icon: app.icon,
-      developer: app.developer,
-      source: 'connected',
-    }));
-
-  const allApplications = [...managedItems, ...connectedItems];
+  const { allApplications, canCreateApplication } = await getApplicationsPageData();
 
   return (
     <div className="grid gap-8">

@@ -22,7 +22,7 @@ import { Badge } from "@/components/ui/badge"
 import { getActivities, ActivityLog } from "@/core/helpers/log-actions"
 import { ChevronLeft, ChevronRight, Ban } from "lucide-react";
 import { BackButton } from "@/components/ui/back-button";
-import { checkPermissions } from "@/core/helpers/user";
+import { checkPermissions } from "@/services/shared/user";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useEffect, useState, useCallback, use } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
