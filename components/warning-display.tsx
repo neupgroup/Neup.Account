@@ -9,7 +9,7 @@ import { cn } from '@/core/helpers/utils';
 import { Skeleton } from './ui/skeleton';
 import { usePathname } from 'next/navigation';
 import { cva, type VariantProps } from 'class-variance-authority';
-import type { Notification as NotificationType } from '@/types';
+import type { Notification as NotificationType } from '@/services/notifications';
 
 export function NotificationBell({ className }: { className?: string}) {
     const [hasNotifications, setHasNotifications] = useState(false);

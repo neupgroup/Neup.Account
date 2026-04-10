@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/core/hooks/use-toast';
 import { approveNeupIdRequest, denyNeupIdRequest } from '@/services/manage/requests/neupid';
-import type { PendingNeupIdRequest } from '@/types';
+import type { PendingNeupIdRequest } from '@/services/manage/requests/neupid';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import {
   AlertDialog,

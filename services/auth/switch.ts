@@ -5,7 +5,7 @@ import { logActivity } from '@/core/helpers/log-actions';
 import { logError } from '@/core/helpers/logger';
 import { headers } from 'next/headers';
 import { switchToAccount as switchToAccountAction, switchToBrand as switchToBrandAction, switchToPersonal as switchToPersonalAction, switchToDependent as switchToDependentAction } from '@/core/helpers/session';
-import type { StoredAccount } from '@/types';
+import type { StoredAccount } from '@/core/helpers/session';
 import { getSessionCookies, setStoredAccountsCookie, clearSessionCookies } from '@/core/helpers/cookies';
 import { makeNotification } from '../notifications';
 

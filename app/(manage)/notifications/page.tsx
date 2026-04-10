@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { getNotifications, markNotificationAsRead, deleteNotification } from '@/services/notifications';
-import type { Notification, AllNotifications } from '@/types';
+import type { Notification, AllNotifications } from '@/services/notifications';
 import { NotificationManager } from '@/app/(manage)/notifications/notification-manager';
 import { Skeleton } from '@/components/ui/skeleton';
 

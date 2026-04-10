@@ -3,7 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Wallet, ShieldCheck, UserCheck, FileText, Ban, Trash2 } from "@/components/icons";
 import React from "react";
-import { checkPermissions } from "@/services/shared/user";
+import { checkPermissions } from '@/core/helpers/user';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ListItem } from "@/components/ui/list-item";
 import { UserCircle } from "lucide-react";

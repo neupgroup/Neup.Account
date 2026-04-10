@@ -1,7 +1,7 @@
 
 'use server';
 
-import type { SocialLink } from '@/types';
+import type { SocialLink } from '@/services/manage/site/socials';
 import { getPaymentSettings } from '@/services/manage/site/payments';
 import { APP_PROFILE_KEYS, readAppProfileData } from '@/services/manage/site/app-profile';
 

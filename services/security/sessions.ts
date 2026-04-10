@@ -4,7 +4,7 @@ import prisma from '@/core/helpers/prisma';
 import { getActiveAccountId, getActiveSession } from '@/core/helpers/auth-actions';
 import { logActivity } from '@/core/helpers/log-actions';
 import { logError } from '@/core/helpers/logger';
-import type { Session } from '@/types';
+import type { Session } from '@/core/helpers/session';
 
 /**
  * Function getUserSessions.

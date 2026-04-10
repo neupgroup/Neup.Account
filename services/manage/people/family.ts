@@ -6,7 +6,22 @@ import { logError } from '@/core/helpers/logger';
 import { getUserProfile, checkPermissions } from '@/core/helpers/user';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
-import type { FamilyMember, FamilyGroup } from '@/types';
+
+export type FamilyMember = {
+  accountId: string;
+  neupId: string;
+  displayName: string;
+  displayPhoto?: string;
+  status: 'pending' | 'approved';
+  hidden: boolean;
+  addedBy: string;
+};
+
+export type FamilyGroup = {
+  id: string;
+  createdBy: string;
+  members: FamilyMember[];
+};
 
 const addAccountSchema = z.object({
   neupId: z

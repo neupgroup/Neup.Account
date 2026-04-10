@@ -1,7 +1,7 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import React from "react";
-import { checkPermissions } from "@/services/shared/user";
+import { checkPermissions } from '@/core/helpers/user';
 import { notFound } from "next/navigation";
 import { ListItem } from "@/components/ui/list-item";
 import { PrimaryHeader } from "@/components/ui/primary-header";

@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { getEncodedUserPermissions } from '@/services/shared/user';
-import { getActiveSession } from '@/services/shared/auth';
+import { getEncodedUserPermissions } from '@/core/helpers/user';
+import { getActiveSession } from '@/core/helpers/session';
 
 export async function GET(request: NextRequest) {
     const session = await getActiveSession();

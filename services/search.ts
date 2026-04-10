@@ -3,9 +3,16 @@
 
 import { logError } from '@/core/helpers/logger';
 import { checkPermissions } from '@/core/helpers/user';
-import type { SearchResult } from '@/types';
 import prisma from '@/core/helpers/prisma';
 import { PERMISSION_SET } from '@/core/helpers/permissions';
+
+export type SearchResult = {
+    id: string;
+    type: 'user' | 'permission';
+    title: string;
+    description: string;
+    url: string;
+};
 
 
 // A very basic search function. In a real-world scenario,

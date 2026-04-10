@@ -9,8 +9,14 @@ import { z } from 'zod';
 import { headers } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import { brandCreationSchema } from '@/services/manage/accounts/schema';
-import type { BrandAccount } from '@/types';
 import { logActivity } from '@/core/helpers/log-actions';
+
+export type BrandAccount = {
+    id: string;
+    name: string;
+    logoUrl?: string;
+    plan: string;
+};
 
 /**
  * Function getBrandAccounts.

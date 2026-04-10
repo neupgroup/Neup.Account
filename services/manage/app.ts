@@ -2,7 +2,7 @@
 
 import prisma from '@/core/helpers/prisma';
 import { logError } from '@/core/helpers/logger';
-import type { Application } from '@/types';
+import type { Application } from '@/services/manage/application-types';
 
 /**
  * Function getApps.

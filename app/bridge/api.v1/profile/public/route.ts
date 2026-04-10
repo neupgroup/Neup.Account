@@ -1,6 +1,6 @@
 
 import { NextResponse, type NextRequest } from 'next/server';
-import { getUserProfile, getUserNeupIds } from '@/services/shared/user-actions';
+import { getUserProfile, getUserNeupIds } from '@/core/helpers/user-actions';
 
 export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);

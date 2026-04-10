@@ -27,7 +27,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import type { Permission } from "@/types";
+import type { Permission } from '@/core/helpers/permissions';
 import { Loader2 } from "@/components/icons";
 import { redirectInApp } from "@/core/helpers/navigation";
 

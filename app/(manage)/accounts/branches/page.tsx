@@ -8,7 +8,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { getActiveAccountId } from "@/services/shared/auth";
+import { getActiveAccountId } from '@/core/helpers/session';
 import { getBranches } from "@/services/manage/accounts/branches";
 import {
     Table,

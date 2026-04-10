@@ -12,7 +12,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { BackButton } from "@/components/ui/back-button";
-import { checkPermissions } from "@/services/shared/user";
+import { checkPermissions } from '@/core/helpers/user';
 import { notFound } from "next/navigation";
 
 export default async function PoliciesPage() {

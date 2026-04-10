@@ -4,7 +4,7 @@
 import { useState, useTransition, useRef } from 'react';
 import { useToast } from '@/core/hooks/use-toast';
 import { addFamilyMember, removeFamilyMember } from '@/services/manage/people/family';
-import type { FamilyMember, FamilyGroup } from '@/types';
+import type { FamilyMember, FamilyGroup } from '@/services/manage/people/family';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { UserPlus, Loader2, Trash2 } from 'lucide-react';

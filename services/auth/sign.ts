@@ -10,7 +10,7 @@ import {
 } from '@/core/helpers/auth-callback-server';
 import prisma from '@/core/helpers/prisma';
 import { randomBytes } from 'crypto';
-import { getUserProfile } from '@/services/shared/user';
+import { getUserProfile } from '@/core/helpers/user';
 import { validateExternalRequest } from '@/services/auth/validate';
 
 /**

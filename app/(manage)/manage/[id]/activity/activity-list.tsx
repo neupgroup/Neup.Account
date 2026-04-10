@@ -11,11 +11,11 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { getActivity } from "@/services/manage/users";
 import { Ban, MapPin } from "@/components/icons";
-import { checkPermissions } from "@/services/shared/user";
+import { checkPermissions } from '@/core/helpers/user';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import type { UserActivityLog } from "@/types";
+import type { UserActivityLog } from '@/services/manage/users';
 
 const statusVariantMap: { [key: string]: "default" | "destructive" | "secondary" } = {
     Success: "default",

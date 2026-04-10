@@ -5,7 +5,16 @@ import { getUserProfile, checkPermissions, getUserNeupIds } from '@/core/helpers
 import { getPersonalAccountId } from '@/core/helpers/auth-actions';
 import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
-import type { Invitation } from '@/types';
+
+export type Invitation = {
+    notificationId: string;
+    requestId: string;
+    action: string;
+    senderId: string;
+    senderName: string;
+    senderNeupId: string;
+    createdAt: string;
+};
 
 /**
  * Function getInvitations.

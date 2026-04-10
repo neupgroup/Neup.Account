@@ -42,7 +42,7 @@ import { dependentFormSchema } from "@/services/manage/accounts/schema"
 import { Label } from "@/components/ui/label"
 import { parseDateString } from "@/services/profile"
 import { BackButton } from "@/components/ui/back-button"
-import { checkPermissions } from "@/services/shared/user"
+import { checkPermissions } from '@/core/helpers/user'
 import { Loader2 } from "@/components/icons"
 import { redirectInApp } from "@/core/helpers/navigation";
 

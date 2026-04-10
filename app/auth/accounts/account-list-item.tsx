@@ -2,8 +2,8 @@
 "use client";
 
 import { useEffect, useState, useTransition } from 'react';
-import { getUserProfile } from '@/services/shared/user';
-import type { StoredAccount } from '@/types';
+import { getUserProfile } from '@/core/helpers/user';
+import type { StoredAccount } from '@/core/helpers/session';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';

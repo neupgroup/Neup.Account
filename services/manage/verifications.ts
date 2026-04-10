@@ -7,7 +7,15 @@ import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { getPersonalAccountId } from '@/core/helpers/auth-actions';
-import type { VerificationRequest } from '@/types';
+
+export type VerificationRequest = {
+    id: string;
+    accountId: string;
+    fullName: string;
+    neupId: string;
+    requestedAt: string;
+    status: 'pending' | 'approved' | 'rejected' | 'revoked';
+};
 
 const verificationActionSchema = z.object({
     reason: z.string().min(10, "A reason of at least 10 characters is required."),

@@ -7,13 +7,46 @@ import { getUserNeupIds, getUserProfile as fetchUserProfile, checkPermissions } 
 import { getPersonalAccountId } from '@/core/helpers/auth-actions';
 import { revalidatePath } from 'next/cache';
 import { logActivity } from '@/core/helpers/log-actions';
+import type { UserProfile } from '@/core/helpers/user';
 
-import type {
-  UserDetails,
-  UserActivityLog,
-  UserPermissions,
-  UserDashboardStats,
-} from '@/types';
+export type UserDetails = {
+  accountId: string;
+  neupId: string;
+  profile: UserProfile;
+  accountType?: string;
+};
+
+export type UserActivityLog = {
+    id: string;
+    action: string;
+    status: string;
+    ip: string;
+    timestamp: string;
+    geolocation?: string;
+    rawTimestamp: Date;
+};
+
+export type UserPermissions = {
+    assignedPermissions: string[];
+    restrictedPermissions: string[];
+    allPermissions: string[];
+};
+
+export type UserDashboardStats = {
+    lastIpAddress: string;
+    lastLocation: string;
+    lastActive: string;
+};
+
+export type AccountDetails = {
+    block: {
+        status: boolean;
+        reason?: string;
+        message?: string;
+        is_permanent?: boolean;
+        until?: string | null;
+    } | null;
+};
 
 // Simplified for now, can be expanded later.
 export type UserDetailsLimited = {

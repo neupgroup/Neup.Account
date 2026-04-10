@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Laptop, MapPin } from 'lucide-react';
 import { logoutSessionById, logoutAllOtherSessions } from '@/services/security/sessions';
-import type { Session } from '@/types';
+import type { Session } from '@/core/helpers/session';
 import { useToast } from '@/core/hooks/use-toast';
 import { CardFooter } from '@/components/ui/card';
 

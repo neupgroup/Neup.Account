@@ -4,8 +4,8 @@
 import { useEffect, useState, useTransition } from 'react';
 import Image from 'next/image';
 import { getPendingKycRequests, approveKycRequest, rejectKycRequest } from '@/services/manage/requests/kyc';
-import type { KycRequest } from '@/types';
-import { checkPermissions } from '@/services/shared/user';
+import type { KycRequest } from '@/services/manage/requests/kyc';
+import { checkPermissions } from '@/core/helpers/user';
 import { notFound } from 'next/navigation';
 import { BackButton } from '@/components/ui/back-button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';

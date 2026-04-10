@@ -4,10 +4,10 @@
 import { useState, useTransition, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import type { StoredAccount } from '@/types';
+import type { StoredAccount } from '@/core/helpers/session';
 import { switchActiveAccount } from '@/services/auth/switch';
 import { useToast } from '@/core/hooks/use-toast';
-import { getActiveAccountId } from '@/services/shared/auth';
+import { getActiveAccountId } from '@/core/helpers/session';
 import { redirectInApp } from '@/core/helpers/navigation';
 
 type CombinedAccount = StoredAccount & {

@@ -11,7 +11,7 @@ import { useToast } from '@/core/hooks/use-toast';
 import { useSecurityCheck } from '@/core/hooks/use-security-check';
 import { cn } from '@/core/helpers/utils';
 import { AccountListItem } from '../accounts/account-list-item';
-import type { StoredAccount } from '@/types';
+import type { StoredAccount } from '@/core/helpers/session';
 import { appendAuthCallbackContext, appendRedirect, getAppDisplayName, shouldReturnToAuthStartForExternalAuthentication } from '@/core/helpers/auth-callback';
 import { redirectInApp } from '@/core/helpers/navigation';
 import { cleanupExpiredStoredSessions } from '@/core/helpers/session';

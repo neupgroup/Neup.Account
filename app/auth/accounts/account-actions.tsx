@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import type { StoredAccount } from "@/types";
+import type { StoredAccount } from '@/core/helpers/session';
 import { logoutStoredSession, removeStoredAccount } from "@/services/auth/switch";
 import { useToast } from "@/core/hooks/use-toast";
 import { Loader2 } from "@/components/icons";

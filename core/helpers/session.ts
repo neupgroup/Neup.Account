@@ -4,7 +4,30 @@ import prisma from '@/core/helpers/prisma';
 import crypto from 'crypto';
 
 import { logError } from './logger';
-import type { Session, StoredAccount } from '@/types';
+
+export type Session = {
+  aid?: string;
+  sid?: string;
+  skey?: string;
+  accountId: string;
+  sessionId: string;
+  sessionKey: string;
+  jwt?: string;
+};
+
+export type StoredAccount = {
+  aid: string;
+  sid?: string;
+  skey?: string;
+  accountId?: string;
+  sessionId?: string;
+  sessionKey?: string;
+  expired: boolean;
+  neupId?: string;
+  isBrand?: boolean;
+  isUnknown?: boolean;
+  active?: boolean;
+};
 import { setSessionCookies, setStoredAccountsCookie, getSessionCookies, clearManagingCookie, setManagingCookie } from './cookies';
 import { getUserNeupIds, validateNeupId } from './user';
 import { getActiveAccountId, getPersonalAccountId, validateCurrentSession } from './auth-actions';

@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { format } from "date-fns"
 
-import { getUserProfile } from "@/services/shared/user"
+import { getUserProfile } from '@/core/helpers/user'
 import { updateUserProfile, parseDateString } from "@/services/profile"
 import { useToast } from "@/core/hooks/use-toast"
 import { cn } from '@/core/helpers/utils'

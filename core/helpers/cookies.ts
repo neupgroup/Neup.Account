@@ -3,7 +3,7 @@
 'use server';
 
 import { cookies } from 'next/headers';
-import type { StoredAccount } from '@/types';
+import type { StoredAccount } from '@/core/helpers/session';
 import type { Session } from "@/core/helpers/auth-actions";
 import { Singleton } from '@/core/interface/singleton';
 

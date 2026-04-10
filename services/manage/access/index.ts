@@ -7,8 +7,32 @@ import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { logActivity } from '@/core/helpers/log-actions';
-import type { UserAccess, AccessDetails, Permission } from '@/types';
+import type { Permission } from '@/core/helpers/permissions';
 import { PERMISSION_SET } from '@/core/helpers/permissions';
+
+export type UserAccess = {
+  permitId: string;
+  userId: string;
+  displayName: string;
+  accountPhoto?: string;
+  permissions: string[];
+  status: 'pending' | 'approved' | 'rejected';
+};
+
+export type AccessDetails = {
+  permitId: string;
+  grantedTo: {
+    id: string;
+    name: string;
+    neupId: string;
+  };
+  grantedBy: {
+    id: string;
+    name: string;
+  };
+  grantedOn: string;
+  permissions: string[];
+};
 
 /**
  * Function getMasterPermissions.

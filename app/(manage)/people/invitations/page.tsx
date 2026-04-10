@@ -4,7 +4,7 @@
 import { useState, useEffect, useTransition } from 'react';
 import { useToast } from '@/core/hooks/use-toast';
 import { getInvitations, acceptRequest, rejectRequest } from '@/services/manage/people/invitations';
-import type { Invitation } from '@/types';
+import type { Invitation } from '@/services/manage/people/invitations';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';

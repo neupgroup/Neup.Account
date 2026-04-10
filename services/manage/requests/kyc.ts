@@ -5,7 +5,18 @@ import { getUserProfile, checkPermissions, getUserNeupIds } from '@/core/helpers
 import { logActivity } from '@/core/helpers/log-actions';
 import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
-import type { KycRequest } from '@/types';
+
+export type KycRequest = {
+    id: string;
+    accountId: string;
+    userFullName: string;
+    userNeupId: string;
+    documentType: string;
+    submittedAt: string;
+    status: 'pending' | 'approved' | 'rejected' | 'revoked';
+    documentPhotoUrl: string;
+    selfiePhotoUrl: string;
+};
 
 
 /**

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UserDetails } from '@/types';
+import { UserDetails } from '@/services/manage/users';
 import { ProfileForm } from './profile-form'; 
 import { VerificationManager } from './verification-manager';
 import { ActivityList } from './activity/activity-list'; 

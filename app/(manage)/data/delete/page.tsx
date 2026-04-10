@@ -21,8 +21,8 @@ import { Label } from "@/components/ui/label";
 import { BackButton } from "@/components/ui/back-button";
 import { GeolocationContext } from "@/core/providers/geolocation-context";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
-import { getAccountType } from "@/services/shared/user";
-import { getActiveAccountId } from "@/services/shared/auth";
+import { getAccountType } from '@/core/helpers/user';
+import { getActiveAccountId } from '@/core/helpers/session';
 import { useRouter } from "next/navigation";
 import { redirectInApp } from "@/core/helpers/navigation";
 

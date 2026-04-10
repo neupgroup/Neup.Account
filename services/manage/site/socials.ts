@@ -5,8 +5,14 @@ import {revalidatePath} from 'next/cache';
 import {logError} from '@/core/helpers/logger';
 import {checkPermissions} from '@/core/helpers/user';
 import crypto from 'crypto';
-import type {SocialLink} from '@/types';
 import { APP_PROFILE_KEYS, readAppProfileData, writeAppProfileData } from '@/services/manage/site/app-profile';
+
+export type SocialLink = {
+    id: string;
+    type: 'instagram' | 'linkedin' | 'twitter' | 'facebook' | 'whatsapp' | 'other';
+    url: string;
+    isVisible: boolean;
+};
 
 
 // Database schema for social links.

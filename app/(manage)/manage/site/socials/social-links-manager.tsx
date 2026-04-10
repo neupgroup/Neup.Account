@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useToast } from '@/core/hooks/use-toast';
 import { addSocialLink, deleteSocialLink, toggleSocialLinkVisibility } from "@/services/manage/site/socials";
-import type { SocialLink } from '@/types';
+import type { SocialLink } from '@/services/manage/site/socials';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

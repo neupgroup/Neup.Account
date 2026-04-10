@@ -5,7 +5,12 @@
 import prisma from '@/core/helpers/prisma';
 import { logError } from '@/core/helpers/logger';
 import { checkPermissions } from '@/core/helpers/user';
-import type { UserStats } from '@/types';
+
+export type UserStats = {
+    totalUsers: number;
+    activeUsers: number;
+    signedUpToday: number;
+};
 
 /**
  * Type AccountListItem.

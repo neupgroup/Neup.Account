@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { RequestDecisionForm } from './form';
 import { notFound, useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import type { PendingNeupIdRequest } from '@/types';
+import type { PendingNeupIdRequest } from '@/services/manage/requests/neupid';
 import { Skeleton } from '@/components/ui/skeleton';
 import { BackButton } from '@/components/ui/back-button';
 

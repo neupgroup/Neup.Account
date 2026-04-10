@@ -150,6 +150,11 @@ export const PERMISSION_SET: Record<string, string[]> = {
   ]
 };
 
+export type Permission = {
+  id: string;
+  name: string;
+};
+
 export const PERMISSION_METADATA: Record<string, { intended_for: string[] }> = {
   "independent.default": { intended_for: ["individual"] },
   "dependent.full": { intended_for: ["dependent"] },
