@@ -61,7 +61,7 @@ model AccountTypeIndividual {
   account             Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
   authMethods         AuthMethod[]
 
-  @@map("account_type__individual")
+  @@map("account_meta__individual")
 }
 
 model AccountTypeBrand {
