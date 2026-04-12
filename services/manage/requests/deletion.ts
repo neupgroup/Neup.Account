@@ -45,14 +45,16 @@ export async function getDeletionRequests(): Promise<DeletionRequest[]> {
         const accountId = account.id;
         const profile = await getUserProfile(accountId);
 
-        const statusLog = await prisma.accountStatusLog.findFirst({
+        const statusLog = await prisma.activityLog.findFirst({
             where: {
-                accountId,
-                status: 'deletion_requested'
+                targetAccountId: accountId,
+                action: {
+                    contains: 'Account status changed to deletion_requested',
+                },
             },
-            orderBy: { fromDate: 'desc' }
+            orderBy: { timestamp: 'desc' }
         });
-        const requestedAt = statusLog?.fromDate?.toLocaleDateString() || 'N/A';
+        const requestedAt = statusLog?.timestamp?.toLocaleDateString() || 'N/A';
 
         return {
           accountId,
@@ -93,14 +95,16 @@ export async function getDeletionStatus(accountId: string): Promise<{status: 'no
 
         const status = account.accountStatus;
         if (status === 'deletion_requested') {
-            const statusLog = await prisma.accountStatusLog.findFirst({
+            const statusLog = await prisma.activityLog.findFirst({
                 where: {
-                    accountId,
-                    status: 'deletion_requested'
+                    targetAccountId: accountId,
+                    action: {
+                        contains: 'Account status changed to deletion_requested',
+                    },
                 },
-                orderBy: { fromDate: 'desc' }
+                orderBy: { timestamp: 'desc' }
             });
-            const requestedAt = statusLog?.fromDate?.toLocaleDateString() || null;
+            const requestedAt = statusLog?.timestamp?.toLocaleDateString() || null;
             return { status: 'pending', requestedAt };
         }
 
@@ -159,23 +163,17 @@ export async function cancelAccountDeletion(
                 data: { accountStatus: 'active' }
             });
 
-            const statusLog = await tx.accountStatusLog.findFirst({
-                where: {
-                    accountId,
-                    status: 'deletion_requested'
-                },
-                orderBy: { fromDate: 'desc' }
+            await tx.activityLog.create({
+                data: {
+                    targetAccountId: accountId,
+                    actorAccountId: adminId,
+                    action: 'Account status changed to active. Request cancelled by admin.',
+                    status: 'Success',
+                    ip: 'system',
+                    timestamp: new Date(),
+                    geolocation: `Request cancelled by admin ${adminId}.`,
+                }
             });
-
-            if (statusLog) {
-                await tx.accountStatusLog.update({
-                    where: { id: statusLog.id },
-                    data: {
-                        status: 'request_cancelled',
-                        remarks: `Request cancelled by admin ${adminId}.`
-                    }
-                });
-            }
         });
 
         await logActivity(accountId, 'Account Deletion Cancelled by Admin', 'Success', undefined, adminId);
@@ -218,12 +216,15 @@ export async function requestAccountDeletionByAdmin(accountId: string, data: z.i
                 data: { accountStatus: 'deletion_requested' }
             });
 
-            await tx.accountStatusLog.create({
+            await tx.activityLog.create({
                 data: {
-                    accountId: accountId,
-                    status: 'deletion_requested',
-                    remarks: `Admin initiated deletion. Reason: ${validation.data.reason}`,
-                    moreInfo: `Request by admin: ${adminId}.`
+                    targetAccountId: accountId,
+                    actorAccountId: adminId,
+                    action: `Account status changed to deletion_requested. Admin initiated deletion. Reason: ${validation.data.reason}`,
+                    status: 'Pending',
+                    ip: 'system',
+                    timestamp: new Date(),
+                    geolocation: `Request by admin: ${adminId}.`,
                 }
             });
         });

@@ -180,15 +180,6 @@ exports.Prisma.ActivityLogScalarFieldEnum = {
   geolocation: 'geolocation'
 };
 
-exports.Prisma.AccountStatusLogScalarFieldEnum = {
-  id: 'id',
-  accountId: 'accountId',
-  status: 'status',
-  remarks: 'remarks',
-  fromDate: 'fromDate',
-  moreInfo: 'moreInfo'
-};
-
 exports.Prisma.NotificationScalarFieldEnum = {
   id: 'id',
   accountId: 'accountId',
@@ -505,7 +496,6 @@ exports.Prisma.ModelName = {
   AppProfile: 'AppProfile',
   AuthRequest: 'AuthRequest',
   ActivityLog: 'ActivityLog',
-  AccountStatusLog: 'AccountStatusLog',
   Notification: 'Notification',
   Request: 'Request',
   Family: 'Family',

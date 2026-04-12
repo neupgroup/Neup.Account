@@ -60,14 +60,15 @@ export async function requestAccountDeletion(data: z.infer<typeof formSchema>, g
             where: { id: accountId },
             data: { accountStatus: 'deletion_requested' }
         }),
-        // Create a log in the new account_status collection
-        prisma.accountStatusLog.create({
+        prisma.activityLog.create({
             data: {
-                accountId: accountId,
-                status: 'deletion_requested',
-                remarks: 'User initiated deletion request.',
-                fromDate: new Date(),
-                moreInfo: 'User verified password to request deletion.'
+                targetAccountId: accountId,
+                actorAccountId: accountId,
+                action: 'Account status changed to deletion_requested. User initiated deletion request.',
+                status: 'Pending',
+                ip: 'system',
+                timestamp: new Date(),
+                geolocation,
             }
         })
     ]);

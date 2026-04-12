@@ -48,7 +48,6 @@ model Account {
   password        Password?
   sessions        Session[]
   errorLogs       ErrorLog[]
-  statusLogs      AccountStatusLog[]
   appConnections  UserAppConnection[]
   appAuthentications AppAuthentication[]
   appSessions     AppSession[]
@@ -115,20 +114,7 @@ model ActivityLog {
   timestamp       DateTime @default(now())
   geolocation     String?
 
-  @@map("activity_logs")
-}
-
-model AccountStatusLog {
-  id        String   @id @default(uuid())
-  accountId String
-  status    String
-  remarks   String?
-  fromDate  DateTime @default(now())
-  moreInfo  String?
-
-  account   Account  @relation(fields: [accountId], references: [id])
-
-  @@map("account_status_logs")
+  @@map("activity")
 }
 
 model Notification {

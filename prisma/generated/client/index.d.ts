@@ -39,11 +39,6 @@ export type AuthRequest = $Result.DefaultSelection<Prisma.$AuthRequestPayload>
  */
 export type ActivityLog = $Result.DefaultSelection<Prisma.$ActivityLogPayload>
 /**
- * Model AccountStatusLog
- * 
- */
-export type AccountStatusLog = $Result.DefaultSelection<Prisma.$AccountStatusLogPayload>
-/**
  * Model Notification
  * 
  */
@@ -345,16 +340,6 @@ export class PrismaClient<
     * ```
     */
   get activityLog(): Prisma.ActivityLogDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.accountStatusLog`: Exposes CRUD operations for the **AccountStatusLog** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more AccountStatusLogs
-    * const accountStatusLogs = await prisma.accountStatusLog.findMany()
-    * ```
-    */
-  get accountStatusLog(): Prisma.AccountStatusLogDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.notification`: Exposes CRUD operations for the **Notification** model.
@@ -1064,7 +1049,6 @@ export namespace Prisma {
     AppProfile: 'AppProfile',
     AuthRequest: 'AuthRequest',
     ActivityLog: 'ActivityLog',
-    AccountStatusLog: 'AccountStatusLog',
     Notification: 'Notification',
     Request: 'Request',
     Family: 'Family',
@@ -1107,7 +1091,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "totp" | "appProfile" | "authRequest" | "activityLog" | "accountStatusLog" | "notification" | "request" | "family" | "backupCode" | "verification" | "contact" | "neupId" | "password" | "permit" | "session" | "errorLog" | "bugReport" | "application" | "authTeam" | "assetGroupInfo" | "assetGroupMember" | "asset" | "assetMemberRole" | "authTeamExternal" | "authRole" | "authPermissionRecipient" | "userAppConnection" | "appAuthentication" | "appSession" | "authSessionExternal" | "authRoleExternal" | "authPermissionsExternal"
+      modelProps: "account" | "totp" | "appProfile" | "authRequest" | "activityLog" | "notification" | "request" | "family" | "backupCode" | "verification" | "contact" | "neupId" | "password" | "permit" | "session" | "errorLog" | "bugReport" | "application" | "authTeam" | "assetGroupInfo" | "assetGroupMember" | "asset" | "assetMemberRole" | "authTeamExternal" | "authRole" | "authPermissionRecipient" | "userAppConnection" | "appAuthentication" | "appSession" | "authSessionExternal" | "authRoleExternal" | "authPermissionsExternal"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1478,80 +1462,6 @@ export namespace Prisma {
           count: {
             args: Prisma.ActivityLogCountArgs<ExtArgs>
             result: $Utils.Optional<ActivityLogCountAggregateOutputType> | number
-          }
-        }
-      }
-      AccountStatusLog: {
-        payload: Prisma.$AccountStatusLogPayload<ExtArgs>
-        fields: Prisma.AccountStatusLogFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.AccountStatusLogFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountStatusLogPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.AccountStatusLogFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountStatusLogPayload>
-          }
-          findFirst: {
-            args: Prisma.AccountStatusLogFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountStatusLogPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.AccountStatusLogFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountStatusLogPayload>
-          }
-          findMany: {
-            args: Prisma.AccountStatusLogFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountStatusLogPayload>[]
-          }
-          create: {
-            args: Prisma.AccountStatusLogCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountStatusLogPayload>
-          }
-          createMany: {
-            args: Prisma.AccountStatusLogCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.AccountStatusLogCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountStatusLogPayload>[]
-          }
-          delete: {
-            args: Prisma.AccountStatusLogDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountStatusLogPayload>
-          }
-          update: {
-            args: Prisma.AccountStatusLogUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountStatusLogPayload>
-          }
-          deleteMany: {
-            args: Prisma.AccountStatusLogDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.AccountStatusLogUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.AccountStatusLogUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountStatusLogPayload>[]
-          }
-          upsert: {
-            args: Prisma.AccountStatusLogUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AccountStatusLogPayload>
-          }
-          aggregate: {
-            args: Prisma.AccountStatusLogAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateAccountStatusLog>
-          }
-          groupBy: {
-            args: Prisma.AccountStatusLogGroupByArgs<ExtArgs>
-            result: $Utils.Optional<AccountStatusLogGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.AccountStatusLogCountArgs<ExtArgs>
-            result: $Utils.Optional<AccountStatusLogCountAggregateOutputType> | number
           }
         }
       }
@@ -3666,7 +3576,6 @@ export namespace Prisma {
     appProfile?: AppProfileOmit
     authRequest?: AuthRequestOmit
     activityLog?: ActivityLogOmit
-    accountStatusLog?: AccountStatusLogOmit
     notification?: NotificationOmit
     request?: RequestOmit
     family?: FamilyOmit
@@ -3781,7 +3690,6 @@ export namespace Prisma {
     targetPermits: number
     sessions: number
     errorLogs: number
-    statusLogs: number
     appConnections: number
     appAuthentications: number
     appSessions: number
@@ -3811,7 +3719,6 @@ export namespace Prisma {
     targetPermits?: boolean | AccountCountOutputTypeCountTargetPermitsArgs
     sessions?: boolean | AccountCountOutputTypeCountSessionsArgs
     errorLogs?: boolean | AccountCountOutputTypeCountErrorLogsArgs
-    statusLogs?: boolean | AccountCountOutputTypeCountStatusLogsArgs
     appConnections?: boolean | AccountCountOutputTypeCountAppConnectionsArgs
     appAuthentications?: boolean | AccountCountOutputTypeCountAppAuthenticationsArgs
     appSessions?: boolean | AccountCountOutputTypeCountAppSessionsArgs
@@ -3891,13 +3798,6 @@ export namespace Prisma {
    */
   export type AccountCountOutputTypeCountErrorLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ErrorLogWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
-  export type AccountCountOutputTypeCountStatusLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AccountStatusLogWhereInput
   }
 
   /**
@@ -4635,7 +4535,6 @@ export namespace Prisma {
     password?: boolean | Account$passwordArgs<ExtArgs>
     sessions?: boolean | Account$sessionsArgs<ExtArgs>
     errorLogs?: boolean | Account$errorLogsArgs<ExtArgs>
-    statusLogs?: boolean | Account$statusLogsArgs<ExtArgs>
     appConnections?: boolean | Account$appConnectionsArgs<ExtArgs>
     appAuthentications?: boolean | Account$appAuthenticationsArgs<ExtArgs>
     appSessions?: boolean | Account$appSessionsArgs<ExtArgs>
@@ -4753,7 +4652,6 @@ export namespace Prisma {
     password?: boolean | Account$passwordArgs<ExtArgs>
     sessions?: boolean | Account$sessionsArgs<ExtArgs>
     errorLogs?: boolean | Account$errorLogsArgs<ExtArgs>
-    statusLogs?: boolean | Account$statusLogsArgs<ExtArgs>
     appConnections?: boolean | Account$appConnectionsArgs<ExtArgs>
     appAuthentications?: boolean | Account$appAuthenticationsArgs<ExtArgs>
     appSessions?: boolean | Account$appSessionsArgs<ExtArgs>
@@ -4795,7 +4693,6 @@ export namespace Prisma {
       password: Prisma.$PasswordPayload<ExtArgs> | null
       sessions: Prisma.$SessionPayload<ExtArgs>[]
       errorLogs: Prisma.$ErrorLogPayload<ExtArgs>[]
-      statusLogs: Prisma.$AccountStatusLogPayload<ExtArgs>[]
       appConnections: Prisma.$UserAppConnectionPayload<ExtArgs>[]
       appAuthentications: Prisma.$AppAuthenticationPayload<ExtArgs>[]
       appSessions: Prisma.$AppSessionPayload<ExtArgs>[]
@@ -5245,7 +5142,6 @@ export namespace Prisma {
     password<T extends Account$passwordArgs<ExtArgs> = {}>(args?: Subset<T, Account$passwordArgs<ExtArgs>>): Prisma__PasswordClient<$Result.GetResult<Prisma.$PasswordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     sessions<T extends Account$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     errorLogs<T extends Account$errorLogsArgs<ExtArgs> = {}>(args?: Subset<T, Account$errorLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErrorLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    statusLogs<T extends Account$statusLogsArgs<ExtArgs> = {}>(args?: Subset<T, Account$statusLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountStatusLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     appConnections<T extends Account$appConnectionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$appConnectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAppConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     appAuthentications<T extends Account$appAuthenticationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$appAuthenticationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppAuthenticationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     appSessions<T extends Account$appSessionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$appSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5918,30 +5814,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ErrorLogScalarFieldEnum | ErrorLogScalarFieldEnum[]
-  }
-
-  /**
-   * Account.statusLogs
-   */
-  export type Account$statusLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AccountStatusLog
-     */
-    select?: AccountStatusLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AccountStatusLog
-     */
-    omit?: AccountStatusLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountStatusLogInclude<ExtArgs> | null
-    where?: AccountStatusLogWhereInput
-    orderBy?: AccountStatusLogOrderByWithRelationInput | AccountStatusLogOrderByWithRelationInput[]
-    cursor?: AccountStatusLogWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AccountStatusLogScalarFieldEnum | AccountStatusLogScalarFieldEnum[]
   }
 
   /**
@@ -10483,1077 +10355,6 @@ export namespace Prisma {
      * Omit specific fields from the ActivityLog
      */
     omit?: ActivityLogOmit<ExtArgs> | null
-  }
-
-
-  /**
-   * Model AccountStatusLog
-   */
-
-  export type AggregateAccountStatusLog = {
-    _count: AccountStatusLogCountAggregateOutputType | null
-    _min: AccountStatusLogMinAggregateOutputType | null
-    _max: AccountStatusLogMaxAggregateOutputType | null
-  }
-
-  export type AccountStatusLogMinAggregateOutputType = {
-    id: string | null
-    accountId: string | null
-    status: string | null
-    remarks: string | null
-    fromDate: Date | null
-    moreInfo: string | null
-  }
-
-  export type AccountStatusLogMaxAggregateOutputType = {
-    id: string | null
-    accountId: string | null
-    status: string | null
-    remarks: string | null
-    fromDate: Date | null
-    moreInfo: string | null
-  }
-
-  export type AccountStatusLogCountAggregateOutputType = {
-    id: number
-    accountId: number
-    status: number
-    remarks: number
-    fromDate: number
-    moreInfo: number
-    _all: number
-  }
-
-
-  export type AccountStatusLogMinAggregateInputType = {
-    id?: true
-    accountId?: true
-    status?: true
-    remarks?: true
-    fromDate?: true
-    moreInfo?: true
-  }
-
-  export type AccountStatusLogMaxAggregateInputType = {
-    id?: true
-    accountId?: true
-    status?: true
-    remarks?: true
-    fromDate?: true
-    moreInfo?: true
-  }
-
-  export type AccountStatusLogCountAggregateInputType = {
-    id?: true
-    accountId?: true
-    status?: true
-    remarks?: true
-    fromDate?: true
-    moreInfo?: true
-    _all?: true
-  }
-
-  export type AccountStatusLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which AccountStatusLog to aggregate.
-     */
-    where?: AccountStatusLogWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AccountStatusLogs to fetch.
-     */
-    orderBy?: AccountStatusLogOrderByWithRelationInput | AccountStatusLogOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: AccountStatusLogWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AccountStatusLogs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AccountStatusLogs.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned AccountStatusLogs
-    **/
-    _count?: true | AccountStatusLogCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: AccountStatusLogMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: AccountStatusLogMaxAggregateInputType
-  }
-
-  export type GetAccountStatusLogAggregateType<T extends AccountStatusLogAggregateArgs> = {
-        [P in keyof T & keyof AggregateAccountStatusLog]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateAccountStatusLog[P]>
-      : GetScalarType<T[P], AggregateAccountStatusLog[P]>
-  }
-
-
-
-
-  export type AccountStatusLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AccountStatusLogWhereInput
-    orderBy?: AccountStatusLogOrderByWithAggregationInput | AccountStatusLogOrderByWithAggregationInput[]
-    by: AccountStatusLogScalarFieldEnum[] | AccountStatusLogScalarFieldEnum
-    having?: AccountStatusLogScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: AccountStatusLogCountAggregateInputType | true
-    _min?: AccountStatusLogMinAggregateInputType
-    _max?: AccountStatusLogMaxAggregateInputType
-  }
-
-  export type AccountStatusLogGroupByOutputType = {
-    id: string
-    accountId: string
-    status: string
-    remarks: string | null
-    fromDate: Date
-    moreInfo: string | null
-    _count: AccountStatusLogCountAggregateOutputType | null
-    _min: AccountStatusLogMinAggregateOutputType | null
-    _max: AccountStatusLogMaxAggregateOutputType | null
-  }
-
-  type GetAccountStatusLogGroupByPayload<T extends AccountStatusLogGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<AccountStatusLogGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof AccountStatusLogGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], AccountStatusLogGroupByOutputType[P]>
-            : GetScalarType<T[P], AccountStatusLogGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type AccountStatusLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    status?: boolean
-    remarks?: boolean
-    fromDate?: boolean
-    moreInfo?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["accountStatusLog"]>
-
-  export type AccountStatusLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    status?: boolean
-    remarks?: boolean
-    fromDate?: boolean
-    moreInfo?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["accountStatusLog"]>
-
-  export type AccountStatusLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    status?: boolean
-    remarks?: boolean
-    fromDate?: boolean
-    moreInfo?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["accountStatusLog"]>
-
-  export type AccountStatusLogSelectScalar = {
-    id?: boolean
-    accountId?: boolean
-    status?: boolean
-    remarks?: boolean
-    fromDate?: boolean
-    moreInfo?: boolean
-  }
-
-  export type AccountStatusLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "status" | "remarks" | "fromDate" | "moreInfo", ExtArgs["result"]["accountStatusLog"]>
-  export type AccountStatusLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }
-  export type AccountStatusLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }
-  export type AccountStatusLogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }
-
-  export type $AccountStatusLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "AccountStatusLog"
-    objects: {
-      account: Prisma.$AccountPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      accountId: string
-      status: string
-      remarks: string | null
-      fromDate: Date
-      moreInfo: string | null
-    }, ExtArgs["result"]["accountStatusLog"]>
-    composites: {}
-  }
-
-  type AccountStatusLogGetPayload<S extends boolean | null | undefined | AccountStatusLogDefaultArgs> = $Result.GetResult<Prisma.$AccountStatusLogPayload, S>
-
-  type AccountStatusLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<AccountStatusLogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: AccountStatusLogCountAggregateInputType | true
-    }
-
-  export interface AccountStatusLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AccountStatusLog'], meta: { name: 'AccountStatusLog' } }
-    /**
-     * Find zero or one AccountStatusLog that matches the filter.
-     * @param {AccountStatusLogFindUniqueArgs} args - Arguments to find a AccountStatusLog
-     * @example
-     * // Get one AccountStatusLog
-     * const accountStatusLog = await prisma.accountStatusLog.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends AccountStatusLogFindUniqueArgs>(args: SelectSubset<T, AccountStatusLogFindUniqueArgs<ExtArgs>>): Prisma__AccountStatusLogClient<$Result.GetResult<Prisma.$AccountStatusLogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one AccountStatusLog that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {AccountStatusLogFindUniqueOrThrowArgs} args - Arguments to find a AccountStatusLog
-     * @example
-     * // Get one AccountStatusLog
-     * const accountStatusLog = await prisma.accountStatusLog.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends AccountStatusLogFindUniqueOrThrowArgs>(args: SelectSubset<T, AccountStatusLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AccountStatusLogClient<$Result.GetResult<Prisma.$AccountStatusLogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first AccountStatusLog that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AccountStatusLogFindFirstArgs} args - Arguments to find a AccountStatusLog
-     * @example
-     * // Get one AccountStatusLog
-     * const accountStatusLog = await prisma.accountStatusLog.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends AccountStatusLogFindFirstArgs>(args?: SelectSubset<T, AccountStatusLogFindFirstArgs<ExtArgs>>): Prisma__AccountStatusLogClient<$Result.GetResult<Prisma.$AccountStatusLogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first AccountStatusLog that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AccountStatusLogFindFirstOrThrowArgs} args - Arguments to find a AccountStatusLog
-     * @example
-     * // Get one AccountStatusLog
-     * const accountStatusLog = await prisma.accountStatusLog.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends AccountStatusLogFindFirstOrThrowArgs>(args?: SelectSubset<T, AccountStatusLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__AccountStatusLogClient<$Result.GetResult<Prisma.$AccountStatusLogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more AccountStatusLogs that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AccountStatusLogFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all AccountStatusLogs
-     * const accountStatusLogs = await prisma.accountStatusLog.findMany()
-     * 
-     * // Get first 10 AccountStatusLogs
-     * const accountStatusLogs = await prisma.accountStatusLog.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const accountStatusLogWithIdOnly = await prisma.accountStatusLog.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends AccountStatusLogFindManyArgs>(args?: SelectSubset<T, AccountStatusLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountStatusLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a AccountStatusLog.
-     * @param {AccountStatusLogCreateArgs} args - Arguments to create a AccountStatusLog.
-     * @example
-     * // Create one AccountStatusLog
-     * const AccountStatusLog = await prisma.accountStatusLog.create({
-     *   data: {
-     *     // ... data to create a AccountStatusLog
-     *   }
-     * })
-     * 
-     */
-    create<T extends AccountStatusLogCreateArgs>(args: SelectSubset<T, AccountStatusLogCreateArgs<ExtArgs>>): Prisma__AccountStatusLogClient<$Result.GetResult<Prisma.$AccountStatusLogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many AccountStatusLogs.
-     * @param {AccountStatusLogCreateManyArgs} args - Arguments to create many AccountStatusLogs.
-     * @example
-     * // Create many AccountStatusLogs
-     * const accountStatusLog = await prisma.accountStatusLog.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends AccountStatusLogCreateManyArgs>(args?: SelectSubset<T, AccountStatusLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many AccountStatusLogs and returns the data saved in the database.
-     * @param {AccountStatusLogCreateManyAndReturnArgs} args - Arguments to create many AccountStatusLogs.
-     * @example
-     * // Create many AccountStatusLogs
-     * const accountStatusLog = await prisma.accountStatusLog.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many AccountStatusLogs and only return the `id`
-     * const accountStatusLogWithIdOnly = await prisma.accountStatusLog.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends AccountStatusLogCreateManyAndReturnArgs>(args?: SelectSubset<T, AccountStatusLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountStatusLogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a AccountStatusLog.
-     * @param {AccountStatusLogDeleteArgs} args - Arguments to delete one AccountStatusLog.
-     * @example
-     * // Delete one AccountStatusLog
-     * const AccountStatusLog = await prisma.accountStatusLog.delete({
-     *   where: {
-     *     // ... filter to delete one AccountStatusLog
-     *   }
-     * })
-     * 
-     */
-    delete<T extends AccountStatusLogDeleteArgs>(args: SelectSubset<T, AccountStatusLogDeleteArgs<ExtArgs>>): Prisma__AccountStatusLogClient<$Result.GetResult<Prisma.$AccountStatusLogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one AccountStatusLog.
-     * @param {AccountStatusLogUpdateArgs} args - Arguments to update one AccountStatusLog.
-     * @example
-     * // Update one AccountStatusLog
-     * const accountStatusLog = await prisma.accountStatusLog.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends AccountStatusLogUpdateArgs>(args: SelectSubset<T, AccountStatusLogUpdateArgs<ExtArgs>>): Prisma__AccountStatusLogClient<$Result.GetResult<Prisma.$AccountStatusLogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more AccountStatusLogs.
-     * @param {AccountStatusLogDeleteManyArgs} args - Arguments to filter AccountStatusLogs to delete.
-     * @example
-     * // Delete a few AccountStatusLogs
-     * const { count } = await prisma.accountStatusLog.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends AccountStatusLogDeleteManyArgs>(args?: SelectSubset<T, AccountStatusLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more AccountStatusLogs.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AccountStatusLogUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many AccountStatusLogs
-     * const accountStatusLog = await prisma.accountStatusLog.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends AccountStatusLogUpdateManyArgs>(args: SelectSubset<T, AccountStatusLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more AccountStatusLogs and returns the data updated in the database.
-     * @param {AccountStatusLogUpdateManyAndReturnArgs} args - Arguments to update many AccountStatusLogs.
-     * @example
-     * // Update many AccountStatusLogs
-     * const accountStatusLog = await prisma.accountStatusLog.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more AccountStatusLogs and only return the `id`
-     * const accountStatusLogWithIdOnly = await prisma.accountStatusLog.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends AccountStatusLogUpdateManyAndReturnArgs>(args: SelectSubset<T, AccountStatusLogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountStatusLogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one AccountStatusLog.
-     * @param {AccountStatusLogUpsertArgs} args - Arguments to update or create a AccountStatusLog.
-     * @example
-     * // Update or create a AccountStatusLog
-     * const accountStatusLog = await prisma.accountStatusLog.upsert({
-     *   create: {
-     *     // ... data to create a AccountStatusLog
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the AccountStatusLog we want to update
-     *   }
-     * })
-     */
-    upsert<T extends AccountStatusLogUpsertArgs>(args: SelectSubset<T, AccountStatusLogUpsertArgs<ExtArgs>>): Prisma__AccountStatusLogClient<$Result.GetResult<Prisma.$AccountStatusLogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of AccountStatusLogs.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AccountStatusLogCountArgs} args - Arguments to filter AccountStatusLogs to count.
-     * @example
-     * // Count the number of AccountStatusLogs
-     * const count = await prisma.accountStatusLog.count({
-     *   where: {
-     *     // ... the filter for the AccountStatusLogs we want to count
-     *   }
-     * })
-    **/
-    count<T extends AccountStatusLogCountArgs>(
-      args?: Subset<T, AccountStatusLogCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], AccountStatusLogCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a AccountStatusLog.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AccountStatusLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends AccountStatusLogAggregateArgs>(args: Subset<T, AccountStatusLogAggregateArgs>): Prisma.PrismaPromise<GetAccountStatusLogAggregateType<T>>
-
-    /**
-     * Group by AccountStatusLog.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AccountStatusLogGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends AccountStatusLogGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: AccountStatusLogGroupByArgs['orderBy'] }
-        : { orderBy?: AccountStatusLogGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, AccountStatusLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAccountStatusLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the AccountStatusLog model
-   */
-  readonly fields: AccountStatusLogFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for AccountStatusLog.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__AccountStatusLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    account<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the AccountStatusLog model
-   */
-  interface AccountStatusLogFieldRefs {
-    readonly id: FieldRef<"AccountStatusLog", 'String'>
-    readonly accountId: FieldRef<"AccountStatusLog", 'String'>
-    readonly status: FieldRef<"AccountStatusLog", 'String'>
-    readonly remarks: FieldRef<"AccountStatusLog", 'String'>
-    readonly fromDate: FieldRef<"AccountStatusLog", 'DateTime'>
-    readonly moreInfo: FieldRef<"AccountStatusLog", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * AccountStatusLog findUnique
-   */
-  export type AccountStatusLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AccountStatusLog
-     */
-    select?: AccountStatusLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AccountStatusLog
-     */
-    omit?: AccountStatusLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountStatusLogInclude<ExtArgs> | null
-    /**
-     * Filter, which AccountStatusLog to fetch.
-     */
-    where: AccountStatusLogWhereUniqueInput
-  }
-
-  /**
-   * AccountStatusLog findUniqueOrThrow
-   */
-  export type AccountStatusLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AccountStatusLog
-     */
-    select?: AccountStatusLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AccountStatusLog
-     */
-    omit?: AccountStatusLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountStatusLogInclude<ExtArgs> | null
-    /**
-     * Filter, which AccountStatusLog to fetch.
-     */
-    where: AccountStatusLogWhereUniqueInput
-  }
-
-  /**
-   * AccountStatusLog findFirst
-   */
-  export type AccountStatusLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AccountStatusLog
-     */
-    select?: AccountStatusLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AccountStatusLog
-     */
-    omit?: AccountStatusLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountStatusLogInclude<ExtArgs> | null
-    /**
-     * Filter, which AccountStatusLog to fetch.
-     */
-    where?: AccountStatusLogWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AccountStatusLogs to fetch.
-     */
-    orderBy?: AccountStatusLogOrderByWithRelationInput | AccountStatusLogOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for AccountStatusLogs.
-     */
-    cursor?: AccountStatusLogWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AccountStatusLogs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AccountStatusLogs.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of AccountStatusLogs.
-     */
-    distinct?: AccountStatusLogScalarFieldEnum | AccountStatusLogScalarFieldEnum[]
-  }
-
-  /**
-   * AccountStatusLog findFirstOrThrow
-   */
-  export type AccountStatusLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AccountStatusLog
-     */
-    select?: AccountStatusLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AccountStatusLog
-     */
-    omit?: AccountStatusLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountStatusLogInclude<ExtArgs> | null
-    /**
-     * Filter, which AccountStatusLog to fetch.
-     */
-    where?: AccountStatusLogWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AccountStatusLogs to fetch.
-     */
-    orderBy?: AccountStatusLogOrderByWithRelationInput | AccountStatusLogOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for AccountStatusLogs.
-     */
-    cursor?: AccountStatusLogWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AccountStatusLogs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AccountStatusLogs.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of AccountStatusLogs.
-     */
-    distinct?: AccountStatusLogScalarFieldEnum | AccountStatusLogScalarFieldEnum[]
-  }
-
-  /**
-   * AccountStatusLog findMany
-   */
-  export type AccountStatusLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AccountStatusLog
-     */
-    select?: AccountStatusLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AccountStatusLog
-     */
-    omit?: AccountStatusLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountStatusLogInclude<ExtArgs> | null
-    /**
-     * Filter, which AccountStatusLogs to fetch.
-     */
-    where?: AccountStatusLogWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AccountStatusLogs to fetch.
-     */
-    orderBy?: AccountStatusLogOrderByWithRelationInput | AccountStatusLogOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing AccountStatusLogs.
-     */
-    cursor?: AccountStatusLogWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AccountStatusLogs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AccountStatusLogs.
-     */
-    skip?: number
-    distinct?: AccountStatusLogScalarFieldEnum | AccountStatusLogScalarFieldEnum[]
-  }
-
-  /**
-   * AccountStatusLog create
-   */
-  export type AccountStatusLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AccountStatusLog
-     */
-    select?: AccountStatusLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AccountStatusLog
-     */
-    omit?: AccountStatusLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountStatusLogInclude<ExtArgs> | null
-    /**
-     * The data needed to create a AccountStatusLog.
-     */
-    data: XOR<AccountStatusLogCreateInput, AccountStatusLogUncheckedCreateInput>
-  }
-
-  /**
-   * AccountStatusLog createMany
-   */
-  export type AccountStatusLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many AccountStatusLogs.
-     */
-    data: AccountStatusLogCreateManyInput | AccountStatusLogCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * AccountStatusLog createManyAndReturn
-   */
-  export type AccountStatusLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AccountStatusLog
-     */
-    select?: AccountStatusLogSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the AccountStatusLog
-     */
-    omit?: AccountStatusLogOmit<ExtArgs> | null
-    /**
-     * The data used to create many AccountStatusLogs.
-     */
-    data: AccountStatusLogCreateManyInput | AccountStatusLogCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountStatusLogIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * AccountStatusLog update
-   */
-  export type AccountStatusLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AccountStatusLog
-     */
-    select?: AccountStatusLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AccountStatusLog
-     */
-    omit?: AccountStatusLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountStatusLogInclude<ExtArgs> | null
-    /**
-     * The data needed to update a AccountStatusLog.
-     */
-    data: XOR<AccountStatusLogUpdateInput, AccountStatusLogUncheckedUpdateInput>
-    /**
-     * Choose, which AccountStatusLog to update.
-     */
-    where: AccountStatusLogWhereUniqueInput
-  }
-
-  /**
-   * AccountStatusLog updateMany
-   */
-  export type AccountStatusLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update AccountStatusLogs.
-     */
-    data: XOR<AccountStatusLogUpdateManyMutationInput, AccountStatusLogUncheckedUpdateManyInput>
-    /**
-     * Filter which AccountStatusLogs to update
-     */
-    where?: AccountStatusLogWhereInput
-    /**
-     * Limit how many AccountStatusLogs to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * AccountStatusLog updateManyAndReturn
-   */
-  export type AccountStatusLogUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AccountStatusLog
-     */
-    select?: AccountStatusLogSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the AccountStatusLog
-     */
-    omit?: AccountStatusLogOmit<ExtArgs> | null
-    /**
-     * The data used to update AccountStatusLogs.
-     */
-    data: XOR<AccountStatusLogUpdateManyMutationInput, AccountStatusLogUncheckedUpdateManyInput>
-    /**
-     * Filter which AccountStatusLogs to update
-     */
-    where?: AccountStatusLogWhereInput
-    /**
-     * Limit how many AccountStatusLogs to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountStatusLogIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * AccountStatusLog upsert
-   */
-  export type AccountStatusLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AccountStatusLog
-     */
-    select?: AccountStatusLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AccountStatusLog
-     */
-    omit?: AccountStatusLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountStatusLogInclude<ExtArgs> | null
-    /**
-     * The filter to search for the AccountStatusLog to update in case it exists.
-     */
-    where: AccountStatusLogWhereUniqueInput
-    /**
-     * In case the AccountStatusLog found by the `where` argument doesn't exist, create a new AccountStatusLog with this data.
-     */
-    create: XOR<AccountStatusLogCreateInput, AccountStatusLogUncheckedCreateInput>
-    /**
-     * In case the AccountStatusLog was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<AccountStatusLogUpdateInput, AccountStatusLogUncheckedUpdateInput>
-  }
-
-  /**
-   * AccountStatusLog delete
-   */
-  export type AccountStatusLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AccountStatusLog
-     */
-    select?: AccountStatusLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AccountStatusLog
-     */
-    omit?: AccountStatusLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountStatusLogInclude<ExtArgs> | null
-    /**
-     * Filter which AccountStatusLog to delete.
-     */
-    where: AccountStatusLogWhereUniqueInput
-  }
-
-  /**
-   * AccountStatusLog deleteMany
-   */
-  export type AccountStatusLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which AccountStatusLogs to delete
-     */
-    where?: AccountStatusLogWhereInput
-    /**
-     * Limit how many AccountStatusLogs to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * AccountStatusLog without action
-   */
-  export type AccountStatusLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AccountStatusLog
-     */
-    select?: AccountStatusLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AccountStatusLog
-     */
-    omit?: AccountStatusLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountStatusLogInclude<ExtArgs> | null
   }
 
 
@@ -41523,18 +40324,6 @@ export namespace Prisma {
   export type ActivityLogScalarFieldEnum = (typeof ActivityLogScalarFieldEnum)[keyof typeof ActivityLogScalarFieldEnum]
 
 
-  export const AccountStatusLogScalarFieldEnum: {
-    id: 'id',
-    accountId: 'accountId',
-    status: 'status',
-    remarks: 'remarks',
-    fromDate: 'fromDate',
-    moreInfo: 'moreInfo'
-  };
-
-  export type AccountStatusLogScalarFieldEnum = (typeof AccountStatusLogScalarFieldEnum)[keyof typeof AccountStatusLogScalarFieldEnum]
-
-
   export const NotificationScalarFieldEnum: {
     id: 'id',
     accountId: 'accountId',
@@ -42051,7 +40840,6 @@ export namespace Prisma {
     password?: XOR<PasswordNullableScalarRelationFilter, PasswordWhereInput> | null
     sessions?: SessionListRelationFilter
     errorLogs?: ErrorLogListRelationFilter
-    statusLogs?: AccountStatusLogListRelationFilter
     appConnections?: UserAppConnectionListRelationFilter
     appAuthentications?: AppAuthenticationListRelationFilter
     appSessions?: AppSessionListRelationFilter
@@ -42108,7 +40896,6 @@ export namespace Prisma {
     password?: PasswordOrderByWithRelationInput
     sessions?: SessionOrderByRelationAggregateInput
     errorLogs?: ErrorLogOrderByRelationAggregateInput
-    statusLogs?: AccountStatusLogOrderByRelationAggregateInput
     appConnections?: UserAppConnectionOrderByRelationAggregateInput
     appAuthentications?: AppAuthenticationOrderByRelationAggregateInput
     appSessions?: AppSessionOrderByRelationAggregateInput
@@ -42168,7 +40955,6 @@ export namespace Prisma {
     password?: XOR<PasswordNullableScalarRelationFilter, PasswordWhereInput> | null
     sessions?: SessionListRelationFilter
     errorLogs?: ErrorLogListRelationFilter
-    statusLogs?: AccountStatusLogListRelationFilter
     appConnections?: UserAppConnectionListRelationFilter
     appAuthentications?: AppAuthenticationListRelationFilter
     appSessions?: AppSessionListRelationFilter
@@ -42465,66 +41251,6 @@ export namespace Prisma {
     ip?: StringWithAggregatesFilter<"ActivityLog"> | string
     timestamp?: DateTimeWithAggregatesFilter<"ActivityLog"> | Date | string
     geolocation?: StringNullableWithAggregatesFilter<"ActivityLog"> | string | null
-  }
-
-  export type AccountStatusLogWhereInput = {
-    AND?: AccountStatusLogWhereInput | AccountStatusLogWhereInput[]
-    OR?: AccountStatusLogWhereInput[]
-    NOT?: AccountStatusLogWhereInput | AccountStatusLogWhereInput[]
-    id?: StringFilter<"AccountStatusLog"> | string
-    accountId?: StringFilter<"AccountStatusLog"> | string
-    status?: StringFilter<"AccountStatusLog"> | string
-    remarks?: StringNullableFilter<"AccountStatusLog"> | string | null
-    fromDate?: DateTimeFilter<"AccountStatusLog"> | Date | string
-    moreInfo?: StringNullableFilter<"AccountStatusLog"> | string | null
-    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-  }
-
-  export type AccountStatusLogOrderByWithRelationInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    status?: SortOrder
-    remarks?: SortOrderInput | SortOrder
-    fromDate?: SortOrder
-    moreInfo?: SortOrderInput | SortOrder
-    account?: AccountOrderByWithRelationInput
-  }
-
-  export type AccountStatusLogWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: AccountStatusLogWhereInput | AccountStatusLogWhereInput[]
-    OR?: AccountStatusLogWhereInput[]
-    NOT?: AccountStatusLogWhereInput | AccountStatusLogWhereInput[]
-    accountId?: StringFilter<"AccountStatusLog"> | string
-    status?: StringFilter<"AccountStatusLog"> | string
-    remarks?: StringNullableFilter<"AccountStatusLog"> | string | null
-    fromDate?: DateTimeFilter<"AccountStatusLog"> | Date | string
-    moreInfo?: StringNullableFilter<"AccountStatusLog"> | string | null
-    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-  }, "id">
-
-  export type AccountStatusLogOrderByWithAggregationInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    status?: SortOrder
-    remarks?: SortOrderInput | SortOrder
-    fromDate?: SortOrder
-    moreInfo?: SortOrderInput | SortOrder
-    _count?: AccountStatusLogCountOrderByAggregateInput
-    _max?: AccountStatusLogMaxOrderByAggregateInput
-    _min?: AccountStatusLogMinOrderByAggregateInput
-  }
-
-  export type AccountStatusLogScalarWhereWithAggregatesInput = {
-    AND?: AccountStatusLogScalarWhereWithAggregatesInput | AccountStatusLogScalarWhereWithAggregatesInput[]
-    OR?: AccountStatusLogScalarWhereWithAggregatesInput[]
-    NOT?: AccountStatusLogScalarWhereWithAggregatesInput | AccountStatusLogScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"AccountStatusLog"> | string
-    accountId?: StringWithAggregatesFilter<"AccountStatusLog"> | string
-    status?: StringWithAggregatesFilter<"AccountStatusLog"> | string
-    remarks?: StringNullableWithAggregatesFilter<"AccountStatusLog"> | string | null
-    fromDate?: DateTimeWithAggregatesFilter<"AccountStatusLog"> | Date | string
-    moreInfo?: StringNullableWithAggregatesFilter<"AccountStatusLog"> | string | null
   }
 
   export type NotificationWhereInput = {
@@ -44462,7 +43188,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -44518,7 +43243,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -44574,7 +43298,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -44630,7 +43353,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -44961,68 +43683,6 @@ export namespace Prisma {
     ip?: StringFieldUpdateOperationsInput | string
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type AccountStatusLogCreateInput = {
-    id?: string
-    status: string
-    remarks?: string | null
-    fromDate?: Date | string
-    moreInfo?: string | null
-    account: AccountCreateNestedOneWithoutStatusLogsInput
-  }
-
-  export type AccountStatusLogUncheckedCreateInput = {
-    id?: string
-    accountId: string
-    status: string
-    remarks?: string | null
-    fromDate?: Date | string
-    moreInfo?: string | null
-  }
-
-  export type AccountStatusLogUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    fromDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    moreInfo?: NullableStringFieldUpdateOperationsInput | string | null
-    account?: AccountUpdateOneRequiredWithoutStatusLogsNestedInput
-  }
-
-  export type AccountStatusLogUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    fromDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    moreInfo?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type AccountStatusLogCreateManyInput = {
-    id?: string
-    accountId: string
-    status: string
-    remarks?: string | null
-    fromDate?: Date | string
-    moreInfo?: string | null
-  }
-
-  export type AccountStatusLogUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    fromDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    moreInfo?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type AccountStatusLogUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    fromDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    moreInfo?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type NotificationCreateInput = {
@@ -47126,12 +45786,6 @@ export namespace Prisma {
     none?: ErrorLogWhereInput
   }
 
-  export type AccountStatusLogListRelationFilter = {
-    every?: AccountStatusLogWhereInput
-    some?: AccountStatusLogWhereInput
-    none?: AccountStatusLogWhereInput
-  }
-
   export type UserAppConnectionListRelationFilter = {
     every?: UserAppConnectionWhereInput
     some?: UserAppConnectionWhereInput
@@ -47253,10 +45907,6 @@ export namespace Prisma {
   }
 
   export type ErrorLogOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type AccountStatusLogOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -47644,33 +46294,6 @@ export namespace Prisma {
     ip?: SortOrder
     timestamp?: SortOrder
     geolocation?: SortOrder
-  }
-
-  export type AccountStatusLogCountOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    status?: SortOrder
-    remarks?: SortOrder
-    fromDate?: SortOrder
-    moreInfo?: SortOrder
-  }
-
-  export type AccountStatusLogMaxOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    status?: SortOrder
-    remarks?: SortOrder
-    fromDate?: SortOrder
-    moreInfo?: SortOrder
-  }
-
-  export type AccountStatusLogMinOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    status?: SortOrder
-    remarks?: SortOrder
-    fromDate?: SortOrder
-    moreInfo?: SortOrder
   }
 
   export type RequestNullableScalarRelationFilter = {
@@ -48664,13 +47287,6 @@ export namespace Prisma {
     connect?: ErrorLogWhereUniqueInput | ErrorLogWhereUniqueInput[]
   }
 
-  export type AccountStatusLogCreateNestedManyWithoutAccountInput = {
-    create?: XOR<AccountStatusLogCreateWithoutAccountInput, AccountStatusLogUncheckedCreateWithoutAccountInput> | AccountStatusLogCreateWithoutAccountInput[] | AccountStatusLogUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AccountStatusLogCreateOrConnectWithoutAccountInput | AccountStatusLogCreateOrConnectWithoutAccountInput[]
-    createMany?: AccountStatusLogCreateManyAccountInputEnvelope
-    connect?: AccountStatusLogWhereUniqueInput | AccountStatusLogWhereUniqueInput[]
-  }
-
   export type UserAppConnectionCreateNestedManyWithoutAccountInput = {
     create?: XOR<UserAppConnectionCreateWithoutAccountInput, UserAppConnectionUncheckedCreateWithoutAccountInput> | UserAppConnectionCreateWithoutAccountInput[] | UserAppConnectionUncheckedCreateWithoutAccountInput[]
     connectOrCreate?: UserAppConnectionCreateOrConnectWithoutAccountInput | UserAppConnectionCreateOrConnectWithoutAccountInput[]
@@ -48863,13 +47479,6 @@ export namespace Prisma {
     connectOrCreate?: ErrorLogCreateOrConnectWithoutAccountInput | ErrorLogCreateOrConnectWithoutAccountInput[]
     createMany?: ErrorLogCreateManyAccountInputEnvelope
     connect?: ErrorLogWhereUniqueInput | ErrorLogWhereUniqueInput[]
-  }
-
-  export type AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput = {
-    create?: XOR<AccountStatusLogCreateWithoutAccountInput, AccountStatusLogUncheckedCreateWithoutAccountInput> | AccountStatusLogCreateWithoutAccountInput[] | AccountStatusLogUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AccountStatusLogCreateOrConnectWithoutAccountInput | AccountStatusLogCreateOrConnectWithoutAccountInput[]
-    createMany?: AccountStatusLogCreateManyAccountInputEnvelope
-    connect?: AccountStatusLogWhereUniqueInput | AccountStatusLogWhereUniqueInput[]
   }
 
   export type UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput = {
@@ -49147,20 +47756,6 @@ export namespace Prisma {
     update?: ErrorLogUpdateWithWhereUniqueWithoutAccountInput | ErrorLogUpdateWithWhereUniqueWithoutAccountInput[]
     updateMany?: ErrorLogUpdateManyWithWhereWithoutAccountInput | ErrorLogUpdateManyWithWhereWithoutAccountInput[]
     deleteMany?: ErrorLogScalarWhereInput | ErrorLogScalarWhereInput[]
-  }
-
-  export type AccountStatusLogUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<AccountStatusLogCreateWithoutAccountInput, AccountStatusLogUncheckedCreateWithoutAccountInput> | AccountStatusLogCreateWithoutAccountInput[] | AccountStatusLogUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AccountStatusLogCreateOrConnectWithoutAccountInput | AccountStatusLogCreateOrConnectWithoutAccountInput[]
-    upsert?: AccountStatusLogUpsertWithWhereUniqueWithoutAccountInput | AccountStatusLogUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: AccountStatusLogCreateManyAccountInputEnvelope
-    set?: AccountStatusLogWhereUniqueInput | AccountStatusLogWhereUniqueInput[]
-    disconnect?: AccountStatusLogWhereUniqueInput | AccountStatusLogWhereUniqueInput[]
-    delete?: AccountStatusLogWhereUniqueInput | AccountStatusLogWhereUniqueInput[]
-    connect?: AccountStatusLogWhereUniqueInput | AccountStatusLogWhereUniqueInput[]
-    update?: AccountStatusLogUpdateWithWhereUniqueWithoutAccountInput | AccountStatusLogUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: AccountStatusLogUpdateManyWithWhereWithoutAccountInput | AccountStatusLogUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: AccountStatusLogScalarWhereInput | AccountStatusLogScalarWhereInput[]
   }
 
   export type UserAppConnectionUpdateManyWithoutAccountNestedInput = {
@@ -49547,20 +48142,6 @@ export namespace Prisma {
     deleteMany?: ErrorLogScalarWhereInput | ErrorLogScalarWhereInput[]
   }
 
-  export type AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<AccountStatusLogCreateWithoutAccountInput, AccountStatusLogUncheckedCreateWithoutAccountInput> | AccountStatusLogCreateWithoutAccountInput[] | AccountStatusLogUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AccountStatusLogCreateOrConnectWithoutAccountInput | AccountStatusLogCreateOrConnectWithoutAccountInput[]
-    upsert?: AccountStatusLogUpsertWithWhereUniqueWithoutAccountInput | AccountStatusLogUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: AccountStatusLogCreateManyAccountInputEnvelope
-    set?: AccountStatusLogWhereUniqueInput | AccountStatusLogWhereUniqueInput[]
-    disconnect?: AccountStatusLogWhereUniqueInput | AccountStatusLogWhereUniqueInput[]
-    delete?: AccountStatusLogWhereUniqueInput | AccountStatusLogWhereUniqueInput[]
-    connect?: AccountStatusLogWhereUniqueInput | AccountStatusLogWhereUniqueInput[]
-    update?: AccountStatusLogUpdateWithWhereUniqueWithoutAccountInput | AccountStatusLogUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: AccountStatusLogUpdateManyWithWhereWithoutAccountInput | AccountStatusLogUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: AccountStatusLogScalarWhereInput | AccountStatusLogScalarWhereInput[]
-  }
-
   export type UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput = {
     create?: XOR<UserAppConnectionCreateWithoutAccountInput, UserAppConnectionUncheckedCreateWithoutAccountInput> | UserAppConnectionCreateWithoutAccountInput[] | UserAppConnectionUncheckedCreateWithoutAccountInput[]
     connectOrCreate?: UserAppConnectionCreateOrConnectWithoutAccountInput | UserAppConnectionCreateOrConnectWithoutAccountInput[]
@@ -49849,20 +48430,6 @@ export namespace Prisma {
     upsert?: AccountUpsertWithoutTotpInput
     connect?: AccountWhereUniqueInput
     update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutTotpInput, AccountUpdateWithoutTotpInput>, AccountUncheckedUpdateWithoutTotpInput>
-  }
-
-  export type AccountCreateNestedOneWithoutStatusLogsInput = {
-    create?: XOR<AccountCreateWithoutStatusLogsInput, AccountUncheckedCreateWithoutStatusLogsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutStatusLogsInput
-    connect?: AccountWhereUniqueInput
-  }
-
-  export type AccountUpdateOneRequiredWithoutStatusLogsNestedInput = {
-    create?: XOR<AccountCreateWithoutStatusLogsInput, AccountUncheckedCreateWithoutStatusLogsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutStatusLogsInput
-    upsert?: AccountUpsertWithoutStatusLogsInput
-    connect?: AccountWhereUniqueInput
-    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutStatusLogsInput, AccountUpdateWithoutStatusLogsInput>, AccountUncheckedUpdateWithoutStatusLogsInput>
   }
 
   export type AccountCreateNestedOneWithoutNotificationsInput = {
@@ -51385,7 +49952,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -51440,7 +50006,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -51500,7 +50065,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -51555,7 +50119,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -51818,32 +50381,6 @@ export namespace Prisma {
 
   export type ErrorLogCreateManyAccountInputEnvelope = {
     data: ErrorLogCreateManyAccountInput | ErrorLogCreateManyAccountInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type AccountStatusLogCreateWithoutAccountInput = {
-    id?: string
-    status: string
-    remarks?: string | null
-    fromDate?: Date | string
-    moreInfo?: string | null
-  }
-
-  export type AccountStatusLogUncheckedCreateWithoutAccountInput = {
-    id?: string
-    status: string
-    remarks?: string | null
-    fromDate?: Date | string
-    moreInfo?: string | null
-  }
-
-  export type AccountStatusLogCreateOrConnectWithoutAccountInput = {
-    where: AccountStatusLogWhereUniqueInput
-    create: XOR<AccountStatusLogCreateWithoutAccountInput, AccountStatusLogUncheckedCreateWithoutAccountInput>
-  }
-
-  export type AccountStatusLogCreateManyAccountInputEnvelope = {
-    data: AccountStatusLogCreateManyAccountInput | AccountStatusLogCreateManyAccountInput[]
     skipDuplicates?: boolean
   }
 
@@ -52485,7 +51022,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -52540,7 +51076,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -52803,34 +51338,6 @@ export namespace Prisma {
     solvedBy?: StringNullableFilter<"ErrorLog"> | string | null
     problemLevel?: StringNullableFilter<"ErrorLog"> | string | null
     timestamp?: DateTimeFilter<"ErrorLog"> | Date | string
-  }
-
-  export type AccountStatusLogUpsertWithWhereUniqueWithoutAccountInput = {
-    where: AccountStatusLogWhereUniqueInput
-    update: XOR<AccountStatusLogUpdateWithoutAccountInput, AccountStatusLogUncheckedUpdateWithoutAccountInput>
-    create: XOR<AccountStatusLogCreateWithoutAccountInput, AccountStatusLogUncheckedCreateWithoutAccountInput>
-  }
-
-  export type AccountStatusLogUpdateWithWhereUniqueWithoutAccountInput = {
-    where: AccountStatusLogWhereUniqueInput
-    data: XOR<AccountStatusLogUpdateWithoutAccountInput, AccountStatusLogUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type AccountStatusLogUpdateManyWithWhereWithoutAccountInput = {
-    where: AccountStatusLogScalarWhereInput
-    data: XOR<AccountStatusLogUpdateManyMutationInput, AccountStatusLogUncheckedUpdateManyWithoutAccountInput>
-  }
-
-  export type AccountStatusLogScalarWhereInput = {
-    AND?: AccountStatusLogScalarWhereInput | AccountStatusLogScalarWhereInput[]
-    OR?: AccountStatusLogScalarWhereInput[]
-    NOT?: AccountStatusLogScalarWhereInput | AccountStatusLogScalarWhereInput[]
-    id?: StringFilter<"AccountStatusLog"> | string
-    accountId?: StringFilter<"AccountStatusLog"> | string
-    status?: StringFilter<"AccountStatusLog"> | string
-    remarks?: StringNullableFilter<"AccountStatusLog"> | string | null
-    fromDate?: DateTimeFilter<"AccountStatusLog"> | Date | string
-    moreInfo?: StringNullableFilter<"AccountStatusLog"> | string | null
   }
 
   export type UserAppConnectionUpsertWithWhereUniqueWithoutAccountInput = {
@@ -53396,7 +51903,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -53451,7 +51957,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -53522,7 +52027,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -53577,7 +52081,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -53588,242 +52091,6 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    adminTeams?: AuthTeamUncheckedUpdateManyWithoutAccountNestedInput
-    memberTeams?: AuthTeamUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
-    authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
-  }
-
-  export type AccountCreateWithoutStatusLogsInput = {
-    id?: string
-    nameFirst?: string | null
-    nameMiddle?: string | null
-    nameLast?: string | null
-    nameDisplay?: string | null
-    displayName?: string | null
-    accountPhoto?: string | null
-    gender?: string | null
-    dateBirth?: Date | string | null
-    dateCreated?: Date | string
-    nationality?: string | null
-    isLegalEntity?: boolean
-    nameLegal?: string | null
-    registrationId?: string | null
-    countryOfOrigin?: string | null
-    dateEstablished?: Date | string | null
-    neupIdPrimary?: string | null
-    verified?: boolean
-    pro?: boolean
-    accountType?: string
-    permit?: string
-    accountStatus?: string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    parentBrand?: AccountCreateNestedOneWithoutBranchesInput
-    branches?: AccountCreateNestedManyWithoutParentBrandInput
-    contacts?: ContactCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
-    permits?: PermitCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    totp?: TotpCreateNestedOneWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    adminTeams?: AuthTeamCreateNestedManyWithoutAccountInput
-    memberTeams?: AuthTeamCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
-    authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
-    recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
-  }
-
-  export type AccountUncheckedCreateWithoutStatusLogsInput = {
-    id?: string
-    nameFirst?: string | null
-    nameMiddle?: string | null
-    nameLast?: string | null
-    nameDisplay?: string | null
-    displayName?: string | null
-    accountPhoto?: string | null
-    gender?: string | null
-    dateBirth?: Date | string | null
-    dateCreated?: Date | string
-    nationality?: string | null
-    isLegalEntity?: boolean
-    nameLegal?: string | null
-    registrationId?: string | null
-    countryOfOrigin?: string | null
-    dateEstablished?: Date | string | null
-    neupIdPrimary?: string | null
-    verified?: boolean
-    pro?: boolean
-    accountType?: string
-    permit?: string
-    accountStatus?: string | null
-    parentBrandId?: string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    branches?: AccountUncheckedCreateNestedManyWithoutParentBrandInput
-    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
-    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    adminTeams?: AuthTeamUncheckedCreateNestedManyWithoutAccountInput
-    memberTeams?: AuthTeamUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
-    authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
-  }
-
-  export type AccountCreateOrConnectWithoutStatusLogsInput = {
-    where: AccountWhereUniqueInput
-    create: XOR<AccountCreateWithoutStatusLogsInput, AccountUncheckedCreateWithoutStatusLogsInput>
-  }
-
-  export type AccountUpsertWithoutStatusLogsInput = {
-    update: XOR<AccountUpdateWithoutStatusLogsInput, AccountUncheckedUpdateWithoutStatusLogsInput>
-    create: XOR<AccountCreateWithoutStatusLogsInput, AccountUncheckedCreateWithoutStatusLogsInput>
-    where?: AccountWhereInput
-  }
-
-  export type AccountUpdateToOneWithWhereWithoutStatusLogsInput = {
-    where?: AccountWhereInput
-    data: XOR<AccountUpdateWithoutStatusLogsInput, AccountUncheckedUpdateWithoutStatusLogsInput>
-  }
-
-  export type AccountUpdateWithoutStatusLogsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
-    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
-    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
-    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableStringFieldUpdateOperationsInput | string | null
-    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationality?: NullableStringFieldUpdateOperationsInput | string | null
-    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
-    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
-    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
-    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    pro?: BoolFieldUpdateOperationsInput | boolean
-    accountType?: StringFieldUpdateOperationsInput | string
-    permit?: StringFieldUpdateOperationsInput | string
-    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    parentBrand?: AccountUpdateOneWithoutBranchesNestedInput
-    branches?: AccountUpdateManyWithoutParentBrandNestedInput
-    contacts?: ContactUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
-    permits?: PermitUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    totp?: TotpUpdateOneWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    adminTeams?: AuthTeamUpdateManyWithoutAccountNestedInput
-    memberTeams?: AuthTeamUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
-    authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
-    recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
-  }
-
-  export type AccountUncheckedUpdateWithoutStatusLogsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
-    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
-    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
-    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableStringFieldUpdateOperationsInput | string | null
-    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationality?: NullableStringFieldUpdateOperationsInput | string | null
-    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
-    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
-    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
-    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    pro?: BoolFieldUpdateOperationsInput | boolean
-    accountType?: StringFieldUpdateOperationsInput | string
-    permit?: StringFieldUpdateOperationsInput | string
-    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    parentBrandId?: NullableStringFieldUpdateOperationsInput | string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    branches?: AccountUncheckedUpdateManyWithoutParentBrandNestedInput
-    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
-    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     adminTeams?: AuthTeamUncheckedUpdateManyWithoutAccountNestedInput
@@ -53868,7 +52135,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -53923,7 +52189,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -54023,7 +52288,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -54078,7 +52342,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -54168,7 +52431,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -54223,7 +52485,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -54283,7 +52544,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -54338,7 +52598,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -54445,7 +52704,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -54500,7 +52758,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -54566,7 +52823,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -54621,7 +52877,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -54692,7 +52947,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -54747,7 +53001,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -54818,7 +53071,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -54873,7 +53125,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -54928,7 +53179,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -54983,7 +53233,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -55054,7 +53303,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -55109,7 +53357,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -55163,7 +53410,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -55218,7 +53464,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -55289,7 +53534,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -55344,7 +53588,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -55399,7 +53642,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -55454,7 +53696,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -55525,7 +53766,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -55580,7 +53820,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -55635,7 +53874,6 @@ export namespace Prisma {
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -55690,7 +53928,6 @@ export namespace Prisma {
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -55761,7 +53998,6 @@ export namespace Prisma {
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -55816,7 +54052,6 @@ export namespace Prisma {
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -55871,7 +54106,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -55926,7 +54160,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -55986,7 +54219,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -56041,7 +54273,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -56112,7 +54343,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -56167,7 +54397,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -56233,7 +54462,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -56288,7 +54516,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -56371,7 +54598,6 @@ export namespace Prisma {
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     password?: PasswordCreateNestedOneWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -56426,7 +54652,6 @@ export namespace Prisma {
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -56513,7 +54738,6 @@ export namespace Prisma {
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     password?: PasswordUpdateOneWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -56568,7 +54792,6 @@ export namespace Prisma {
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -56623,7 +54846,6 @@ export namespace Prisma {
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -56678,7 +54900,6 @@ export namespace Prisma {
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -56749,7 +54970,6 @@ export namespace Prisma {
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -56804,7 +55024,6 @@ export namespace Prisma {
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -56860,7 +55079,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -56915,7 +55133,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -57250,7 +55467,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -57305,7 +55521,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -57577,7 +55792,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -57632,7 +55846,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -57692,7 +55905,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -57747,7 +55959,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -57881,7 +56092,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -57936,7 +56146,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -58002,7 +56211,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -58057,7 +56265,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -58552,7 +56759,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -58607,7 +56813,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -58667,7 +56872,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -58722,7 +56926,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -58856,7 +57059,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -58911,7 +57113,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -58977,7 +57178,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -59032,7 +57232,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -59144,7 +57343,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -59199,7 +57397,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -59333,7 +57530,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -59388,7 +57584,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -59500,7 +57695,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -59555,7 +57749,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -59615,7 +57808,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -59670,7 +57862,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -59804,7 +57995,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -59859,7 +58049,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -59925,7 +58114,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -59980,7 +58168,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -60035,7 +58222,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
@@ -60090,7 +58276,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
@@ -60218,7 +58403,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
@@ -60273,7 +58457,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
@@ -60391,7 +58574,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
@@ -60446,7 +58628,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
@@ -60574,7 +58755,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
@@ -60629,7 +58809,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
@@ -60747,7 +58926,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
@@ -60802,7 +58980,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
@@ -60965,7 +59142,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
@@ -61020,7 +59196,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
@@ -61179,7 +59354,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -61234,7 +59408,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -61362,7 +59535,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -61417,7 +59589,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -61535,7 +59706,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -61590,7 +59760,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -61718,7 +59887,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -61773,7 +59941,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -61891,7 +60058,6 @@ export namespace Prisma {
     password?: PasswordCreateNestedOneWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -61946,7 +60112,6 @@ export namespace Prisma {
     password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -62074,7 +60239,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -62129,7 +60293,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -62316,14 +60479,6 @@ export namespace Prisma {
     solvedBy?: string | null
     problemLevel?: string | null
     timestamp?: Date | string
-  }
-
-  export type AccountStatusLogCreateManyAccountInput = {
-    id?: string
-    status: string
-    remarks?: string | null
-    fromDate?: Date | string
-    moreInfo?: string | null
   }
 
   export type UserAppConnectionCreateManyAccountInput = {
@@ -62541,7 +60696,6 @@ export namespace Prisma {
     password?: PasswordUpdateOneWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -62596,7 +60750,6 @@ export namespace Prisma {
     password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -62879,30 +61032,6 @@ export namespace Prisma {
     solvedBy?: NullableStringFieldUpdateOperationsInput | string | null
     problemLevel?: NullableStringFieldUpdateOperationsInput | string | null
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AccountStatusLogUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    fromDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    moreInfo?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type AccountStatusLogUncheckedUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    fromDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    moreInfo?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type AccountStatusLogUncheckedUpdateManyWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    remarks?: NullableStringFieldUpdateOperationsInput | string | null
-    fromDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    moreInfo?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserAppConnectionUpdateWithoutAccountInput = {

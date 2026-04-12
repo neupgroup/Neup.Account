@@ -153,13 +153,15 @@ export async function blockServiceAccess(userId: string, data: z.infer<typeof bl
                     accountStatus: 'blocked' 
                 }
             }),
-            prisma.accountStatusLog.create({
+            prisma.activityLog.create({
                 data: {
-                    accountId: userId,
-                    status: 'blocked',
-                    remarks: `Admin blocked access. Reason: ${reason}. ${remarks}`,
-                    fromDate: new Date(),
-                    moreInfo: `Request by admin: ${adminId}.`
+                    targetAccountId: userId,
+                    actorAccountId: adminId,
+                    action: `Account status changed to blocked. Reason: ${reason}. ${remarks}`,
+                    status: 'Alert',
+                    ip: 'system',
+                    timestamp: new Date(),
+                    geolocation: `Request by admin: ${adminId}.`,
                 }
             })
         ]);
@@ -202,13 +204,15 @@ export async function unblockServiceAccess(userId: string): Promise<{ success: b
                      accountStatus: 'active' 
                  }
              }),
-            prisma.accountStatusLog.create({
+            prisma.activityLog.create({
                 data: {
-                    accountId: userId,
-                    status: 'active',
-                    remarks: 'Service access restored by admin.',
-                    fromDate: new Date(),
-                    moreInfo: `Request by admin: ${adminId}.`
+                    targetAccountId: userId,
+                    actorAccountId: adminId,
+                    action: 'Account status changed to active. Service access restored by admin.',
+                    status: 'Success',
+                    ip: 'system',
+                    timestamp: new Date(),
+                    geolocation: `Request by admin: ${adminId}.`,
                 }
             })
         ]);
@@ -329,7 +333,6 @@ export async function deleteUserAccount(userId: string): Promise<{ success: bool
             prisma.verification.deleteMany({ where: { accountId: userId } }),
             prisma.password.deleteMany({ where: { accountId: userId } }),
             prisma.totp.deleteMany({ where: { accountId: userId } }),
-            prisma.accountStatusLog.deleteMany({ where: { accountId: userId } }),
             prisma.account.delete({ where: { id: userId } }),
         ]);
 
