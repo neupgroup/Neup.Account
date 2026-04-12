@@ -294,7 +294,7 @@ export async function getApplicationDetailsForViewer(appId: string): Promise<App
           })
         : null,
       personalAccountId
-        ? prisma.authSessionExternal.findFirst({
+        ? prisma.appSession.findFirst({
             where: {
               appId,
               accountId: personalAccountId,

@@ -41,16 +41,16 @@ export async function validateJwt(input: ValidateJwtInput): Promise<JwtValidatio
 		return { status: 'unauthorized' };
 	}
 
-	const externalSession = await prisma.authSessionExternal.findFirst({
+	  const externalSession = await prisma.appSession.findFirst({
 		where: {
 			id: sid,
 			accountId: aid,
-			sessionKey: skey,
+				sessionValue: skey,
 		},
 		select: {
 			accountId: true,
-			jwt: true,
-			expiresOn: true,
+				activeTill: true,
+				appId: true,
 			application: {
 				select: {
 					appSecret: true,
@@ -63,12 +63,8 @@ export async function validateJwt(input: ValidateJwtInput): Promise<JwtValidatio
 		return { status: 'unauthorized' };
 	}
 
-	if (!externalSession.expiresOn || externalSession.expiresOn <= new Date()) {
+	if (!externalSession.activeTill || externalSession.activeTill <= new Date()) {
 		return { status: 'expired' };
-	}
-
-	if (externalSession.jwt !== token) {
-		return { status: 'invalid' };
 	}
 
 	const appSecret = externalSession.application?.appSecret;
@@ -77,9 +73,17 @@ export async function validateJwt(input: ValidateJwtInput): Promise<JwtValidatio
 	}
 
 	try {
-		const payload = jwt.verify(token, appSecret) as { aid?: string };
+		const payload = jwt.verify(token, appSecret) as { aid?: string; sid?: string; appId?: string };
 
 		if (payload?.aid && payload.aid !== aid) {
+			return { status: 'invalid' };
+		}
+
+		if (payload?.sid && payload.sid !== sid) {
+			return { status: 'invalid' };
+		}
+
+		if (payload?.appId && payload.appId !== externalSession.appId) {
 			return { status: 'invalid' };
 		}
 

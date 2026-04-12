@@ -231,14 +231,7 @@ export async function getUserPermissions(accountId?: string, appId?: string): Pr
     });
 
     if (appId) {
-      const [externalRole, directPermissions, appPermissions] = await Promise.all([
-        prisma.authRoleExternal.findMany({
-          where: {
-            accountId: activeId,
-            appId,
-          },
-          select: { role: true },
-        }),
+      const [directPermissions, appPermissions] = await Promise.all([
         prisma.authPermissionRecipient.findMany({
           where: {
             recipientId: activeId,
@@ -247,17 +240,14 @@ export async function getUserPermissions(accountId?: string, appId?: string): Pr
           },
           select: { permission: true },
         }),
-        prisma.authPermissionsExternal.findUnique({
+        prisma.appAuthentication.findUnique({
           where: {
-            accountId_appId: {
-              accountId: activeId,
-              appId,
-            },
+            appId_accountId: { appId, accountId: activeId },
           },
+          select: { permissions: true },
         }),
       ]);
 
-      externalRole.forEach((access) => collectedPermissions.add(access.role));
       directPermissions.forEach((dp) => collectedPermissions.add(dp.permission));
       const externalPermissions = appPermissions?.permissions;
       if (Array.isArray(externalPermissions)) {

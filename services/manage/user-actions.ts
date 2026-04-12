@@ -145,12 +145,24 @@ export async function blockServiceAccess(userId: string, data: z.infer<typeof bl
             blockedOn: new Date().toISOString()
         };
 
+        const existingAccount = await prisma.account.findUnique({
+            where: { id: userId },
+            select: { details: true }
+        });
+
+        const existingDetails = (existingAccount?.details && typeof existingAccount.details === 'object' && !Array.isArray(existingAccount.details))
+            ? (existingAccount.details as Record<string, unknown>)
+            : {};
+
         await prisma.$transaction([
             prisma.account.update({
                 where: { id: userId },
                 data: { 
-                    block: blockData, 
-                    accountStatus: 'blocked' 
+                    details: {
+                        ...existingDetails,
+                        block: blockData
+                    } as Prisma.InputJsonValue,
+                    status: 'blocked' 
                 }
             }),
             prisma.activityLog.create({
@@ -196,12 +208,27 @@ export async function unblockServiceAccess(userId: string): Promise<{ success: b
     if (!adminId) return { success: false, error: 'Administrator not authenticated.' };
 
     try {
+        const existingAccount = await prisma.account.findUnique({
+            where: { id: userId },
+            select: { details: true }
+        });
+
+        const existingDetails = (existingAccount?.details && typeof existingAccount.details === 'object' && !Array.isArray(existingAccount.details))
+            ? ({ ...(existingAccount.details as Record<string, unknown>) })
+            : {};
+
+        delete existingDetails.block;
+        const nextDetails: Prisma.NullableJsonNullValueInput | Prisma.InputJsonValue =
+            Object.keys(existingDetails).length > 0
+                ? (existingDetails as Prisma.InputJsonValue)
+                : Prisma.DbNull;
+
         await prisma.$transaction([
             prisma.account.update({
                  where: { id: userId },
                  data: { 
-                     block: Prisma.DbNull, 
-                     accountStatus: 'active' 
+                     details: nextDetails,
+                     status: 'active' 
                  }
              }),
             prisma.activityLog.create({
@@ -360,9 +387,23 @@ export async function setProStatus(accountId: string, isPro: boolean, reason: st
     if (!adminId) return { success: false, error: 'Administrator not authenticated.' };
 
     try {
+        const existingAccount = await prisma.account.findUnique({
+            where: { id: accountId },
+            select: { details: true }
+        });
+
+        const existingDetails = (existingAccount?.details && typeof existingAccount.details === 'object' && !Array.isArray(existingAccount.details))
+            ? (existingAccount.details as Record<string, unknown>)
+            : {};
+
         await prisma.account.update({
             where: { id: accountId },
-            data: { pro: isPro }
+            data: {
+                details: {
+                    ...existingDetails,
+                    pro: isPro
+                } as Prisma.InputJsonValue
+            }
         });
 
         const action = isPro ? 'Activated Neup.Pro' : 'Deactivated Neup.Pro';

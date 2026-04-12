@@ -32,13 +32,13 @@ export async function bridgeGetAuthAccess(input: {
   }
 
   try {
-    const externalSession = await prisma.authSessionExternal.findFirst({
+    const externalSession = await prisma.appSession.findFirst({
       where: {
         id: sid,
         accountId: aid,
-        sessionKey: skey,
+        sessionValue: skey,
         ...(appId ? { appId } : {}),
-        expiresOn: { gt: new Date() },
+        activeTill: { gt: new Date() },
       },
     });
 
@@ -50,16 +50,13 @@ export async function bridgeGetAuthAccess(input: {
     }
 
     const resolvedAppId = externalSession.appId;
-    const roleInfo = await prisma.authRoleExternal.findUnique({
-      where: { accountId_appId: { accountId: aid, appId: resolvedAppId } },
-    });
-
     const teamInfo = await prisma.authTeamExternal.findMany({
       where: { recipientId: aid, appId: resolvedAppId },
     });
 
-    const legacyPermissions = await prisma.authPermissionsExternal.findUnique({
-      where: { accountId_appId: { accountId: aid, appId: resolvedAppId } },
+    const appAuth = await prisma.appAuthentication.findUnique({
+      where: { appId_accountId: { appId: resolvedAppId, accountId: aid } },
+      select: { permissions: true },
     });
 
     const assetPermissions = await prisma.authPermissionRecipient.findMany({
@@ -73,9 +70,9 @@ export async function bridgeGetAuthAccess(input: {
         aid,
         appId: resolvedAppId,
         isInternal: isInternalApp(resolvedAppId),
-        role: roleInfo?.role || 'user',
+        role: 'user',
         teams: teamInfo,
-        permissions: legacyPermissions?.permissions || [],
+        permissions: Array.isArray(appAuth?.permissions) ? appAuth.permissions : [],
         assetPermissions,
         resourcePermissions: assetPermissions,
         accountAccess: assetPermissions,
@@ -100,8 +97,8 @@ export async function bridgeCreateAuthAccess(input: Record<string, any>): Promis
   }
 
   try {
-    const session = await prisma.authSessionExternal.findFirst({
-      where: { id: sid, accountId: aid, sessionKey: skey, expiresOn: { gt: new Date() } },
+    const session = await prisma.appSession.findFirst({
+      where: { id: sid, accountId: aid, sessionValue: skey, activeTill: { gt: new Date() } },
     });
 
     if (!session) return { status: 401, body: { error: 'unauthorized' } };
@@ -143,8 +140,8 @@ export async function bridgeUpdateAuthAccess(input: Record<string, any>): Promis
   } = input;
 
   try {
-    const session = await prisma.authSessionExternal.findFirst({
-      where: { id: sid, accountId: aid, sessionKey: skey, expiresOn: { gt: new Date() } },
+    const session = await prisma.appSession.findFirst({
+      where: { id: sid, accountId: aid, sessionValue: skey, activeTill: { gt: new Date() } },
     });
 
     if (!session) return { status: 401, body: { error: 'unauthorized' } };
@@ -163,14 +160,6 @@ export async function bridgeUpdateAuthAccess(input: Record<string, any>): Promis
         ? assetId.trim()
         : null;
 
-    if (update && typeof update === 'string') {
-      await prisma.authRoleExternal.upsert({
-        where: { accountId_appId: { accountId: recipientId, appId } },
-        update: { role: update },
-        create: { accountId: recipientId, appId, role: update },
-      });
-    }
-
     if (resourceId || assetId || parentOwnerId || ownerId) {
       const finalOwnerId = resolvedParentOwnerId;
 
@@ -187,15 +176,16 @@ export async function bridgeUpdateAuthAccess(input: Record<string, any>): Promis
         });
       }
     } else if (add || remove) {
-      const existing = await prisma.authPermissionsExternal.findUnique({
-        where: { accountId_appId: { accountId: recipientId, appId } },
+      const existing = await prisma.appAuthentication.findUnique({
+        where: { appId_accountId: { accountId: recipientId, appId } },
+        select: { permissions: true },
       });
       let perms = (existing?.permissions as string[]) || [];
       if (add) perms = Array.from(new Set([...perms, ...(Array.isArray(add) ? add : [add])]));
       if (remove) perms = perms.filter((p) => !(Array.isArray(remove) ? remove : [remove]).includes(p));
 
-      await prisma.authPermissionsExternal.upsert({
-        where: { accountId_appId: { accountId: recipientId, appId } },
+      await prisma.appAuthentication.upsert({
+        where: { appId_accountId: { accountId: recipientId, appId } },
         update: { permissions: perms },
         create: { accountId: recipientId, appId, permissions: perms },
       });

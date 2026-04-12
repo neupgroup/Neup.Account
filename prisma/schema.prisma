@@ -32,9 +32,6 @@ model Account {
   appConnections  UserAppConnection[]
   appAuthentications AppAuthentication[]
   appSessions     AppSession[]
-  externalSessions AuthSessionExternal[]
-  externalRoles   AuthRoleExternal[]
-  externalPermissions AuthPermissionsExternal[]
   ownedApplications Application[]
   notifications   Notification[]
   verifications   Verification[]
@@ -307,7 +304,7 @@ model ErrorLog {
   
   account     Account?  @relation(fields: [accountId], references: [id])
 
-  @@map("error_logs")
+  @@map("system_errors")
 }
 
 model BugReport {
@@ -342,9 +339,6 @@ model Application {
   connections UserAppConnection[]
   appAuthentications AppAuthentication[]
   appSessions     AppSession[]
-  externalSessions AuthSessionExternal[]
-  externalRoles   AuthRoleExternal[]
-  externalPermissions AuthPermissionsExternal[]
   
   // New Auth Team & Permission Models
   authTeamsExternal   AuthTeamExternal[]
@@ -484,49 +478,4 @@ model AppSession {
   session      Session     @relation(fields: [sessionId], references: [id], onDelete: Cascade)
 
   @@map("app_sessions")
-}
-
-model AuthSessionExternal {
-  id           String   @id @default(uuid())
-  accountId    String
-  appId        String
-  sessionId    String
-  sessionKey   String
-  jwt          String   @db.Text
-  expiresOn    DateTime
-  createdAt    DateTime @default(now())
-
-  account      Account     @relation(fields: [accountId], references: [id])
-  application  Application @relation(fields: [appId], references: [id])
-
-  @@map("auth_sessions_external")
-}
-
-model AuthRoleExternal {
-  id        String   @id @default(uuid())
-  accountId String
-  appId     String
-  role      String
-  hasExtra  Boolean  @default(false)
-  createdAt DateTime @default(now())
-
-  account     Account     @relation(fields: [accountId], references: [id])
-  application Application @relation(fields: [appId], references: [id])
-
-  @@unique([accountId, appId])
-  @@map("auth_roles_external")
-}
-
-model AuthPermissionsExternal {
-  id          String   @id @default(uuid())
-  accountId   String
-  appId       String
-  permissions Json     @default("[]")
-  createdAt   DateTime @default(now())
-
-  account     Account     @relation(fields: [accountId], references: [id])
-  application Application @relation(fields: [appId], references: [id])
-
-  @@unique([accountId, appId])
-  @@map("auth_permissions_external")
 }

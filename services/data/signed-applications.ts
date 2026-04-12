@@ -46,21 +46,21 @@ export async function getSignedApplications(): Promise<SignedApplicationsResult>
   }
 
   try {
-    const [authConnections, externalSessions] = await Promise.all([
+    const [authConnections, appSessions] = await Promise.all([
       prisma.appAuthentication.findMany({
         where: { accountId },
         include: {
           application: true,
         },
       }),
-      prisma.authSessionExternal.findMany({
+      prisma.appSession.findMany({
         where: { accountId },
         distinct: ['appId'],
         include: {
           application: true,
         },
         orderBy: {
-          createdAt: 'asc',
+          createdOn: 'asc',
         },
       }),
     ]);
@@ -79,7 +79,7 @@ export async function getSignedApplications(): Promise<SignedApplicationsResult>
       });
     }
 
-    for (const row of externalSessions) {
+    for (const row of appSessions) {
       const existing = byAppId.get(row.appId);
 
       if (!existing) {
@@ -90,15 +90,15 @@ export async function getSignedApplications(): Promise<SignedApplicationsResult>
           description: row.application.description || '',
           website: row.application.website || undefined,
           developer: row.application.developer || undefined,
-          signedAt: row.createdAt,
+          signedAt: row.createdOn,
         });
         continue;
       }
 
-      if (row.createdAt < existing.signedAt) {
+      if (row.createdOn < existing.signedAt) {
         byAppId.set(row.appId, {
           ...existing,
-          signedAt: row.createdAt,
+          signedAt: row.createdOn,
         });
       }
     }

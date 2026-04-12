@@ -47,7 +47,8 @@ async function getList(type: 'blockList' | 'restrictList'): Promise<BlockedUser[
 
   try {
     const account = await prisma.account.findUnique({ where: { id: accountId } });
-    const block = (account?.block as BlockJson) || {};
+    const details = (account?.details as Record<string, unknown> | null) || {};
+    const block = (details.block as BlockJson) || {};
     const listAccountIds: string[] = (block?.[type] as string[]) || [];
 
     if (listAccountIds.length === 0) return [];
@@ -108,13 +109,14 @@ async function addUserToList(neupId: string, type: 'blockList' | 'restrictList')
 
   try {
     const account = await prisma.account.findUnique({ where: { id: ownerAccountId } });
-    const block = (account?.block as BlockJson) || {};
+    const details = (account?.details as Record<string, unknown> | null) || {};
+    const block = (details.block as BlockJson) || {};
     const list: string[] = Array.isArray(block?.[type]) ? (block?.[type] as string[]) : [];
     if (!list.includes(targetAccountId)) list.push(targetAccountId);
     const newBlock: BlockJson = { ...(block || {}), [type]: list };
     await prisma.account.update({
       where: { id: ownerAccountId },
-      data: { block: newBlock as any },
+      data: { details: { ...(details || {}), block: newBlock } as any },
     });
     revalidatePath('/manage/people/blocked');
     return { success: true };
@@ -148,13 +150,14 @@ async function removeUserFromList(accountId: string, type: 'blockList' | 'restri
 
   try {
     const account = await prisma.account.findUnique({ where: { id: ownerAccountId } });
-    const block = (account?.block as BlockJson) || {};
+    const details = (account?.details as Record<string, unknown> | null) || {};
+    const block = (details.block as BlockJson) || {};
     const list: string[] = Array.isArray(block?.[type]) ? (block?.[type] as string[]) : [];
     const newList = list.filter((id) => id !== accountId);
     const newBlock: BlockJson = { ...(block || {}), [type]: newList };
     await prisma.account.update({
       where: { id: ownerAccountId },
-      data: { block: newBlock as any },
+      data: { details: { ...(details || {}), block: newBlock } as any },
     });
     revalidatePath('/manage/people/blocked');
     return { success: true };

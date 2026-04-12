@@ -419,34 +419,6 @@ exports.Prisma.AppSessionScalarFieldEnum = {
   activeTill: 'activeTill'
 };
 
-exports.Prisma.AuthSessionExternalScalarFieldEnum = {
-  id: 'id',
-  accountId: 'accountId',
-  appId: 'appId',
-  sessionId: 'sessionId',
-  sessionKey: 'sessionKey',
-  jwt: 'jwt',
-  expiresOn: 'expiresOn',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.AuthRoleExternalScalarFieldEnum = {
-  id: 'id',
-  accountId: 'accountId',
-  appId: 'appId',
-  role: 'role',
-  hasExtra: 'hasExtra',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.AuthPermissionsExternalScalarFieldEnum = {
-  id: 'id',
-  accountId: 'accountId',
-  appId: 'appId',
-  permissions: 'permissions',
-  createdAt: 'createdAt'
-};
-
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -507,10 +479,7 @@ exports.Prisma.ModelName = {
   AuthPermissionRecipient: 'AuthPermissionRecipient',
   UserAppConnection: 'UserAppConnection',
   AppAuthentication: 'AppAuthentication',
-  AppSession: 'AppSession',
-  AuthSessionExternal: 'AuthSessionExternal',
-  AuthRoleExternal: 'AuthRoleExternal',
-  AuthPermissionsExternal: 'AuthPermissionsExternal'
+  AppSession: 'AppSession'
 };
 
 /**

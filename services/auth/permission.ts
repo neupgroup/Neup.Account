@@ -160,28 +160,28 @@ function hasPermission(granted: Set<string>, required: string): boolean {
 async function resolveAuthenticatedAccount(input: { app: string; sid: string; skey: string }): Promise<ResolvedAuth | null> {
 	const now = new Date();
 
-	const externalSession = await prisma.authSessionExternal.findFirst({
-		where: { sessionId: input.sid },
+	const externalSession = await prisma.appSession.findFirst({
+		where: { id: input.sid },
 		select: {
 			accountId: true,
 			appId: true,
-			sessionKey: true,
-			expiresOn: true,
+			sessionValue: true,
+			activeTill: true,
 		},
 	});
 
 	if (externalSession) {
-		if (externalSession.appId !== input.app || externalSession.sessionKey !== input.skey) {
+		if (externalSession.appId !== input.app || externalSession.sessionValue !== input.skey) {
 			return null;
 		}
 
-		if (externalSession.expiresOn <= now) {
+		if (externalSession.activeTill <= now) {
 			return null;
 		}
 
 		return {
 			accountId: externalSession.accountId,
-			validTill: externalSession.expiresOn,
+			validTill: externalSession.activeTill,
 		};
 	}
 

@@ -84,7 +84,7 @@ export async function approveKycRequest(kycId: string, accountId: string): Promi
             }),
             prisma.account.update({
                 where: { id: accountId },
-                data: { verified: true } // Assuming 'verified' in Account model maps to kycVerified
+                data: { isVerified: true }
             })
         ]);
 

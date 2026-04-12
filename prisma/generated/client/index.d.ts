@@ -158,21 +158,6 @@ export type AppAuthentication = $Result.DefaultSelection<Prisma.$AppAuthenticati
  * 
  */
 export type AppSession = $Result.DefaultSelection<Prisma.$AppSessionPayload>
-/**
- * Model AuthSessionExternal
- * 
- */
-export type AuthSessionExternal = $Result.DefaultSelection<Prisma.$AuthSessionExternalPayload>
-/**
- * Model AuthRoleExternal
- * 
- */
-export type AuthRoleExternal = $Result.DefaultSelection<Prisma.$AuthRoleExternalPayload>
-/**
- * Model AuthPermissionsExternal
- * 
- */
-export type AuthPermissionsExternal = $Result.DefaultSelection<Prisma.$AuthPermissionsExternalPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -580,36 +565,6 @@ export class PrismaClient<
     * ```
     */
   get appSession(): Prisma.AppSessionDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.authSessionExternal`: Exposes CRUD operations for the **AuthSessionExternal** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more AuthSessionExternals
-    * const authSessionExternals = await prisma.authSessionExternal.findMany()
-    * ```
-    */
-  get authSessionExternal(): Prisma.AuthSessionExternalDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.authRoleExternal`: Exposes CRUD operations for the **AuthRoleExternal** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more AuthRoleExternals
-    * const authRoleExternals = await prisma.authRoleExternal.findMany()
-    * ```
-    */
-  get authRoleExternal(): Prisma.AuthRoleExternalDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.authPermissionsExternal`: Exposes CRUD operations for the **AuthPermissionsExternal** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more AuthPermissionsExternals
-    * const authPermissionsExternals = await prisma.authPermissionsExternal.findMany()
-    * ```
-    */
-  get authPermissionsExternal(): Prisma.AuthPermissionsExternalDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1072,10 +1027,7 @@ export namespace Prisma {
     AuthPermissionRecipient: 'AuthPermissionRecipient',
     UserAppConnection: 'UserAppConnection',
     AppAuthentication: 'AppAuthentication',
-    AppSession: 'AppSession',
-    AuthSessionExternal: 'AuthSessionExternal',
-    AuthRoleExternal: 'AuthRoleExternal',
-    AuthPermissionsExternal: 'AuthPermissionsExternal'
+    AppSession: 'AppSession'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1091,7 +1043,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "accountOwnership" | "systemConfig" | "authRequest" | "activityLog" | "notification" | "request" | "family" | "verification" | "contact" | "neupId" | "password" | "authSecondary" | "permit" | "session" | "errorLog" | "bugReport" | "application" | "assetGroupInfo" | "assetGroupMember" | "asset" | "assetMemberRole" | "authTeamExternal" | "authPermissionRecipient" | "userAppConnection" | "appAuthentication" | "appSession" | "authSessionExternal" | "authRoleExternal" | "authPermissionsExternal"
+      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "accountOwnership" | "systemConfig" | "authRequest" | "activityLog" | "notification" | "request" | "family" | "verification" | "contact" | "neupId" | "password" | "authSecondary" | "permit" | "session" | "errorLog" | "bugReport" | "application" | "assetGroupInfo" | "assetGroupMember" | "asset" | "assetMemberRole" | "authTeamExternal" | "authPermissionRecipient" | "userAppConnection" | "appAuthentication" | "appSession"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3241,228 +3193,6 @@ export namespace Prisma {
           }
         }
       }
-      AuthSessionExternal: {
-        payload: Prisma.$AuthSessionExternalPayload<ExtArgs>
-        fields: Prisma.AuthSessionExternalFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.AuthSessionExternalFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSessionExternalPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.AuthSessionExternalFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSessionExternalPayload>
-          }
-          findFirst: {
-            args: Prisma.AuthSessionExternalFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSessionExternalPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.AuthSessionExternalFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSessionExternalPayload>
-          }
-          findMany: {
-            args: Prisma.AuthSessionExternalFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSessionExternalPayload>[]
-          }
-          create: {
-            args: Prisma.AuthSessionExternalCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSessionExternalPayload>
-          }
-          createMany: {
-            args: Prisma.AuthSessionExternalCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.AuthSessionExternalCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSessionExternalPayload>[]
-          }
-          delete: {
-            args: Prisma.AuthSessionExternalDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSessionExternalPayload>
-          }
-          update: {
-            args: Prisma.AuthSessionExternalUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSessionExternalPayload>
-          }
-          deleteMany: {
-            args: Prisma.AuthSessionExternalDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.AuthSessionExternalUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.AuthSessionExternalUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSessionExternalPayload>[]
-          }
-          upsert: {
-            args: Prisma.AuthSessionExternalUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSessionExternalPayload>
-          }
-          aggregate: {
-            args: Prisma.AuthSessionExternalAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateAuthSessionExternal>
-          }
-          groupBy: {
-            args: Prisma.AuthSessionExternalGroupByArgs<ExtArgs>
-            result: $Utils.Optional<AuthSessionExternalGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.AuthSessionExternalCountArgs<ExtArgs>
-            result: $Utils.Optional<AuthSessionExternalCountAggregateOutputType> | number
-          }
-        }
-      }
-      AuthRoleExternal: {
-        payload: Prisma.$AuthRoleExternalPayload<ExtArgs>
-        fields: Prisma.AuthRoleExternalFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.AuthRoleExternalFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthRoleExternalPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.AuthRoleExternalFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthRoleExternalPayload>
-          }
-          findFirst: {
-            args: Prisma.AuthRoleExternalFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthRoleExternalPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.AuthRoleExternalFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthRoleExternalPayload>
-          }
-          findMany: {
-            args: Prisma.AuthRoleExternalFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthRoleExternalPayload>[]
-          }
-          create: {
-            args: Prisma.AuthRoleExternalCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthRoleExternalPayload>
-          }
-          createMany: {
-            args: Prisma.AuthRoleExternalCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.AuthRoleExternalCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthRoleExternalPayload>[]
-          }
-          delete: {
-            args: Prisma.AuthRoleExternalDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthRoleExternalPayload>
-          }
-          update: {
-            args: Prisma.AuthRoleExternalUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthRoleExternalPayload>
-          }
-          deleteMany: {
-            args: Prisma.AuthRoleExternalDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.AuthRoleExternalUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.AuthRoleExternalUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthRoleExternalPayload>[]
-          }
-          upsert: {
-            args: Prisma.AuthRoleExternalUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthRoleExternalPayload>
-          }
-          aggregate: {
-            args: Prisma.AuthRoleExternalAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateAuthRoleExternal>
-          }
-          groupBy: {
-            args: Prisma.AuthRoleExternalGroupByArgs<ExtArgs>
-            result: $Utils.Optional<AuthRoleExternalGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.AuthRoleExternalCountArgs<ExtArgs>
-            result: $Utils.Optional<AuthRoleExternalCountAggregateOutputType> | number
-          }
-        }
-      }
-      AuthPermissionsExternal: {
-        payload: Prisma.$AuthPermissionsExternalPayload<ExtArgs>
-        fields: Prisma.AuthPermissionsExternalFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.AuthPermissionsExternalFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthPermissionsExternalPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.AuthPermissionsExternalFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthPermissionsExternalPayload>
-          }
-          findFirst: {
-            args: Prisma.AuthPermissionsExternalFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthPermissionsExternalPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.AuthPermissionsExternalFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthPermissionsExternalPayload>
-          }
-          findMany: {
-            args: Prisma.AuthPermissionsExternalFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthPermissionsExternalPayload>[]
-          }
-          create: {
-            args: Prisma.AuthPermissionsExternalCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthPermissionsExternalPayload>
-          }
-          createMany: {
-            args: Prisma.AuthPermissionsExternalCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.AuthPermissionsExternalCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthPermissionsExternalPayload>[]
-          }
-          delete: {
-            args: Prisma.AuthPermissionsExternalDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthPermissionsExternalPayload>
-          }
-          update: {
-            args: Prisma.AuthPermissionsExternalUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthPermissionsExternalPayload>
-          }
-          deleteMany: {
-            args: Prisma.AuthPermissionsExternalDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.AuthPermissionsExternalUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.AuthPermissionsExternalUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthPermissionsExternalPayload>[]
-          }
-          upsert: {
-            args: Prisma.AuthPermissionsExternalUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthPermissionsExternalPayload>
-          }
-          aggregate: {
-            args: Prisma.AuthPermissionsExternalAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateAuthPermissionsExternal>
-          }
-          groupBy: {
-            args: Prisma.AuthPermissionsExternalGroupByArgs<ExtArgs>
-            result: $Utils.Optional<AuthPermissionsExternalGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.AuthPermissionsExternalCountArgs<ExtArgs>
-            result: $Utils.Optional<AuthPermissionsExternalCountAggregateOutputType> | number
-          }
-        }
-      }
     }
   } & {
     other: {
@@ -3600,9 +3330,6 @@ export namespace Prisma {
     userAppConnection?: UserAppConnectionOmit
     appAuthentication?: AppAuthenticationOmit
     appSession?: AppSessionOmit
-    authSessionExternal?: AuthSessionExternalOmit
-    authRoleExternal?: AuthRoleExternalOmit
-    authPermissionsExternal?: AuthPermissionsExternalOmit
   }
 
   /* Types for Logging */
@@ -3693,9 +3420,6 @@ export namespace Prisma {
     appConnections: number
     appAuthentications: number
     appSessions: number
-    externalSessions: number
-    externalRoles: number
-    externalPermissions: number
     ownedApplications: number
     notifications: number
     verifications: number
@@ -3720,9 +3444,6 @@ export namespace Prisma {
     appConnections?: boolean | AccountCountOutputTypeCountAppConnectionsArgs
     appAuthentications?: boolean | AccountCountOutputTypeCountAppAuthenticationsArgs
     appSessions?: boolean | AccountCountOutputTypeCountAppSessionsArgs
-    externalSessions?: boolean | AccountCountOutputTypeCountExternalSessionsArgs
-    externalRoles?: boolean | AccountCountOutputTypeCountExternalRolesArgs
-    externalPermissions?: boolean | AccountCountOutputTypeCountExternalPermissionsArgs
     ownedApplications?: boolean | AccountCountOutputTypeCountOwnedApplicationsArgs
     notifications?: boolean | AccountCountOutputTypeCountNotificationsArgs
     verifications?: boolean | AccountCountOutputTypeCountVerificationsArgs
@@ -3815,27 +3536,6 @@ export namespace Prisma {
    */
   export type AccountCountOutputTypeCountAppSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AppSessionWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
-  export type AccountCountOutputTypeCountExternalSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthSessionExternalWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
-  export type AccountCountOutputTypeCountExternalRolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthRoleExternalWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
-  export type AccountCountOutputTypeCountExternalPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthPermissionsExternalWhereInput
   }
 
   /**
@@ -3986,9 +3686,6 @@ export namespace Prisma {
     connections: number
     appAuthentications: number
     appSessions: number
-    externalSessions: number
-    externalRoles: number
-    externalPermissions: number
     authTeamsExternal: number
     authPermissionRecipients: number
   }
@@ -3997,9 +3694,6 @@ export namespace Prisma {
     connections?: boolean | ApplicationCountOutputTypeCountConnectionsArgs
     appAuthentications?: boolean | ApplicationCountOutputTypeCountAppAuthenticationsArgs
     appSessions?: boolean | ApplicationCountOutputTypeCountAppSessionsArgs
-    externalSessions?: boolean | ApplicationCountOutputTypeCountExternalSessionsArgs
-    externalRoles?: boolean | ApplicationCountOutputTypeCountExternalRolesArgs
-    externalPermissions?: boolean | ApplicationCountOutputTypeCountExternalPermissionsArgs
     authTeamsExternal?: boolean | ApplicationCountOutputTypeCountAuthTeamsExternalArgs
     authPermissionRecipients?: boolean | ApplicationCountOutputTypeCountAuthPermissionRecipientsArgs
   }
@@ -4034,27 +3728,6 @@ export namespace Prisma {
    */
   export type ApplicationCountOutputTypeCountAppSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AppSessionWhereInput
-  }
-
-  /**
-   * ApplicationCountOutputType without action
-   */
-  export type ApplicationCountOutputTypeCountExternalSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthSessionExternalWhereInput
-  }
-
-  /**
-   * ApplicationCountOutputType without action
-   */
-  export type ApplicationCountOutputTypeCountExternalRolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthRoleExternalWhereInput
-  }
-
-  /**
-   * ApplicationCountOutputType without action
-   */
-  export type ApplicationCountOutputTypeCountExternalPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthPermissionsExternalWhereInput
   }
 
   /**
@@ -4373,9 +4046,6 @@ export namespace Prisma {
     appConnections?: boolean | Account$appConnectionsArgs<ExtArgs>
     appAuthentications?: boolean | Account$appAuthenticationsArgs<ExtArgs>
     appSessions?: boolean | Account$appSessionsArgs<ExtArgs>
-    externalSessions?: boolean | Account$externalSessionsArgs<ExtArgs>
-    externalRoles?: boolean | Account$externalRolesArgs<ExtArgs>
-    externalPermissions?: boolean | Account$externalPermissionsArgs<ExtArgs>
     ownedApplications?: boolean | Account$ownedApplicationsArgs<ExtArgs>
     notifications?: boolean | Account$notificationsArgs<ExtArgs>
     verifications?: boolean | Account$verificationsArgs<ExtArgs>
@@ -4438,9 +4108,6 @@ export namespace Prisma {
     appConnections?: boolean | Account$appConnectionsArgs<ExtArgs>
     appAuthentications?: boolean | Account$appAuthenticationsArgs<ExtArgs>
     appSessions?: boolean | Account$appSessionsArgs<ExtArgs>
-    externalSessions?: boolean | Account$externalSessionsArgs<ExtArgs>
-    externalRoles?: boolean | Account$externalRolesArgs<ExtArgs>
-    externalPermissions?: boolean | Account$externalPermissionsArgs<ExtArgs>
     ownedApplications?: boolean | Account$ownedApplicationsArgs<ExtArgs>
     notifications?: boolean | Account$notificationsArgs<ExtArgs>
     verifications?: boolean | Account$verificationsArgs<ExtArgs>
@@ -4473,9 +4140,6 @@ export namespace Prisma {
       appConnections: Prisma.$UserAppConnectionPayload<ExtArgs>[]
       appAuthentications: Prisma.$AppAuthenticationPayload<ExtArgs>[]
       appSessions: Prisma.$AppSessionPayload<ExtArgs>[]
-      externalSessions: Prisma.$AuthSessionExternalPayload<ExtArgs>[]
-      externalRoles: Prisma.$AuthRoleExternalPayload<ExtArgs>[]
-      externalPermissions: Prisma.$AuthPermissionsExternalPayload<ExtArgs>[]
       ownedApplications: Prisma.$ApplicationPayload<ExtArgs>[]
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
       verifications: Prisma.$VerificationPayload<ExtArgs>[]
@@ -4904,9 +4568,6 @@ export namespace Prisma {
     appConnections<T extends Account$appConnectionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$appConnectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAppConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     appAuthentications<T extends Account$appAuthenticationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$appAuthenticationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppAuthenticationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     appSessions<T extends Account$appSessionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$appSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    externalSessions<T extends Account$externalSessionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$externalSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthSessionExternalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    externalRoles<T extends Account$externalRolesArgs<ExtArgs> = {}>(args?: Subset<T, Account$externalRolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthRoleExternalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    externalPermissions<T extends Account$externalPermissionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$externalPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthPermissionsExternalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ownedApplications<T extends Account$ownedApplicationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$ownedApplicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notifications<T extends Account$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     verifications<T extends Account$verificationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$verificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VerificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5601,78 +5262,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AppSessionScalarFieldEnum | AppSessionScalarFieldEnum[]
-  }
-
-  /**
-   * Account.externalSessions
-   */
-  export type Account$externalSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthSessionExternal
-     */
-    select?: AuthSessionExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthSessionExternal
-     */
-    omit?: AuthSessionExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthSessionExternalInclude<ExtArgs> | null
-    where?: AuthSessionExternalWhereInput
-    orderBy?: AuthSessionExternalOrderByWithRelationInput | AuthSessionExternalOrderByWithRelationInput[]
-    cursor?: AuthSessionExternalWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AuthSessionExternalScalarFieldEnum | AuthSessionExternalScalarFieldEnum[]
-  }
-
-  /**
-   * Account.externalRoles
-   */
-  export type Account$externalRolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthRoleExternal
-     */
-    select?: AuthRoleExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthRoleExternal
-     */
-    omit?: AuthRoleExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthRoleExternalInclude<ExtArgs> | null
-    where?: AuthRoleExternalWhereInput
-    orderBy?: AuthRoleExternalOrderByWithRelationInput | AuthRoleExternalOrderByWithRelationInput[]
-    cursor?: AuthRoleExternalWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AuthRoleExternalScalarFieldEnum | AuthRoleExternalScalarFieldEnum[]
-  }
-
-  /**
-   * Account.externalPermissions
-   */
-  export type Account$externalPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthPermissionsExternal
-     */
-    select?: AuthPermissionsExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthPermissionsExternal
-     */
-    omit?: AuthPermissionsExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthPermissionsExternalInclude<ExtArgs> | null
-    where?: AuthPermissionsExternalWhereInput
-    orderBy?: AuthPermissionsExternalOrderByWithRelationInput | AuthPermissionsExternalOrderByWithRelationInput[]
-    cursor?: AuthPermissionsExternalWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AuthPermissionsExternalScalarFieldEnum | AuthPermissionsExternalScalarFieldEnum[]
   }
 
   /**
@@ -25733,9 +25322,6 @@ export namespace Prisma {
     connections?: boolean | Application$connectionsArgs<ExtArgs>
     appAuthentications?: boolean | Application$appAuthenticationsArgs<ExtArgs>
     appSessions?: boolean | Application$appSessionsArgs<ExtArgs>
-    externalSessions?: boolean | Application$externalSessionsArgs<ExtArgs>
-    externalRoles?: boolean | Application$externalRolesArgs<ExtArgs>
-    externalPermissions?: boolean | Application$externalPermissionsArgs<ExtArgs>
     authTeamsExternal?: boolean | Application$authTeamsExternalArgs<ExtArgs>
     authPermissionRecipients?: boolean | Application$authPermissionRecipientsArgs<ExtArgs>
     _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
@@ -25800,9 +25386,6 @@ export namespace Prisma {
     connections?: boolean | Application$connectionsArgs<ExtArgs>
     appAuthentications?: boolean | Application$appAuthenticationsArgs<ExtArgs>
     appSessions?: boolean | Application$appSessionsArgs<ExtArgs>
-    externalSessions?: boolean | Application$externalSessionsArgs<ExtArgs>
-    externalRoles?: boolean | Application$externalRolesArgs<ExtArgs>
-    externalPermissions?: boolean | Application$externalPermissionsArgs<ExtArgs>
     authTeamsExternal?: boolean | Application$authTeamsExternalArgs<ExtArgs>
     authPermissionRecipients?: boolean | Application$authPermissionRecipientsArgs<ExtArgs>
     _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
@@ -25821,9 +25404,6 @@ export namespace Prisma {
       connections: Prisma.$UserAppConnectionPayload<ExtArgs>[]
       appAuthentications: Prisma.$AppAuthenticationPayload<ExtArgs>[]
       appSessions: Prisma.$AppSessionPayload<ExtArgs>[]
-      externalSessions: Prisma.$AuthSessionExternalPayload<ExtArgs>[]
-      externalRoles: Prisma.$AuthRoleExternalPayload<ExtArgs>[]
-      externalPermissions: Prisma.$AuthPermissionsExternalPayload<ExtArgs>[]
       authTeamsExternal: Prisma.$AuthTeamExternalPayload<ExtArgs>[]
       authPermissionRecipients: Prisma.$AuthPermissionRecipientPayload<ExtArgs>[]
     }
@@ -26240,9 +25820,6 @@ export namespace Prisma {
     connections<T extends Application$connectionsArgs<ExtArgs> = {}>(args?: Subset<T, Application$connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAppConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     appAuthentications<T extends Application$appAuthenticationsArgs<ExtArgs> = {}>(args?: Subset<T, Application$appAuthenticationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppAuthenticationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     appSessions<T extends Application$appSessionsArgs<ExtArgs> = {}>(args?: Subset<T, Application$appSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    externalSessions<T extends Application$externalSessionsArgs<ExtArgs> = {}>(args?: Subset<T, Application$externalSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthSessionExternalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    externalRoles<T extends Application$externalRolesArgs<ExtArgs> = {}>(args?: Subset<T, Application$externalRolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthRoleExternalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    externalPermissions<T extends Application$externalPermissionsArgs<ExtArgs> = {}>(args?: Subset<T, Application$externalPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthPermissionsExternalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     authTeamsExternal<T extends Application$authTeamsExternalArgs<ExtArgs> = {}>(args?: Subset<T, Application$authTeamsExternalArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthTeamExternalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     authPermissionRecipients<T extends Application$authPermissionRecipientsArgs<ExtArgs> = {}>(args?: Subset<T, Application$authPermissionRecipientsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthPermissionRecipientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -26772,78 +26349,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AppSessionScalarFieldEnum | AppSessionScalarFieldEnum[]
-  }
-
-  /**
-   * Application.externalSessions
-   */
-  export type Application$externalSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthSessionExternal
-     */
-    select?: AuthSessionExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthSessionExternal
-     */
-    omit?: AuthSessionExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthSessionExternalInclude<ExtArgs> | null
-    where?: AuthSessionExternalWhereInput
-    orderBy?: AuthSessionExternalOrderByWithRelationInput | AuthSessionExternalOrderByWithRelationInput[]
-    cursor?: AuthSessionExternalWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AuthSessionExternalScalarFieldEnum | AuthSessionExternalScalarFieldEnum[]
-  }
-
-  /**
-   * Application.externalRoles
-   */
-  export type Application$externalRolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthRoleExternal
-     */
-    select?: AuthRoleExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthRoleExternal
-     */
-    omit?: AuthRoleExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthRoleExternalInclude<ExtArgs> | null
-    where?: AuthRoleExternalWhereInput
-    orderBy?: AuthRoleExternalOrderByWithRelationInput | AuthRoleExternalOrderByWithRelationInput[]
-    cursor?: AuthRoleExternalWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AuthRoleExternalScalarFieldEnum | AuthRoleExternalScalarFieldEnum[]
-  }
-
-  /**
-   * Application.externalPermissions
-   */
-  export type Application$externalPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthPermissionsExternal
-     */
-    select?: AuthPermissionsExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthPermissionsExternal
-     */
-    omit?: AuthPermissionsExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthPermissionsExternalInclude<ExtArgs> | null
-    where?: AuthPermissionsExternalWhereInput
-    orderBy?: AuthPermissionsExternalOrderByWithRelationInput | AuthPermissionsExternalOrderByWithRelationInput[]
-    cursor?: AuthPermissionsExternalWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AuthPermissionsExternalScalarFieldEnum | AuthPermissionsExternalScalarFieldEnum[]
   }
 
   /**
@@ -36656,3252 +36161,6 @@ export namespace Prisma {
 
 
   /**
-   * Model AuthSessionExternal
-   */
-
-  export type AggregateAuthSessionExternal = {
-    _count: AuthSessionExternalCountAggregateOutputType | null
-    _min: AuthSessionExternalMinAggregateOutputType | null
-    _max: AuthSessionExternalMaxAggregateOutputType | null
-  }
-
-  export type AuthSessionExternalMinAggregateOutputType = {
-    id: string | null
-    accountId: string | null
-    appId: string | null
-    sessionId: string | null
-    sessionKey: string | null
-    jwt: string | null
-    expiresOn: Date | null
-    createdAt: Date | null
-  }
-
-  export type AuthSessionExternalMaxAggregateOutputType = {
-    id: string | null
-    accountId: string | null
-    appId: string | null
-    sessionId: string | null
-    sessionKey: string | null
-    jwt: string | null
-    expiresOn: Date | null
-    createdAt: Date | null
-  }
-
-  export type AuthSessionExternalCountAggregateOutputType = {
-    id: number
-    accountId: number
-    appId: number
-    sessionId: number
-    sessionKey: number
-    jwt: number
-    expiresOn: number
-    createdAt: number
-    _all: number
-  }
-
-
-  export type AuthSessionExternalMinAggregateInputType = {
-    id?: true
-    accountId?: true
-    appId?: true
-    sessionId?: true
-    sessionKey?: true
-    jwt?: true
-    expiresOn?: true
-    createdAt?: true
-  }
-
-  export type AuthSessionExternalMaxAggregateInputType = {
-    id?: true
-    accountId?: true
-    appId?: true
-    sessionId?: true
-    sessionKey?: true
-    jwt?: true
-    expiresOn?: true
-    createdAt?: true
-  }
-
-  export type AuthSessionExternalCountAggregateInputType = {
-    id?: true
-    accountId?: true
-    appId?: true
-    sessionId?: true
-    sessionKey?: true
-    jwt?: true
-    expiresOn?: true
-    createdAt?: true
-    _all?: true
-  }
-
-  export type AuthSessionExternalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which AuthSessionExternal to aggregate.
-     */
-    where?: AuthSessionExternalWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AuthSessionExternals to fetch.
-     */
-    orderBy?: AuthSessionExternalOrderByWithRelationInput | AuthSessionExternalOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: AuthSessionExternalWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AuthSessionExternals from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AuthSessionExternals.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned AuthSessionExternals
-    **/
-    _count?: true | AuthSessionExternalCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: AuthSessionExternalMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: AuthSessionExternalMaxAggregateInputType
-  }
-
-  export type GetAuthSessionExternalAggregateType<T extends AuthSessionExternalAggregateArgs> = {
-        [P in keyof T & keyof AggregateAuthSessionExternal]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateAuthSessionExternal[P]>
-      : GetScalarType<T[P], AggregateAuthSessionExternal[P]>
-  }
-
-
-
-
-  export type AuthSessionExternalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthSessionExternalWhereInput
-    orderBy?: AuthSessionExternalOrderByWithAggregationInput | AuthSessionExternalOrderByWithAggregationInput[]
-    by: AuthSessionExternalScalarFieldEnum[] | AuthSessionExternalScalarFieldEnum
-    having?: AuthSessionExternalScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: AuthSessionExternalCountAggregateInputType | true
-    _min?: AuthSessionExternalMinAggregateInputType
-    _max?: AuthSessionExternalMaxAggregateInputType
-  }
-
-  export type AuthSessionExternalGroupByOutputType = {
-    id: string
-    accountId: string
-    appId: string
-    sessionId: string
-    sessionKey: string
-    jwt: string
-    expiresOn: Date
-    createdAt: Date
-    _count: AuthSessionExternalCountAggregateOutputType | null
-    _min: AuthSessionExternalMinAggregateOutputType | null
-    _max: AuthSessionExternalMaxAggregateOutputType | null
-  }
-
-  type GetAuthSessionExternalGroupByPayload<T extends AuthSessionExternalGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<AuthSessionExternalGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof AuthSessionExternalGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], AuthSessionExternalGroupByOutputType[P]>
-            : GetScalarType<T[P], AuthSessionExternalGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type AuthSessionExternalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    appId?: boolean
-    sessionId?: boolean
-    sessionKey?: boolean
-    jwt?: boolean
-    expiresOn?: boolean
-    createdAt?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["authSessionExternal"]>
-
-  export type AuthSessionExternalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    appId?: boolean
-    sessionId?: boolean
-    sessionKey?: boolean
-    jwt?: boolean
-    expiresOn?: boolean
-    createdAt?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["authSessionExternal"]>
-
-  export type AuthSessionExternalSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    appId?: boolean
-    sessionId?: boolean
-    sessionKey?: boolean
-    jwt?: boolean
-    expiresOn?: boolean
-    createdAt?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["authSessionExternal"]>
-
-  export type AuthSessionExternalSelectScalar = {
-    id?: boolean
-    accountId?: boolean
-    appId?: boolean
-    sessionId?: boolean
-    sessionKey?: boolean
-    jwt?: boolean
-    expiresOn?: boolean
-    createdAt?: boolean
-  }
-
-  export type AuthSessionExternalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "appId" | "sessionId" | "sessionKey" | "jwt" | "expiresOn" | "createdAt", ExtArgs["result"]["authSessionExternal"]>
-  export type AuthSessionExternalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
-  }
-  export type AuthSessionExternalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
-  }
-  export type AuthSessionExternalIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
-  }
-
-  export type $AuthSessionExternalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "AuthSessionExternal"
-    objects: {
-      account: Prisma.$AccountPayload<ExtArgs>
-      application: Prisma.$ApplicationPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      accountId: string
-      appId: string
-      sessionId: string
-      sessionKey: string
-      jwt: string
-      expiresOn: Date
-      createdAt: Date
-    }, ExtArgs["result"]["authSessionExternal"]>
-    composites: {}
-  }
-
-  type AuthSessionExternalGetPayload<S extends boolean | null | undefined | AuthSessionExternalDefaultArgs> = $Result.GetResult<Prisma.$AuthSessionExternalPayload, S>
-
-  type AuthSessionExternalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<AuthSessionExternalFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: AuthSessionExternalCountAggregateInputType | true
-    }
-
-  export interface AuthSessionExternalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AuthSessionExternal'], meta: { name: 'AuthSessionExternal' } }
-    /**
-     * Find zero or one AuthSessionExternal that matches the filter.
-     * @param {AuthSessionExternalFindUniqueArgs} args - Arguments to find a AuthSessionExternal
-     * @example
-     * // Get one AuthSessionExternal
-     * const authSessionExternal = await prisma.authSessionExternal.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends AuthSessionExternalFindUniqueArgs>(args: SelectSubset<T, AuthSessionExternalFindUniqueArgs<ExtArgs>>): Prisma__AuthSessionExternalClient<$Result.GetResult<Prisma.$AuthSessionExternalPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one AuthSessionExternal that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {AuthSessionExternalFindUniqueOrThrowArgs} args - Arguments to find a AuthSessionExternal
-     * @example
-     * // Get one AuthSessionExternal
-     * const authSessionExternal = await prisma.authSessionExternal.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends AuthSessionExternalFindUniqueOrThrowArgs>(args: SelectSubset<T, AuthSessionExternalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AuthSessionExternalClient<$Result.GetResult<Prisma.$AuthSessionExternalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first AuthSessionExternal that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthSessionExternalFindFirstArgs} args - Arguments to find a AuthSessionExternal
-     * @example
-     * // Get one AuthSessionExternal
-     * const authSessionExternal = await prisma.authSessionExternal.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends AuthSessionExternalFindFirstArgs>(args?: SelectSubset<T, AuthSessionExternalFindFirstArgs<ExtArgs>>): Prisma__AuthSessionExternalClient<$Result.GetResult<Prisma.$AuthSessionExternalPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first AuthSessionExternal that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthSessionExternalFindFirstOrThrowArgs} args - Arguments to find a AuthSessionExternal
-     * @example
-     * // Get one AuthSessionExternal
-     * const authSessionExternal = await prisma.authSessionExternal.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends AuthSessionExternalFindFirstOrThrowArgs>(args?: SelectSubset<T, AuthSessionExternalFindFirstOrThrowArgs<ExtArgs>>): Prisma__AuthSessionExternalClient<$Result.GetResult<Prisma.$AuthSessionExternalPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more AuthSessionExternals that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthSessionExternalFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all AuthSessionExternals
-     * const authSessionExternals = await prisma.authSessionExternal.findMany()
-     * 
-     * // Get first 10 AuthSessionExternals
-     * const authSessionExternals = await prisma.authSessionExternal.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const authSessionExternalWithIdOnly = await prisma.authSessionExternal.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends AuthSessionExternalFindManyArgs>(args?: SelectSubset<T, AuthSessionExternalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthSessionExternalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a AuthSessionExternal.
-     * @param {AuthSessionExternalCreateArgs} args - Arguments to create a AuthSessionExternal.
-     * @example
-     * // Create one AuthSessionExternal
-     * const AuthSessionExternal = await prisma.authSessionExternal.create({
-     *   data: {
-     *     // ... data to create a AuthSessionExternal
-     *   }
-     * })
-     * 
-     */
-    create<T extends AuthSessionExternalCreateArgs>(args: SelectSubset<T, AuthSessionExternalCreateArgs<ExtArgs>>): Prisma__AuthSessionExternalClient<$Result.GetResult<Prisma.$AuthSessionExternalPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many AuthSessionExternals.
-     * @param {AuthSessionExternalCreateManyArgs} args - Arguments to create many AuthSessionExternals.
-     * @example
-     * // Create many AuthSessionExternals
-     * const authSessionExternal = await prisma.authSessionExternal.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends AuthSessionExternalCreateManyArgs>(args?: SelectSubset<T, AuthSessionExternalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many AuthSessionExternals and returns the data saved in the database.
-     * @param {AuthSessionExternalCreateManyAndReturnArgs} args - Arguments to create many AuthSessionExternals.
-     * @example
-     * // Create many AuthSessionExternals
-     * const authSessionExternal = await prisma.authSessionExternal.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many AuthSessionExternals and only return the `id`
-     * const authSessionExternalWithIdOnly = await prisma.authSessionExternal.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends AuthSessionExternalCreateManyAndReturnArgs>(args?: SelectSubset<T, AuthSessionExternalCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthSessionExternalPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a AuthSessionExternal.
-     * @param {AuthSessionExternalDeleteArgs} args - Arguments to delete one AuthSessionExternal.
-     * @example
-     * // Delete one AuthSessionExternal
-     * const AuthSessionExternal = await prisma.authSessionExternal.delete({
-     *   where: {
-     *     // ... filter to delete one AuthSessionExternal
-     *   }
-     * })
-     * 
-     */
-    delete<T extends AuthSessionExternalDeleteArgs>(args: SelectSubset<T, AuthSessionExternalDeleteArgs<ExtArgs>>): Prisma__AuthSessionExternalClient<$Result.GetResult<Prisma.$AuthSessionExternalPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one AuthSessionExternal.
-     * @param {AuthSessionExternalUpdateArgs} args - Arguments to update one AuthSessionExternal.
-     * @example
-     * // Update one AuthSessionExternal
-     * const authSessionExternal = await prisma.authSessionExternal.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends AuthSessionExternalUpdateArgs>(args: SelectSubset<T, AuthSessionExternalUpdateArgs<ExtArgs>>): Prisma__AuthSessionExternalClient<$Result.GetResult<Prisma.$AuthSessionExternalPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more AuthSessionExternals.
-     * @param {AuthSessionExternalDeleteManyArgs} args - Arguments to filter AuthSessionExternals to delete.
-     * @example
-     * // Delete a few AuthSessionExternals
-     * const { count } = await prisma.authSessionExternal.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends AuthSessionExternalDeleteManyArgs>(args?: SelectSubset<T, AuthSessionExternalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more AuthSessionExternals.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthSessionExternalUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many AuthSessionExternals
-     * const authSessionExternal = await prisma.authSessionExternal.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends AuthSessionExternalUpdateManyArgs>(args: SelectSubset<T, AuthSessionExternalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more AuthSessionExternals and returns the data updated in the database.
-     * @param {AuthSessionExternalUpdateManyAndReturnArgs} args - Arguments to update many AuthSessionExternals.
-     * @example
-     * // Update many AuthSessionExternals
-     * const authSessionExternal = await prisma.authSessionExternal.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more AuthSessionExternals and only return the `id`
-     * const authSessionExternalWithIdOnly = await prisma.authSessionExternal.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends AuthSessionExternalUpdateManyAndReturnArgs>(args: SelectSubset<T, AuthSessionExternalUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthSessionExternalPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one AuthSessionExternal.
-     * @param {AuthSessionExternalUpsertArgs} args - Arguments to update or create a AuthSessionExternal.
-     * @example
-     * // Update or create a AuthSessionExternal
-     * const authSessionExternal = await prisma.authSessionExternal.upsert({
-     *   create: {
-     *     // ... data to create a AuthSessionExternal
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the AuthSessionExternal we want to update
-     *   }
-     * })
-     */
-    upsert<T extends AuthSessionExternalUpsertArgs>(args: SelectSubset<T, AuthSessionExternalUpsertArgs<ExtArgs>>): Prisma__AuthSessionExternalClient<$Result.GetResult<Prisma.$AuthSessionExternalPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of AuthSessionExternals.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthSessionExternalCountArgs} args - Arguments to filter AuthSessionExternals to count.
-     * @example
-     * // Count the number of AuthSessionExternals
-     * const count = await prisma.authSessionExternal.count({
-     *   where: {
-     *     // ... the filter for the AuthSessionExternals we want to count
-     *   }
-     * })
-    **/
-    count<T extends AuthSessionExternalCountArgs>(
-      args?: Subset<T, AuthSessionExternalCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], AuthSessionExternalCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a AuthSessionExternal.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthSessionExternalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends AuthSessionExternalAggregateArgs>(args: Subset<T, AuthSessionExternalAggregateArgs>): Prisma.PrismaPromise<GetAuthSessionExternalAggregateType<T>>
-
-    /**
-     * Group by AuthSessionExternal.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthSessionExternalGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends AuthSessionExternalGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: AuthSessionExternalGroupByArgs['orderBy'] }
-        : { orderBy?: AuthSessionExternalGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, AuthSessionExternalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAuthSessionExternalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the AuthSessionExternal model
-   */
-  readonly fields: AuthSessionExternalFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for AuthSessionExternal.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__AuthSessionExternalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    account<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    application<T extends ApplicationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationDefaultArgs<ExtArgs>>): Prisma__ApplicationClient<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the AuthSessionExternal model
-   */
-  interface AuthSessionExternalFieldRefs {
-    readonly id: FieldRef<"AuthSessionExternal", 'String'>
-    readonly accountId: FieldRef<"AuthSessionExternal", 'String'>
-    readonly appId: FieldRef<"AuthSessionExternal", 'String'>
-    readonly sessionId: FieldRef<"AuthSessionExternal", 'String'>
-    readonly sessionKey: FieldRef<"AuthSessionExternal", 'String'>
-    readonly jwt: FieldRef<"AuthSessionExternal", 'String'>
-    readonly expiresOn: FieldRef<"AuthSessionExternal", 'DateTime'>
-    readonly createdAt: FieldRef<"AuthSessionExternal", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * AuthSessionExternal findUnique
-   */
-  export type AuthSessionExternalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthSessionExternal
-     */
-    select?: AuthSessionExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthSessionExternal
-     */
-    omit?: AuthSessionExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthSessionExternalInclude<ExtArgs> | null
-    /**
-     * Filter, which AuthSessionExternal to fetch.
-     */
-    where: AuthSessionExternalWhereUniqueInput
-  }
-
-  /**
-   * AuthSessionExternal findUniqueOrThrow
-   */
-  export type AuthSessionExternalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthSessionExternal
-     */
-    select?: AuthSessionExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthSessionExternal
-     */
-    omit?: AuthSessionExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthSessionExternalInclude<ExtArgs> | null
-    /**
-     * Filter, which AuthSessionExternal to fetch.
-     */
-    where: AuthSessionExternalWhereUniqueInput
-  }
-
-  /**
-   * AuthSessionExternal findFirst
-   */
-  export type AuthSessionExternalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthSessionExternal
-     */
-    select?: AuthSessionExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthSessionExternal
-     */
-    omit?: AuthSessionExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthSessionExternalInclude<ExtArgs> | null
-    /**
-     * Filter, which AuthSessionExternal to fetch.
-     */
-    where?: AuthSessionExternalWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AuthSessionExternals to fetch.
-     */
-    orderBy?: AuthSessionExternalOrderByWithRelationInput | AuthSessionExternalOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for AuthSessionExternals.
-     */
-    cursor?: AuthSessionExternalWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AuthSessionExternals from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AuthSessionExternals.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of AuthSessionExternals.
-     */
-    distinct?: AuthSessionExternalScalarFieldEnum | AuthSessionExternalScalarFieldEnum[]
-  }
-
-  /**
-   * AuthSessionExternal findFirstOrThrow
-   */
-  export type AuthSessionExternalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthSessionExternal
-     */
-    select?: AuthSessionExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthSessionExternal
-     */
-    omit?: AuthSessionExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthSessionExternalInclude<ExtArgs> | null
-    /**
-     * Filter, which AuthSessionExternal to fetch.
-     */
-    where?: AuthSessionExternalWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AuthSessionExternals to fetch.
-     */
-    orderBy?: AuthSessionExternalOrderByWithRelationInput | AuthSessionExternalOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for AuthSessionExternals.
-     */
-    cursor?: AuthSessionExternalWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AuthSessionExternals from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AuthSessionExternals.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of AuthSessionExternals.
-     */
-    distinct?: AuthSessionExternalScalarFieldEnum | AuthSessionExternalScalarFieldEnum[]
-  }
-
-  /**
-   * AuthSessionExternal findMany
-   */
-  export type AuthSessionExternalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthSessionExternal
-     */
-    select?: AuthSessionExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthSessionExternal
-     */
-    omit?: AuthSessionExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthSessionExternalInclude<ExtArgs> | null
-    /**
-     * Filter, which AuthSessionExternals to fetch.
-     */
-    where?: AuthSessionExternalWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AuthSessionExternals to fetch.
-     */
-    orderBy?: AuthSessionExternalOrderByWithRelationInput | AuthSessionExternalOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing AuthSessionExternals.
-     */
-    cursor?: AuthSessionExternalWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AuthSessionExternals from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AuthSessionExternals.
-     */
-    skip?: number
-    distinct?: AuthSessionExternalScalarFieldEnum | AuthSessionExternalScalarFieldEnum[]
-  }
-
-  /**
-   * AuthSessionExternal create
-   */
-  export type AuthSessionExternalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthSessionExternal
-     */
-    select?: AuthSessionExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthSessionExternal
-     */
-    omit?: AuthSessionExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthSessionExternalInclude<ExtArgs> | null
-    /**
-     * The data needed to create a AuthSessionExternal.
-     */
-    data: XOR<AuthSessionExternalCreateInput, AuthSessionExternalUncheckedCreateInput>
-  }
-
-  /**
-   * AuthSessionExternal createMany
-   */
-  export type AuthSessionExternalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many AuthSessionExternals.
-     */
-    data: AuthSessionExternalCreateManyInput | AuthSessionExternalCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * AuthSessionExternal createManyAndReturn
-   */
-  export type AuthSessionExternalCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthSessionExternal
-     */
-    select?: AuthSessionExternalSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthSessionExternal
-     */
-    omit?: AuthSessionExternalOmit<ExtArgs> | null
-    /**
-     * The data used to create many AuthSessionExternals.
-     */
-    data: AuthSessionExternalCreateManyInput | AuthSessionExternalCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthSessionExternalIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * AuthSessionExternal update
-   */
-  export type AuthSessionExternalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthSessionExternal
-     */
-    select?: AuthSessionExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthSessionExternal
-     */
-    omit?: AuthSessionExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthSessionExternalInclude<ExtArgs> | null
-    /**
-     * The data needed to update a AuthSessionExternal.
-     */
-    data: XOR<AuthSessionExternalUpdateInput, AuthSessionExternalUncheckedUpdateInput>
-    /**
-     * Choose, which AuthSessionExternal to update.
-     */
-    where: AuthSessionExternalWhereUniqueInput
-  }
-
-  /**
-   * AuthSessionExternal updateMany
-   */
-  export type AuthSessionExternalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update AuthSessionExternals.
-     */
-    data: XOR<AuthSessionExternalUpdateManyMutationInput, AuthSessionExternalUncheckedUpdateManyInput>
-    /**
-     * Filter which AuthSessionExternals to update
-     */
-    where?: AuthSessionExternalWhereInput
-    /**
-     * Limit how many AuthSessionExternals to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * AuthSessionExternal updateManyAndReturn
-   */
-  export type AuthSessionExternalUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthSessionExternal
-     */
-    select?: AuthSessionExternalSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthSessionExternal
-     */
-    omit?: AuthSessionExternalOmit<ExtArgs> | null
-    /**
-     * The data used to update AuthSessionExternals.
-     */
-    data: XOR<AuthSessionExternalUpdateManyMutationInput, AuthSessionExternalUncheckedUpdateManyInput>
-    /**
-     * Filter which AuthSessionExternals to update
-     */
-    where?: AuthSessionExternalWhereInput
-    /**
-     * Limit how many AuthSessionExternals to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthSessionExternalIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * AuthSessionExternal upsert
-   */
-  export type AuthSessionExternalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthSessionExternal
-     */
-    select?: AuthSessionExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthSessionExternal
-     */
-    omit?: AuthSessionExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthSessionExternalInclude<ExtArgs> | null
-    /**
-     * The filter to search for the AuthSessionExternal to update in case it exists.
-     */
-    where: AuthSessionExternalWhereUniqueInput
-    /**
-     * In case the AuthSessionExternal found by the `where` argument doesn't exist, create a new AuthSessionExternal with this data.
-     */
-    create: XOR<AuthSessionExternalCreateInput, AuthSessionExternalUncheckedCreateInput>
-    /**
-     * In case the AuthSessionExternal was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<AuthSessionExternalUpdateInput, AuthSessionExternalUncheckedUpdateInput>
-  }
-
-  /**
-   * AuthSessionExternal delete
-   */
-  export type AuthSessionExternalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthSessionExternal
-     */
-    select?: AuthSessionExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthSessionExternal
-     */
-    omit?: AuthSessionExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthSessionExternalInclude<ExtArgs> | null
-    /**
-     * Filter which AuthSessionExternal to delete.
-     */
-    where: AuthSessionExternalWhereUniqueInput
-  }
-
-  /**
-   * AuthSessionExternal deleteMany
-   */
-  export type AuthSessionExternalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which AuthSessionExternals to delete
-     */
-    where?: AuthSessionExternalWhereInput
-    /**
-     * Limit how many AuthSessionExternals to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * AuthSessionExternal without action
-   */
-  export type AuthSessionExternalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthSessionExternal
-     */
-    select?: AuthSessionExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthSessionExternal
-     */
-    omit?: AuthSessionExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthSessionExternalInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model AuthRoleExternal
-   */
-
-  export type AggregateAuthRoleExternal = {
-    _count: AuthRoleExternalCountAggregateOutputType | null
-    _min: AuthRoleExternalMinAggregateOutputType | null
-    _max: AuthRoleExternalMaxAggregateOutputType | null
-  }
-
-  export type AuthRoleExternalMinAggregateOutputType = {
-    id: string | null
-    accountId: string | null
-    appId: string | null
-    role: string | null
-    hasExtra: boolean | null
-    createdAt: Date | null
-  }
-
-  export type AuthRoleExternalMaxAggregateOutputType = {
-    id: string | null
-    accountId: string | null
-    appId: string | null
-    role: string | null
-    hasExtra: boolean | null
-    createdAt: Date | null
-  }
-
-  export type AuthRoleExternalCountAggregateOutputType = {
-    id: number
-    accountId: number
-    appId: number
-    role: number
-    hasExtra: number
-    createdAt: number
-    _all: number
-  }
-
-
-  export type AuthRoleExternalMinAggregateInputType = {
-    id?: true
-    accountId?: true
-    appId?: true
-    role?: true
-    hasExtra?: true
-    createdAt?: true
-  }
-
-  export type AuthRoleExternalMaxAggregateInputType = {
-    id?: true
-    accountId?: true
-    appId?: true
-    role?: true
-    hasExtra?: true
-    createdAt?: true
-  }
-
-  export type AuthRoleExternalCountAggregateInputType = {
-    id?: true
-    accountId?: true
-    appId?: true
-    role?: true
-    hasExtra?: true
-    createdAt?: true
-    _all?: true
-  }
-
-  export type AuthRoleExternalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which AuthRoleExternal to aggregate.
-     */
-    where?: AuthRoleExternalWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AuthRoleExternals to fetch.
-     */
-    orderBy?: AuthRoleExternalOrderByWithRelationInput | AuthRoleExternalOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: AuthRoleExternalWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AuthRoleExternals from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AuthRoleExternals.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned AuthRoleExternals
-    **/
-    _count?: true | AuthRoleExternalCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: AuthRoleExternalMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: AuthRoleExternalMaxAggregateInputType
-  }
-
-  export type GetAuthRoleExternalAggregateType<T extends AuthRoleExternalAggregateArgs> = {
-        [P in keyof T & keyof AggregateAuthRoleExternal]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateAuthRoleExternal[P]>
-      : GetScalarType<T[P], AggregateAuthRoleExternal[P]>
-  }
-
-
-
-
-  export type AuthRoleExternalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthRoleExternalWhereInput
-    orderBy?: AuthRoleExternalOrderByWithAggregationInput | AuthRoleExternalOrderByWithAggregationInput[]
-    by: AuthRoleExternalScalarFieldEnum[] | AuthRoleExternalScalarFieldEnum
-    having?: AuthRoleExternalScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: AuthRoleExternalCountAggregateInputType | true
-    _min?: AuthRoleExternalMinAggregateInputType
-    _max?: AuthRoleExternalMaxAggregateInputType
-  }
-
-  export type AuthRoleExternalGroupByOutputType = {
-    id: string
-    accountId: string
-    appId: string
-    role: string
-    hasExtra: boolean
-    createdAt: Date
-    _count: AuthRoleExternalCountAggregateOutputType | null
-    _min: AuthRoleExternalMinAggregateOutputType | null
-    _max: AuthRoleExternalMaxAggregateOutputType | null
-  }
-
-  type GetAuthRoleExternalGroupByPayload<T extends AuthRoleExternalGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<AuthRoleExternalGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof AuthRoleExternalGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], AuthRoleExternalGroupByOutputType[P]>
-            : GetScalarType<T[P], AuthRoleExternalGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type AuthRoleExternalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    appId?: boolean
-    role?: boolean
-    hasExtra?: boolean
-    createdAt?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["authRoleExternal"]>
-
-  export type AuthRoleExternalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    appId?: boolean
-    role?: boolean
-    hasExtra?: boolean
-    createdAt?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["authRoleExternal"]>
-
-  export type AuthRoleExternalSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    appId?: boolean
-    role?: boolean
-    hasExtra?: boolean
-    createdAt?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["authRoleExternal"]>
-
-  export type AuthRoleExternalSelectScalar = {
-    id?: boolean
-    accountId?: boolean
-    appId?: boolean
-    role?: boolean
-    hasExtra?: boolean
-    createdAt?: boolean
-  }
-
-  export type AuthRoleExternalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "appId" | "role" | "hasExtra" | "createdAt", ExtArgs["result"]["authRoleExternal"]>
-  export type AuthRoleExternalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
-  }
-  export type AuthRoleExternalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
-  }
-  export type AuthRoleExternalIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
-  }
-
-  export type $AuthRoleExternalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "AuthRoleExternal"
-    objects: {
-      account: Prisma.$AccountPayload<ExtArgs>
-      application: Prisma.$ApplicationPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      accountId: string
-      appId: string
-      role: string
-      hasExtra: boolean
-      createdAt: Date
-    }, ExtArgs["result"]["authRoleExternal"]>
-    composites: {}
-  }
-
-  type AuthRoleExternalGetPayload<S extends boolean | null | undefined | AuthRoleExternalDefaultArgs> = $Result.GetResult<Prisma.$AuthRoleExternalPayload, S>
-
-  type AuthRoleExternalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<AuthRoleExternalFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: AuthRoleExternalCountAggregateInputType | true
-    }
-
-  export interface AuthRoleExternalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AuthRoleExternal'], meta: { name: 'AuthRoleExternal' } }
-    /**
-     * Find zero or one AuthRoleExternal that matches the filter.
-     * @param {AuthRoleExternalFindUniqueArgs} args - Arguments to find a AuthRoleExternal
-     * @example
-     * // Get one AuthRoleExternal
-     * const authRoleExternal = await prisma.authRoleExternal.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends AuthRoleExternalFindUniqueArgs>(args: SelectSubset<T, AuthRoleExternalFindUniqueArgs<ExtArgs>>): Prisma__AuthRoleExternalClient<$Result.GetResult<Prisma.$AuthRoleExternalPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one AuthRoleExternal that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {AuthRoleExternalFindUniqueOrThrowArgs} args - Arguments to find a AuthRoleExternal
-     * @example
-     * // Get one AuthRoleExternal
-     * const authRoleExternal = await prisma.authRoleExternal.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends AuthRoleExternalFindUniqueOrThrowArgs>(args: SelectSubset<T, AuthRoleExternalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AuthRoleExternalClient<$Result.GetResult<Prisma.$AuthRoleExternalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first AuthRoleExternal that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthRoleExternalFindFirstArgs} args - Arguments to find a AuthRoleExternal
-     * @example
-     * // Get one AuthRoleExternal
-     * const authRoleExternal = await prisma.authRoleExternal.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends AuthRoleExternalFindFirstArgs>(args?: SelectSubset<T, AuthRoleExternalFindFirstArgs<ExtArgs>>): Prisma__AuthRoleExternalClient<$Result.GetResult<Prisma.$AuthRoleExternalPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first AuthRoleExternal that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthRoleExternalFindFirstOrThrowArgs} args - Arguments to find a AuthRoleExternal
-     * @example
-     * // Get one AuthRoleExternal
-     * const authRoleExternal = await prisma.authRoleExternal.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends AuthRoleExternalFindFirstOrThrowArgs>(args?: SelectSubset<T, AuthRoleExternalFindFirstOrThrowArgs<ExtArgs>>): Prisma__AuthRoleExternalClient<$Result.GetResult<Prisma.$AuthRoleExternalPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more AuthRoleExternals that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthRoleExternalFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all AuthRoleExternals
-     * const authRoleExternals = await prisma.authRoleExternal.findMany()
-     * 
-     * // Get first 10 AuthRoleExternals
-     * const authRoleExternals = await prisma.authRoleExternal.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const authRoleExternalWithIdOnly = await prisma.authRoleExternal.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends AuthRoleExternalFindManyArgs>(args?: SelectSubset<T, AuthRoleExternalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthRoleExternalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a AuthRoleExternal.
-     * @param {AuthRoleExternalCreateArgs} args - Arguments to create a AuthRoleExternal.
-     * @example
-     * // Create one AuthRoleExternal
-     * const AuthRoleExternal = await prisma.authRoleExternal.create({
-     *   data: {
-     *     // ... data to create a AuthRoleExternal
-     *   }
-     * })
-     * 
-     */
-    create<T extends AuthRoleExternalCreateArgs>(args: SelectSubset<T, AuthRoleExternalCreateArgs<ExtArgs>>): Prisma__AuthRoleExternalClient<$Result.GetResult<Prisma.$AuthRoleExternalPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many AuthRoleExternals.
-     * @param {AuthRoleExternalCreateManyArgs} args - Arguments to create many AuthRoleExternals.
-     * @example
-     * // Create many AuthRoleExternals
-     * const authRoleExternal = await prisma.authRoleExternal.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends AuthRoleExternalCreateManyArgs>(args?: SelectSubset<T, AuthRoleExternalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many AuthRoleExternals and returns the data saved in the database.
-     * @param {AuthRoleExternalCreateManyAndReturnArgs} args - Arguments to create many AuthRoleExternals.
-     * @example
-     * // Create many AuthRoleExternals
-     * const authRoleExternal = await prisma.authRoleExternal.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many AuthRoleExternals and only return the `id`
-     * const authRoleExternalWithIdOnly = await prisma.authRoleExternal.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends AuthRoleExternalCreateManyAndReturnArgs>(args?: SelectSubset<T, AuthRoleExternalCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthRoleExternalPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a AuthRoleExternal.
-     * @param {AuthRoleExternalDeleteArgs} args - Arguments to delete one AuthRoleExternal.
-     * @example
-     * // Delete one AuthRoleExternal
-     * const AuthRoleExternal = await prisma.authRoleExternal.delete({
-     *   where: {
-     *     // ... filter to delete one AuthRoleExternal
-     *   }
-     * })
-     * 
-     */
-    delete<T extends AuthRoleExternalDeleteArgs>(args: SelectSubset<T, AuthRoleExternalDeleteArgs<ExtArgs>>): Prisma__AuthRoleExternalClient<$Result.GetResult<Prisma.$AuthRoleExternalPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one AuthRoleExternal.
-     * @param {AuthRoleExternalUpdateArgs} args - Arguments to update one AuthRoleExternal.
-     * @example
-     * // Update one AuthRoleExternal
-     * const authRoleExternal = await prisma.authRoleExternal.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends AuthRoleExternalUpdateArgs>(args: SelectSubset<T, AuthRoleExternalUpdateArgs<ExtArgs>>): Prisma__AuthRoleExternalClient<$Result.GetResult<Prisma.$AuthRoleExternalPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more AuthRoleExternals.
-     * @param {AuthRoleExternalDeleteManyArgs} args - Arguments to filter AuthRoleExternals to delete.
-     * @example
-     * // Delete a few AuthRoleExternals
-     * const { count } = await prisma.authRoleExternal.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends AuthRoleExternalDeleteManyArgs>(args?: SelectSubset<T, AuthRoleExternalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more AuthRoleExternals.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthRoleExternalUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many AuthRoleExternals
-     * const authRoleExternal = await prisma.authRoleExternal.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends AuthRoleExternalUpdateManyArgs>(args: SelectSubset<T, AuthRoleExternalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more AuthRoleExternals and returns the data updated in the database.
-     * @param {AuthRoleExternalUpdateManyAndReturnArgs} args - Arguments to update many AuthRoleExternals.
-     * @example
-     * // Update many AuthRoleExternals
-     * const authRoleExternal = await prisma.authRoleExternal.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more AuthRoleExternals and only return the `id`
-     * const authRoleExternalWithIdOnly = await prisma.authRoleExternal.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends AuthRoleExternalUpdateManyAndReturnArgs>(args: SelectSubset<T, AuthRoleExternalUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthRoleExternalPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one AuthRoleExternal.
-     * @param {AuthRoleExternalUpsertArgs} args - Arguments to update or create a AuthRoleExternal.
-     * @example
-     * // Update or create a AuthRoleExternal
-     * const authRoleExternal = await prisma.authRoleExternal.upsert({
-     *   create: {
-     *     // ... data to create a AuthRoleExternal
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the AuthRoleExternal we want to update
-     *   }
-     * })
-     */
-    upsert<T extends AuthRoleExternalUpsertArgs>(args: SelectSubset<T, AuthRoleExternalUpsertArgs<ExtArgs>>): Prisma__AuthRoleExternalClient<$Result.GetResult<Prisma.$AuthRoleExternalPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of AuthRoleExternals.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthRoleExternalCountArgs} args - Arguments to filter AuthRoleExternals to count.
-     * @example
-     * // Count the number of AuthRoleExternals
-     * const count = await prisma.authRoleExternal.count({
-     *   where: {
-     *     // ... the filter for the AuthRoleExternals we want to count
-     *   }
-     * })
-    **/
-    count<T extends AuthRoleExternalCountArgs>(
-      args?: Subset<T, AuthRoleExternalCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], AuthRoleExternalCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a AuthRoleExternal.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthRoleExternalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends AuthRoleExternalAggregateArgs>(args: Subset<T, AuthRoleExternalAggregateArgs>): Prisma.PrismaPromise<GetAuthRoleExternalAggregateType<T>>
-
-    /**
-     * Group by AuthRoleExternal.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthRoleExternalGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends AuthRoleExternalGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: AuthRoleExternalGroupByArgs['orderBy'] }
-        : { orderBy?: AuthRoleExternalGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, AuthRoleExternalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAuthRoleExternalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the AuthRoleExternal model
-   */
-  readonly fields: AuthRoleExternalFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for AuthRoleExternal.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__AuthRoleExternalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    account<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    application<T extends ApplicationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationDefaultArgs<ExtArgs>>): Prisma__ApplicationClient<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the AuthRoleExternal model
-   */
-  interface AuthRoleExternalFieldRefs {
-    readonly id: FieldRef<"AuthRoleExternal", 'String'>
-    readonly accountId: FieldRef<"AuthRoleExternal", 'String'>
-    readonly appId: FieldRef<"AuthRoleExternal", 'String'>
-    readonly role: FieldRef<"AuthRoleExternal", 'String'>
-    readonly hasExtra: FieldRef<"AuthRoleExternal", 'Boolean'>
-    readonly createdAt: FieldRef<"AuthRoleExternal", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * AuthRoleExternal findUnique
-   */
-  export type AuthRoleExternalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthRoleExternal
-     */
-    select?: AuthRoleExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthRoleExternal
-     */
-    omit?: AuthRoleExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthRoleExternalInclude<ExtArgs> | null
-    /**
-     * Filter, which AuthRoleExternal to fetch.
-     */
-    where: AuthRoleExternalWhereUniqueInput
-  }
-
-  /**
-   * AuthRoleExternal findUniqueOrThrow
-   */
-  export type AuthRoleExternalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthRoleExternal
-     */
-    select?: AuthRoleExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthRoleExternal
-     */
-    omit?: AuthRoleExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthRoleExternalInclude<ExtArgs> | null
-    /**
-     * Filter, which AuthRoleExternal to fetch.
-     */
-    where: AuthRoleExternalWhereUniqueInput
-  }
-
-  /**
-   * AuthRoleExternal findFirst
-   */
-  export type AuthRoleExternalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthRoleExternal
-     */
-    select?: AuthRoleExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthRoleExternal
-     */
-    omit?: AuthRoleExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthRoleExternalInclude<ExtArgs> | null
-    /**
-     * Filter, which AuthRoleExternal to fetch.
-     */
-    where?: AuthRoleExternalWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AuthRoleExternals to fetch.
-     */
-    orderBy?: AuthRoleExternalOrderByWithRelationInput | AuthRoleExternalOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for AuthRoleExternals.
-     */
-    cursor?: AuthRoleExternalWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AuthRoleExternals from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AuthRoleExternals.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of AuthRoleExternals.
-     */
-    distinct?: AuthRoleExternalScalarFieldEnum | AuthRoleExternalScalarFieldEnum[]
-  }
-
-  /**
-   * AuthRoleExternal findFirstOrThrow
-   */
-  export type AuthRoleExternalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthRoleExternal
-     */
-    select?: AuthRoleExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthRoleExternal
-     */
-    omit?: AuthRoleExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthRoleExternalInclude<ExtArgs> | null
-    /**
-     * Filter, which AuthRoleExternal to fetch.
-     */
-    where?: AuthRoleExternalWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AuthRoleExternals to fetch.
-     */
-    orderBy?: AuthRoleExternalOrderByWithRelationInput | AuthRoleExternalOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for AuthRoleExternals.
-     */
-    cursor?: AuthRoleExternalWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AuthRoleExternals from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AuthRoleExternals.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of AuthRoleExternals.
-     */
-    distinct?: AuthRoleExternalScalarFieldEnum | AuthRoleExternalScalarFieldEnum[]
-  }
-
-  /**
-   * AuthRoleExternal findMany
-   */
-  export type AuthRoleExternalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthRoleExternal
-     */
-    select?: AuthRoleExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthRoleExternal
-     */
-    omit?: AuthRoleExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthRoleExternalInclude<ExtArgs> | null
-    /**
-     * Filter, which AuthRoleExternals to fetch.
-     */
-    where?: AuthRoleExternalWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AuthRoleExternals to fetch.
-     */
-    orderBy?: AuthRoleExternalOrderByWithRelationInput | AuthRoleExternalOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing AuthRoleExternals.
-     */
-    cursor?: AuthRoleExternalWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AuthRoleExternals from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AuthRoleExternals.
-     */
-    skip?: number
-    distinct?: AuthRoleExternalScalarFieldEnum | AuthRoleExternalScalarFieldEnum[]
-  }
-
-  /**
-   * AuthRoleExternal create
-   */
-  export type AuthRoleExternalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthRoleExternal
-     */
-    select?: AuthRoleExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthRoleExternal
-     */
-    omit?: AuthRoleExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthRoleExternalInclude<ExtArgs> | null
-    /**
-     * The data needed to create a AuthRoleExternal.
-     */
-    data: XOR<AuthRoleExternalCreateInput, AuthRoleExternalUncheckedCreateInput>
-  }
-
-  /**
-   * AuthRoleExternal createMany
-   */
-  export type AuthRoleExternalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many AuthRoleExternals.
-     */
-    data: AuthRoleExternalCreateManyInput | AuthRoleExternalCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * AuthRoleExternal createManyAndReturn
-   */
-  export type AuthRoleExternalCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthRoleExternal
-     */
-    select?: AuthRoleExternalSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthRoleExternal
-     */
-    omit?: AuthRoleExternalOmit<ExtArgs> | null
-    /**
-     * The data used to create many AuthRoleExternals.
-     */
-    data: AuthRoleExternalCreateManyInput | AuthRoleExternalCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthRoleExternalIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * AuthRoleExternal update
-   */
-  export type AuthRoleExternalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthRoleExternal
-     */
-    select?: AuthRoleExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthRoleExternal
-     */
-    omit?: AuthRoleExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthRoleExternalInclude<ExtArgs> | null
-    /**
-     * The data needed to update a AuthRoleExternal.
-     */
-    data: XOR<AuthRoleExternalUpdateInput, AuthRoleExternalUncheckedUpdateInput>
-    /**
-     * Choose, which AuthRoleExternal to update.
-     */
-    where: AuthRoleExternalWhereUniqueInput
-  }
-
-  /**
-   * AuthRoleExternal updateMany
-   */
-  export type AuthRoleExternalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update AuthRoleExternals.
-     */
-    data: XOR<AuthRoleExternalUpdateManyMutationInput, AuthRoleExternalUncheckedUpdateManyInput>
-    /**
-     * Filter which AuthRoleExternals to update
-     */
-    where?: AuthRoleExternalWhereInput
-    /**
-     * Limit how many AuthRoleExternals to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * AuthRoleExternal updateManyAndReturn
-   */
-  export type AuthRoleExternalUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthRoleExternal
-     */
-    select?: AuthRoleExternalSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthRoleExternal
-     */
-    omit?: AuthRoleExternalOmit<ExtArgs> | null
-    /**
-     * The data used to update AuthRoleExternals.
-     */
-    data: XOR<AuthRoleExternalUpdateManyMutationInput, AuthRoleExternalUncheckedUpdateManyInput>
-    /**
-     * Filter which AuthRoleExternals to update
-     */
-    where?: AuthRoleExternalWhereInput
-    /**
-     * Limit how many AuthRoleExternals to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthRoleExternalIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * AuthRoleExternal upsert
-   */
-  export type AuthRoleExternalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthRoleExternal
-     */
-    select?: AuthRoleExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthRoleExternal
-     */
-    omit?: AuthRoleExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthRoleExternalInclude<ExtArgs> | null
-    /**
-     * The filter to search for the AuthRoleExternal to update in case it exists.
-     */
-    where: AuthRoleExternalWhereUniqueInput
-    /**
-     * In case the AuthRoleExternal found by the `where` argument doesn't exist, create a new AuthRoleExternal with this data.
-     */
-    create: XOR<AuthRoleExternalCreateInput, AuthRoleExternalUncheckedCreateInput>
-    /**
-     * In case the AuthRoleExternal was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<AuthRoleExternalUpdateInput, AuthRoleExternalUncheckedUpdateInput>
-  }
-
-  /**
-   * AuthRoleExternal delete
-   */
-  export type AuthRoleExternalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthRoleExternal
-     */
-    select?: AuthRoleExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthRoleExternal
-     */
-    omit?: AuthRoleExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthRoleExternalInclude<ExtArgs> | null
-    /**
-     * Filter which AuthRoleExternal to delete.
-     */
-    where: AuthRoleExternalWhereUniqueInput
-  }
-
-  /**
-   * AuthRoleExternal deleteMany
-   */
-  export type AuthRoleExternalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which AuthRoleExternals to delete
-     */
-    where?: AuthRoleExternalWhereInput
-    /**
-     * Limit how many AuthRoleExternals to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * AuthRoleExternal without action
-   */
-  export type AuthRoleExternalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthRoleExternal
-     */
-    select?: AuthRoleExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthRoleExternal
-     */
-    omit?: AuthRoleExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthRoleExternalInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model AuthPermissionsExternal
-   */
-
-  export type AggregateAuthPermissionsExternal = {
-    _count: AuthPermissionsExternalCountAggregateOutputType | null
-    _min: AuthPermissionsExternalMinAggregateOutputType | null
-    _max: AuthPermissionsExternalMaxAggregateOutputType | null
-  }
-
-  export type AuthPermissionsExternalMinAggregateOutputType = {
-    id: string | null
-    accountId: string | null
-    appId: string | null
-    createdAt: Date | null
-  }
-
-  export type AuthPermissionsExternalMaxAggregateOutputType = {
-    id: string | null
-    accountId: string | null
-    appId: string | null
-    createdAt: Date | null
-  }
-
-  export type AuthPermissionsExternalCountAggregateOutputType = {
-    id: number
-    accountId: number
-    appId: number
-    permissions: number
-    createdAt: number
-    _all: number
-  }
-
-
-  export type AuthPermissionsExternalMinAggregateInputType = {
-    id?: true
-    accountId?: true
-    appId?: true
-    createdAt?: true
-  }
-
-  export type AuthPermissionsExternalMaxAggregateInputType = {
-    id?: true
-    accountId?: true
-    appId?: true
-    createdAt?: true
-  }
-
-  export type AuthPermissionsExternalCountAggregateInputType = {
-    id?: true
-    accountId?: true
-    appId?: true
-    permissions?: true
-    createdAt?: true
-    _all?: true
-  }
-
-  export type AuthPermissionsExternalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which AuthPermissionsExternal to aggregate.
-     */
-    where?: AuthPermissionsExternalWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AuthPermissionsExternals to fetch.
-     */
-    orderBy?: AuthPermissionsExternalOrderByWithRelationInput | AuthPermissionsExternalOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: AuthPermissionsExternalWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AuthPermissionsExternals from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AuthPermissionsExternals.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned AuthPermissionsExternals
-    **/
-    _count?: true | AuthPermissionsExternalCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: AuthPermissionsExternalMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: AuthPermissionsExternalMaxAggregateInputType
-  }
-
-  export type GetAuthPermissionsExternalAggregateType<T extends AuthPermissionsExternalAggregateArgs> = {
-        [P in keyof T & keyof AggregateAuthPermissionsExternal]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateAuthPermissionsExternal[P]>
-      : GetScalarType<T[P], AggregateAuthPermissionsExternal[P]>
-  }
-
-
-
-
-  export type AuthPermissionsExternalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthPermissionsExternalWhereInput
-    orderBy?: AuthPermissionsExternalOrderByWithAggregationInput | AuthPermissionsExternalOrderByWithAggregationInput[]
-    by: AuthPermissionsExternalScalarFieldEnum[] | AuthPermissionsExternalScalarFieldEnum
-    having?: AuthPermissionsExternalScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: AuthPermissionsExternalCountAggregateInputType | true
-    _min?: AuthPermissionsExternalMinAggregateInputType
-    _max?: AuthPermissionsExternalMaxAggregateInputType
-  }
-
-  export type AuthPermissionsExternalGroupByOutputType = {
-    id: string
-    accountId: string
-    appId: string
-    permissions: JsonValue
-    createdAt: Date
-    _count: AuthPermissionsExternalCountAggregateOutputType | null
-    _min: AuthPermissionsExternalMinAggregateOutputType | null
-    _max: AuthPermissionsExternalMaxAggregateOutputType | null
-  }
-
-  type GetAuthPermissionsExternalGroupByPayload<T extends AuthPermissionsExternalGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<AuthPermissionsExternalGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof AuthPermissionsExternalGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], AuthPermissionsExternalGroupByOutputType[P]>
-            : GetScalarType<T[P], AuthPermissionsExternalGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type AuthPermissionsExternalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    appId?: boolean
-    permissions?: boolean
-    createdAt?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["authPermissionsExternal"]>
-
-  export type AuthPermissionsExternalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    appId?: boolean
-    permissions?: boolean
-    createdAt?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["authPermissionsExternal"]>
-
-  export type AuthPermissionsExternalSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    appId?: boolean
-    permissions?: boolean
-    createdAt?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["authPermissionsExternal"]>
-
-  export type AuthPermissionsExternalSelectScalar = {
-    id?: boolean
-    accountId?: boolean
-    appId?: boolean
-    permissions?: boolean
-    createdAt?: boolean
-  }
-
-  export type AuthPermissionsExternalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "appId" | "permissions" | "createdAt", ExtArgs["result"]["authPermissionsExternal"]>
-  export type AuthPermissionsExternalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
-  }
-  export type AuthPermissionsExternalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
-  }
-  export type AuthPermissionsExternalIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
-  }
-
-  export type $AuthPermissionsExternalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "AuthPermissionsExternal"
-    objects: {
-      account: Prisma.$AccountPayload<ExtArgs>
-      application: Prisma.$ApplicationPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      accountId: string
-      appId: string
-      permissions: Prisma.JsonValue
-      createdAt: Date
-    }, ExtArgs["result"]["authPermissionsExternal"]>
-    composites: {}
-  }
-
-  type AuthPermissionsExternalGetPayload<S extends boolean | null | undefined | AuthPermissionsExternalDefaultArgs> = $Result.GetResult<Prisma.$AuthPermissionsExternalPayload, S>
-
-  type AuthPermissionsExternalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<AuthPermissionsExternalFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: AuthPermissionsExternalCountAggregateInputType | true
-    }
-
-  export interface AuthPermissionsExternalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AuthPermissionsExternal'], meta: { name: 'AuthPermissionsExternal' } }
-    /**
-     * Find zero or one AuthPermissionsExternal that matches the filter.
-     * @param {AuthPermissionsExternalFindUniqueArgs} args - Arguments to find a AuthPermissionsExternal
-     * @example
-     * // Get one AuthPermissionsExternal
-     * const authPermissionsExternal = await prisma.authPermissionsExternal.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends AuthPermissionsExternalFindUniqueArgs>(args: SelectSubset<T, AuthPermissionsExternalFindUniqueArgs<ExtArgs>>): Prisma__AuthPermissionsExternalClient<$Result.GetResult<Prisma.$AuthPermissionsExternalPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one AuthPermissionsExternal that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {AuthPermissionsExternalFindUniqueOrThrowArgs} args - Arguments to find a AuthPermissionsExternal
-     * @example
-     * // Get one AuthPermissionsExternal
-     * const authPermissionsExternal = await prisma.authPermissionsExternal.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends AuthPermissionsExternalFindUniqueOrThrowArgs>(args: SelectSubset<T, AuthPermissionsExternalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AuthPermissionsExternalClient<$Result.GetResult<Prisma.$AuthPermissionsExternalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first AuthPermissionsExternal that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthPermissionsExternalFindFirstArgs} args - Arguments to find a AuthPermissionsExternal
-     * @example
-     * // Get one AuthPermissionsExternal
-     * const authPermissionsExternal = await prisma.authPermissionsExternal.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends AuthPermissionsExternalFindFirstArgs>(args?: SelectSubset<T, AuthPermissionsExternalFindFirstArgs<ExtArgs>>): Prisma__AuthPermissionsExternalClient<$Result.GetResult<Prisma.$AuthPermissionsExternalPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first AuthPermissionsExternal that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthPermissionsExternalFindFirstOrThrowArgs} args - Arguments to find a AuthPermissionsExternal
-     * @example
-     * // Get one AuthPermissionsExternal
-     * const authPermissionsExternal = await prisma.authPermissionsExternal.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends AuthPermissionsExternalFindFirstOrThrowArgs>(args?: SelectSubset<T, AuthPermissionsExternalFindFirstOrThrowArgs<ExtArgs>>): Prisma__AuthPermissionsExternalClient<$Result.GetResult<Prisma.$AuthPermissionsExternalPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more AuthPermissionsExternals that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthPermissionsExternalFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all AuthPermissionsExternals
-     * const authPermissionsExternals = await prisma.authPermissionsExternal.findMany()
-     * 
-     * // Get first 10 AuthPermissionsExternals
-     * const authPermissionsExternals = await prisma.authPermissionsExternal.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const authPermissionsExternalWithIdOnly = await prisma.authPermissionsExternal.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends AuthPermissionsExternalFindManyArgs>(args?: SelectSubset<T, AuthPermissionsExternalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthPermissionsExternalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a AuthPermissionsExternal.
-     * @param {AuthPermissionsExternalCreateArgs} args - Arguments to create a AuthPermissionsExternal.
-     * @example
-     * // Create one AuthPermissionsExternal
-     * const AuthPermissionsExternal = await prisma.authPermissionsExternal.create({
-     *   data: {
-     *     // ... data to create a AuthPermissionsExternal
-     *   }
-     * })
-     * 
-     */
-    create<T extends AuthPermissionsExternalCreateArgs>(args: SelectSubset<T, AuthPermissionsExternalCreateArgs<ExtArgs>>): Prisma__AuthPermissionsExternalClient<$Result.GetResult<Prisma.$AuthPermissionsExternalPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many AuthPermissionsExternals.
-     * @param {AuthPermissionsExternalCreateManyArgs} args - Arguments to create many AuthPermissionsExternals.
-     * @example
-     * // Create many AuthPermissionsExternals
-     * const authPermissionsExternal = await prisma.authPermissionsExternal.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends AuthPermissionsExternalCreateManyArgs>(args?: SelectSubset<T, AuthPermissionsExternalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many AuthPermissionsExternals and returns the data saved in the database.
-     * @param {AuthPermissionsExternalCreateManyAndReturnArgs} args - Arguments to create many AuthPermissionsExternals.
-     * @example
-     * // Create many AuthPermissionsExternals
-     * const authPermissionsExternal = await prisma.authPermissionsExternal.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many AuthPermissionsExternals and only return the `id`
-     * const authPermissionsExternalWithIdOnly = await prisma.authPermissionsExternal.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends AuthPermissionsExternalCreateManyAndReturnArgs>(args?: SelectSubset<T, AuthPermissionsExternalCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthPermissionsExternalPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a AuthPermissionsExternal.
-     * @param {AuthPermissionsExternalDeleteArgs} args - Arguments to delete one AuthPermissionsExternal.
-     * @example
-     * // Delete one AuthPermissionsExternal
-     * const AuthPermissionsExternal = await prisma.authPermissionsExternal.delete({
-     *   where: {
-     *     // ... filter to delete one AuthPermissionsExternal
-     *   }
-     * })
-     * 
-     */
-    delete<T extends AuthPermissionsExternalDeleteArgs>(args: SelectSubset<T, AuthPermissionsExternalDeleteArgs<ExtArgs>>): Prisma__AuthPermissionsExternalClient<$Result.GetResult<Prisma.$AuthPermissionsExternalPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one AuthPermissionsExternal.
-     * @param {AuthPermissionsExternalUpdateArgs} args - Arguments to update one AuthPermissionsExternal.
-     * @example
-     * // Update one AuthPermissionsExternal
-     * const authPermissionsExternal = await prisma.authPermissionsExternal.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends AuthPermissionsExternalUpdateArgs>(args: SelectSubset<T, AuthPermissionsExternalUpdateArgs<ExtArgs>>): Prisma__AuthPermissionsExternalClient<$Result.GetResult<Prisma.$AuthPermissionsExternalPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more AuthPermissionsExternals.
-     * @param {AuthPermissionsExternalDeleteManyArgs} args - Arguments to filter AuthPermissionsExternals to delete.
-     * @example
-     * // Delete a few AuthPermissionsExternals
-     * const { count } = await prisma.authPermissionsExternal.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends AuthPermissionsExternalDeleteManyArgs>(args?: SelectSubset<T, AuthPermissionsExternalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more AuthPermissionsExternals.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthPermissionsExternalUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many AuthPermissionsExternals
-     * const authPermissionsExternal = await prisma.authPermissionsExternal.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends AuthPermissionsExternalUpdateManyArgs>(args: SelectSubset<T, AuthPermissionsExternalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more AuthPermissionsExternals and returns the data updated in the database.
-     * @param {AuthPermissionsExternalUpdateManyAndReturnArgs} args - Arguments to update many AuthPermissionsExternals.
-     * @example
-     * // Update many AuthPermissionsExternals
-     * const authPermissionsExternal = await prisma.authPermissionsExternal.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more AuthPermissionsExternals and only return the `id`
-     * const authPermissionsExternalWithIdOnly = await prisma.authPermissionsExternal.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends AuthPermissionsExternalUpdateManyAndReturnArgs>(args: SelectSubset<T, AuthPermissionsExternalUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthPermissionsExternalPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one AuthPermissionsExternal.
-     * @param {AuthPermissionsExternalUpsertArgs} args - Arguments to update or create a AuthPermissionsExternal.
-     * @example
-     * // Update or create a AuthPermissionsExternal
-     * const authPermissionsExternal = await prisma.authPermissionsExternal.upsert({
-     *   create: {
-     *     // ... data to create a AuthPermissionsExternal
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the AuthPermissionsExternal we want to update
-     *   }
-     * })
-     */
-    upsert<T extends AuthPermissionsExternalUpsertArgs>(args: SelectSubset<T, AuthPermissionsExternalUpsertArgs<ExtArgs>>): Prisma__AuthPermissionsExternalClient<$Result.GetResult<Prisma.$AuthPermissionsExternalPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of AuthPermissionsExternals.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthPermissionsExternalCountArgs} args - Arguments to filter AuthPermissionsExternals to count.
-     * @example
-     * // Count the number of AuthPermissionsExternals
-     * const count = await prisma.authPermissionsExternal.count({
-     *   where: {
-     *     // ... the filter for the AuthPermissionsExternals we want to count
-     *   }
-     * })
-    **/
-    count<T extends AuthPermissionsExternalCountArgs>(
-      args?: Subset<T, AuthPermissionsExternalCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], AuthPermissionsExternalCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a AuthPermissionsExternal.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthPermissionsExternalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends AuthPermissionsExternalAggregateArgs>(args: Subset<T, AuthPermissionsExternalAggregateArgs>): Prisma.PrismaPromise<GetAuthPermissionsExternalAggregateType<T>>
-
-    /**
-     * Group by AuthPermissionsExternal.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthPermissionsExternalGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends AuthPermissionsExternalGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: AuthPermissionsExternalGroupByArgs['orderBy'] }
-        : { orderBy?: AuthPermissionsExternalGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, AuthPermissionsExternalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAuthPermissionsExternalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the AuthPermissionsExternal model
-   */
-  readonly fields: AuthPermissionsExternalFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for AuthPermissionsExternal.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__AuthPermissionsExternalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    account<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    application<T extends ApplicationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationDefaultArgs<ExtArgs>>): Prisma__ApplicationClient<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the AuthPermissionsExternal model
-   */
-  interface AuthPermissionsExternalFieldRefs {
-    readonly id: FieldRef<"AuthPermissionsExternal", 'String'>
-    readonly accountId: FieldRef<"AuthPermissionsExternal", 'String'>
-    readonly appId: FieldRef<"AuthPermissionsExternal", 'String'>
-    readonly permissions: FieldRef<"AuthPermissionsExternal", 'Json'>
-    readonly createdAt: FieldRef<"AuthPermissionsExternal", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * AuthPermissionsExternal findUnique
-   */
-  export type AuthPermissionsExternalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthPermissionsExternal
-     */
-    select?: AuthPermissionsExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthPermissionsExternal
-     */
-    omit?: AuthPermissionsExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthPermissionsExternalInclude<ExtArgs> | null
-    /**
-     * Filter, which AuthPermissionsExternal to fetch.
-     */
-    where: AuthPermissionsExternalWhereUniqueInput
-  }
-
-  /**
-   * AuthPermissionsExternal findUniqueOrThrow
-   */
-  export type AuthPermissionsExternalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthPermissionsExternal
-     */
-    select?: AuthPermissionsExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthPermissionsExternal
-     */
-    omit?: AuthPermissionsExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthPermissionsExternalInclude<ExtArgs> | null
-    /**
-     * Filter, which AuthPermissionsExternal to fetch.
-     */
-    where: AuthPermissionsExternalWhereUniqueInput
-  }
-
-  /**
-   * AuthPermissionsExternal findFirst
-   */
-  export type AuthPermissionsExternalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthPermissionsExternal
-     */
-    select?: AuthPermissionsExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthPermissionsExternal
-     */
-    omit?: AuthPermissionsExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthPermissionsExternalInclude<ExtArgs> | null
-    /**
-     * Filter, which AuthPermissionsExternal to fetch.
-     */
-    where?: AuthPermissionsExternalWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AuthPermissionsExternals to fetch.
-     */
-    orderBy?: AuthPermissionsExternalOrderByWithRelationInput | AuthPermissionsExternalOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for AuthPermissionsExternals.
-     */
-    cursor?: AuthPermissionsExternalWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AuthPermissionsExternals from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AuthPermissionsExternals.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of AuthPermissionsExternals.
-     */
-    distinct?: AuthPermissionsExternalScalarFieldEnum | AuthPermissionsExternalScalarFieldEnum[]
-  }
-
-  /**
-   * AuthPermissionsExternal findFirstOrThrow
-   */
-  export type AuthPermissionsExternalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthPermissionsExternal
-     */
-    select?: AuthPermissionsExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthPermissionsExternal
-     */
-    omit?: AuthPermissionsExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthPermissionsExternalInclude<ExtArgs> | null
-    /**
-     * Filter, which AuthPermissionsExternal to fetch.
-     */
-    where?: AuthPermissionsExternalWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AuthPermissionsExternals to fetch.
-     */
-    orderBy?: AuthPermissionsExternalOrderByWithRelationInput | AuthPermissionsExternalOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for AuthPermissionsExternals.
-     */
-    cursor?: AuthPermissionsExternalWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AuthPermissionsExternals from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AuthPermissionsExternals.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of AuthPermissionsExternals.
-     */
-    distinct?: AuthPermissionsExternalScalarFieldEnum | AuthPermissionsExternalScalarFieldEnum[]
-  }
-
-  /**
-   * AuthPermissionsExternal findMany
-   */
-  export type AuthPermissionsExternalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthPermissionsExternal
-     */
-    select?: AuthPermissionsExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthPermissionsExternal
-     */
-    omit?: AuthPermissionsExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthPermissionsExternalInclude<ExtArgs> | null
-    /**
-     * Filter, which AuthPermissionsExternals to fetch.
-     */
-    where?: AuthPermissionsExternalWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AuthPermissionsExternals to fetch.
-     */
-    orderBy?: AuthPermissionsExternalOrderByWithRelationInput | AuthPermissionsExternalOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing AuthPermissionsExternals.
-     */
-    cursor?: AuthPermissionsExternalWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AuthPermissionsExternals from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AuthPermissionsExternals.
-     */
-    skip?: number
-    distinct?: AuthPermissionsExternalScalarFieldEnum | AuthPermissionsExternalScalarFieldEnum[]
-  }
-
-  /**
-   * AuthPermissionsExternal create
-   */
-  export type AuthPermissionsExternalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthPermissionsExternal
-     */
-    select?: AuthPermissionsExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthPermissionsExternal
-     */
-    omit?: AuthPermissionsExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthPermissionsExternalInclude<ExtArgs> | null
-    /**
-     * The data needed to create a AuthPermissionsExternal.
-     */
-    data: XOR<AuthPermissionsExternalCreateInput, AuthPermissionsExternalUncheckedCreateInput>
-  }
-
-  /**
-   * AuthPermissionsExternal createMany
-   */
-  export type AuthPermissionsExternalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many AuthPermissionsExternals.
-     */
-    data: AuthPermissionsExternalCreateManyInput | AuthPermissionsExternalCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * AuthPermissionsExternal createManyAndReturn
-   */
-  export type AuthPermissionsExternalCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthPermissionsExternal
-     */
-    select?: AuthPermissionsExternalSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthPermissionsExternal
-     */
-    omit?: AuthPermissionsExternalOmit<ExtArgs> | null
-    /**
-     * The data used to create many AuthPermissionsExternals.
-     */
-    data: AuthPermissionsExternalCreateManyInput | AuthPermissionsExternalCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthPermissionsExternalIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * AuthPermissionsExternal update
-   */
-  export type AuthPermissionsExternalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthPermissionsExternal
-     */
-    select?: AuthPermissionsExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthPermissionsExternal
-     */
-    omit?: AuthPermissionsExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthPermissionsExternalInclude<ExtArgs> | null
-    /**
-     * The data needed to update a AuthPermissionsExternal.
-     */
-    data: XOR<AuthPermissionsExternalUpdateInput, AuthPermissionsExternalUncheckedUpdateInput>
-    /**
-     * Choose, which AuthPermissionsExternal to update.
-     */
-    where: AuthPermissionsExternalWhereUniqueInput
-  }
-
-  /**
-   * AuthPermissionsExternal updateMany
-   */
-  export type AuthPermissionsExternalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update AuthPermissionsExternals.
-     */
-    data: XOR<AuthPermissionsExternalUpdateManyMutationInput, AuthPermissionsExternalUncheckedUpdateManyInput>
-    /**
-     * Filter which AuthPermissionsExternals to update
-     */
-    where?: AuthPermissionsExternalWhereInput
-    /**
-     * Limit how many AuthPermissionsExternals to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * AuthPermissionsExternal updateManyAndReturn
-   */
-  export type AuthPermissionsExternalUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthPermissionsExternal
-     */
-    select?: AuthPermissionsExternalSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthPermissionsExternal
-     */
-    omit?: AuthPermissionsExternalOmit<ExtArgs> | null
-    /**
-     * The data used to update AuthPermissionsExternals.
-     */
-    data: XOR<AuthPermissionsExternalUpdateManyMutationInput, AuthPermissionsExternalUncheckedUpdateManyInput>
-    /**
-     * Filter which AuthPermissionsExternals to update
-     */
-    where?: AuthPermissionsExternalWhereInput
-    /**
-     * Limit how many AuthPermissionsExternals to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthPermissionsExternalIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * AuthPermissionsExternal upsert
-   */
-  export type AuthPermissionsExternalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthPermissionsExternal
-     */
-    select?: AuthPermissionsExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthPermissionsExternal
-     */
-    omit?: AuthPermissionsExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthPermissionsExternalInclude<ExtArgs> | null
-    /**
-     * The filter to search for the AuthPermissionsExternal to update in case it exists.
-     */
-    where: AuthPermissionsExternalWhereUniqueInput
-    /**
-     * In case the AuthPermissionsExternal found by the `where` argument doesn't exist, create a new AuthPermissionsExternal with this data.
-     */
-    create: XOR<AuthPermissionsExternalCreateInput, AuthPermissionsExternalUncheckedCreateInput>
-    /**
-     * In case the AuthPermissionsExternal was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<AuthPermissionsExternalUpdateInput, AuthPermissionsExternalUncheckedUpdateInput>
-  }
-
-  /**
-   * AuthPermissionsExternal delete
-   */
-  export type AuthPermissionsExternalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthPermissionsExternal
-     */
-    select?: AuthPermissionsExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthPermissionsExternal
-     */
-    omit?: AuthPermissionsExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthPermissionsExternalInclude<ExtArgs> | null
-    /**
-     * Filter which AuthPermissionsExternal to delete.
-     */
-    where: AuthPermissionsExternalWhereUniqueInput
-  }
-
-  /**
-   * AuthPermissionsExternal deleteMany
-   */
-  export type AuthPermissionsExternalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which AuthPermissionsExternals to delete
-     */
-    where?: AuthPermissionsExternalWhereInput
-    /**
-     * Limit how many AuthPermissionsExternals to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * AuthPermissionsExternal without action
-   */
-  export type AuthPermissionsExternalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthPermissionsExternal
-     */
-    select?: AuthPermissionsExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthPermissionsExternal
-     */
-    omit?: AuthPermissionsExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthPermissionsExternalInclude<ExtArgs> | null
-  }
-
-
-  /**
    * Enums
    */
 
@@ -40301,43 +36560,6 @@ export namespace Prisma {
   export type AppSessionScalarFieldEnum = (typeof AppSessionScalarFieldEnum)[keyof typeof AppSessionScalarFieldEnum]
 
 
-  export const AuthSessionExternalScalarFieldEnum: {
-    id: 'id',
-    accountId: 'accountId',
-    appId: 'appId',
-    sessionId: 'sessionId',
-    sessionKey: 'sessionKey',
-    jwt: 'jwt',
-    expiresOn: 'expiresOn',
-    createdAt: 'createdAt'
-  };
-
-  export type AuthSessionExternalScalarFieldEnum = (typeof AuthSessionExternalScalarFieldEnum)[keyof typeof AuthSessionExternalScalarFieldEnum]
-
-
-  export const AuthRoleExternalScalarFieldEnum: {
-    id: 'id',
-    accountId: 'accountId',
-    appId: 'appId',
-    role: 'role',
-    hasExtra: 'hasExtra',
-    createdAt: 'createdAt'
-  };
-
-  export type AuthRoleExternalScalarFieldEnum = (typeof AuthRoleExternalScalarFieldEnum)[keyof typeof AuthRoleExternalScalarFieldEnum]
-
-
-  export const AuthPermissionsExternalScalarFieldEnum: {
-    id: 'id',
-    accountId: 'accountId',
-    appId: 'appId',
-    permissions: 'permissions',
-    createdAt: 'createdAt'
-  };
-
-  export type AuthPermissionsExternalScalarFieldEnum = (typeof AuthPermissionsExternalScalarFieldEnum)[keyof typeof AuthPermissionsExternalScalarFieldEnum]
-
-
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -40480,9 +36702,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionListRelationFilter
     appAuthentications?: AppAuthenticationListRelationFilter
     appSessions?: AppSessionListRelationFilter
-    externalSessions?: AuthSessionExternalListRelationFilter
-    externalRoles?: AuthRoleExternalListRelationFilter
-    externalPermissions?: AuthPermissionsExternalListRelationFilter
     ownedApplications?: ApplicationListRelationFilter
     notifications?: NotificationListRelationFilter
     verifications?: VerificationListRelationFilter
@@ -40518,9 +36737,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionOrderByRelationAggregateInput
     appAuthentications?: AppAuthenticationOrderByRelationAggregateInput
     appSessions?: AppSessionOrderByRelationAggregateInput
-    externalSessions?: AuthSessionExternalOrderByRelationAggregateInput
-    externalRoles?: AuthRoleExternalOrderByRelationAggregateInput
-    externalPermissions?: AuthPermissionsExternalOrderByRelationAggregateInput
     ownedApplications?: ApplicationOrderByRelationAggregateInput
     notifications?: NotificationOrderByRelationAggregateInput
     verifications?: VerificationOrderByRelationAggregateInput
@@ -40559,9 +36775,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionListRelationFilter
     appAuthentications?: AppAuthenticationListRelationFilter
     appSessions?: AppSessionListRelationFilter
-    externalSessions?: AuthSessionExternalListRelationFilter
-    externalRoles?: AuthRoleExternalListRelationFilter
-    externalPermissions?: AuthPermissionsExternalListRelationFilter
     ownedApplications?: ApplicationListRelationFilter
     notifications?: NotificationListRelationFilter
     verifications?: VerificationListRelationFilter
@@ -41876,9 +38089,6 @@ export namespace Prisma {
     connections?: UserAppConnectionListRelationFilter
     appAuthentications?: AppAuthenticationListRelationFilter
     appSessions?: AppSessionListRelationFilter
-    externalSessions?: AuthSessionExternalListRelationFilter
-    externalRoles?: AuthRoleExternalListRelationFilter
-    externalPermissions?: AuthPermissionsExternalListRelationFilter
     authTeamsExternal?: AuthTeamExternalListRelationFilter
     authPermissionRecipients?: AuthPermissionRecipientListRelationFilter
   }
@@ -41902,9 +38112,6 @@ export namespace Prisma {
     connections?: UserAppConnectionOrderByRelationAggregateInput
     appAuthentications?: AppAuthenticationOrderByRelationAggregateInput
     appSessions?: AppSessionOrderByRelationAggregateInput
-    externalSessions?: AuthSessionExternalOrderByRelationAggregateInput
-    externalRoles?: AuthRoleExternalOrderByRelationAggregateInput
-    externalPermissions?: AuthPermissionsExternalOrderByRelationAggregateInput
     authTeamsExternal?: AuthTeamExternalOrderByRelationAggregateInput
     authPermissionRecipients?: AuthPermissionRecipientOrderByRelationAggregateInput
   }
@@ -41931,9 +38138,6 @@ export namespace Prisma {
     connections?: UserAppConnectionListRelationFilter
     appAuthentications?: AppAuthenticationListRelationFilter
     appSessions?: AppSessionListRelationFilter
-    externalSessions?: AuthSessionExternalListRelationFilter
-    externalRoles?: AuthRoleExternalListRelationFilter
-    externalPermissions?: AuthPermissionsExternalListRelationFilter
     authTeamsExternal?: AuthTeamExternalListRelationFilter
     authPermissionRecipients?: AuthPermissionRecipientListRelationFilter
   }, "id">
@@ -42534,202 +38738,6 @@ export namespace Prisma {
     activeTill?: DateTimeWithAggregatesFilter<"AppSession"> | Date | string
   }
 
-  export type AuthSessionExternalWhereInput = {
-    AND?: AuthSessionExternalWhereInput | AuthSessionExternalWhereInput[]
-    OR?: AuthSessionExternalWhereInput[]
-    NOT?: AuthSessionExternalWhereInput | AuthSessionExternalWhereInput[]
-    id?: StringFilter<"AuthSessionExternal"> | string
-    accountId?: StringFilter<"AuthSessionExternal"> | string
-    appId?: StringFilter<"AuthSessionExternal"> | string
-    sessionId?: StringFilter<"AuthSessionExternal"> | string
-    sessionKey?: StringFilter<"AuthSessionExternal"> | string
-    jwt?: StringFilter<"AuthSessionExternal"> | string
-    expiresOn?: DateTimeFilter<"AuthSessionExternal"> | Date | string
-    createdAt?: DateTimeFilter<"AuthSessionExternal"> | Date | string
-    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
-  }
-
-  export type AuthSessionExternalOrderByWithRelationInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    appId?: SortOrder
-    sessionId?: SortOrder
-    sessionKey?: SortOrder
-    jwt?: SortOrder
-    expiresOn?: SortOrder
-    createdAt?: SortOrder
-    account?: AccountOrderByWithRelationInput
-    application?: ApplicationOrderByWithRelationInput
-  }
-
-  export type AuthSessionExternalWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: AuthSessionExternalWhereInput | AuthSessionExternalWhereInput[]
-    OR?: AuthSessionExternalWhereInput[]
-    NOT?: AuthSessionExternalWhereInput | AuthSessionExternalWhereInput[]
-    accountId?: StringFilter<"AuthSessionExternal"> | string
-    appId?: StringFilter<"AuthSessionExternal"> | string
-    sessionId?: StringFilter<"AuthSessionExternal"> | string
-    sessionKey?: StringFilter<"AuthSessionExternal"> | string
-    jwt?: StringFilter<"AuthSessionExternal"> | string
-    expiresOn?: DateTimeFilter<"AuthSessionExternal"> | Date | string
-    createdAt?: DateTimeFilter<"AuthSessionExternal"> | Date | string
-    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
-  }, "id">
-
-  export type AuthSessionExternalOrderByWithAggregationInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    appId?: SortOrder
-    sessionId?: SortOrder
-    sessionKey?: SortOrder
-    jwt?: SortOrder
-    expiresOn?: SortOrder
-    createdAt?: SortOrder
-    _count?: AuthSessionExternalCountOrderByAggregateInput
-    _max?: AuthSessionExternalMaxOrderByAggregateInput
-    _min?: AuthSessionExternalMinOrderByAggregateInput
-  }
-
-  export type AuthSessionExternalScalarWhereWithAggregatesInput = {
-    AND?: AuthSessionExternalScalarWhereWithAggregatesInput | AuthSessionExternalScalarWhereWithAggregatesInput[]
-    OR?: AuthSessionExternalScalarWhereWithAggregatesInput[]
-    NOT?: AuthSessionExternalScalarWhereWithAggregatesInput | AuthSessionExternalScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"AuthSessionExternal"> | string
-    accountId?: StringWithAggregatesFilter<"AuthSessionExternal"> | string
-    appId?: StringWithAggregatesFilter<"AuthSessionExternal"> | string
-    sessionId?: StringWithAggregatesFilter<"AuthSessionExternal"> | string
-    sessionKey?: StringWithAggregatesFilter<"AuthSessionExternal"> | string
-    jwt?: StringWithAggregatesFilter<"AuthSessionExternal"> | string
-    expiresOn?: DateTimeWithAggregatesFilter<"AuthSessionExternal"> | Date | string
-    createdAt?: DateTimeWithAggregatesFilter<"AuthSessionExternal"> | Date | string
-  }
-
-  export type AuthRoleExternalWhereInput = {
-    AND?: AuthRoleExternalWhereInput | AuthRoleExternalWhereInput[]
-    OR?: AuthRoleExternalWhereInput[]
-    NOT?: AuthRoleExternalWhereInput | AuthRoleExternalWhereInput[]
-    id?: StringFilter<"AuthRoleExternal"> | string
-    accountId?: StringFilter<"AuthRoleExternal"> | string
-    appId?: StringFilter<"AuthRoleExternal"> | string
-    role?: StringFilter<"AuthRoleExternal"> | string
-    hasExtra?: BoolFilter<"AuthRoleExternal"> | boolean
-    createdAt?: DateTimeFilter<"AuthRoleExternal"> | Date | string
-    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
-  }
-
-  export type AuthRoleExternalOrderByWithRelationInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    appId?: SortOrder
-    role?: SortOrder
-    hasExtra?: SortOrder
-    createdAt?: SortOrder
-    account?: AccountOrderByWithRelationInput
-    application?: ApplicationOrderByWithRelationInput
-  }
-
-  export type AuthRoleExternalWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    accountId_appId?: AuthRoleExternalAccountIdAppIdCompoundUniqueInput
-    AND?: AuthRoleExternalWhereInput | AuthRoleExternalWhereInput[]
-    OR?: AuthRoleExternalWhereInput[]
-    NOT?: AuthRoleExternalWhereInput | AuthRoleExternalWhereInput[]
-    accountId?: StringFilter<"AuthRoleExternal"> | string
-    appId?: StringFilter<"AuthRoleExternal"> | string
-    role?: StringFilter<"AuthRoleExternal"> | string
-    hasExtra?: BoolFilter<"AuthRoleExternal"> | boolean
-    createdAt?: DateTimeFilter<"AuthRoleExternal"> | Date | string
-    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
-  }, "id" | "accountId_appId">
-
-  export type AuthRoleExternalOrderByWithAggregationInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    appId?: SortOrder
-    role?: SortOrder
-    hasExtra?: SortOrder
-    createdAt?: SortOrder
-    _count?: AuthRoleExternalCountOrderByAggregateInput
-    _max?: AuthRoleExternalMaxOrderByAggregateInput
-    _min?: AuthRoleExternalMinOrderByAggregateInput
-  }
-
-  export type AuthRoleExternalScalarWhereWithAggregatesInput = {
-    AND?: AuthRoleExternalScalarWhereWithAggregatesInput | AuthRoleExternalScalarWhereWithAggregatesInput[]
-    OR?: AuthRoleExternalScalarWhereWithAggregatesInput[]
-    NOT?: AuthRoleExternalScalarWhereWithAggregatesInput | AuthRoleExternalScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"AuthRoleExternal"> | string
-    accountId?: StringWithAggregatesFilter<"AuthRoleExternal"> | string
-    appId?: StringWithAggregatesFilter<"AuthRoleExternal"> | string
-    role?: StringWithAggregatesFilter<"AuthRoleExternal"> | string
-    hasExtra?: BoolWithAggregatesFilter<"AuthRoleExternal"> | boolean
-    createdAt?: DateTimeWithAggregatesFilter<"AuthRoleExternal"> | Date | string
-  }
-
-  export type AuthPermissionsExternalWhereInput = {
-    AND?: AuthPermissionsExternalWhereInput | AuthPermissionsExternalWhereInput[]
-    OR?: AuthPermissionsExternalWhereInput[]
-    NOT?: AuthPermissionsExternalWhereInput | AuthPermissionsExternalWhereInput[]
-    id?: StringFilter<"AuthPermissionsExternal"> | string
-    accountId?: StringFilter<"AuthPermissionsExternal"> | string
-    appId?: StringFilter<"AuthPermissionsExternal"> | string
-    permissions?: JsonFilter<"AuthPermissionsExternal">
-    createdAt?: DateTimeFilter<"AuthPermissionsExternal"> | Date | string
-    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
-  }
-
-  export type AuthPermissionsExternalOrderByWithRelationInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    appId?: SortOrder
-    permissions?: SortOrder
-    createdAt?: SortOrder
-    account?: AccountOrderByWithRelationInput
-    application?: ApplicationOrderByWithRelationInput
-  }
-
-  export type AuthPermissionsExternalWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    accountId_appId?: AuthPermissionsExternalAccountIdAppIdCompoundUniqueInput
-    AND?: AuthPermissionsExternalWhereInput | AuthPermissionsExternalWhereInput[]
-    OR?: AuthPermissionsExternalWhereInput[]
-    NOT?: AuthPermissionsExternalWhereInput | AuthPermissionsExternalWhereInput[]
-    accountId?: StringFilter<"AuthPermissionsExternal"> | string
-    appId?: StringFilter<"AuthPermissionsExternal"> | string
-    permissions?: JsonFilter<"AuthPermissionsExternal">
-    createdAt?: DateTimeFilter<"AuthPermissionsExternal"> | Date | string
-    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
-  }, "id" | "accountId_appId">
-
-  export type AuthPermissionsExternalOrderByWithAggregationInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    appId?: SortOrder
-    permissions?: SortOrder
-    createdAt?: SortOrder
-    _count?: AuthPermissionsExternalCountOrderByAggregateInput
-    _max?: AuthPermissionsExternalMaxOrderByAggregateInput
-    _min?: AuthPermissionsExternalMinOrderByAggregateInput
-  }
-
-  export type AuthPermissionsExternalScalarWhereWithAggregatesInput = {
-    AND?: AuthPermissionsExternalScalarWhereWithAggregatesInput | AuthPermissionsExternalScalarWhereWithAggregatesInput[]
-    OR?: AuthPermissionsExternalScalarWhereWithAggregatesInput[]
-    NOT?: AuthPermissionsExternalScalarWhereWithAggregatesInput | AuthPermissionsExternalScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"AuthPermissionsExternal"> | string
-    accountId?: StringWithAggregatesFilter<"AuthPermissionsExternal"> | string
-    appId?: StringWithAggregatesFilter<"AuthPermissionsExternal"> | string
-    permissions?: JsonWithAggregatesFilter<"AuthPermissionsExternal">
-    createdAt?: DateTimeWithAggregatesFilter<"AuthPermissionsExternal"> | Date | string
-  }
-
   export type AccountCreateInput = {
     id?: string
     accountType?: string
@@ -42750,9 +38758,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -42788,9 +38793,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -42826,9 +38828,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -42864,9 +38863,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -44289,9 +40285,6 @@ export namespace Prisma {
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutApplicationInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutApplicationInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutApplicationInput
     authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
   }
@@ -44314,9 +40307,6 @@ export namespace Prisma {
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutApplicationInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutApplicationInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutApplicationInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutApplicationInput
     authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
   }
@@ -44339,9 +40329,6 @@ export namespace Prisma {
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutApplicationNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutApplicationNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutApplicationNestedInput
     authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
   }
@@ -44364,9 +40351,6 @@ export namespace Prisma {
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutApplicationNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
   }
@@ -44952,196 +40936,6 @@ export namespace Prisma {
     activeTill?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type AuthSessionExternalCreateInput = {
-    id?: string
-    sessionId: string
-    sessionKey: string
-    jwt: string
-    expiresOn: Date | string
-    createdAt?: Date | string
-    account: AccountCreateNestedOneWithoutExternalSessionsInput
-    application: ApplicationCreateNestedOneWithoutExternalSessionsInput
-  }
-
-  export type AuthSessionExternalUncheckedCreateInput = {
-    id?: string
-    accountId: string
-    appId: string
-    sessionId: string
-    sessionKey: string
-    jwt: string
-    expiresOn: Date | string
-    createdAt?: Date | string
-  }
-
-  export type AuthSessionExternalUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    sessionId?: StringFieldUpdateOperationsInput | string
-    sessionKey?: StringFieldUpdateOperationsInput | string
-    jwt?: StringFieldUpdateOperationsInput | string
-    expiresOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    account?: AccountUpdateOneRequiredWithoutExternalSessionsNestedInput
-    application?: ApplicationUpdateOneRequiredWithoutExternalSessionsNestedInput
-  }
-
-  export type AuthSessionExternalUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
-    sessionId?: StringFieldUpdateOperationsInput | string
-    sessionKey?: StringFieldUpdateOperationsInput | string
-    jwt?: StringFieldUpdateOperationsInput | string
-    expiresOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthSessionExternalCreateManyInput = {
-    id?: string
-    accountId: string
-    appId: string
-    sessionId: string
-    sessionKey: string
-    jwt: string
-    expiresOn: Date | string
-    createdAt?: Date | string
-  }
-
-  export type AuthSessionExternalUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    sessionId?: StringFieldUpdateOperationsInput | string
-    sessionKey?: StringFieldUpdateOperationsInput | string
-    jwt?: StringFieldUpdateOperationsInput | string
-    expiresOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthSessionExternalUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
-    sessionId?: StringFieldUpdateOperationsInput | string
-    sessionKey?: StringFieldUpdateOperationsInput | string
-    jwt?: StringFieldUpdateOperationsInput | string
-    expiresOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthRoleExternalCreateInput = {
-    id?: string
-    role: string
-    hasExtra?: boolean
-    createdAt?: Date | string
-    account: AccountCreateNestedOneWithoutExternalRolesInput
-    application: ApplicationCreateNestedOneWithoutExternalRolesInput
-  }
-
-  export type AuthRoleExternalUncheckedCreateInput = {
-    id?: string
-    accountId: string
-    appId: string
-    role: string
-    hasExtra?: boolean
-    createdAt?: Date | string
-  }
-
-  export type AuthRoleExternalUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    hasExtra?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    account?: AccountUpdateOneRequiredWithoutExternalRolesNestedInput
-    application?: ApplicationUpdateOneRequiredWithoutExternalRolesNestedInput
-  }
-
-  export type AuthRoleExternalUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    hasExtra?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthRoleExternalCreateManyInput = {
-    id?: string
-    accountId: string
-    appId: string
-    role: string
-    hasExtra?: boolean
-    createdAt?: Date | string
-  }
-
-  export type AuthRoleExternalUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    hasExtra?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthRoleExternalUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    hasExtra?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthPermissionsExternalCreateInput = {
-    id?: string
-    permissions?: JsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    account: AccountCreateNestedOneWithoutExternalPermissionsInput
-    application: ApplicationCreateNestedOneWithoutExternalPermissionsInput
-  }
-
-  export type AuthPermissionsExternalUncheckedCreateInput = {
-    id?: string
-    accountId: string
-    appId: string
-    permissions?: JsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-  }
-
-  export type AuthPermissionsExternalUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    permissions?: JsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    account?: AccountUpdateOneRequiredWithoutExternalPermissionsNestedInput
-    application?: ApplicationUpdateOneRequiredWithoutExternalPermissionsNestedInput
-  }
-
-  export type AuthPermissionsExternalUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
-    permissions?: JsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthPermissionsExternalCreateManyInput = {
-    id?: string
-    accountId: string
-    appId: string
-    permissions?: JsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-  }
-
-  export type AuthPermissionsExternalUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    permissions?: JsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthPermissionsExternalUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
-    permissions?: JsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -45270,24 +41064,6 @@ export namespace Prisma {
     none?: AppSessionWhereInput
   }
 
-  export type AuthSessionExternalListRelationFilter = {
-    every?: AuthSessionExternalWhereInput
-    some?: AuthSessionExternalWhereInput
-    none?: AuthSessionExternalWhereInput
-  }
-
-  export type AuthRoleExternalListRelationFilter = {
-    every?: AuthRoleExternalWhereInput
-    some?: AuthRoleExternalWhereInput
-    none?: AuthRoleExternalWhereInput
-  }
-
-  export type AuthPermissionsExternalListRelationFilter = {
-    every?: AuthPermissionsExternalWhereInput
-    some?: AuthPermissionsExternalWhereInput
-    none?: AuthPermissionsExternalWhereInput
-  }
-
   export type ApplicationListRelationFilter = {
     every?: ApplicationWhereInput
     some?: ApplicationWhereInput
@@ -45378,18 +41154,6 @@ export namespace Prisma {
   }
 
   export type AppSessionOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type AuthSessionExternalOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type AuthRoleExternalOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type AuthPermissionsExternalOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -46560,98 +42324,6 @@ export namespace Prisma {
     activeTill?: SortOrder
   }
 
-  export type AuthSessionExternalCountOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    appId?: SortOrder
-    sessionId?: SortOrder
-    sessionKey?: SortOrder
-    jwt?: SortOrder
-    expiresOn?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type AuthSessionExternalMaxOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    appId?: SortOrder
-    sessionId?: SortOrder
-    sessionKey?: SortOrder
-    jwt?: SortOrder
-    expiresOn?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type AuthSessionExternalMinOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    appId?: SortOrder
-    sessionId?: SortOrder
-    sessionKey?: SortOrder
-    jwt?: SortOrder
-    expiresOn?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type AuthRoleExternalAccountIdAppIdCompoundUniqueInput = {
-    accountId: string
-    appId: string
-  }
-
-  export type AuthRoleExternalCountOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    appId?: SortOrder
-    role?: SortOrder
-    hasExtra?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type AuthRoleExternalMaxOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    appId?: SortOrder
-    role?: SortOrder
-    hasExtra?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type AuthRoleExternalMinOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    appId?: SortOrder
-    role?: SortOrder
-    hasExtra?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type AuthPermissionsExternalAccountIdAppIdCompoundUniqueInput = {
-    accountId: string
-    appId: string
-  }
-
-  export type AuthPermissionsExternalCountOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    appId?: SortOrder
-    permissions?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type AuthPermissionsExternalMaxOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    appId?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type AuthPermissionsExternalMinOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    appId?: SortOrder
-    createdAt?: SortOrder
-  }
-
   export type ContactCreateNestedManyWithoutAccountInput = {
     create?: XOR<ContactCreateWithoutAccountInput, ContactUncheckedCreateWithoutAccountInput> | ContactCreateWithoutAccountInput[] | ContactUncheckedCreateWithoutAccountInput[]
     connectOrCreate?: ContactCreateOrConnectWithoutAccountInput | ContactCreateOrConnectWithoutAccountInput[]
@@ -46726,27 +42398,6 @@ export namespace Prisma {
     connectOrCreate?: AppSessionCreateOrConnectWithoutAccountInput | AppSessionCreateOrConnectWithoutAccountInput[]
     createMany?: AppSessionCreateManyAccountInputEnvelope
     connect?: AppSessionWhereUniqueInput | AppSessionWhereUniqueInput[]
-  }
-
-  export type AuthSessionExternalCreateNestedManyWithoutAccountInput = {
-    create?: XOR<AuthSessionExternalCreateWithoutAccountInput, AuthSessionExternalUncheckedCreateWithoutAccountInput> | AuthSessionExternalCreateWithoutAccountInput[] | AuthSessionExternalUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthSessionExternalCreateOrConnectWithoutAccountInput | AuthSessionExternalCreateOrConnectWithoutAccountInput[]
-    createMany?: AuthSessionExternalCreateManyAccountInputEnvelope
-    connect?: AuthSessionExternalWhereUniqueInput | AuthSessionExternalWhereUniqueInput[]
-  }
-
-  export type AuthRoleExternalCreateNestedManyWithoutAccountInput = {
-    create?: XOR<AuthRoleExternalCreateWithoutAccountInput, AuthRoleExternalUncheckedCreateWithoutAccountInput> | AuthRoleExternalCreateWithoutAccountInput[] | AuthRoleExternalUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthRoleExternalCreateOrConnectWithoutAccountInput | AuthRoleExternalCreateOrConnectWithoutAccountInput[]
-    createMany?: AuthRoleExternalCreateManyAccountInputEnvelope
-    connect?: AuthRoleExternalWhereUniqueInput | AuthRoleExternalWhereUniqueInput[]
-  }
-
-  export type AuthPermissionsExternalCreateNestedManyWithoutAccountInput = {
-    create?: XOR<AuthPermissionsExternalCreateWithoutAccountInput, AuthPermissionsExternalUncheckedCreateWithoutAccountInput> | AuthPermissionsExternalCreateWithoutAccountInput[] | AuthPermissionsExternalUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthPermissionsExternalCreateOrConnectWithoutAccountInput | AuthPermissionsExternalCreateOrConnectWithoutAccountInput[]
-    createMany?: AuthPermissionsExternalCreateManyAccountInputEnvelope
-    connect?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
   }
 
   export type ApplicationCreateNestedManyWithoutOwnerInput = {
@@ -46912,27 +42563,6 @@ export namespace Prisma {
     connectOrCreate?: AppSessionCreateOrConnectWithoutAccountInput | AppSessionCreateOrConnectWithoutAccountInput[]
     createMany?: AppSessionCreateManyAccountInputEnvelope
     connect?: AppSessionWhereUniqueInput | AppSessionWhereUniqueInput[]
-  }
-
-  export type AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput = {
-    create?: XOR<AuthSessionExternalCreateWithoutAccountInput, AuthSessionExternalUncheckedCreateWithoutAccountInput> | AuthSessionExternalCreateWithoutAccountInput[] | AuthSessionExternalUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthSessionExternalCreateOrConnectWithoutAccountInput | AuthSessionExternalCreateOrConnectWithoutAccountInput[]
-    createMany?: AuthSessionExternalCreateManyAccountInputEnvelope
-    connect?: AuthSessionExternalWhereUniqueInput | AuthSessionExternalWhereUniqueInput[]
-  }
-
-  export type AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput = {
-    create?: XOR<AuthRoleExternalCreateWithoutAccountInput, AuthRoleExternalUncheckedCreateWithoutAccountInput> | AuthRoleExternalCreateWithoutAccountInput[] | AuthRoleExternalUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthRoleExternalCreateOrConnectWithoutAccountInput | AuthRoleExternalCreateOrConnectWithoutAccountInput[]
-    createMany?: AuthRoleExternalCreateManyAccountInputEnvelope
-    connect?: AuthRoleExternalWhereUniqueInput | AuthRoleExternalWhereUniqueInput[]
-  }
-
-  export type AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput = {
-    create?: XOR<AuthPermissionsExternalCreateWithoutAccountInput, AuthPermissionsExternalUncheckedCreateWithoutAccountInput> | AuthPermissionsExternalCreateWithoutAccountInput[] | AuthPermissionsExternalUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthPermissionsExternalCreateOrConnectWithoutAccountInput | AuthPermissionsExternalCreateOrConnectWithoutAccountInput[]
-    createMany?: AuthPermissionsExternalCreateManyAccountInputEnvelope
-    connect?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
   }
 
   export type ApplicationUncheckedCreateNestedManyWithoutOwnerInput = {
@@ -47188,48 +42818,6 @@ export namespace Prisma {
     update?: AppSessionUpdateWithWhereUniqueWithoutAccountInput | AppSessionUpdateWithWhereUniqueWithoutAccountInput[]
     updateMany?: AppSessionUpdateManyWithWhereWithoutAccountInput | AppSessionUpdateManyWithWhereWithoutAccountInput[]
     deleteMany?: AppSessionScalarWhereInput | AppSessionScalarWhereInput[]
-  }
-
-  export type AuthSessionExternalUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<AuthSessionExternalCreateWithoutAccountInput, AuthSessionExternalUncheckedCreateWithoutAccountInput> | AuthSessionExternalCreateWithoutAccountInput[] | AuthSessionExternalUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthSessionExternalCreateOrConnectWithoutAccountInput | AuthSessionExternalCreateOrConnectWithoutAccountInput[]
-    upsert?: AuthSessionExternalUpsertWithWhereUniqueWithoutAccountInput | AuthSessionExternalUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: AuthSessionExternalCreateManyAccountInputEnvelope
-    set?: AuthSessionExternalWhereUniqueInput | AuthSessionExternalWhereUniqueInput[]
-    disconnect?: AuthSessionExternalWhereUniqueInput | AuthSessionExternalWhereUniqueInput[]
-    delete?: AuthSessionExternalWhereUniqueInput | AuthSessionExternalWhereUniqueInput[]
-    connect?: AuthSessionExternalWhereUniqueInput | AuthSessionExternalWhereUniqueInput[]
-    update?: AuthSessionExternalUpdateWithWhereUniqueWithoutAccountInput | AuthSessionExternalUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: AuthSessionExternalUpdateManyWithWhereWithoutAccountInput | AuthSessionExternalUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: AuthSessionExternalScalarWhereInput | AuthSessionExternalScalarWhereInput[]
-  }
-
-  export type AuthRoleExternalUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<AuthRoleExternalCreateWithoutAccountInput, AuthRoleExternalUncheckedCreateWithoutAccountInput> | AuthRoleExternalCreateWithoutAccountInput[] | AuthRoleExternalUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthRoleExternalCreateOrConnectWithoutAccountInput | AuthRoleExternalCreateOrConnectWithoutAccountInput[]
-    upsert?: AuthRoleExternalUpsertWithWhereUniqueWithoutAccountInput | AuthRoleExternalUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: AuthRoleExternalCreateManyAccountInputEnvelope
-    set?: AuthRoleExternalWhereUniqueInput | AuthRoleExternalWhereUniqueInput[]
-    disconnect?: AuthRoleExternalWhereUniqueInput | AuthRoleExternalWhereUniqueInput[]
-    delete?: AuthRoleExternalWhereUniqueInput | AuthRoleExternalWhereUniqueInput[]
-    connect?: AuthRoleExternalWhereUniqueInput | AuthRoleExternalWhereUniqueInput[]
-    update?: AuthRoleExternalUpdateWithWhereUniqueWithoutAccountInput | AuthRoleExternalUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: AuthRoleExternalUpdateManyWithWhereWithoutAccountInput | AuthRoleExternalUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: AuthRoleExternalScalarWhereInput | AuthRoleExternalScalarWhereInput[]
-  }
-
-  export type AuthPermissionsExternalUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<AuthPermissionsExternalCreateWithoutAccountInput, AuthPermissionsExternalUncheckedCreateWithoutAccountInput> | AuthPermissionsExternalCreateWithoutAccountInput[] | AuthPermissionsExternalUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthPermissionsExternalCreateOrConnectWithoutAccountInput | AuthPermissionsExternalCreateOrConnectWithoutAccountInput[]
-    upsert?: AuthPermissionsExternalUpsertWithWhereUniqueWithoutAccountInput | AuthPermissionsExternalUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: AuthPermissionsExternalCreateManyAccountInputEnvelope
-    set?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
-    disconnect?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
-    delete?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
-    connect?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
-    update?: AuthPermissionsExternalUpdateWithWhereUniqueWithoutAccountInput | AuthPermissionsExternalUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: AuthPermissionsExternalUpdateManyWithWhereWithoutAccountInput | AuthPermissionsExternalUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: AuthPermissionsExternalScalarWhereInput | AuthPermissionsExternalScalarWhereInput[]
   }
 
   export type ApplicationUpdateManyWithoutOwnerNestedInput = {
@@ -47554,48 +43142,6 @@ export namespace Prisma {
     update?: AppSessionUpdateWithWhereUniqueWithoutAccountInput | AppSessionUpdateWithWhereUniqueWithoutAccountInput[]
     updateMany?: AppSessionUpdateManyWithWhereWithoutAccountInput | AppSessionUpdateManyWithWhereWithoutAccountInput[]
     deleteMany?: AppSessionScalarWhereInput | AppSessionScalarWhereInput[]
-  }
-
-  export type AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<AuthSessionExternalCreateWithoutAccountInput, AuthSessionExternalUncheckedCreateWithoutAccountInput> | AuthSessionExternalCreateWithoutAccountInput[] | AuthSessionExternalUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthSessionExternalCreateOrConnectWithoutAccountInput | AuthSessionExternalCreateOrConnectWithoutAccountInput[]
-    upsert?: AuthSessionExternalUpsertWithWhereUniqueWithoutAccountInput | AuthSessionExternalUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: AuthSessionExternalCreateManyAccountInputEnvelope
-    set?: AuthSessionExternalWhereUniqueInput | AuthSessionExternalWhereUniqueInput[]
-    disconnect?: AuthSessionExternalWhereUniqueInput | AuthSessionExternalWhereUniqueInput[]
-    delete?: AuthSessionExternalWhereUniqueInput | AuthSessionExternalWhereUniqueInput[]
-    connect?: AuthSessionExternalWhereUniqueInput | AuthSessionExternalWhereUniqueInput[]
-    update?: AuthSessionExternalUpdateWithWhereUniqueWithoutAccountInput | AuthSessionExternalUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: AuthSessionExternalUpdateManyWithWhereWithoutAccountInput | AuthSessionExternalUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: AuthSessionExternalScalarWhereInput | AuthSessionExternalScalarWhereInput[]
-  }
-
-  export type AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<AuthRoleExternalCreateWithoutAccountInput, AuthRoleExternalUncheckedCreateWithoutAccountInput> | AuthRoleExternalCreateWithoutAccountInput[] | AuthRoleExternalUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthRoleExternalCreateOrConnectWithoutAccountInput | AuthRoleExternalCreateOrConnectWithoutAccountInput[]
-    upsert?: AuthRoleExternalUpsertWithWhereUniqueWithoutAccountInput | AuthRoleExternalUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: AuthRoleExternalCreateManyAccountInputEnvelope
-    set?: AuthRoleExternalWhereUniqueInput | AuthRoleExternalWhereUniqueInput[]
-    disconnect?: AuthRoleExternalWhereUniqueInput | AuthRoleExternalWhereUniqueInput[]
-    delete?: AuthRoleExternalWhereUniqueInput | AuthRoleExternalWhereUniqueInput[]
-    connect?: AuthRoleExternalWhereUniqueInput | AuthRoleExternalWhereUniqueInput[]
-    update?: AuthRoleExternalUpdateWithWhereUniqueWithoutAccountInput | AuthRoleExternalUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: AuthRoleExternalUpdateManyWithWhereWithoutAccountInput | AuthRoleExternalUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: AuthRoleExternalScalarWhereInput | AuthRoleExternalScalarWhereInput[]
-  }
-
-  export type AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<AuthPermissionsExternalCreateWithoutAccountInput, AuthPermissionsExternalUncheckedCreateWithoutAccountInput> | AuthPermissionsExternalCreateWithoutAccountInput[] | AuthPermissionsExternalUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthPermissionsExternalCreateOrConnectWithoutAccountInput | AuthPermissionsExternalCreateOrConnectWithoutAccountInput[]
-    upsert?: AuthPermissionsExternalUpsertWithWhereUniqueWithoutAccountInput | AuthPermissionsExternalUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: AuthPermissionsExternalCreateManyAccountInputEnvelope
-    set?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
-    disconnect?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
-    delete?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
-    connect?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
-    update?: AuthPermissionsExternalUpdateWithWhereUniqueWithoutAccountInput | AuthPermissionsExternalUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: AuthPermissionsExternalUpdateManyWithWhereWithoutAccountInput | AuthPermissionsExternalUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: AuthPermissionsExternalScalarWhereInput | AuthPermissionsExternalScalarWhereInput[]
   }
 
   export type ApplicationUncheckedUpdateManyWithoutOwnerNestedInput = {
@@ -48158,27 +43704,6 @@ export namespace Prisma {
     connect?: AppSessionWhereUniqueInput | AppSessionWhereUniqueInput[]
   }
 
-  export type AuthSessionExternalCreateNestedManyWithoutApplicationInput = {
-    create?: XOR<AuthSessionExternalCreateWithoutApplicationInput, AuthSessionExternalUncheckedCreateWithoutApplicationInput> | AuthSessionExternalCreateWithoutApplicationInput[] | AuthSessionExternalUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: AuthSessionExternalCreateOrConnectWithoutApplicationInput | AuthSessionExternalCreateOrConnectWithoutApplicationInput[]
-    createMany?: AuthSessionExternalCreateManyApplicationInputEnvelope
-    connect?: AuthSessionExternalWhereUniqueInput | AuthSessionExternalWhereUniqueInput[]
-  }
-
-  export type AuthRoleExternalCreateNestedManyWithoutApplicationInput = {
-    create?: XOR<AuthRoleExternalCreateWithoutApplicationInput, AuthRoleExternalUncheckedCreateWithoutApplicationInput> | AuthRoleExternalCreateWithoutApplicationInput[] | AuthRoleExternalUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: AuthRoleExternalCreateOrConnectWithoutApplicationInput | AuthRoleExternalCreateOrConnectWithoutApplicationInput[]
-    createMany?: AuthRoleExternalCreateManyApplicationInputEnvelope
-    connect?: AuthRoleExternalWhereUniqueInput | AuthRoleExternalWhereUniqueInput[]
-  }
-
-  export type AuthPermissionsExternalCreateNestedManyWithoutApplicationInput = {
-    create?: XOR<AuthPermissionsExternalCreateWithoutApplicationInput, AuthPermissionsExternalUncheckedCreateWithoutApplicationInput> | AuthPermissionsExternalCreateWithoutApplicationInput[] | AuthPermissionsExternalUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: AuthPermissionsExternalCreateOrConnectWithoutApplicationInput | AuthPermissionsExternalCreateOrConnectWithoutApplicationInput[]
-    createMany?: AuthPermissionsExternalCreateManyApplicationInputEnvelope
-    connect?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
-  }
-
   export type AuthTeamExternalCreateNestedManyWithoutApplicationInput = {
     create?: XOR<AuthTeamExternalCreateWithoutApplicationInput, AuthTeamExternalUncheckedCreateWithoutApplicationInput> | AuthTeamExternalCreateWithoutApplicationInput[] | AuthTeamExternalUncheckedCreateWithoutApplicationInput[]
     connectOrCreate?: AuthTeamExternalCreateOrConnectWithoutApplicationInput | AuthTeamExternalCreateOrConnectWithoutApplicationInput[]
@@ -48212,27 +43737,6 @@ export namespace Prisma {
     connectOrCreate?: AppSessionCreateOrConnectWithoutApplicationInput | AppSessionCreateOrConnectWithoutApplicationInput[]
     createMany?: AppSessionCreateManyApplicationInputEnvelope
     connect?: AppSessionWhereUniqueInput | AppSessionWhereUniqueInput[]
-  }
-
-  export type AuthSessionExternalUncheckedCreateNestedManyWithoutApplicationInput = {
-    create?: XOR<AuthSessionExternalCreateWithoutApplicationInput, AuthSessionExternalUncheckedCreateWithoutApplicationInput> | AuthSessionExternalCreateWithoutApplicationInput[] | AuthSessionExternalUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: AuthSessionExternalCreateOrConnectWithoutApplicationInput | AuthSessionExternalCreateOrConnectWithoutApplicationInput[]
-    createMany?: AuthSessionExternalCreateManyApplicationInputEnvelope
-    connect?: AuthSessionExternalWhereUniqueInput | AuthSessionExternalWhereUniqueInput[]
-  }
-
-  export type AuthRoleExternalUncheckedCreateNestedManyWithoutApplicationInput = {
-    create?: XOR<AuthRoleExternalCreateWithoutApplicationInput, AuthRoleExternalUncheckedCreateWithoutApplicationInput> | AuthRoleExternalCreateWithoutApplicationInput[] | AuthRoleExternalUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: AuthRoleExternalCreateOrConnectWithoutApplicationInput | AuthRoleExternalCreateOrConnectWithoutApplicationInput[]
-    createMany?: AuthRoleExternalCreateManyApplicationInputEnvelope
-    connect?: AuthRoleExternalWhereUniqueInput | AuthRoleExternalWhereUniqueInput[]
-  }
-
-  export type AuthPermissionsExternalUncheckedCreateNestedManyWithoutApplicationInput = {
-    create?: XOR<AuthPermissionsExternalCreateWithoutApplicationInput, AuthPermissionsExternalUncheckedCreateWithoutApplicationInput> | AuthPermissionsExternalCreateWithoutApplicationInput[] | AuthPermissionsExternalUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: AuthPermissionsExternalCreateOrConnectWithoutApplicationInput | AuthPermissionsExternalCreateOrConnectWithoutApplicationInput[]
-    createMany?: AuthPermissionsExternalCreateManyApplicationInputEnvelope
-    connect?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
   }
 
   export type AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput = {
@@ -48299,48 +43803,6 @@ export namespace Prisma {
     update?: AppSessionUpdateWithWhereUniqueWithoutApplicationInput | AppSessionUpdateWithWhereUniqueWithoutApplicationInput[]
     updateMany?: AppSessionUpdateManyWithWhereWithoutApplicationInput | AppSessionUpdateManyWithWhereWithoutApplicationInput[]
     deleteMany?: AppSessionScalarWhereInput | AppSessionScalarWhereInput[]
-  }
-
-  export type AuthSessionExternalUpdateManyWithoutApplicationNestedInput = {
-    create?: XOR<AuthSessionExternalCreateWithoutApplicationInput, AuthSessionExternalUncheckedCreateWithoutApplicationInput> | AuthSessionExternalCreateWithoutApplicationInput[] | AuthSessionExternalUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: AuthSessionExternalCreateOrConnectWithoutApplicationInput | AuthSessionExternalCreateOrConnectWithoutApplicationInput[]
-    upsert?: AuthSessionExternalUpsertWithWhereUniqueWithoutApplicationInput | AuthSessionExternalUpsertWithWhereUniqueWithoutApplicationInput[]
-    createMany?: AuthSessionExternalCreateManyApplicationInputEnvelope
-    set?: AuthSessionExternalWhereUniqueInput | AuthSessionExternalWhereUniqueInput[]
-    disconnect?: AuthSessionExternalWhereUniqueInput | AuthSessionExternalWhereUniqueInput[]
-    delete?: AuthSessionExternalWhereUniqueInput | AuthSessionExternalWhereUniqueInput[]
-    connect?: AuthSessionExternalWhereUniqueInput | AuthSessionExternalWhereUniqueInput[]
-    update?: AuthSessionExternalUpdateWithWhereUniqueWithoutApplicationInput | AuthSessionExternalUpdateWithWhereUniqueWithoutApplicationInput[]
-    updateMany?: AuthSessionExternalUpdateManyWithWhereWithoutApplicationInput | AuthSessionExternalUpdateManyWithWhereWithoutApplicationInput[]
-    deleteMany?: AuthSessionExternalScalarWhereInput | AuthSessionExternalScalarWhereInput[]
-  }
-
-  export type AuthRoleExternalUpdateManyWithoutApplicationNestedInput = {
-    create?: XOR<AuthRoleExternalCreateWithoutApplicationInput, AuthRoleExternalUncheckedCreateWithoutApplicationInput> | AuthRoleExternalCreateWithoutApplicationInput[] | AuthRoleExternalUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: AuthRoleExternalCreateOrConnectWithoutApplicationInput | AuthRoleExternalCreateOrConnectWithoutApplicationInput[]
-    upsert?: AuthRoleExternalUpsertWithWhereUniqueWithoutApplicationInput | AuthRoleExternalUpsertWithWhereUniqueWithoutApplicationInput[]
-    createMany?: AuthRoleExternalCreateManyApplicationInputEnvelope
-    set?: AuthRoleExternalWhereUniqueInput | AuthRoleExternalWhereUniqueInput[]
-    disconnect?: AuthRoleExternalWhereUniqueInput | AuthRoleExternalWhereUniqueInput[]
-    delete?: AuthRoleExternalWhereUniqueInput | AuthRoleExternalWhereUniqueInput[]
-    connect?: AuthRoleExternalWhereUniqueInput | AuthRoleExternalWhereUniqueInput[]
-    update?: AuthRoleExternalUpdateWithWhereUniqueWithoutApplicationInput | AuthRoleExternalUpdateWithWhereUniqueWithoutApplicationInput[]
-    updateMany?: AuthRoleExternalUpdateManyWithWhereWithoutApplicationInput | AuthRoleExternalUpdateManyWithWhereWithoutApplicationInput[]
-    deleteMany?: AuthRoleExternalScalarWhereInput | AuthRoleExternalScalarWhereInput[]
-  }
-
-  export type AuthPermissionsExternalUpdateManyWithoutApplicationNestedInput = {
-    create?: XOR<AuthPermissionsExternalCreateWithoutApplicationInput, AuthPermissionsExternalUncheckedCreateWithoutApplicationInput> | AuthPermissionsExternalCreateWithoutApplicationInput[] | AuthPermissionsExternalUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: AuthPermissionsExternalCreateOrConnectWithoutApplicationInput | AuthPermissionsExternalCreateOrConnectWithoutApplicationInput[]
-    upsert?: AuthPermissionsExternalUpsertWithWhereUniqueWithoutApplicationInput | AuthPermissionsExternalUpsertWithWhereUniqueWithoutApplicationInput[]
-    createMany?: AuthPermissionsExternalCreateManyApplicationInputEnvelope
-    set?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
-    disconnect?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
-    delete?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
-    connect?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
-    update?: AuthPermissionsExternalUpdateWithWhereUniqueWithoutApplicationInput | AuthPermissionsExternalUpdateWithWhereUniqueWithoutApplicationInput[]
-    updateMany?: AuthPermissionsExternalUpdateManyWithWhereWithoutApplicationInput | AuthPermissionsExternalUpdateManyWithWhereWithoutApplicationInput[]
-    deleteMany?: AuthPermissionsExternalScalarWhereInput | AuthPermissionsExternalScalarWhereInput[]
   }
 
   export type AuthTeamExternalUpdateManyWithoutApplicationNestedInput = {
@@ -48411,48 +43873,6 @@ export namespace Prisma {
     update?: AppSessionUpdateWithWhereUniqueWithoutApplicationInput | AppSessionUpdateWithWhereUniqueWithoutApplicationInput[]
     updateMany?: AppSessionUpdateManyWithWhereWithoutApplicationInput | AppSessionUpdateManyWithWhereWithoutApplicationInput[]
     deleteMany?: AppSessionScalarWhereInput | AppSessionScalarWhereInput[]
-  }
-
-  export type AuthSessionExternalUncheckedUpdateManyWithoutApplicationNestedInput = {
-    create?: XOR<AuthSessionExternalCreateWithoutApplicationInput, AuthSessionExternalUncheckedCreateWithoutApplicationInput> | AuthSessionExternalCreateWithoutApplicationInput[] | AuthSessionExternalUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: AuthSessionExternalCreateOrConnectWithoutApplicationInput | AuthSessionExternalCreateOrConnectWithoutApplicationInput[]
-    upsert?: AuthSessionExternalUpsertWithWhereUniqueWithoutApplicationInput | AuthSessionExternalUpsertWithWhereUniqueWithoutApplicationInput[]
-    createMany?: AuthSessionExternalCreateManyApplicationInputEnvelope
-    set?: AuthSessionExternalWhereUniqueInput | AuthSessionExternalWhereUniqueInput[]
-    disconnect?: AuthSessionExternalWhereUniqueInput | AuthSessionExternalWhereUniqueInput[]
-    delete?: AuthSessionExternalWhereUniqueInput | AuthSessionExternalWhereUniqueInput[]
-    connect?: AuthSessionExternalWhereUniqueInput | AuthSessionExternalWhereUniqueInput[]
-    update?: AuthSessionExternalUpdateWithWhereUniqueWithoutApplicationInput | AuthSessionExternalUpdateWithWhereUniqueWithoutApplicationInput[]
-    updateMany?: AuthSessionExternalUpdateManyWithWhereWithoutApplicationInput | AuthSessionExternalUpdateManyWithWhereWithoutApplicationInput[]
-    deleteMany?: AuthSessionExternalScalarWhereInput | AuthSessionExternalScalarWhereInput[]
-  }
-
-  export type AuthRoleExternalUncheckedUpdateManyWithoutApplicationNestedInput = {
-    create?: XOR<AuthRoleExternalCreateWithoutApplicationInput, AuthRoleExternalUncheckedCreateWithoutApplicationInput> | AuthRoleExternalCreateWithoutApplicationInput[] | AuthRoleExternalUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: AuthRoleExternalCreateOrConnectWithoutApplicationInput | AuthRoleExternalCreateOrConnectWithoutApplicationInput[]
-    upsert?: AuthRoleExternalUpsertWithWhereUniqueWithoutApplicationInput | AuthRoleExternalUpsertWithWhereUniqueWithoutApplicationInput[]
-    createMany?: AuthRoleExternalCreateManyApplicationInputEnvelope
-    set?: AuthRoleExternalWhereUniqueInput | AuthRoleExternalWhereUniqueInput[]
-    disconnect?: AuthRoleExternalWhereUniqueInput | AuthRoleExternalWhereUniqueInput[]
-    delete?: AuthRoleExternalWhereUniqueInput | AuthRoleExternalWhereUniqueInput[]
-    connect?: AuthRoleExternalWhereUniqueInput | AuthRoleExternalWhereUniqueInput[]
-    update?: AuthRoleExternalUpdateWithWhereUniqueWithoutApplicationInput | AuthRoleExternalUpdateWithWhereUniqueWithoutApplicationInput[]
-    updateMany?: AuthRoleExternalUpdateManyWithWhereWithoutApplicationInput | AuthRoleExternalUpdateManyWithWhereWithoutApplicationInput[]
-    deleteMany?: AuthRoleExternalScalarWhereInput | AuthRoleExternalScalarWhereInput[]
-  }
-
-  export type AuthPermissionsExternalUncheckedUpdateManyWithoutApplicationNestedInput = {
-    create?: XOR<AuthPermissionsExternalCreateWithoutApplicationInput, AuthPermissionsExternalUncheckedCreateWithoutApplicationInput> | AuthPermissionsExternalCreateWithoutApplicationInput[] | AuthPermissionsExternalUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: AuthPermissionsExternalCreateOrConnectWithoutApplicationInput | AuthPermissionsExternalCreateOrConnectWithoutApplicationInput[]
-    upsert?: AuthPermissionsExternalUpsertWithWhereUniqueWithoutApplicationInput | AuthPermissionsExternalUpsertWithWhereUniqueWithoutApplicationInput[]
-    createMany?: AuthPermissionsExternalCreateManyApplicationInputEnvelope
-    set?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
-    disconnect?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
-    delete?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
-    connect?: AuthPermissionsExternalWhereUniqueInput | AuthPermissionsExternalWhereUniqueInput[]
-    update?: AuthPermissionsExternalUpdateWithWhereUniqueWithoutApplicationInput | AuthPermissionsExternalUpdateWithWhereUniqueWithoutApplicationInput[]
-    updateMany?: AuthPermissionsExternalUpdateManyWithWhereWithoutApplicationInput | AuthPermissionsExternalUpdateManyWithWhereWithoutApplicationInput[]
-    deleteMany?: AuthPermissionsExternalScalarWhereInput | AuthPermissionsExternalScalarWhereInput[]
   }
 
   export type AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput = {
@@ -48887,90 +44307,6 @@ export namespace Prisma {
     upsert?: SessionUpsertWithoutAppSessionsInput
     connect?: SessionWhereUniqueInput
     update?: XOR<XOR<SessionUpdateToOneWithWhereWithoutAppSessionsInput, SessionUpdateWithoutAppSessionsInput>, SessionUncheckedUpdateWithoutAppSessionsInput>
-  }
-
-  export type AccountCreateNestedOneWithoutExternalSessionsInput = {
-    create?: XOR<AccountCreateWithoutExternalSessionsInput, AccountUncheckedCreateWithoutExternalSessionsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutExternalSessionsInput
-    connect?: AccountWhereUniqueInput
-  }
-
-  export type ApplicationCreateNestedOneWithoutExternalSessionsInput = {
-    create?: XOR<ApplicationCreateWithoutExternalSessionsInput, ApplicationUncheckedCreateWithoutExternalSessionsInput>
-    connectOrCreate?: ApplicationCreateOrConnectWithoutExternalSessionsInput
-    connect?: ApplicationWhereUniqueInput
-  }
-
-  export type AccountUpdateOneRequiredWithoutExternalSessionsNestedInput = {
-    create?: XOR<AccountCreateWithoutExternalSessionsInput, AccountUncheckedCreateWithoutExternalSessionsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutExternalSessionsInput
-    upsert?: AccountUpsertWithoutExternalSessionsInput
-    connect?: AccountWhereUniqueInput
-    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutExternalSessionsInput, AccountUpdateWithoutExternalSessionsInput>, AccountUncheckedUpdateWithoutExternalSessionsInput>
-  }
-
-  export type ApplicationUpdateOneRequiredWithoutExternalSessionsNestedInput = {
-    create?: XOR<ApplicationCreateWithoutExternalSessionsInput, ApplicationUncheckedCreateWithoutExternalSessionsInput>
-    connectOrCreate?: ApplicationCreateOrConnectWithoutExternalSessionsInput
-    upsert?: ApplicationUpsertWithoutExternalSessionsInput
-    connect?: ApplicationWhereUniqueInput
-    update?: XOR<XOR<ApplicationUpdateToOneWithWhereWithoutExternalSessionsInput, ApplicationUpdateWithoutExternalSessionsInput>, ApplicationUncheckedUpdateWithoutExternalSessionsInput>
-  }
-
-  export type AccountCreateNestedOneWithoutExternalRolesInput = {
-    create?: XOR<AccountCreateWithoutExternalRolesInput, AccountUncheckedCreateWithoutExternalRolesInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutExternalRolesInput
-    connect?: AccountWhereUniqueInput
-  }
-
-  export type ApplicationCreateNestedOneWithoutExternalRolesInput = {
-    create?: XOR<ApplicationCreateWithoutExternalRolesInput, ApplicationUncheckedCreateWithoutExternalRolesInput>
-    connectOrCreate?: ApplicationCreateOrConnectWithoutExternalRolesInput
-    connect?: ApplicationWhereUniqueInput
-  }
-
-  export type AccountUpdateOneRequiredWithoutExternalRolesNestedInput = {
-    create?: XOR<AccountCreateWithoutExternalRolesInput, AccountUncheckedCreateWithoutExternalRolesInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutExternalRolesInput
-    upsert?: AccountUpsertWithoutExternalRolesInput
-    connect?: AccountWhereUniqueInput
-    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutExternalRolesInput, AccountUpdateWithoutExternalRolesInput>, AccountUncheckedUpdateWithoutExternalRolesInput>
-  }
-
-  export type ApplicationUpdateOneRequiredWithoutExternalRolesNestedInput = {
-    create?: XOR<ApplicationCreateWithoutExternalRolesInput, ApplicationUncheckedCreateWithoutExternalRolesInput>
-    connectOrCreate?: ApplicationCreateOrConnectWithoutExternalRolesInput
-    upsert?: ApplicationUpsertWithoutExternalRolesInput
-    connect?: ApplicationWhereUniqueInput
-    update?: XOR<XOR<ApplicationUpdateToOneWithWhereWithoutExternalRolesInput, ApplicationUpdateWithoutExternalRolesInput>, ApplicationUncheckedUpdateWithoutExternalRolesInput>
-  }
-
-  export type AccountCreateNestedOneWithoutExternalPermissionsInput = {
-    create?: XOR<AccountCreateWithoutExternalPermissionsInput, AccountUncheckedCreateWithoutExternalPermissionsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutExternalPermissionsInput
-    connect?: AccountWhereUniqueInput
-  }
-
-  export type ApplicationCreateNestedOneWithoutExternalPermissionsInput = {
-    create?: XOR<ApplicationCreateWithoutExternalPermissionsInput, ApplicationUncheckedCreateWithoutExternalPermissionsInput>
-    connectOrCreate?: ApplicationCreateOrConnectWithoutExternalPermissionsInput
-    connect?: ApplicationWhereUniqueInput
-  }
-
-  export type AccountUpdateOneRequiredWithoutExternalPermissionsNestedInput = {
-    create?: XOR<AccountCreateWithoutExternalPermissionsInput, AccountUncheckedCreateWithoutExternalPermissionsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutExternalPermissionsInput
-    upsert?: AccountUpsertWithoutExternalPermissionsInput
-    connect?: AccountWhereUniqueInput
-    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutExternalPermissionsInput, AccountUpdateWithoutExternalPermissionsInput>, AccountUncheckedUpdateWithoutExternalPermissionsInput>
-  }
-
-  export type ApplicationUpdateOneRequiredWithoutExternalPermissionsNestedInput = {
-    create?: XOR<ApplicationCreateWithoutExternalPermissionsInput, ApplicationUncheckedCreateWithoutExternalPermissionsInput>
-    connectOrCreate?: ApplicationCreateOrConnectWithoutExternalPermissionsInput
-    upsert?: ApplicationUpsertWithoutExternalPermissionsInput
-    connect?: ApplicationWhereUniqueInput
-    update?: XOR<XOR<ApplicationUpdateToOneWithWhereWithoutExternalPermissionsInput, ApplicationUpdateWithoutExternalPermissionsInput>, ApplicationUncheckedUpdateWithoutExternalPermissionsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -49501,86 +44837,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type AuthSessionExternalCreateWithoutAccountInput = {
-    id?: string
-    sessionId: string
-    sessionKey: string
-    jwt: string
-    expiresOn: Date | string
-    createdAt?: Date | string
-    application: ApplicationCreateNestedOneWithoutExternalSessionsInput
-  }
-
-  export type AuthSessionExternalUncheckedCreateWithoutAccountInput = {
-    id?: string
-    appId: string
-    sessionId: string
-    sessionKey: string
-    jwt: string
-    expiresOn: Date | string
-    createdAt?: Date | string
-  }
-
-  export type AuthSessionExternalCreateOrConnectWithoutAccountInput = {
-    where: AuthSessionExternalWhereUniqueInput
-    create: XOR<AuthSessionExternalCreateWithoutAccountInput, AuthSessionExternalUncheckedCreateWithoutAccountInput>
-  }
-
-  export type AuthSessionExternalCreateManyAccountInputEnvelope = {
-    data: AuthSessionExternalCreateManyAccountInput | AuthSessionExternalCreateManyAccountInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type AuthRoleExternalCreateWithoutAccountInput = {
-    id?: string
-    role: string
-    hasExtra?: boolean
-    createdAt?: Date | string
-    application: ApplicationCreateNestedOneWithoutExternalRolesInput
-  }
-
-  export type AuthRoleExternalUncheckedCreateWithoutAccountInput = {
-    id?: string
-    appId: string
-    role: string
-    hasExtra?: boolean
-    createdAt?: Date | string
-  }
-
-  export type AuthRoleExternalCreateOrConnectWithoutAccountInput = {
-    where: AuthRoleExternalWhereUniqueInput
-    create: XOR<AuthRoleExternalCreateWithoutAccountInput, AuthRoleExternalUncheckedCreateWithoutAccountInput>
-  }
-
-  export type AuthRoleExternalCreateManyAccountInputEnvelope = {
-    data: AuthRoleExternalCreateManyAccountInput | AuthRoleExternalCreateManyAccountInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type AuthPermissionsExternalCreateWithoutAccountInput = {
-    id?: string
-    permissions?: JsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    application: ApplicationCreateNestedOneWithoutExternalPermissionsInput
-  }
-
-  export type AuthPermissionsExternalUncheckedCreateWithoutAccountInput = {
-    id?: string
-    appId: string
-    permissions?: JsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-  }
-
-  export type AuthPermissionsExternalCreateOrConnectWithoutAccountInput = {
-    where: AuthPermissionsExternalWhereUniqueInput
-    create: XOR<AuthPermissionsExternalCreateWithoutAccountInput, AuthPermissionsExternalUncheckedCreateWithoutAccountInput>
-  }
-
-  export type AuthPermissionsExternalCreateManyAccountInputEnvelope = {
-    data: AuthPermissionsExternalCreateManyAccountInput | AuthPermissionsExternalCreateManyAccountInput[]
-    skipDuplicates?: boolean
-  }
-
   export type ApplicationCreateWithoutOwnerInput = {
     id: string
     name: string
@@ -49598,9 +44854,6 @@ export namespace Prisma {
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutApplicationInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutApplicationInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutApplicationInput
     authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
   }
@@ -49622,9 +44875,6 @@ export namespace Prisma {
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutApplicationInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutApplicationInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutApplicationInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutApplicationInput
     authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
   }
@@ -50296,91 +45546,6 @@ export namespace Prisma {
     activeTill?: DateTimeFilter<"AppSession"> | Date | string
   }
 
-  export type AuthSessionExternalUpsertWithWhereUniqueWithoutAccountInput = {
-    where: AuthSessionExternalWhereUniqueInput
-    update: XOR<AuthSessionExternalUpdateWithoutAccountInput, AuthSessionExternalUncheckedUpdateWithoutAccountInput>
-    create: XOR<AuthSessionExternalCreateWithoutAccountInput, AuthSessionExternalUncheckedCreateWithoutAccountInput>
-  }
-
-  export type AuthSessionExternalUpdateWithWhereUniqueWithoutAccountInput = {
-    where: AuthSessionExternalWhereUniqueInput
-    data: XOR<AuthSessionExternalUpdateWithoutAccountInput, AuthSessionExternalUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type AuthSessionExternalUpdateManyWithWhereWithoutAccountInput = {
-    where: AuthSessionExternalScalarWhereInput
-    data: XOR<AuthSessionExternalUpdateManyMutationInput, AuthSessionExternalUncheckedUpdateManyWithoutAccountInput>
-  }
-
-  export type AuthSessionExternalScalarWhereInput = {
-    AND?: AuthSessionExternalScalarWhereInput | AuthSessionExternalScalarWhereInput[]
-    OR?: AuthSessionExternalScalarWhereInput[]
-    NOT?: AuthSessionExternalScalarWhereInput | AuthSessionExternalScalarWhereInput[]
-    id?: StringFilter<"AuthSessionExternal"> | string
-    accountId?: StringFilter<"AuthSessionExternal"> | string
-    appId?: StringFilter<"AuthSessionExternal"> | string
-    sessionId?: StringFilter<"AuthSessionExternal"> | string
-    sessionKey?: StringFilter<"AuthSessionExternal"> | string
-    jwt?: StringFilter<"AuthSessionExternal"> | string
-    expiresOn?: DateTimeFilter<"AuthSessionExternal"> | Date | string
-    createdAt?: DateTimeFilter<"AuthSessionExternal"> | Date | string
-  }
-
-  export type AuthRoleExternalUpsertWithWhereUniqueWithoutAccountInput = {
-    where: AuthRoleExternalWhereUniqueInput
-    update: XOR<AuthRoleExternalUpdateWithoutAccountInput, AuthRoleExternalUncheckedUpdateWithoutAccountInput>
-    create: XOR<AuthRoleExternalCreateWithoutAccountInput, AuthRoleExternalUncheckedCreateWithoutAccountInput>
-  }
-
-  export type AuthRoleExternalUpdateWithWhereUniqueWithoutAccountInput = {
-    where: AuthRoleExternalWhereUniqueInput
-    data: XOR<AuthRoleExternalUpdateWithoutAccountInput, AuthRoleExternalUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type AuthRoleExternalUpdateManyWithWhereWithoutAccountInput = {
-    where: AuthRoleExternalScalarWhereInput
-    data: XOR<AuthRoleExternalUpdateManyMutationInput, AuthRoleExternalUncheckedUpdateManyWithoutAccountInput>
-  }
-
-  export type AuthRoleExternalScalarWhereInput = {
-    AND?: AuthRoleExternalScalarWhereInput | AuthRoleExternalScalarWhereInput[]
-    OR?: AuthRoleExternalScalarWhereInput[]
-    NOT?: AuthRoleExternalScalarWhereInput | AuthRoleExternalScalarWhereInput[]
-    id?: StringFilter<"AuthRoleExternal"> | string
-    accountId?: StringFilter<"AuthRoleExternal"> | string
-    appId?: StringFilter<"AuthRoleExternal"> | string
-    role?: StringFilter<"AuthRoleExternal"> | string
-    hasExtra?: BoolFilter<"AuthRoleExternal"> | boolean
-    createdAt?: DateTimeFilter<"AuthRoleExternal"> | Date | string
-  }
-
-  export type AuthPermissionsExternalUpsertWithWhereUniqueWithoutAccountInput = {
-    where: AuthPermissionsExternalWhereUniqueInput
-    update: XOR<AuthPermissionsExternalUpdateWithoutAccountInput, AuthPermissionsExternalUncheckedUpdateWithoutAccountInput>
-    create: XOR<AuthPermissionsExternalCreateWithoutAccountInput, AuthPermissionsExternalUncheckedCreateWithoutAccountInput>
-  }
-
-  export type AuthPermissionsExternalUpdateWithWhereUniqueWithoutAccountInput = {
-    where: AuthPermissionsExternalWhereUniqueInput
-    data: XOR<AuthPermissionsExternalUpdateWithoutAccountInput, AuthPermissionsExternalUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type AuthPermissionsExternalUpdateManyWithWhereWithoutAccountInput = {
-    where: AuthPermissionsExternalScalarWhereInput
-    data: XOR<AuthPermissionsExternalUpdateManyMutationInput, AuthPermissionsExternalUncheckedUpdateManyWithoutAccountInput>
-  }
-
-  export type AuthPermissionsExternalScalarWhereInput = {
-    AND?: AuthPermissionsExternalScalarWhereInput | AuthPermissionsExternalScalarWhereInput[]
-    OR?: AuthPermissionsExternalScalarWhereInput[]
-    NOT?: AuthPermissionsExternalScalarWhereInput | AuthPermissionsExternalScalarWhereInput[]
-    id?: StringFilter<"AuthPermissionsExternal"> | string
-    accountId?: StringFilter<"AuthPermissionsExternal"> | string
-    appId?: StringFilter<"AuthPermissionsExternal"> | string
-    permissions?: JsonFilter<"AuthPermissionsExternal">
-    createdAt?: DateTimeFilter<"AuthPermissionsExternal"> | Date | string
-  }
-
   export type ApplicationUpsertWithWhereUniqueWithoutOwnerInput = {
     where: ApplicationWhereUniqueInput
     update: XOR<ApplicationUpdateWithoutOwnerInput, ApplicationUncheckedUpdateWithoutOwnerInput>
@@ -50742,9 +45907,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -50779,9 +45941,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -50832,9 +45991,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -50869,9 +46025,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -50906,9 +46059,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -50943,9 +46093,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -50996,9 +46143,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -51033,9 +46177,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -51070,9 +46211,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -51107,9 +46245,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -51149,9 +46284,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -51186,9 +46318,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -51239,9 +46368,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -51276,9 +46402,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -51324,9 +46447,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -51361,9 +46481,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -51398,9 +46515,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
@@ -51435,9 +46549,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
@@ -51517,9 +46628,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
@@ -51554,9 +46662,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
@@ -51626,9 +46731,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -51663,9 +46765,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -51705,9 +46804,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -51742,9 +46838,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -51831,9 +46924,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -51868,9 +46958,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -51916,9 +47003,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -51953,9 +47037,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -52006,9 +47087,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
@@ -52043,9 +47121,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
@@ -52096,9 +47171,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
@@ -52133,9 +47205,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
@@ -52169,9 +47238,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -52206,9 +47272,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -52259,9 +47322,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -52296,9 +47356,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -52333,9 +47390,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -52370,9 +47424,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -52423,9 +47474,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -52460,9 +47508,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -52497,9 +47542,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -52534,9 +47576,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -52587,9 +47626,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -52624,9 +47660,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -52661,9 +47694,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -52698,9 +47728,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -52751,9 +47778,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -52788,9 +47812,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -52825,9 +47846,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -52862,9 +47880,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -52904,9 +47919,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -52941,9 +47953,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -52994,9 +48003,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -53031,9 +48037,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -53079,9 +48082,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -53116,9 +48116,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -53181,9 +48178,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -53218,9 +48212,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -53287,9 +48278,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -53324,9 +48312,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -53361,9 +48346,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -53398,9 +48380,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -53451,9 +48430,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -53488,9 +48464,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -53526,9 +48499,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
@@ -53563,9 +48533,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
@@ -53659,86 +48626,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type AuthSessionExternalCreateWithoutApplicationInput = {
-    id?: string
-    sessionId: string
-    sessionKey: string
-    jwt: string
-    expiresOn: Date | string
-    createdAt?: Date | string
-    account: AccountCreateNestedOneWithoutExternalSessionsInput
-  }
-
-  export type AuthSessionExternalUncheckedCreateWithoutApplicationInput = {
-    id?: string
-    accountId: string
-    sessionId: string
-    sessionKey: string
-    jwt: string
-    expiresOn: Date | string
-    createdAt?: Date | string
-  }
-
-  export type AuthSessionExternalCreateOrConnectWithoutApplicationInput = {
-    where: AuthSessionExternalWhereUniqueInput
-    create: XOR<AuthSessionExternalCreateWithoutApplicationInput, AuthSessionExternalUncheckedCreateWithoutApplicationInput>
-  }
-
-  export type AuthSessionExternalCreateManyApplicationInputEnvelope = {
-    data: AuthSessionExternalCreateManyApplicationInput | AuthSessionExternalCreateManyApplicationInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type AuthRoleExternalCreateWithoutApplicationInput = {
-    id?: string
-    role: string
-    hasExtra?: boolean
-    createdAt?: Date | string
-    account: AccountCreateNestedOneWithoutExternalRolesInput
-  }
-
-  export type AuthRoleExternalUncheckedCreateWithoutApplicationInput = {
-    id?: string
-    accountId: string
-    role: string
-    hasExtra?: boolean
-    createdAt?: Date | string
-  }
-
-  export type AuthRoleExternalCreateOrConnectWithoutApplicationInput = {
-    where: AuthRoleExternalWhereUniqueInput
-    create: XOR<AuthRoleExternalCreateWithoutApplicationInput, AuthRoleExternalUncheckedCreateWithoutApplicationInput>
-  }
-
-  export type AuthRoleExternalCreateManyApplicationInputEnvelope = {
-    data: AuthRoleExternalCreateManyApplicationInput | AuthRoleExternalCreateManyApplicationInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type AuthPermissionsExternalCreateWithoutApplicationInput = {
-    id?: string
-    permissions?: JsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    account: AccountCreateNestedOneWithoutExternalPermissionsInput
-  }
-
-  export type AuthPermissionsExternalUncheckedCreateWithoutApplicationInput = {
-    id?: string
-    accountId: string
-    permissions?: JsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-  }
-
-  export type AuthPermissionsExternalCreateOrConnectWithoutApplicationInput = {
-    where: AuthPermissionsExternalWhereUniqueInput
-    create: XOR<AuthPermissionsExternalCreateWithoutApplicationInput, AuthPermissionsExternalUncheckedCreateWithoutApplicationInput>
-  }
-
-  export type AuthPermissionsExternalCreateManyApplicationInputEnvelope = {
-    data: AuthPermissionsExternalCreateManyApplicationInput | AuthPermissionsExternalCreateManyApplicationInput[]
-    skipDuplicates?: boolean
-  }
-
   export type AuthTeamExternalCreateWithoutApplicationInput = {
     id?: string
     isPermanent?: boolean
@@ -53828,9 +48715,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
@@ -53865,9 +48749,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
@@ -53928,54 +48809,6 @@ export namespace Prisma {
   export type AppSessionUpdateManyWithWhereWithoutApplicationInput = {
     where: AppSessionScalarWhereInput
     data: XOR<AppSessionUpdateManyMutationInput, AppSessionUncheckedUpdateManyWithoutApplicationInput>
-  }
-
-  export type AuthSessionExternalUpsertWithWhereUniqueWithoutApplicationInput = {
-    where: AuthSessionExternalWhereUniqueInput
-    update: XOR<AuthSessionExternalUpdateWithoutApplicationInput, AuthSessionExternalUncheckedUpdateWithoutApplicationInput>
-    create: XOR<AuthSessionExternalCreateWithoutApplicationInput, AuthSessionExternalUncheckedCreateWithoutApplicationInput>
-  }
-
-  export type AuthSessionExternalUpdateWithWhereUniqueWithoutApplicationInput = {
-    where: AuthSessionExternalWhereUniqueInput
-    data: XOR<AuthSessionExternalUpdateWithoutApplicationInput, AuthSessionExternalUncheckedUpdateWithoutApplicationInput>
-  }
-
-  export type AuthSessionExternalUpdateManyWithWhereWithoutApplicationInput = {
-    where: AuthSessionExternalScalarWhereInput
-    data: XOR<AuthSessionExternalUpdateManyMutationInput, AuthSessionExternalUncheckedUpdateManyWithoutApplicationInput>
-  }
-
-  export type AuthRoleExternalUpsertWithWhereUniqueWithoutApplicationInput = {
-    where: AuthRoleExternalWhereUniqueInput
-    update: XOR<AuthRoleExternalUpdateWithoutApplicationInput, AuthRoleExternalUncheckedUpdateWithoutApplicationInput>
-    create: XOR<AuthRoleExternalCreateWithoutApplicationInput, AuthRoleExternalUncheckedCreateWithoutApplicationInput>
-  }
-
-  export type AuthRoleExternalUpdateWithWhereUniqueWithoutApplicationInput = {
-    where: AuthRoleExternalWhereUniqueInput
-    data: XOR<AuthRoleExternalUpdateWithoutApplicationInput, AuthRoleExternalUncheckedUpdateWithoutApplicationInput>
-  }
-
-  export type AuthRoleExternalUpdateManyWithWhereWithoutApplicationInput = {
-    where: AuthRoleExternalScalarWhereInput
-    data: XOR<AuthRoleExternalUpdateManyMutationInput, AuthRoleExternalUncheckedUpdateManyWithoutApplicationInput>
-  }
-
-  export type AuthPermissionsExternalUpsertWithWhereUniqueWithoutApplicationInput = {
-    where: AuthPermissionsExternalWhereUniqueInput
-    update: XOR<AuthPermissionsExternalUpdateWithoutApplicationInput, AuthPermissionsExternalUncheckedUpdateWithoutApplicationInput>
-    create: XOR<AuthPermissionsExternalCreateWithoutApplicationInput, AuthPermissionsExternalUncheckedCreateWithoutApplicationInput>
-  }
-
-  export type AuthPermissionsExternalUpdateWithWhereUniqueWithoutApplicationInput = {
-    where: AuthPermissionsExternalWhereUniqueInput
-    data: XOR<AuthPermissionsExternalUpdateWithoutApplicationInput, AuthPermissionsExternalUncheckedUpdateWithoutApplicationInput>
-  }
-
-  export type AuthPermissionsExternalUpdateManyWithWhereWithoutApplicationInput = {
-    where: AuthPermissionsExternalScalarWhereInput
-    data: XOR<AuthPermissionsExternalUpdateManyMutationInput, AuthPermissionsExternalUncheckedUpdateManyWithoutApplicationInput>
   }
 
   export type AuthTeamExternalUpsertWithWhereUniqueWithoutApplicationInput = {
@@ -54411,9 +49244,6 @@ export namespace Prisma {
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutApplicationInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutApplicationInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
   }
 
@@ -54435,9 +49265,6 @@ export namespace Prisma {
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutApplicationInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutApplicationInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutApplicationInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
   }
 
@@ -54466,9 +49293,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -54503,9 +49327,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -54545,9 +49366,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -54582,9 +49400,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -54633,9 +49448,6 @@ export namespace Prisma {
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutApplicationNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutApplicationNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
   }
 
@@ -54657,9 +49469,6 @@ export namespace Prisma {
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutApplicationNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
@@ -54694,9 +49503,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -54731,9 +49537,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -54779,9 +49582,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -54816,9 +49616,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -54851,9 +49648,6 @@ export namespace Prisma {
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutApplicationInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutApplicationInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutApplicationInput
     authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
   }
 
@@ -54875,9 +49669,6 @@ export namespace Prisma {
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutApplicationInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutApplicationInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutApplicationInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutApplicationInput
     authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
   }
 
@@ -54906,9 +49697,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -54943,9 +49731,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -54985,9 +49770,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -55022,9 +49804,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -55073,9 +49852,6 @@ export namespace Prisma {
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutApplicationNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutApplicationNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutApplicationNestedInput
     authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
   }
 
@@ -55097,9 +49873,6 @@ export namespace Prisma {
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutApplicationNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
@@ -55134,9 +49907,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -55171,9 +49941,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -55219,9 +49986,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -55256,9 +50020,6 @@ export namespace Prisma {
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -55292,9 +50053,6 @@ export namespace Prisma {
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -55329,9 +50087,6 @@ export namespace Prisma {
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -55369,9 +50124,6 @@ export namespace Prisma {
     owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutApplicationInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutApplicationInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutApplicationInput
     authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
   }
@@ -55393,9 +50145,6 @@ export namespace Prisma {
     createdAt?: Date | string
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutApplicationInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutApplicationInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutApplicationInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutApplicationInput
     authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
   }
@@ -55435,9 +50184,6 @@ export namespace Prisma {
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -55472,9 +50218,6 @@ export namespace Prisma {
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -55518,9 +50261,6 @@ export namespace Prisma {
     owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutApplicationNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutApplicationNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutApplicationNestedInput
     authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
   }
@@ -55542,9 +50282,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutApplicationNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
   }
@@ -55568,9 +50305,6 @@ export namespace Prisma {
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -55605,9 +50339,6 @@ export namespace Prisma {
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -55645,9 +50376,6 @@ export namespace Prisma {
     owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutApplicationInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutApplicationInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutApplicationInput
     authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
   }
@@ -55669,9 +50397,6 @@ export namespace Prisma {
     createdAt?: Date | string
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutApplicationInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutApplicationInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutApplicationInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutApplicationInput
     authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
   }
@@ -55711,9 +50436,6 @@ export namespace Prisma {
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -55748,9 +50470,6 @@ export namespace Prisma {
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -55794,9 +50513,6 @@ export namespace Prisma {
     owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutApplicationNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutApplicationNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutApplicationNestedInput
     authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
   }
@@ -55818,9 +50534,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutApplicationNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
   }
@@ -55844,9 +50557,6 @@ export namespace Prisma {
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -55881,9 +50591,6 @@ export namespace Prisma {
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -55921,9 +50628,6 @@ export namespace Prisma {
     owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutApplicationInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutApplicationInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutApplicationInput
     authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
   }
@@ -55945,9 +50649,6 @@ export namespace Prisma {
     createdAt?: Date | string
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutApplicationInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutApplicationInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutApplicationInput
     authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
   }
@@ -56022,9 +50723,6 @@ export namespace Prisma {
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -56059,9 +50757,6 @@ export namespace Prisma {
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -56105,9 +50800,6 @@ export namespace Prisma {
     owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutApplicationNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutApplicationNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutApplicationNestedInput
     authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
   }
@@ -56129,9 +50821,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
   }
@@ -56175,834 +50864,6 @@ export namespace Prisma {
     isExpired?: BoolFieldUpdateOperationsInput | boolean
     authSessionKey?: NullableStringFieldUpdateOperationsInput | string | null
     dependentKeys?: NullableJsonNullValueInput | InputJsonValue
-  }
-
-  export type AccountCreateWithoutExternalSessionsInput = {
-    id?: string
-    accountType?: string
-    displayImage?: string | null
-    displayName?: string | null
-    status?: string | null
-    isVerified?: boolean
-    createdAt?: Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
-    permits?: PermitCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
-    recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
-  }
-
-  export type AccountUncheckedCreateWithoutExternalSessionsInput = {
-    id?: string
-    accountType?: string
-    displayImage?: string | null
-    displayName?: string | null
-    status?: string | null
-    isVerified?: boolean
-    createdAt?: Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
-    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
-  }
-
-  export type AccountCreateOrConnectWithoutExternalSessionsInput = {
-    where: AccountWhereUniqueInput
-    create: XOR<AccountCreateWithoutExternalSessionsInput, AccountUncheckedCreateWithoutExternalSessionsInput>
-  }
-
-  export type ApplicationCreateWithoutExternalSessionsInput = {
-    id: string
-    name: string
-    status?: string
-    party?: string
-    description?: string | null
-    icon?: string | null
-    website?: string | null
-    developer?: string | null
-    appSecret?: string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
-    connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
-    appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
-    appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutApplicationInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutApplicationInput
-    authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
-    authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
-  }
-
-  export type ApplicationUncheckedCreateWithoutExternalSessionsInput = {
-    id: string
-    name: string
-    status?: string
-    party?: string
-    description?: string | null
-    icon?: string | null
-    website?: string | null
-    developer?: string | null
-    appSecret?: string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    ownerAccountId?: string | null
-    createdAt?: Date | string
-    connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
-    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
-    appSessions?: AppSessionUncheckedCreateNestedManyWithoutApplicationInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutApplicationInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutApplicationInput
-    authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
-    authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
-  }
-
-  export type ApplicationCreateOrConnectWithoutExternalSessionsInput = {
-    where: ApplicationWhereUniqueInput
-    create: XOR<ApplicationCreateWithoutExternalSessionsInput, ApplicationUncheckedCreateWithoutExternalSessionsInput>
-  }
-
-  export type AccountUpsertWithoutExternalSessionsInput = {
-    update: XOR<AccountUpdateWithoutExternalSessionsInput, AccountUncheckedUpdateWithoutExternalSessionsInput>
-    create: XOR<AccountCreateWithoutExternalSessionsInput, AccountUncheckedCreateWithoutExternalSessionsInput>
-    where?: AccountWhereInput
-  }
-
-  export type AccountUpdateToOneWithWhereWithoutExternalSessionsInput = {
-    where?: AccountWhereInput
-    data: XOR<AccountUpdateWithoutExternalSessionsInput, AccountUncheckedUpdateWithoutExternalSessionsInput>
-  }
-
-  export type AccountUpdateWithoutExternalSessionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
-    permits?: PermitUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
-    recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
-  }
-
-  export type AccountUncheckedUpdateWithoutExternalSessionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
-    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
-  }
-
-  export type ApplicationUpsertWithoutExternalSessionsInput = {
-    update: XOR<ApplicationUpdateWithoutExternalSessionsInput, ApplicationUncheckedUpdateWithoutExternalSessionsInput>
-    create: XOR<ApplicationCreateWithoutExternalSessionsInput, ApplicationUncheckedCreateWithoutExternalSessionsInput>
-    where?: ApplicationWhereInput
-  }
-
-  export type ApplicationUpdateToOneWithWhereWithoutExternalSessionsInput = {
-    where?: ApplicationWhereInput
-    data: XOR<ApplicationUpdateWithoutExternalSessionsInput, ApplicationUncheckedUpdateWithoutExternalSessionsInput>
-  }
-
-  export type ApplicationUpdateWithoutExternalSessionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    party?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
-    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
-    connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
-    appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
-    appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutApplicationNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutApplicationNestedInput
-    authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
-    authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
-  }
-
-  export type ApplicationUncheckedUpdateWithoutExternalSessionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    party?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
-    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
-    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
-    appSessions?: AppSessionUncheckedUpdateManyWithoutApplicationNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
-  }
-
-  export type AccountCreateWithoutExternalRolesInput = {
-    id?: string
-    accountType?: string
-    displayImage?: string | null
-    displayName?: string | null
-    status?: string | null
-    isVerified?: boolean
-    createdAt?: Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
-    permits?: PermitCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
-    recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
-  }
-
-  export type AccountUncheckedCreateWithoutExternalRolesInput = {
-    id?: string
-    accountType?: string
-    displayImage?: string | null
-    displayName?: string | null
-    status?: string | null
-    isVerified?: boolean
-    createdAt?: Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
-    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
-  }
-
-  export type AccountCreateOrConnectWithoutExternalRolesInput = {
-    where: AccountWhereUniqueInput
-    create: XOR<AccountCreateWithoutExternalRolesInput, AccountUncheckedCreateWithoutExternalRolesInput>
-  }
-
-  export type ApplicationCreateWithoutExternalRolesInput = {
-    id: string
-    name: string
-    status?: string
-    party?: string
-    description?: string | null
-    icon?: string | null
-    website?: string | null
-    developer?: string | null
-    appSecret?: string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
-    connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
-    appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
-    appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutApplicationInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutApplicationInput
-    authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
-    authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
-  }
-
-  export type ApplicationUncheckedCreateWithoutExternalRolesInput = {
-    id: string
-    name: string
-    status?: string
-    party?: string
-    description?: string | null
-    icon?: string | null
-    website?: string | null
-    developer?: string | null
-    appSecret?: string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    ownerAccountId?: string | null
-    createdAt?: Date | string
-    connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
-    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
-    appSessions?: AppSessionUncheckedCreateNestedManyWithoutApplicationInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutApplicationInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutApplicationInput
-    authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
-    authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
-  }
-
-  export type ApplicationCreateOrConnectWithoutExternalRolesInput = {
-    where: ApplicationWhereUniqueInput
-    create: XOR<ApplicationCreateWithoutExternalRolesInput, ApplicationUncheckedCreateWithoutExternalRolesInput>
-  }
-
-  export type AccountUpsertWithoutExternalRolesInput = {
-    update: XOR<AccountUpdateWithoutExternalRolesInput, AccountUncheckedUpdateWithoutExternalRolesInput>
-    create: XOR<AccountCreateWithoutExternalRolesInput, AccountUncheckedCreateWithoutExternalRolesInput>
-    where?: AccountWhereInput
-  }
-
-  export type AccountUpdateToOneWithWhereWithoutExternalRolesInput = {
-    where?: AccountWhereInput
-    data: XOR<AccountUpdateWithoutExternalRolesInput, AccountUncheckedUpdateWithoutExternalRolesInput>
-  }
-
-  export type AccountUpdateWithoutExternalRolesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
-    permits?: PermitUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
-    recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
-  }
-
-  export type AccountUncheckedUpdateWithoutExternalRolesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
-    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
-  }
-
-  export type ApplicationUpsertWithoutExternalRolesInput = {
-    update: XOR<ApplicationUpdateWithoutExternalRolesInput, ApplicationUncheckedUpdateWithoutExternalRolesInput>
-    create: XOR<ApplicationCreateWithoutExternalRolesInput, ApplicationUncheckedCreateWithoutExternalRolesInput>
-    where?: ApplicationWhereInput
-  }
-
-  export type ApplicationUpdateToOneWithWhereWithoutExternalRolesInput = {
-    where?: ApplicationWhereInput
-    data: XOR<ApplicationUpdateWithoutExternalRolesInput, ApplicationUncheckedUpdateWithoutExternalRolesInput>
-  }
-
-  export type ApplicationUpdateWithoutExternalRolesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    party?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
-    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
-    connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
-    appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
-    appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutApplicationNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutApplicationNestedInput
-    authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
-    authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
-  }
-
-  export type ApplicationUncheckedUpdateWithoutExternalRolesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    party?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
-    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
-    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
-    appSessions?: AppSessionUncheckedUpdateManyWithoutApplicationNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
-  }
-
-  export type AccountCreateWithoutExternalPermissionsInput = {
-    id?: string
-    accountType?: string
-    displayImage?: string | null
-    displayName?: string | null
-    status?: string | null
-    isVerified?: boolean
-    createdAt?: Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
-    permits?: PermitCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
-    recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
-  }
-
-  export type AccountUncheckedCreateWithoutExternalPermissionsInput = {
-    id?: string
-    accountType?: string
-    displayImage?: string | null
-    displayName?: string | null
-    status?: string | null
-    isVerified?: boolean
-    createdAt?: Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
-    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
-  }
-
-  export type AccountCreateOrConnectWithoutExternalPermissionsInput = {
-    where: AccountWhereUniqueInput
-    create: XOR<AccountCreateWithoutExternalPermissionsInput, AccountUncheckedCreateWithoutExternalPermissionsInput>
-  }
-
-  export type ApplicationCreateWithoutExternalPermissionsInput = {
-    id: string
-    name: string
-    status?: string
-    party?: string
-    description?: string | null
-    icon?: string | null
-    website?: string | null
-    developer?: string | null
-    appSecret?: string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
-    connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
-    appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
-    appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutApplicationInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutApplicationInput
-    authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
-    authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
-  }
-
-  export type ApplicationUncheckedCreateWithoutExternalPermissionsInput = {
-    id: string
-    name: string
-    status?: string
-    party?: string
-    description?: string | null
-    icon?: string | null
-    website?: string | null
-    developer?: string | null
-    appSecret?: string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    ownerAccountId?: string | null
-    createdAt?: Date | string
-    connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
-    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
-    appSessions?: AppSessionUncheckedCreateNestedManyWithoutApplicationInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutApplicationInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutApplicationInput
-    authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
-    authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
-  }
-
-  export type ApplicationCreateOrConnectWithoutExternalPermissionsInput = {
-    where: ApplicationWhereUniqueInput
-    create: XOR<ApplicationCreateWithoutExternalPermissionsInput, ApplicationUncheckedCreateWithoutExternalPermissionsInput>
-  }
-
-  export type AccountUpsertWithoutExternalPermissionsInput = {
-    update: XOR<AccountUpdateWithoutExternalPermissionsInput, AccountUncheckedUpdateWithoutExternalPermissionsInput>
-    create: XOR<AccountCreateWithoutExternalPermissionsInput, AccountUncheckedCreateWithoutExternalPermissionsInput>
-    where?: AccountWhereInput
-  }
-
-  export type AccountUpdateToOneWithWhereWithoutExternalPermissionsInput = {
-    where?: AccountWhereInput
-    data: XOR<AccountUpdateWithoutExternalPermissionsInput, AccountUncheckedUpdateWithoutExternalPermissionsInput>
-  }
-
-  export type AccountUpdateWithoutExternalPermissionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
-    permits?: PermitUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
-    recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
-  }
-
-  export type AccountUncheckedUpdateWithoutExternalPermissionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
-    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
-  }
-
-  export type ApplicationUpsertWithoutExternalPermissionsInput = {
-    update: XOR<ApplicationUpdateWithoutExternalPermissionsInput, ApplicationUncheckedUpdateWithoutExternalPermissionsInput>
-    create: XOR<ApplicationCreateWithoutExternalPermissionsInput, ApplicationUncheckedCreateWithoutExternalPermissionsInput>
-    where?: ApplicationWhereInput
-  }
-
-  export type ApplicationUpdateToOneWithWhereWithoutExternalPermissionsInput = {
-    where?: ApplicationWhereInput
-    data: XOR<ApplicationUpdateWithoutExternalPermissionsInput, ApplicationUncheckedUpdateWithoutExternalPermissionsInput>
-  }
-
-  export type ApplicationUpdateWithoutExternalPermissionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    party?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
-    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
-    connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
-    appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
-    appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutApplicationNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutApplicationNestedInput
-    authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
-    authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
-  }
-
-  export type ApplicationUncheckedUpdateWithoutExternalPermissionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    party?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
-    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
-    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
-    appSessions?: AppSessionUncheckedUpdateManyWithoutApplicationNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ContactCreateManyAccountInput = {
@@ -57112,31 +50973,6 @@ export namespace Prisma {
     sessionValue: string
     createdOn?: Date | string
     activeTill: Date | string
-  }
-
-  export type AuthSessionExternalCreateManyAccountInput = {
-    id?: string
-    appId: string
-    sessionId: string
-    sessionKey: string
-    jwt: string
-    expiresOn: Date | string
-    createdAt?: Date | string
-  }
-
-  export type AuthRoleExternalCreateManyAccountInput = {
-    id?: string
-    appId: string
-    role: string
-    hasExtra?: boolean
-    createdAt?: Date | string
-  }
-
-  export type AuthPermissionsExternalCreateManyAccountInput = {
-    id?: string
-    appId: string
-    permissions?: JsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
   }
 
   export type ApplicationCreateManyOwnerInput = {
@@ -57585,81 +51421,6 @@ export namespace Prisma {
     activeTill?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type AuthSessionExternalUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    sessionId?: StringFieldUpdateOperationsInput | string
-    sessionKey?: StringFieldUpdateOperationsInput | string
-    jwt?: StringFieldUpdateOperationsInput | string
-    expiresOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    application?: ApplicationUpdateOneRequiredWithoutExternalSessionsNestedInput
-  }
-
-  export type AuthSessionExternalUncheckedUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
-    sessionId?: StringFieldUpdateOperationsInput | string
-    sessionKey?: StringFieldUpdateOperationsInput | string
-    jwt?: StringFieldUpdateOperationsInput | string
-    expiresOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthSessionExternalUncheckedUpdateManyWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
-    sessionId?: StringFieldUpdateOperationsInput | string
-    sessionKey?: StringFieldUpdateOperationsInput | string
-    jwt?: StringFieldUpdateOperationsInput | string
-    expiresOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthRoleExternalUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    hasExtra?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    application?: ApplicationUpdateOneRequiredWithoutExternalRolesNestedInput
-  }
-
-  export type AuthRoleExternalUncheckedUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    hasExtra?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthRoleExternalUncheckedUpdateManyWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    hasExtra?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthPermissionsExternalUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    permissions?: JsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    application?: ApplicationUpdateOneRequiredWithoutExternalPermissionsNestedInput
-  }
-
-  export type AuthPermissionsExternalUncheckedUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
-    permissions?: JsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthPermissionsExternalUncheckedUpdateManyWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
-    permissions?: JsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type ApplicationUpdateWithoutOwnerInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -57677,9 +51438,6 @@ export namespace Prisma {
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutApplicationNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutApplicationNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutApplicationNestedInput
     authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
   }
@@ -57701,9 +51459,6 @@ export namespace Prisma {
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutApplicationNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutApplicationNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
   }
@@ -58141,31 +51896,6 @@ export namespace Prisma {
     activeTill: Date | string
   }
 
-  export type AuthSessionExternalCreateManyApplicationInput = {
-    id?: string
-    accountId: string
-    sessionId: string
-    sessionKey: string
-    jwt: string
-    expiresOn: Date | string
-    createdAt?: Date | string
-  }
-
-  export type AuthRoleExternalCreateManyApplicationInput = {
-    id?: string
-    accountId: string
-    role: string
-    hasExtra?: boolean
-    createdAt?: Date | string
-  }
-
-  export type AuthPermissionsExternalCreateManyApplicationInput = {
-    id?: string
-    accountId: string
-    permissions?: JsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-  }
-
   export type AuthTeamExternalCreateManyApplicationInput = {
     id?: string
     accountId: string
@@ -58249,81 +51979,6 @@ export namespace Prisma {
     sessionValue?: StringFieldUpdateOperationsInput | string
     createdOn?: DateTimeFieldUpdateOperationsInput | Date | string
     activeTill?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthSessionExternalUpdateWithoutApplicationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    sessionId?: StringFieldUpdateOperationsInput | string
-    sessionKey?: StringFieldUpdateOperationsInput | string
-    jwt?: StringFieldUpdateOperationsInput | string
-    expiresOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    account?: AccountUpdateOneRequiredWithoutExternalSessionsNestedInput
-  }
-
-  export type AuthSessionExternalUncheckedUpdateWithoutApplicationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    sessionId?: StringFieldUpdateOperationsInput | string
-    sessionKey?: StringFieldUpdateOperationsInput | string
-    jwt?: StringFieldUpdateOperationsInput | string
-    expiresOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthSessionExternalUncheckedUpdateManyWithoutApplicationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    sessionId?: StringFieldUpdateOperationsInput | string
-    sessionKey?: StringFieldUpdateOperationsInput | string
-    jwt?: StringFieldUpdateOperationsInput | string
-    expiresOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthRoleExternalUpdateWithoutApplicationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    hasExtra?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    account?: AccountUpdateOneRequiredWithoutExternalRolesNestedInput
-  }
-
-  export type AuthRoleExternalUncheckedUpdateWithoutApplicationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    hasExtra?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthRoleExternalUncheckedUpdateManyWithoutApplicationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    hasExtra?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthPermissionsExternalUpdateWithoutApplicationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    permissions?: JsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    account?: AccountUpdateOneRequiredWithoutExternalPermissionsNestedInput
-  }
-
-  export type AuthPermissionsExternalUncheckedUpdateWithoutApplicationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    permissions?: JsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthPermissionsExternalUncheckedUpdateManyWithoutApplicationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    permissions?: JsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AuthTeamExternalUpdateWithoutApplicationInput = {

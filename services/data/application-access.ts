@@ -48,13 +48,13 @@ export async function getUserApplicationAccess(appId: string): Promise<UserAppli
           },
         },
       }),
-      prisma.authSessionExternal.findFirst({
+      prisma.appSession.findFirst({
         where: {
           appId,
           accountId,
         },
         orderBy: {
-          createdAt: 'asc',
+          createdOn: 'asc',
         },
       }),
     ]);
@@ -73,7 +73,7 @@ export async function getUserApplicationAccess(appId: string): Promise<UserAppli
       ? (appAuthentication?.permissions as string[])
       : [];
 
-    const connectedOnCandidates = [appAuthentication?.createdAt, externalSession?.createdAt].filter(Boolean) as Date[];
+    const connectedOnCandidates = [appAuthentication?.createdAt, externalSession?.createdOn].filter(Boolean) as Date[];
     const connectedOn = connectedOnCandidates.length > 0
       ? connectedOnCandidates.reduce((earliest, current) => (current < earliest ? current : earliest))
       : new Date();
