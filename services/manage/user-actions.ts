@@ -325,11 +325,8 @@ export async function deleteUserAccount(userId: string): Promise<{ success: bool
                 } 
             }),
             prisma.notification.deleteMany({ where: { accountId: userId } }),
-            prisma.kycRequest.deleteMany({ where: { accountId: userId } }),
             prisma.backupCode.deleteMany({ where: { accountId: userId } }),
             prisma.verification.deleteMany({ where: { accountId: userId } }),
-            prisma.userDocument.deleteMany({ where: { accountId: userId } }),
-            prisma.userContent.deleteMany({ where: { forAccountId: userId } }),
             prisma.password.deleteMany({ where: { accountId: userId } }),
             prisma.totp.deleteMany({ where: { accountId: userId } }),
             prisma.accountStatusLog.deleteMany({ where: { accountId: userId } }),

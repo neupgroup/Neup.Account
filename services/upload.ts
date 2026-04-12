@@ -1,7 +1,6 @@
 
 'use server';
 
-import prisma from '@/core/helpers/prisma';
 import { getActiveAccountId, getPersonalAccountId } from '@/core/helpers/auth-actions';
 import { logError } from '@/core/helpers/logger';
 
@@ -127,20 +126,6 @@ export async function uploadFile(
 
     if (result.success && result.url) {
       const fullUrl = `https://neupgroup.com${result.url}`;
-      
-      // Log successful upload to Prisma
-      await prisma.userContent.create({
-        data: {
-          contentId,
-          platform,
-          uploaderId: actorAccountId,
-          forAccountId: targetAccountId,
-          url: fullUrl,
-          originalName: name,
-          fileType: file.type,
-          size: file.size,
-        }
-      });
 
       return { success: true, url: fullUrl, contentId: contentId };
     } else if (result.success && !result.url) {

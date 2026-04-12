@@ -153,12 +153,6 @@ exports.Prisma.TotpScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
-exports.Prisma.SystemConfigScalarFieldEnum = {
-  id: 'id',
-  data: 'data',
-  updatedAt: 'updatedAt'
-};
-
 exports.Prisma.AppProfileScalarFieldEnum = {
   key: 'key',
   data: 'data',
@@ -193,41 +187,6 @@ exports.Prisma.AccountStatusLogScalarFieldEnum = {
   remarks: 'remarks',
   fromDate: 'fromDate',
   moreInfo: 'moreInfo'
-};
-
-exports.Prisma.KycRequestScalarFieldEnum = {
-  id: 'id',
-  accountId: 'accountId',
-  documentType: 'documentType',
-  documentId: 'documentId',
-  documentPhotoUrl: 'documentPhotoUrl',
-  documentPhotoContentId: 'documentPhotoContentId',
-  selfiePhotoUrl: 'selfiePhotoUrl',
-  selfiePhotoContentId: 'selfiePhotoContentId',
-  status: 'status',
-  rejectionReason: 'rejectionReason',
-  submittedAt: 'submittedAt',
-  userFullName: 'userFullName',
-  userNeupId: 'userNeupId'
-};
-
-exports.Prisma.InvitationScalarFieldEnum = {
-  id: 'id',
-  inviterAccountId: 'inviterAccountId',
-  inviteeEmail: 'inviteeEmail',
-  role: 'role',
-  status: 'status',
-  createdAt: 'createdAt',
-  expiresAt: 'expiresAt'
-};
-
-exports.Prisma.NeupIdRequestScalarFieldEnum = {
-  id: 'id',
-  accountId: 'accountId',
-  requestedId: 'requestedId',
-  status: 'status',
-  reason: 'reason',
-  submittedAt: 'submittedAt'
 };
 
 exports.Prisma.NotificationScalarFieldEnum = {
@@ -288,15 +247,6 @@ exports.Prisma.VerificationScalarFieldEnum = {
   createdAt: 'createdAt',
   verifiedAt: 'verifiedAt',
   revokedAt: 'revokedAt'
-};
-
-exports.Prisma.UserDocumentScalarFieldEnum = {
-  id: 'id',
-  accountId: 'accountId',
-  type: 'type',
-  url: 'url',
-  status: 'status',
-  uploadedAt: 'uploadedAt'
 };
 
 exports.Prisma.ContactScalarFieldEnum = {
@@ -377,29 +327,6 @@ exports.Prisma.BugReportScalarFieldEnum = {
   status: 'status',
   reportedBy: 'reportedBy',
   timestamp: 'timestamp'
-};
-
-exports.Prisma.UserContentScalarFieldEnum = {
-  id: 'id',
-  contentId: 'contentId',
-  uploaderId: 'uploaderId',
-  forAccountId: 'forAccountId',
-  platform: 'platform',
-  url: 'url',
-  originalName: 'originalName',
-  fileType: 'fileType',
-  size: 'size',
-  uploadedAt: 'uploadedAt',
-  contentType: 'contentType'
-};
-
-exports.Prisma.RecoveryContactScalarFieldEnum = {
-  id: 'id',
-  ownerAccountId: 'ownerAccountId',
-  recoveryAccountId: 'recoveryAccountId',
-  recoveryNeupId: 'recoveryNeupId',
-  status: 'status',
-  createdAt: 'createdAt'
 };
 
 exports.Prisma.ApplicationScalarFieldEnum = {
@@ -575,20 +502,15 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.ModelName = {
   Account: 'Account',
   Totp: 'Totp',
-  SystemConfig: 'SystemConfig',
   AppProfile: 'AppProfile',
   AuthRequest: 'AuthRequest',
   ActivityLog: 'ActivityLog',
   AccountStatusLog: 'AccountStatusLog',
-  KycRequest: 'KycRequest',
-  Invitation: 'Invitation',
-  NeupIdRequest: 'NeupIdRequest',
   Notification: 'Notification',
   Request: 'Request',
   Family: 'Family',
   BackupCode: 'BackupCode',
   Verification: 'Verification',
-  UserDocument: 'UserDocument',
   Contact: 'Contact',
   NeupId: 'NeupId',
   Password: 'Password',
@@ -596,8 +518,6 @@ exports.Prisma.ModelName = {
   Session: 'Session',
   ErrorLog: 'ErrorLog',
   BugReport: 'BugReport',
-  UserContent: 'UserContent',
-  RecoveryContact: 'RecoveryContact',
   Application: 'Application',
   AuthTeam: 'AuthTeam',
   AssetGroupInfo: 'AssetGroupInfo',

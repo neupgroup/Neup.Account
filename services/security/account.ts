@@ -16,14 +16,16 @@
    recoveryNeupId: string;
    displayName: string;
    displayPhoto?: string;
-   status: 'pending' | 'approved' | 'rejected';
+  status: 'pending' | 'approved' | 'rejected';
  };
  
  const addAccountSchema = z.object({
    neupId: z.string().min(3, 'NeupID must be at least 3 characters.').max(16, 'NeupID cannot be more than 16 characters.'),
  });
  
- const statusOrder: Record<RecoveryAccount['status'], number> = {
+const RECOVERY_CONTACT_TYPE = 'recoveryAccount';
+
+const statusOrder: Record<RecoveryAccount['status'], number> = {
    approved: 1,
    pending: 2,
    rejected: 3,
@@ -41,25 +43,34 @@
    if (!ownerAccountId) return [];
  
    try {
-    const rows = await prisma.recoveryContact.findMany({
-      where: { ownerAccountId },
+    const rows = await prisma.contact.findMany({
+      where: {
+        accountId: ownerAccountId,
+        contactType: RECOVERY_CONTACT_TYPE,
+      },
     });
  
     if (rows.length === 0) return [];
  
     const recoveryContacts = await Promise.all(
       rows.map(async (r) => {
-        const profile = await getUserProfile(r.recoveryAccountId);
+        const recoveryAccountId = r.value;
+        const profile = await getUserProfile(recoveryAccountId);
+        const neup = await prisma.neupId.findFirst({
+          where: { accountId: recoveryAccountId },
+          select: { id: true },
+        });
+
         return {
           id: r.id,
-          recoveryAccountId: r.recoveryAccountId,
-          recoveryNeupId: r.recoveryNeupId,
+          recoveryAccountId,
+          recoveryNeupId: neup?.id || 'N/A',
           displayName:
             profile?.nameDisplay ||
             `${profile?.nameFirst || ''} ${profile?.nameLast || ''}`.trim() ||
-            r.recoveryNeupId,
+            (neup?.id || recoveryAccountId),
           displayPhoto: profile?.accountPhoto,
-          status: (r.status || 'pending') as 'pending' | 'approved' | 'rejected',
+          status: 'approved' as const,
         };
       }),
     );
@@ -92,8 +103,11 @@
    const { neupId } = validation.data;
  
    try {
-    const count = await prisma.recoveryContact.count({
-      where: { ownerAccountId },
+    const count = await prisma.contact.count({
+      where: {
+        accountId: ownerAccountId,
+        contactType: RECOVERY_CONTACT_TYPE,
+      },
     });
     if (count >= 5) {
        return { success: false, error: 'You cannot add more than 5 recovery accounts.' };
@@ -110,19 +124,22 @@
        return { success: false, error: 'You cannot add yourself as a recovery account.' };
      }
  
-    const exists = await prisma.recoveryContact.findFirst({
-      where: { ownerAccountId, recoveryAccountId },
+    const exists = await prisma.contact.findFirst({
+      where: {
+        accountId: ownerAccountId,
+        contactType: RECOVERY_CONTACT_TYPE,
+        value: recoveryAccountId,
+      },
     });
     if (exists) {
        return { success: false, error: 'This account has already been added.' };
      }
  
-    const created = await prisma.recoveryContact.create({
+    const created = await prisma.contact.create({
       data: {
-        ownerAccountId,
-        recoveryAccountId,
-        recoveryNeupId: neupId,
-        status: 'pending',
+        accountId: ownerAccountId,
+        contactType: RECOVERY_CONTACT_TYPE,
+        value: recoveryAccountId,
       },
     });
  
@@ -137,7 +154,7 @@
          `${profile?.nameFirst || ''} ${profile?.nameLast || ''}`.trim() ||
          neupId,
        displayPhoto: profile?.accountPhoto,
-       status: 'pending',
+       status: 'approved',
      };
  
      revalidatePath('/manage/security/account');
@@ -160,13 +177,13 @@
    if (!ownerAccountId) return { success: false, error: 'User not authenticated.' };
  
    try {
-    const row = await prisma.recoveryContact.findUnique({ where: { id } });
+    const row = await prisma.contact.findUnique({ where: { id } });
  
-    if (!row || row.ownerAccountId !== ownerAccountId) {
+    if (!row || row.accountId !== ownerAccountId || row.contactType !== RECOVERY_CONTACT_TYPE) {
        return { success: false, error: 'Permission denied or account not found.' };
      }
  
-    await prisma.recoveryContact.delete({ where: { id } });
+    await prisma.contact.delete({ where: { id } });
  
      revalidatePath('/manage/security/account');
      return { success: true };

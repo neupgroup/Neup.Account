@@ -27,8 +27,11 @@ export async function getPendingKycRequests(): Promise<KycRequest[]> {
     if (!canView) return [];
 
     try {
-        const querySnapshot = await prisma.kycRequest.findMany({
-            where: { status: 'pending' }
+        const querySnapshot = await prisma.request.findMany({
+            where: {
+                action: 'kyc_request',
+                status: 'pending',
+            }
         });
 
         if (querySnapshot.length === 0) {
@@ -37,7 +40,8 @@ export async function getPendingKycRequests(): Promise<KycRequest[]> {
 
         const requests = await Promise.all(
             querySnapshot.map(async (doc) => {
-                const accountId = doc.accountId;
+                const accountId = doc.senderId;
+                const payload = (doc.data || {}) as Record<string, any>;
 
                 const [profile, neupIds] = await Promise.all([
                     getUserProfile(accountId),
@@ -49,11 +53,11 @@ export async function getPendingKycRequests(): Promise<KycRequest[]> {
                     accountId,
                     userFullName: profile ? `${profile.nameFirst || ''} ${profile.nameLast || ''}`.trim() : 'Unknown User',
                     userNeupId: neupIds[0] || 'N/A',
-                    documentType: doc.documentType,
-                    submittedAt: doc.submittedAt.toLocaleDateString() || 'N/A',
+                    documentType: String(payload.documentType || 'unknown'),
+                    submittedAt: doc.createdAt.toLocaleDateString() || 'N/A',
                     status: doc.status as 'pending' | 'approved' | 'rejected',
-                    documentPhotoUrl: doc.documentPhotoUrl || 'https://placehold.co/600x400',
-                    selfiePhotoUrl: doc.selfiePhotoUrl || 'https://placehold.co/400x400',
+                    documentPhotoUrl: String(payload.documentPhotoUrl || 'https://placehold.co/600x400'),
+                    selfiePhotoUrl: String(payload.selfiePhotoUrl || 'https://placehold.co/400x400'),
                 };
             })
         );
@@ -74,7 +78,7 @@ export async function approveKycRequest(kycId: string, accountId: string): Promi
 
     try {
         await prisma.$transaction([
-            prisma.kycRequest.update({
+            prisma.request.update({
                 where: { id: kycId },
                 data: { status: 'approved' }
             }),
@@ -102,9 +106,9 @@ export async function rejectKycRequest(kycId: string, accountId: string, reason:
     if (!canDeny) return { success: false, error: 'Permission denied.' };
 
     try {
-        await prisma.kycRequest.update({
+        await prisma.request.update({
             where: { id: kycId },
-            data: { status: 'rejected', rejectionReason: reason }
+            data: { status: 'rejected' }
         });
         
         await logActivity(accountId, `KYC Rejected. Reason: ${reason}`, 'Alert');

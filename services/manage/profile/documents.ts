@@ -31,24 +31,34 @@ export async function submitKyc(accountId: string, data: KycSubmissionData): Pro
 
     try {
         // Prevent duplicate pending submissions
-        const existing = await prisma.kycRequest.findFirst({
-            where: { accountId, status: 'pending' }
+        const existing = await prisma.request.findFirst({
+            where: {
+                senderId: accountId,
+                recipientId: accountId,
+                action: 'kyc_request',
+                status: 'pending',
+            }
         });
 
         if (existing) {
             return { success: false, error: 'You already have a pending KYC submission.' };
         }
 
-        await prisma.kycRequest.create({
+        await prisma.request.create({
             data: {
-                accountId,
+                senderId: accountId,
+                recipientId: accountId,
+                action: 'kyc_request',
+                type: 'kyc',
                 status: 'pending',
-                documentType: data.documentType,
-                documentId: data.documentId,
-                documentPhotoUrl: data.documentPhotoUrl,
-                documentPhotoContentId: data.documentPhotoContentId,
-                selfiePhotoUrl: data.selfiePhotoUrl,
-                selfiePhotoContentId: data.selfiePhotoContentId,
+                data: {
+                    documentType: data.documentType,
+                    documentId: data.documentId,
+                    documentPhotoUrl: data.documentPhotoUrl,
+                    documentPhotoContentId: data.documentPhotoContentId,
+                    selfiePhotoUrl: data.selfiePhotoUrl,
+                    selfiePhotoContentId: data.selfiePhotoContentId,
+                },
             },
         });
 

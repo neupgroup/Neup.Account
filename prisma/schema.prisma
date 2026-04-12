@@ -56,14 +56,9 @@ model Account {
   externalRoles   AuthRoleExternal[]
   externalPermissions AuthPermissionsExternal[]
   ownedApplications Application[]
-  kycRequests     KycRequest[]
-  invitations     Invitation[]   @relation("Inviter")
-  neupIdRequests  NeupIdRequest[]
   notifications   Notification[]
   backupCodes     BackupCode[]
   verifications   Verification[]
-  documents       UserDocument[]
-  userContents    UserContent[]
   totp            Totp?
   sentRequests    Request[] @relation("SentRequests")
   receivedRequests Request[] @relation("ReceivedRequests")
@@ -88,14 +83,6 @@ model Totp {
   account   Account  @relation(fields: [accountId], references: [id])
 
   @@map("auth_totp")
-}
-
-model SystemConfig {
-  id        String   @id
-  data      Json
-  updatedAt DateTime @updatedAt
-
-  @@map("system_configs")
 }
 
 model AppProfile {
@@ -142,53 +129,6 @@ model AccountStatusLog {
   account   Account  @relation(fields: [accountId], references: [id])
 
   @@map("account_status_logs")
-}
-
-model KycRequest {
-  id                     String   @id @default(uuid())
-  accountId              String
-  documentType           String
-  documentId             String?
-  documentPhotoUrl       String?
-  documentPhotoContentId String?
-  selfiePhotoUrl         String?
-  selfiePhotoContentId   String?
-  status                 String   @default("pending") // 'pending' | 'approved' | 'rejected'
-  rejectionReason        String?
-  submittedAt            DateTime @default(now())
-  userFullName           String?
-  userNeupId             String?
-
-  account                Account  @relation(fields: [accountId], references: [id])
-
-  @@map("kyc_requests")
-}
-
-model Invitation {
-  id              String   @id @default(uuid())
-  inviterAccountId String
-  inviteeEmail    String
-  role            String   @default("member")
-  status          String   @default("pending") // 'pending' | 'accepted' | 'declined' | 'expired'
-  createdAt       DateTime @default(now())
-  expiresAt       DateTime
-
-  inviter         Account  @relation("Inviter", fields: [inviterAccountId], references: [id])
-
-  @@map("invitations")
-}
-
-model NeupIdRequest {
-  id          String   @id @default(uuid())
-  accountId   String
-  requestedId String   @unique
-  status      String   @default("pending") // 'pending' | 'approved' | 'rejected'
-  reason      String?
-  submittedAt DateTime @default(now())
-
-  account     Account  @relation(fields: [accountId], references: [id])
-
-  @@map("neupid_requests")
 }
 
 model Notification {
@@ -270,19 +210,6 @@ model Verification {
   account          Account   @relation(fields: [accountId], references: [id])
 
   @@map("verifications")
-}
-
-model UserDocument {
-  id          String   @id @default(uuid())
-  accountId   String
-  type        String   // 'id_card' | 'passport' | 'utility_bill' | 'other'
-  url         String
-  status      String   @default("pending") // 'pending' | 'approved' | 'rejected'
-  uploadedAt  DateTime @default(now())
-
-  account     Account  @relation(fields: [accountId], references: [id])
-
-  @@map("user_documents")
 }
 
 model Contact {
@@ -392,35 +319,6 @@ model BugReport {
   timestamp   DateTime  @default(now())
   
   @@map("bug_reports")
-}
-
-model UserContent {
-  id           String   @id @default(uuid())
-  contentId    String?
-  uploaderId   String?
-  forAccountId String
-  platform     String
-  url          String
-  originalName String?
-  fileType     String?
-  size         Int?
-  uploadedAt   DateTime @default(now())
-  contentType  String? // 'profile_photo' | 'document' | 'other'
-
-  account Account @relation(fields: [forAccountId], references: [id])
-
-  @@map("user_content")
-}
-
-model RecoveryContact {
-  id               String   @id @default(uuid())
-  ownerAccountId   String
-  recoveryAccountId String
-  recoveryNeupId   String
-  status           String   @default("pending") // 'pending' | 'approved' | 'rejected'
-  createdAt        DateTime @default(now())
-
-  @@map("recovery_contacts")
 }
 
 model Application {

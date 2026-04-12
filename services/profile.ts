@@ -46,12 +46,8 @@ export async function getDisplayNameSuggestions(accountId: string): Promise<stri
  */
 export async function getPastProfilePhotos(accountId: string): Promise<string[]> {
     try {
-        const items = await prisma.userContent.findMany({
-            where: { forAccountId: accountId, platform: 'neup.account' },
-            orderBy: [{ uploadedAt: 'desc' }, { id: 'desc' }],
-            take: 4
-        });
-        return items.map((i) => i.url);
+        void accountId;
+        return [];
     } catch (error) {
         await logError('database', error, `getPastProfilePhotos for ${accountId}`);
         return [];

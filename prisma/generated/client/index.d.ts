@@ -24,11 +24,6 @@ export type Account = $Result.DefaultSelection<Prisma.$AccountPayload>
  */
 export type Totp = $Result.DefaultSelection<Prisma.$TotpPayload>
 /**
- * Model SystemConfig
- * 
- */
-export type SystemConfig = $Result.DefaultSelection<Prisma.$SystemConfigPayload>
-/**
  * Model AppProfile
  * 
  */
@@ -48,21 +43,6 @@ export type ActivityLog = $Result.DefaultSelection<Prisma.$ActivityLogPayload>
  * 
  */
 export type AccountStatusLog = $Result.DefaultSelection<Prisma.$AccountStatusLogPayload>
-/**
- * Model KycRequest
- * 
- */
-export type KycRequest = $Result.DefaultSelection<Prisma.$KycRequestPayload>
-/**
- * Model Invitation
- * 
- */
-export type Invitation = $Result.DefaultSelection<Prisma.$InvitationPayload>
-/**
- * Model NeupIdRequest
- * 
- */
-export type NeupIdRequest = $Result.DefaultSelection<Prisma.$NeupIdRequestPayload>
 /**
  * Model Notification
  * 
@@ -88,11 +68,6 @@ export type BackupCode = $Result.DefaultSelection<Prisma.$BackupCodePayload>
  * 
  */
 export type Verification = $Result.DefaultSelection<Prisma.$VerificationPayload>
-/**
- * Model UserDocument
- * 
- */
-export type UserDocument = $Result.DefaultSelection<Prisma.$UserDocumentPayload>
 /**
  * Model Contact
  * 
@@ -128,16 +103,6 @@ export type ErrorLog = $Result.DefaultSelection<Prisma.$ErrorLogPayload>
  * 
  */
 export type BugReport = $Result.DefaultSelection<Prisma.$BugReportPayload>
-/**
- * Model UserContent
- * 
- */
-export type UserContent = $Result.DefaultSelection<Prisma.$UserContentPayload>
-/**
- * Model RecoveryContact
- * 
- */
-export type RecoveryContact = $Result.DefaultSelection<Prisma.$RecoveryContactPayload>
 /**
  * Model Application
  * 
@@ -352,16 +317,6 @@ export class PrismaClient<
   get totp(): Prisma.TotpDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.systemConfig`: Exposes CRUD operations for the **SystemConfig** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more SystemConfigs
-    * const systemConfigs = await prisma.systemConfig.findMany()
-    * ```
-    */
-  get systemConfig(): Prisma.SystemConfigDelegate<ExtArgs, ClientOptions>;
-
-  /**
    * `prisma.appProfile`: Exposes CRUD operations for the **AppProfile** model.
     * Example usage:
     * ```ts
@@ -400,36 +355,6 @@ export class PrismaClient<
     * ```
     */
   get accountStatusLog(): Prisma.AccountStatusLogDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.kycRequest`: Exposes CRUD operations for the **KycRequest** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more KycRequests
-    * const kycRequests = await prisma.kycRequest.findMany()
-    * ```
-    */
-  get kycRequest(): Prisma.KycRequestDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.invitation`: Exposes CRUD operations for the **Invitation** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Invitations
-    * const invitations = await prisma.invitation.findMany()
-    * ```
-    */
-  get invitation(): Prisma.InvitationDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.neupIdRequest`: Exposes CRUD operations for the **NeupIdRequest** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more NeupIdRequests
-    * const neupIdRequests = await prisma.neupIdRequest.findMany()
-    * ```
-    */
-  get neupIdRequest(): Prisma.NeupIdRequestDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.notification`: Exposes CRUD operations for the **Notification** model.
@@ -480,16 +405,6 @@ export class PrismaClient<
     * ```
     */
   get verification(): Prisma.VerificationDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.userDocument`: Exposes CRUD operations for the **UserDocument** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more UserDocuments
-    * const userDocuments = await prisma.userDocument.findMany()
-    * ```
-    */
-  get userDocument(): Prisma.UserDocumentDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.contact`: Exposes CRUD operations for the **Contact** model.
@@ -560,26 +475,6 @@ export class PrismaClient<
     * ```
     */
   get bugReport(): Prisma.BugReportDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.userContent`: Exposes CRUD operations for the **UserContent** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more UserContents
-    * const userContents = await prisma.userContent.findMany()
-    * ```
-    */
-  get userContent(): Prisma.UserContentDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.recoveryContact`: Exposes CRUD operations for the **RecoveryContact** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more RecoveryContacts
-    * const recoveryContacts = await prisma.recoveryContact.findMany()
-    * ```
-    */
-  get recoveryContact(): Prisma.RecoveryContactDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.application`: Exposes CRUD operations for the **Application** model.
@@ -1166,20 +1061,15 @@ export namespace Prisma {
   export const ModelName: {
     Account: 'Account',
     Totp: 'Totp',
-    SystemConfig: 'SystemConfig',
     AppProfile: 'AppProfile',
     AuthRequest: 'AuthRequest',
     ActivityLog: 'ActivityLog',
     AccountStatusLog: 'AccountStatusLog',
-    KycRequest: 'KycRequest',
-    Invitation: 'Invitation',
-    NeupIdRequest: 'NeupIdRequest',
     Notification: 'Notification',
     Request: 'Request',
     Family: 'Family',
     BackupCode: 'BackupCode',
     Verification: 'Verification',
-    UserDocument: 'UserDocument',
     Contact: 'Contact',
     NeupId: 'NeupId',
     Password: 'Password',
@@ -1187,8 +1077,6 @@ export namespace Prisma {
     Session: 'Session',
     ErrorLog: 'ErrorLog',
     BugReport: 'BugReport',
-    UserContent: 'UserContent',
-    RecoveryContact: 'RecoveryContact',
     Application: 'Application',
     AuthTeam: 'AuthTeam',
     AssetGroupInfo: 'AssetGroupInfo',
@@ -1219,7 +1107,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "totp" | "systemConfig" | "appProfile" | "authRequest" | "activityLog" | "accountStatusLog" | "kycRequest" | "invitation" | "neupIdRequest" | "notification" | "request" | "family" | "backupCode" | "verification" | "userDocument" | "contact" | "neupId" | "password" | "permit" | "session" | "errorLog" | "bugReport" | "userContent" | "recoveryContact" | "application" | "authTeam" | "assetGroupInfo" | "assetGroupMember" | "asset" | "assetMemberRole" | "authTeamExternal" | "authRole" | "authPermissionRecipient" | "userAppConnection" | "appAuthentication" | "appSession" | "authSessionExternal" | "authRoleExternal" | "authPermissionsExternal"
+      modelProps: "account" | "totp" | "appProfile" | "authRequest" | "activityLog" | "accountStatusLog" | "notification" | "request" | "family" | "backupCode" | "verification" | "contact" | "neupId" | "password" | "permit" | "session" | "errorLog" | "bugReport" | "application" | "authTeam" | "assetGroupInfo" | "assetGroupMember" | "asset" | "assetMemberRole" | "authTeamExternal" | "authRole" | "authPermissionRecipient" | "userAppConnection" | "appAuthentication" | "appSession" | "authSessionExternal" | "authRoleExternal" | "authPermissionsExternal"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1368,80 +1256,6 @@ export namespace Prisma {
           count: {
             args: Prisma.TotpCountArgs<ExtArgs>
             result: $Utils.Optional<TotpCountAggregateOutputType> | number
-          }
-        }
-      }
-      SystemConfig: {
-        payload: Prisma.$SystemConfigPayload<ExtArgs>
-        fields: Prisma.SystemConfigFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.SystemConfigFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.SystemConfigFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload>
-          }
-          findFirst: {
-            args: Prisma.SystemConfigFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.SystemConfigFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload>
-          }
-          findMany: {
-            args: Prisma.SystemConfigFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload>[]
-          }
-          create: {
-            args: Prisma.SystemConfigCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload>
-          }
-          createMany: {
-            args: Prisma.SystemConfigCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.SystemConfigCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload>[]
-          }
-          delete: {
-            args: Prisma.SystemConfigDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload>
-          }
-          update: {
-            args: Prisma.SystemConfigUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload>
-          }
-          deleteMany: {
-            args: Prisma.SystemConfigDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.SystemConfigUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.SystemConfigUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload>[]
-          }
-          upsert: {
-            args: Prisma.SystemConfigUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SystemConfigPayload>
-          }
-          aggregate: {
-            args: Prisma.SystemConfigAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateSystemConfig>
-          }
-          groupBy: {
-            args: Prisma.SystemConfigGroupByArgs<ExtArgs>
-            result: $Utils.Optional<SystemConfigGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.SystemConfigCountArgs<ExtArgs>
-            result: $Utils.Optional<SystemConfigCountAggregateOutputType> | number
           }
         }
       }
@@ -1738,228 +1552,6 @@ export namespace Prisma {
           count: {
             args: Prisma.AccountStatusLogCountArgs<ExtArgs>
             result: $Utils.Optional<AccountStatusLogCountAggregateOutputType> | number
-          }
-        }
-      }
-      KycRequest: {
-        payload: Prisma.$KycRequestPayload<ExtArgs>
-        fields: Prisma.KycRequestFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.KycRequestFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$KycRequestPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.KycRequestFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$KycRequestPayload>
-          }
-          findFirst: {
-            args: Prisma.KycRequestFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$KycRequestPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.KycRequestFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$KycRequestPayload>
-          }
-          findMany: {
-            args: Prisma.KycRequestFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$KycRequestPayload>[]
-          }
-          create: {
-            args: Prisma.KycRequestCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$KycRequestPayload>
-          }
-          createMany: {
-            args: Prisma.KycRequestCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.KycRequestCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$KycRequestPayload>[]
-          }
-          delete: {
-            args: Prisma.KycRequestDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$KycRequestPayload>
-          }
-          update: {
-            args: Prisma.KycRequestUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$KycRequestPayload>
-          }
-          deleteMany: {
-            args: Prisma.KycRequestDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.KycRequestUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.KycRequestUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$KycRequestPayload>[]
-          }
-          upsert: {
-            args: Prisma.KycRequestUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$KycRequestPayload>
-          }
-          aggregate: {
-            args: Prisma.KycRequestAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateKycRequest>
-          }
-          groupBy: {
-            args: Prisma.KycRequestGroupByArgs<ExtArgs>
-            result: $Utils.Optional<KycRequestGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.KycRequestCountArgs<ExtArgs>
-            result: $Utils.Optional<KycRequestCountAggregateOutputType> | number
-          }
-        }
-      }
-      Invitation: {
-        payload: Prisma.$InvitationPayload<ExtArgs>
-        fields: Prisma.InvitationFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.InvitationFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$InvitationPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.InvitationFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$InvitationPayload>
-          }
-          findFirst: {
-            args: Prisma.InvitationFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$InvitationPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.InvitationFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$InvitationPayload>
-          }
-          findMany: {
-            args: Prisma.InvitationFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$InvitationPayload>[]
-          }
-          create: {
-            args: Prisma.InvitationCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$InvitationPayload>
-          }
-          createMany: {
-            args: Prisma.InvitationCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.InvitationCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$InvitationPayload>[]
-          }
-          delete: {
-            args: Prisma.InvitationDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$InvitationPayload>
-          }
-          update: {
-            args: Prisma.InvitationUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$InvitationPayload>
-          }
-          deleteMany: {
-            args: Prisma.InvitationDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.InvitationUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.InvitationUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$InvitationPayload>[]
-          }
-          upsert: {
-            args: Prisma.InvitationUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$InvitationPayload>
-          }
-          aggregate: {
-            args: Prisma.InvitationAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateInvitation>
-          }
-          groupBy: {
-            args: Prisma.InvitationGroupByArgs<ExtArgs>
-            result: $Utils.Optional<InvitationGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.InvitationCountArgs<ExtArgs>
-            result: $Utils.Optional<InvitationCountAggregateOutputType> | number
-          }
-        }
-      }
-      NeupIdRequest: {
-        payload: Prisma.$NeupIdRequestPayload<ExtArgs>
-        fields: Prisma.NeupIdRequestFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.NeupIdRequestFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NeupIdRequestPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.NeupIdRequestFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NeupIdRequestPayload>
-          }
-          findFirst: {
-            args: Prisma.NeupIdRequestFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NeupIdRequestPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.NeupIdRequestFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NeupIdRequestPayload>
-          }
-          findMany: {
-            args: Prisma.NeupIdRequestFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NeupIdRequestPayload>[]
-          }
-          create: {
-            args: Prisma.NeupIdRequestCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NeupIdRequestPayload>
-          }
-          createMany: {
-            args: Prisma.NeupIdRequestCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.NeupIdRequestCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NeupIdRequestPayload>[]
-          }
-          delete: {
-            args: Prisma.NeupIdRequestDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NeupIdRequestPayload>
-          }
-          update: {
-            args: Prisma.NeupIdRequestUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NeupIdRequestPayload>
-          }
-          deleteMany: {
-            args: Prisma.NeupIdRequestDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.NeupIdRequestUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.NeupIdRequestUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NeupIdRequestPayload>[]
-          }
-          upsert: {
-            args: Prisma.NeupIdRequestUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$NeupIdRequestPayload>
-          }
-          aggregate: {
-            args: Prisma.NeupIdRequestAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateNeupIdRequest>
-          }
-          groupBy: {
-            args: Prisma.NeupIdRequestGroupByArgs<ExtArgs>
-            result: $Utils.Optional<NeupIdRequestGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.NeupIdRequestCountArgs<ExtArgs>
-            result: $Utils.Optional<NeupIdRequestCountAggregateOutputType> | number
           }
         }
       }
@@ -2330,80 +1922,6 @@ export namespace Prisma {
           count: {
             args: Prisma.VerificationCountArgs<ExtArgs>
             result: $Utils.Optional<VerificationCountAggregateOutputType> | number
-          }
-        }
-      }
-      UserDocument: {
-        payload: Prisma.$UserDocumentPayload<ExtArgs>
-        fields: Prisma.UserDocumentFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.UserDocumentFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserDocumentPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.UserDocumentFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserDocumentPayload>
-          }
-          findFirst: {
-            args: Prisma.UserDocumentFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserDocumentPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.UserDocumentFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserDocumentPayload>
-          }
-          findMany: {
-            args: Prisma.UserDocumentFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserDocumentPayload>[]
-          }
-          create: {
-            args: Prisma.UserDocumentCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserDocumentPayload>
-          }
-          createMany: {
-            args: Prisma.UserDocumentCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.UserDocumentCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserDocumentPayload>[]
-          }
-          delete: {
-            args: Prisma.UserDocumentDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserDocumentPayload>
-          }
-          update: {
-            args: Prisma.UserDocumentUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserDocumentPayload>
-          }
-          deleteMany: {
-            args: Prisma.UserDocumentDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.UserDocumentUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.UserDocumentUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserDocumentPayload>[]
-          }
-          upsert: {
-            args: Prisma.UserDocumentUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserDocumentPayload>
-          }
-          aggregate: {
-            args: Prisma.UserDocumentAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateUserDocument>
-          }
-          groupBy: {
-            args: Prisma.UserDocumentGroupByArgs<ExtArgs>
-            result: $Utils.Optional<UserDocumentGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.UserDocumentCountArgs<ExtArgs>
-            result: $Utils.Optional<UserDocumentCountAggregateOutputType> | number
           }
         }
       }
@@ -2922,154 +2440,6 @@ export namespace Prisma {
           count: {
             args: Prisma.BugReportCountArgs<ExtArgs>
             result: $Utils.Optional<BugReportCountAggregateOutputType> | number
-          }
-        }
-      }
-      UserContent: {
-        payload: Prisma.$UserContentPayload<ExtArgs>
-        fields: Prisma.UserContentFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.UserContentFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserContentPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.UserContentFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserContentPayload>
-          }
-          findFirst: {
-            args: Prisma.UserContentFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserContentPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.UserContentFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserContentPayload>
-          }
-          findMany: {
-            args: Prisma.UserContentFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserContentPayload>[]
-          }
-          create: {
-            args: Prisma.UserContentCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserContentPayload>
-          }
-          createMany: {
-            args: Prisma.UserContentCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.UserContentCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserContentPayload>[]
-          }
-          delete: {
-            args: Prisma.UserContentDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserContentPayload>
-          }
-          update: {
-            args: Prisma.UserContentUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserContentPayload>
-          }
-          deleteMany: {
-            args: Prisma.UserContentDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.UserContentUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.UserContentUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserContentPayload>[]
-          }
-          upsert: {
-            args: Prisma.UserContentUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserContentPayload>
-          }
-          aggregate: {
-            args: Prisma.UserContentAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateUserContent>
-          }
-          groupBy: {
-            args: Prisma.UserContentGroupByArgs<ExtArgs>
-            result: $Utils.Optional<UserContentGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.UserContentCountArgs<ExtArgs>
-            result: $Utils.Optional<UserContentCountAggregateOutputType> | number
-          }
-        }
-      }
-      RecoveryContact: {
-        payload: Prisma.$RecoveryContactPayload<ExtArgs>
-        fields: Prisma.RecoveryContactFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.RecoveryContactFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecoveryContactPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.RecoveryContactFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecoveryContactPayload>
-          }
-          findFirst: {
-            args: Prisma.RecoveryContactFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecoveryContactPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.RecoveryContactFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecoveryContactPayload>
-          }
-          findMany: {
-            args: Prisma.RecoveryContactFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecoveryContactPayload>[]
-          }
-          create: {
-            args: Prisma.RecoveryContactCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecoveryContactPayload>
-          }
-          createMany: {
-            args: Prisma.RecoveryContactCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.RecoveryContactCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecoveryContactPayload>[]
-          }
-          delete: {
-            args: Prisma.RecoveryContactDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecoveryContactPayload>
-          }
-          update: {
-            args: Prisma.RecoveryContactUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecoveryContactPayload>
-          }
-          deleteMany: {
-            args: Prisma.RecoveryContactDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.RecoveryContactUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.RecoveryContactUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecoveryContactPayload>[]
-          }
-          upsert: {
-            args: Prisma.RecoveryContactUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecoveryContactPayload>
-          }
-          aggregate: {
-            args: Prisma.RecoveryContactAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateRecoveryContact>
-          }
-          groupBy: {
-            args: Prisma.RecoveryContactGroupByArgs<ExtArgs>
-            result: $Utils.Optional<RecoveryContactGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.RecoveryContactCountArgs<ExtArgs>
-            result: $Utils.Optional<RecoveryContactCountAggregateOutputType> | number
           }
         }
       }
@@ -4293,20 +3663,15 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     account?: AccountOmit
     totp?: TotpOmit
-    systemConfig?: SystemConfigOmit
     appProfile?: AppProfileOmit
     authRequest?: AuthRequestOmit
     activityLog?: ActivityLogOmit
     accountStatusLog?: AccountStatusLogOmit
-    kycRequest?: KycRequestOmit
-    invitation?: InvitationOmit
-    neupIdRequest?: NeupIdRequestOmit
     notification?: NotificationOmit
     request?: RequestOmit
     family?: FamilyOmit
     backupCode?: BackupCodeOmit
     verification?: VerificationOmit
-    userDocument?: UserDocumentOmit
     contact?: ContactOmit
     neupId?: NeupIdOmit
     password?: PasswordOmit
@@ -4314,8 +3679,6 @@ export namespace Prisma {
     session?: SessionOmit
     errorLog?: ErrorLogOmit
     bugReport?: BugReportOmit
-    userContent?: UserContentOmit
-    recoveryContact?: RecoveryContactOmit
     application?: ApplicationOmit
     authTeam?: AuthTeamOmit
     assetGroupInfo?: AssetGroupInfoOmit
@@ -4426,14 +3789,9 @@ export namespace Prisma {
     externalRoles: number
     externalPermissions: number
     ownedApplications: number
-    kycRequests: number
-    invitations: number
-    neupIdRequests: number
     notifications: number
     backupCodes: number
     verifications: number
-    documents: number
-    userContents: number
     sentRequests: number
     receivedRequests: number
     adminTeams: number
@@ -4461,14 +3819,9 @@ export namespace Prisma {
     externalRoles?: boolean | AccountCountOutputTypeCountExternalRolesArgs
     externalPermissions?: boolean | AccountCountOutputTypeCountExternalPermissionsArgs
     ownedApplications?: boolean | AccountCountOutputTypeCountOwnedApplicationsArgs
-    kycRequests?: boolean | AccountCountOutputTypeCountKycRequestsArgs
-    invitations?: boolean | AccountCountOutputTypeCountInvitationsArgs
-    neupIdRequests?: boolean | AccountCountOutputTypeCountNeupIdRequestsArgs
     notifications?: boolean | AccountCountOutputTypeCountNotificationsArgs
     backupCodes?: boolean | AccountCountOutputTypeCountBackupCodesArgs
     verifications?: boolean | AccountCountOutputTypeCountVerificationsArgs
-    documents?: boolean | AccountCountOutputTypeCountDocumentsArgs
-    userContents?: boolean | AccountCountOutputTypeCountUserContentsArgs
     sentRequests?: boolean | AccountCountOutputTypeCountSentRequestsArgs
     receivedRequests?: boolean | AccountCountOutputTypeCountReceivedRequestsArgs
     adminTeams?: boolean | AccountCountOutputTypeCountAdminTeamsArgs
@@ -4599,27 +3952,6 @@ export namespace Prisma {
   /**
    * AccountCountOutputType without action
    */
-  export type AccountCountOutputTypeCountKycRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: KycRequestWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
-  export type AccountCountOutputTypeCountInvitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: InvitationWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
-  export type AccountCountOutputTypeCountNeupIdRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: NeupIdRequestWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
   export type AccountCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: NotificationWhereInput
   }
@@ -4636,20 +3968,6 @@ export namespace Prisma {
    */
   export type AccountCountOutputTypeCountVerificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: VerificationWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
-  export type AccountCountOutputTypeCountDocumentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UserDocumentWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
-  export type AccountCountOutputTypeCountUserContentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UserContentWhereInput
   }
 
   /**
@@ -5325,14 +4643,9 @@ export namespace Prisma {
     externalRoles?: boolean | Account$externalRolesArgs<ExtArgs>
     externalPermissions?: boolean | Account$externalPermissionsArgs<ExtArgs>
     ownedApplications?: boolean | Account$ownedApplicationsArgs<ExtArgs>
-    kycRequests?: boolean | Account$kycRequestsArgs<ExtArgs>
-    invitations?: boolean | Account$invitationsArgs<ExtArgs>
-    neupIdRequests?: boolean | Account$neupIdRequestsArgs<ExtArgs>
     notifications?: boolean | Account$notificationsArgs<ExtArgs>
     backupCodes?: boolean | Account$backupCodesArgs<ExtArgs>
     verifications?: boolean | Account$verificationsArgs<ExtArgs>
-    documents?: boolean | Account$documentsArgs<ExtArgs>
-    userContents?: boolean | Account$userContentsArgs<ExtArgs>
     totp?: boolean | Account$totpArgs<ExtArgs>
     sentRequests?: boolean | Account$sentRequestsArgs<ExtArgs>
     receivedRequests?: boolean | Account$receivedRequestsArgs<ExtArgs>
@@ -5448,14 +4761,9 @@ export namespace Prisma {
     externalRoles?: boolean | Account$externalRolesArgs<ExtArgs>
     externalPermissions?: boolean | Account$externalPermissionsArgs<ExtArgs>
     ownedApplications?: boolean | Account$ownedApplicationsArgs<ExtArgs>
-    kycRequests?: boolean | Account$kycRequestsArgs<ExtArgs>
-    invitations?: boolean | Account$invitationsArgs<ExtArgs>
-    neupIdRequests?: boolean | Account$neupIdRequestsArgs<ExtArgs>
     notifications?: boolean | Account$notificationsArgs<ExtArgs>
     backupCodes?: boolean | Account$backupCodesArgs<ExtArgs>
     verifications?: boolean | Account$verificationsArgs<ExtArgs>
-    documents?: boolean | Account$documentsArgs<ExtArgs>
-    userContents?: boolean | Account$userContentsArgs<ExtArgs>
     totp?: boolean | Account$totpArgs<ExtArgs>
     sentRequests?: boolean | Account$sentRequestsArgs<ExtArgs>
     receivedRequests?: boolean | Account$receivedRequestsArgs<ExtArgs>
@@ -5495,14 +4803,9 @@ export namespace Prisma {
       externalRoles: Prisma.$AuthRoleExternalPayload<ExtArgs>[]
       externalPermissions: Prisma.$AuthPermissionsExternalPayload<ExtArgs>[]
       ownedApplications: Prisma.$ApplicationPayload<ExtArgs>[]
-      kycRequests: Prisma.$KycRequestPayload<ExtArgs>[]
-      invitations: Prisma.$InvitationPayload<ExtArgs>[]
-      neupIdRequests: Prisma.$NeupIdRequestPayload<ExtArgs>[]
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
       backupCodes: Prisma.$BackupCodePayload<ExtArgs>[]
       verifications: Prisma.$VerificationPayload<ExtArgs>[]
-      documents: Prisma.$UserDocumentPayload<ExtArgs>[]
-      userContents: Prisma.$UserContentPayload<ExtArgs>[]
       totp: Prisma.$TotpPayload<ExtArgs> | null
       sentRequests: Prisma.$RequestPayload<ExtArgs>[]
       receivedRequests: Prisma.$RequestPayload<ExtArgs>[]
@@ -5950,14 +5253,9 @@ export namespace Prisma {
     externalRoles<T extends Account$externalRolesArgs<ExtArgs> = {}>(args?: Subset<T, Account$externalRolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthRoleExternalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     externalPermissions<T extends Account$externalPermissionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$externalPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthPermissionsExternalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ownedApplications<T extends Account$ownedApplicationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$ownedApplicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    kycRequests<T extends Account$kycRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Account$kycRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KycRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    invitations<T extends Account$invitationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$invitationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    neupIdRequests<T extends Account$neupIdRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Account$neupIdRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NeupIdRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notifications<T extends Account$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     backupCodes<T extends Account$backupCodesArgs<ExtArgs> = {}>(args?: Subset<T, Account$backupCodesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BackupCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     verifications<T extends Account$verificationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$verificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VerificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    documents<T extends Account$documentsArgs<ExtArgs> = {}>(args?: Subset<T, Account$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    userContents<T extends Account$userContentsArgs<ExtArgs> = {}>(args?: Subset<T, Account$userContentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserContentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     totp<T extends Account$totpArgs<ExtArgs> = {}>(args?: Subset<T, Account$totpArgs<ExtArgs>>): Prisma__TotpClient<$Result.GetResult<Prisma.$TotpPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     sentRequests<T extends Account$sentRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Account$sentRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     receivedRequests<T extends Account$receivedRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Account$receivedRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -6815,78 +6113,6 @@ export namespace Prisma {
   }
 
   /**
-   * Account.kycRequests
-   */
-  export type Account$kycRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the KycRequest
-     */
-    select?: KycRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the KycRequest
-     */
-    omit?: KycRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: KycRequestInclude<ExtArgs> | null
-    where?: KycRequestWhereInput
-    orderBy?: KycRequestOrderByWithRelationInput | KycRequestOrderByWithRelationInput[]
-    cursor?: KycRequestWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: KycRequestScalarFieldEnum | KycRequestScalarFieldEnum[]
-  }
-
-  /**
-   * Account.invitations
-   */
-  export type Account$invitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Invitation
-     */
-    select?: InvitationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Invitation
-     */
-    omit?: InvitationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: InvitationInclude<ExtArgs> | null
-    where?: InvitationWhereInput
-    orderBy?: InvitationOrderByWithRelationInput | InvitationOrderByWithRelationInput[]
-    cursor?: InvitationWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: InvitationScalarFieldEnum | InvitationScalarFieldEnum[]
-  }
-
-  /**
-   * Account.neupIdRequests
-   */
-  export type Account$neupIdRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the NeupIdRequest
-     */
-    select?: NeupIdRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the NeupIdRequest
-     */
-    omit?: NeupIdRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NeupIdRequestInclude<ExtArgs> | null
-    where?: NeupIdRequestWhereInput
-    orderBy?: NeupIdRequestOrderByWithRelationInput | NeupIdRequestOrderByWithRelationInput[]
-    cursor?: NeupIdRequestWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: NeupIdRequestScalarFieldEnum | NeupIdRequestScalarFieldEnum[]
-  }
-
-  /**
    * Account.notifications
    */
   export type Account$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6956,54 +6182,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: VerificationScalarFieldEnum | VerificationScalarFieldEnum[]
-  }
-
-  /**
-   * Account.documents
-   */
-  export type Account$documentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserDocument
-     */
-    select?: UserDocumentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserDocument
-     */
-    omit?: UserDocumentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserDocumentInclude<ExtArgs> | null
-    where?: UserDocumentWhereInput
-    orderBy?: UserDocumentOrderByWithRelationInput | UserDocumentOrderByWithRelationInput[]
-    cursor?: UserDocumentWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: UserDocumentScalarFieldEnum | UserDocumentScalarFieldEnum[]
-  }
-
-  /**
-   * Account.userContents
-   */
-  export type Account$userContentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserContent
-     */
-    select?: UserContentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserContent
-     */
-    omit?: UserContentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserContentInclude<ExtArgs> | null
-    where?: UserContentWhereInput
-    orderBy?: UserContentOrderByWithRelationInput | UserContentOrderByWithRelationInput[]
-    cursor?: UserContentWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: UserContentScalarFieldEnum | UserContentScalarFieldEnum[]
   }
 
   /**
@@ -8289,971 +7467,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: TotpInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model SystemConfig
-   */
-
-  export type AggregateSystemConfig = {
-    _count: SystemConfigCountAggregateOutputType | null
-    _min: SystemConfigMinAggregateOutputType | null
-    _max: SystemConfigMaxAggregateOutputType | null
-  }
-
-  export type SystemConfigMinAggregateOutputType = {
-    id: string | null
-    updatedAt: Date | null
-  }
-
-  export type SystemConfigMaxAggregateOutputType = {
-    id: string | null
-    updatedAt: Date | null
-  }
-
-  export type SystemConfigCountAggregateOutputType = {
-    id: number
-    data: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type SystemConfigMinAggregateInputType = {
-    id?: true
-    updatedAt?: true
-  }
-
-  export type SystemConfigMaxAggregateInputType = {
-    id?: true
-    updatedAt?: true
-  }
-
-  export type SystemConfigCountAggregateInputType = {
-    id?: true
-    data?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type SystemConfigAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which SystemConfig to aggregate.
-     */
-    where?: SystemConfigWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of SystemConfigs to fetch.
-     */
-    orderBy?: SystemConfigOrderByWithRelationInput | SystemConfigOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: SystemConfigWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` SystemConfigs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` SystemConfigs.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned SystemConfigs
-    **/
-    _count?: true | SystemConfigCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: SystemConfigMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: SystemConfigMaxAggregateInputType
-  }
-
-  export type GetSystemConfigAggregateType<T extends SystemConfigAggregateArgs> = {
-        [P in keyof T & keyof AggregateSystemConfig]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateSystemConfig[P]>
-      : GetScalarType<T[P], AggregateSystemConfig[P]>
-  }
-
-
-
-
-  export type SystemConfigGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SystemConfigWhereInput
-    orderBy?: SystemConfigOrderByWithAggregationInput | SystemConfigOrderByWithAggregationInput[]
-    by: SystemConfigScalarFieldEnum[] | SystemConfigScalarFieldEnum
-    having?: SystemConfigScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: SystemConfigCountAggregateInputType | true
-    _min?: SystemConfigMinAggregateInputType
-    _max?: SystemConfigMaxAggregateInputType
-  }
-
-  export type SystemConfigGroupByOutputType = {
-    id: string
-    data: JsonValue
-    updatedAt: Date
-    _count: SystemConfigCountAggregateOutputType | null
-    _min: SystemConfigMinAggregateOutputType | null
-    _max: SystemConfigMaxAggregateOutputType | null
-  }
-
-  type GetSystemConfigGroupByPayload<T extends SystemConfigGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<SystemConfigGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof SystemConfigGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], SystemConfigGroupByOutputType[P]>
-            : GetScalarType<T[P], SystemConfigGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type SystemConfigSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    data?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["systemConfig"]>
-
-  export type SystemConfigSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    data?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["systemConfig"]>
-
-  export type SystemConfigSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    data?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["systemConfig"]>
-
-  export type SystemConfigSelectScalar = {
-    id?: boolean
-    data?: boolean
-    updatedAt?: boolean
-  }
-
-  export type SystemConfigOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "data" | "updatedAt", ExtArgs["result"]["systemConfig"]>
-
-  export type $SystemConfigPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "SystemConfig"
-    objects: {}
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      data: Prisma.JsonValue
-      updatedAt: Date
-    }, ExtArgs["result"]["systemConfig"]>
-    composites: {}
-  }
-
-  type SystemConfigGetPayload<S extends boolean | null | undefined | SystemConfigDefaultArgs> = $Result.GetResult<Prisma.$SystemConfigPayload, S>
-
-  type SystemConfigCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<SystemConfigFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: SystemConfigCountAggregateInputType | true
-    }
-
-  export interface SystemConfigDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SystemConfig'], meta: { name: 'SystemConfig' } }
-    /**
-     * Find zero or one SystemConfig that matches the filter.
-     * @param {SystemConfigFindUniqueArgs} args - Arguments to find a SystemConfig
-     * @example
-     * // Get one SystemConfig
-     * const systemConfig = await prisma.systemConfig.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends SystemConfigFindUniqueArgs>(args: SelectSubset<T, SystemConfigFindUniqueArgs<ExtArgs>>): Prisma__SystemConfigClient<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one SystemConfig that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {SystemConfigFindUniqueOrThrowArgs} args - Arguments to find a SystemConfig
-     * @example
-     * // Get one SystemConfig
-     * const systemConfig = await prisma.systemConfig.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends SystemConfigFindUniqueOrThrowArgs>(args: SelectSubset<T, SystemConfigFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SystemConfigClient<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first SystemConfig that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SystemConfigFindFirstArgs} args - Arguments to find a SystemConfig
-     * @example
-     * // Get one SystemConfig
-     * const systemConfig = await prisma.systemConfig.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends SystemConfigFindFirstArgs>(args?: SelectSubset<T, SystemConfigFindFirstArgs<ExtArgs>>): Prisma__SystemConfigClient<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first SystemConfig that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SystemConfigFindFirstOrThrowArgs} args - Arguments to find a SystemConfig
-     * @example
-     * // Get one SystemConfig
-     * const systemConfig = await prisma.systemConfig.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends SystemConfigFindFirstOrThrowArgs>(args?: SelectSubset<T, SystemConfigFindFirstOrThrowArgs<ExtArgs>>): Prisma__SystemConfigClient<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more SystemConfigs that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SystemConfigFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all SystemConfigs
-     * const systemConfigs = await prisma.systemConfig.findMany()
-     * 
-     * // Get first 10 SystemConfigs
-     * const systemConfigs = await prisma.systemConfig.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const systemConfigWithIdOnly = await prisma.systemConfig.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends SystemConfigFindManyArgs>(args?: SelectSubset<T, SystemConfigFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a SystemConfig.
-     * @param {SystemConfigCreateArgs} args - Arguments to create a SystemConfig.
-     * @example
-     * // Create one SystemConfig
-     * const SystemConfig = await prisma.systemConfig.create({
-     *   data: {
-     *     // ... data to create a SystemConfig
-     *   }
-     * })
-     * 
-     */
-    create<T extends SystemConfigCreateArgs>(args: SelectSubset<T, SystemConfigCreateArgs<ExtArgs>>): Prisma__SystemConfigClient<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many SystemConfigs.
-     * @param {SystemConfigCreateManyArgs} args - Arguments to create many SystemConfigs.
-     * @example
-     * // Create many SystemConfigs
-     * const systemConfig = await prisma.systemConfig.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends SystemConfigCreateManyArgs>(args?: SelectSubset<T, SystemConfigCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many SystemConfigs and returns the data saved in the database.
-     * @param {SystemConfigCreateManyAndReturnArgs} args - Arguments to create many SystemConfigs.
-     * @example
-     * // Create many SystemConfigs
-     * const systemConfig = await prisma.systemConfig.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many SystemConfigs and only return the `id`
-     * const systemConfigWithIdOnly = await prisma.systemConfig.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends SystemConfigCreateManyAndReturnArgs>(args?: SelectSubset<T, SystemConfigCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a SystemConfig.
-     * @param {SystemConfigDeleteArgs} args - Arguments to delete one SystemConfig.
-     * @example
-     * // Delete one SystemConfig
-     * const SystemConfig = await prisma.systemConfig.delete({
-     *   where: {
-     *     // ... filter to delete one SystemConfig
-     *   }
-     * })
-     * 
-     */
-    delete<T extends SystemConfigDeleteArgs>(args: SelectSubset<T, SystemConfigDeleteArgs<ExtArgs>>): Prisma__SystemConfigClient<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one SystemConfig.
-     * @param {SystemConfigUpdateArgs} args - Arguments to update one SystemConfig.
-     * @example
-     * // Update one SystemConfig
-     * const systemConfig = await prisma.systemConfig.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends SystemConfigUpdateArgs>(args: SelectSubset<T, SystemConfigUpdateArgs<ExtArgs>>): Prisma__SystemConfigClient<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more SystemConfigs.
-     * @param {SystemConfigDeleteManyArgs} args - Arguments to filter SystemConfigs to delete.
-     * @example
-     * // Delete a few SystemConfigs
-     * const { count } = await prisma.systemConfig.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends SystemConfigDeleteManyArgs>(args?: SelectSubset<T, SystemConfigDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more SystemConfigs.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SystemConfigUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many SystemConfigs
-     * const systemConfig = await prisma.systemConfig.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends SystemConfigUpdateManyArgs>(args: SelectSubset<T, SystemConfigUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more SystemConfigs and returns the data updated in the database.
-     * @param {SystemConfigUpdateManyAndReturnArgs} args - Arguments to update many SystemConfigs.
-     * @example
-     * // Update many SystemConfigs
-     * const systemConfig = await prisma.systemConfig.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more SystemConfigs and only return the `id`
-     * const systemConfigWithIdOnly = await prisma.systemConfig.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends SystemConfigUpdateManyAndReturnArgs>(args: SelectSubset<T, SystemConfigUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one SystemConfig.
-     * @param {SystemConfigUpsertArgs} args - Arguments to update or create a SystemConfig.
-     * @example
-     * // Update or create a SystemConfig
-     * const systemConfig = await prisma.systemConfig.upsert({
-     *   create: {
-     *     // ... data to create a SystemConfig
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the SystemConfig we want to update
-     *   }
-     * })
-     */
-    upsert<T extends SystemConfigUpsertArgs>(args: SelectSubset<T, SystemConfigUpsertArgs<ExtArgs>>): Prisma__SystemConfigClient<$Result.GetResult<Prisma.$SystemConfigPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of SystemConfigs.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SystemConfigCountArgs} args - Arguments to filter SystemConfigs to count.
-     * @example
-     * // Count the number of SystemConfigs
-     * const count = await prisma.systemConfig.count({
-     *   where: {
-     *     // ... the filter for the SystemConfigs we want to count
-     *   }
-     * })
-    **/
-    count<T extends SystemConfigCountArgs>(
-      args?: Subset<T, SystemConfigCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], SystemConfigCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a SystemConfig.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SystemConfigAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends SystemConfigAggregateArgs>(args: Subset<T, SystemConfigAggregateArgs>): Prisma.PrismaPromise<GetSystemConfigAggregateType<T>>
-
-    /**
-     * Group by SystemConfig.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SystemConfigGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends SystemConfigGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: SystemConfigGroupByArgs['orderBy'] }
-        : { orderBy?: SystemConfigGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, SystemConfigGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSystemConfigGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the SystemConfig model
-   */
-  readonly fields: SystemConfigFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for SystemConfig.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__SystemConfigClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the SystemConfig model
-   */
-  interface SystemConfigFieldRefs {
-    readonly id: FieldRef<"SystemConfig", 'String'>
-    readonly data: FieldRef<"SystemConfig", 'Json'>
-    readonly updatedAt: FieldRef<"SystemConfig", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * SystemConfig findUnique
-   */
-  export type SystemConfigFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SystemConfig
-     */
-    select?: SystemConfigSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SystemConfig
-     */
-    omit?: SystemConfigOmit<ExtArgs> | null
-    /**
-     * Filter, which SystemConfig to fetch.
-     */
-    where: SystemConfigWhereUniqueInput
-  }
-
-  /**
-   * SystemConfig findUniqueOrThrow
-   */
-  export type SystemConfigFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SystemConfig
-     */
-    select?: SystemConfigSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SystemConfig
-     */
-    omit?: SystemConfigOmit<ExtArgs> | null
-    /**
-     * Filter, which SystemConfig to fetch.
-     */
-    where: SystemConfigWhereUniqueInput
-  }
-
-  /**
-   * SystemConfig findFirst
-   */
-  export type SystemConfigFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SystemConfig
-     */
-    select?: SystemConfigSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SystemConfig
-     */
-    omit?: SystemConfigOmit<ExtArgs> | null
-    /**
-     * Filter, which SystemConfig to fetch.
-     */
-    where?: SystemConfigWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of SystemConfigs to fetch.
-     */
-    orderBy?: SystemConfigOrderByWithRelationInput | SystemConfigOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for SystemConfigs.
-     */
-    cursor?: SystemConfigWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` SystemConfigs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` SystemConfigs.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of SystemConfigs.
-     */
-    distinct?: SystemConfigScalarFieldEnum | SystemConfigScalarFieldEnum[]
-  }
-
-  /**
-   * SystemConfig findFirstOrThrow
-   */
-  export type SystemConfigFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SystemConfig
-     */
-    select?: SystemConfigSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SystemConfig
-     */
-    omit?: SystemConfigOmit<ExtArgs> | null
-    /**
-     * Filter, which SystemConfig to fetch.
-     */
-    where?: SystemConfigWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of SystemConfigs to fetch.
-     */
-    orderBy?: SystemConfigOrderByWithRelationInput | SystemConfigOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for SystemConfigs.
-     */
-    cursor?: SystemConfigWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` SystemConfigs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` SystemConfigs.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of SystemConfigs.
-     */
-    distinct?: SystemConfigScalarFieldEnum | SystemConfigScalarFieldEnum[]
-  }
-
-  /**
-   * SystemConfig findMany
-   */
-  export type SystemConfigFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SystemConfig
-     */
-    select?: SystemConfigSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SystemConfig
-     */
-    omit?: SystemConfigOmit<ExtArgs> | null
-    /**
-     * Filter, which SystemConfigs to fetch.
-     */
-    where?: SystemConfigWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of SystemConfigs to fetch.
-     */
-    orderBy?: SystemConfigOrderByWithRelationInput | SystemConfigOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing SystemConfigs.
-     */
-    cursor?: SystemConfigWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` SystemConfigs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` SystemConfigs.
-     */
-    skip?: number
-    distinct?: SystemConfigScalarFieldEnum | SystemConfigScalarFieldEnum[]
-  }
-
-  /**
-   * SystemConfig create
-   */
-  export type SystemConfigCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SystemConfig
-     */
-    select?: SystemConfigSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SystemConfig
-     */
-    omit?: SystemConfigOmit<ExtArgs> | null
-    /**
-     * The data needed to create a SystemConfig.
-     */
-    data: XOR<SystemConfigCreateInput, SystemConfigUncheckedCreateInput>
-  }
-
-  /**
-   * SystemConfig createMany
-   */
-  export type SystemConfigCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many SystemConfigs.
-     */
-    data: SystemConfigCreateManyInput | SystemConfigCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * SystemConfig createManyAndReturn
-   */
-  export type SystemConfigCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SystemConfig
-     */
-    select?: SystemConfigSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the SystemConfig
-     */
-    omit?: SystemConfigOmit<ExtArgs> | null
-    /**
-     * The data used to create many SystemConfigs.
-     */
-    data: SystemConfigCreateManyInput | SystemConfigCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * SystemConfig update
-   */
-  export type SystemConfigUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SystemConfig
-     */
-    select?: SystemConfigSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SystemConfig
-     */
-    omit?: SystemConfigOmit<ExtArgs> | null
-    /**
-     * The data needed to update a SystemConfig.
-     */
-    data: XOR<SystemConfigUpdateInput, SystemConfigUncheckedUpdateInput>
-    /**
-     * Choose, which SystemConfig to update.
-     */
-    where: SystemConfigWhereUniqueInput
-  }
-
-  /**
-   * SystemConfig updateMany
-   */
-  export type SystemConfigUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update SystemConfigs.
-     */
-    data: XOR<SystemConfigUpdateManyMutationInput, SystemConfigUncheckedUpdateManyInput>
-    /**
-     * Filter which SystemConfigs to update
-     */
-    where?: SystemConfigWhereInput
-    /**
-     * Limit how many SystemConfigs to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * SystemConfig updateManyAndReturn
-   */
-  export type SystemConfigUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SystemConfig
-     */
-    select?: SystemConfigSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the SystemConfig
-     */
-    omit?: SystemConfigOmit<ExtArgs> | null
-    /**
-     * The data used to update SystemConfigs.
-     */
-    data: XOR<SystemConfigUpdateManyMutationInput, SystemConfigUncheckedUpdateManyInput>
-    /**
-     * Filter which SystemConfigs to update
-     */
-    where?: SystemConfigWhereInput
-    /**
-     * Limit how many SystemConfigs to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * SystemConfig upsert
-   */
-  export type SystemConfigUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SystemConfig
-     */
-    select?: SystemConfigSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SystemConfig
-     */
-    omit?: SystemConfigOmit<ExtArgs> | null
-    /**
-     * The filter to search for the SystemConfig to update in case it exists.
-     */
-    where: SystemConfigWhereUniqueInput
-    /**
-     * In case the SystemConfig found by the `where` argument doesn't exist, create a new SystemConfig with this data.
-     */
-    create: XOR<SystemConfigCreateInput, SystemConfigUncheckedCreateInput>
-    /**
-     * In case the SystemConfig was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<SystemConfigUpdateInput, SystemConfigUncheckedUpdateInput>
-  }
-
-  /**
-   * SystemConfig delete
-   */
-  export type SystemConfigDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SystemConfig
-     */
-    select?: SystemConfigSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SystemConfig
-     */
-    omit?: SystemConfigOmit<ExtArgs> | null
-    /**
-     * Filter which SystemConfig to delete.
-     */
-    where: SystemConfigWhereUniqueInput
-  }
-
-  /**
-   * SystemConfig deleteMany
-   */
-  export type SystemConfigDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which SystemConfigs to delete
-     */
-    where?: SystemConfigWhereInput
-    /**
-     * Limit how many SystemConfigs to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * SystemConfig without action
-   */
-  export type SystemConfigDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SystemConfig
-     */
-    select?: SystemConfigSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SystemConfig
-     */
-    omit?: SystemConfigOmit<ExtArgs> | null
   }
 
 
@@ -13341,3323 +11554,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: AccountStatusLogInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model KycRequest
-   */
-
-  export type AggregateKycRequest = {
-    _count: KycRequestCountAggregateOutputType | null
-    _min: KycRequestMinAggregateOutputType | null
-    _max: KycRequestMaxAggregateOutputType | null
-  }
-
-  export type KycRequestMinAggregateOutputType = {
-    id: string | null
-    accountId: string | null
-    documentType: string | null
-    documentId: string | null
-    documentPhotoUrl: string | null
-    documentPhotoContentId: string | null
-    selfiePhotoUrl: string | null
-    selfiePhotoContentId: string | null
-    status: string | null
-    rejectionReason: string | null
-    submittedAt: Date | null
-    userFullName: string | null
-    userNeupId: string | null
-  }
-
-  export type KycRequestMaxAggregateOutputType = {
-    id: string | null
-    accountId: string | null
-    documentType: string | null
-    documentId: string | null
-    documentPhotoUrl: string | null
-    documentPhotoContentId: string | null
-    selfiePhotoUrl: string | null
-    selfiePhotoContentId: string | null
-    status: string | null
-    rejectionReason: string | null
-    submittedAt: Date | null
-    userFullName: string | null
-    userNeupId: string | null
-  }
-
-  export type KycRequestCountAggregateOutputType = {
-    id: number
-    accountId: number
-    documentType: number
-    documentId: number
-    documentPhotoUrl: number
-    documentPhotoContentId: number
-    selfiePhotoUrl: number
-    selfiePhotoContentId: number
-    status: number
-    rejectionReason: number
-    submittedAt: number
-    userFullName: number
-    userNeupId: number
-    _all: number
-  }
-
-
-  export type KycRequestMinAggregateInputType = {
-    id?: true
-    accountId?: true
-    documentType?: true
-    documentId?: true
-    documentPhotoUrl?: true
-    documentPhotoContentId?: true
-    selfiePhotoUrl?: true
-    selfiePhotoContentId?: true
-    status?: true
-    rejectionReason?: true
-    submittedAt?: true
-    userFullName?: true
-    userNeupId?: true
-  }
-
-  export type KycRequestMaxAggregateInputType = {
-    id?: true
-    accountId?: true
-    documentType?: true
-    documentId?: true
-    documentPhotoUrl?: true
-    documentPhotoContentId?: true
-    selfiePhotoUrl?: true
-    selfiePhotoContentId?: true
-    status?: true
-    rejectionReason?: true
-    submittedAt?: true
-    userFullName?: true
-    userNeupId?: true
-  }
-
-  export type KycRequestCountAggregateInputType = {
-    id?: true
-    accountId?: true
-    documentType?: true
-    documentId?: true
-    documentPhotoUrl?: true
-    documentPhotoContentId?: true
-    selfiePhotoUrl?: true
-    selfiePhotoContentId?: true
-    status?: true
-    rejectionReason?: true
-    submittedAt?: true
-    userFullName?: true
-    userNeupId?: true
-    _all?: true
-  }
-
-  export type KycRequestAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which KycRequest to aggregate.
-     */
-    where?: KycRequestWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of KycRequests to fetch.
-     */
-    orderBy?: KycRequestOrderByWithRelationInput | KycRequestOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: KycRequestWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` KycRequests from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` KycRequests.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned KycRequests
-    **/
-    _count?: true | KycRequestCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: KycRequestMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: KycRequestMaxAggregateInputType
-  }
-
-  export type GetKycRequestAggregateType<T extends KycRequestAggregateArgs> = {
-        [P in keyof T & keyof AggregateKycRequest]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateKycRequest[P]>
-      : GetScalarType<T[P], AggregateKycRequest[P]>
-  }
-
-
-
-
-  export type KycRequestGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: KycRequestWhereInput
-    orderBy?: KycRequestOrderByWithAggregationInput | KycRequestOrderByWithAggregationInput[]
-    by: KycRequestScalarFieldEnum[] | KycRequestScalarFieldEnum
-    having?: KycRequestScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: KycRequestCountAggregateInputType | true
-    _min?: KycRequestMinAggregateInputType
-    _max?: KycRequestMaxAggregateInputType
-  }
-
-  export type KycRequestGroupByOutputType = {
-    id: string
-    accountId: string
-    documentType: string
-    documentId: string | null
-    documentPhotoUrl: string | null
-    documentPhotoContentId: string | null
-    selfiePhotoUrl: string | null
-    selfiePhotoContentId: string | null
-    status: string
-    rejectionReason: string | null
-    submittedAt: Date
-    userFullName: string | null
-    userNeupId: string | null
-    _count: KycRequestCountAggregateOutputType | null
-    _min: KycRequestMinAggregateOutputType | null
-    _max: KycRequestMaxAggregateOutputType | null
-  }
-
-  type GetKycRequestGroupByPayload<T extends KycRequestGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<KycRequestGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof KycRequestGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], KycRequestGroupByOutputType[P]>
-            : GetScalarType<T[P], KycRequestGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type KycRequestSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    documentType?: boolean
-    documentId?: boolean
-    documentPhotoUrl?: boolean
-    documentPhotoContentId?: boolean
-    selfiePhotoUrl?: boolean
-    selfiePhotoContentId?: boolean
-    status?: boolean
-    rejectionReason?: boolean
-    submittedAt?: boolean
-    userFullName?: boolean
-    userNeupId?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["kycRequest"]>
-
-  export type KycRequestSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    documentType?: boolean
-    documentId?: boolean
-    documentPhotoUrl?: boolean
-    documentPhotoContentId?: boolean
-    selfiePhotoUrl?: boolean
-    selfiePhotoContentId?: boolean
-    status?: boolean
-    rejectionReason?: boolean
-    submittedAt?: boolean
-    userFullName?: boolean
-    userNeupId?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["kycRequest"]>
-
-  export type KycRequestSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    documentType?: boolean
-    documentId?: boolean
-    documentPhotoUrl?: boolean
-    documentPhotoContentId?: boolean
-    selfiePhotoUrl?: boolean
-    selfiePhotoContentId?: boolean
-    status?: boolean
-    rejectionReason?: boolean
-    submittedAt?: boolean
-    userFullName?: boolean
-    userNeupId?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["kycRequest"]>
-
-  export type KycRequestSelectScalar = {
-    id?: boolean
-    accountId?: boolean
-    documentType?: boolean
-    documentId?: boolean
-    documentPhotoUrl?: boolean
-    documentPhotoContentId?: boolean
-    selfiePhotoUrl?: boolean
-    selfiePhotoContentId?: boolean
-    status?: boolean
-    rejectionReason?: boolean
-    submittedAt?: boolean
-    userFullName?: boolean
-    userNeupId?: boolean
-  }
-
-  export type KycRequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "documentType" | "documentId" | "documentPhotoUrl" | "documentPhotoContentId" | "selfiePhotoUrl" | "selfiePhotoContentId" | "status" | "rejectionReason" | "submittedAt" | "userFullName" | "userNeupId", ExtArgs["result"]["kycRequest"]>
-  export type KycRequestInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }
-  export type KycRequestIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }
-  export type KycRequestIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }
-
-  export type $KycRequestPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "KycRequest"
-    objects: {
-      account: Prisma.$AccountPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      accountId: string
-      documentType: string
-      documentId: string | null
-      documentPhotoUrl: string | null
-      documentPhotoContentId: string | null
-      selfiePhotoUrl: string | null
-      selfiePhotoContentId: string | null
-      status: string
-      rejectionReason: string | null
-      submittedAt: Date
-      userFullName: string | null
-      userNeupId: string | null
-    }, ExtArgs["result"]["kycRequest"]>
-    composites: {}
-  }
-
-  type KycRequestGetPayload<S extends boolean | null | undefined | KycRequestDefaultArgs> = $Result.GetResult<Prisma.$KycRequestPayload, S>
-
-  type KycRequestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<KycRequestFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: KycRequestCountAggregateInputType | true
-    }
-
-  export interface KycRequestDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['KycRequest'], meta: { name: 'KycRequest' } }
-    /**
-     * Find zero or one KycRequest that matches the filter.
-     * @param {KycRequestFindUniqueArgs} args - Arguments to find a KycRequest
-     * @example
-     * // Get one KycRequest
-     * const kycRequest = await prisma.kycRequest.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends KycRequestFindUniqueArgs>(args: SelectSubset<T, KycRequestFindUniqueArgs<ExtArgs>>): Prisma__KycRequestClient<$Result.GetResult<Prisma.$KycRequestPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one KycRequest that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {KycRequestFindUniqueOrThrowArgs} args - Arguments to find a KycRequest
-     * @example
-     * // Get one KycRequest
-     * const kycRequest = await prisma.kycRequest.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends KycRequestFindUniqueOrThrowArgs>(args: SelectSubset<T, KycRequestFindUniqueOrThrowArgs<ExtArgs>>): Prisma__KycRequestClient<$Result.GetResult<Prisma.$KycRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first KycRequest that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {KycRequestFindFirstArgs} args - Arguments to find a KycRequest
-     * @example
-     * // Get one KycRequest
-     * const kycRequest = await prisma.kycRequest.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends KycRequestFindFirstArgs>(args?: SelectSubset<T, KycRequestFindFirstArgs<ExtArgs>>): Prisma__KycRequestClient<$Result.GetResult<Prisma.$KycRequestPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first KycRequest that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {KycRequestFindFirstOrThrowArgs} args - Arguments to find a KycRequest
-     * @example
-     * // Get one KycRequest
-     * const kycRequest = await prisma.kycRequest.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends KycRequestFindFirstOrThrowArgs>(args?: SelectSubset<T, KycRequestFindFirstOrThrowArgs<ExtArgs>>): Prisma__KycRequestClient<$Result.GetResult<Prisma.$KycRequestPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more KycRequests that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {KycRequestFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all KycRequests
-     * const kycRequests = await prisma.kycRequest.findMany()
-     * 
-     * // Get first 10 KycRequests
-     * const kycRequests = await prisma.kycRequest.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const kycRequestWithIdOnly = await prisma.kycRequest.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends KycRequestFindManyArgs>(args?: SelectSubset<T, KycRequestFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KycRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a KycRequest.
-     * @param {KycRequestCreateArgs} args - Arguments to create a KycRequest.
-     * @example
-     * // Create one KycRequest
-     * const KycRequest = await prisma.kycRequest.create({
-     *   data: {
-     *     // ... data to create a KycRequest
-     *   }
-     * })
-     * 
-     */
-    create<T extends KycRequestCreateArgs>(args: SelectSubset<T, KycRequestCreateArgs<ExtArgs>>): Prisma__KycRequestClient<$Result.GetResult<Prisma.$KycRequestPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many KycRequests.
-     * @param {KycRequestCreateManyArgs} args - Arguments to create many KycRequests.
-     * @example
-     * // Create many KycRequests
-     * const kycRequest = await prisma.kycRequest.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends KycRequestCreateManyArgs>(args?: SelectSubset<T, KycRequestCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many KycRequests and returns the data saved in the database.
-     * @param {KycRequestCreateManyAndReturnArgs} args - Arguments to create many KycRequests.
-     * @example
-     * // Create many KycRequests
-     * const kycRequest = await prisma.kycRequest.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many KycRequests and only return the `id`
-     * const kycRequestWithIdOnly = await prisma.kycRequest.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends KycRequestCreateManyAndReturnArgs>(args?: SelectSubset<T, KycRequestCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KycRequestPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a KycRequest.
-     * @param {KycRequestDeleteArgs} args - Arguments to delete one KycRequest.
-     * @example
-     * // Delete one KycRequest
-     * const KycRequest = await prisma.kycRequest.delete({
-     *   where: {
-     *     // ... filter to delete one KycRequest
-     *   }
-     * })
-     * 
-     */
-    delete<T extends KycRequestDeleteArgs>(args: SelectSubset<T, KycRequestDeleteArgs<ExtArgs>>): Prisma__KycRequestClient<$Result.GetResult<Prisma.$KycRequestPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one KycRequest.
-     * @param {KycRequestUpdateArgs} args - Arguments to update one KycRequest.
-     * @example
-     * // Update one KycRequest
-     * const kycRequest = await prisma.kycRequest.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends KycRequestUpdateArgs>(args: SelectSubset<T, KycRequestUpdateArgs<ExtArgs>>): Prisma__KycRequestClient<$Result.GetResult<Prisma.$KycRequestPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more KycRequests.
-     * @param {KycRequestDeleteManyArgs} args - Arguments to filter KycRequests to delete.
-     * @example
-     * // Delete a few KycRequests
-     * const { count } = await prisma.kycRequest.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends KycRequestDeleteManyArgs>(args?: SelectSubset<T, KycRequestDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more KycRequests.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {KycRequestUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many KycRequests
-     * const kycRequest = await prisma.kycRequest.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends KycRequestUpdateManyArgs>(args: SelectSubset<T, KycRequestUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more KycRequests and returns the data updated in the database.
-     * @param {KycRequestUpdateManyAndReturnArgs} args - Arguments to update many KycRequests.
-     * @example
-     * // Update many KycRequests
-     * const kycRequest = await prisma.kycRequest.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more KycRequests and only return the `id`
-     * const kycRequestWithIdOnly = await prisma.kycRequest.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends KycRequestUpdateManyAndReturnArgs>(args: SelectSubset<T, KycRequestUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KycRequestPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one KycRequest.
-     * @param {KycRequestUpsertArgs} args - Arguments to update or create a KycRequest.
-     * @example
-     * // Update or create a KycRequest
-     * const kycRequest = await prisma.kycRequest.upsert({
-     *   create: {
-     *     // ... data to create a KycRequest
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the KycRequest we want to update
-     *   }
-     * })
-     */
-    upsert<T extends KycRequestUpsertArgs>(args: SelectSubset<T, KycRequestUpsertArgs<ExtArgs>>): Prisma__KycRequestClient<$Result.GetResult<Prisma.$KycRequestPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of KycRequests.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {KycRequestCountArgs} args - Arguments to filter KycRequests to count.
-     * @example
-     * // Count the number of KycRequests
-     * const count = await prisma.kycRequest.count({
-     *   where: {
-     *     // ... the filter for the KycRequests we want to count
-     *   }
-     * })
-    **/
-    count<T extends KycRequestCountArgs>(
-      args?: Subset<T, KycRequestCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], KycRequestCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a KycRequest.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {KycRequestAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends KycRequestAggregateArgs>(args: Subset<T, KycRequestAggregateArgs>): Prisma.PrismaPromise<GetKycRequestAggregateType<T>>
-
-    /**
-     * Group by KycRequest.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {KycRequestGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends KycRequestGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: KycRequestGroupByArgs['orderBy'] }
-        : { orderBy?: KycRequestGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, KycRequestGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKycRequestGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the KycRequest model
-   */
-  readonly fields: KycRequestFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for KycRequest.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__KycRequestClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    account<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the KycRequest model
-   */
-  interface KycRequestFieldRefs {
-    readonly id: FieldRef<"KycRequest", 'String'>
-    readonly accountId: FieldRef<"KycRequest", 'String'>
-    readonly documentType: FieldRef<"KycRequest", 'String'>
-    readonly documentId: FieldRef<"KycRequest", 'String'>
-    readonly documentPhotoUrl: FieldRef<"KycRequest", 'String'>
-    readonly documentPhotoContentId: FieldRef<"KycRequest", 'String'>
-    readonly selfiePhotoUrl: FieldRef<"KycRequest", 'String'>
-    readonly selfiePhotoContentId: FieldRef<"KycRequest", 'String'>
-    readonly status: FieldRef<"KycRequest", 'String'>
-    readonly rejectionReason: FieldRef<"KycRequest", 'String'>
-    readonly submittedAt: FieldRef<"KycRequest", 'DateTime'>
-    readonly userFullName: FieldRef<"KycRequest", 'String'>
-    readonly userNeupId: FieldRef<"KycRequest", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * KycRequest findUnique
-   */
-  export type KycRequestFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the KycRequest
-     */
-    select?: KycRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the KycRequest
-     */
-    omit?: KycRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: KycRequestInclude<ExtArgs> | null
-    /**
-     * Filter, which KycRequest to fetch.
-     */
-    where: KycRequestWhereUniqueInput
-  }
-
-  /**
-   * KycRequest findUniqueOrThrow
-   */
-  export type KycRequestFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the KycRequest
-     */
-    select?: KycRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the KycRequest
-     */
-    omit?: KycRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: KycRequestInclude<ExtArgs> | null
-    /**
-     * Filter, which KycRequest to fetch.
-     */
-    where: KycRequestWhereUniqueInput
-  }
-
-  /**
-   * KycRequest findFirst
-   */
-  export type KycRequestFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the KycRequest
-     */
-    select?: KycRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the KycRequest
-     */
-    omit?: KycRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: KycRequestInclude<ExtArgs> | null
-    /**
-     * Filter, which KycRequest to fetch.
-     */
-    where?: KycRequestWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of KycRequests to fetch.
-     */
-    orderBy?: KycRequestOrderByWithRelationInput | KycRequestOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for KycRequests.
-     */
-    cursor?: KycRequestWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` KycRequests from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` KycRequests.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of KycRequests.
-     */
-    distinct?: KycRequestScalarFieldEnum | KycRequestScalarFieldEnum[]
-  }
-
-  /**
-   * KycRequest findFirstOrThrow
-   */
-  export type KycRequestFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the KycRequest
-     */
-    select?: KycRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the KycRequest
-     */
-    omit?: KycRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: KycRequestInclude<ExtArgs> | null
-    /**
-     * Filter, which KycRequest to fetch.
-     */
-    where?: KycRequestWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of KycRequests to fetch.
-     */
-    orderBy?: KycRequestOrderByWithRelationInput | KycRequestOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for KycRequests.
-     */
-    cursor?: KycRequestWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` KycRequests from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` KycRequests.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of KycRequests.
-     */
-    distinct?: KycRequestScalarFieldEnum | KycRequestScalarFieldEnum[]
-  }
-
-  /**
-   * KycRequest findMany
-   */
-  export type KycRequestFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the KycRequest
-     */
-    select?: KycRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the KycRequest
-     */
-    omit?: KycRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: KycRequestInclude<ExtArgs> | null
-    /**
-     * Filter, which KycRequests to fetch.
-     */
-    where?: KycRequestWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of KycRequests to fetch.
-     */
-    orderBy?: KycRequestOrderByWithRelationInput | KycRequestOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing KycRequests.
-     */
-    cursor?: KycRequestWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` KycRequests from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` KycRequests.
-     */
-    skip?: number
-    distinct?: KycRequestScalarFieldEnum | KycRequestScalarFieldEnum[]
-  }
-
-  /**
-   * KycRequest create
-   */
-  export type KycRequestCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the KycRequest
-     */
-    select?: KycRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the KycRequest
-     */
-    omit?: KycRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: KycRequestInclude<ExtArgs> | null
-    /**
-     * The data needed to create a KycRequest.
-     */
-    data: XOR<KycRequestCreateInput, KycRequestUncheckedCreateInput>
-  }
-
-  /**
-   * KycRequest createMany
-   */
-  export type KycRequestCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many KycRequests.
-     */
-    data: KycRequestCreateManyInput | KycRequestCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * KycRequest createManyAndReturn
-   */
-  export type KycRequestCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the KycRequest
-     */
-    select?: KycRequestSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the KycRequest
-     */
-    omit?: KycRequestOmit<ExtArgs> | null
-    /**
-     * The data used to create many KycRequests.
-     */
-    data: KycRequestCreateManyInput | KycRequestCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: KycRequestIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * KycRequest update
-   */
-  export type KycRequestUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the KycRequest
-     */
-    select?: KycRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the KycRequest
-     */
-    omit?: KycRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: KycRequestInclude<ExtArgs> | null
-    /**
-     * The data needed to update a KycRequest.
-     */
-    data: XOR<KycRequestUpdateInput, KycRequestUncheckedUpdateInput>
-    /**
-     * Choose, which KycRequest to update.
-     */
-    where: KycRequestWhereUniqueInput
-  }
-
-  /**
-   * KycRequest updateMany
-   */
-  export type KycRequestUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update KycRequests.
-     */
-    data: XOR<KycRequestUpdateManyMutationInput, KycRequestUncheckedUpdateManyInput>
-    /**
-     * Filter which KycRequests to update
-     */
-    where?: KycRequestWhereInput
-    /**
-     * Limit how many KycRequests to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * KycRequest updateManyAndReturn
-   */
-  export type KycRequestUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the KycRequest
-     */
-    select?: KycRequestSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the KycRequest
-     */
-    omit?: KycRequestOmit<ExtArgs> | null
-    /**
-     * The data used to update KycRequests.
-     */
-    data: XOR<KycRequestUpdateManyMutationInput, KycRequestUncheckedUpdateManyInput>
-    /**
-     * Filter which KycRequests to update
-     */
-    where?: KycRequestWhereInput
-    /**
-     * Limit how many KycRequests to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: KycRequestIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * KycRequest upsert
-   */
-  export type KycRequestUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the KycRequest
-     */
-    select?: KycRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the KycRequest
-     */
-    omit?: KycRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: KycRequestInclude<ExtArgs> | null
-    /**
-     * The filter to search for the KycRequest to update in case it exists.
-     */
-    where: KycRequestWhereUniqueInput
-    /**
-     * In case the KycRequest found by the `where` argument doesn't exist, create a new KycRequest with this data.
-     */
-    create: XOR<KycRequestCreateInput, KycRequestUncheckedCreateInput>
-    /**
-     * In case the KycRequest was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<KycRequestUpdateInput, KycRequestUncheckedUpdateInput>
-  }
-
-  /**
-   * KycRequest delete
-   */
-  export type KycRequestDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the KycRequest
-     */
-    select?: KycRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the KycRequest
-     */
-    omit?: KycRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: KycRequestInclude<ExtArgs> | null
-    /**
-     * Filter which KycRequest to delete.
-     */
-    where: KycRequestWhereUniqueInput
-  }
-
-  /**
-   * KycRequest deleteMany
-   */
-  export type KycRequestDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which KycRequests to delete
-     */
-    where?: KycRequestWhereInput
-    /**
-     * Limit how many KycRequests to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * KycRequest without action
-   */
-  export type KycRequestDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the KycRequest
-     */
-    select?: KycRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the KycRequest
-     */
-    omit?: KycRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: KycRequestInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model Invitation
-   */
-
-  export type AggregateInvitation = {
-    _count: InvitationCountAggregateOutputType | null
-    _min: InvitationMinAggregateOutputType | null
-    _max: InvitationMaxAggregateOutputType | null
-  }
-
-  export type InvitationMinAggregateOutputType = {
-    id: string | null
-    inviterAccountId: string | null
-    inviteeEmail: string | null
-    role: string | null
-    status: string | null
-    createdAt: Date | null
-    expiresAt: Date | null
-  }
-
-  export type InvitationMaxAggregateOutputType = {
-    id: string | null
-    inviterAccountId: string | null
-    inviteeEmail: string | null
-    role: string | null
-    status: string | null
-    createdAt: Date | null
-    expiresAt: Date | null
-  }
-
-  export type InvitationCountAggregateOutputType = {
-    id: number
-    inviterAccountId: number
-    inviteeEmail: number
-    role: number
-    status: number
-    createdAt: number
-    expiresAt: number
-    _all: number
-  }
-
-
-  export type InvitationMinAggregateInputType = {
-    id?: true
-    inviterAccountId?: true
-    inviteeEmail?: true
-    role?: true
-    status?: true
-    createdAt?: true
-    expiresAt?: true
-  }
-
-  export type InvitationMaxAggregateInputType = {
-    id?: true
-    inviterAccountId?: true
-    inviteeEmail?: true
-    role?: true
-    status?: true
-    createdAt?: true
-    expiresAt?: true
-  }
-
-  export type InvitationCountAggregateInputType = {
-    id?: true
-    inviterAccountId?: true
-    inviteeEmail?: true
-    role?: true
-    status?: true
-    createdAt?: true
-    expiresAt?: true
-    _all?: true
-  }
-
-  export type InvitationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Invitation to aggregate.
-     */
-    where?: InvitationWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Invitations to fetch.
-     */
-    orderBy?: InvitationOrderByWithRelationInput | InvitationOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: InvitationWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Invitations from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Invitations.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Invitations
-    **/
-    _count?: true | InvitationCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: InvitationMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: InvitationMaxAggregateInputType
-  }
-
-  export type GetInvitationAggregateType<T extends InvitationAggregateArgs> = {
-        [P in keyof T & keyof AggregateInvitation]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateInvitation[P]>
-      : GetScalarType<T[P], AggregateInvitation[P]>
-  }
-
-
-
-
-  export type InvitationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: InvitationWhereInput
-    orderBy?: InvitationOrderByWithAggregationInput | InvitationOrderByWithAggregationInput[]
-    by: InvitationScalarFieldEnum[] | InvitationScalarFieldEnum
-    having?: InvitationScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: InvitationCountAggregateInputType | true
-    _min?: InvitationMinAggregateInputType
-    _max?: InvitationMaxAggregateInputType
-  }
-
-  export type InvitationGroupByOutputType = {
-    id: string
-    inviterAccountId: string
-    inviteeEmail: string
-    role: string
-    status: string
-    createdAt: Date
-    expiresAt: Date
-    _count: InvitationCountAggregateOutputType | null
-    _min: InvitationMinAggregateOutputType | null
-    _max: InvitationMaxAggregateOutputType | null
-  }
-
-  type GetInvitationGroupByPayload<T extends InvitationGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<InvitationGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof InvitationGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], InvitationGroupByOutputType[P]>
-            : GetScalarType<T[P], InvitationGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type InvitationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    inviterAccountId?: boolean
-    inviteeEmail?: boolean
-    role?: boolean
-    status?: boolean
-    createdAt?: boolean
-    expiresAt?: boolean
-    inviter?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["invitation"]>
-
-  export type InvitationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    inviterAccountId?: boolean
-    inviteeEmail?: boolean
-    role?: boolean
-    status?: boolean
-    createdAt?: boolean
-    expiresAt?: boolean
-    inviter?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["invitation"]>
-
-  export type InvitationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    inviterAccountId?: boolean
-    inviteeEmail?: boolean
-    role?: boolean
-    status?: boolean
-    createdAt?: boolean
-    expiresAt?: boolean
-    inviter?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["invitation"]>
-
-  export type InvitationSelectScalar = {
-    id?: boolean
-    inviterAccountId?: boolean
-    inviteeEmail?: boolean
-    role?: boolean
-    status?: boolean
-    createdAt?: boolean
-    expiresAt?: boolean
-  }
-
-  export type InvitationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "inviterAccountId" | "inviteeEmail" | "role" | "status" | "createdAt" | "expiresAt", ExtArgs["result"]["invitation"]>
-  export type InvitationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    inviter?: boolean | AccountDefaultArgs<ExtArgs>
-  }
-  export type InvitationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    inviter?: boolean | AccountDefaultArgs<ExtArgs>
-  }
-  export type InvitationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    inviter?: boolean | AccountDefaultArgs<ExtArgs>
-  }
-
-  export type $InvitationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Invitation"
-    objects: {
-      inviter: Prisma.$AccountPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      inviterAccountId: string
-      inviteeEmail: string
-      role: string
-      status: string
-      createdAt: Date
-      expiresAt: Date
-    }, ExtArgs["result"]["invitation"]>
-    composites: {}
-  }
-
-  type InvitationGetPayload<S extends boolean | null | undefined | InvitationDefaultArgs> = $Result.GetResult<Prisma.$InvitationPayload, S>
-
-  type InvitationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<InvitationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: InvitationCountAggregateInputType | true
-    }
-
-  export interface InvitationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Invitation'], meta: { name: 'Invitation' } }
-    /**
-     * Find zero or one Invitation that matches the filter.
-     * @param {InvitationFindUniqueArgs} args - Arguments to find a Invitation
-     * @example
-     * // Get one Invitation
-     * const invitation = await prisma.invitation.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends InvitationFindUniqueArgs>(args: SelectSubset<T, InvitationFindUniqueArgs<ExtArgs>>): Prisma__InvitationClient<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Invitation that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {InvitationFindUniqueOrThrowArgs} args - Arguments to find a Invitation
-     * @example
-     * // Get one Invitation
-     * const invitation = await prisma.invitation.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends InvitationFindUniqueOrThrowArgs>(args: SelectSubset<T, InvitationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__InvitationClient<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Invitation that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {InvitationFindFirstArgs} args - Arguments to find a Invitation
-     * @example
-     * // Get one Invitation
-     * const invitation = await prisma.invitation.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends InvitationFindFirstArgs>(args?: SelectSubset<T, InvitationFindFirstArgs<ExtArgs>>): Prisma__InvitationClient<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Invitation that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {InvitationFindFirstOrThrowArgs} args - Arguments to find a Invitation
-     * @example
-     * // Get one Invitation
-     * const invitation = await prisma.invitation.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends InvitationFindFirstOrThrowArgs>(args?: SelectSubset<T, InvitationFindFirstOrThrowArgs<ExtArgs>>): Prisma__InvitationClient<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Invitations that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {InvitationFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Invitations
-     * const invitations = await prisma.invitation.findMany()
-     * 
-     * // Get first 10 Invitations
-     * const invitations = await prisma.invitation.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const invitationWithIdOnly = await prisma.invitation.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends InvitationFindManyArgs>(args?: SelectSubset<T, InvitationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Invitation.
-     * @param {InvitationCreateArgs} args - Arguments to create a Invitation.
-     * @example
-     * // Create one Invitation
-     * const Invitation = await prisma.invitation.create({
-     *   data: {
-     *     // ... data to create a Invitation
-     *   }
-     * })
-     * 
-     */
-    create<T extends InvitationCreateArgs>(args: SelectSubset<T, InvitationCreateArgs<ExtArgs>>): Prisma__InvitationClient<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Invitations.
-     * @param {InvitationCreateManyArgs} args - Arguments to create many Invitations.
-     * @example
-     * // Create many Invitations
-     * const invitation = await prisma.invitation.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends InvitationCreateManyArgs>(args?: SelectSubset<T, InvitationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Invitations and returns the data saved in the database.
-     * @param {InvitationCreateManyAndReturnArgs} args - Arguments to create many Invitations.
-     * @example
-     * // Create many Invitations
-     * const invitation = await prisma.invitation.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Invitations and only return the `id`
-     * const invitationWithIdOnly = await prisma.invitation.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends InvitationCreateManyAndReturnArgs>(args?: SelectSubset<T, InvitationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Invitation.
-     * @param {InvitationDeleteArgs} args - Arguments to delete one Invitation.
-     * @example
-     * // Delete one Invitation
-     * const Invitation = await prisma.invitation.delete({
-     *   where: {
-     *     // ... filter to delete one Invitation
-     *   }
-     * })
-     * 
-     */
-    delete<T extends InvitationDeleteArgs>(args: SelectSubset<T, InvitationDeleteArgs<ExtArgs>>): Prisma__InvitationClient<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Invitation.
-     * @param {InvitationUpdateArgs} args - Arguments to update one Invitation.
-     * @example
-     * // Update one Invitation
-     * const invitation = await prisma.invitation.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends InvitationUpdateArgs>(args: SelectSubset<T, InvitationUpdateArgs<ExtArgs>>): Prisma__InvitationClient<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Invitations.
-     * @param {InvitationDeleteManyArgs} args - Arguments to filter Invitations to delete.
-     * @example
-     * // Delete a few Invitations
-     * const { count } = await prisma.invitation.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends InvitationDeleteManyArgs>(args?: SelectSubset<T, InvitationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Invitations.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {InvitationUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Invitations
-     * const invitation = await prisma.invitation.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends InvitationUpdateManyArgs>(args: SelectSubset<T, InvitationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Invitations and returns the data updated in the database.
-     * @param {InvitationUpdateManyAndReturnArgs} args - Arguments to update many Invitations.
-     * @example
-     * // Update many Invitations
-     * const invitation = await prisma.invitation.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Invitations and only return the `id`
-     * const invitationWithIdOnly = await prisma.invitation.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends InvitationUpdateManyAndReturnArgs>(args: SelectSubset<T, InvitationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Invitation.
-     * @param {InvitationUpsertArgs} args - Arguments to update or create a Invitation.
-     * @example
-     * // Update or create a Invitation
-     * const invitation = await prisma.invitation.upsert({
-     *   create: {
-     *     // ... data to create a Invitation
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Invitation we want to update
-     *   }
-     * })
-     */
-    upsert<T extends InvitationUpsertArgs>(args: SelectSubset<T, InvitationUpsertArgs<ExtArgs>>): Prisma__InvitationClient<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Invitations.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {InvitationCountArgs} args - Arguments to filter Invitations to count.
-     * @example
-     * // Count the number of Invitations
-     * const count = await prisma.invitation.count({
-     *   where: {
-     *     // ... the filter for the Invitations we want to count
-     *   }
-     * })
-    **/
-    count<T extends InvitationCountArgs>(
-      args?: Subset<T, InvitationCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], InvitationCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Invitation.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {InvitationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends InvitationAggregateArgs>(args: Subset<T, InvitationAggregateArgs>): Prisma.PrismaPromise<GetInvitationAggregateType<T>>
-
-    /**
-     * Group by Invitation.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {InvitationGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends InvitationGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: InvitationGroupByArgs['orderBy'] }
-        : { orderBy?: InvitationGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, InvitationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInvitationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Invitation model
-   */
-  readonly fields: InvitationFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Invitation.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__InvitationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    inviter<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Invitation model
-   */
-  interface InvitationFieldRefs {
-    readonly id: FieldRef<"Invitation", 'String'>
-    readonly inviterAccountId: FieldRef<"Invitation", 'String'>
-    readonly inviteeEmail: FieldRef<"Invitation", 'String'>
-    readonly role: FieldRef<"Invitation", 'String'>
-    readonly status: FieldRef<"Invitation", 'String'>
-    readonly createdAt: FieldRef<"Invitation", 'DateTime'>
-    readonly expiresAt: FieldRef<"Invitation", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Invitation findUnique
-   */
-  export type InvitationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Invitation
-     */
-    select?: InvitationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Invitation
-     */
-    omit?: InvitationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: InvitationInclude<ExtArgs> | null
-    /**
-     * Filter, which Invitation to fetch.
-     */
-    where: InvitationWhereUniqueInput
-  }
-
-  /**
-   * Invitation findUniqueOrThrow
-   */
-  export type InvitationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Invitation
-     */
-    select?: InvitationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Invitation
-     */
-    omit?: InvitationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: InvitationInclude<ExtArgs> | null
-    /**
-     * Filter, which Invitation to fetch.
-     */
-    where: InvitationWhereUniqueInput
-  }
-
-  /**
-   * Invitation findFirst
-   */
-  export type InvitationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Invitation
-     */
-    select?: InvitationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Invitation
-     */
-    omit?: InvitationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: InvitationInclude<ExtArgs> | null
-    /**
-     * Filter, which Invitation to fetch.
-     */
-    where?: InvitationWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Invitations to fetch.
-     */
-    orderBy?: InvitationOrderByWithRelationInput | InvitationOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Invitations.
-     */
-    cursor?: InvitationWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Invitations from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Invitations.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Invitations.
-     */
-    distinct?: InvitationScalarFieldEnum | InvitationScalarFieldEnum[]
-  }
-
-  /**
-   * Invitation findFirstOrThrow
-   */
-  export type InvitationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Invitation
-     */
-    select?: InvitationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Invitation
-     */
-    omit?: InvitationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: InvitationInclude<ExtArgs> | null
-    /**
-     * Filter, which Invitation to fetch.
-     */
-    where?: InvitationWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Invitations to fetch.
-     */
-    orderBy?: InvitationOrderByWithRelationInput | InvitationOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Invitations.
-     */
-    cursor?: InvitationWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Invitations from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Invitations.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Invitations.
-     */
-    distinct?: InvitationScalarFieldEnum | InvitationScalarFieldEnum[]
-  }
-
-  /**
-   * Invitation findMany
-   */
-  export type InvitationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Invitation
-     */
-    select?: InvitationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Invitation
-     */
-    omit?: InvitationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: InvitationInclude<ExtArgs> | null
-    /**
-     * Filter, which Invitations to fetch.
-     */
-    where?: InvitationWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Invitations to fetch.
-     */
-    orderBy?: InvitationOrderByWithRelationInput | InvitationOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Invitations.
-     */
-    cursor?: InvitationWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Invitations from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Invitations.
-     */
-    skip?: number
-    distinct?: InvitationScalarFieldEnum | InvitationScalarFieldEnum[]
-  }
-
-  /**
-   * Invitation create
-   */
-  export type InvitationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Invitation
-     */
-    select?: InvitationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Invitation
-     */
-    omit?: InvitationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: InvitationInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Invitation.
-     */
-    data: XOR<InvitationCreateInput, InvitationUncheckedCreateInput>
-  }
-
-  /**
-   * Invitation createMany
-   */
-  export type InvitationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Invitations.
-     */
-    data: InvitationCreateManyInput | InvitationCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Invitation createManyAndReturn
-   */
-  export type InvitationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Invitation
-     */
-    select?: InvitationSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Invitation
-     */
-    omit?: InvitationOmit<ExtArgs> | null
-    /**
-     * The data used to create many Invitations.
-     */
-    data: InvitationCreateManyInput | InvitationCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: InvitationIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Invitation update
-   */
-  export type InvitationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Invitation
-     */
-    select?: InvitationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Invitation
-     */
-    omit?: InvitationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: InvitationInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Invitation.
-     */
-    data: XOR<InvitationUpdateInput, InvitationUncheckedUpdateInput>
-    /**
-     * Choose, which Invitation to update.
-     */
-    where: InvitationWhereUniqueInput
-  }
-
-  /**
-   * Invitation updateMany
-   */
-  export type InvitationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Invitations.
-     */
-    data: XOR<InvitationUpdateManyMutationInput, InvitationUncheckedUpdateManyInput>
-    /**
-     * Filter which Invitations to update
-     */
-    where?: InvitationWhereInput
-    /**
-     * Limit how many Invitations to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Invitation updateManyAndReturn
-   */
-  export type InvitationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Invitation
-     */
-    select?: InvitationSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Invitation
-     */
-    omit?: InvitationOmit<ExtArgs> | null
-    /**
-     * The data used to update Invitations.
-     */
-    data: XOR<InvitationUpdateManyMutationInput, InvitationUncheckedUpdateManyInput>
-    /**
-     * Filter which Invitations to update
-     */
-    where?: InvitationWhereInput
-    /**
-     * Limit how many Invitations to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: InvitationIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Invitation upsert
-   */
-  export type InvitationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Invitation
-     */
-    select?: InvitationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Invitation
-     */
-    omit?: InvitationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: InvitationInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Invitation to update in case it exists.
-     */
-    where: InvitationWhereUniqueInput
-    /**
-     * In case the Invitation found by the `where` argument doesn't exist, create a new Invitation with this data.
-     */
-    create: XOR<InvitationCreateInput, InvitationUncheckedCreateInput>
-    /**
-     * In case the Invitation was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<InvitationUpdateInput, InvitationUncheckedUpdateInput>
-  }
-
-  /**
-   * Invitation delete
-   */
-  export type InvitationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Invitation
-     */
-    select?: InvitationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Invitation
-     */
-    omit?: InvitationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: InvitationInclude<ExtArgs> | null
-    /**
-     * Filter which Invitation to delete.
-     */
-    where: InvitationWhereUniqueInput
-  }
-
-  /**
-   * Invitation deleteMany
-   */
-  export type InvitationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Invitations to delete
-     */
-    where?: InvitationWhereInput
-    /**
-     * Limit how many Invitations to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Invitation without action
-   */
-  export type InvitationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Invitation
-     */
-    select?: InvitationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Invitation
-     */
-    omit?: InvitationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: InvitationInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model NeupIdRequest
-   */
-
-  export type AggregateNeupIdRequest = {
-    _count: NeupIdRequestCountAggregateOutputType | null
-    _min: NeupIdRequestMinAggregateOutputType | null
-    _max: NeupIdRequestMaxAggregateOutputType | null
-  }
-
-  export type NeupIdRequestMinAggregateOutputType = {
-    id: string | null
-    accountId: string | null
-    requestedId: string | null
-    status: string | null
-    reason: string | null
-    submittedAt: Date | null
-  }
-
-  export type NeupIdRequestMaxAggregateOutputType = {
-    id: string | null
-    accountId: string | null
-    requestedId: string | null
-    status: string | null
-    reason: string | null
-    submittedAt: Date | null
-  }
-
-  export type NeupIdRequestCountAggregateOutputType = {
-    id: number
-    accountId: number
-    requestedId: number
-    status: number
-    reason: number
-    submittedAt: number
-    _all: number
-  }
-
-
-  export type NeupIdRequestMinAggregateInputType = {
-    id?: true
-    accountId?: true
-    requestedId?: true
-    status?: true
-    reason?: true
-    submittedAt?: true
-  }
-
-  export type NeupIdRequestMaxAggregateInputType = {
-    id?: true
-    accountId?: true
-    requestedId?: true
-    status?: true
-    reason?: true
-    submittedAt?: true
-  }
-
-  export type NeupIdRequestCountAggregateInputType = {
-    id?: true
-    accountId?: true
-    requestedId?: true
-    status?: true
-    reason?: true
-    submittedAt?: true
-    _all?: true
-  }
-
-  export type NeupIdRequestAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which NeupIdRequest to aggregate.
-     */
-    where?: NeupIdRequestWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of NeupIdRequests to fetch.
-     */
-    orderBy?: NeupIdRequestOrderByWithRelationInput | NeupIdRequestOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: NeupIdRequestWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` NeupIdRequests from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` NeupIdRequests.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned NeupIdRequests
-    **/
-    _count?: true | NeupIdRequestCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: NeupIdRequestMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: NeupIdRequestMaxAggregateInputType
-  }
-
-  export type GetNeupIdRequestAggregateType<T extends NeupIdRequestAggregateArgs> = {
-        [P in keyof T & keyof AggregateNeupIdRequest]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateNeupIdRequest[P]>
-      : GetScalarType<T[P], AggregateNeupIdRequest[P]>
-  }
-
-
-
-
-  export type NeupIdRequestGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: NeupIdRequestWhereInput
-    orderBy?: NeupIdRequestOrderByWithAggregationInput | NeupIdRequestOrderByWithAggregationInput[]
-    by: NeupIdRequestScalarFieldEnum[] | NeupIdRequestScalarFieldEnum
-    having?: NeupIdRequestScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: NeupIdRequestCountAggregateInputType | true
-    _min?: NeupIdRequestMinAggregateInputType
-    _max?: NeupIdRequestMaxAggregateInputType
-  }
-
-  export type NeupIdRequestGroupByOutputType = {
-    id: string
-    accountId: string
-    requestedId: string
-    status: string
-    reason: string | null
-    submittedAt: Date
-    _count: NeupIdRequestCountAggregateOutputType | null
-    _min: NeupIdRequestMinAggregateOutputType | null
-    _max: NeupIdRequestMaxAggregateOutputType | null
-  }
-
-  type GetNeupIdRequestGroupByPayload<T extends NeupIdRequestGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<NeupIdRequestGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof NeupIdRequestGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], NeupIdRequestGroupByOutputType[P]>
-            : GetScalarType<T[P], NeupIdRequestGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type NeupIdRequestSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    requestedId?: boolean
-    status?: boolean
-    reason?: boolean
-    submittedAt?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["neupIdRequest"]>
-
-  export type NeupIdRequestSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    requestedId?: boolean
-    status?: boolean
-    reason?: boolean
-    submittedAt?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["neupIdRequest"]>
-
-  export type NeupIdRequestSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    requestedId?: boolean
-    status?: boolean
-    reason?: boolean
-    submittedAt?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["neupIdRequest"]>
-
-  export type NeupIdRequestSelectScalar = {
-    id?: boolean
-    accountId?: boolean
-    requestedId?: boolean
-    status?: boolean
-    reason?: boolean
-    submittedAt?: boolean
-  }
-
-  export type NeupIdRequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "requestedId" | "status" | "reason" | "submittedAt", ExtArgs["result"]["neupIdRequest"]>
-  export type NeupIdRequestInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }
-  export type NeupIdRequestIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }
-  export type NeupIdRequestIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }
-
-  export type $NeupIdRequestPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "NeupIdRequest"
-    objects: {
-      account: Prisma.$AccountPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      accountId: string
-      requestedId: string
-      status: string
-      reason: string | null
-      submittedAt: Date
-    }, ExtArgs["result"]["neupIdRequest"]>
-    composites: {}
-  }
-
-  type NeupIdRequestGetPayload<S extends boolean | null | undefined | NeupIdRequestDefaultArgs> = $Result.GetResult<Prisma.$NeupIdRequestPayload, S>
-
-  type NeupIdRequestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<NeupIdRequestFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: NeupIdRequestCountAggregateInputType | true
-    }
-
-  export interface NeupIdRequestDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['NeupIdRequest'], meta: { name: 'NeupIdRequest' } }
-    /**
-     * Find zero or one NeupIdRequest that matches the filter.
-     * @param {NeupIdRequestFindUniqueArgs} args - Arguments to find a NeupIdRequest
-     * @example
-     * // Get one NeupIdRequest
-     * const neupIdRequest = await prisma.neupIdRequest.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends NeupIdRequestFindUniqueArgs>(args: SelectSubset<T, NeupIdRequestFindUniqueArgs<ExtArgs>>): Prisma__NeupIdRequestClient<$Result.GetResult<Prisma.$NeupIdRequestPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one NeupIdRequest that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {NeupIdRequestFindUniqueOrThrowArgs} args - Arguments to find a NeupIdRequest
-     * @example
-     * // Get one NeupIdRequest
-     * const neupIdRequest = await prisma.neupIdRequest.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends NeupIdRequestFindUniqueOrThrowArgs>(args: SelectSubset<T, NeupIdRequestFindUniqueOrThrowArgs<ExtArgs>>): Prisma__NeupIdRequestClient<$Result.GetResult<Prisma.$NeupIdRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first NeupIdRequest that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {NeupIdRequestFindFirstArgs} args - Arguments to find a NeupIdRequest
-     * @example
-     * // Get one NeupIdRequest
-     * const neupIdRequest = await prisma.neupIdRequest.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends NeupIdRequestFindFirstArgs>(args?: SelectSubset<T, NeupIdRequestFindFirstArgs<ExtArgs>>): Prisma__NeupIdRequestClient<$Result.GetResult<Prisma.$NeupIdRequestPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first NeupIdRequest that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {NeupIdRequestFindFirstOrThrowArgs} args - Arguments to find a NeupIdRequest
-     * @example
-     * // Get one NeupIdRequest
-     * const neupIdRequest = await prisma.neupIdRequest.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends NeupIdRequestFindFirstOrThrowArgs>(args?: SelectSubset<T, NeupIdRequestFindFirstOrThrowArgs<ExtArgs>>): Prisma__NeupIdRequestClient<$Result.GetResult<Prisma.$NeupIdRequestPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more NeupIdRequests that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {NeupIdRequestFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all NeupIdRequests
-     * const neupIdRequests = await prisma.neupIdRequest.findMany()
-     * 
-     * // Get first 10 NeupIdRequests
-     * const neupIdRequests = await prisma.neupIdRequest.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const neupIdRequestWithIdOnly = await prisma.neupIdRequest.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends NeupIdRequestFindManyArgs>(args?: SelectSubset<T, NeupIdRequestFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NeupIdRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a NeupIdRequest.
-     * @param {NeupIdRequestCreateArgs} args - Arguments to create a NeupIdRequest.
-     * @example
-     * // Create one NeupIdRequest
-     * const NeupIdRequest = await prisma.neupIdRequest.create({
-     *   data: {
-     *     // ... data to create a NeupIdRequest
-     *   }
-     * })
-     * 
-     */
-    create<T extends NeupIdRequestCreateArgs>(args: SelectSubset<T, NeupIdRequestCreateArgs<ExtArgs>>): Prisma__NeupIdRequestClient<$Result.GetResult<Prisma.$NeupIdRequestPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many NeupIdRequests.
-     * @param {NeupIdRequestCreateManyArgs} args - Arguments to create many NeupIdRequests.
-     * @example
-     * // Create many NeupIdRequests
-     * const neupIdRequest = await prisma.neupIdRequest.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends NeupIdRequestCreateManyArgs>(args?: SelectSubset<T, NeupIdRequestCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many NeupIdRequests and returns the data saved in the database.
-     * @param {NeupIdRequestCreateManyAndReturnArgs} args - Arguments to create many NeupIdRequests.
-     * @example
-     * // Create many NeupIdRequests
-     * const neupIdRequest = await prisma.neupIdRequest.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many NeupIdRequests and only return the `id`
-     * const neupIdRequestWithIdOnly = await prisma.neupIdRequest.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends NeupIdRequestCreateManyAndReturnArgs>(args?: SelectSubset<T, NeupIdRequestCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NeupIdRequestPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a NeupIdRequest.
-     * @param {NeupIdRequestDeleteArgs} args - Arguments to delete one NeupIdRequest.
-     * @example
-     * // Delete one NeupIdRequest
-     * const NeupIdRequest = await prisma.neupIdRequest.delete({
-     *   where: {
-     *     // ... filter to delete one NeupIdRequest
-     *   }
-     * })
-     * 
-     */
-    delete<T extends NeupIdRequestDeleteArgs>(args: SelectSubset<T, NeupIdRequestDeleteArgs<ExtArgs>>): Prisma__NeupIdRequestClient<$Result.GetResult<Prisma.$NeupIdRequestPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one NeupIdRequest.
-     * @param {NeupIdRequestUpdateArgs} args - Arguments to update one NeupIdRequest.
-     * @example
-     * // Update one NeupIdRequest
-     * const neupIdRequest = await prisma.neupIdRequest.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends NeupIdRequestUpdateArgs>(args: SelectSubset<T, NeupIdRequestUpdateArgs<ExtArgs>>): Prisma__NeupIdRequestClient<$Result.GetResult<Prisma.$NeupIdRequestPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more NeupIdRequests.
-     * @param {NeupIdRequestDeleteManyArgs} args - Arguments to filter NeupIdRequests to delete.
-     * @example
-     * // Delete a few NeupIdRequests
-     * const { count } = await prisma.neupIdRequest.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends NeupIdRequestDeleteManyArgs>(args?: SelectSubset<T, NeupIdRequestDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more NeupIdRequests.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {NeupIdRequestUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many NeupIdRequests
-     * const neupIdRequest = await prisma.neupIdRequest.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends NeupIdRequestUpdateManyArgs>(args: SelectSubset<T, NeupIdRequestUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more NeupIdRequests and returns the data updated in the database.
-     * @param {NeupIdRequestUpdateManyAndReturnArgs} args - Arguments to update many NeupIdRequests.
-     * @example
-     * // Update many NeupIdRequests
-     * const neupIdRequest = await prisma.neupIdRequest.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more NeupIdRequests and only return the `id`
-     * const neupIdRequestWithIdOnly = await prisma.neupIdRequest.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends NeupIdRequestUpdateManyAndReturnArgs>(args: SelectSubset<T, NeupIdRequestUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NeupIdRequestPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one NeupIdRequest.
-     * @param {NeupIdRequestUpsertArgs} args - Arguments to update or create a NeupIdRequest.
-     * @example
-     * // Update or create a NeupIdRequest
-     * const neupIdRequest = await prisma.neupIdRequest.upsert({
-     *   create: {
-     *     // ... data to create a NeupIdRequest
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the NeupIdRequest we want to update
-     *   }
-     * })
-     */
-    upsert<T extends NeupIdRequestUpsertArgs>(args: SelectSubset<T, NeupIdRequestUpsertArgs<ExtArgs>>): Prisma__NeupIdRequestClient<$Result.GetResult<Prisma.$NeupIdRequestPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of NeupIdRequests.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {NeupIdRequestCountArgs} args - Arguments to filter NeupIdRequests to count.
-     * @example
-     * // Count the number of NeupIdRequests
-     * const count = await prisma.neupIdRequest.count({
-     *   where: {
-     *     // ... the filter for the NeupIdRequests we want to count
-     *   }
-     * })
-    **/
-    count<T extends NeupIdRequestCountArgs>(
-      args?: Subset<T, NeupIdRequestCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], NeupIdRequestCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a NeupIdRequest.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {NeupIdRequestAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends NeupIdRequestAggregateArgs>(args: Subset<T, NeupIdRequestAggregateArgs>): Prisma.PrismaPromise<GetNeupIdRequestAggregateType<T>>
-
-    /**
-     * Group by NeupIdRequest.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {NeupIdRequestGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends NeupIdRequestGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: NeupIdRequestGroupByArgs['orderBy'] }
-        : { orderBy?: NeupIdRequestGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, NeupIdRequestGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetNeupIdRequestGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the NeupIdRequest model
-   */
-  readonly fields: NeupIdRequestFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for NeupIdRequest.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__NeupIdRequestClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    account<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the NeupIdRequest model
-   */
-  interface NeupIdRequestFieldRefs {
-    readonly id: FieldRef<"NeupIdRequest", 'String'>
-    readonly accountId: FieldRef<"NeupIdRequest", 'String'>
-    readonly requestedId: FieldRef<"NeupIdRequest", 'String'>
-    readonly status: FieldRef<"NeupIdRequest", 'String'>
-    readonly reason: FieldRef<"NeupIdRequest", 'String'>
-    readonly submittedAt: FieldRef<"NeupIdRequest", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * NeupIdRequest findUnique
-   */
-  export type NeupIdRequestFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the NeupIdRequest
-     */
-    select?: NeupIdRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the NeupIdRequest
-     */
-    omit?: NeupIdRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NeupIdRequestInclude<ExtArgs> | null
-    /**
-     * Filter, which NeupIdRequest to fetch.
-     */
-    where: NeupIdRequestWhereUniqueInput
-  }
-
-  /**
-   * NeupIdRequest findUniqueOrThrow
-   */
-  export type NeupIdRequestFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the NeupIdRequest
-     */
-    select?: NeupIdRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the NeupIdRequest
-     */
-    omit?: NeupIdRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NeupIdRequestInclude<ExtArgs> | null
-    /**
-     * Filter, which NeupIdRequest to fetch.
-     */
-    where: NeupIdRequestWhereUniqueInput
-  }
-
-  /**
-   * NeupIdRequest findFirst
-   */
-  export type NeupIdRequestFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the NeupIdRequest
-     */
-    select?: NeupIdRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the NeupIdRequest
-     */
-    omit?: NeupIdRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NeupIdRequestInclude<ExtArgs> | null
-    /**
-     * Filter, which NeupIdRequest to fetch.
-     */
-    where?: NeupIdRequestWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of NeupIdRequests to fetch.
-     */
-    orderBy?: NeupIdRequestOrderByWithRelationInput | NeupIdRequestOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for NeupIdRequests.
-     */
-    cursor?: NeupIdRequestWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` NeupIdRequests from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` NeupIdRequests.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of NeupIdRequests.
-     */
-    distinct?: NeupIdRequestScalarFieldEnum | NeupIdRequestScalarFieldEnum[]
-  }
-
-  /**
-   * NeupIdRequest findFirstOrThrow
-   */
-  export type NeupIdRequestFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the NeupIdRequest
-     */
-    select?: NeupIdRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the NeupIdRequest
-     */
-    omit?: NeupIdRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NeupIdRequestInclude<ExtArgs> | null
-    /**
-     * Filter, which NeupIdRequest to fetch.
-     */
-    where?: NeupIdRequestWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of NeupIdRequests to fetch.
-     */
-    orderBy?: NeupIdRequestOrderByWithRelationInput | NeupIdRequestOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for NeupIdRequests.
-     */
-    cursor?: NeupIdRequestWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` NeupIdRequests from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` NeupIdRequests.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of NeupIdRequests.
-     */
-    distinct?: NeupIdRequestScalarFieldEnum | NeupIdRequestScalarFieldEnum[]
-  }
-
-  /**
-   * NeupIdRequest findMany
-   */
-  export type NeupIdRequestFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the NeupIdRequest
-     */
-    select?: NeupIdRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the NeupIdRequest
-     */
-    omit?: NeupIdRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NeupIdRequestInclude<ExtArgs> | null
-    /**
-     * Filter, which NeupIdRequests to fetch.
-     */
-    where?: NeupIdRequestWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of NeupIdRequests to fetch.
-     */
-    orderBy?: NeupIdRequestOrderByWithRelationInput | NeupIdRequestOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing NeupIdRequests.
-     */
-    cursor?: NeupIdRequestWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` NeupIdRequests from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` NeupIdRequests.
-     */
-    skip?: number
-    distinct?: NeupIdRequestScalarFieldEnum | NeupIdRequestScalarFieldEnum[]
-  }
-
-  /**
-   * NeupIdRequest create
-   */
-  export type NeupIdRequestCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the NeupIdRequest
-     */
-    select?: NeupIdRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the NeupIdRequest
-     */
-    omit?: NeupIdRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NeupIdRequestInclude<ExtArgs> | null
-    /**
-     * The data needed to create a NeupIdRequest.
-     */
-    data: XOR<NeupIdRequestCreateInput, NeupIdRequestUncheckedCreateInput>
-  }
-
-  /**
-   * NeupIdRequest createMany
-   */
-  export type NeupIdRequestCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many NeupIdRequests.
-     */
-    data: NeupIdRequestCreateManyInput | NeupIdRequestCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * NeupIdRequest createManyAndReturn
-   */
-  export type NeupIdRequestCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the NeupIdRequest
-     */
-    select?: NeupIdRequestSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the NeupIdRequest
-     */
-    omit?: NeupIdRequestOmit<ExtArgs> | null
-    /**
-     * The data used to create many NeupIdRequests.
-     */
-    data: NeupIdRequestCreateManyInput | NeupIdRequestCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NeupIdRequestIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * NeupIdRequest update
-   */
-  export type NeupIdRequestUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the NeupIdRequest
-     */
-    select?: NeupIdRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the NeupIdRequest
-     */
-    omit?: NeupIdRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NeupIdRequestInclude<ExtArgs> | null
-    /**
-     * The data needed to update a NeupIdRequest.
-     */
-    data: XOR<NeupIdRequestUpdateInput, NeupIdRequestUncheckedUpdateInput>
-    /**
-     * Choose, which NeupIdRequest to update.
-     */
-    where: NeupIdRequestWhereUniqueInput
-  }
-
-  /**
-   * NeupIdRequest updateMany
-   */
-  export type NeupIdRequestUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update NeupIdRequests.
-     */
-    data: XOR<NeupIdRequestUpdateManyMutationInput, NeupIdRequestUncheckedUpdateManyInput>
-    /**
-     * Filter which NeupIdRequests to update
-     */
-    where?: NeupIdRequestWhereInput
-    /**
-     * Limit how many NeupIdRequests to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * NeupIdRequest updateManyAndReturn
-   */
-  export type NeupIdRequestUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the NeupIdRequest
-     */
-    select?: NeupIdRequestSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the NeupIdRequest
-     */
-    omit?: NeupIdRequestOmit<ExtArgs> | null
-    /**
-     * The data used to update NeupIdRequests.
-     */
-    data: XOR<NeupIdRequestUpdateManyMutationInput, NeupIdRequestUncheckedUpdateManyInput>
-    /**
-     * Filter which NeupIdRequests to update
-     */
-    where?: NeupIdRequestWhereInput
-    /**
-     * Limit how many NeupIdRequests to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NeupIdRequestIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * NeupIdRequest upsert
-   */
-  export type NeupIdRequestUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the NeupIdRequest
-     */
-    select?: NeupIdRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the NeupIdRequest
-     */
-    omit?: NeupIdRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NeupIdRequestInclude<ExtArgs> | null
-    /**
-     * The filter to search for the NeupIdRequest to update in case it exists.
-     */
-    where: NeupIdRequestWhereUniqueInput
-    /**
-     * In case the NeupIdRequest found by the `where` argument doesn't exist, create a new NeupIdRequest with this data.
-     */
-    create: XOR<NeupIdRequestCreateInput, NeupIdRequestUncheckedCreateInput>
-    /**
-     * In case the NeupIdRequest was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<NeupIdRequestUpdateInput, NeupIdRequestUncheckedUpdateInput>
-  }
-
-  /**
-   * NeupIdRequest delete
-   */
-  export type NeupIdRequestDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the NeupIdRequest
-     */
-    select?: NeupIdRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the NeupIdRequest
-     */
-    omit?: NeupIdRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NeupIdRequestInclude<ExtArgs> | null
-    /**
-     * Filter which NeupIdRequest to delete.
-     */
-    where: NeupIdRequestWhereUniqueInput
-  }
-
-  /**
-   * NeupIdRequest deleteMany
-   */
-  export type NeupIdRequestDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which NeupIdRequests to delete
-     */
-    where?: NeupIdRequestWhereInput
-    /**
-     * Limit how many NeupIdRequests to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * NeupIdRequest without action
-   */
-  export type NeupIdRequestDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the NeupIdRequest
-     */
-    select?: NeupIdRequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the NeupIdRequest
-     */
-    omit?: NeupIdRequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NeupIdRequestInclude<ExtArgs> | null
   }
 
 
@@ -22198,1077 +17094,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: VerificationInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model UserDocument
-   */
-
-  export type AggregateUserDocument = {
-    _count: UserDocumentCountAggregateOutputType | null
-    _min: UserDocumentMinAggregateOutputType | null
-    _max: UserDocumentMaxAggregateOutputType | null
-  }
-
-  export type UserDocumentMinAggregateOutputType = {
-    id: string | null
-    accountId: string | null
-    type: string | null
-    url: string | null
-    status: string | null
-    uploadedAt: Date | null
-  }
-
-  export type UserDocumentMaxAggregateOutputType = {
-    id: string | null
-    accountId: string | null
-    type: string | null
-    url: string | null
-    status: string | null
-    uploadedAt: Date | null
-  }
-
-  export type UserDocumentCountAggregateOutputType = {
-    id: number
-    accountId: number
-    type: number
-    url: number
-    status: number
-    uploadedAt: number
-    _all: number
-  }
-
-
-  export type UserDocumentMinAggregateInputType = {
-    id?: true
-    accountId?: true
-    type?: true
-    url?: true
-    status?: true
-    uploadedAt?: true
-  }
-
-  export type UserDocumentMaxAggregateInputType = {
-    id?: true
-    accountId?: true
-    type?: true
-    url?: true
-    status?: true
-    uploadedAt?: true
-  }
-
-  export type UserDocumentCountAggregateInputType = {
-    id?: true
-    accountId?: true
-    type?: true
-    url?: true
-    status?: true
-    uploadedAt?: true
-    _all?: true
-  }
-
-  export type UserDocumentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which UserDocument to aggregate.
-     */
-    where?: UserDocumentWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of UserDocuments to fetch.
-     */
-    orderBy?: UserDocumentOrderByWithRelationInput | UserDocumentOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: UserDocumentWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` UserDocuments from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` UserDocuments.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned UserDocuments
-    **/
-    _count?: true | UserDocumentCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: UserDocumentMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: UserDocumentMaxAggregateInputType
-  }
-
-  export type GetUserDocumentAggregateType<T extends UserDocumentAggregateArgs> = {
-        [P in keyof T & keyof AggregateUserDocument]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateUserDocument[P]>
-      : GetScalarType<T[P], AggregateUserDocument[P]>
-  }
-
-
-
-
-  export type UserDocumentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UserDocumentWhereInput
-    orderBy?: UserDocumentOrderByWithAggregationInput | UserDocumentOrderByWithAggregationInput[]
-    by: UserDocumentScalarFieldEnum[] | UserDocumentScalarFieldEnum
-    having?: UserDocumentScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: UserDocumentCountAggregateInputType | true
-    _min?: UserDocumentMinAggregateInputType
-    _max?: UserDocumentMaxAggregateInputType
-  }
-
-  export type UserDocumentGroupByOutputType = {
-    id: string
-    accountId: string
-    type: string
-    url: string
-    status: string
-    uploadedAt: Date
-    _count: UserDocumentCountAggregateOutputType | null
-    _min: UserDocumentMinAggregateOutputType | null
-    _max: UserDocumentMaxAggregateOutputType | null
-  }
-
-  type GetUserDocumentGroupByPayload<T extends UserDocumentGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<UserDocumentGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof UserDocumentGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], UserDocumentGroupByOutputType[P]>
-            : GetScalarType<T[P], UserDocumentGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type UserDocumentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    type?: boolean
-    url?: boolean
-    status?: boolean
-    uploadedAt?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["userDocument"]>
-
-  export type UserDocumentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    type?: boolean
-    url?: boolean
-    status?: boolean
-    uploadedAt?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["userDocument"]>
-
-  export type UserDocumentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    type?: boolean
-    url?: boolean
-    status?: boolean
-    uploadedAt?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["userDocument"]>
-
-  export type UserDocumentSelectScalar = {
-    id?: boolean
-    accountId?: boolean
-    type?: boolean
-    url?: boolean
-    status?: boolean
-    uploadedAt?: boolean
-  }
-
-  export type UserDocumentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "type" | "url" | "status" | "uploadedAt", ExtArgs["result"]["userDocument"]>
-  export type UserDocumentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }
-  export type UserDocumentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }
-  export type UserDocumentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }
-
-  export type $UserDocumentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "UserDocument"
-    objects: {
-      account: Prisma.$AccountPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      accountId: string
-      type: string
-      url: string
-      status: string
-      uploadedAt: Date
-    }, ExtArgs["result"]["userDocument"]>
-    composites: {}
-  }
-
-  type UserDocumentGetPayload<S extends boolean | null | undefined | UserDocumentDefaultArgs> = $Result.GetResult<Prisma.$UserDocumentPayload, S>
-
-  type UserDocumentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<UserDocumentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: UserDocumentCountAggregateInputType | true
-    }
-
-  export interface UserDocumentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserDocument'], meta: { name: 'UserDocument' } }
-    /**
-     * Find zero or one UserDocument that matches the filter.
-     * @param {UserDocumentFindUniqueArgs} args - Arguments to find a UserDocument
-     * @example
-     * // Get one UserDocument
-     * const userDocument = await prisma.userDocument.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends UserDocumentFindUniqueArgs>(args: SelectSubset<T, UserDocumentFindUniqueArgs<ExtArgs>>): Prisma__UserDocumentClient<$Result.GetResult<Prisma.$UserDocumentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one UserDocument that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {UserDocumentFindUniqueOrThrowArgs} args - Arguments to find a UserDocument
-     * @example
-     * // Get one UserDocument
-     * const userDocument = await prisma.userDocument.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends UserDocumentFindUniqueOrThrowArgs>(args: SelectSubset<T, UserDocumentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserDocumentClient<$Result.GetResult<Prisma.$UserDocumentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first UserDocument that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserDocumentFindFirstArgs} args - Arguments to find a UserDocument
-     * @example
-     * // Get one UserDocument
-     * const userDocument = await prisma.userDocument.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends UserDocumentFindFirstArgs>(args?: SelectSubset<T, UserDocumentFindFirstArgs<ExtArgs>>): Prisma__UserDocumentClient<$Result.GetResult<Prisma.$UserDocumentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first UserDocument that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserDocumentFindFirstOrThrowArgs} args - Arguments to find a UserDocument
-     * @example
-     * // Get one UserDocument
-     * const userDocument = await prisma.userDocument.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends UserDocumentFindFirstOrThrowArgs>(args?: SelectSubset<T, UserDocumentFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserDocumentClient<$Result.GetResult<Prisma.$UserDocumentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more UserDocuments that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserDocumentFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all UserDocuments
-     * const userDocuments = await prisma.userDocument.findMany()
-     * 
-     * // Get first 10 UserDocuments
-     * const userDocuments = await prisma.userDocument.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const userDocumentWithIdOnly = await prisma.userDocument.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends UserDocumentFindManyArgs>(args?: SelectSubset<T, UserDocumentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a UserDocument.
-     * @param {UserDocumentCreateArgs} args - Arguments to create a UserDocument.
-     * @example
-     * // Create one UserDocument
-     * const UserDocument = await prisma.userDocument.create({
-     *   data: {
-     *     // ... data to create a UserDocument
-     *   }
-     * })
-     * 
-     */
-    create<T extends UserDocumentCreateArgs>(args: SelectSubset<T, UserDocumentCreateArgs<ExtArgs>>): Prisma__UserDocumentClient<$Result.GetResult<Prisma.$UserDocumentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many UserDocuments.
-     * @param {UserDocumentCreateManyArgs} args - Arguments to create many UserDocuments.
-     * @example
-     * // Create many UserDocuments
-     * const userDocument = await prisma.userDocument.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends UserDocumentCreateManyArgs>(args?: SelectSubset<T, UserDocumentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many UserDocuments and returns the data saved in the database.
-     * @param {UserDocumentCreateManyAndReturnArgs} args - Arguments to create many UserDocuments.
-     * @example
-     * // Create many UserDocuments
-     * const userDocument = await prisma.userDocument.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many UserDocuments and only return the `id`
-     * const userDocumentWithIdOnly = await prisma.userDocument.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends UserDocumentCreateManyAndReturnArgs>(args?: SelectSubset<T, UserDocumentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserDocumentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a UserDocument.
-     * @param {UserDocumentDeleteArgs} args - Arguments to delete one UserDocument.
-     * @example
-     * // Delete one UserDocument
-     * const UserDocument = await prisma.userDocument.delete({
-     *   where: {
-     *     // ... filter to delete one UserDocument
-     *   }
-     * })
-     * 
-     */
-    delete<T extends UserDocumentDeleteArgs>(args: SelectSubset<T, UserDocumentDeleteArgs<ExtArgs>>): Prisma__UserDocumentClient<$Result.GetResult<Prisma.$UserDocumentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one UserDocument.
-     * @param {UserDocumentUpdateArgs} args - Arguments to update one UserDocument.
-     * @example
-     * // Update one UserDocument
-     * const userDocument = await prisma.userDocument.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends UserDocumentUpdateArgs>(args: SelectSubset<T, UserDocumentUpdateArgs<ExtArgs>>): Prisma__UserDocumentClient<$Result.GetResult<Prisma.$UserDocumentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more UserDocuments.
-     * @param {UserDocumentDeleteManyArgs} args - Arguments to filter UserDocuments to delete.
-     * @example
-     * // Delete a few UserDocuments
-     * const { count } = await prisma.userDocument.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends UserDocumentDeleteManyArgs>(args?: SelectSubset<T, UserDocumentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more UserDocuments.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserDocumentUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many UserDocuments
-     * const userDocument = await prisma.userDocument.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends UserDocumentUpdateManyArgs>(args: SelectSubset<T, UserDocumentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more UserDocuments and returns the data updated in the database.
-     * @param {UserDocumentUpdateManyAndReturnArgs} args - Arguments to update many UserDocuments.
-     * @example
-     * // Update many UserDocuments
-     * const userDocument = await prisma.userDocument.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more UserDocuments and only return the `id`
-     * const userDocumentWithIdOnly = await prisma.userDocument.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends UserDocumentUpdateManyAndReturnArgs>(args: SelectSubset<T, UserDocumentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserDocumentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one UserDocument.
-     * @param {UserDocumentUpsertArgs} args - Arguments to update or create a UserDocument.
-     * @example
-     * // Update or create a UserDocument
-     * const userDocument = await prisma.userDocument.upsert({
-     *   create: {
-     *     // ... data to create a UserDocument
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the UserDocument we want to update
-     *   }
-     * })
-     */
-    upsert<T extends UserDocumentUpsertArgs>(args: SelectSubset<T, UserDocumentUpsertArgs<ExtArgs>>): Prisma__UserDocumentClient<$Result.GetResult<Prisma.$UserDocumentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of UserDocuments.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserDocumentCountArgs} args - Arguments to filter UserDocuments to count.
-     * @example
-     * // Count the number of UserDocuments
-     * const count = await prisma.userDocument.count({
-     *   where: {
-     *     // ... the filter for the UserDocuments we want to count
-     *   }
-     * })
-    **/
-    count<T extends UserDocumentCountArgs>(
-      args?: Subset<T, UserDocumentCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], UserDocumentCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a UserDocument.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserDocumentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends UserDocumentAggregateArgs>(args: Subset<T, UserDocumentAggregateArgs>): Prisma.PrismaPromise<GetUserDocumentAggregateType<T>>
-
-    /**
-     * Group by UserDocument.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserDocumentGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends UserDocumentGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: UserDocumentGroupByArgs['orderBy'] }
-        : { orderBy?: UserDocumentGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, UserDocumentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserDocumentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the UserDocument model
-   */
-  readonly fields: UserDocumentFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for UserDocument.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__UserDocumentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    account<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the UserDocument model
-   */
-  interface UserDocumentFieldRefs {
-    readonly id: FieldRef<"UserDocument", 'String'>
-    readonly accountId: FieldRef<"UserDocument", 'String'>
-    readonly type: FieldRef<"UserDocument", 'String'>
-    readonly url: FieldRef<"UserDocument", 'String'>
-    readonly status: FieldRef<"UserDocument", 'String'>
-    readonly uploadedAt: FieldRef<"UserDocument", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * UserDocument findUnique
-   */
-  export type UserDocumentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserDocument
-     */
-    select?: UserDocumentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserDocument
-     */
-    omit?: UserDocumentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserDocumentInclude<ExtArgs> | null
-    /**
-     * Filter, which UserDocument to fetch.
-     */
-    where: UserDocumentWhereUniqueInput
-  }
-
-  /**
-   * UserDocument findUniqueOrThrow
-   */
-  export type UserDocumentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserDocument
-     */
-    select?: UserDocumentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserDocument
-     */
-    omit?: UserDocumentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserDocumentInclude<ExtArgs> | null
-    /**
-     * Filter, which UserDocument to fetch.
-     */
-    where: UserDocumentWhereUniqueInput
-  }
-
-  /**
-   * UserDocument findFirst
-   */
-  export type UserDocumentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserDocument
-     */
-    select?: UserDocumentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserDocument
-     */
-    omit?: UserDocumentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserDocumentInclude<ExtArgs> | null
-    /**
-     * Filter, which UserDocument to fetch.
-     */
-    where?: UserDocumentWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of UserDocuments to fetch.
-     */
-    orderBy?: UserDocumentOrderByWithRelationInput | UserDocumentOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for UserDocuments.
-     */
-    cursor?: UserDocumentWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` UserDocuments from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` UserDocuments.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of UserDocuments.
-     */
-    distinct?: UserDocumentScalarFieldEnum | UserDocumentScalarFieldEnum[]
-  }
-
-  /**
-   * UserDocument findFirstOrThrow
-   */
-  export type UserDocumentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserDocument
-     */
-    select?: UserDocumentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserDocument
-     */
-    omit?: UserDocumentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserDocumentInclude<ExtArgs> | null
-    /**
-     * Filter, which UserDocument to fetch.
-     */
-    where?: UserDocumentWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of UserDocuments to fetch.
-     */
-    orderBy?: UserDocumentOrderByWithRelationInput | UserDocumentOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for UserDocuments.
-     */
-    cursor?: UserDocumentWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` UserDocuments from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` UserDocuments.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of UserDocuments.
-     */
-    distinct?: UserDocumentScalarFieldEnum | UserDocumentScalarFieldEnum[]
-  }
-
-  /**
-   * UserDocument findMany
-   */
-  export type UserDocumentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserDocument
-     */
-    select?: UserDocumentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserDocument
-     */
-    omit?: UserDocumentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserDocumentInclude<ExtArgs> | null
-    /**
-     * Filter, which UserDocuments to fetch.
-     */
-    where?: UserDocumentWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of UserDocuments to fetch.
-     */
-    orderBy?: UserDocumentOrderByWithRelationInput | UserDocumentOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing UserDocuments.
-     */
-    cursor?: UserDocumentWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` UserDocuments from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` UserDocuments.
-     */
-    skip?: number
-    distinct?: UserDocumentScalarFieldEnum | UserDocumentScalarFieldEnum[]
-  }
-
-  /**
-   * UserDocument create
-   */
-  export type UserDocumentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserDocument
-     */
-    select?: UserDocumentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserDocument
-     */
-    omit?: UserDocumentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserDocumentInclude<ExtArgs> | null
-    /**
-     * The data needed to create a UserDocument.
-     */
-    data: XOR<UserDocumentCreateInput, UserDocumentUncheckedCreateInput>
-  }
-
-  /**
-   * UserDocument createMany
-   */
-  export type UserDocumentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many UserDocuments.
-     */
-    data: UserDocumentCreateManyInput | UserDocumentCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * UserDocument createManyAndReturn
-   */
-  export type UserDocumentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserDocument
-     */
-    select?: UserDocumentSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserDocument
-     */
-    omit?: UserDocumentOmit<ExtArgs> | null
-    /**
-     * The data used to create many UserDocuments.
-     */
-    data: UserDocumentCreateManyInput | UserDocumentCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserDocumentIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * UserDocument update
-   */
-  export type UserDocumentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserDocument
-     */
-    select?: UserDocumentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserDocument
-     */
-    omit?: UserDocumentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserDocumentInclude<ExtArgs> | null
-    /**
-     * The data needed to update a UserDocument.
-     */
-    data: XOR<UserDocumentUpdateInput, UserDocumentUncheckedUpdateInput>
-    /**
-     * Choose, which UserDocument to update.
-     */
-    where: UserDocumentWhereUniqueInput
-  }
-
-  /**
-   * UserDocument updateMany
-   */
-  export type UserDocumentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update UserDocuments.
-     */
-    data: XOR<UserDocumentUpdateManyMutationInput, UserDocumentUncheckedUpdateManyInput>
-    /**
-     * Filter which UserDocuments to update
-     */
-    where?: UserDocumentWhereInput
-    /**
-     * Limit how many UserDocuments to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * UserDocument updateManyAndReturn
-   */
-  export type UserDocumentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserDocument
-     */
-    select?: UserDocumentSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserDocument
-     */
-    omit?: UserDocumentOmit<ExtArgs> | null
-    /**
-     * The data used to update UserDocuments.
-     */
-    data: XOR<UserDocumentUpdateManyMutationInput, UserDocumentUncheckedUpdateManyInput>
-    /**
-     * Filter which UserDocuments to update
-     */
-    where?: UserDocumentWhereInput
-    /**
-     * Limit how many UserDocuments to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserDocumentIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * UserDocument upsert
-   */
-  export type UserDocumentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserDocument
-     */
-    select?: UserDocumentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserDocument
-     */
-    omit?: UserDocumentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserDocumentInclude<ExtArgs> | null
-    /**
-     * The filter to search for the UserDocument to update in case it exists.
-     */
-    where: UserDocumentWhereUniqueInput
-    /**
-     * In case the UserDocument found by the `where` argument doesn't exist, create a new UserDocument with this data.
-     */
-    create: XOR<UserDocumentCreateInput, UserDocumentUncheckedCreateInput>
-    /**
-     * In case the UserDocument was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<UserDocumentUpdateInput, UserDocumentUncheckedUpdateInput>
-  }
-
-  /**
-   * UserDocument delete
-   */
-  export type UserDocumentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserDocument
-     */
-    select?: UserDocumentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserDocument
-     */
-    omit?: UserDocumentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserDocumentInclude<ExtArgs> | null
-    /**
-     * Filter which UserDocument to delete.
-     */
-    where: UserDocumentWhereUniqueInput
-  }
-
-  /**
-   * UserDocument deleteMany
-   */
-  export type UserDocumentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which UserDocuments to delete
-     */
-    where?: UserDocumentWhereInput
-    /**
-     * Limit how many UserDocuments to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * UserDocument without action
-   */
-  export type UserDocumentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserDocument
-     */
-    select?: UserDocumentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserDocument
-     */
-    omit?: UserDocumentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserDocumentInclude<ExtArgs> | null
   }
 
 
@@ -30988,2184 +24813,6 @@ export namespace Prisma {
      * Omit specific fields from the BugReport
      */
     omit?: BugReportOmit<ExtArgs> | null
-  }
-
-
-  /**
-   * Model UserContent
-   */
-
-  export type AggregateUserContent = {
-    _count: UserContentCountAggregateOutputType | null
-    _avg: UserContentAvgAggregateOutputType | null
-    _sum: UserContentSumAggregateOutputType | null
-    _min: UserContentMinAggregateOutputType | null
-    _max: UserContentMaxAggregateOutputType | null
-  }
-
-  export type UserContentAvgAggregateOutputType = {
-    size: number | null
-  }
-
-  export type UserContentSumAggregateOutputType = {
-    size: number | null
-  }
-
-  export type UserContentMinAggregateOutputType = {
-    id: string | null
-    contentId: string | null
-    uploaderId: string | null
-    forAccountId: string | null
-    platform: string | null
-    url: string | null
-    originalName: string | null
-    fileType: string | null
-    size: number | null
-    uploadedAt: Date | null
-    contentType: string | null
-  }
-
-  export type UserContentMaxAggregateOutputType = {
-    id: string | null
-    contentId: string | null
-    uploaderId: string | null
-    forAccountId: string | null
-    platform: string | null
-    url: string | null
-    originalName: string | null
-    fileType: string | null
-    size: number | null
-    uploadedAt: Date | null
-    contentType: string | null
-  }
-
-  export type UserContentCountAggregateOutputType = {
-    id: number
-    contentId: number
-    uploaderId: number
-    forAccountId: number
-    platform: number
-    url: number
-    originalName: number
-    fileType: number
-    size: number
-    uploadedAt: number
-    contentType: number
-    _all: number
-  }
-
-
-  export type UserContentAvgAggregateInputType = {
-    size?: true
-  }
-
-  export type UserContentSumAggregateInputType = {
-    size?: true
-  }
-
-  export type UserContentMinAggregateInputType = {
-    id?: true
-    contentId?: true
-    uploaderId?: true
-    forAccountId?: true
-    platform?: true
-    url?: true
-    originalName?: true
-    fileType?: true
-    size?: true
-    uploadedAt?: true
-    contentType?: true
-  }
-
-  export type UserContentMaxAggregateInputType = {
-    id?: true
-    contentId?: true
-    uploaderId?: true
-    forAccountId?: true
-    platform?: true
-    url?: true
-    originalName?: true
-    fileType?: true
-    size?: true
-    uploadedAt?: true
-    contentType?: true
-  }
-
-  export type UserContentCountAggregateInputType = {
-    id?: true
-    contentId?: true
-    uploaderId?: true
-    forAccountId?: true
-    platform?: true
-    url?: true
-    originalName?: true
-    fileType?: true
-    size?: true
-    uploadedAt?: true
-    contentType?: true
-    _all?: true
-  }
-
-  export type UserContentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which UserContent to aggregate.
-     */
-    where?: UserContentWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of UserContents to fetch.
-     */
-    orderBy?: UserContentOrderByWithRelationInput | UserContentOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: UserContentWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` UserContents from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` UserContents.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned UserContents
-    **/
-    _count?: true | UserContentCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: UserContentAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: UserContentSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: UserContentMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: UserContentMaxAggregateInputType
-  }
-
-  export type GetUserContentAggregateType<T extends UserContentAggregateArgs> = {
-        [P in keyof T & keyof AggregateUserContent]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateUserContent[P]>
-      : GetScalarType<T[P], AggregateUserContent[P]>
-  }
-
-
-
-
-  export type UserContentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UserContentWhereInput
-    orderBy?: UserContentOrderByWithAggregationInput | UserContentOrderByWithAggregationInput[]
-    by: UserContentScalarFieldEnum[] | UserContentScalarFieldEnum
-    having?: UserContentScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: UserContentCountAggregateInputType | true
-    _avg?: UserContentAvgAggregateInputType
-    _sum?: UserContentSumAggregateInputType
-    _min?: UserContentMinAggregateInputType
-    _max?: UserContentMaxAggregateInputType
-  }
-
-  export type UserContentGroupByOutputType = {
-    id: string
-    contentId: string | null
-    uploaderId: string | null
-    forAccountId: string
-    platform: string
-    url: string
-    originalName: string | null
-    fileType: string | null
-    size: number | null
-    uploadedAt: Date
-    contentType: string | null
-    _count: UserContentCountAggregateOutputType | null
-    _avg: UserContentAvgAggregateOutputType | null
-    _sum: UserContentSumAggregateOutputType | null
-    _min: UserContentMinAggregateOutputType | null
-    _max: UserContentMaxAggregateOutputType | null
-  }
-
-  type GetUserContentGroupByPayload<T extends UserContentGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<UserContentGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof UserContentGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], UserContentGroupByOutputType[P]>
-            : GetScalarType<T[P], UserContentGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type UserContentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    contentId?: boolean
-    uploaderId?: boolean
-    forAccountId?: boolean
-    platform?: boolean
-    url?: boolean
-    originalName?: boolean
-    fileType?: boolean
-    size?: boolean
-    uploadedAt?: boolean
-    contentType?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["userContent"]>
-
-  export type UserContentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    contentId?: boolean
-    uploaderId?: boolean
-    forAccountId?: boolean
-    platform?: boolean
-    url?: boolean
-    originalName?: boolean
-    fileType?: boolean
-    size?: boolean
-    uploadedAt?: boolean
-    contentType?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["userContent"]>
-
-  export type UserContentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    contentId?: boolean
-    uploaderId?: boolean
-    forAccountId?: boolean
-    platform?: boolean
-    url?: boolean
-    originalName?: boolean
-    fileType?: boolean
-    size?: boolean
-    uploadedAt?: boolean
-    contentType?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["userContent"]>
-
-  export type UserContentSelectScalar = {
-    id?: boolean
-    contentId?: boolean
-    uploaderId?: boolean
-    forAccountId?: boolean
-    platform?: boolean
-    url?: boolean
-    originalName?: boolean
-    fileType?: boolean
-    size?: boolean
-    uploadedAt?: boolean
-    contentType?: boolean
-  }
-
-  export type UserContentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "contentId" | "uploaderId" | "forAccountId" | "platform" | "url" | "originalName" | "fileType" | "size" | "uploadedAt" | "contentType", ExtArgs["result"]["userContent"]>
-  export type UserContentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }
-  export type UserContentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }
-  export type UserContentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }
-
-  export type $UserContentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "UserContent"
-    objects: {
-      account: Prisma.$AccountPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      contentId: string | null
-      uploaderId: string | null
-      forAccountId: string
-      platform: string
-      url: string
-      originalName: string | null
-      fileType: string | null
-      size: number | null
-      uploadedAt: Date
-      contentType: string | null
-    }, ExtArgs["result"]["userContent"]>
-    composites: {}
-  }
-
-  type UserContentGetPayload<S extends boolean | null | undefined | UserContentDefaultArgs> = $Result.GetResult<Prisma.$UserContentPayload, S>
-
-  type UserContentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<UserContentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: UserContentCountAggregateInputType | true
-    }
-
-  export interface UserContentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserContent'], meta: { name: 'UserContent' } }
-    /**
-     * Find zero or one UserContent that matches the filter.
-     * @param {UserContentFindUniqueArgs} args - Arguments to find a UserContent
-     * @example
-     * // Get one UserContent
-     * const userContent = await prisma.userContent.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends UserContentFindUniqueArgs>(args: SelectSubset<T, UserContentFindUniqueArgs<ExtArgs>>): Prisma__UserContentClient<$Result.GetResult<Prisma.$UserContentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one UserContent that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {UserContentFindUniqueOrThrowArgs} args - Arguments to find a UserContent
-     * @example
-     * // Get one UserContent
-     * const userContent = await prisma.userContent.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends UserContentFindUniqueOrThrowArgs>(args: SelectSubset<T, UserContentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserContentClient<$Result.GetResult<Prisma.$UserContentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first UserContent that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserContentFindFirstArgs} args - Arguments to find a UserContent
-     * @example
-     * // Get one UserContent
-     * const userContent = await prisma.userContent.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends UserContentFindFirstArgs>(args?: SelectSubset<T, UserContentFindFirstArgs<ExtArgs>>): Prisma__UserContentClient<$Result.GetResult<Prisma.$UserContentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first UserContent that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserContentFindFirstOrThrowArgs} args - Arguments to find a UserContent
-     * @example
-     * // Get one UserContent
-     * const userContent = await prisma.userContent.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends UserContentFindFirstOrThrowArgs>(args?: SelectSubset<T, UserContentFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserContentClient<$Result.GetResult<Prisma.$UserContentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more UserContents that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserContentFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all UserContents
-     * const userContents = await prisma.userContent.findMany()
-     * 
-     * // Get first 10 UserContents
-     * const userContents = await prisma.userContent.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const userContentWithIdOnly = await prisma.userContent.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends UserContentFindManyArgs>(args?: SelectSubset<T, UserContentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserContentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a UserContent.
-     * @param {UserContentCreateArgs} args - Arguments to create a UserContent.
-     * @example
-     * // Create one UserContent
-     * const UserContent = await prisma.userContent.create({
-     *   data: {
-     *     // ... data to create a UserContent
-     *   }
-     * })
-     * 
-     */
-    create<T extends UserContentCreateArgs>(args: SelectSubset<T, UserContentCreateArgs<ExtArgs>>): Prisma__UserContentClient<$Result.GetResult<Prisma.$UserContentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many UserContents.
-     * @param {UserContentCreateManyArgs} args - Arguments to create many UserContents.
-     * @example
-     * // Create many UserContents
-     * const userContent = await prisma.userContent.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends UserContentCreateManyArgs>(args?: SelectSubset<T, UserContentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many UserContents and returns the data saved in the database.
-     * @param {UserContentCreateManyAndReturnArgs} args - Arguments to create many UserContents.
-     * @example
-     * // Create many UserContents
-     * const userContent = await prisma.userContent.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many UserContents and only return the `id`
-     * const userContentWithIdOnly = await prisma.userContent.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends UserContentCreateManyAndReturnArgs>(args?: SelectSubset<T, UserContentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserContentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a UserContent.
-     * @param {UserContentDeleteArgs} args - Arguments to delete one UserContent.
-     * @example
-     * // Delete one UserContent
-     * const UserContent = await prisma.userContent.delete({
-     *   where: {
-     *     // ... filter to delete one UserContent
-     *   }
-     * })
-     * 
-     */
-    delete<T extends UserContentDeleteArgs>(args: SelectSubset<T, UserContentDeleteArgs<ExtArgs>>): Prisma__UserContentClient<$Result.GetResult<Prisma.$UserContentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one UserContent.
-     * @param {UserContentUpdateArgs} args - Arguments to update one UserContent.
-     * @example
-     * // Update one UserContent
-     * const userContent = await prisma.userContent.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends UserContentUpdateArgs>(args: SelectSubset<T, UserContentUpdateArgs<ExtArgs>>): Prisma__UserContentClient<$Result.GetResult<Prisma.$UserContentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more UserContents.
-     * @param {UserContentDeleteManyArgs} args - Arguments to filter UserContents to delete.
-     * @example
-     * // Delete a few UserContents
-     * const { count } = await prisma.userContent.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends UserContentDeleteManyArgs>(args?: SelectSubset<T, UserContentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more UserContents.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserContentUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many UserContents
-     * const userContent = await prisma.userContent.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends UserContentUpdateManyArgs>(args: SelectSubset<T, UserContentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more UserContents and returns the data updated in the database.
-     * @param {UserContentUpdateManyAndReturnArgs} args - Arguments to update many UserContents.
-     * @example
-     * // Update many UserContents
-     * const userContent = await prisma.userContent.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more UserContents and only return the `id`
-     * const userContentWithIdOnly = await prisma.userContent.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends UserContentUpdateManyAndReturnArgs>(args: SelectSubset<T, UserContentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserContentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one UserContent.
-     * @param {UserContentUpsertArgs} args - Arguments to update or create a UserContent.
-     * @example
-     * // Update or create a UserContent
-     * const userContent = await prisma.userContent.upsert({
-     *   create: {
-     *     // ... data to create a UserContent
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the UserContent we want to update
-     *   }
-     * })
-     */
-    upsert<T extends UserContentUpsertArgs>(args: SelectSubset<T, UserContentUpsertArgs<ExtArgs>>): Prisma__UserContentClient<$Result.GetResult<Prisma.$UserContentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of UserContents.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserContentCountArgs} args - Arguments to filter UserContents to count.
-     * @example
-     * // Count the number of UserContents
-     * const count = await prisma.userContent.count({
-     *   where: {
-     *     // ... the filter for the UserContents we want to count
-     *   }
-     * })
-    **/
-    count<T extends UserContentCountArgs>(
-      args?: Subset<T, UserContentCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], UserContentCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a UserContent.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserContentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends UserContentAggregateArgs>(args: Subset<T, UserContentAggregateArgs>): Prisma.PrismaPromise<GetUserContentAggregateType<T>>
-
-    /**
-     * Group by UserContent.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserContentGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends UserContentGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: UserContentGroupByArgs['orderBy'] }
-        : { orderBy?: UserContentGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, UserContentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserContentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the UserContent model
-   */
-  readonly fields: UserContentFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for UserContent.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__UserContentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    account<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the UserContent model
-   */
-  interface UserContentFieldRefs {
-    readonly id: FieldRef<"UserContent", 'String'>
-    readonly contentId: FieldRef<"UserContent", 'String'>
-    readonly uploaderId: FieldRef<"UserContent", 'String'>
-    readonly forAccountId: FieldRef<"UserContent", 'String'>
-    readonly platform: FieldRef<"UserContent", 'String'>
-    readonly url: FieldRef<"UserContent", 'String'>
-    readonly originalName: FieldRef<"UserContent", 'String'>
-    readonly fileType: FieldRef<"UserContent", 'String'>
-    readonly size: FieldRef<"UserContent", 'Int'>
-    readonly uploadedAt: FieldRef<"UserContent", 'DateTime'>
-    readonly contentType: FieldRef<"UserContent", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * UserContent findUnique
-   */
-  export type UserContentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserContent
-     */
-    select?: UserContentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserContent
-     */
-    omit?: UserContentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserContentInclude<ExtArgs> | null
-    /**
-     * Filter, which UserContent to fetch.
-     */
-    where: UserContentWhereUniqueInput
-  }
-
-  /**
-   * UserContent findUniqueOrThrow
-   */
-  export type UserContentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserContent
-     */
-    select?: UserContentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserContent
-     */
-    omit?: UserContentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserContentInclude<ExtArgs> | null
-    /**
-     * Filter, which UserContent to fetch.
-     */
-    where: UserContentWhereUniqueInput
-  }
-
-  /**
-   * UserContent findFirst
-   */
-  export type UserContentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserContent
-     */
-    select?: UserContentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserContent
-     */
-    omit?: UserContentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserContentInclude<ExtArgs> | null
-    /**
-     * Filter, which UserContent to fetch.
-     */
-    where?: UserContentWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of UserContents to fetch.
-     */
-    orderBy?: UserContentOrderByWithRelationInput | UserContentOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for UserContents.
-     */
-    cursor?: UserContentWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` UserContents from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` UserContents.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of UserContents.
-     */
-    distinct?: UserContentScalarFieldEnum | UserContentScalarFieldEnum[]
-  }
-
-  /**
-   * UserContent findFirstOrThrow
-   */
-  export type UserContentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserContent
-     */
-    select?: UserContentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserContent
-     */
-    omit?: UserContentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserContentInclude<ExtArgs> | null
-    /**
-     * Filter, which UserContent to fetch.
-     */
-    where?: UserContentWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of UserContents to fetch.
-     */
-    orderBy?: UserContentOrderByWithRelationInput | UserContentOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for UserContents.
-     */
-    cursor?: UserContentWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` UserContents from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` UserContents.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of UserContents.
-     */
-    distinct?: UserContentScalarFieldEnum | UserContentScalarFieldEnum[]
-  }
-
-  /**
-   * UserContent findMany
-   */
-  export type UserContentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserContent
-     */
-    select?: UserContentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserContent
-     */
-    omit?: UserContentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserContentInclude<ExtArgs> | null
-    /**
-     * Filter, which UserContents to fetch.
-     */
-    where?: UserContentWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of UserContents to fetch.
-     */
-    orderBy?: UserContentOrderByWithRelationInput | UserContentOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing UserContents.
-     */
-    cursor?: UserContentWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` UserContents from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` UserContents.
-     */
-    skip?: number
-    distinct?: UserContentScalarFieldEnum | UserContentScalarFieldEnum[]
-  }
-
-  /**
-   * UserContent create
-   */
-  export type UserContentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserContent
-     */
-    select?: UserContentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserContent
-     */
-    omit?: UserContentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserContentInclude<ExtArgs> | null
-    /**
-     * The data needed to create a UserContent.
-     */
-    data: XOR<UserContentCreateInput, UserContentUncheckedCreateInput>
-  }
-
-  /**
-   * UserContent createMany
-   */
-  export type UserContentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many UserContents.
-     */
-    data: UserContentCreateManyInput | UserContentCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * UserContent createManyAndReturn
-   */
-  export type UserContentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserContent
-     */
-    select?: UserContentSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserContent
-     */
-    omit?: UserContentOmit<ExtArgs> | null
-    /**
-     * The data used to create many UserContents.
-     */
-    data: UserContentCreateManyInput | UserContentCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserContentIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * UserContent update
-   */
-  export type UserContentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserContent
-     */
-    select?: UserContentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserContent
-     */
-    omit?: UserContentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserContentInclude<ExtArgs> | null
-    /**
-     * The data needed to update a UserContent.
-     */
-    data: XOR<UserContentUpdateInput, UserContentUncheckedUpdateInput>
-    /**
-     * Choose, which UserContent to update.
-     */
-    where: UserContentWhereUniqueInput
-  }
-
-  /**
-   * UserContent updateMany
-   */
-  export type UserContentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update UserContents.
-     */
-    data: XOR<UserContentUpdateManyMutationInput, UserContentUncheckedUpdateManyInput>
-    /**
-     * Filter which UserContents to update
-     */
-    where?: UserContentWhereInput
-    /**
-     * Limit how many UserContents to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * UserContent updateManyAndReturn
-   */
-  export type UserContentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserContent
-     */
-    select?: UserContentSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserContent
-     */
-    omit?: UserContentOmit<ExtArgs> | null
-    /**
-     * The data used to update UserContents.
-     */
-    data: XOR<UserContentUpdateManyMutationInput, UserContentUncheckedUpdateManyInput>
-    /**
-     * Filter which UserContents to update
-     */
-    where?: UserContentWhereInput
-    /**
-     * Limit how many UserContents to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserContentIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * UserContent upsert
-   */
-  export type UserContentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserContent
-     */
-    select?: UserContentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserContent
-     */
-    omit?: UserContentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserContentInclude<ExtArgs> | null
-    /**
-     * The filter to search for the UserContent to update in case it exists.
-     */
-    where: UserContentWhereUniqueInput
-    /**
-     * In case the UserContent found by the `where` argument doesn't exist, create a new UserContent with this data.
-     */
-    create: XOR<UserContentCreateInput, UserContentUncheckedCreateInput>
-    /**
-     * In case the UserContent was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<UserContentUpdateInput, UserContentUncheckedUpdateInput>
-  }
-
-  /**
-   * UserContent delete
-   */
-  export type UserContentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserContent
-     */
-    select?: UserContentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserContent
-     */
-    omit?: UserContentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserContentInclude<ExtArgs> | null
-    /**
-     * Filter which UserContent to delete.
-     */
-    where: UserContentWhereUniqueInput
-  }
-
-  /**
-   * UserContent deleteMany
-   */
-  export type UserContentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which UserContents to delete
-     */
-    where?: UserContentWhereInput
-    /**
-     * Limit how many UserContents to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * UserContent without action
-   */
-  export type UserContentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserContent
-     */
-    select?: UserContentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the UserContent
-     */
-    omit?: UserContentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserContentInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model RecoveryContact
-   */
-
-  export type AggregateRecoveryContact = {
-    _count: RecoveryContactCountAggregateOutputType | null
-    _min: RecoveryContactMinAggregateOutputType | null
-    _max: RecoveryContactMaxAggregateOutputType | null
-  }
-
-  export type RecoveryContactMinAggregateOutputType = {
-    id: string | null
-    ownerAccountId: string | null
-    recoveryAccountId: string | null
-    recoveryNeupId: string | null
-    status: string | null
-    createdAt: Date | null
-  }
-
-  export type RecoveryContactMaxAggregateOutputType = {
-    id: string | null
-    ownerAccountId: string | null
-    recoveryAccountId: string | null
-    recoveryNeupId: string | null
-    status: string | null
-    createdAt: Date | null
-  }
-
-  export type RecoveryContactCountAggregateOutputType = {
-    id: number
-    ownerAccountId: number
-    recoveryAccountId: number
-    recoveryNeupId: number
-    status: number
-    createdAt: number
-    _all: number
-  }
-
-
-  export type RecoveryContactMinAggregateInputType = {
-    id?: true
-    ownerAccountId?: true
-    recoveryAccountId?: true
-    recoveryNeupId?: true
-    status?: true
-    createdAt?: true
-  }
-
-  export type RecoveryContactMaxAggregateInputType = {
-    id?: true
-    ownerAccountId?: true
-    recoveryAccountId?: true
-    recoveryNeupId?: true
-    status?: true
-    createdAt?: true
-  }
-
-  export type RecoveryContactCountAggregateInputType = {
-    id?: true
-    ownerAccountId?: true
-    recoveryAccountId?: true
-    recoveryNeupId?: true
-    status?: true
-    createdAt?: true
-    _all?: true
-  }
-
-  export type RecoveryContactAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which RecoveryContact to aggregate.
-     */
-    where?: RecoveryContactWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of RecoveryContacts to fetch.
-     */
-    orderBy?: RecoveryContactOrderByWithRelationInput | RecoveryContactOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: RecoveryContactWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` RecoveryContacts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` RecoveryContacts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned RecoveryContacts
-    **/
-    _count?: true | RecoveryContactCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: RecoveryContactMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: RecoveryContactMaxAggregateInputType
-  }
-
-  export type GetRecoveryContactAggregateType<T extends RecoveryContactAggregateArgs> = {
-        [P in keyof T & keyof AggregateRecoveryContact]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateRecoveryContact[P]>
-      : GetScalarType<T[P], AggregateRecoveryContact[P]>
-  }
-
-
-
-
-  export type RecoveryContactGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RecoveryContactWhereInput
-    orderBy?: RecoveryContactOrderByWithAggregationInput | RecoveryContactOrderByWithAggregationInput[]
-    by: RecoveryContactScalarFieldEnum[] | RecoveryContactScalarFieldEnum
-    having?: RecoveryContactScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: RecoveryContactCountAggregateInputType | true
-    _min?: RecoveryContactMinAggregateInputType
-    _max?: RecoveryContactMaxAggregateInputType
-  }
-
-  export type RecoveryContactGroupByOutputType = {
-    id: string
-    ownerAccountId: string
-    recoveryAccountId: string
-    recoveryNeupId: string
-    status: string
-    createdAt: Date
-    _count: RecoveryContactCountAggregateOutputType | null
-    _min: RecoveryContactMinAggregateOutputType | null
-    _max: RecoveryContactMaxAggregateOutputType | null
-  }
-
-  type GetRecoveryContactGroupByPayload<T extends RecoveryContactGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<RecoveryContactGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof RecoveryContactGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], RecoveryContactGroupByOutputType[P]>
-            : GetScalarType<T[P], RecoveryContactGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type RecoveryContactSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    ownerAccountId?: boolean
-    recoveryAccountId?: boolean
-    recoveryNeupId?: boolean
-    status?: boolean
-    createdAt?: boolean
-  }, ExtArgs["result"]["recoveryContact"]>
-
-  export type RecoveryContactSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    ownerAccountId?: boolean
-    recoveryAccountId?: boolean
-    recoveryNeupId?: boolean
-    status?: boolean
-    createdAt?: boolean
-  }, ExtArgs["result"]["recoveryContact"]>
-
-  export type RecoveryContactSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    ownerAccountId?: boolean
-    recoveryAccountId?: boolean
-    recoveryNeupId?: boolean
-    status?: boolean
-    createdAt?: boolean
-  }, ExtArgs["result"]["recoveryContact"]>
-
-  export type RecoveryContactSelectScalar = {
-    id?: boolean
-    ownerAccountId?: boolean
-    recoveryAccountId?: boolean
-    recoveryNeupId?: boolean
-    status?: boolean
-    createdAt?: boolean
-  }
-
-  export type RecoveryContactOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ownerAccountId" | "recoveryAccountId" | "recoveryNeupId" | "status" | "createdAt", ExtArgs["result"]["recoveryContact"]>
-
-  export type $RecoveryContactPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "RecoveryContact"
-    objects: {}
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      ownerAccountId: string
-      recoveryAccountId: string
-      recoveryNeupId: string
-      status: string
-      createdAt: Date
-    }, ExtArgs["result"]["recoveryContact"]>
-    composites: {}
-  }
-
-  type RecoveryContactGetPayload<S extends boolean | null | undefined | RecoveryContactDefaultArgs> = $Result.GetResult<Prisma.$RecoveryContactPayload, S>
-
-  type RecoveryContactCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<RecoveryContactFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: RecoveryContactCountAggregateInputType | true
-    }
-
-  export interface RecoveryContactDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['RecoveryContact'], meta: { name: 'RecoveryContact' } }
-    /**
-     * Find zero or one RecoveryContact that matches the filter.
-     * @param {RecoveryContactFindUniqueArgs} args - Arguments to find a RecoveryContact
-     * @example
-     * // Get one RecoveryContact
-     * const recoveryContact = await prisma.recoveryContact.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends RecoveryContactFindUniqueArgs>(args: SelectSubset<T, RecoveryContactFindUniqueArgs<ExtArgs>>): Prisma__RecoveryContactClient<$Result.GetResult<Prisma.$RecoveryContactPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one RecoveryContact that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {RecoveryContactFindUniqueOrThrowArgs} args - Arguments to find a RecoveryContact
-     * @example
-     * // Get one RecoveryContact
-     * const recoveryContact = await prisma.recoveryContact.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends RecoveryContactFindUniqueOrThrowArgs>(args: SelectSubset<T, RecoveryContactFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RecoveryContactClient<$Result.GetResult<Prisma.$RecoveryContactPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first RecoveryContact that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RecoveryContactFindFirstArgs} args - Arguments to find a RecoveryContact
-     * @example
-     * // Get one RecoveryContact
-     * const recoveryContact = await prisma.recoveryContact.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends RecoveryContactFindFirstArgs>(args?: SelectSubset<T, RecoveryContactFindFirstArgs<ExtArgs>>): Prisma__RecoveryContactClient<$Result.GetResult<Prisma.$RecoveryContactPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first RecoveryContact that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RecoveryContactFindFirstOrThrowArgs} args - Arguments to find a RecoveryContact
-     * @example
-     * // Get one RecoveryContact
-     * const recoveryContact = await prisma.recoveryContact.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends RecoveryContactFindFirstOrThrowArgs>(args?: SelectSubset<T, RecoveryContactFindFirstOrThrowArgs<ExtArgs>>): Prisma__RecoveryContactClient<$Result.GetResult<Prisma.$RecoveryContactPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more RecoveryContacts that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RecoveryContactFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all RecoveryContacts
-     * const recoveryContacts = await prisma.recoveryContact.findMany()
-     * 
-     * // Get first 10 RecoveryContacts
-     * const recoveryContacts = await prisma.recoveryContact.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const recoveryContactWithIdOnly = await prisma.recoveryContact.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends RecoveryContactFindManyArgs>(args?: SelectSubset<T, RecoveryContactFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecoveryContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a RecoveryContact.
-     * @param {RecoveryContactCreateArgs} args - Arguments to create a RecoveryContact.
-     * @example
-     * // Create one RecoveryContact
-     * const RecoveryContact = await prisma.recoveryContact.create({
-     *   data: {
-     *     // ... data to create a RecoveryContact
-     *   }
-     * })
-     * 
-     */
-    create<T extends RecoveryContactCreateArgs>(args: SelectSubset<T, RecoveryContactCreateArgs<ExtArgs>>): Prisma__RecoveryContactClient<$Result.GetResult<Prisma.$RecoveryContactPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many RecoveryContacts.
-     * @param {RecoveryContactCreateManyArgs} args - Arguments to create many RecoveryContacts.
-     * @example
-     * // Create many RecoveryContacts
-     * const recoveryContact = await prisma.recoveryContact.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends RecoveryContactCreateManyArgs>(args?: SelectSubset<T, RecoveryContactCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many RecoveryContacts and returns the data saved in the database.
-     * @param {RecoveryContactCreateManyAndReturnArgs} args - Arguments to create many RecoveryContacts.
-     * @example
-     * // Create many RecoveryContacts
-     * const recoveryContact = await prisma.recoveryContact.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many RecoveryContacts and only return the `id`
-     * const recoveryContactWithIdOnly = await prisma.recoveryContact.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends RecoveryContactCreateManyAndReturnArgs>(args?: SelectSubset<T, RecoveryContactCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecoveryContactPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a RecoveryContact.
-     * @param {RecoveryContactDeleteArgs} args - Arguments to delete one RecoveryContact.
-     * @example
-     * // Delete one RecoveryContact
-     * const RecoveryContact = await prisma.recoveryContact.delete({
-     *   where: {
-     *     // ... filter to delete one RecoveryContact
-     *   }
-     * })
-     * 
-     */
-    delete<T extends RecoveryContactDeleteArgs>(args: SelectSubset<T, RecoveryContactDeleteArgs<ExtArgs>>): Prisma__RecoveryContactClient<$Result.GetResult<Prisma.$RecoveryContactPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one RecoveryContact.
-     * @param {RecoveryContactUpdateArgs} args - Arguments to update one RecoveryContact.
-     * @example
-     * // Update one RecoveryContact
-     * const recoveryContact = await prisma.recoveryContact.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends RecoveryContactUpdateArgs>(args: SelectSubset<T, RecoveryContactUpdateArgs<ExtArgs>>): Prisma__RecoveryContactClient<$Result.GetResult<Prisma.$RecoveryContactPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more RecoveryContacts.
-     * @param {RecoveryContactDeleteManyArgs} args - Arguments to filter RecoveryContacts to delete.
-     * @example
-     * // Delete a few RecoveryContacts
-     * const { count } = await prisma.recoveryContact.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends RecoveryContactDeleteManyArgs>(args?: SelectSubset<T, RecoveryContactDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more RecoveryContacts.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RecoveryContactUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many RecoveryContacts
-     * const recoveryContact = await prisma.recoveryContact.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends RecoveryContactUpdateManyArgs>(args: SelectSubset<T, RecoveryContactUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more RecoveryContacts and returns the data updated in the database.
-     * @param {RecoveryContactUpdateManyAndReturnArgs} args - Arguments to update many RecoveryContacts.
-     * @example
-     * // Update many RecoveryContacts
-     * const recoveryContact = await prisma.recoveryContact.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more RecoveryContacts and only return the `id`
-     * const recoveryContactWithIdOnly = await prisma.recoveryContact.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends RecoveryContactUpdateManyAndReturnArgs>(args: SelectSubset<T, RecoveryContactUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecoveryContactPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one RecoveryContact.
-     * @param {RecoveryContactUpsertArgs} args - Arguments to update or create a RecoveryContact.
-     * @example
-     * // Update or create a RecoveryContact
-     * const recoveryContact = await prisma.recoveryContact.upsert({
-     *   create: {
-     *     // ... data to create a RecoveryContact
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the RecoveryContact we want to update
-     *   }
-     * })
-     */
-    upsert<T extends RecoveryContactUpsertArgs>(args: SelectSubset<T, RecoveryContactUpsertArgs<ExtArgs>>): Prisma__RecoveryContactClient<$Result.GetResult<Prisma.$RecoveryContactPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of RecoveryContacts.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RecoveryContactCountArgs} args - Arguments to filter RecoveryContacts to count.
-     * @example
-     * // Count the number of RecoveryContacts
-     * const count = await prisma.recoveryContact.count({
-     *   where: {
-     *     // ... the filter for the RecoveryContacts we want to count
-     *   }
-     * })
-    **/
-    count<T extends RecoveryContactCountArgs>(
-      args?: Subset<T, RecoveryContactCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], RecoveryContactCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a RecoveryContact.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RecoveryContactAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends RecoveryContactAggregateArgs>(args: Subset<T, RecoveryContactAggregateArgs>): Prisma.PrismaPromise<GetRecoveryContactAggregateType<T>>
-
-    /**
-     * Group by RecoveryContact.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RecoveryContactGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends RecoveryContactGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: RecoveryContactGroupByArgs['orderBy'] }
-        : { orderBy?: RecoveryContactGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, RecoveryContactGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRecoveryContactGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the RecoveryContact model
-   */
-  readonly fields: RecoveryContactFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for RecoveryContact.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__RecoveryContactClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the RecoveryContact model
-   */
-  interface RecoveryContactFieldRefs {
-    readonly id: FieldRef<"RecoveryContact", 'String'>
-    readonly ownerAccountId: FieldRef<"RecoveryContact", 'String'>
-    readonly recoveryAccountId: FieldRef<"RecoveryContact", 'String'>
-    readonly recoveryNeupId: FieldRef<"RecoveryContact", 'String'>
-    readonly status: FieldRef<"RecoveryContact", 'String'>
-    readonly createdAt: FieldRef<"RecoveryContact", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * RecoveryContact findUnique
-   */
-  export type RecoveryContactFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RecoveryContact
-     */
-    select?: RecoveryContactSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RecoveryContact
-     */
-    omit?: RecoveryContactOmit<ExtArgs> | null
-    /**
-     * Filter, which RecoveryContact to fetch.
-     */
-    where: RecoveryContactWhereUniqueInput
-  }
-
-  /**
-   * RecoveryContact findUniqueOrThrow
-   */
-  export type RecoveryContactFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RecoveryContact
-     */
-    select?: RecoveryContactSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RecoveryContact
-     */
-    omit?: RecoveryContactOmit<ExtArgs> | null
-    /**
-     * Filter, which RecoveryContact to fetch.
-     */
-    where: RecoveryContactWhereUniqueInput
-  }
-
-  /**
-   * RecoveryContact findFirst
-   */
-  export type RecoveryContactFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RecoveryContact
-     */
-    select?: RecoveryContactSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RecoveryContact
-     */
-    omit?: RecoveryContactOmit<ExtArgs> | null
-    /**
-     * Filter, which RecoveryContact to fetch.
-     */
-    where?: RecoveryContactWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of RecoveryContacts to fetch.
-     */
-    orderBy?: RecoveryContactOrderByWithRelationInput | RecoveryContactOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for RecoveryContacts.
-     */
-    cursor?: RecoveryContactWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` RecoveryContacts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` RecoveryContacts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of RecoveryContacts.
-     */
-    distinct?: RecoveryContactScalarFieldEnum | RecoveryContactScalarFieldEnum[]
-  }
-
-  /**
-   * RecoveryContact findFirstOrThrow
-   */
-  export type RecoveryContactFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RecoveryContact
-     */
-    select?: RecoveryContactSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RecoveryContact
-     */
-    omit?: RecoveryContactOmit<ExtArgs> | null
-    /**
-     * Filter, which RecoveryContact to fetch.
-     */
-    where?: RecoveryContactWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of RecoveryContacts to fetch.
-     */
-    orderBy?: RecoveryContactOrderByWithRelationInput | RecoveryContactOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for RecoveryContacts.
-     */
-    cursor?: RecoveryContactWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` RecoveryContacts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` RecoveryContacts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of RecoveryContacts.
-     */
-    distinct?: RecoveryContactScalarFieldEnum | RecoveryContactScalarFieldEnum[]
-  }
-
-  /**
-   * RecoveryContact findMany
-   */
-  export type RecoveryContactFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RecoveryContact
-     */
-    select?: RecoveryContactSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RecoveryContact
-     */
-    omit?: RecoveryContactOmit<ExtArgs> | null
-    /**
-     * Filter, which RecoveryContacts to fetch.
-     */
-    where?: RecoveryContactWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of RecoveryContacts to fetch.
-     */
-    orderBy?: RecoveryContactOrderByWithRelationInput | RecoveryContactOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing RecoveryContacts.
-     */
-    cursor?: RecoveryContactWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` RecoveryContacts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` RecoveryContacts.
-     */
-    skip?: number
-    distinct?: RecoveryContactScalarFieldEnum | RecoveryContactScalarFieldEnum[]
-  }
-
-  /**
-   * RecoveryContact create
-   */
-  export type RecoveryContactCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RecoveryContact
-     */
-    select?: RecoveryContactSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RecoveryContact
-     */
-    omit?: RecoveryContactOmit<ExtArgs> | null
-    /**
-     * The data needed to create a RecoveryContact.
-     */
-    data: XOR<RecoveryContactCreateInput, RecoveryContactUncheckedCreateInput>
-  }
-
-  /**
-   * RecoveryContact createMany
-   */
-  export type RecoveryContactCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many RecoveryContacts.
-     */
-    data: RecoveryContactCreateManyInput | RecoveryContactCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * RecoveryContact createManyAndReturn
-   */
-  export type RecoveryContactCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RecoveryContact
-     */
-    select?: RecoveryContactSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the RecoveryContact
-     */
-    omit?: RecoveryContactOmit<ExtArgs> | null
-    /**
-     * The data used to create many RecoveryContacts.
-     */
-    data: RecoveryContactCreateManyInput | RecoveryContactCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * RecoveryContact update
-   */
-  export type RecoveryContactUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RecoveryContact
-     */
-    select?: RecoveryContactSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RecoveryContact
-     */
-    omit?: RecoveryContactOmit<ExtArgs> | null
-    /**
-     * The data needed to update a RecoveryContact.
-     */
-    data: XOR<RecoveryContactUpdateInput, RecoveryContactUncheckedUpdateInput>
-    /**
-     * Choose, which RecoveryContact to update.
-     */
-    where: RecoveryContactWhereUniqueInput
-  }
-
-  /**
-   * RecoveryContact updateMany
-   */
-  export type RecoveryContactUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update RecoveryContacts.
-     */
-    data: XOR<RecoveryContactUpdateManyMutationInput, RecoveryContactUncheckedUpdateManyInput>
-    /**
-     * Filter which RecoveryContacts to update
-     */
-    where?: RecoveryContactWhereInput
-    /**
-     * Limit how many RecoveryContacts to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * RecoveryContact updateManyAndReturn
-   */
-  export type RecoveryContactUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RecoveryContact
-     */
-    select?: RecoveryContactSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the RecoveryContact
-     */
-    omit?: RecoveryContactOmit<ExtArgs> | null
-    /**
-     * The data used to update RecoveryContacts.
-     */
-    data: XOR<RecoveryContactUpdateManyMutationInput, RecoveryContactUncheckedUpdateManyInput>
-    /**
-     * Filter which RecoveryContacts to update
-     */
-    where?: RecoveryContactWhereInput
-    /**
-     * Limit how many RecoveryContacts to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * RecoveryContact upsert
-   */
-  export type RecoveryContactUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RecoveryContact
-     */
-    select?: RecoveryContactSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RecoveryContact
-     */
-    omit?: RecoveryContactOmit<ExtArgs> | null
-    /**
-     * The filter to search for the RecoveryContact to update in case it exists.
-     */
-    where: RecoveryContactWhereUniqueInput
-    /**
-     * In case the RecoveryContact found by the `where` argument doesn't exist, create a new RecoveryContact with this data.
-     */
-    create: XOR<RecoveryContactCreateInput, RecoveryContactUncheckedCreateInput>
-    /**
-     * In case the RecoveryContact was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<RecoveryContactUpdateInput, RecoveryContactUncheckedUpdateInput>
-  }
-
-  /**
-   * RecoveryContact delete
-   */
-  export type RecoveryContactDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RecoveryContact
-     */
-    select?: RecoveryContactSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RecoveryContact
-     */
-    omit?: RecoveryContactOmit<ExtArgs> | null
-    /**
-     * Filter which RecoveryContact to delete.
-     */
-    where: RecoveryContactWhereUniqueInput
-  }
-
-  /**
-   * RecoveryContact deleteMany
-   */
-  export type RecoveryContactDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which RecoveryContacts to delete
-     */
-    where?: RecoveryContactWhereInput
-    /**
-     * Limit how many RecoveryContacts to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * RecoveryContact without action
-   */
-  export type RecoveryContactDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the RecoveryContact
-     */
-    select?: RecoveryContactSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the RecoveryContact
-     */
-    omit?: RecoveryContactOmit<ExtArgs> | null
   }
 
 
@@ -49840,15 +41487,6 @@ export namespace Prisma {
   export type TotpScalarFieldEnum = (typeof TotpScalarFieldEnum)[keyof typeof TotpScalarFieldEnum]
 
 
-  export const SystemConfigScalarFieldEnum: {
-    id: 'id',
-    data: 'data',
-    updatedAt: 'updatedAt'
-  };
-
-  export type SystemConfigScalarFieldEnum = (typeof SystemConfigScalarFieldEnum)[keyof typeof SystemConfigScalarFieldEnum]
-
-
   export const AppProfileScalarFieldEnum: {
     key: 'key',
     data: 'data',
@@ -49895,50 +41533,6 @@ export namespace Prisma {
   };
 
   export type AccountStatusLogScalarFieldEnum = (typeof AccountStatusLogScalarFieldEnum)[keyof typeof AccountStatusLogScalarFieldEnum]
-
-
-  export const KycRequestScalarFieldEnum: {
-    id: 'id',
-    accountId: 'accountId',
-    documentType: 'documentType',
-    documentId: 'documentId',
-    documentPhotoUrl: 'documentPhotoUrl',
-    documentPhotoContentId: 'documentPhotoContentId',
-    selfiePhotoUrl: 'selfiePhotoUrl',
-    selfiePhotoContentId: 'selfiePhotoContentId',
-    status: 'status',
-    rejectionReason: 'rejectionReason',
-    submittedAt: 'submittedAt',
-    userFullName: 'userFullName',
-    userNeupId: 'userNeupId'
-  };
-
-  export type KycRequestScalarFieldEnum = (typeof KycRequestScalarFieldEnum)[keyof typeof KycRequestScalarFieldEnum]
-
-
-  export const InvitationScalarFieldEnum: {
-    id: 'id',
-    inviterAccountId: 'inviterAccountId',
-    inviteeEmail: 'inviteeEmail',
-    role: 'role',
-    status: 'status',
-    createdAt: 'createdAt',
-    expiresAt: 'expiresAt'
-  };
-
-  export type InvitationScalarFieldEnum = (typeof InvitationScalarFieldEnum)[keyof typeof InvitationScalarFieldEnum]
-
-
-  export const NeupIdRequestScalarFieldEnum: {
-    id: 'id',
-    accountId: 'accountId',
-    requestedId: 'requestedId',
-    status: 'status',
-    reason: 'reason',
-    submittedAt: 'submittedAt'
-  };
-
-  export type NeupIdRequestScalarFieldEnum = (typeof NeupIdRequestScalarFieldEnum)[keyof typeof NeupIdRequestScalarFieldEnum]
 
 
   export const NotificationScalarFieldEnum: {
@@ -50014,18 +41608,6 @@ export namespace Prisma {
   };
 
   export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
-
-
-  export const UserDocumentScalarFieldEnum: {
-    id: 'id',
-    accountId: 'accountId',
-    type: 'type',
-    url: 'url',
-    status: 'status',
-    uploadedAt: 'uploadedAt'
-  };
-
-  export type UserDocumentScalarFieldEnum = (typeof UserDocumentScalarFieldEnum)[keyof typeof UserDocumentScalarFieldEnum]
 
 
   export const ContactScalarFieldEnum: {
@@ -50127,35 +41709,6 @@ export namespace Prisma {
   };
 
   export type BugReportScalarFieldEnum = (typeof BugReportScalarFieldEnum)[keyof typeof BugReportScalarFieldEnum]
-
-
-  export const UserContentScalarFieldEnum: {
-    id: 'id',
-    contentId: 'contentId',
-    uploaderId: 'uploaderId',
-    forAccountId: 'forAccountId',
-    platform: 'platform',
-    url: 'url',
-    originalName: 'originalName',
-    fileType: 'fileType',
-    size: 'size',
-    uploadedAt: 'uploadedAt',
-    contentType: 'contentType'
-  };
-
-  export type UserContentScalarFieldEnum = (typeof UserContentScalarFieldEnum)[keyof typeof UserContentScalarFieldEnum]
-
-
-  export const RecoveryContactScalarFieldEnum: {
-    id: 'id',
-    ownerAccountId: 'ownerAccountId',
-    recoveryAccountId: 'recoveryAccountId',
-    recoveryNeupId: 'recoveryNeupId',
-    status: 'status',
-    createdAt: 'createdAt'
-  };
-
-  export type RecoveryContactScalarFieldEnum = (typeof RecoveryContactScalarFieldEnum)[keyof typeof RecoveryContactScalarFieldEnum]
 
 
   export const ApplicationScalarFieldEnum: {
@@ -50456,20 +42009,6 @@ export namespace Prisma {
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
-
-
-  /**
-   * Reference to a field of type 'Float'
-   */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float[]'
-   */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
   /**
    * Deep Input Types
    */
@@ -50520,14 +42059,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalListRelationFilter
     externalPermissions?: AuthPermissionsExternalListRelationFilter
     ownedApplications?: ApplicationListRelationFilter
-    kycRequests?: KycRequestListRelationFilter
-    invitations?: InvitationListRelationFilter
-    neupIdRequests?: NeupIdRequestListRelationFilter
     notifications?: NotificationListRelationFilter
     backupCodes?: BackupCodeListRelationFilter
     verifications?: VerificationListRelationFilter
-    documents?: UserDocumentListRelationFilter
-    userContents?: UserContentListRelationFilter
     totp?: XOR<TotpNullableScalarRelationFilter, TotpWhereInput> | null
     sentRequests?: RequestListRelationFilter
     receivedRequests?: RequestListRelationFilter
@@ -50582,14 +42116,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalOrderByRelationAggregateInput
     externalPermissions?: AuthPermissionsExternalOrderByRelationAggregateInput
     ownedApplications?: ApplicationOrderByRelationAggregateInput
-    kycRequests?: KycRequestOrderByRelationAggregateInput
-    invitations?: InvitationOrderByRelationAggregateInput
-    neupIdRequests?: NeupIdRequestOrderByRelationAggregateInput
     notifications?: NotificationOrderByRelationAggregateInput
     backupCodes?: BackupCodeOrderByRelationAggregateInput
     verifications?: VerificationOrderByRelationAggregateInput
-    documents?: UserDocumentOrderByRelationAggregateInput
-    userContents?: UserContentOrderByRelationAggregateInput
     totp?: TotpOrderByWithRelationInput
     sentRequests?: RequestOrderByRelationAggregateInput
     receivedRequests?: RequestOrderByRelationAggregateInput
@@ -50647,14 +42176,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalListRelationFilter
     externalPermissions?: AuthPermissionsExternalListRelationFilter
     ownedApplications?: ApplicationListRelationFilter
-    kycRequests?: KycRequestListRelationFilter
-    invitations?: InvitationListRelationFilter
-    neupIdRequests?: NeupIdRequestListRelationFilter
     notifications?: NotificationListRelationFilter
     backupCodes?: BackupCodeListRelationFilter
     verifications?: VerificationListRelationFilter
-    documents?: UserDocumentListRelationFilter
-    userContents?: UserContentListRelationFilter
     totp?: XOR<TotpNullableScalarRelationFilter, TotpWhereInput> | null
     sentRequests?: RequestListRelationFilter
     receivedRequests?: RequestListRelationFilter
@@ -50770,48 +42294,6 @@ export namespace Prisma {
     accountId?: StringWithAggregatesFilter<"Totp"> | string
     secret?: StringWithAggregatesFilter<"Totp"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Totp"> | Date | string
-  }
-
-  export type SystemConfigWhereInput = {
-    AND?: SystemConfigWhereInput | SystemConfigWhereInput[]
-    OR?: SystemConfigWhereInput[]
-    NOT?: SystemConfigWhereInput | SystemConfigWhereInput[]
-    id?: StringFilter<"SystemConfig"> | string
-    data?: JsonFilter<"SystemConfig">
-    updatedAt?: DateTimeFilter<"SystemConfig"> | Date | string
-  }
-
-  export type SystemConfigOrderByWithRelationInput = {
-    id?: SortOrder
-    data?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type SystemConfigWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: SystemConfigWhereInput | SystemConfigWhereInput[]
-    OR?: SystemConfigWhereInput[]
-    NOT?: SystemConfigWhereInput | SystemConfigWhereInput[]
-    data?: JsonFilter<"SystemConfig">
-    updatedAt?: DateTimeFilter<"SystemConfig"> | Date | string
-  }, "id">
-
-  export type SystemConfigOrderByWithAggregationInput = {
-    id?: SortOrder
-    data?: SortOrder
-    updatedAt?: SortOrder
-    _count?: SystemConfigCountOrderByAggregateInput
-    _max?: SystemConfigMaxOrderByAggregateInput
-    _min?: SystemConfigMinOrderByAggregateInput
-  }
-
-  export type SystemConfigScalarWhereWithAggregatesInput = {
-    AND?: SystemConfigScalarWhereWithAggregatesInput | SystemConfigScalarWhereWithAggregatesInput[]
-    OR?: SystemConfigScalarWhereWithAggregatesInput[]
-    NOT?: SystemConfigScalarWhereWithAggregatesInput | SystemConfigScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"SystemConfig"> | string
-    data?: JsonWithAggregatesFilter<"SystemConfig">
-    updatedAt?: DateTimeWithAggregatesFilter<"SystemConfig"> | Date | string
   }
 
   export type AppProfileWhereInput = {
@@ -51043,226 +42525,6 @@ export namespace Prisma {
     remarks?: StringNullableWithAggregatesFilter<"AccountStatusLog"> | string | null
     fromDate?: DateTimeWithAggregatesFilter<"AccountStatusLog"> | Date | string
     moreInfo?: StringNullableWithAggregatesFilter<"AccountStatusLog"> | string | null
-  }
-
-  export type KycRequestWhereInput = {
-    AND?: KycRequestWhereInput | KycRequestWhereInput[]
-    OR?: KycRequestWhereInput[]
-    NOT?: KycRequestWhereInput | KycRequestWhereInput[]
-    id?: StringFilter<"KycRequest"> | string
-    accountId?: StringFilter<"KycRequest"> | string
-    documentType?: StringFilter<"KycRequest"> | string
-    documentId?: StringNullableFilter<"KycRequest"> | string | null
-    documentPhotoUrl?: StringNullableFilter<"KycRequest"> | string | null
-    documentPhotoContentId?: StringNullableFilter<"KycRequest"> | string | null
-    selfiePhotoUrl?: StringNullableFilter<"KycRequest"> | string | null
-    selfiePhotoContentId?: StringNullableFilter<"KycRequest"> | string | null
-    status?: StringFilter<"KycRequest"> | string
-    rejectionReason?: StringNullableFilter<"KycRequest"> | string | null
-    submittedAt?: DateTimeFilter<"KycRequest"> | Date | string
-    userFullName?: StringNullableFilter<"KycRequest"> | string | null
-    userNeupId?: StringNullableFilter<"KycRequest"> | string | null
-    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-  }
-
-  export type KycRequestOrderByWithRelationInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    documentType?: SortOrder
-    documentId?: SortOrderInput | SortOrder
-    documentPhotoUrl?: SortOrderInput | SortOrder
-    documentPhotoContentId?: SortOrderInput | SortOrder
-    selfiePhotoUrl?: SortOrderInput | SortOrder
-    selfiePhotoContentId?: SortOrderInput | SortOrder
-    status?: SortOrder
-    rejectionReason?: SortOrderInput | SortOrder
-    submittedAt?: SortOrder
-    userFullName?: SortOrderInput | SortOrder
-    userNeupId?: SortOrderInput | SortOrder
-    account?: AccountOrderByWithRelationInput
-  }
-
-  export type KycRequestWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: KycRequestWhereInput | KycRequestWhereInput[]
-    OR?: KycRequestWhereInput[]
-    NOT?: KycRequestWhereInput | KycRequestWhereInput[]
-    accountId?: StringFilter<"KycRequest"> | string
-    documentType?: StringFilter<"KycRequest"> | string
-    documentId?: StringNullableFilter<"KycRequest"> | string | null
-    documentPhotoUrl?: StringNullableFilter<"KycRequest"> | string | null
-    documentPhotoContentId?: StringNullableFilter<"KycRequest"> | string | null
-    selfiePhotoUrl?: StringNullableFilter<"KycRequest"> | string | null
-    selfiePhotoContentId?: StringNullableFilter<"KycRequest"> | string | null
-    status?: StringFilter<"KycRequest"> | string
-    rejectionReason?: StringNullableFilter<"KycRequest"> | string | null
-    submittedAt?: DateTimeFilter<"KycRequest"> | Date | string
-    userFullName?: StringNullableFilter<"KycRequest"> | string | null
-    userNeupId?: StringNullableFilter<"KycRequest"> | string | null
-    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-  }, "id">
-
-  export type KycRequestOrderByWithAggregationInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    documentType?: SortOrder
-    documentId?: SortOrderInput | SortOrder
-    documentPhotoUrl?: SortOrderInput | SortOrder
-    documentPhotoContentId?: SortOrderInput | SortOrder
-    selfiePhotoUrl?: SortOrderInput | SortOrder
-    selfiePhotoContentId?: SortOrderInput | SortOrder
-    status?: SortOrder
-    rejectionReason?: SortOrderInput | SortOrder
-    submittedAt?: SortOrder
-    userFullName?: SortOrderInput | SortOrder
-    userNeupId?: SortOrderInput | SortOrder
-    _count?: KycRequestCountOrderByAggregateInput
-    _max?: KycRequestMaxOrderByAggregateInput
-    _min?: KycRequestMinOrderByAggregateInput
-  }
-
-  export type KycRequestScalarWhereWithAggregatesInput = {
-    AND?: KycRequestScalarWhereWithAggregatesInput | KycRequestScalarWhereWithAggregatesInput[]
-    OR?: KycRequestScalarWhereWithAggregatesInput[]
-    NOT?: KycRequestScalarWhereWithAggregatesInput | KycRequestScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"KycRequest"> | string
-    accountId?: StringWithAggregatesFilter<"KycRequest"> | string
-    documentType?: StringWithAggregatesFilter<"KycRequest"> | string
-    documentId?: StringNullableWithAggregatesFilter<"KycRequest"> | string | null
-    documentPhotoUrl?: StringNullableWithAggregatesFilter<"KycRequest"> | string | null
-    documentPhotoContentId?: StringNullableWithAggregatesFilter<"KycRequest"> | string | null
-    selfiePhotoUrl?: StringNullableWithAggregatesFilter<"KycRequest"> | string | null
-    selfiePhotoContentId?: StringNullableWithAggregatesFilter<"KycRequest"> | string | null
-    status?: StringWithAggregatesFilter<"KycRequest"> | string
-    rejectionReason?: StringNullableWithAggregatesFilter<"KycRequest"> | string | null
-    submittedAt?: DateTimeWithAggregatesFilter<"KycRequest"> | Date | string
-    userFullName?: StringNullableWithAggregatesFilter<"KycRequest"> | string | null
-    userNeupId?: StringNullableWithAggregatesFilter<"KycRequest"> | string | null
-  }
-
-  export type InvitationWhereInput = {
-    AND?: InvitationWhereInput | InvitationWhereInput[]
-    OR?: InvitationWhereInput[]
-    NOT?: InvitationWhereInput | InvitationWhereInput[]
-    id?: StringFilter<"Invitation"> | string
-    inviterAccountId?: StringFilter<"Invitation"> | string
-    inviteeEmail?: StringFilter<"Invitation"> | string
-    role?: StringFilter<"Invitation"> | string
-    status?: StringFilter<"Invitation"> | string
-    createdAt?: DateTimeFilter<"Invitation"> | Date | string
-    expiresAt?: DateTimeFilter<"Invitation"> | Date | string
-    inviter?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-  }
-
-  export type InvitationOrderByWithRelationInput = {
-    id?: SortOrder
-    inviterAccountId?: SortOrder
-    inviteeEmail?: SortOrder
-    role?: SortOrder
-    status?: SortOrder
-    createdAt?: SortOrder
-    expiresAt?: SortOrder
-    inviter?: AccountOrderByWithRelationInput
-  }
-
-  export type InvitationWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: InvitationWhereInput | InvitationWhereInput[]
-    OR?: InvitationWhereInput[]
-    NOT?: InvitationWhereInput | InvitationWhereInput[]
-    inviterAccountId?: StringFilter<"Invitation"> | string
-    inviteeEmail?: StringFilter<"Invitation"> | string
-    role?: StringFilter<"Invitation"> | string
-    status?: StringFilter<"Invitation"> | string
-    createdAt?: DateTimeFilter<"Invitation"> | Date | string
-    expiresAt?: DateTimeFilter<"Invitation"> | Date | string
-    inviter?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-  }, "id">
-
-  export type InvitationOrderByWithAggregationInput = {
-    id?: SortOrder
-    inviterAccountId?: SortOrder
-    inviteeEmail?: SortOrder
-    role?: SortOrder
-    status?: SortOrder
-    createdAt?: SortOrder
-    expiresAt?: SortOrder
-    _count?: InvitationCountOrderByAggregateInput
-    _max?: InvitationMaxOrderByAggregateInput
-    _min?: InvitationMinOrderByAggregateInput
-  }
-
-  export type InvitationScalarWhereWithAggregatesInput = {
-    AND?: InvitationScalarWhereWithAggregatesInput | InvitationScalarWhereWithAggregatesInput[]
-    OR?: InvitationScalarWhereWithAggregatesInput[]
-    NOT?: InvitationScalarWhereWithAggregatesInput | InvitationScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Invitation"> | string
-    inviterAccountId?: StringWithAggregatesFilter<"Invitation"> | string
-    inviteeEmail?: StringWithAggregatesFilter<"Invitation"> | string
-    role?: StringWithAggregatesFilter<"Invitation"> | string
-    status?: StringWithAggregatesFilter<"Invitation"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"Invitation"> | Date | string
-    expiresAt?: DateTimeWithAggregatesFilter<"Invitation"> | Date | string
-  }
-
-  export type NeupIdRequestWhereInput = {
-    AND?: NeupIdRequestWhereInput | NeupIdRequestWhereInput[]
-    OR?: NeupIdRequestWhereInput[]
-    NOT?: NeupIdRequestWhereInput | NeupIdRequestWhereInput[]
-    id?: StringFilter<"NeupIdRequest"> | string
-    accountId?: StringFilter<"NeupIdRequest"> | string
-    requestedId?: StringFilter<"NeupIdRequest"> | string
-    status?: StringFilter<"NeupIdRequest"> | string
-    reason?: StringNullableFilter<"NeupIdRequest"> | string | null
-    submittedAt?: DateTimeFilter<"NeupIdRequest"> | Date | string
-    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-  }
-
-  export type NeupIdRequestOrderByWithRelationInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    requestedId?: SortOrder
-    status?: SortOrder
-    reason?: SortOrderInput | SortOrder
-    submittedAt?: SortOrder
-    account?: AccountOrderByWithRelationInput
-  }
-
-  export type NeupIdRequestWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    requestedId?: string
-    AND?: NeupIdRequestWhereInput | NeupIdRequestWhereInput[]
-    OR?: NeupIdRequestWhereInput[]
-    NOT?: NeupIdRequestWhereInput | NeupIdRequestWhereInput[]
-    accountId?: StringFilter<"NeupIdRequest"> | string
-    status?: StringFilter<"NeupIdRequest"> | string
-    reason?: StringNullableFilter<"NeupIdRequest"> | string | null
-    submittedAt?: DateTimeFilter<"NeupIdRequest"> | Date | string
-    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-  }, "id" | "requestedId">
-
-  export type NeupIdRequestOrderByWithAggregationInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    requestedId?: SortOrder
-    status?: SortOrder
-    reason?: SortOrderInput | SortOrder
-    submittedAt?: SortOrder
-    _count?: NeupIdRequestCountOrderByAggregateInput
-    _max?: NeupIdRequestMaxOrderByAggregateInput
-    _min?: NeupIdRequestMinOrderByAggregateInput
-  }
-
-  export type NeupIdRequestScalarWhereWithAggregatesInput = {
-    AND?: NeupIdRequestScalarWhereWithAggregatesInput | NeupIdRequestScalarWhereWithAggregatesInput[]
-    OR?: NeupIdRequestScalarWhereWithAggregatesInput[]
-    NOT?: NeupIdRequestScalarWhereWithAggregatesInput | NeupIdRequestScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"NeupIdRequest"> | string
-    accountId?: StringWithAggregatesFilter<"NeupIdRequest"> | string
-    requestedId?: StringWithAggregatesFilter<"NeupIdRequest"> | string
-    status?: StringWithAggregatesFilter<"NeupIdRequest"> | string
-    reason?: StringNullableWithAggregatesFilter<"NeupIdRequest"> | string | null
-    submittedAt?: DateTimeWithAggregatesFilter<"NeupIdRequest"> | Date | string
   }
 
   export type NotificationWhereInput = {
@@ -51644,66 +42906,6 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Verification"> | Date | string
     verifiedAt?: DateTimeNullableWithAggregatesFilter<"Verification"> | Date | string | null
     revokedAt?: DateTimeNullableWithAggregatesFilter<"Verification"> | Date | string | null
-  }
-
-  export type UserDocumentWhereInput = {
-    AND?: UserDocumentWhereInput | UserDocumentWhereInput[]
-    OR?: UserDocumentWhereInput[]
-    NOT?: UserDocumentWhereInput | UserDocumentWhereInput[]
-    id?: StringFilter<"UserDocument"> | string
-    accountId?: StringFilter<"UserDocument"> | string
-    type?: StringFilter<"UserDocument"> | string
-    url?: StringFilter<"UserDocument"> | string
-    status?: StringFilter<"UserDocument"> | string
-    uploadedAt?: DateTimeFilter<"UserDocument"> | Date | string
-    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-  }
-
-  export type UserDocumentOrderByWithRelationInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    type?: SortOrder
-    url?: SortOrder
-    status?: SortOrder
-    uploadedAt?: SortOrder
-    account?: AccountOrderByWithRelationInput
-  }
-
-  export type UserDocumentWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: UserDocumentWhereInput | UserDocumentWhereInput[]
-    OR?: UserDocumentWhereInput[]
-    NOT?: UserDocumentWhereInput | UserDocumentWhereInput[]
-    accountId?: StringFilter<"UserDocument"> | string
-    type?: StringFilter<"UserDocument"> | string
-    url?: StringFilter<"UserDocument"> | string
-    status?: StringFilter<"UserDocument"> | string
-    uploadedAt?: DateTimeFilter<"UserDocument"> | Date | string
-    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-  }, "id">
-
-  export type UserDocumentOrderByWithAggregationInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    type?: SortOrder
-    url?: SortOrder
-    status?: SortOrder
-    uploadedAt?: SortOrder
-    _count?: UserDocumentCountOrderByAggregateInput
-    _max?: UserDocumentMaxOrderByAggregateInput
-    _min?: UserDocumentMinOrderByAggregateInput
-  }
-
-  export type UserDocumentScalarWhereWithAggregatesInput = {
-    AND?: UserDocumentScalarWhereWithAggregatesInput | UserDocumentScalarWhereWithAggregatesInput[]
-    OR?: UserDocumentScalarWhereWithAggregatesInput[]
-    NOT?: UserDocumentScalarWhereWithAggregatesInput | UserDocumentScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"UserDocument"> | string
-    accountId?: StringWithAggregatesFilter<"UserDocument"> | string
-    type?: StringWithAggregatesFilter<"UserDocument"> | string
-    url?: StringWithAggregatesFilter<"UserDocument"> | string
-    status?: StringWithAggregatesFilter<"UserDocument"> | string
-    uploadedAt?: DateTimeWithAggregatesFilter<"UserDocument"> | Date | string
   }
 
   export type ContactWhereInput = {
@@ -52212,150 +43414,6 @@ export namespace Prisma {
     status?: StringWithAggregatesFilter<"BugReport"> | string
     reportedBy?: StringNullableWithAggregatesFilter<"BugReport"> | string | null
     timestamp?: DateTimeWithAggregatesFilter<"BugReport"> | Date | string
-  }
-
-  export type UserContentWhereInput = {
-    AND?: UserContentWhereInput | UserContentWhereInput[]
-    OR?: UserContentWhereInput[]
-    NOT?: UserContentWhereInput | UserContentWhereInput[]
-    id?: StringFilter<"UserContent"> | string
-    contentId?: StringNullableFilter<"UserContent"> | string | null
-    uploaderId?: StringNullableFilter<"UserContent"> | string | null
-    forAccountId?: StringFilter<"UserContent"> | string
-    platform?: StringFilter<"UserContent"> | string
-    url?: StringFilter<"UserContent"> | string
-    originalName?: StringNullableFilter<"UserContent"> | string | null
-    fileType?: StringNullableFilter<"UserContent"> | string | null
-    size?: IntNullableFilter<"UserContent"> | number | null
-    uploadedAt?: DateTimeFilter<"UserContent"> | Date | string
-    contentType?: StringNullableFilter<"UserContent"> | string | null
-    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-  }
-
-  export type UserContentOrderByWithRelationInput = {
-    id?: SortOrder
-    contentId?: SortOrderInput | SortOrder
-    uploaderId?: SortOrderInput | SortOrder
-    forAccountId?: SortOrder
-    platform?: SortOrder
-    url?: SortOrder
-    originalName?: SortOrderInput | SortOrder
-    fileType?: SortOrderInput | SortOrder
-    size?: SortOrderInput | SortOrder
-    uploadedAt?: SortOrder
-    contentType?: SortOrderInput | SortOrder
-    account?: AccountOrderByWithRelationInput
-  }
-
-  export type UserContentWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: UserContentWhereInput | UserContentWhereInput[]
-    OR?: UserContentWhereInput[]
-    NOT?: UserContentWhereInput | UserContentWhereInput[]
-    contentId?: StringNullableFilter<"UserContent"> | string | null
-    uploaderId?: StringNullableFilter<"UserContent"> | string | null
-    forAccountId?: StringFilter<"UserContent"> | string
-    platform?: StringFilter<"UserContent"> | string
-    url?: StringFilter<"UserContent"> | string
-    originalName?: StringNullableFilter<"UserContent"> | string | null
-    fileType?: StringNullableFilter<"UserContent"> | string | null
-    size?: IntNullableFilter<"UserContent"> | number | null
-    uploadedAt?: DateTimeFilter<"UserContent"> | Date | string
-    contentType?: StringNullableFilter<"UserContent"> | string | null
-    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-  }, "id">
-
-  export type UserContentOrderByWithAggregationInput = {
-    id?: SortOrder
-    contentId?: SortOrderInput | SortOrder
-    uploaderId?: SortOrderInput | SortOrder
-    forAccountId?: SortOrder
-    platform?: SortOrder
-    url?: SortOrder
-    originalName?: SortOrderInput | SortOrder
-    fileType?: SortOrderInput | SortOrder
-    size?: SortOrderInput | SortOrder
-    uploadedAt?: SortOrder
-    contentType?: SortOrderInput | SortOrder
-    _count?: UserContentCountOrderByAggregateInput
-    _avg?: UserContentAvgOrderByAggregateInput
-    _max?: UserContentMaxOrderByAggregateInput
-    _min?: UserContentMinOrderByAggregateInput
-    _sum?: UserContentSumOrderByAggregateInput
-  }
-
-  export type UserContentScalarWhereWithAggregatesInput = {
-    AND?: UserContentScalarWhereWithAggregatesInput | UserContentScalarWhereWithAggregatesInput[]
-    OR?: UserContentScalarWhereWithAggregatesInput[]
-    NOT?: UserContentScalarWhereWithAggregatesInput | UserContentScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"UserContent"> | string
-    contentId?: StringNullableWithAggregatesFilter<"UserContent"> | string | null
-    uploaderId?: StringNullableWithAggregatesFilter<"UserContent"> | string | null
-    forAccountId?: StringWithAggregatesFilter<"UserContent"> | string
-    platform?: StringWithAggregatesFilter<"UserContent"> | string
-    url?: StringWithAggregatesFilter<"UserContent"> | string
-    originalName?: StringNullableWithAggregatesFilter<"UserContent"> | string | null
-    fileType?: StringNullableWithAggregatesFilter<"UserContent"> | string | null
-    size?: IntNullableWithAggregatesFilter<"UserContent"> | number | null
-    uploadedAt?: DateTimeWithAggregatesFilter<"UserContent"> | Date | string
-    contentType?: StringNullableWithAggregatesFilter<"UserContent"> | string | null
-  }
-
-  export type RecoveryContactWhereInput = {
-    AND?: RecoveryContactWhereInput | RecoveryContactWhereInput[]
-    OR?: RecoveryContactWhereInput[]
-    NOT?: RecoveryContactWhereInput | RecoveryContactWhereInput[]
-    id?: StringFilter<"RecoveryContact"> | string
-    ownerAccountId?: StringFilter<"RecoveryContact"> | string
-    recoveryAccountId?: StringFilter<"RecoveryContact"> | string
-    recoveryNeupId?: StringFilter<"RecoveryContact"> | string
-    status?: StringFilter<"RecoveryContact"> | string
-    createdAt?: DateTimeFilter<"RecoveryContact"> | Date | string
-  }
-
-  export type RecoveryContactOrderByWithRelationInput = {
-    id?: SortOrder
-    ownerAccountId?: SortOrder
-    recoveryAccountId?: SortOrder
-    recoveryNeupId?: SortOrder
-    status?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type RecoveryContactWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: RecoveryContactWhereInput | RecoveryContactWhereInput[]
-    OR?: RecoveryContactWhereInput[]
-    NOT?: RecoveryContactWhereInput | RecoveryContactWhereInput[]
-    ownerAccountId?: StringFilter<"RecoveryContact"> | string
-    recoveryAccountId?: StringFilter<"RecoveryContact"> | string
-    recoveryNeupId?: StringFilter<"RecoveryContact"> | string
-    status?: StringFilter<"RecoveryContact"> | string
-    createdAt?: DateTimeFilter<"RecoveryContact"> | Date | string
-  }, "id">
-
-  export type RecoveryContactOrderByWithAggregationInput = {
-    id?: SortOrder
-    ownerAccountId?: SortOrder
-    recoveryAccountId?: SortOrder
-    recoveryNeupId?: SortOrder
-    status?: SortOrder
-    createdAt?: SortOrder
-    _count?: RecoveryContactCountOrderByAggregateInput
-    _max?: RecoveryContactMaxOrderByAggregateInput
-    _min?: RecoveryContactMinOrderByAggregateInput
-  }
-
-  export type RecoveryContactScalarWhereWithAggregatesInput = {
-    AND?: RecoveryContactScalarWhereWithAggregatesInput | RecoveryContactScalarWhereWithAggregatesInput[]
-    OR?: RecoveryContactScalarWhereWithAggregatesInput[]
-    NOT?: RecoveryContactScalarWhereWithAggregatesInput | RecoveryContactScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"RecoveryContact"> | string
-    ownerAccountId?: StringWithAggregatesFilter<"RecoveryContact"> | string
-    recoveryAccountId?: StringWithAggregatesFilter<"RecoveryContact"> | string
-    recoveryNeupId?: StringWithAggregatesFilter<"RecoveryContact"> | string
-    status?: StringWithAggregatesFilter<"RecoveryContact"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"RecoveryContact"> | Date | string
   }
 
   export type ApplicationWhereInput = {
@@ -53412,14 +44470,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -53473,14 +44526,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -53534,14 +44582,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -53595,14 +44638,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -53734,48 +44772,6 @@ export namespace Prisma {
     accountId?: StringFieldUpdateOperationsInput | string
     secret?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type SystemConfigCreateInput = {
-    id: string
-    data: JsonNullValueInput | InputJsonValue
-    updatedAt?: Date | string
-  }
-
-  export type SystemConfigUncheckedCreateInput = {
-    id: string
-    data: JsonNullValueInput | InputJsonValue
-    updatedAt?: Date | string
-  }
-
-  export type SystemConfigUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    data?: JsonNullValueInput | InputJsonValue
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type SystemConfigUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    data?: JsonNullValueInput | InputJsonValue
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type SystemConfigCreateManyInput = {
-    id: string
-    data: JsonNullValueInput | InputJsonValue
-    updatedAt?: Date | string
-  }
-
-  export type SystemConfigUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    data?: JsonNullValueInput | InputJsonValue
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type SystemConfigUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    data?: JsonNullValueInput | InputJsonValue
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AppProfileCreateInput = {
@@ -54027,248 +45023,6 @@ export namespace Prisma {
     remarks?: NullableStringFieldUpdateOperationsInput | string | null
     fromDate?: DateTimeFieldUpdateOperationsInput | Date | string
     moreInfo?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type KycRequestCreateInput = {
-    id?: string
-    documentType: string
-    documentId?: string | null
-    documentPhotoUrl?: string | null
-    documentPhotoContentId?: string | null
-    selfiePhotoUrl?: string | null
-    selfiePhotoContentId?: string | null
-    status?: string
-    rejectionReason?: string | null
-    submittedAt?: Date | string
-    userFullName?: string | null
-    userNeupId?: string | null
-    account: AccountCreateNestedOneWithoutKycRequestsInput
-  }
-
-  export type KycRequestUncheckedCreateInput = {
-    id?: string
-    accountId: string
-    documentType: string
-    documentId?: string | null
-    documentPhotoUrl?: string | null
-    documentPhotoContentId?: string | null
-    selfiePhotoUrl?: string | null
-    selfiePhotoContentId?: string | null
-    status?: string
-    rejectionReason?: string | null
-    submittedAt?: Date | string
-    userFullName?: string | null
-    userNeupId?: string | null
-  }
-
-  export type KycRequestUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    documentType?: StringFieldUpdateOperationsInput | string
-    documentId?: NullableStringFieldUpdateOperationsInput | string | null
-    documentPhotoUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    documentPhotoContentId?: NullableStringFieldUpdateOperationsInput | string | null
-    selfiePhotoUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    selfiePhotoContentId?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
-    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userFullName?: NullableStringFieldUpdateOperationsInput | string | null
-    userNeupId?: NullableStringFieldUpdateOperationsInput | string | null
-    account?: AccountUpdateOneRequiredWithoutKycRequestsNestedInput
-  }
-
-  export type KycRequestUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    documentType?: StringFieldUpdateOperationsInput | string
-    documentId?: NullableStringFieldUpdateOperationsInput | string | null
-    documentPhotoUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    documentPhotoContentId?: NullableStringFieldUpdateOperationsInput | string | null
-    selfiePhotoUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    selfiePhotoContentId?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
-    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userFullName?: NullableStringFieldUpdateOperationsInput | string | null
-    userNeupId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type KycRequestCreateManyInput = {
-    id?: string
-    accountId: string
-    documentType: string
-    documentId?: string | null
-    documentPhotoUrl?: string | null
-    documentPhotoContentId?: string | null
-    selfiePhotoUrl?: string | null
-    selfiePhotoContentId?: string | null
-    status?: string
-    rejectionReason?: string | null
-    submittedAt?: Date | string
-    userFullName?: string | null
-    userNeupId?: string | null
-  }
-
-  export type KycRequestUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    documentType?: StringFieldUpdateOperationsInput | string
-    documentId?: NullableStringFieldUpdateOperationsInput | string | null
-    documentPhotoUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    documentPhotoContentId?: NullableStringFieldUpdateOperationsInput | string | null
-    selfiePhotoUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    selfiePhotoContentId?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
-    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userFullName?: NullableStringFieldUpdateOperationsInput | string | null
-    userNeupId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type KycRequestUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    documentType?: StringFieldUpdateOperationsInput | string
-    documentId?: NullableStringFieldUpdateOperationsInput | string | null
-    documentPhotoUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    documentPhotoContentId?: NullableStringFieldUpdateOperationsInput | string | null
-    selfiePhotoUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    selfiePhotoContentId?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
-    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userFullName?: NullableStringFieldUpdateOperationsInput | string | null
-    userNeupId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type InvitationCreateInput = {
-    id?: string
-    inviteeEmail: string
-    role?: string
-    status?: string
-    createdAt?: Date | string
-    expiresAt: Date | string
-    inviter: AccountCreateNestedOneWithoutInvitationsInput
-  }
-
-  export type InvitationUncheckedCreateInput = {
-    id?: string
-    inviterAccountId: string
-    inviteeEmail: string
-    role?: string
-    status?: string
-    createdAt?: Date | string
-    expiresAt: Date | string
-  }
-
-  export type InvitationUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    inviteeEmail?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    inviter?: AccountUpdateOneRequiredWithoutInvitationsNestedInput
-  }
-
-  export type InvitationUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    inviterAccountId?: StringFieldUpdateOperationsInput | string
-    inviteeEmail?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type InvitationCreateManyInput = {
-    id?: string
-    inviterAccountId: string
-    inviteeEmail: string
-    role?: string
-    status?: string
-    createdAt?: Date | string
-    expiresAt: Date | string
-  }
-
-  export type InvitationUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    inviteeEmail?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type InvitationUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    inviterAccountId?: StringFieldUpdateOperationsInput | string
-    inviteeEmail?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type NeupIdRequestCreateInput = {
-    id?: string
-    requestedId: string
-    status?: string
-    reason?: string | null
-    submittedAt?: Date | string
-    account: AccountCreateNestedOneWithoutNeupIdRequestsInput
-  }
-
-  export type NeupIdRequestUncheckedCreateInput = {
-    id?: string
-    accountId: string
-    requestedId: string
-    status?: string
-    reason?: string | null
-    submittedAt?: Date | string
-  }
-
-  export type NeupIdRequestUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    requestedId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    reason?: NullableStringFieldUpdateOperationsInput | string | null
-    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    account?: AccountUpdateOneRequiredWithoutNeupIdRequestsNestedInput
-  }
-
-  export type NeupIdRequestUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    requestedId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    reason?: NullableStringFieldUpdateOperationsInput | string | null
-    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type NeupIdRequestCreateManyInput = {
-    id?: string
-    accountId: string
-    requestedId: string
-    status?: string
-    reason?: string | null
-    submittedAt?: Date | string
-  }
-
-  export type NeupIdRequestUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    requestedId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    reason?: NullableStringFieldUpdateOperationsInput | string | null
-    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type NeupIdRequestUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    requestedId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    reason?: NullableStringFieldUpdateOperationsInput | string | null
-    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type NotificationCreateInput = {
@@ -54687,68 +45441,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type UserDocumentCreateInput = {
-    id?: string
-    type: string
-    url: string
-    status?: string
-    uploadedAt?: Date | string
-    account: AccountCreateNestedOneWithoutDocumentsInput
-  }
-
-  export type UserDocumentUncheckedCreateInput = {
-    id?: string
-    accountId: string
-    type: string
-    url: string
-    status?: string
-    uploadedAt?: Date | string
-  }
-
-  export type UserDocumentUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    account?: AccountUpdateOneRequiredWithoutDocumentsNestedInput
-  }
-
-  export type UserDocumentUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserDocumentCreateManyInput = {
-    id?: string
-    accountId: string
-    type: string
-    url: string
-    status?: string
-    uploadedAt?: Date | string
-  }
-
-  export type UserDocumentUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserDocumentUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ContactCreateInput = {
@@ -55306,166 +45998,6 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     reportedBy?: NullableStringFieldUpdateOperationsInput | string | null
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserContentCreateInput = {
-    id?: string
-    contentId?: string | null
-    uploaderId?: string | null
-    platform: string
-    url: string
-    originalName?: string | null
-    fileType?: string | null
-    size?: number | null
-    uploadedAt?: Date | string
-    contentType?: string | null
-    account: AccountCreateNestedOneWithoutUserContentsInput
-  }
-
-  export type UserContentUncheckedCreateInput = {
-    id?: string
-    contentId?: string | null
-    uploaderId?: string | null
-    forAccountId: string
-    platform: string
-    url: string
-    originalName?: string | null
-    fileType?: string | null
-    size?: number | null
-    uploadedAt?: Date | string
-    contentType?: string | null
-  }
-
-  export type UserContentUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    contentId?: NullableStringFieldUpdateOperationsInput | string | null
-    uploaderId?: NullableStringFieldUpdateOperationsInput | string | null
-    platform?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    originalName?: NullableStringFieldUpdateOperationsInput | string | null
-    fileType?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableIntFieldUpdateOperationsInput | number | null
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    contentType?: NullableStringFieldUpdateOperationsInput | string | null
-    account?: AccountUpdateOneRequiredWithoutUserContentsNestedInput
-  }
-
-  export type UserContentUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    contentId?: NullableStringFieldUpdateOperationsInput | string | null
-    uploaderId?: NullableStringFieldUpdateOperationsInput | string | null
-    forAccountId?: StringFieldUpdateOperationsInput | string
-    platform?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    originalName?: NullableStringFieldUpdateOperationsInput | string | null
-    fileType?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableIntFieldUpdateOperationsInput | number | null
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    contentType?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type UserContentCreateManyInput = {
-    id?: string
-    contentId?: string | null
-    uploaderId?: string | null
-    forAccountId: string
-    platform: string
-    url: string
-    originalName?: string | null
-    fileType?: string | null
-    size?: number | null
-    uploadedAt?: Date | string
-    contentType?: string | null
-  }
-
-  export type UserContentUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    contentId?: NullableStringFieldUpdateOperationsInput | string | null
-    uploaderId?: NullableStringFieldUpdateOperationsInput | string | null
-    platform?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    originalName?: NullableStringFieldUpdateOperationsInput | string | null
-    fileType?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableIntFieldUpdateOperationsInput | number | null
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    contentType?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type UserContentUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    contentId?: NullableStringFieldUpdateOperationsInput | string | null
-    uploaderId?: NullableStringFieldUpdateOperationsInput | string | null
-    forAccountId?: StringFieldUpdateOperationsInput | string
-    platform?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    originalName?: NullableStringFieldUpdateOperationsInput | string | null
-    fileType?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableIntFieldUpdateOperationsInput | number | null
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    contentType?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type RecoveryContactCreateInput = {
-    id?: string
-    ownerAccountId: string
-    recoveryAccountId: string
-    recoveryNeupId: string
-    status?: string
-    createdAt?: Date | string
-  }
-
-  export type RecoveryContactUncheckedCreateInput = {
-    id?: string
-    ownerAccountId: string
-    recoveryAccountId: string
-    recoveryNeupId: string
-    status?: string
-    createdAt?: Date | string
-  }
-
-  export type RecoveryContactUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    ownerAccountId?: StringFieldUpdateOperationsInput | string
-    recoveryAccountId?: StringFieldUpdateOperationsInput | string
-    recoveryNeupId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RecoveryContactUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    ownerAccountId?: StringFieldUpdateOperationsInput | string
-    recoveryAccountId?: StringFieldUpdateOperationsInput | string
-    recoveryNeupId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RecoveryContactCreateManyInput = {
-    id?: string
-    ownerAccountId: string
-    recoveryAccountId: string
-    recoveryNeupId: string
-    status?: string
-    createdAt?: Date | string
-  }
-
-  export type RecoveryContactUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    ownerAccountId?: StringFieldUpdateOperationsInput | string
-    recoveryAccountId?: StringFieldUpdateOperationsInput | string
-    recoveryNeupId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RecoveryContactUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    ownerAccountId?: StringFieldUpdateOperationsInput | string
-    recoveryAccountId?: StringFieldUpdateOperationsInput | string
-    recoveryNeupId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ApplicationCreateInput = {
@@ -56642,24 +47174,6 @@ export namespace Prisma {
     none?: ApplicationWhereInput
   }
 
-  export type KycRequestListRelationFilter = {
-    every?: KycRequestWhereInput
-    some?: KycRequestWhereInput
-    none?: KycRequestWhereInput
-  }
-
-  export type InvitationListRelationFilter = {
-    every?: InvitationWhereInput
-    some?: InvitationWhereInput
-    none?: InvitationWhereInput
-  }
-
-  export type NeupIdRequestListRelationFilter = {
-    every?: NeupIdRequestWhereInput
-    some?: NeupIdRequestWhereInput
-    none?: NeupIdRequestWhereInput
-  }
-
   export type NotificationListRelationFilter = {
     every?: NotificationWhereInput
     some?: NotificationWhereInput
@@ -56676,18 +47190,6 @@ export namespace Prisma {
     every?: VerificationWhereInput
     some?: VerificationWhereInput
     none?: VerificationWhereInput
-  }
-
-  export type UserDocumentListRelationFilter = {
-    every?: UserDocumentWhereInput
-    some?: UserDocumentWhereInput
-    none?: UserDocumentWhereInput
-  }
-
-  export type UserContentListRelationFilter = {
-    every?: UserContentWhereInput
-    some?: UserContentWhereInput
-    none?: UserContentWhereInput
   }
 
   export type TotpNullableScalarRelationFilter = {
@@ -56786,18 +47288,6 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type KycRequestOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type InvitationOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type NeupIdRequestOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type NotificationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -56807,14 +47297,6 @@ export namespace Prisma {
   }
 
   export type VerificationOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type UserDocumentOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type UserContentOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -57061,19 +47543,19 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type SystemConfigCountOrderByAggregateInput = {
-    id?: SortOrder
+  export type AppProfileCountOrderByAggregateInput = {
+    key?: SortOrder
     data?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type SystemConfigMaxOrderByAggregateInput = {
-    id?: SortOrder
+  export type AppProfileMaxOrderByAggregateInput = {
+    key?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type SystemConfigMinOrderByAggregateInput = {
-    id?: SortOrder
+  export type AppProfileMinOrderByAggregateInput = {
+    key?: SortOrder
     updatedAt?: SortOrder
   }
   export type JsonWithAggregatesFilter<$PrismaModel = never> =
@@ -57101,22 +47583,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedJsonFilter<$PrismaModel>
     _max?: NestedJsonFilter<$PrismaModel>
-  }
-
-  export type AppProfileCountOrderByAggregateInput = {
-    key?: SortOrder
-    data?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type AppProfileMaxOrderByAggregateInput = {
-    key?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type AppProfileMinOrderByAggregateInput = {
-    key?: SortOrder
-    updatedAt?: SortOrder
   }
 
   export type AuthRequestCountOrderByAggregateInput = {
@@ -57205,111 +47671,6 @@ export namespace Prisma {
     remarks?: SortOrder
     fromDate?: SortOrder
     moreInfo?: SortOrder
-  }
-
-  export type KycRequestCountOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    documentType?: SortOrder
-    documentId?: SortOrder
-    documentPhotoUrl?: SortOrder
-    documentPhotoContentId?: SortOrder
-    selfiePhotoUrl?: SortOrder
-    selfiePhotoContentId?: SortOrder
-    status?: SortOrder
-    rejectionReason?: SortOrder
-    submittedAt?: SortOrder
-    userFullName?: SortOrder
-    userNeupId?: SortOrder
-  }
-
-  export type KycRequestMaxOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    documentType?: SortOrder
-    documentId?: SortOrder
-    documentPhotoUrl?: SortOrder
-    documentPhotoContentId?: SortOrder
-    selfiePhotoUrl?: SortOrder
-    selfiePhotoContentId?: SortOrder
-    status?: SortOrder
-    rejectionReason?: SortOrder
-    submittedAt?: SortOrder
-    userFullName?: SortOrder
-    userNeupId?: SortOrder
-  }
-
-  export type KycRequestMinOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    documentType?: SortOrder
-    documentId?: SortOrder
-    documentPhotoUrl?: SortOrder
-    documentPhotoContentId?: SortOrder
-    selfiePhotoUrl?: SortOrder
-    selfiePhotoContentId?: SortOrder
-    status?: SortOrder
-    rejectionReason?: SortOrder
-    submittedAt?: SortOrder
-    userFullName?: SortOrder
-    userNeupId?: SortOrder
-  }
-
-  export type InvitationCountOrderByAggregateInput = {
-    id?: SortOrder
-    inviterAccountId?: SortOrder
-    inviteeEmail?: SortOrder
-    role?: SortOrder
-    status?: SortOrder
-    createdAt?: SortOrder
-    expiresAt?: SortOrder
-  }
-
-  export type InvitationMaxOrderByAggregateInput = {
-    id?: SortOrder
-    inviterAccountId?: SortOrder
-    inviteeEmail?: SortOrder
-    role?: SortOrder
-    status?: SortOrder
-    createdAt?: SortOrder
-    expiresAt?: SortOrder
-  }
-
-  export type InvitationMinOrderByAggregateInput = {
-    id?: SortOrder
-    inviterAccountId?: SortOrder
-    inviteeEmail?: SortOrder
-    role?: SortOrder
-    status?: SortOrder
-    createdAt?: SortOrder
-    expiresAt?: SortOrder
-  }
-
-  export type NeupIdRequestCountOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    requestedId?: SortOrder
-    status?: SortOrder
-    reason?: SortOrder
-    submittedAt?: SortOrder
-  }
-
-  export type NeupIdRequestMaxOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    requestedId?: SortOrder
-    status?: SortOrder
-    reason?: SortOrder
-    submittedAt?: SortOrder
-  }
-
-  export type NeupIdRequestMinOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    requestedId?: SortOrder
-    status?: SortOrder
-    reason?: SortOrder
-    submittedAt?: SortOrder
   }
 
   export type RequestNullableScalarRelationFilter = {
@@ -57497,33 +47858,6 @@ export namespace Prisma {
     createdAt?: SortOrder
     verifiedAt?: SortOrder
     revokedAt?: SortOrder
-  }
-
-  export type UserDocumentCountOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    type?: SortOrder
-    url?: SortOrder
-    status?: SortOrder
-    uploadedAt?: SortOrder
-  }
-
-  export type UserDocumentMaxOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    type?: SortOrder
-    url?: SortOrder
-    status?: SortOrder
-    uploadedAt?: SortOrder
-  }
-
-  export type UserDocumentMinOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-    type?: SortOrder
-    url?: SortOrder
-    status?: SortOrder
-    uploadedAt?: SortOrder
   }
 
   export type ContactCountOrderByAggregateInput = {
@@ -57758,110 +48092,6 @@ export namespace Prisma {
     status?: SortOrder
     reportedBy?: SortOrder
     timestamp?: SortOrder
-  }
-
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type UserContentCountOrderByAggregateInput = {
-    id?: SortOrder
-    contentId?: SortOrder
-    uploaderId?: SortOrder
-    forAccountId?: SortOrder
-    platform?: SortOrder
-    url?: SortOrder
-    originalName?: SortOrder
-    fileType?: SortOrder
-    size?: SortOrder
-    uploadedAt?: SortOrder
-    contentType?: SortOrder
-  }
-
-  export type UserContentAvgOrderByAggregateInput = {
-    size?: SortOrder
-  }
-
-  export type UserContentMaxOrderByAggregateInput = {
-    id?: SortOrder
-    contentId?: SortOrder
-    uploaderId?: SortOrder
-    forAccountId?: SortOrder
-    platform?: SortOrder
-    url?: SortOrder
-    originalName?: SortOrder
-    fileType?: SortOrder
-    size?: SortOrder
-    uploadedAt?: SortOrder
-    contentType?: SortOrder
-  }
-
-  export type UserContentMinOrderByAggregateInput = {
-    id?: SortOrder
-    contentId?: SortOrder
-    uploaderId?: SortOrder
-    forAccountId?: SortOrder
-    platform?: SortOrder
-    url?: SortOrder
-    originalName?: SortOrder
-    fileType?: SortOrder
-    size?: SortOrder
-    uploadedAt?: SortOrder
-    contentType?: SortOrder
-  }
-
-  export type UserContentSumOrderByAggregateInput = {
-    size?: SortOrder
-  }
-
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type RecoveryContactCountOrderByAggregateInput = {
-    id?: SortOrder
-    ownerAccountId?: SortOrder
-    recoveryAccountId?: SortOrder
-    recoveryNeupId?: SortOrder
-    status?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type RecoveryContactMaxOrderByAggregateInput = {
-    id?: SortOrder
-    ownerAccountId?: SortOrder
-    recoveryAccountId?: SortOrder
-    recoveryNeupId?: SortOrder
-    status?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type RecoveryContactMinOrderByAggregateInput = {
-    id?: SortOrder
-    ownerAccountId?: SortOrder
-    recoveryAccountId?: SortOrder
-    recoveryNeupId?: SortOrder
-    status?: SortOrder
-    createdAt?: SortOrder
   }
 
   export type ApplicationCountOrderByAggregateInput = {
@@ -58490,27 +48720,6 @@ export namespace Prisma {
     connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
   }
 
-  export type KycRequestCreateNestedManyWithoutAccountInput = {
-    create?: XOR<KycRequestCreateWithoutAccountInput, KycRequestUncheckedCreateWithoutAccountInput> | KycRequestCreateWithoutAccountInput[] | KycRequestUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: KycRequestCreateOrConnectWithoutAccountInput | KycRequestCreateOrConnectWithoutAccountInput[]
-    createMany?: KycRequestCreateManyAccountInputEnvelope
-    connect?: KycRequestWhereUniqueInput | KycRequestWhereUniqueInput[]
-  }
-
-  export type InvitationCreateNestedManyWithoutInviterInput = {
-    create?: XOR<InvitationCreateWithoutInviterInput, InvitationUncheckedCreateWithoutInviterInput> | InvitationCreateWithoutInviterInput[] | InvitationUncheckedCreateWithoutInviterInput[]
-    connectOrCreate?: InvitationCreateOrConnectWithoutInviterInput | InvitationCreateOrConnectWithoutInviterInput[]
-    createMany?: InvitationCreateManyInviterInputEnvelope
-    connect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
-  }
-
-  export type NeupIdRequestCreateNestedManyWithoutAccountInput = {
-    create?: XOR<NeupIdRequestCreateWithoutAccountInput, NeupIdRequestUncheckedCreateWithoutAccountInput> | NeupIdRequestCreateWithoutAccountInput[] | NeupIdRequestUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: NeupIdRequestCreateOrConnectWithoutAccountInput | NeupIdRequestCreateOrConnectWithoutAccountInput[]
-    createMany?: NeupIdRequestCreateManyAccountInputEnvelope
-    connect?: NeupIdRequestWhereUniqueInput | NeupIdRequestWhereUniqueInput[]
-  }
-
   export type NotificationCreateNestedManyWithoutAccountInput = {
     create?: XOR<NotificationCreateWithoutAccountInput, NotificationUncheckedCreateWithoutAccountInput> | NotificationCreateWithoutAccountInput[] | NotificationUncheckedCreateWithoutAccountInput[]
     connectOrCreate?: NotificationCreateOrConnectWithoutAccountInput | NotificationCreateOrConnectWithoutAccountInput[]
@@ -58530,20 +48739,6 @@ export namespace Prisma {
     connectOrCreate?: VerificationCreateOrConnectWithoutAccountInput | VerificationCreateOrConnectWithoutAccountInput[]
     createMany?: VerificationCreateManyAccountInputEnvelope
     connect?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
-  }
-
-  export type UserDocumentCreateNestedManyWithoutAccountInput = {
-    create?: XOR<UserDocumentCreateWithoutAccountInput, UserDocumentUncheckedCreateWithoutAccountInput> | UserDocumentCreateWithoutAccountInput[] | UserDocumentUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: UserDocumentCreateOrConnectWithoutAccountInput | UserDocumentCreateOrConnectWithoutAccountInput[]
-    createMany?: UserDocumentCreateManyAccountInputEnvelope
-    connect?: UserDocumentWhereUniqueInput | UserDocumentWhereUniqueInput[]
-  }
-
-  export type UserContentCreateNestedManyWithoutAccountInput = {
-    create?: XOR<UserContentCreateWithoutAccountInput, UserContentUncheckedCreateWithoutAccountInput> | UserContentCreateWithoutAccountInput[] | UserContentUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: UserContentCreateOrConnectWithoutAccountInput | UserContentCreateOrConnectWithoutAccountInput[]
-    createMany?: UserContentCreateManyAccountInputEnvelope
-    connect?: UserContentWhereUniqueInput | UserContentWhereUniqueInput[]
   }
 
   export type TotpCreateNestedOneWithoutAccountInput = {
@@ -58726,27 +48921,6 @@ export namespace Prisma {
     connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
   }
 
-  export type KycRequestUncheckedCreateNestedManyWithoutAccountInput = {
-    create?: XOR<KycRequestCreateWithoutAccountInput, KycRequestUncheckedCreateWithoutAccountInput> | KycRequestCreateWithoutAccountInput[] | KycRequestUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: KycRequestCreateOrConnectWithoutAccountInput | KycRequestCreateOrConnectWithoutAccountInput[]
-    createMany?: KycRequestCreateManyAccountInputEnvelope
-    connect?: KycRequestWhereUniqueInput | KycRequestWhereUniqueInput[]
-  }
-
-  export type InvitationUncheckedCreateNestedManyWithoutInviterInput = {
-    create?: XOR<InvitationCreateWithoutInviterInput, InvitationUncheckedCreateWithoutInviterInput> | InvitationCreateWithoutInviterInput[] | InvitationUncheckedCreateWithoutInviterInput[]
-    connectOrCreate?: InvitationCreateOrConnectWithoutInviterInput | InvitationCreateOrConnectWithoutInviterInput[]
-    createMany?: InvitationCreateManyInviterInputEnvelope
-    connect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
-  }
-
-  export type NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput = {
-    create?: XOR<NeupIdRequestCreateWithoutAccountInput, NeupIdRequestUncheckedCreateWithoutAccountInput> | NeupIdRequestCreateWithoutAccountInput[] | NeupIdRequestUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: NeupIdRequestCreateOrConnectWithoutAccountInput | NeupIdRequestCreateOrConnectWithoutAccountInput[]
-    createMany?: NeupIdRequestCreateManyAccountInputEnvelope
-    connect?: NeupIdRequestWhereUniqueInput | NeupIdRequestWhereUniqueInput[]
-  }
-
   export type NotificationUncheckedCreateNestedManyWithoutAccountInput = {
     create?: XOR<NotificationCreateWithoutAccountInput, NotificationUncheckedCreateWithoutAccountInput> | NotificationCreateWithoutAccountInput[] | NotificationUncheckedCreateWithoutAccountInput[]
     connectOrCreate?: NotificationCreateOrConnectWithoutAccountInput | NotificationCreateOrConnectWithoutAccountInput[]
@@ -58766,20 +48940,6 @@ export namespace Prisma {
     connectOrCreate?: VerificationCreateOrConnectWithoutAccountInput | VerificationCreateOrConnectWithoutAccountInput[]
     createMany?: VerificationCreateManyAccountInputEnvelope
     connect?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
-  }
-
-  export type UserDocumentUncheckedCreateNestedManyWithoutAccountInput = {
-    create?: XOR<UserDocumentCreateWithoutAccountInput, UserDocumentUncheckedCreateWithoutAccountInput> | UserDocumentCreateWithoutAccountInput[] | UserDocumentUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: UserDocumentCreateOrConnectWithoutAccountInput | UserDocumentCreateOrConnectWithoutAccountInput[]
-    createMany?: UserDocumentCreateManyAccountInputEnvelope
-    connect?: UserDocumentWhereUniqueInput | UserDocumentWhereUniqueInput[]
-  }
-
-  export type UserContentUncheckedCreateNestedManyWithoutAccountInput = {
-    create?: XOR<UserContentCreateWithoutAccountInput, UserContentUncheckedCreateWithoutAccountInput> | UserContentCreateWithoutAccountInput[] | UserContentUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: UserContentCreateOrConnectWithoutAccountInput | UserContentCreateOrConnectWithoutAccountInput[]
-    createMany?: UserContentCreateManyAccountInputEnvelope
-    connect?: UserContentWhereUniqueInput | UserContentWhereUniqueInput[]
   }
 
   export type TotpUncheckedCreateNestedOneWithoutAccountInput = {
@@ -59101,48 +49261,6 @@ export namespace Prisma {
     deleteMany?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
   }
 
-  export type KycRequestUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<KycRequestCreateWithoutAccountInput, KycRequestUncheckedCreateWithoutAccountInput> | KycRequestCreateWithoutAccountInput[] | KycRequestUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: KycRequestCreateOrConnectWithoutAccountInput | KycRequestCreateOrConnectWithoutAccountInput[]
-    upsert?: KycRequestUpsertWithWhereUniqueWithoutAccountInput | KycRequestUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: KycRequestCreateManyAccountInputEnvelope
-    set?: KycRequestWhereUniqueInput | KycRequestWhereUniqueInput[]
-    disconnect?: KycRequestWhereUniqueInput | KycRequestWhereUniqueInput[]
-    delete?: KycRequestWhereUniqueInput | KycRequestWhereUniqueInput[]
-    connect?: KycRequestWhereUniqueInput | KycRequestWhereUniqueInput[]
-    update?: KycRequestUpdateWithWhereUniqueWithoutAccountInput | KycRequestUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: KycRequestUpdateManyWithWhereWithoutAccountInput | KycRequestUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: KycRequestScalarWhereInput | KycRequestScalarWhereInput[]
-  }
-
-  export type InvitationUpdateManyWithoutInviterNestedInput = {
-    create?: XOR<InvitationCreateWithoutInviterInput, InvitationUncheckedCreateWithoutInviterInput> | InvitationCreateWithoutInviterInput[] | InvitationUncheckedCreateWithoutInviterInput[]
-    connectOrCreate?: InvitationCreateOrConnectWithoutInviterInput | InvitationCreateOrConnectWithoutInviterInput[]
-    upsert?: InvitationUpsertWithWhereUniqueWithoutInviterInput | InvitationUpsertWithWhereUniqueWithoutInviterInput[]
-    createMany?: InvitationCreateManyInviterInputEnvelope
-    set?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
-    disconnect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
-    delete?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
-    connect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
-    update?: InvitationUpdateWithWhereUniqueWithoutInviterInput | InvitationUpdateWithWhereUniqueWithoutInviterInput[]
-    updateMany?: InvitationUpdateManyWithWhereWithoutInviterInput | InvitationUpdateManyWithWhereWithoutInviterInput[]
-    deleteMany?: InvitationScalarWhereInput | InvitationScalarWhereInput[]
-  }
-
-  export type NeupIdRequestUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<NeupIdRequestCreateWithoutAccountInput, NeupIdRequestUncheckedCreateWithoutAccountInput> | NeupIdRequestCreateWithoutAccountInput[] | NeupIdRequestUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: NeupIdRequestCreateOrConnectWithoutAccountInput | NeupIdRequestCreateOrConnectWithoutAccountInput[]
-    upsert?: NeupIdRequestUpsertWithWhereUniqueWithoutAccountInput | NeupIdRequestUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: NeupIdRequestCreateManyAccountInputEnvelope
-    set?: NeupIdRequestWhereUniqueInput | NeupIdRequestWhereUniqueInput[]
-    disconnect?: NeupIdRequestWhereUniqueInput | NeupIdRequestWhereUniqueInput[]
-    delete?: NeupIdRequestWhereUniqueInput | NeupIdRequestWhereUniqueInput[]
-    connect?: NeupIdRequestWhereUniqueInput | NeupIdRequestWhereUniqueInput[]
-    update?: NeupIdRequestUpdateWithWhereUniqueWithoutAccountInput | NeupIdRequestUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: NeupIdRequestUpdateManyWithWhereWithoutAccountInput | NeupIdRequestUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: NeupIdRequestScalarWhereInput | NeupIdRequestScalarWhereInput[]
-  }
-
   export type NotificationUpdateManyWithoutAccountNestedInput = {
     create?: XOR<NotificationCreateWithoutAccountInput, NotificationUncheckedCreateWithoutAccountInput> | NotificationCreateWithoutAccountInput[] | NotificationUncheckedCreateWithoutAccountInput[]
     connectOrCreate?: NotificationCreateOrConnectWithoutAccountInput | NotificationCreateOrConnectWithoutAccountInput[]
@@ -59183,34 +49301,6 @@ export namespace Prisma {
     update?: VerificationUpdateWithWhereUniqueWithoutAccountInput | VerificationUpdateWithWhereUniqueWithoutAccountInput[]
     updateMany?: VerificationUpdateManyWithWhereWithoutAccountInput | VerificationUpdateManyWithWhereWithoutAccountInput[]
     deleteMany?: VerificationScalarWhereInput | VerificationScalarWhereInput[]
-  }
-
-  export type UserDocumentUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<UserDocumentCreateWithoutAccountInput, UserDocumentUncheckedCreateWithoutAccountInput> | UserDocumentCreateWithoutAccountInput[] | UserDocumentUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: UserDocumentCreateOrConnectWithoutAccountInput | UserDocumentCreateOrConnectWithoutAccountInput[]
-    upsert?: UserDocumentUpsertWithWhereUniqueWithoutAccountInput | UserDocumentUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: UserDocumentCreateManyAccountInputEnvelope
-    set?: UserDocumentWhereUniqueInput | UserDocumentWhereUniqueInput[]
-    disconnect?: UserDocumentWhereUniqueInput | UserDocumentWhereUniqueInput[]
-    delete?: UserDocumentWhereUniqueInput | UserDocumentWhereUniqueInput[]
-    connect?: UserDocumentWhereUniqueInput | UserDocumentWhereUniqueInput[]
-    update?: UserDocumentUpdateWithWhereUniqueWithoutAccountInput | UserDocumentUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: UserDocumentUpdateManyWithWhereWithoutAccountInput | UserDocumentUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: UserDocumentScalarWhereInput | UserDocumentScalarWhereInput[]
-  }
-
-  export type UserContentUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<UserContentCreateWithoutAccountInput, UserContentUncheckedCreateWithoutAccountInput> | UserContentCreateWithoutAccountInput[] | UserContentUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: UserContentCreateOrConnectWithoutAccountInput | UserContentCreateOrConnectWithoutAccountInput[]
-    upsert?: UserContentUpsertWithWhereUniqueWithoutAccountInput | UserContentUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: UserContentCreateManyAccountInputEnvelope
-    set?: UserContentWhereUniqueInput | UserContentWhereUniqueInput[]
-    disconnect?: UserContentWhereUniqueInput | UserContentWhereUniqueInput[]
-    delete?: UserContentWhereUniqueInput | UserContentWhereUniqueInput[]
-    connect?: UserContentWhereUniqueInput | UserContentWhereUniqueInput[]
-    update?: UserContentUpdateWithWhereUniqueWithoutAccountInput | UserContentUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: UserContentUpdateManyWithWhereWithoutAccountInput | UserContentUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: UserContentScalarWhereInput | UserContentScalarWhereInput[]
   }
 
   export type TotpUpdateOneWithoutAccountNestedInput = {
@@ -59569,48 +49659,6 @@ export namespace Prisma {
     deleteMany?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
   }
 
-  export type KycRequestUncheckedUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<KycRequestCreateWithoutAccountInput, KycRequestUncheckedCreateWithoutAccountInput> | KycRequestCreateWithoutAccountInput[] | KycRequestUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: KycRequestCreateOrConnectWithoutAccountInput | KycRequestCreateOrConnectWithoutAccountInput[]
-    upsert?: KycRequestUpsertWithWhereUniqueWithoutAccountInput | KycRequestUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: KycRequestCreateManyAccountInputEnvelope
-    set?: KycRequestWhereUniqueInput | KycRequestWhereUniqueInput[]
-    disconnect?: KycRequestWhereUniqueInput | KycRequestWhereUniqueInput[]
-    delete?: KycRequestWhereUniqueInput | KycRequestWhereUniqueInput[]
-    connect?: KycRequestWhereUniqueInput | KycRequestWhereUniqueInput[]
-    update?: KycRequestUpdateWithWhereUniqueWithoutAccountInput | KycRequestUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: KycRequestUpdateManyWithWhereWithoutAccountInput | KycRequestUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: KycRequestScalarWhereInput | KycRequestScalarWhereInput[]
-  }
-
-  export type InvitationUncheckedUpdateManyWithoutInviterNestedInput = {
-    create?: XOR<InvitationCreateWithoutInviterInput, InvitationUncheckedCreateWithoutInviterInput> | InvitationCreateWithoutInviterInput[] | InvitationUncheckedCreateWithoutInviterInput[]
-    connectOrCreate?: InvitationCreateOrConnectWithoutInviterInput | InvitationCreateOrConnectWithoutInviterInput[]
-    upsert?: InvitationUpsertWithWhereUniqueWithoutInviterInput | InvitationUpsertWithWhereUniqueWithoutInviterInput[]
-    createMany?: InvitationCreateManyInviterInputEnvelope
-    set?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
-    disconnect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
-    delete?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
-    connect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
-    update?: InvitationUpdateWithWhereUniqueWithoutInviterInput | InvitationUpdateWithWhereUniqueWithoutInviterInput[]
-    updateMany?: InvitationUpdateManyWithWhereWithoutInviterInput | InvitationUpdateManyWithWhereWithoutInviterInput[]
-    deleteMany?: InvitationScalarWhereInput | InvitationScalarWhereInput[]
-  }
-
-  export type NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<NeupIdRequestCreateWithoutAccountInput, NeupIdRequestUncheckedCreateWithoutAccountInput> | NeupIdRequestCreateWithoutAccountInput[] | NeupIdRequestUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: NeupIdRequestCreateOrConnectWithoutAccountInput | NeupIdRequestCreateOrConnectWithoutAccountInput[]
-    upsert?: NeupIdRequestUpsertWithWhereUniqueWithoutAccountInput | NeupIdRequestUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: NeupIdRequestCreateManyAccountInputEnvelope
-    set?: NeupIdRequestWhereUniqueInput | NeupIdRequestWhereUniqueInput[]
-    disconnect?: NeupIdRequestWhereUniqueInput | NeupIdRequestWhereUniqueInput[]
-    delete?: NeupIdRequestWhereUniqueInput | NeupIdRequestWhereUniqueInput[]
-    connect?: NeupIdRequestWhereUniqueInput | NeupIdRequestWhereUniqueInput[]
-    update?: NeupIdRequestUpdateWithWhereUniqueWithoutAccountInput | NeupIdRequestUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: NeupIdRequestUpdateManyWithWhereWithoutAccountInput | NeupIdRequestUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: NeupIdRequestScalarWhereInput | NeupIdRequestScalarWhereInput[]
-  }
-
   export type NotificationUncheckedUpdateManyWithoutAccountNestedInput = {
     create?: XOR<NotificationCreateWithoutAccountInput, NotificationUncheckedCreateWithoutAccountInput> | NotificationCreateWithoutAccountInput[] | NotificationUncheckedCreateWithoutAccountInput[]
     connectOrCreate?: NotificationCreateOrConnectWithoutAccountInput | NotificationCreateOrConnectWithoutAccountInput[]
@@ -59651,34 +49699,6 @@ export namespace Prisma {
     update?: VerificationUpdateWithWhereUniqueWithoutAccountInput | VerificationUpdateWithWhereUniqueWithoutAccountInput[]
     updateMany?: VerificationUpdateManyWithWhereWithoutAccountInput | VerificationUpdateManyWithWhereWithoutAccountInput[]
     deleteMany?: VerificationScalarWhereInput | VerificationScalarWhereInput[]
-  }
-
-  export type UserDocumentUncheckedUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<UserDocumentCreateWithoutAccountInput, UserDocumentUncheckedCreateWithoutAccountInput> | UserDocumentCreateWithoutAccountInput[] | UserDocumentUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: UserDocumentCreateOrConnectWithoutAccountInput | UserDocumentCreateOrConnectWithoutAccountInput[]
-    upsert?: UserDocumentUpsertWithWhereUniqueWithoutAccountInput | UserDocumentUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: UserDocumentCreateManyAccountInputEnvelope
-    set?: UserDocumentWhereUniqueInput | UserDocumentWhereUniqueInput[]
-    disconnect?: UserDocumentWhereUniqueInput | UserDocumentWhereUniqueInput[]
-    delete?: UserDocumentWhereUniqueInput | UserDocumentWhereUniqueInput[]
-    connect?: UserDocumentWhereUniqueInput | UserDocumentWhereUniqueInput[]
-    update?: UserDocumentUpdateWithWhereUniqueWithoutAccountInput | UserDocumentUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: UserDocumentUpdateManyWithWhereWithoutAccountInput | UserDocumentUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: UserDocumentScalarWhereInput | UserDocumentScalarWhereInput[]
-  }
-
-  export type UserContentUncheckedUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<UserContentCreateWithoutAccountInput, UserContentUncheckedCreateWithoutAccountInput> | UserContentCreateWithoutAccountInput[] | UserContentUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: UserContentCreateOrConnectWithoutAccountInput | UserContentCreateOrConnectWithoutAccountInput[]
-    upsert?: UserContentUpsertWithWhereUniqueWithoutAccountInput | UserContentUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: UserContentCreateManyAccountInputEnvelope
-    set?: UserContentWhereUniqueInput | UserContentWhereUniqueInput[]
-    disconnect?: UserContentWhereUniqueInput | UserContentWhereUniqueInput[]
-    delete?: UserContentWhereUniqueInput | UserContentWhereUniqueInput[]
-    connect?: UserContentWhereUniqueInput | UserContentWhereUniqueInput[]
-    update?: UserContentUpdateWithWhereUniqueWithoutAccountInput | UserContentUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: UserContentUpdateManyWithWhereWithoutAccountInput | UserContentUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: UserContentScalarWhereInput | UserContentScalarWhereInput[]
   }
 
   export type TotpUncheckedUpdateOneWithoutAccountNestedInput = {
@@ -59845,48 +49865,6 @@ export namespace Prisma {
     update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutStatusLogsInput, AccountUpdateWithoutStatusLogsInput>, AccountUncheckedUpdateWithoutStatusLogsInput>
   }
 
-  export type AccountCreateNestedOneWithoutKycRequestsInput = {
-    create?: XOR<AccountCreateWithoutKycRequestsInput, AccountUncheckedCreateWithoutKycRequestsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutKycRequestsInput
-    connect?: AccountWhereUniqueInput
-  }
-
-  export type AccountUpdateOneRequiredWithoutKycRequestsNestedInput = {
-    create?: XOR<AccountCreateWithoutKycRequestsInput, AccountUncheckedCreateWithoutKycRequestsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutKycRequestsInput
-    upsert?: AccountUpsertWithoutKycRequestsInput
-    connect?: AccountWhereUniqueInput
-    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutKycRequestsInput, AccountUpdateWithoutKycRequestsInput>, AccountUncheckedUpdateWithoutKycRequestsInput>
-  }
-
-  export type AccountCreateNestedOneWithoutInvitationsInput = {
-    create?: XOR<AccountCreateWithoutInvitationsInput, AccountUncheckedCreateWithoutInvitationsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutInvitationsInput
-    connect?: AccountWhereUniqueInput
-  }
-
-  export type AccountUpdateOneRequiredWithoutInvitationsNestedInput = {
-    create?: XOR<AccountCreateWithoutInvitationsInput, AccountUncheckedCreateWithoutInvitationsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutInvitationsInput
-    upsert?: AccountUpsertWithoutInvitationsInput
-    connect?: AccountWhereUniqueInput
-    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutInvitationsInput, AccountUpdateWithoutInvitationsInput>, AccountUncheckedUpdateWithoutInvitationsInput>
-  }
-
-  export type AccountCreateNestedOneWithoutNeupIdRequestsInput = {
-    create?: XOR<AccountCreateWithoutNeupIdRequestsInput, AccountUncheckedCreateWithoutNeupIdRequestsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutNeupIdRequestsInput
-    connect?: AccountWhereUniqueInput
-  }
-
-  export type AccountUpdateOneRequiredWithoutNeupIdRequestsNestedInput = {
-    create?: XOR<AccountCreateWithoutNeupIdRequestsInput, AccountUncheckedCreateWithoutNeupIdRequestsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutNeupIdRequestsInput
-    upsert?: AccountUpsertWithoutNeupIdRequestsInput
-    connect?: AccountWhereUniqueInput
-    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutNeupIdRequestsInput, AccountUpdateWithoutNeupIdRequestsInput>, AccountUncheckedUpdateWithoutNeupIdRequestsInput>
-  }
-
   export type AccountCreateNestedOneWithoutNotificationsInput = {
     create?: XOR<AccountCreateWithoutNotificationsInput, AccountUncheckedCreateWithoutNotificationsInput>
     connectOrCreate?: AccountCreateOrConnectWithoutNotificationsInput
@@ -60022,20 +50000,6 @@ export namespace Prisma {
     upsert?: AccountUpsertWithoutVerificationsInput
     connect?: AccountWhereUniqueInput
     update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutVerificationsInput, AccountUpdateWithoutVerificationsInput>, AccountUncheckedUpdateWithoutVerificationsInput>
-  }
-
-  export type AccountCreateNestedOneWithoutDocumentsInput = {
-    create?: XOR<AccountCreateWithoutDocumentsInput, AccountUncheckedCreateWithoutDocumentsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutDocumentsInput
-    connect?: AccountWhereUniqueInput
-  }
-
-  export type AccountUpdateOneRequiredWithoutDocumentsNestedInput = {
-    create?: XOR<AccountCreateWithoutDocumentsInput, AccountUncheckedCreateWithoutDocumentsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutDocumentsInput
-    upsert?: AccountUpsertWithoutDocumentsInput
-    connect?: AccountWhereUniqueInput
-    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutDocumentsInput, AccountUpdateWithoutDocumentsInput>, AccountUncheckedUpdateWithoutDocumentsInput>
   }
 
   export type AccountCreateNestedOneWithoutContactsInput = {
@@ -60198,28 +50162,6 @@ export namespace Prisma {
     delete?: AccountWhereInput | boolean
     connect?: AccountWhereUniqueInput
     update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutErrorLogsInput, AccountUpdateWithoutErrorLogsInput>, AccountUncheckedUpdateWithoutErrorLogsInput>
-  }
-
-  export type AccountCreateNestedOneWithoutUserContentsInput = {
-    create?: XOR<AccountCreateWithoutUserContentsInput, AccountUncheckedCreateWithoutUserContentsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutUserContentsInput
-    connect?: AccountWhereUniqueInput
-  }
-
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
-  export type AccountUpdateOneRequiredWithoutUserContentsNestedInput = {
-    create?: XOR<AccountCreateWithoutUserContentsInput, AccountUncheckedCreateWithoutUserContentsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutUserContentsInput
-    upsert?: AccountUpsertWithoutUserContentsInput
-    connect?: AccountWhereUniqueInput
-    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutUserContentsInput, AccountUpdateWithoutUserContentsInput>, AccountUncheckedUpdateWithoutUserContentsInput>
   }
 
   export type AccountCreateNestedOneWithoutOwnedApplicationsInput = {
@@ -61411,33 +51353,6 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
   export type AccountCreateWithoutBranchesInput = {
     id?: string
     nameFirst?: string | null
@@ -61478,14 +51393,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -61538,14 +51448,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -61603,14 +51508,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -61663,14 +51563,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -62168,100 +52063,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type KycRequestCreateWithoutAccountInput = {
-    id?: string
-    documentType: string
-    documentId?: string | null
-    documentPhotoUrl?: string | null
-    documentPhotoContentId?: string | null
-    selfiePhotoUrl?: string | null
-    selfiePhotoContentId?: string | null
-    status?: string
-    rejectionReason?: string | null
-    submittedAt?: Date | string
-    userFullName?: string | null
-    userNeupId?: string | null
-  }
-
-  export type KycRequestUncheckedCreateWithoutAccountInput = {
-    id?: string
-    documentType: string
-    documentId?: string | null
-    documentPhotoUrl?: string | null
-    documentPhotoContentId?: string | null
-    selfiePhotoUrl?: string | null
-    selfiePhotoContentId?: string | null
-    status?: string
-    rejectionReason?: string | null
-    submittedAt?: Date | string
-    userFullName?: string | null
-    userNeupId?: string | null
-  }
-
-  export type KycRequestCreateOrConnectWithoutAccountInput = {
-    where: KycRequestWhereUniqueInput
-    create: XOR<KycRequestCreateWithoutAccountInput, KycRequestUncheckedCreateWithoutAccountInput>
-  }
-
-  export type KycRequestCreateManyAccountInputEnvelope = {
-    data: KycRequestCreateManyAccountInput | KycRequestCreateManyAccountInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type InvitationCreateWithoutInviterInput = {
-    id?: string
-    inviteeEmail: string
-    role?: string
-    status?: string
-    createdAt?: Date | string
-    expiresAt: Date | string
-  }
-
-  export type InvitationUncheckedCreateWithoutInviterInput = {
-    id?: string
-    inviteeEmail: string
-    role?: string
-    status?: string
-    createdAt?: Date | string
-    expiresAt: Date | string
-  }
-
-  export type InvitationCreateOrConnectWithoutInviterInput = {
-    where: InvitationWhereUniqueInput
-    create: XOR<InvitationCreateWithoutInviterInput, InvitationUncheckedCreateWithoutInviterInput>
-  }
-
-  export type InvitationCreateManyInviterInputEnvelope = {
-    data: InvitationCreateManyInviterInput | InvitationCreateManyInviterInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type NeupIdRequestCreateWithoutAccountInput = {
-    id?: string
-    requestedId: string
-    status?: string
-    reason?: string | null
-    submittedAt?: Date | string
-  }
-
-  export type NeupIdRequestUncheckedCreateWithoutAccountInput = {
-    id?: string
-    requestedId: string
-    status?: string
-    reason?: string | null
-    submittedAt?: Date | string
-  }
-
-  export type NeupIdRequestCreateOrConnectWithoutAccountInput = {
-    where: NeupIdRequestWhereUniqueInput
-    create: XOR<NeupIdRequestCreateWithoutAccountInput, NeupIdRequestUncheckedCreateWithoutAccountInput>
-  }
-
-  export type NeupIdRequestCreateManyAccountInputEnvelope = {
-    data: NeupIdRequestCreateManyAccountInput | NeupIdRequestCreateManyAccountInput[]
-    skipDuplicates?: boolean
-  }
-
   export type NotificationCreateWithoutAccountInput = {
     id?: string
     action?: string | null
@@ -62361,68 +52162,6 @@ export namespace Prisma {
 
   export type VerificationCreateManyAccountInputEnvelope = {
     data: VerificationCreateManyAccountInput | VerificationCreateManyAccountInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type UserDocumentCreateWithoutAccountInput = {
-    id?: string
-    type: string
-    url: string
-    status?: string
-    uploadedAt?: Date | string
-  }
-
-  export type UserDocumentUncheckedCreateWithoutAccountInput = {
-    id?: string
-    type: string
-    url: string
-    status?: string
-    uploadedAt?: Date | string
-  }
-
-  export type UserDocumentCreateOrConnectWithoutAccountInput = {
-    where: UserDocumentWhereUniqueInput
-    create: XOR<UserDocumentCreateWithoutAccountInput, UserDocumentUncheckedCreateWithoutAccountInput>
-  }
-
-  export type UserDocumentCreateManyAccountInputEnvelope = {
-    data: UserDocumentCreateManyAccountInput | UserDocumentCreateManyAccountInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type UserContentCreateWithoutAccountInput = {
-    id?: string
-    contentId?: string | null
-    uploaderId?: string | null
-    platform: string
-    url: string
-    originalName?: string | null
-    fileType?: string | null
-    size?: number | null
-    uploadedAt?: Date | string
-    contentType?: string | null
-  }
-
-  export type UserContentUncheckedCreateWithoutAccountInput = {
-    id?: string
-    contentId?: string | null
-    uploaderId?: string | null
-    platform: string
-    url: string
-    originalName?: string | null
-    fileType?: string | null
-    size?: number | null
-    uploadedAt?: Date | string
-    contentType?: string | null
-  }
-
-  export type UserContentCreateOrConnectWithoutAccountInput = {
-    where: UserContentWhereUniqueInput
-    create: XOR<UserContentCreateWithoutAccountInput, UserContentUncheckedCreateWithoutAccountInput>
-  }
-
-  export type UserContentCreateManyAccountInputEnvelope = {
-    data: UserContentCreateManyAccountInput | UserContentCreateManyAccountInput[]
     skipDuplicates?: boolean
   }
 
@@ -62754,14 +52493,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -62814,14 +52548,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -63307,98 +53036,6 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Application"> | Date | string
   }
 
-  export type KycRequestUpsertWithWhereUniqueWithoutAccountInput = {
-    where: KycRequestWhereUniqueInput
-    update: XOR<KycRequestUpdateWithoutAccountInput, KycRequestUncheckedUpdateWithoutAccountInput>
-    create: XOR<KycRequestCreateWithoutAccountInput, KycRequestUncheckedCreateWithoutAccountInput>
-  }
-
-  export type KycRequestUpdateWithWhereUniqueWithoutAccountInput = {
-    where: KycRequestWhereUniqueInput
-    data: XOR<KycRequestUpdateWithoutAccountInput, KycRequestUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type KycRequestUpdateManyWithWhereWithoutAccountInput = {
-    where: KycRequestScalarWhereInput
-    data: XOR<KycRequestUpdateManyMutationInput, KycRequestUncheckedUpdateManyWithoutAccountInput>
-  }
-
-  export type KycRequestScalarWhereInput = {
-    AND?: KycRequestScalarWhereInput | KycRequestScalarWhereInput[]
-    OR?: KycRequestScalarWhereInput[]
-    NOT?: KycRequestScalarWhereInput | KycRequestScalarWhereInput[]
-    id?: StringFilter<"KycRequest"> | string
-    accountId?: StringFilter<"KycRequest"> | string
-    documentType?: StringFilter<"KycRequest"> | string
-    documentId?: StringNullableFilter<"KycRequest"> | string | null
-    documentPhotoUrl?: StringNullableFilter<"KycRequest"> | string | null
-    documentPhotoContentId?: StringNullableFilter<"KycRequest"> | string | null
-    selfiePhotoUrl?: StringNullableFilter<"KycRequest"> | string | null
-    selfiePhotoContentId?: StringNullableFilter<"KycRequest"> | string | null
-    status?: StringFilter<"KycRequest"> | string
-    rejectionReason?: StringNullableFilter<"KycRequest"> | string | null
-    submittedAt?: DateTimeFilter<"KycRequest"> | Date | string
-    userFullName?: StringNullableFilter<"KycRequest"> | string | null
-    userNeupId?: StringNullableFilter<"KycRequest"> | string | null
-  }
-
-  export type InvitationUpsertWithWhereUniqueWithoutInviterInput = {
-    where: InvitationWhereUniqueInput
-    update: XOR<InvitationUpdateWithoutInviterInput, InvitationUncheckedUpdateWithoutInviterInput>
-    create: XOR<InvitationCreateWithoutInviterInput, InvitationUncheckedCreateWithoutInviterInput>
-  }
-
-  export type InvitationUpdateWithWhereUniqueWithoutInviterInput = {
-    where: InvitationWhereUniqueInput
-    data: XOR<InvitationUpdateWithoutInviterInput, InvitationUncheckedUpdateWithoutInviterInput>
-  }
-
-  export type InvitationUpdateManyWithWhereWithoutInviterInput = {
-    where: InvitationScalarWhereInput
-    data: XOR<InvitationUpdateManyMutationInput, InvitationUncheckedUpdateManyWithoutInviterInput>
-  }
-
-  export type InvitationScalarWhereInput = {
-    AND?: InvitationScalarWhereInput | InvitationScalarWhereInput[]
-    OR?: InvitationScalarWhereInput[]
-    NOT?: InvitationScalarWhereInput | InvitationScalarWhereInput[]
-    id?: StringFilter<"Invitation"> | string
-    inviterAccountId?: StringFilter<"Invitation"> | string
-    inviteeEmail?: StringFilter<"Invitation"> | string
-    role?: StringFilter<"Invitation"> | string
-    status?: StringFilter<"Invitation"> | string
-    createdAt?: DateTimeFilter<"Invitation"> | Date | string
-    expiresAt?: DateTimeFilter<"Invitation"> | Date | string
-  }
-
-  export type NeupIdRequestUpsertWithWhereUniqueWithoutAccountInput = {
-    where: NeupIdRequestWhereUniqueInput
-    update: XOR<NeupIdRequestUpdateWithoutAccountInput, NeupIdRequestUncheckedUpdateWithoutAccountInput>
-    create: XOR<NeupIdRequestCreateWithoutAccountInput, NeupIdRequestUncheckedCreateWithoutAccountInput>
-  }
-
-  export type NeupIdRequestUpdateWithWhereUniqueWithoutAccountInput = {
-    where: NeupIdRequestWhereUniqueInput
-    data: XOR<NeupIdRequestUpdateWithoutAccountInput, NeupIdRequestUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type NeupIdRequestUpdateManyWithWhereWithoutAccountInput = {
-    where: NeupIdRequestScalarWhereInput
-    data: XOR<NeupIdRequestUpdateManyMutationInput, NeupIdRequestUncheckedUpdateManyWithoutAccountInput>
-  }
-
-  export type NeupIdRequestScalarWhereInput = {
-    AND?: NeupIdRequestScalarWhereInput | NeupIdRequestScalarWhereInput[]
-    OR?: NeupIdRequestScalarWhereInput[]
-    NOT?: NeupIdRequestScalarWhereInput | NeupIdRequestScalarWhereInput[]
-    id?: StringFilter<"NeupIdRequest"> | string
-    accountId?: StringFilter<"NeupIdRequest"> | string
-    requestedId?: StringFilter<"NeupIdRequest"> | string
-    status?: StringFilter<"NeupIdRequest"> | string
-    reason?: StringNullableFilter<"NeupIdRequest"> | string | null
-    submittedAt?: DateTimeFilter<"NeupIdRequest"> | Date | string
-  }
-
   export type NotificationUpsertWithWhereUniqueWithoutAccountInput = {
     where: NotificationWhereUniqueInput
     update: XOR<NotificationUpdateWithoutAccountInput, NotificationUncheckedUpdateWithoutAccountInput>
@@ -63493,67 +53130,6 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Verification"> | Date | string
     verifiedAt?: DateTimeNullableFilter<"Verification"> | Date | string | null
     revokedAt?: DateTimeNullableFilter<"Verification"> | Date | string | null
-  }
-
-  export type UserDocumentUpsertWithWhereUniqueWithoutAccountInput = {
-    where: UserDocumentWhereUniqueInput
-    update: XOR<UserDocumentUpdateWithoutAccountInput, UserDocumentUncheckedUpdateWithoutAccountInput>
-    create: XOR<UserDocumentCreateWithoutAccountInput, UserDocumentUncheckedCreateWithoutAccountInput>
-  }
-
-  export type UserDocumentUpdateWithWhereUniqueWithoutAccountInput = {
-    where: UserDocumentWhereUniqueInput
-    data: XOR<UserDocumentUpdateWithoutAccountInput, UserDocumentUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type UserDocumentUpdateManyWithWhereWithoutAccountInput = {
-    where: UserDocumentScalarWhereInput
-    data: XOR<UserDocumentUpdateManyMutationInput, UserDocumentUncheckedUpdateManyWithoutAccountInput>
-  }
-
-  export type UserDocumentScalarWhereInput = {
-    AND?: UserDocumentScalarWhereInput | UserDocumentScalarWhereInput[]
-    OR?: UserDocumentScalarWhereInput[]
-    NOT?: UserDocumentScalarWhereInput | UserDocumentScalarWhereInput[]
-    id?: StringFilter<"UserDocument"> | string
-    accountId?: StringFilter<"UserDocument"> | string
-    type?: StringFilter<"UserDocument"> | string
-    url?: StringFilter<"UserDocument"> | string
-    status?: StringFilter<"UserDocument"> | string
-    uploadedAt?: DateTimeFilter<"UserDocument"> | Date | string
-  }
-
-  export type UserContentUpsertWithWhereUniqueWithoutAccountInput = {
-    where: UserContentWhereUniqueInput
-    update: XOR<UserContentUpdateWithoutAccountInput, UserContentUncheckedUpdateWithoutAccountInput>
-    create: XOR<UserContentCreateWithoutAccountInput, UserContentUncheckedCreateWithoutAccountInput>
-  }
-
-  export type UserContentUpdateWithWhereUniqueWithoutAccountInput = {
-    where: UserContentWhereUniqueInput
-    data: XOR<UserContentUpdateWithoutAccountInput, UserContentUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type UserContentUpdateManyWithWhereWithoutAccountInput = {
-    where: UserContentScalarWhereInput
-    data: XOR<UserContentUpdateManyMutationInput, UserContentUncheckedUpdateManyWithoutAccountInput>
-  }
-
-  export type UserContentScalarWhereInput = {
-    AND?: UserContentScalarWhereInput | UserContentScalarWhereInput[]
-    OR?: UserContentScalarWhereInput[]
-    NOT?: UserContentScalarWhereInput | UserContentScalarWhereInput[]
-    id?: StringFilter<"UserContent"> | string
-    contentId?: StringNullableFilter<"UserContent"> | string | null
-    uploaderId?: StringNullableFilter<"UserContent"> | string | null
-    forAccountId?: StringFilter<"UserContent"> | string
-    platform?: StringFilter<"UserContent"> | string
-    url?: StringFilter<"UserContent"> | string
-    originalName?: StringNullableFilter<"UserContent"> | string | null
-    fileType?: StringNullableFilter<"UserContent"> | string | null
-    size?: IntNullableFilter<"UserContent"> | number | null
-    uploadedAt?: DateTimeFilter<"UserContent"> | Date | string
-    contentType?: StringNullableFilter<"UserContent"> | string | null
   }
 
   export type TotpUpsertWithoutAccountInput = {
@@ -63828,14 +53404,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     adminTeams?: AuthTeamCreateNestedManyWithoutAccountInput
@@ -63888,14 +53459,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     adminTeams?: AuthTeamUncheckedCreateNestedManyWithoutAccountInput
@@ -63964,14 +53530,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     adminTeams?: AuthTeamUpdateManyWithoutAccountNestedInput
@@ -64024,14 +53585,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     adminTeams?: AuthTeamUncheckedUpdateManyWithoutAccountNestedInput
@@ -64083,14 +53639,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -64143,14 +53694,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -64219,14 +53765,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -64279,782 +53820,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
-    totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    adminTeams?: AuthTeamUncheckedUpdateManyWithoutAccountNestedInput
-    memberTeams?: AuthTeamUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
-    authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
-  }
-
-  export type AccountCreateWithoutKycRequestsInput = {
-    id?: string
-    nameFirst?: string | null
-    nameMiddle?: string | null
-    nameLast?: string | null
-    nameDisplay?: string | null
-    displayName?: string | null
-    accountPhoto?: string | null
-    gender?: string | null
-    dateBirth?: Date | string | null
-    dateCreated?: Date | string
-    nationality?: string | null
-    isLegalEntity?: boolean
-    nameLegal?: string | null
-    registrationId?: string | null
-    countryOfOrigin?: string | null
-    dateEstablished?: Date | string | null
-    neupIdPrimary?: string | null
-    verified?: boolean
-    pro?: boolean
-    accountType?: string
-    permit?: string
-    accountStatus?: string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    parentBrand?: AccountCreateNestedOneWithoutBranchesInput
-    branches?: AccountCreateNestedManyWithoutParentBrandInput
-    contacts?: ContactCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
-    permits?: PermitCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
-    totp?: TotpCreateNestedOneWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    adminTeams?: AuthTeamCreateNestedManyWithoutAccountInput
-    memberTeams?: AuthTeamCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
-    authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
-    recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
-  }
-
-  export type AccountUncheckedCreateWithoutKycRequestsInput = {
-    id?: string
-    nameFirst?: string | null
-    nameMiddle?: string | null
-    nameLast?: string | null
-    nameDisplay?: string | null
-    displayName?: string | null
-    accountPhoto?: string | null
-    gender?: string | null
-    dateBirth?: Date | string | null
-    dateCreated?: Date | string
-    nationality?: string | null
-    isLegalEntity?: boolean
-    nameLegal?: string | null
-    registrationId?: string | null
-    countryOfOrigin?: string | null
-    dateEstablished?: Date | string | null
-    neupIdPrimary?: string | null
-    verified?: boolean
-    pro?: boolean
-    accountType?: string
-    permit?: string
-    accountStatus?: string | null
-    parentBrandId?: string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    branches?: AccountUncheckedCreateNestedManyWithoutParentBrandInput
-    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
-    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
-    totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    adminTeams?: AuthTeamUncheckedCreateNestedManyWithoutAccountInput
-    memberTeams?: AuthTeamUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
-    authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
-  }
-
-  export type AccountCreateOrConnectWithoutKycRequestsInput = {
-    where: AccountWhereUniqueInput
-    create: XOR<AccountCreateWithoutKycRequestsInput, AccountUncheckedCreateWithoutKycRequestsInput>
-  }
-
-  export type AccountUpsertWithoutKycRequestsInput = {
-    update: XOR<AccountUpdateWithoutKycRequestsInput, AccountUncheckedUpdateWithoutKycRequestsInput>
-    create: XOR<AccountCreateWithoutKycRequestsInput, AccountUncheckedCreateWithoutKycRequestsInput>
-    where?: AccountWhereInput
-  }
-
-  export type AccountUpdateToOneWithWhereWithoutKycRequestsInput = {
-    where?: AccountWhereInput
-    data: XOR<AccountUpdateWithoutKycRequestsInput, AccountUncheckedUpdateWithoutKycRequestsInput>
-  }
-
-  export type AccountUpdateWithoutKycRequestsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
-    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
-    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
-    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableStringFieldUpdateOperationsInput | string | null
-    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationality?: NullableStringFieldUpdateOperationsInput | string | null
-    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
-    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
-    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
-    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    pro?: BoolFieldUpdateOperationsInput | boolean
-    accountType?: StringFieldUpdateOperationsInput | string
-    permit?: StringFieldUpdateOperationsInput | string
-    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    parentBrand?: AccountUpdateOneWithoutBranchesNestedInput
-    branches?: AccountUpdateManyWithoutParentBrandNestedInput
-    contacts?: ContactUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
-    permits?: PermitUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
-    totp?: TotpUpdateOneWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    adminTeams?: AuthTeamUpdateManyWithoutAccountNestedInput
-    memberTeams?: AuthTeamUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
-    authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
-    recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
-  }
-
-  export type AccountUncheckedUpdateWithoutKycRequestsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
-    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
-    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
-    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableStringFieldUpdateOperationsInput | string | null
-    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationality?: NullableStringFieldUpdateOperationsInput | string | null
-    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
-    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
-    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
-    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    pro?: BoolFieldUpdateOperationsInput | boolean
-    accountType?: StringFieldUpdateOperationsInput | string
-    permit?: StringFieldUpdateOperationsInput | string
-    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    parentBrandId?: NullableStringFieldUpdateOperationsInput | string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    branches?: AccountUncheckedUpdateManyWithoutParentBrandNestedInput
-    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
-    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
-    totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    adminTeams?: AuthTeamUncheckedUpdateManyWithoutAccountNestedInput
-    memberTeams?: AuthTeamUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
-    authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
-  }
-
-  export type AccountCreateWithoutInvitationsInput = {
-    id?: string
-    nameFirst?: string | null
-    nameMiddle?: string | null
-    nameLast?: string | null
-    nameDisplay?: string | null
-    displayName?: string | null
-    accountPhoto?: string | null
-    gender?: string | null
-    dateBirth?: Date | string | null
-    dateCreated?: Date | string
-    nationality?: string | null
-    isLegalEntity?: boolean
-    nameLegal?: string | null
-    registrationId?: string | null
-    countryOfOrigin?: string | null
-    dateEstablished?: Date | string | null
-    neupIdPrimary?: string | null
-    verified?: boolean
-    pro?: boolean
-    accountType?: string
-    permit?: string
-    accountStatus?: string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    parentBrand?: AccountCreateNestedOneWithoutBranchesInput
-    branches?: AccountCreateNestedManyWithoutParentBrandInput
-    contacts?: ContactCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
-    permits?: PermitCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
-    totp?: TotpCreateNestedOneWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    adminTeams?: AuthTeamCreateNestedManyWithoutAccountInput
-    memberTeams?: AuthTeamCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
-    authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
-    recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
-  }
-
-  export type AccountUncheckedCreateWithoutInvitationsInput = {
-    id?: string
-    nameFirst?: string | null
-    nameMiddle?: string | null
-    nameLast?: string | null
-    nameDisplay?: string | null
-    displayName?: string | null
-    accountPhoto?: string | null
-    gender?: string | null
-    dateBirth?: Date | string | null
-    dateCreated?: Date | string
-    nationality?: string | null
-    isLegalEntity?: boolean
-    nameLegal?: string | null
-    registrationId?: string | null
-    countryOfOrigin?: string | null
-    dateEstablished?: Date | string | null
-    neupIdPrimary?: string | null
-    verified?: boolean
-    pro?: boolean
-    accountType?: string
-    permit?: string
-    accountStatus?: string | null
-    parentBrandId?: string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    branches?: AccountUncheckedCreateNestedManyWithoutParentBrandInput
-    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
-    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
-    totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    adminTeams?: AuthTeamUncheckedCreateNestedManyWithoutAccountInput
-    memberTeams?: AuthTeamUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
-    authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
-  }
-
-  export type AccountCreateOrConnectWithoutInvitationsInput = {
-    where: AccountWhereUniqueInput
-    create: XOR<AccountCreateWithoutInvitationsInput, AccountUncheckedCreateWithoutInvitationsInput>
-  }
-
-  export type AccountUpsertWithoutInvitationsInput = {
-    update: XOR<AccountUpdateWithoutInvitationsInput, AccountUncheckedUpdateWithoutInvitationsInput>
-    create: XOR<AccountCreateWithoutInvitationsInput, AccountUncheckedCreateWithoutInvitationsInput>
-    where?: AccountWhereInput
-  }
-
-  export type AccountUpdateToOneWithWhereWithoutInvitationsInput = {
-    where?: AccountWhereInput
-    data: XOR<AccountUpdateWithoutInvitationsInput, AccountUncheckedUpdateWithoutInvitationsInput>
-  }
-
-  export type AccountUpdateWithoutInvitationsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
-    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
-    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
-    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableStringFieldUpdateOperationsInput | string | null
-    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationality?: NullableStringFieldUpdateOperationsInput | string | null
-    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
-    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
-    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
-    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    pro?: BoolFieldUpdateOperationsInput | boolean
-    accountType?: StringFieldUpdateOperationsInput | string
-    permit?: StringFieldUpdateOperationsInput | string
-    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    parentBrand?: AccountUpdateOneWithoutBranchesNestedInput
-    branches?: AccountUpdateManyWithoutParentBrandNestedInput
-    contacts?: ContactUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
-    permits?: PermitUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
-    totp?: TotpUpdateOneWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    adminTeams?: AuthTeamUpdateManyWithoutAccountNestedInput
-    memberTeams?: AuthTeamUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
-    authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
-    recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
-  }
-
-  export type AccountUncheckedUpdateWithoutInvitationsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
-    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
-    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
-    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableStringFieldUpdateOperationsInput | string | null
-    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationality?: NullableStringFieldUpdateOperationsInput | string | null
-    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
-    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
-    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
-    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    pro?: BoolFieldUpdateOperationsInput | boolean
-    accountType?: StringFieldUpdateOperationsInput | string
-    permit?: StringFieldUpdateOperationsInput | string
-    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    parentBrandId?: NullableStringFieldUpdateOperationsInput | string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    branches?: AccountUncheckedUpdateManyWithoutParentBrandNestedInput
-    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
-    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
-    totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    adminTeams?: AuthTeamUncheckedUpdateManyWithoutAccountNestedInput
-    memberTeams?: AuthTeamUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
-    authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
-  }
-
-  export type AccountCreateWithoutNeupIdRequestsInput = {
-    id?: string
-    nameFirst?: string | null
-    nameMiddle?: string | null
-    nameLast?: string | null
-    nameDisplay?: string | null
-    displayName?: string | null
-    accountPhoto?: string | null
-    gender?: string | null
-    dateBirth?: Date | string | null
-    dateCreated?: Date | string
-    nationality?: string | null
-    isLegalEntity?: boolean
-    nameLegal?: string | null
-    registrationId?: string | null
-    countryOfOrigin?: string | null
-    dateEstablished?: Date | string | null
-    neupIdPrimary?: string | null
-    verified?: boolean
-    pro?: boolean
-    accountType?: string
-    permit?: string
-    accountStatus?: string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    parentBrand?: AccountCreateNestedOneWithoutBranchesInput
-    branches?: AccountCreateNestedManyWithoutParentBrandInput
-    contacts?: ContactCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
-    permits?: PermitCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
-    totp?: TotpCreateNestedOneWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    adminTeams?: AuthTeamCreateNestedManyWithoutAccountInput
-    memberTeams?: AuthTeamCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
-    authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
-    recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
-  }
-
-  export type AccountUncheckedCreateWithoutNeupIdRequestsInput = {
-    id?: string
-    nameFirst?: string | null
-    nameMiddle?: string | null
-    nameLast?: string | null
-    nameDisplay?: string | null
-    displayName?: string | null
-    accountPhoto?: string | null
-    gender?: string | null
-    dateBirth?: Date | string | null
-    dateCreated?: Date | string
-    nationality?: string | null
-    isLegalEntity?: boolean
-    nameLegal?: string | null
-    registrationId?: string | null
-    countryOfOrigin?: string | null
-    dateEstablished?: Date | string | null
-    neupIdPrimary?: string | null
-    verified?: boolean
-    pro?: boolean
-    accountType?: string
-    permit?: string
-    accountStatus?: string | null
-    parentBrandId?: string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    branches?: AccountUncheckedCreateNestedManyWithoutParentBrandInput
-    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
-    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
-    totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    adminTeams?: AuthTeamUncheckedCreateNestedManyWithoutAccountInput
-    memberTeams?: AuthTeamUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
-    authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
-  }
-
-  export type AccountCreateOrConnectWithoutNeupIdRequestsInput = {
-    where: AccountWhereUniqueInput
-    create: XOR<AccountCreateWithoutNeupIdRequestsInput, AccountUncheckedCreateWithoutNeupIdRequestsInput>
-  }
-
-  export type AccountUpsertWithoutNeupIdRequestsInput = {
-    update: XOR<AccountUpdateWithoutNeupIdRequestsInput, AccountUncheckedUpdateWithoutNeupIdRequestsInput>
-    create: XOR<AccountCreateWithoutNeupIdRequestsInput, AccountUncheckedCreateWithoutNeupIdRequestsInput>
-    where?: AccountWhereInput
-  }
-
-  export type AccountUpdateToOneWithWhereWithoutNeupIdRequestsInput = {
-    where?: AccountWhereInput
-    data: XOR<AccountUpdateWithoutNeupIdRequestsInput, AccountUncheckedUpdateWithoutNeupIdRequestsInput>
-  }
-
-  export type AccountUpdateWithoutNeupIdRequestsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
-    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
-    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
-    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableStringFieldUpdateOperationsInput | string | null
-    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationality?: NullableStringFieldUpdateOperationsInput | string | null
-    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
-    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
-    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
-    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    pro?: BoolFieldUpdateOperationsInput | boolean
-    accountType?: StringFieldUpdateOperationsInput | string
-    permit?: StringFieldUpdateOperationsInput | string
-    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    parentBrand?: AccountUpdateOneWithoutBranchesNestedInput
-    branches?: AccountUpdateManyWithoutParentBrandNestedInput
-    contacts?: ContactUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
-    permits?: PermitUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
-    totp?: TotpUpdateOneWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    adminTeams?: AuthTeamUpdateManyWithoutAccountNestedInput
-    memberTeams?: AuthTeamUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
-    authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
-    recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
-  }
-
-  export type AccountUncheckedUpdateWithoutNeupIdRequestsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
-    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
-    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
-    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableStringFieldUpdateOperationsInput | string | null
-    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationality?: NullableStringFieldUpdateOperationsInput | string | null
-    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
-    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
-    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
-    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    pro?: BoolFieldUpdateOperationsInput | boolean
-    accountType?: StringFieldUpdateOperationsInput | string
-    permit?: StringFieldUpdateOperationsInput | string
-    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    parentBrandId?: NullableStringFieldUpdateOperationsInput | string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    branches?: AccountUncheckedUpdateManyWithoutParentBrandNestedInput
-    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
-    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -65108,13 +53876,8 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -65168,13 +53931,8 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -65273,13 +54031,8 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -65333,13 +54086,8 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -65428,14 +54176,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     adminTeams?: AuthTeamCreateNestedManyWithoutAccountInput
@@ -65488,14 +54231,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     adminTeams?: AuthTeamUncheckedCreateNestedManyWithoutAccountInput
@@ -65553,14 +54291,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     adminTeams?: AuthTeamCreateNestedManyWithoutAccountInput
@@ -65613,14 +54346,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     adminTeams?: AuthTeamUncheckedCreateNestedManyWithoutAccountInput
@@ -65725,14 +54453,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     adminTeams?: AuthTeamUpdateManyWithoutAccountNestedInput
@@ -65785,14 +54508,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     adminTeams?: AuthTeamUncheckedUpdateManyWithoutAccountNestedInput
@@ -65856,14 +54574,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     adminTeams?: AuthTeamUpdateManyWithoutAccountNestedInput
@@ -65916,14 +54629,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     adminTeams?: AuthTeamUncheckedUpdateManyWithoutAccountNestedInput
@@ -65992,13 +54700,8 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -66052,13 +54755,8 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -66128,13 +54826,8 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -66188,13 +54881,8 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -66248,13 +54936,8 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -66308,13 +54991,8 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -66384,13 +55062,8 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -66444,269 +55117,8 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
-    totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    adminTeams?: AuthTeamUncheckedUpdateManyWithoutAccountNestedInput
-    memberTeams?: AuthTeamUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
-    authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
-  }
-
-  export type AccountCreateWithoutDocumentsInput = {
-    id?: string
-    nameFirst?: string | null
-    nameMiddle?: string | null
-    nameLast?: string | null
-    nameDisplay?: string | null
-    displayName?: string | null
-    accountPhoto?: string | null
-    gender?: string | null
-    dateBirth?: Date | string | null
-    dateCreated?: Date | string
-    nationality?: string | null
-    isLegalEntity?: boolean
-    nameLegal?: string | null
-    registrationId?: string | null
-    countryOfOrigin?: string | null
-    dateEstablished?: Date | string | null
-    neupIdPrimary?: string | null
-    verified?: boolean
-    pro?: boolean
-    accountType?: string
-    permit?: string
-    accountStatus?: string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    parentBrand?: AccountCreateNestedOneWithoutBranchesInput
-    branches?: AccountCreateNestedManyWithoutParentBrandInput
-    contacts?: ContactCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
-    permits?: PermitCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
-    totp?: TotpCreateNestedOneWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    adminTeams?: AuthTeamCreateNestedManyWithoutAccountInput
-    memberTeams?: AuthTeamCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
-    authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
-    recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
-  }
-
-  export type AccountUncheckedCreateWithoutDocumentsInput = {
-    id?: string
-    nameFirst?: string | null
-    nameMiddle?: string | null
-    nameLast?: string | null
-    nameDisplay?: string | null
-    displayName?: string | null
-    accountPhoto?: string | null
-    gender?: string | null
-    dateBirth?: Date | string | null
-    dateCreated?: Date | string
-    nationality?: string | null
-    isLegalEntity?: boolean
-    nameLegal?: string | null
-    registrationId?: string | null
-    countryOfOrigin?: string | null
-    dateEstablished?: Date | string | null
-    neupIdPrimary?: string | null
-    verified?: boolean
-    pro?: boolean
-    accountType?: string
-    permit?: string
-    accountStatus?: string | null
-    parentBrandId?: string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    branches?: AccountUncheckedCreateNestedManyWithoutParentBrandInput
-    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
-    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
-    totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    adminTeams?: AuthTeamUncheckedCreateNestedManyWithoutAccountInput
-    memberTeams?: AuthTeamUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
-    authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
-  }
-
-  export type AccountCreateOrConnectWithoutDocumentsInput = {
-    where: AccountWhereUniqueInput
-    create: XOR<AccountCreateWithoutDocumentsInput, AccountUncheckedCreateWithoutDocumentsInput>
-  }
-
-  export type AccountUpsertWithoutDocumentsInput = {
-    update: XOR<AccountUpdateWithoutDocumentsInput, AccountUncheckedUpdateWithoutDocumentsInput>
-    create: XOR<AccountCreateWithoutDocumentsInput, AccountUncheckedCreateWithoutDocumentsInput>
-    where?: AccountWhereInput
-  }
-
-  export type AccountUpdateToOneWithWhereWithoutDocumentsInput = {
-    where?: AccountWhereInput
-    data: XOR<AccountUpdateWithoutDocumentsInput, AccountUncheckedUpdateWithoutDocumentsInput>
-  }
-
-  export type AccountUpdateWithoutDocumentsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
-    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
-    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
-    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableStringFieldUpdateOperationsInput | string | null
-    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationality?: NullableStringFieldUpdateOperationsInput | string | null
-    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
-    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
-    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
-    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    pro?: BoolFieldUpdateOperationsInput | boolean
-    accountType?: StringFieldUpdateOperationsInput | string
-    permit?: StringFieldUpdateOperationsInput | string
-    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    parentBrand?: AccountUpdateOneWithoutBranchesNestedInput
-    branches?: AccountUpdateManyWithoutParentBrandNestedInput
-    contacts?: ContactUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
-    permits?: PermitUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
-    totp?: TotpUpdateOneWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    adminTeams?: AuthTeamUpdateManyWithoutAccountNestedInput
-    memberTeams?: AuthTeamUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
-    authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
-    recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
-  }
-
-  export type AccountUncheckedUpdateWithoutDocumentsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
-    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
-    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
-    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableStringFieldUpdateOperationsInput | string | null
-    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationality?: NullableStringFieldUpdateOperationsInput | string | null
-    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
-    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
-    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
-    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    pro?: BoolFieldUpdateOperationsInput | boolean
-    accountType?: StringFieldUpdateOperationsInput | string
-    permit?: StringFieldUpdateOperationsInput | string
-    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    parentBrandId?: NullableStringFieldUpdateOperationsInput | string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    branches?: AccountUncheckedUpdateManyWithoutParentBrandNestedInput
-    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
-    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -66759,14 +55171,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -66819,14 +55226,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -66895,14 +55297,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -66955,14 +55352,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -67015,14 +55407,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -67075,14 +55462,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -67151,14 +55533,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -67211,14 +55588,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -67271,14 +55643,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -67331,14 +55698,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -67407,14 +55769,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -67467,14 +55824,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -67527,14 +55879,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -67587,14 +55934,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -67652,14 +55994,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -67712,14 +56049,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -67788,14 +56120,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -67848,14 +56175,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -67919,14 +56241,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -67979,14 +56296,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -68067,14 +56379,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -68127,14 +56434,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -68219,14 +56521,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -68279,14 +56576,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -68339,14 +56631,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -68399,14 +56686,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -68475,14 +56757,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -68535,270 +56812,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
-    totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    adminTeams?: AuthTeamUncheckedUpdateManyWithoutAccountNestedInput
-    memberTeams?: AuthTeamUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
-    authRolesInternal?: AuthRoleUncheckedUpdateManyWithoutAccountNestedInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
-  }
-
-  export type AccountCreateWithoutUserContentsInput = {
-    id?: string
-    nameFirst?: string | null
-    nameMiddle?: string | null
-    nameLast?: string | null
-    nameDisplay?: string | null
-    displayName?: string | null
-    accountPhoto?: string | null
-    gender?: string | null
-    dateBirth?: Date | string | null
-    dateCreated?: Date | string
-    nationality?: string | null
-    isLegalEntity?: boolean
-    nameLegal?: string | null
-    registrationId?: string | null
-    countryOfOrigin?: string | null
-    dateEstablished?: Date | string | null
-    neupIdPrimary?: string | null
-    verified?: boolean
-    pro?: boolean
-    accountType?: string
-    permit?: string
-    accountStatus?: string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    parentBrand?: AccountCreateNestedOneWithoutBranchesInput
-    branches?: AccountCreateNestedManyWithoutParentBrandInput
-    contacts?: ContactCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
-    permits?: PermitCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    totp?: TotpCreateNestedOneWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    adminTeams?: AuthTeamCreateNestedManyWithoutAccountInput
-    memberTeams?: AuthTeamCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
-    authRolesInternal?: AuthRoleCreateNestedManyWithoutAccountInput
-    recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
-  }
-
-  export type AccountUncheckedCreateWithoutUserContentsInput = {
-    id?: string
-    nameFirst?: string | null
-    nameMiddle?: string | null
-    nameLast?: string | null
-    nameDisplay?: string | null
-    displayName?: string | null
-    accountPhoto?: string | null
-    gender?: string | null
-    dateBirth?: Date | string | null
-    dateCreated?: Date | string
-    nationality?: string | null
-    isLegalEntity?: boolean
-    nameLegal?: string | null
-    registrationId?: string | null
-    countryOfOrigin?: string | null
-    dateEstablished?: Date | string | null
-    neupIdPrimary?: string | null
-    verified?: boolean
-    pro?: boolean
-    accountType?: string
-    permit?: string
-    accountStatus?: string | null
-    parentBrandId?: string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    branches?: AccountUncheckedCreateNestedManyWithoutParentBrandInput
-    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
-    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    statusLogs?: AccountStatusLogUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    adminTeams?: AuthTeamUncheckedCreateNestedManyWithoutAccountInput
-    memberTeams?: AuthTeamUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
-    authRolesInternal?: AuthRoleUncheckedCreateNestedManyWithoutAccountInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
-  }
-
-  export type AccountCreateOrConnectWithoutUserContentsInput = {
-    where: AccountWhereUniqueInput
-    create: XOR<AccountCreateWithoutUserContentsInput, AccountUncheckedCreateWithoutUserContentsInput>
-  }
-
-  export type AccountUpsertWithoutUserContentsInput = {
-    update: XOR<AccountUpdateWithoutUserContentsInput, AccountUncheckedUpdateWithoutUserContentsInput>
-    create: XOR<AccountCreateWithoutUserContentsInput, AccountUncheckedCreateWithoutUserContentsInput>
-    where?: AccountWhereInput
-  }
-
-  export type AccountUpdateToOneWithWhereWithoutUserContentsInput = {
-    where?: AccountWhereInput
-    data: XOR<AccountUpdateWithoutUserContentsInput, AccountUncheckedUpdateWithoutUserContentsInput>
-  }
-
-  export type AccountUpdateWithoutUserContentsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
-    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
-    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
-    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableStringFieldUpdateOperationsInput | string | null
-    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationality?: NullableStringFieldUpdateOperationsInput | string | null
-    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
-    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
-    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
-    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    pro?: BoolFieldUpdateOperationsInput | boolean
-    accountType?: StringFieldUpdateOperationsInput | string
-    permit?: StringFieldUpdateOperationsInput | string
-    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    parentBrand?: AccountUpdateOneWithoutBranchesNestedInput
-    branches?: AccountUpdateManyWithoutParentBrandNestedInput
-    contacts?: ContactUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
-    permits?: PermitUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    totp?: TotpUpdateOneWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    adminTeams?: AuthTeamUpdateManyWithoutAccountNestedInput
-    memberTeams?: AuthTeamUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
-    authRolesInternal?: AuthRoleUpdateManyWithoutAccountNestedInput
-    recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
-  }
-
-  export type AccountUncheckedUpdateWithoutUserContentsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nameFirst?: NullableStringFieldUpdateOperationsInput | string | null
-    nameMiddle?: NullableStringFieldUpdateOperationsInput | string | null
-    nameLast?: NullableStringFieldUpdateOperationsInput | string | null
-    nameDisplay?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    accountPhoto?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableStringFieldUpdateOperationsInput | string | null
-    dateBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationality?: NullableStringFieldUpdateOperationsInput | string | null
-    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
-    nameLegal?: NullableStringFieldUpdateOperationsInput | string | null
-    registrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    countryOfOrigin?: NullableStringFieldUpdateOperationsInput | string | null
-    dateEstablished?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    neupIdPrimary?: NullableStringFieldUpdateOperationsInput | string | null
-    verified?: BoolFieldUpdateOperationsInput | boolean
-    pro?: BoolFieldUpdateOperationsInput | boolean
-    accountType?: StringFieldUpdateOperationsInput | string
-    permit?: StringFieldUpdateOperationsInput | string
-    accountStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    parentBrandId?: NullableStringFieldUpdateOperationsInput | string | null
-    block?: NullableJsonNullValueInput | InputJsonValue
-    branches?: AccountUncheckedUpdateManyWithoutParentBrandNestedInput
-    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
-    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    statusLogs?: AccountStatusLogUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -68851,14 +56867,9 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -68911,14 +56922,9 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -69251,14 +57257,9 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -69311,14 +57312,9 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -69589,14 +57585,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -69649,14 +57640,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -69714,14 +57700,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -69774,14 +57755,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -69913,14 +57889,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -69973,14 +57944,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -70044,14 +58010,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -70104,14 +58065,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -70604,14 +58560,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -70664,14 +58615,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -70729,14 +58675,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -70789,14 +58730,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -70928,14 +58864,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -70988,14 +58919,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -71059,14 +58985,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -71119,14 +59040,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -71236,14 +59152,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -71296,14 +59207,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -71435,14 +59341,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -71495,14 +59396,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -71612,14 +59508,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -71672,14 +59563,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -71737,14 +59623,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -71797,14 +59678,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -71936,14 +59812,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -71996,14 +59867,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -72067,14 +59933,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -72127,14 +59988,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -72186,14 +60042,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -72246,14 +60097,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -72379,14 +60225,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -72439,14 +60280,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -72562,14 +60398,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -72622,14 +60453,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -72755,14 +60581,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -72815,14 +60636,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -72938,14 +60754,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -72998,14 +60809,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -73166,14 +60972,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -73226,14 +61027,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -73390,14 +61186,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -73450,14 +61241,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -73583,14 +61369,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -73643,14 +61424,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -73766,14 +61542,9 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -73826,14 +61597,9 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalPermissions?: AuthPermissionsExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -73959,14 +61725,9 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -74019,14 +61780,9 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -74142,14 +61898,9 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestCreateNestedManyWithoutAccountInput
-    invitations?: InvitationCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentCreateNestedManyWithoutAccountInput
-    userContents?: UserContentCreateNestedManyWithoutAccountInput
     totp?: TotpCreateNestedOneWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
@@ -74202,14 +61953,9 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedCreateNestedManyWithoutAccountInput
     externalRoles?: AuthRoleExternalUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    kycRequests?: KycRequestUncheckedCreateNestedManyWithoutAccountInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
-    neupIdRequests?: NeupIdRequestUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     backupCodes?: BackupCodeUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    documents?: UserDocumentUncheckedCreateNestedManyWithoutAccountInput
-    userContents?: UserContentUncheckedCreateNestedManyWithoutAccountInput
     totp?: TotpUncheckedCreateNestedOneWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
@@ -74335,14 +62081,9 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -74395,14 +62136,9 @@ export namespace Prisma {
     externalSessions?: AuthSessionExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -74653,38 +62389,6 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
-  export type KycRequestCreateManyAccountInput = {
-    id?: string
-    documentType: string
-    documentId?: string | null
-    documentPhotoUrl?: string | null
-    documentPhotoContentId?: string | null
-    selfiePhotoUrl?: string | null
-    selfiePhotoContentId?: string | null
-    status?: string
-    rejectionReason?: string | null
-    submittedAt?: Date | string
-    userFullName?: string | null
-    userNeupId?: string | null
-  }
-
-  export type InvitationCreateManyInviterInput = {
-    id?: string
-    inviteeEmail: string
-    role?: string
-    status?: string
-    createdAt?: Date | string
-    expiresAt: Date | string
-  }
-
-  export type NeupIdRequestCreateManyAccountInput = {
-    id?: string
-    requestedId: string
-    status?: string
-    reason?: string | null
-    submittedAt?: Date | string
-  }
-
   export type NotificationCreateManyAccountInput = {
     id?: string
     action?: string | null
@@ -74719,27 +62423,6 @@ export namespace Prisma {
     createdAt?: Date | string
     verifiedAt?: Date | string | null
     revokedAt?: Date | string | null
-  }
-
-  export type UserDocumentCreateManyAccountInput = {
-    id?: string
-    type: string
-    url: string
-    status?: string
-    uploadedAt?: Date | string
-  }
-
-  export type UserContentCreateManyAccountInput = {
-    id?: string
-    contentId?: string | null
-    uploaderId?: string | null
-    platform: string
-    url: string
-    originalName?: string | null
-    fileType?: string | null
-    size?: number | null
-    uploadedAt?: Date | string
-    contentType?: string | null
   }
 
   export type RequestCreateManySenderInput = {
@@ -74866,14 +62549,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUpdateManyWithoutAccountNestedInput
     totp?: TotpUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
@@ -74926,14 +62604,9 @@ export namespace Prisma {
     externalRoles?: AuthRoleExternalUncheckedUpdateManyWithoutAccountNestedInput
     externalPermissions?: AuthPermissionsExternalUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    kycRequests?: KycRequestUncheckedUpdateManyWithoutAccountNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
-    neupIdRequests?: NeupIdRequestUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     backupCodes?: BackupCodeUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    documents?: UserDocumentUncheckedUpdateManyWithoutAccountNestedInput
-    userContents?: UserContentUncheckedUpdateManyWithoutAccountNestedInput
     totp?: TotpUncheckedUpdateOneWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
@@ -75441,102 +63114,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type KycRequestUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    documentType?: StringFieldUpdateOperationsInput | string
-    documentId?: NullableStringFieldUpdateOperationsInput | string | null
-    documentPhotoUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    documentPhotoContentId?: NullableStringFieldUpdateOperationsInput | string | null
-    selfiePhotoUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    selfiePhotoContentId?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
-    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userFullName?: NullableStringFieldUpdateOperationsInput | string | null
-    userNeupId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type KycRequestUncheckedUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    documentType?: StringFieldUpdateOperationsInput | string
-    documentId?: NullableStringFieldUpdateOperationsInput | string | null
-    documentPhotoUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    documentPhotoContentId?: NullableStringFieldUpdateOperationsInput | string | null
-    selfiePhotoUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    selfiePhotoContentId?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
-    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userFullName?: NullableStringFieldUpdateOperationsInput | string | null
-    userNeupId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type KycRequestUncheckedUpdateManyWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    documentType?: StringFieldUpdateOperationsInput | string
-    documentId?: NullableStringFieldUpdateOperationsInput | string | null
-    documentPhotoUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    documentPhotoContentId?: NullableStringFieldUpdateOperationsInput | string | null
-    selfiePhotoUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    selfiePhotoContentId?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
-    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userFullName?: NullableStringFieldUpdateOperationsInput | string | null
-    userNeupId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type InvitationUpdateWithoutInviterInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    inviteeEmail?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type InvitationUncheckedUpdateWithoutInviterInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    inviteeEmail?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type InvitationUncheckedUpdateManyWithoutInviterInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    inviteeEmail?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type NeupIdRequestUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    requestedId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    reason?: NullableStringFieldUpdateOperationsInput | string | null
-    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type NeupIdRequestUncheckedUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    requestedId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    reason?: NullableStringFieldUpdateOperationsInput | string | null
-    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type NeupIdRequestUncheckedUpdateManyWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    requestedId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    reason?: NullableStringFieldUpdateOperationsInput | string | null
-    submittedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type NotificationUpdateWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
     action?: NullableStringFieldUpdateOperationsInput | string | null
@@ -75643,69 +63220,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type UserDocumentUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserDocumentUncheckedUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserDocumentUncheckedUpdateManyWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserContentUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    contentId?: NullableStringFieldUpdateOperationsInput | string | null
-    uploaderId?: NullableStringFieldUpdateOperationsInput | string | null
-    platform?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    originalName?: NullableStringFieldUpdateOperationsInput | string | null
-    fileType?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableIntFieldUpdateOperationsInput | number | null
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    contentType?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type UserContentUncheckedUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    contentId?: NullableStringFieldUpdateOperationsInput | string | null
-    uploaderId?: NullableStringFieldUpdateOperationsInput | string | null
-    platform?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    originalName?: NullableStringFieldUpdateOperationsInput | string | null
-    fileType?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableIntFieldUpdateOperationsInput | number | null
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    contentType?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type UserContentUncheckedUpdateManyWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    contentId?: NullableStringFieldUpdateOperationsInput | string | null
-    uploaderId?: NullableStringFieldUpdateOperationsInput | string | null
-    platform?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    originalName?: NullableStringFieldUpdateOperationsInput | string | null
-    fileType?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableIntFieldUpdateOperationsInput | number | null
-    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    contentType?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type RequestUpdateWithoutSenderInput = {
