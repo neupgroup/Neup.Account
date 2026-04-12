@@ -34,74 +34,13 @@ Before an application can verify a session, it must initiate a handshake to obta
    - `authType`: Either `signin` (existing user) or `signup` (new user for this app).
 3. Your app server must then verify the `tempToken` via the verification API before granting access.
 
-**Example Request:**
-```
-GET https://neupgroup.com/account/bridge/handshake.v1/auth/grant?appId=YOUR_APP_ID&redirectsTo=https://yourapp.com/auth/callback&state=xyz
-```
+### App Access Model
 
-**Example Redirect:**
-```
-https://yourapp.com/auth/callback?state=xyz&tempToken=TOKEN_VALUE&authType=signin
-```
+The dedicated `access_members` and `account_access` tables were removed. App access now uses the shared auth records already in the schema: `auth_roles`, `auth_permissions`, and `auth_permission_recipients`.
 
----
+### Bridge Access API
 
-## 3. External Application Integration
-
-External applications interact with Neup.Account primarily through the **"Sign"** endpoint.
-
-### The "Grant" Process (Exchange tempToken for Session)
-External apps perform a POST request to exchange the `tempToken` (received via the handshake) for a persistent session and a signed JWT.
-
-**Endpoint:** `POST https://neupgroup.com/account/api.v1/auth/grant`
-
-**Request Body:**
-```json
-{
-  "appId": "YOUR_APP_ID",
-  "tempToken": "TOKEN_FROM_HANDSHAKE"
-}
-```
-
-**Response Properties:**
-- `aid`: The Neup `accountId`.
-- `sid`: A unique session ID for the external app. (Expires in 7 days)
-- `skey`: A secure session key for the external app. (Expires in 7 days)
-- `jwt`: A signed JSON Web Token containing user identity and roles. (Expires in 7 minutes)
-- `exp`: Expiration timestamp (Unix seconds) for the **JWT token** only.
-- `role`: The user's assigned role for this application.
-- `per`: (Optional) Array of permissions, included if the role has "extra" permissions enabled.
-
-**JWT Payload:**
-```json
-{
-  "aid": "123",
-  "role": "role-name",
-  "per": ["perm1", "perm2"], // Included if hasExtra is true
-  "iat": 123123123,
-  "exp": 234234234 // Exactly 7 minutes after iat
-}
-```
-
----
-
-### The "Validate Grant" Process (Check if Session is Valid)
-External apps perform a GET request to check if their authentication grant is still active.
-
-**Endpoint:** `GET https://neupgroup.com/account/api.v1/auth/grant`
-
-**Query Parameters:**
-- `appId`: Your application ID.
-- `aid`: The account ID.
-- `sid`: The session ID.
-- `skey`: The session key.
-
-**Response:**
-```json
-{
-  "success": true,
-  "aid": "acc_123",
-  "appId": "app_456",
+The `POST` and `PATCH` handlers on `https://neupgroup.com/account/bridge/api.v1/auth/access` continue to work with the shared auth tables for role and permission updates.
   "expiresOn": "2026-03-20T10:00:00.000Z",
   "lastLoggedIn": "2026-03-12T10:00:00.000Z"
 }

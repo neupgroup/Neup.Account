@@ -231,32 +231,36 @@ export async function getUserPermissions(accountId?: string, appId?: string): Pr
       });
     });
 
-    // Internal apps use the account_access table and expose active roles as app-scoped permissions.
     if (appId) {
-      if (appId.startsWith('neup.')) {
-        const internalAccess = await prisma.accountAccess.findMany({
+      const [externalRole, directPermissions, appPermissions] = await Promise.all([
+        prisma.authRoleExternal.findMany({
           where: {
             accountId: activeId,
             appId,
-            status: 'active',
           },
-          select: { role: true }
-        });
-
-        internalAccess.forEach((access) => collectedPermissions.add(access.role));
-      } else {
-        const directPermissions = await prisma.authPermissionRecipient.findMany({
+          select: { role: true },
+        }),
+        prisma.authPermissionRecipient.findMany({
           where: {
             recipientId: activeId,
             appId,
-            OR: [
-              { isPermanent: true },
-              { expiresAt: { gt: new Date() } }
-            ]
-          }
-        });
-        directPermissions.forEach((dp: { permission: string }) => collectedPermissions.add(dp.permission));
-      }
+            OR: [{ isPermanent: true }, { expiresAt: { gt: new Date() } }],
+          },
+          select: { permission: true },
+        }),
+        prisma.authPermissionsExternal.findUnique({
+          where: {
+            accountId_appId: {
+              accountId: activeId,
+              appId,
+            },
+          },
+        }),
+      ]);
+
+      externalRole.forEach((access) => collectedPermissions.add(access.role));
+      directPermissions.forEach((dp) => collectedPermissions.add(dp.permission));
+      appPermissions?.permissions?.forEach((permission) => collectedPermissions.add(permission));
     }
 
     // Filter by appId if provided (if your permissions structure supports appId filtering)

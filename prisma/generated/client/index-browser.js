@@ -488,27 +488,6 @@ exports.Prisma.AuthPermissionRecipientScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
-exports.Prisma.AccountAccessScalarFieldEnum = {
-  id: 'id',
-  accountId: 'accountId',
-  appId: 'appId',
-  resourceId: 'resourceId',
-  parentOwnerId: 'parentOwnerId',
-  role: 'role',
-  status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.AccessMemberScalarFieldEnum = {
-  id: 'id',
-  parentOwnerId: 'parentOwnerId',
-  memberAccountId: 'memberAccountId',
-  status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
 exports.Prisma.UserAppConnectionScalarFieldEnum = {
   id: 'id',
   accountId: 'accountId',
@@ -628,8 +607,6 @@ exports.Prisma.ModelName = {
   AuthTeamExternal: 'AuthTeamExternal',
   AuthRole: 'AuthRole',
   AuthPermissionRecipient: 'AuthPermissionRecipient',
-  AccountAccess: 'AccountAccess',
-  AccessMember: 'AccessMember',
   UserAppConnection: 'UserAppConnection',
   AppAuthentication: 'AppAuthentication',
   AppSession: 'AppSession',

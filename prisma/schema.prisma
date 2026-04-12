@@ -76,10 +76,6 @@ model Account {
   authRolesInternal AuthRole[]
   recipientPermissions AuthPermissionRecipient[] @relation("RecipientPermissions")
   ownerPermissions   AuthPermissionRecipient[] @relation("OwnerPermissions")
-  receivedAccountAccess AccountAccess[] @relation("AccountAccessRecipient")
-  ownedAccountAccess    AccountAccess[] @relation("AccountAccessParentOwner")
-  accessMembersOwned    AccessMember[]  @relation("AccessMemberParentOwner")
-  accessMemberships     AccessMember[]  @relation("AccessMemberAccount")
 
   @@map("accounts")
 }
@@ -456,7 +452,6 @@ model Application {
   authTeamsExternal   AuthTeamExternal[]
   authRoles           AuthRole[]
   authPermissionRecipients AuthPermissionRecipient[]
-  accountAccesses     AccountAccess[]
 
   @@map("applications")
 }
@@ -580,45 +575,6 @@ model AuthPermissionRecipient {
   owner        Account     @relation("OwnerPermissions", fields: [ownerId], references: [id])
 
   @@map("auth_permission_recipients")
-}
-
-model AccountAccess {
-  id            String   @id @default(uuid())
-  accountId     String
-  appId         String
-  resourceId    String   @default("__app__")
-  parentOwnerId String
-  role          String
-  status        String   @default("active")
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  account       Account     @relation("AccountAccessRecipient", fields: [accountId], references: [id])
-  application   Application @relation(fields: [appId], references: [id])
-  parentOwner   Account     @relation("AccountAccessParentOwner", fields: [parentOwnerId], references: [id])
-
-  @@unique([accountId, appId, resourceId, parentOwnerId])
-  @@index([accountId, appId, status])
-  @@index([parentOwnerId, appId, status])
-  @@index([appId, resourceId, status])
-  @@map("account_access")
-}
-
-model AccessMember {
-  id              String   @id @default(uuid())
-  parentOwnerId   String
-  memberAccountId String
-  status          String   @default("invited")
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-
-  parentOwner     Account  @relation("AccessMemberParentOwner", fields: [parentOwnerId], references: [id])
-  memberAccount   Account  @relation("AccessMemberAccount", fields: [memberAccountId], references: [id])
-
-  @@unique([parentOwnerId, memberAccountId])
-  @@index([memberAccountId, status])
-  @@index([parentOwnerId, status])
-  @@map("access_members")
 }
 
 model UserAppConnection {
