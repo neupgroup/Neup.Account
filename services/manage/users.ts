@@ -84,11 +84,14 @@ export async function getAccountDetails(accountId: string) {
     const account = await prisma.account.findUnique({
         where: { id: accountId },
         select: {
-            block: true,
+            details: true,
         },
     });
     if (!account) return null;
-    return account;
+    const details = account.details as Record<string, unknown> | null;
+    return {
+        block: (details?.block as AccountDetails['block']) || null,
+    };
 }
 
 

@@ -471,24 +471,11 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
     const account = await prisma.account.create({
       data: {
         accountType: 'individual',
-        accountStatus: 'active',
         status: 'active',
-        verified: false,
         isVerified: false,
-        nameDisplay: nameDisplay,
-        accountPhoto: null,
+        displayName: nameDisplay,
         displayImage: null,
-        nameFirst,
-        nameLast,
-        nameMiddle: nameMiddle || null,
-        dateBirth: birthDateObj,
-        gender,
-        // customGender: customGender || null, // customGender is not in schema yet, adding to block if needed or ignoring for now
-        nationality,
-        neupIdPrimary: neupId,
-        dateCreated: new Date(),
-        // For admin, we will update permit to 'addition' later. Default is 'default'.
-        
+
         neupIds: {
           create: {
             id: neupId,
@@ -523,18 +510,6 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
     });
 
     const accountId = account.id;
-
-    // Permissions
-    // Optimized: Set account.permit based on role
-    let role = 'independent.default';
-    if (isAdmin) {
-      role = 'root.full';
-    }
-
-    await prisma.account.update({
-        where: { id: accountId },
-        data: { permit: role }
-    });
 
     if (isAdmin) {
       // Create root permit entry for admin (legacy compatibility)

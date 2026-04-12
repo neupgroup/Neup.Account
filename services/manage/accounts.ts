@@ -45,7 +45,7 @@ export async function getUserStats(): Promise<UserStats> {
         const [totalUsers, signedUpToday] = await Promise.all([
             prisma.account.count(),
             prisma.account.count({
-                where: { dateCreated: { gte: twentyFourHoursAgo } },
+                where: { createdAt: { gte: twentyFourHoursAgo } },
             }),
         ]);
         // Placeholder for active users until a proper metric exists
@@ -79,8 +79,8 @@ export async function getAllAccounts(
             prisma.account.findMany({
                 select: {
                     id: true,
-                    nameDisplay: true,
-                    dateCreated: true,
+                    displayName: true,
+                    createdAt: true,
                     accountType: true,
                 },
             }),
@@ -94,8 +94,8 @@ export async function getAllAccounts(
 
         let allAccounts: AccountListItem[] = accounts.map(a => ({
             id: a.id,
-            name: a.nameDisplay || 'Unnamed Account',
-            dateCreated: (a.dateCreated ?? new Date(0)).toISOString(),
+            name: a.displayName || 'Unnamed Account',
+            dateCreated: (a.createdAt ?? new Date(0)).toISOString(),
             accountType: a.accountType || 'individual',
             isRoot: rootSet.has(a.id),
         }));

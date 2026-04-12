@@ -63,26 +63,21 @@ export async function getUserProfile(
     
     if (account) {
       const serializedData: UserProfile = {
-        nameFirst: account.individualProfile?.firstName || account.nameFirst || undefined,
-        nameMiddle: account.individualProfile?.middleName || account.nameMiddle || undefined,
-        nameLast: account.individualProfile?.lastName || account.nameLast || undefined,
-        nameDisplay: account.brandProfile?.brandName || account.nameDisplay || undefined,
+        nameFirst: account.individualProfile?.firstName || undefined,
+        nameMiddle: account.individualProfile?.middleName || undefined,
+        nameLast: account.individualProfile?.lastName || undefined,
+        nameDisplay: account.brandProfile?.brandName || account.displayName || undefined,
         displayName: account.displayName || undefined,
-        accountPhoto: account.displayImage || account.accountPhoto || undefined,
-        gender: account.gender || undefined,
-        dateBirth: account.individualProfile?.dateOfBirth?.toISOString() || account.dateBirth?.toISOString() || undefined,
-        dateCreated: account.dateCreated?.toISOString() || undefined,
-        nationality: account.individualProfile?.countryOfResidence || account.nationality || undefined,
-        isLegalEntity: (account.brandProfile?.isLegalEntity ?? account.isLegalEntity) || undefined,
-        nameLegal: account.nameLegal || undefined,
-        registrationId: account.registrationId || undefined,
-        countryOfOrigin: account.brandProfile?.originCountry || account.countryOfOrigin || undefined,
-        dateEstablished: account.dateEstablished?.toISOString() || undefined,
-        neupIdPrimary: account.neupIdPrimary || undefined,
-        verified: (account.isVerified ?? account.verified) || undefined,
+        accountPhoto: account.displayImage || undefined,
+        dateBirth: account.individualProfile?.dateOfBirth?.toISOString() || undefined,
+        dateCreated: account.createdAt?.toISOString() || undefined,
+        nationality: account.individualProfile?.countryOfResidence || undefined,
+        isLegalEntity: account.brandProfile?.isLegalEntity || undefined,
+        countryOfOrigin: account.brandProfile?.originCountry || undefined,
+        verified: account.isVerified || undefined,
         accountType: account.accountType || undefined,
-        permit: account.permit || 'default',
-        pro: account.pro,
+        permit: 'default',
+        pro: false,
       };
 
       if (!serializedData.accountPhoto) {
@@ -171,17 +166,17 @@ export async function getUserPermissions(accountId?: string, appId?: string): Pr
   try {
     const account = await prisma.account.findUnique({
       where: { id: activeId },
-      select: { permit: true }
+      select: { accountType: true }
     });
     
     if (!account) return [];
 
-    const baseRole = account.permit || 'default';
+    const baseRole = account.accountType === 'dependent' ? 'dependent.full' : 'independent.default';
     let collectedPermissions = new Set<string>();
 
     // If not managing another account, start with the base permissions from the account's role
     if (!isManaging) {
-      const basePermissions = PERMISSION_SET[baseRole] || (baseRole === 'default' ? (PERMISSION_SET['independent.default'] || []) : []);
+      const basePermissions = PERMISSION_SET[baseRole] || [];
       basePermissions.forEach(p => collectedPermissions.add(p));
     }
 
@@ -331,12 +326,13 @@ export async function validateNeupId(neupId: string): Promise<{ success: boolean
              return { success: false, error: "Brand accounts can't be signed in." };
         }
         
-        if (account.accountStatus === 'deletion_requested') {
+           if (account.status === 'deletion_requested') {
             return { success: false, error: "pending_deletion" };
         }
 
-        if (account.accountStatus === 'blocked') {
-             const block = account.block as any;
+           if (account.status === 'blocked') {
+             const details = account.details as Record<string, any> | null;
+             const block = details?.block;
              if (block && (block.is_permanent || (block.until && new Date(block.until) > new Date()))) {
                 return { success: false, error: "This account has been blocked." };
              }

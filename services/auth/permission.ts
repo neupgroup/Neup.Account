@@ -429,8 +429,8 @@ export async function checkPermission(input: CheckPermissionInput): Promise<Perm
 			where: { id: auth.accountId },
 			select: {
 				id: true,
-				accountStatus: true,
-				block: true,
+				status: true,
+				details: true,
 			},
 		});
 
@@ -438,7 +438,10 @@ export async function checkPermission(input: CheckPermissionInput): Promise<Perm
 			return { status: 'invalid', reason: '404' };
 		}
 
-		if (account.accountStatus === 'blocked' && hasActiveBlock(account.block as BlockInfo, now)) {
+		const details = account.details as Record<string, unknown> | null;
+		const block = (details?.block as BlockInfo) || null;
+
+		if (account.status === 'blocked' && hasActiveBlock(block, now)) {
 			return { status: 'invalid', reason: 'accountBlocked' };
 		}
 

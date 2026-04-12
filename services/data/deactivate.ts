@@ -52,7 +52,7 @@ export async function deactivateAccount(data: z.infer<typeof formSchema>, geoloc
     // In a real application, you would set a 'deactivated' flag on the user's account.
     await prisma.account.update({
         where: { id: accountId },
-        data: { accountStatus: 'deactivated' }
+      data: { status: 'deactivated' }
     });
     await logActivity(accountId, "Account Deactivated", "Success", undefined, undefined, geolocation);
     

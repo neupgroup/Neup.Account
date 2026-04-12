@@ -40,7 +40,7 @@ export async function requestAccountDeletion(data: z.infer<typeof formSchema>, g
         prisma.password.findUnique({ where: { accountId } })
     ]);
     
-    if (account && account.accountStatus === 'deletion_requested') {
+    if (account && account.status === 'deletion_requested') {
         return { success: false, error: "Your account is already scheduled for deletion." };
     }
 
@@ -58,7 +58,7 @@ export async function requestAccountDeletion(data: z.infer<typeof formSchema>, g
         // Update the status in the account document
         prisma.account.update({
             where: { id: accountId },
-            data: { accountStatus: 'deletion_requested' }
+            data: { status: 'deletion_requested' }
         }),
         prisma.activityLog.create({
             data: {
@@ -92,7 +92,7 @@ export async function cancelAccountDeletion(accountId: string): Promise<{ succes
     try {
         await prisma.account.update({
             where: { id: accountId },
-            data: { accountStatus: 'active' }
+            data: { status: 'active' }
         });
 
         await logActivity(accountId, "Account Deletion Cancelled", "Success");

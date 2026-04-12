@@ -159,8 +159,8 @@ export async function validateAuthSession(input: ValidateAuthSessionInput): Prom
 		where: { id: auth_aid },
 		select: {
 			id: true,
-			accountStatus: true,
-			block: true,
+			status: true,
+			details: true,
 		},
 	});
 
@@ -171,7 +171,10 @@ export async function validateAuthSession(input: ValidateAuthSessionInput): Prom
 		};
 	}
 
-	if (account.accountStatus === 'blocked' && hasActiveBlock(account.block as BlockInfo, now)) {
+	const details = account.details as Record<string, unknown> | null;
+	const block = (details?.block as BlockInfo) || null;
+
+	if (account.status === 'blocked' && hasActiveBlock(block, now)) {
 		return {
 			status: 'invalid',
 			reason: 'accountBlocked',

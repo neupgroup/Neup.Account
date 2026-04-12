@@ -40,8 +40,8 @@ export async function getPendingVerificationRequests(): Promise<VerificationRequ
             return {
                 id: v.id,
                 accountId: v.accountId,
-                fullName: profile?.nameDisplay || `${profile?.nameFirst || ''} ${profile?.nameLast || ''}`.trim() || 'Unknown User',
-                neupId: profile?.neupIdPrimary || 'N/A',
+                fullName: profile?.displayName || 'Unknown User',
+                neupId: 'N/A',
                 requestedAt: v.createdAt.toLocaleDateString() || 'N/A',
                 status: v.status as VerificationRequest['status'],
             };
@@ -80,7 +80,7 @@ export async function grantVerification(accountId: string, data: z.infer<typeof 
             // Update account document
             prisma.account.update({
                 where: { id: accountId },
-                data: { verified: true }
+                data: { isVerified: true }
             }),
             // Set verification details in verifications collection
             prisma.verification.upsert({
@@ -134,7 +134,7 @@ export async function revokeVerification(accountId: string, reason: string): Pro
         await prisma.$transaction([
             prisma.account.update({
                 where: { id: accountId },
-                data: { verified: false }
+                data: { isVerified: false }
             }),
             prisma.verification.update({
                 where: { id: accountId },
@@ -164,10 +164,10 @@ export async function getAccountVerification(accountId: string): Promise<{ verif
     try {
         const account = await prisma.account.findUnique({
             where: { id: accountId },
-            select: { verified: true }
+            select: { isVerified: true }
         });
 
-        if (!account || !account.verified) {
+        if (!account || !account.isVerified) {
             return { verified: false };
         }
 

@@ -27,13 +27,9 @@ export async function searchAll(query: string): Promise<SearchResult[]> {
         try {
             const accountsByName = await prisma.account.findMany({
                 where: {
-                    OR: [
-                        { nameDisplay: { contains: lowercasedQuery, mode: 'insensitive' } },
-                        { nameFirst: { contains: lowercasedQuery, mode: 'insensitive' } },
-                        { nameLast: { contains: lowercasedQuery, mode: 'insensitive' } },
-                    ],
+                    displayName: { contains: lowercasedQuery, mode: 'insensitive' },
                 },
-                select: { id: true, nameFirst: true, nameLast: true, nameDisplay: true },
+                select: { id: true, displayName: true },
                 take: 100,
             });
 
@@ -49,14 +45,13 @@ export async function searchAll(query: string): Promise<SearchResult[]> {
             const seenAccounts = new Set<string>();
 
             for (const acc of accountsByName) {
-                const fullName = `${acc.nameFirst || ''} ${acc.nameLast || ''}`.trim();
-                const displayName = acc.nameDisplay || '';
+                const displayName = acc.displayName || '';
                 const neupId = accountIdToNeupId.get(acc.id) || '';
                 seenAccounts.add(acc.id);
                 results.push({
                     id: `user-${acc.id}`,
                     type: 'user',
-                    title: displayName || fullName,
+                    title: displayName || `@${neupId}`,
                     description: neupId ? `@${neupId}` : '',
                     url: `/manage/${acc.id}`,
                 });
@@ -66,15 +61,14 @@ export async function searchAll(query: string): Promise<SearchResult[]> {
                 if (seenAccounts.has(n.accountId)) continue;
                 const acc = await prisma.account.findUnique({
                     where: { id: n.accountId },
-                    select: { id: true, nameFirst: true, nameLast: true, nameDisplay: true },
+                    select: { id: true, displayName: true },
                 });
                 if (!acc) continue;
-                const fullName = `${acc.nameFirst || ''} ${acc.nameLast || ''}`.trim();
-                const displayName = acc.nameDisplay || '';
+                const displayName = acc.displayName || '';
                 results.push({
                     id: `user-${acc.id}`,
                     type: 'user',
-                    title: displayName || fullName || `@${n.id}`,
+                    title: displayName || `@${n.id}`,
                     description: `@${n.id}`,
                     url: `/manage/${acc.id}`,
                 });

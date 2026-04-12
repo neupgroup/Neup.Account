@@ -20,7 +20,6 @@ export type UserProfile = {
     registrationId?: string;
     countryOfOrigin?: string;
     registeredOn?: string; // ISO string
-    pro?: boolean;
 };
 
 export type UserContacts = {
@@ -75,25 +74,25 @@ export async function getUserProfile(accountId?: string): Promise<UserProfile | 
     if (!idToFetch) return null;
     try {
         const account = await prisma.account.findUnique({
-            where: { id: idToFetch }
+            where: { id: idToFetch },
+            include: {
+                individualProfile: true,
+                brandProfile: true,
+            }
         });
 
         if (account) {
             return {
-                firstName: account.nameFirst || undefined,
-                middleName: account.nameMiddle || undefined,
-                lastName: account.nameLast || undefined,
-                displayName: account.nameDisplay || undefined,
-                displayPhoto: account.accountPhoto || undefined,
-                gender: account.gender || undefined,
-                dob: account.dateBirth?.toISOString() || undefined,
-                nationality: account.nationality || undefined,
-                isLegalEntity: account.isLegalEntity,
-                legalName: account.nameLegal || undefined,
-                registrationId: account.registrationId || undefined,
-                countryOfOrigin: account.countryOfOrigin || undefined,
-                registeredOn: account.dateCreated.toISOString(),
-                pro: account.pro,
+                firstName: account.individualProfile?.firstName || undefined,
+                middleName: account.individualProfile?.middleName || undefined,
+                lastName: account.individualProfile?.lastName || undefined,
+                displayName: account.brandProfile?.brandName || account.displayName || undefined,
+                displayPhoto: account.displayImage || undefined,
+                dob: account.individualProfile?.dateOfBirth?.toISOString() || undefined,
+                nationality: account.individualProfile?.countryOfResidence || undefined,
+                isLegalEntity: account.brandProfile?.isLegalEntity,
+                countryOfOrigin: account.brandProfile?.originCountry || undefined,
+                registeredOn: account.createdAt.toISOString(),
             };
         }
         return null;

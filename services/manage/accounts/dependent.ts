@@ -130,23 +130,13 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
         const account = await prisma.account.create({
             data: {
                 accountType: 'dependent',
-                accountStatus: 'active',
                 status: 'active',
-                verified: false,
                 isVerified: false,
-                nameDisplay: `${profileData.firstName} ${profileData.lastName}`.trim(),
-                accountPhoto: null,
+                displayName: `${profileData.firstName} ${profileData.lastName}`.trim(),
                 displayImage: null,
-                neupIdPrimary: neupId,
-                
-                nameFirst: profileData.firstName,
-                nameMiddle: profileData.middleName,
-                nameLast: profileData.lastName,
-                gender: profileData.gender,
-                nationality: profileData.nationality,
-                
-                dateBirth: new Date(profileData.dob),
-                dateCreated: new Date(),
+                details: {
+                    gender: profileData.gender,
+                },
 
                 individualProfile: {
                     create: {

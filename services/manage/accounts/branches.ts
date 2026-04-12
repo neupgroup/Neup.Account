@@ -77,12 +77,9 @@ export async function createBranchAccount(data: z.infer<typeof formSchema>, geol
             const newAccount = await tx.account.create({
                 data: {
                     accountType: 'branch',
-                    parentBrandId: parentBrandId,
                     status: 'active',
-                    accountStatus: 'active',
                     isVerified: false,
                     displayName: name,
-                    nameDisplay: name,
                     brandProfile: {
                         create: {
                             brandName: name,

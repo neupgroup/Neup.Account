@@ -10,7 +10,6 @@ async function main() {
   const NEUP_ID = 'neupkishor';
   const firstName = 'Kishor';
   const lastName = 'Neupane';
-  const gender = 'male';
   const nationality = 'Nepal';
   const dob = new Date('2004-01-25T00:00:00.000Z');
   const passwordPlain = 'admin112';
@@ -18,15 +17,6 @@ async function main() {
   // Find existing account by NeupID
   const existingNeupId = await prisma.neupId.findUnique({ where: { id: NEUP_ID } });
   let accountId: string | null = existingNeupId?.accountId ?? null;
-
-  // Fallback: search by primary neupid
-  if (!accountId) {
-    const existingByPrimary = await prisma.account.findFirst({
-      where: { neupIdPrimary: NEUP_ID },
-      select: { id: true },
-    });
-    if (existingByPrimary) accountId = existingByPrimary.id;
-  }
 
   const nameDisplay = `${firstName} ${lastName}`.trim();
   const hashed = await bcrypt.hash(passwordPlain, 10);
@@ -36,19 +26,21 @@ async function main() {
     const created = await prisma.account.create({
       data: {
         accountType: 'individual',
-        accountStatus: 'active',
-        verified: false,
-        nameDisplay,
-        nameFirst: firstName,
-        nameLast: lastName,
-        dateBirth: dob,
-        gender,
-        nationality,
-        neupIdPrimary: NEUP_ID,
+        status: 'active',
+        isVerified: false,
+        displayName: nameDisplay,
         neupIds: {
           create: {
             id: NEUP_ID,
             isPrimary: true,
+          },
+        },
+        individualProfile: {
+          create: {
+            firstName,
+            lastName,
+            dateOfBirth: dob,
+            countryOfResidence: nationality,
           },
         },
         password: {
@@ -56,7 +48,6 @@ async function main() {
             hash: hashed,
           },
         },
-        permit: 'root.full',
       },
     });
     accountId = created.id;
@@ -66,15 +57,25 @@ async function main() {
       where: { id: accountId },
       data: {
         accountType: 'individual',
-        accountStatus: 'active',
-        nameDisplay,
-        nameFirst: firstName,
-        nameLast: lastName,
-        dateBirth: dob,
-        gender,
-        nationality,
-        neupIdPrimary: NEUP_ID,
-        permit: 'root.full',
+        status: 'active',
+        displayName: nameDisplay,
+        isVerified: false,
+        individualProfile: {
+          upsert: {
+            update: {
+              firstName,
+              lastName,
+              dateOfBirth: dob,
+              countryOfResidence: nationality,
+            },
+            create: {
+              firstName,
+              lastName,
+              dateOfBirth: dob,
+              countryOfResidence: nationality,
+            },
+          },
+        },
       },
     });
 
@@ -104,12 +105,6 @@ async function main() {
 
   // Ensure root permit attached
   if (accountId) {
-    // Update account permit type to root.full for seed data
-    await prisma.account.update({
-      where: { id: accountId },
-      data: { permit: 'root.full' },
-    });
-
     const existingRootPermit = await prisma.permit.findFirst({
       where: { accountId, isRoot: true, forSelf: false },
     });

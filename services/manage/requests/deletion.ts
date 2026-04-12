@@ -33,7 +33,7 @@ export async function getDeletionRequests(): Promise<DeletionRequest[]> {
 
   try {
     const accounts = await prisma.account.findMany({
-      where: { accountStatus: 'deletion_requested' }
+            where: { status: 'deletion_requested' }
     });
 
     if (accounts.length === 0) {
@@ -93,7 +93,7 @@ export async function getDeletionStatus(accountId: string): Promise<{status: 'no
             return { status: 'deleted' };
         }
 
-        const status = account.accountStatus;
+        const status = account.status;
         if (status === 'deletion_requested') {
             const statusLog = await prisma.activityLog.findFirst({
                 where: {
@@ -160,7 +160,7 @@ export async function cancelAccountDeletion(
         await prisma.$transaction(async (tx) => {
             await tx.account.update({
                 where: { id: accountId },
-                data: { accountStatus: 'active' }
+                data: { status: 'active' }
             });
 
             await tx.activityLog.create({
@@ -213,7 +213,7 @@ export async function requestAccountDeletionByAdmin(accountId: string, data: z.i
         await prisma.$transaction(async (tx) => {
             await tx.account.update({
                 where: { id: accountId },
-                data: { accountStatus: 'deletion_requested' }
+                data: { status: 'deletion_requested' }
             });
 
             await tx.activityLog.create({

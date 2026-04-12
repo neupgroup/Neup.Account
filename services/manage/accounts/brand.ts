@@ -125,16 +125,14 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
              const account = await tx.account.create({
                 data: {
                     accountType: 'brand',
-                    accountStatus: 'active',
                     status: 'active',
-                    verified: false,
                     isVerified: false,
-                    nameDisplay: nameBrand,
                     displayName: nameBrand,
                     displayImage: null,
-                    nameLegal: nameLegal || null,
-                    registrationId: registrationId || null,
-                    dateCreated: new Date(),
+                    details: {
+                        nameLegal: nameLegal || null,
+                        registrationId: registrationId || null,
+                    },
                     
                     neupIds: {
                         create: {

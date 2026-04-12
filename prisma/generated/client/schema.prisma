@@ -217,7 +217,7 @@ model NeupId {
 
   account Account @relation(fields: [accountId], references: [id])
 
-  @@map("account_neupid")
+  @@map("neupid")
 }
 
 model Password {

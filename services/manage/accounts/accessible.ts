@@ -48,8 +48,7 @@ export async function getAccessibleAccounts(): Promise<AccessibleAccount[]> {
             const neupId = targetAccount.neupIds[0]?.id || 'unknown';
             
             // Determine display name
-            const displayName = targetAccount.nameDisplay || 
-                                (targetAccount.nameFirst ? `${targetAccount.nameFirst} ${targetAccount.nameLast || ''}`.trim() : 'Unnamed Account');
+            const displayName = targetAccount.displayName || 'Unnamed Account';
 
             const accessibleAccount: AccessibleAccount = {
                 aid: targetAccount.id,
@@ -65,7 +64,7 @@ export async function getAccessibleAccounts(): Promise<AccessibleAccount[]> {
                 isDependent: targetAccount.accountType === 'dependent',
                 accountType: targetAccount.accountType,
                 displayName: displayName,
-                displayPhoto: targetAccount.accountPhoto || undefined,
+                displayPhoto: targetAccount.displayImage || undefined,
             };
             return accessibleAccount;
         }));
