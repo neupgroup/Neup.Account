@@ -4,7 +4,7 @@ import prisma from '@/core/helpers/prisma';
 import { getPersonalAccountId } from '@/core/helpers/auth-actions';
 import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
-import { checkPermissions } from '@/core/helpers/user';
+import { checkPermissions, getUserProfile } from '@/core/helpers/user';
 
 /**
  * Type Notification.
@@ -103,18 +103,7 @@ export async function getNotifications(): Promise<AllNotifications> {
     const notifications = await prisma.notification.findMany({
         where: { accountId },
         include: {
-            request: {
-                include: {
-                    sender: {
-                        include: {
-                            neupIds: {
-                                where: { isPrimary: true },
-                                take: 1
-                            }
-                        }
-                    }
-                }
-            }
+            request: true,
         },
         orderBy: { createdAt: 'desc' }
     });
@@ -138,9 +127,16 @@ export async function getNotifications(): Promise<AllNotifications> {
         if (notif.requestId && notif.request) {
             if (notif.request.status !== 'pending') continue;
 
-            const sender = notif.request.sender;
-            const senderName = sender.nameDisplay || `${sender.nameFirst || ''} ${sender.nameLast || ''}`.trim() || 'A user';
-            const senderNeupId = sender.neupIds[0]?.id || 'N/A';
+            const senderProfile = await getUserProfile(notif.request.senderId);
+            const senderNeupIdRecord = await prisma.neupId.findFirst({
+                where: {
+                    accountId: notif.request.senderId,
+                    isPrimary: true,
+                },
+                select: { id: true },
+            });
+            const senderName = senderProfile?.nameDisplay || `${senderProfile?.nameFirst || ''} ${senderProfile?.nameLast || ''}`.trim() || 'A user';
+            const senderNeupId = senderNeupIdRecord?.id || 'N/A';
 
             requests.push({
                 ...baseNotification,
