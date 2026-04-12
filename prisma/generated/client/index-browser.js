@@ -173,7 +173,7 @@ exports.Prisma.AuthRequestScalarFieldEnum = {
   expiresAt: 'expiresAt'
 };
 
-exports.Prisma.ActivityLogScalarFieldEnum = {
+exports.Prisma.ActivityScalarFieldEnum = {
   id: 'id',
   targetAccountId: 'targetAccountId',
   actorAccountId: 'actorAccountId',
@@ -295,7 +295,7 @@ exports.Prisma.SessionScalarFieldEnum = {
   dependentKeys: 'dependentKeys'
 };
 
-exports.Prisma.ErrorLogScalarFieldEnum = {
+exports.Prisma.SystemErrorScalarFieldEnum = {
   id: 'id',
   type: 'type',
   context: 'context',
@@ -456,7 +456,7 @@ exports.Prisma.ModelName = {
   AccountOwnership: 'AccountOwnership',
   SystemConfig: 'SystemConfig',
   AuthRequest: 'AuthRequest',
-  ActivityLog: 'ActivityLog',
+  Activity: 'Activity',
   Notification: 'Notification',
   Request: 'Request',
   Family: 'Family',
@@ -466,7 +466,7 @@ exports.Prisma.ModelName = {
   AuthMethod: 'AuthMethod',
   Permit: 'Permit',
   Session: 'Session',
-  ErrorLog: 'ErrorLog',
+  SystemError: 'SystemError',
   Application: 'Application',
   Portfolio: 'Portfolio',
   PortfolioAsset: 'PortfolioAsset',

@@ -99,7 +99,7 @@ export async function getAccountDetails(accountId: string) {
  * Function getActivity.
  */
 export async function getActivity(accountId: string): Promise<UserActivityLog[]> {
-    const rows = await prisma.activityLog.findMany({
+    const rows = await prisma.activity.findMany({
         where: { targetAccountId: accountId },
         orderBy: { timestamp: 'desc' },
         take: 20,
@@ -217,7 +217,7 @@ export async function updateUserPermissions(accountId: string, newPermissionIds:
  * Function getUserDashboardStats.
  */
 export async function getUserDashboardStats(accountId: string): Promise<UserDashboardStats> {
-    const last = await prisma.activityLog.findFirst({
+    const last = await prisma.activity.findFirst({
         where: { targetAccountId: accountId },
         orderBy: { timestamp: 'desc' },
     });

@@ -26,7 +26,7 @@ model Account {
   permits         Permit[]
   targetPermits   Permit[] @relation("TargetAccount")
   sessions        Session[]
-  errorLogs       ErrorLog[]
+  errorLogs       SystemError[]
   appConnections  UserAppConnection[]
   appAuthentications AppAuthentication[]
   appSessions     AppSession[]
@@ -112,7 +112,7 @@ model AuthRequest {
   @@map("auth_requests")
 }
 
-model ActivityLog {
+model Activity {
   id              String   @id @default(uuid())
   targetAccountId String
   actorAccountId  String
@@ -303,7 +303,7 @@ model Session {
 }
 
 // New models for error tracking and bug reports
-model ErrorLog {
+model SystemError {
   id          String    @id @default(uuid())
   type        String    // 'ai' | 'database' | 'validation' | 'auth' | 'unknown'
   context     String

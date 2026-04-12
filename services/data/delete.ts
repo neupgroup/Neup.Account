@@ -68,7 +68,7 @@ export async function requestAccountDeletion(data: z.infer<typeof formSchema>, g
             where: { id: accountId },
             data: { status: 'deletion_requested' }
         }),
-        prisma.activityLog.create({
+        prisma.activity.create({
             data: {
                 targetAccountId: accountId,
                 actorAccountId: accountId,

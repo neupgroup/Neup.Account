@@ -30,7 +30,7 @@ export async function logActivity(
         
         const finalActorAccountId = actorAccountId || targetAccountId;
 
-        await prisma.activityLog.create({
+        await prisma.activity.create({
             data: {
                 targetAccountId,
                 actorAccountId: finalActorAccountId,
@@ -81,7 +81,7 @@ export async function getActivities({ startAfter: startAfterDocId, forCurrentUse
             queryOptions.skip = 1;
         }
 
-        const pageDocs = await prisma.activityLog.findMany(queryOptions);
+        const pageDocs = await prisma.activity.findMany(queryOptions);
 
         let hasNextPage = pageDocs.length > PAGE_SIZE;
         if(hasNextPage) {

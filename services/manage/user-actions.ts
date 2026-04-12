@@ -165,7 +165,7 @@ export async function blockServiceAccess(userId: string, data: z.infer<typeof bl
                     status: 'blocked' 
                 }
             }),
-            prisma.activityLog.create({
+            prisma.activity.create({
                 data: {
                     targetAccountId: userId,
                     actorAccountId: adminId,
@@ -231,7 +231,7 @@ export async function unblockServiceAccess(userId: string): Promise<{ success: b
                      status: 'active' 
                  }
              }),
-            prisma.activityLog.create({
+            prisma.activity.create({
                 data: {
                     targetAccountId: userId,
                     actorAccountId: adminId,
@@ -350,7 +350,7 @@ export async function deleteUserAccount(userId: string): Promise<{ success: bool
                 } 
             }),
             prisma.session.deleteMany({ where: { accountId: userId } }),
-            prisma.activityLog.deleteMany({ 
+            prisma.activity.deleteMany({ 
                 where: { 
                     OR: [
                         { targetAccountId: userId },

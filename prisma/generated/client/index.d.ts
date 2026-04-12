@@ -44,10 +44,10 @@ export type SystemConfig = $Result.DefaultSelection<Prisma.$SystemConfigPayload>
  */
 export type AuthRequest = $Result.DefaultSelection<Prisma.$AuthRequestPayload>
 /**
- * Model ActivityLog
+ * Model Activity
  * 
  */
-export type ActivityLog = $Result.DefaultSelection<Prisma.$ActivityLogPayload>
+export type Activity = $Result.DefaultSelection<Prisma.$ActivityPayload>
 /**
  * Model Notification
  * 
@@ -94,10 +94,10 @@ export type Permit = $Result.DefaultSelection<Prisma.$PermitPayload>
  */
 export type Session = $Result.DefaultSelection<Prisma.$SessionPayload>
 /**
- * Model ErrorLog
+ * Model SystemError
  * 
  */
-export type ErrorLog = $Result.DefaultSelection<Prisma.$ErrorLogPayload>
+export type SystemError = $Result.DefaultSelection<Prisma.$SystemErrorPayload>
 /**
  * Model Application
  * 
@@ -373,14 +373,14 @@ export class PrismaClient<
   get authRequest(): Prisma.AuthRequestDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.activityLog`: Exposes CRUD operations for the **ActivityLog** model.
+   * `prisma.activity`: Exposes CRUD operations for the **Activity** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more ActivityLogs
-    * const activityLogs = await prisma.activityLog.findMany()
+    * // Fetch zero or more Activities
+    * const activities = await prisma.activity.findMany()
     * ```
     */
-  get activityLog(): Prisma.ActivityLogDelegate<ExtArgs, ClientOptions>;
+  get activity(): Prisma.ActivityDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.notification`: Exposes CRUD operations for the **Notification** model.
@@ -473,14 +473,14 @@ export class PrismaClient<
   get session(): Prisma.SessionDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.errorLog`: Exposes CRUD operations for the **ErrorLog** model.
+   * `prisma.systemError`: Exposes CRUD operations for the **SystemError** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more ErrorLogs
-    * const errorLogs = await prisma.errorLog.findMany()
+    * // Fetch zero or more SystemErrors
+    * const systemErrors = await prisma.systemError.findMany()
     * ```
     */
-  get errorLog(): Prisma.ErrorLogDelegate<ExtArgs, ClientOptions>;
+  get systemError(): Prisma.SystemErrorDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.application`: Exposes CRUD operations for the **Application** model.
@@ -1011,7 +1011,7 @@ export namespace Prisma {
     AccountOwnership: 'AccountOwnership',
     SystemConfig: 'SystemConfig',
     AuthRequest: 'AuthRequest',
-    ActivityLog: 'ActivityLog',
+    Activity: 'Activity',
     Notification: 'Notification',
     Request: 'Request',
     Family: 'Family',
@@ -1021,7 +1021,7 @@ export namespace Prisma {
     AuthMethod: 'AuthMethod',
     Permit: 'Permit',
     Session: 'Session',
-    ErrorLog: 'ErrorLog',
+    SystemError: 'SystemError',
     Application: 'Application',
     Portfolio: 'Portfolio',
     PortfolioAsset: 'PortfolioAsset',
@@ -1046,7 +1046,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "accountOwnership" | "systemConfig" | "authRequest" | "activityLog" | "notification" | "request" | "family" | "verification" | "contact" | "neupId" | "authMethod" | "permit" | "session" | "errorLog" | "application" | "portfolio" | "portfolioAsset" | "portfolioMember" | "portfolioRole" | "authPermissionRecipient" | "userAppConnection" | "appAuthentication" | "appSession"
+      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "accountOwnership" | "systemConfig" | "authRequest" | "activity" | "notification" | "request" | "family" | "verification" | "contact" | "neupId" | "authMethod" | "permit" | "session" | "systemError" | "application" | "portfolio" | "portfolioAsset" | "portfolioMember" | "portfolioRole" | "authPermissionRecipient" | "userAppConnection" | "appAuthentication" | "appSession"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1494,77 +1494,77 @@ export namespace Prisma {
           }
         }
       }
-      ActivityLog: {
-        payload: Prisma.$ActivityLogPayload<ExtArgs>
-        fields: Prisma.ActivityLogFieldRefs
+      Activity: {
+        payload: Prisma.$ActivityPayload<ExtArgs>
+        fields: Prisma.ActivityFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.ActivityLogFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ActivityLogPayload> | null
+            args: Prisma.ActivityFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.ActivityLogFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ActivityLogPayload>
+            args: Prisma.ActivityFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload>
           }
           findFirst: {
-            args: Prisma.ActivityLogFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ActivityLogPayload> | null
+            args: Prisma.ActivityFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.ActivityLogFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ActivityLogPayload>
+            args: Prisma.ActivityFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload>
           }
           findMany: {
-            args: Prisma.ActivityLogFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ActivityLogPayload>[]
+            args: Prisma.ActivityFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload>[]
           }
           create: {
-            args: Prisma.ActivityLogCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ActivityLogPayload>
+            args: Prisma.ActivityCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload>
           }
           createMany: {
-            args: Prisma.ActivityLogCreateManyArgs<ExtArgs>
+            args: Prisma.ActivityCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.ActivityLogCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ActivityLogPayload>[]
+            args: Prisma.ActivityCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload>[]
           }
           delete: {
-            args: Prisma.ActivityLogDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ActivityLogPayload>
+            args: Prisma.ActivityDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload>
           }
           update: {
-            args: Prisma.ActivityLogUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ActivityLogPayload>
+            args: Prisma.ActivityUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload>
           }
           deleteMany: {
-            args: Prisma.ActivityLogDeleteManyArgs<ExtArgs>
+            args: Prisma.ActivityDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.ActivityLogUpdateManyArgs<ExtArgs>
+            args: Prisma.ActivityUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.ActivityLogUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ActivityLogPayload>[]
+            args: Prisma.ActivityUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload>[]
           }
           upsert: {
-            args: Prisma.ActivityLogUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ActivityLogPayload>
+            args: Prisma.ActivityUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivityPayload>
           }
           aggregate: {
-            args: Prisma.ActivityLogAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateActivityLog>
+            args: Prisma.ActivityAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateActivity>
           }
           groupBy: {
-            args: Prisma.ActivityLogGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ActivityLogGroupByOutputType>[]
+            args: Prisma.ActivityGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ActivityGroupByOutputType>[]
           }
           count: {
-            args: Prisma.ActivityLogCountArgs<ExtArgs>
-            result: $Utils.Optional<ActivityLogCountAggregateOutputType> | number
+            args: Prisma.ActivityCountArgs<ExtArgs>
+            result: $Utils.Optional<ActivityCountAggregateOutputType> | number
           }
         }
       }
@@ -2234,77 +2234,77 @@ export namespace Prisma {
           }
         }
       }
-      ErrorLog: {
-        payload: Prisma.$ErrorLogPayload<ExtArgs>
-        fields: Prisma.ErrorLogFieldRefs
+      SystemError: {
+        payload: Prisma.$SystemErrorPayload<ExtArgs>
+        fields: Prisma.SystemErrorFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.ErrorLogFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ErrorLogPayload> | null
+            args: Prisma.SystemErrorFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemErrorPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.ErrorLogFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ErrorLogPayload>
+            args: Prisma.SystemErrorFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemErrorPayload>
           }
           findFirst: {
-            args: Prisma.ErrorLogFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ErrorLogPayload> | null
+            args: Prisma.SystemErrorFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemErrorPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.ErrorLogFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ErrorLogPayload>
+            args: Prisma.SystemErrorFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemErrorPayload>
           }
           findMany: {
-            args: Prisma.ErrorLogFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ErrorLogPayload>[]
+            args: Prisma.SystemErrorFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemErrorPayload>[]
           }
           create: {
-            args: Prisma.ErrorLogCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ErrorLogPayload>
+            args: Prisma.SystemErrorCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemErrorPayload>
           }
           createMany: {
-            args: Prisma.ErrorLogCreateManyArgs<ExtArgs>
+            args: Prisma.SystemErrorCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.ErrorLogCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ErrorLogPayload>[]
+            args: Prisma.SystemErrorCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemErrorPayload>[]
           }
           delete: {
-            args: Prisma.ErrorLogDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ErrorLogPayload>
+            args: Prisma.SystemErrorDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemErrorPayload>
           }
           update: {
-            args: Prisma.ErrorLogUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ErrorLogPayload>
+            args: Prisma.SystemErrorUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemErrorPayload>
           }
           deleteMany: {
-            args: Prisma.ErrorLogDeleteManyArgs<ExtArgs>
+            args: Prisma.SystemErrorDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.ErrorLogUpdateManyArgs<ExtArgs>
+            args: Prisma.SystemErrorUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.ErrorLogUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ErrorLogPayload>[]
+            args: Prisma.SystemErrorUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemErrorPayload>[]
           }
           upsert: {
-            args: Prisma.ErrorLogUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ErrorLogPayload>
+            args: Prisma.SystemErrorUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemErrorPayload>
           }
           aggregate: {
-            args: Prisma.ErrorLogAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateErrorLog>
+            args: Prisma.SystemErrorAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSystemError>
           }
           groupBy: {
-            args: Prisma.ErrorLogGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ErrorLogGroupByOutputType>[]
+            args: Prisma.SystemErrorGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SystemErrorGroupByOutputType>[]
           }
           count: {
-            args: Prisma.ErrorLogCountArgs<ExtArgs>
-            result: $Utils.Optional<ErrorLogCountAggregateOutputType> | number
+            args: Prisma.SystemErrorCountArgs<ExtArgs>
+            result: $Utils.Optional<SystemErrorCountAggregateOutputType> | number
           }
         }
       }
@@ -3088,7 +3088,7 @@ export namespace Prisma {
     accountOwnership?: AccountOwnershipOmit
     systemConfig?: SystemConfigOmit
     authRequest?: AuthRequestOmit
-    activityLog?: ActivityLogOmit
+    activity?: ActivityOmit
     notification?: NotificationOmit
     request?: RequestOmit
     family?: FamilyOmit
@@ -3098,7 +3098,7 @@ export namespace Prisma {
     authMethod?: AuthMethodOmit
     permit?: PermitOmit
     session?: SessionOmit
-    errorLog?: ErrorLogOmit
+    systemError?: SystemErrorOmit
     application?: ApplicationOmit
     portfolio?: PortfolioOmit
     portfolioAsset?: PortfolioAssetOmit
@@ -3283,7 +3283,7 @@ export namespace Prisma {
    * AccountCountOutputType without action
    */
   export type AccountCountOutputTypeCountErrorLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ErrorLogWhereInput
+    where?: SystemErrorWhereInput
   }
 
   /**
@@ -3868,7 +3868,7 @@ export namespace Prisma {
       permits: Prisma.$PermitPayload<ExtArgs>[]
       targetPermits: Prisma.$PermitPayload<ExtArgs>[]
       sessions: Prisma.$SessionPayload<ExtArgs>[]
-      errorLogs: Prisma.$ErrorLogPayload<ExtArgs>[]
+      errorLogs: Prisma.$SystemErrorPayload<ExtArgs>[]
       appConnections: Prisma.$UserAppConnectionPayload<ExtArgs>[]
       appAuthentications: Prisma.$AppAuthenticationPayload<ExtArgs>[]
       appSessions: Prisma.$AppSessionPayload<ExtArgs>[]
@@ -4294,7 +4294,7 @@ export namespace Prisma {
     permits<T extends Account$permitsArgs<ExtArgs> = {}>(args?: Subset<T, Account$permitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PermitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     targetPermits<T extends Account$targetPermitsArgs<ExtArgs> = {}>(args?: Subset<T, Account$targetPermitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PermitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sessions<T extends Account$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    errorLogs<T extends Account$errorLogsArgs<ExtArgs> = {}>(args?: Subset<T, Account$errorLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErrorLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    errorLogs<T extends Account$errorLogsArgs<ExtArgs> = {}>(args?: Subset<T, Account$errorLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemErrorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     appConnections<T extends Account$appConnectionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$appConnectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAppConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     appAuthentications<T extends Account$appAuthenticationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$appAuthenticationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppAuthenticationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     appSessions<T extends Account$appSessionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$appSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4860,23 +4860,23 @@ export namespace Prisma {
    */
   export type Account$errorLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ErrorLog
+     * Select specific fields to fetch from the SystemError
      */
-    select?: ErrorLogSelect<ExtArgs> | null
+    select?: SystemErrorSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ErrorLog
+     * Omit specific fields from the SystemError
      */
-    omit?: ErrorLogOmit<ExtArgs> | null
+    omit?: SystemErrorOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ErrorLogInclude<ExtArgs> | null
-    where?: ErrorLogWhereInput
-    orderBy?: ErrorLogOrderByWithRelationInput | ErrorLogOrderByWithRelationInput[]
-    cursor?: ErrorLogWhereUniqueInput
+    include?: SystemErrorInclude<ExtArgs> | null
+    where?: SystemErrorWhereInput
+    orderBy?: SystemErrorOrderByWithRelationInput | SystemErrorOrderByWithRelationInput[]
+    cursor?: SystemErrorWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: ErrorLogScalarFieldEnum | ErrorLogScalarFieldEnum[]
+    distinct?: SystemErrorScalarFieldEnum | SystemErrorScalarFieldEnum[]
   }
 
   /**
@@ -10493,16 +10493,16 @@ export namespace Prisma {
 
 
   /**
-   * Model ActivityLog
+   * Model Activity
    */
 
-  export type AggregateActivityLog = {
-    _count: ActivityLogCountAggregateOutputType | null
-    _min: ActivityLogMinAggregateOutputType | null
-    _max: ActivityLogMaxAggregateOutputType | null
+  export type AggregateActivity = {
+    _count: ActivityCountAggregateOutputType | null
+    _min: ActivityMinAggregateOutputType | null
+    _max: ActivityMaxAggregateOutputType | null
   }
 
-  export type ActivityLogMinAggregateOutputType = {
+  export type ActivityMinAggregateOutputType = {
     id: string | null
     targetAccountId: string | null
     actorAccountId: string | null
@@ -10513,7 +10513,7 @@ export namespace Prisma {
     geolocation: string | null
   }
 
-  export type ActivityLogMaxAggregateOutputType = {
+  export type ActivityMaxAggregateOutputType = {
     id: string | null
     targetAccountId: string | null
     actorAccountId: string | null
@@ -10524,7 +10524,7 @@ export namespace Prisma {
     geolocation: string | null
   }
 
-  export type ActivityLogCountAggregateOutputType = {
+  export type ActivityCountAggregateOutputType = {
     id: number
     targetAccountId: number
     actorAccountId: number
@@ -10537,7 +10537,7 @@ export namespace Prisma {
   }
 
 
-  export type ActivityLogMinAggregateInputType = {
+  export type ActivityMinAggregateInputType = {
     id?: true
     targetAccountId?: true
     actorAccountId?: true
@@ -10548,7 +10548,7 @@ export namespace Prisma {
     geolocation?: true
   }
 
-  export type ActivityLogMaxAggregateInputType = {
+  export type ActivityMaxAggregateInputType = {
     id?: true
     targetAccountId?: true
     actorAccountId?: true
@@ -10559,7 +10559,7 @@ export namespace Prisma {
     geolocation?: true
   }
 
-  export type ActivityLogCountAggregateInputType = {
+  export type ActivityCountAggregateInputType = {
     id?: true
     targetAccountId?: true
     actorAccountId?: true
@@ -10571,79 +10571,79 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type ActivityLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ActivityAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which ActivityLog to aggregate.
+     * Filter which Activity to aggregate.
      */
-    where?: ActivityLogWhereInput
+    where?: ActivityWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of ActivityLogs to fetch.
+     * Determine the order of Activities to fetch.
      */
-    orderBy?: ActivityLogOrderByWithRelationInput | ActivityLogOrderByWithRelationInput[]
+    orderBy?: ActivityOrderByWithRelationInput | ActivityOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: ActivityLogWhereUniqueInput
+    cursor?: ActivityWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` ActivityLogs from the position of the cursor.
+     * Take `±n` Activities from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` ActivityLogs.
+     * Skip the first `n` Activities.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned ActivityLogs
+     * Count returned Activities
     **/
-    _count?: true | ActivityLogCountAggregateInputType
+    _count?: true | ActivityCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: ActivityLogMinAggregateInputType
+    _min?: ActivityMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: ActivityLogMaxAggregateInputType
+    _max?: ActivityMaxAggregateInputType
   }
 
-  export type GetActivityLogAggregateType<T extends ActivityLogAggregateArgs> = {
-        [P in keyof T & keyof AggregateActivityLog]: P extends '_count' | 'count'
+  export type GetActivityAggregateType<T extends ActivityAggregateArgs> = {
+        [P in keyof T & keyof AggregateActivity]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateActivityLog[P]>
-      : GetScalarType<T[P], AggregateActivityLog[P]>
+        : GetScalarType<T[P], AggregateActivity[P]>
+      : GetScalarType<T[P], AggregateActivity[P]>
   }
 
 
 
 
-  export type ActivityLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ActivityLogWhereInput
-    orderBy?: ActivityLogOrderByWithAggregationInput | ActivityLogOrderByWithAggregationInput[]
-    by: ActivityLogScalarFieldEnum[] | ActivityLogScalarFieldEnum
-    having?: ActivityLogScalarWhereWithAggregatesInput
+  export type ActivityGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ActivityWhereInput
+    orderBy?: ActivityOrderByWithAggregationInput | ActivityOrderByWithAggregationInput[]
+    by: ActivityScalarFieldEnum[] | ActivityScalarFieldEnum
+    having?: ActivityScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: ActivityLogCountAggregateInputType | true
-    _min?: ActivityLogMinAggregateInputType
-    _max?: ActivityLogMaxAggregateInputType
+    _count?: ActivityCountAggregateInputType | true
+    _min?: ActivityMinAggregateInputType
+    _max?: ActivityMaxAggregateInputType
   }
 
-  export type ActivityLogGroupByOutputType = {
+  export type ActivityGroupByOutputType = {
     id: string
     targetAccountId: string
     actorAccountId: string
@@ -10652,26 +10652,26 @@ export namespace Prisma {
     ip: string
     timestamp: Date
     geolocation: string | null
-    _count: ActivityLogCountAggregateOutputType | null
-    _min: ActivityLogMinAggregateOutputType | null
-    _max: ActivityLogMaxAggregateOutputType | null
+    _count: ActivityCountAggregateOutputType | null
+    _min: ActivityMinAggregateOutputType | null
+    _max: ActivityMaxAggregateOutputType | null
   }
 
-  type GetActivityLogGroupByPayload<T extends ActivityLogGroupByArgs> = Prisma.PrismaPromise<
+  type GetActivityGroupByPayload<T extends ActivityGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<ActivityLogGroupByOutputType, T['by']> &
+      PickEnumerable<ActivityGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof ActivityLogGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof ActivityGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], ActivityLogGroupByOutputType[P]>
-            : GetScalarType<T[P], ActivityLogGroupByOutputType[P]>
+              : GetScalarType<T[P], ActivityGroupByOutputType[P]>
+            : GetScalarType<T[P], ActivityGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type ActivityLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ActivitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     targetAccountId?: boolean
     actorAccountId?: boolean
@@ -10680,9 +10680,9 @@ export namespace Prisma {
     ip?: boolean
     timestamp?: boolean
     geolocation?: boolean
-  }, ExtArgs["result"]["activityLog"]>
+  }, ExtArgs["result"]["activity"]>
 
-  export type ActivityLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ActivitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     targetAccountId?: boolean
     actorAccountId?: boolean
@@ -10691,9 +10691,9 @@ export namespace Prisma {
     ip?: boolean
     timestamp?: boolean
     geolocation?: boolean
-  }, ExtArgs["result"]["activityLog"]>
+  }, ExtArgs["result"]["activity"]>
 
-  export type ActivityLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ActivitySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     targetAccountId?: boolean
     actorAccountId?: boolean
@@ -10702,9 +10702,9 @@ export namespace Prisma {
     ip?: boolean
     timestamp?: boolean
     geolocation?: boolean
-  }, ExtArgs["result"]["activityLog"]>
+  }, ExtArgs["result"]["activity"]>
 
-  export type ActivityLogSelectScalar = {
+  export type ActivitySelectScalar = {
     id?: boolean
     targetAccountId?: boolean
     actorAccountId?: boolean
@@ -10715,10 +10715,10 @@ export namespace Prisma {
     geolocation?: boolean
   }
 
-  export type ActivityLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "targetAccountId" | "actorAccountId" | "action" | "status" | "ip" | "timestamp" | "geolocation", ExtArgs["result"]["activityLog"]>
+  export type ActivityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "targetAccountId" | "actorAccountId" | "action" | "status" | "ip" | "timestamp" | "geolocation", ExtArgs["result"]["activity"]>
 
-  export type $ActivityLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "ActivityLog"
+  export type $ActivityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Activity"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -10729,136 +10729,136 @@ export namespace Prisma {
       ip: string
       timestamp: Date
       geolocation: string | null
-    }, ExtArgs["result"]["activityLog"]>
+    }, ExtArgs["result"]["activity"]>
     composites: {}
   }
 
-  type ActivityLogGetPayload<S extends boolean | null | undefined | ActivityLogDefaultArgs> = $Result.GetResult<Prisma.$ActivityLogPayload, S>
+  type ActivityGetPayload<S extends boolean | null | undefined | ActivityDefaultArgs> = $Result.GetResult<Prisma.$ActivityPayload, S>
 
-  type ActivityLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ActivityLogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ActivityLogCountAggregateInputType | true
+  type ActivityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ActivityFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ActivityCountAggregateInputType | true
     }
 
-  export interface ActivityLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ActivityLog'], meta: { name: 'ActivityLog' } }
+  export interface ActivityDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Activity'], meta: { name: 'Activity' } }
     /**
-     * Find zero or one ActivityLog that matches the filter.
-     * @param {ActivityLogFindUniqueArgs} args - Arguments to find a ActivityLog
+     * Find zero or one Activity that matches the filter.
+     * @param {ActivityFindUniqueArgs} args - Arguments to find a Activity
      * @example
-     * // Get one ActivityLog
-     * const activityLog = await prisma.activityLog.findUnique({
+     * // Get one Activity
+     * const activity = await prisma.activity.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends ActivityLogFindUniqueArgs>(args: SelectSubset<T, ActivityLogFindUniqueArgs<ExtArgs>>): Prisma__ActivityLogClient<$Result.GetResult<Prisma.$ActivityLogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends ActivityFindUniqueArgs>(args: SelectSubset<T, ActivityFindUniqueArgs<ExtArgs>>): Prisma__ActivityClient<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one ActivityLog that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Activity that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {ActivityLogFindUniqueOrThrowArgs} args - Arguments to find a ActivityLog
+     * @param {ActivityFindUniqueOrThrowArgs} args - Arguments to find a Activity
      * @example
-     * // Get one ActivityLog
-     * const activityLog = await prisma.activityLog.findUniqueOrThrow({
+     * // Get one Activity
+     * const activity = await prisma.activity.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends ActivityLogFindUniqueOrThrowArgs>(args: SelectSubset<T, ActivityLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ActivityLogClient<$Result.GetResult<Prisma.$ActivityLogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends ActivityFindUniqueOrThrowArgs>(args: SelectSubset<T, ActivityFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ActivityClient<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first ActivityLog that matches the filter.
+     * Find the first Activity that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ActivityLogFindFirstArgs} args - Arguments to find a ActivityLog
+     * @param {ActivityFindFirstArgs} args - Arguments to find a Activity
      * @example
-     * // Get one ActivityLog
-     * const activityLog = await prisma.activityLog.findFirst({
+     * // Get one Activity
+     * const activity = await prisma.activity.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends ActivityLogFindFirstArgs>(args?: SelectSubset<T, ActivityLogFindFirstArgs<ExtArgs>>): Prisma__ActivityLogClient<$Result.GetResult<Prisma.$ActivityLogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends ActivityFindFirstArgs>(args?: SelectSubset<T, ActivityFindFirstArgs<ExtArgs>>): Prisma__ActivityClient<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first ActivityLog that matches the filter or
+     * Find the first Activity that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ActivityLogFindFirstOrThrowArgs} args - Arguments to find a ActivityLog
+     * @param {ActivityFindFirstOrThrowArgs} args - Arguments to find a Activity
      * @example
-     * // Get one ActivityLog
-     * const activityLog = await prisma.activityLog.findFirstOrThrow({
+     * // Get one Activity
+     * const activity = await prisma.activity.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends ActivityLogFindFirstOrThrowArgs>(args?: SelectSubset<T, ActivityLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__ActivityLogClient<$Result.GetResult<Prisma.$ActivityLogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends ActivityFindFirstOrThrowArgs>(args?: SelectSubset<T, ActivityFindFirstOrThrowArgs<ExtArgs>>): Prisma__ActivityClient<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more ActivityLogs that matches the filter.
+     * Find zero or more Activities that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ActivityLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {ActivityFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all ActivityLogs
-     * const activityLogs = await prisma.activityLog.findMany()
+     * // Get all Activities
+     * const activities = await prisma.activity.findMany()
      * 
-     * // Get first 10 ActivityLogs
-     * const activityLogs = await prisma.activityLog.findMany({ take: 10 })
+     * // Get first 10 Activities
+     * const activities = await prisma.activity.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const activityLogWithIdOnly = await prisma.activityLog.findMany({ select: { id: true } })
+     * const activityWithIdOnly = await prisma.activity.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends ActivityLogFindManyArgs>(args?: SelectSubset<T, ActivityLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends ActivityFindManyArgs>(args?: SelectSubset<T, ActivityFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a ActivityLog.
-     * @param {ActivityLogCreateArgs} args - Arguments to create a ActivityLog.
+     * Create a Activity.
+     * @param {ActivityCreateArgs} args - Arguments to create a Activity.
      * @example
-     * // Create one ActivityLog
-     * const ActivityLog = await prisma.activityLog.create({
+     * // Create one Activity
+     * const Activity = await prisma.activity.create({
      *   data: {
-     *     // ... data to create a ActivityLog
+     *     // ... data to create a Activity
      *   }
      * })
      * 
      */
-    create<T extends ActivityLogCreateArgs>(args: SelectSubset<T, ActivityLogCreateArgs<ExtArgs>>): Prisma__ActivityLogClient<$Result.GetResult<Prisma.$ActivityLogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends ActivityCreateArgs>(args: SelectSubset<T, ActivityCreateArgs<ExtArgs>>): Prisma__ActivityClient<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many ActivityLogs.
-     * @param {ActivityLogCreateManyArgs} args - Arguments to create many ActivityLogs.
+     * Create many Activities.
+     * @param {ActivityCreateManyArgs} args - Arguments to create many Activities.
      * @example
-     * // Create many ActivityLogs
-     * const activityLog = await prisma.activityLog.createMany({
+     * // Create many Activities
+     * const activity = await prisma.activity.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends ActivityLogCreateManyArgs>(args?: SelectSubset<T, ActivityLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends ActivityCreateManyArgs>(args?: SelectSubset<T, ActivityCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many ActivityLogs and returns the data saved in the database.
-     * @param {ActivityLogCreateManyAndReturnArgs} args - Arguments to create many ActivityLogs.
+     * Create many Activities and returns the data saved in the database.
+     * @param {ActivityCreateManyAndReturnArgs} args - Arguments to create many Activities.
      * @example
-     * // Create many ActivityLogs
-     * const activityLog = await prisma.activityLog.createManyAndReturn({
+     * // Create many Activities
+     * const activity = await prisma.activity.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many ActivityLogs and only return the `id`
-     * const activityLogWithIdOnly = await prisma.activityLog.createManyAndReturn({
+     * // Create many Activities and only return the `id`
+     * const activityWithIdOnly = await prisma.activity.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -10868,28 +10868,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends ActivityLogCreateManyAndReturnArgs>(args?: SelectSubset<T, ActivityLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityLogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends ActivityCreateManyAndReturnArgs>(args?: SelectSubset<T, ActivityCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a ActivityLog.
-     * @param {ActivityLogDeleteArgs} args - Arguments to delete one ActivityLog.
+     * Delete a Activity.
+     * @param {ActivityDeleteArgs} args - Arguments to delete one Activity.
      * @example
-     * // Delete one ActivityLog
-     * const ActivityLog = await prisma.activityLog.delete({
+     * // Delete one Activity
+     * const Activity = await prisma.activity.delete({
      *   where: {
-     *     // ... filter to delete one ActivityLog
+     *     // ... filter to delete one Activity
      *   }
      * })
      * 
      */
-    delete<T extends ActivityLogDeleteArgs>(args: SelectSubset<T, ActivityLogDeleteArgs<ExtArgs>>): Prisma__ActivityLogClient<$Result.GetResult<Prisma.$ActivityLogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends ActivityDeleteArgs>(args: SelectSubset<T, ActivityDeleteArgs<ExtArgs>>): Prisma__ActivityClient<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one ActivityLog.
-     * @param {ActivityLogUpdateArgs} args - Arguments to update one ActivityLog.
+     * Update one Activity.
+     * @param {ActivityUpdateArgs} args - Arguments to update one Activity.
      * @example
-     * // Update one ActivityLog
-     * const activityLog = await prisma.activityLog.update({
+     * // Update one Activity
+     * const activity = await prisma.activity.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -10899,30 +10899,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends ActivityLogUpdateArgs>(args: SelectSubset<T, ActivityLogUpdateArgs<ExtArgs>>): Prisma__ActivityLogClient<$Result.GetResult<Prisma.$ActivityLogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends ActivityUpdateArgs>(args: SelectSubset<T, ActivityUpdateArgs<ExtArgs>>): Prisma__ActivityClient<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more ActivityLogs.
-     * @param {ActivityLogDeleteManyArgs} args - Arguments to filter ActivityLogs to delete.
+     * Delete zero or more Activities.
+     * @param {ActivityDeleteManyArgs} args - Arguments to filter Activities to delete.
      * @example
-     * // Delete a few ActivityLogs
-     * const { count } = await prisma.activityLog.deleteMany({
+     * // Delete a few Activities
+     * const { count } = await prisma.activity.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends ActivityLogDeleteManyArgs>(args?: SelectSubset<T, ActivityLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends ActivityDeleteManyArgs>(args?: SelectSubset<T, ActivityDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more ActivityLogs.
+     * Update zero or more Activities.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ActivityLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {ActivityUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many ActivityLogs
-     * const activityLog = await prisma.activityLog.updateMany({
+     * // Update many Activities
+     * const activity = await prisma.activity.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -10932,14 +10932,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends ActivityLogUpdateManyArgs>(args: SelectSubset<T, ActivityLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends ActivityUpdateManyArgs>(args: SelectSubset<T, ActivityUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more ActivityLogs and returns the data updated in the database.
-     * @param {ActivityLogUpdateManyAndReturnArgs} args - Arguments to update many ActivityLogs.
+     * Update zero or more Activities and returns the data updated in the database.
+     * @param {ActivityUpdateManyAndReturnArgs} args - Arguments to update many Activities.
      * @example
-     * // Update many ActivityLogs
-     * const activityLog = await prisma.activityLog.updateManyAndReturn({
+     * // Update many Activities
+     * const activity = await prisma.activity.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -10948,8 +10948,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more ActivityLogs and only return the `id`
-     * const activityLogWithIdOnly = await prisma.activityLog.updateManyAndReturn({
+     * // Update zero or more Activities and only return the `id`
+     * const activityWithIdOnly = await prisma.activity.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -10962,56 +10962,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends ActivityLogUpdateManyAndReturnArgs>(args: SelectSubset<T, ActivityLogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityLogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends ActivityUpdateManyAndReturnArgs>(args: SelectSubset<T, ActivityUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one ActivityLog.
-     * @param {ActivityLogUpsertArgs} args - Arguments to update or create a ActivityLog.
+     * Create or update one Activity.
+     * @param {ActivityUpsertArgs} args - Arguments to update or create a Activity.
      * @example
-     * // Update or create a ActivityLog
-     * const activityLog = await prisma.activityLog.upsert({
+     * // Update or create a Activity
+     * const activity = await prisma.activity.upsert({
      *   create: {
-     *     // ... data to create a ActivityLog
+     *     // ... data to create a Activity
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the ActivityLog we want to update
+     *     // ... the filter for the Activity we want to update
      *   }
      * })
      */
-    upsert<T extends ActivityLogUpsertArgs>(args: SelectSubset<T, ActivityLogUpsertArgs<ExtArgs>>): Prisma__ActivityLogClient<$Result.GetResult<Prisma.$ActivityLogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends ActivityUpsertArgs>(args: SelectSubset<T, ActivityUpsertArgs<ExtArgs>>): Prisma__ActivityClient<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of ActivityLogs.
+     * Count the number of Activities.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ActivityLogCountArgs} args - Arguments to filter ActivityLogs to count.
+     * @param {ActivityCountArgs} args - Arguments to filter Activities to count.
      * @example
-     * // Count the number of ActivityLogs
-     * const count = await prisma.activityLog.count({
+     * // Count the number of Activities
+     * const count = await prisma.activity.count({
      *   where: {
-     *     // ... the filter for the ActivityLogs we want to count
+     *     // ... the filter for the Activities we want to count
      *   }
      * })
     **/
-    count<T extends ActivityLogCountArgs>(
-      args?: Subset<T, ActivityLogCountArgs>,
+    count<T extends ActivityCountArgs>(
+      args?: Subset<T, ActivityCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], ActivityLogCountAggregateOutputType>
+          : GetScalarType<T['select'], ActivityCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a ActivityLog.
+     * Allows you to perform aggregations operations on a Activity.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ActivityLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {ActivityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -11031,13 +11031,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends ActivityLogAggregateArgs>(args: Subset<T, ActivityLogAggregateArgs>): Prisma.PrismaPromise<GetActivityLogAggregateType<T>>
+    aggregate<T extends ActivityAggregateArgs>(args: Subset<T, ActivityAggregateArgs>): Prisma.PrismaPromise<GetActivityAggregateType<T>>
 
     /**
-     * Group by ActivityLog.
+     * Group by Activity.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ActivityLogGroupByArgs} args - Group by arguments.
+     * @param {ActivityGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -11052,14 +11052,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends ActivityLogGroupByArgs,
+      T extends ActivityGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ActivityLogGroupByArgs['orderBy'] }
-        : { orderBy?: ActivityLogGroupByArgs['orderBy'] },
+        ? { orderBy: ActivityGroupByArgs['orderBy'] }
+        : { orderBy?: ActivityGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -11108,20 +11108,20 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, ActivityLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetActivityLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, ActivityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetActivityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the ActivityLog model
+   * Fields of the Activity model
    */
-  readonly fields: ActivityLogFieldRefs;
+  readonly fields: ActivityFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for ActivityLog.
+   * The delegate class that acts as a "Promise-like" for Activity.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__ActivityLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__ActivityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -11149,380 +11149,380 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the ActivityLog model
+   * Fields of the Activity model
    */
-  interface ActivityLogFieldRefs {
-    readonly id: FieldRef<"ActivityLog", 'String'>
-    readonly targetAccountId: FieldRef<"ActivityLog", 'String'>
-    readonly actorAccountId: FieldRef<"ActivityLog", 'String'>
-    readonly action: FieldRef<"ActivityLog", 'String'>
-    readonly status: FieldRef<"ActivityLog", 'String'>
-    readonly ip: FieldRef<"ActivityLog", 'String'>
-    readonly timestamp: FieldRef<"ActivityLog", 'DateTime'>
-    readonly geolocation: FieldRef<"ActivityLog", 'String'>
+  interface ActivityFieldRefs {
+    readonly id: FieldRef<"Activity", 'String'>
+    readonly targetAccountId: FieldRef<"Activity", 'String'>
+    readonly actorAccountId: FieldRef<"Activity", 'String'>
+    readonly action: FieldRef<"Activity", 'String'>
+    readonly status: FieldRef<"Activity", 'String'>
+    readonly ip: FieldRef<"Activity", 'String'>
+    readonly timestamp: FieldRef<"Activity", 'DateTime'>
+    readonly geolocation: FieldRef<"Activity", 'String'>
   }
     
 
   // Custom InputTypes
   /**
-   * ActivityLog findUnique
+   * Activity findUnique
    */
-  export type ActivityLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ActivityFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ActivityLog
+     * Select specific fields to fetch from the Activity
      */
-    select?: ActivityLogSelect<ExtArgs> | null
+    select?: ActivitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ActivityLog
+     * Omit specific fields from the Activity
      */
-    omit?: ActivityLogOmit<ExtArgs> | null
+    omit?: ActivityOmit<ExtArgs> | null
     /**
-     * Filter, which ActivityLog to fetch.
+     * Filter, which Activity to fetch.
      */
-    where: ActivityLogWhereUniqueInput
+    where: ActivityWhereUniqueInput
   }
 
   /**
-   * ActivityLog findUniqueOrThrow
+   * Activity findUniqueOrThrow
    */
-  export type ActivityLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ActivityFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ActivityLog
+     * Select specific fields to fetch from the Activity
      */
-    select?: ActivityLogSelect<ExtArgs> | null
+    select?: ActivitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ActivityLog
+     * Omit specific fields from the Activity
      */
-    omit?: ActivityLogOmit<ExtArgs> | null
+    omit?: ActivityOmit<ExtArgs> | null
     /**
-     * Filter, which ActivityLog to fetch.
+     * Filter, which Activity to fetch.
      */
-    where: ActivityLogWhereUniqueInput
+    where: ActivityWhereUniqueInput
   }
 
   /**
-   * ActivityLog findFirst
+   * Activity findFirst
    */
-  export type ActivityLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ActivityFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ActivityLog
+     * Select specific fields to fetch from the Activity
      */
-    select?: ActivityLogSelect<ExtArgs> | null
+    select?: ActivitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ActivityLog
+     * Omit specific fields from the Activity
      */
-    omit?: ActivityLogOmit<ExtArgs> | null
+    omit?: ActivityOmit<ExtArgs> | null
     /**
-     * Filter, which ActivityLog to fetch.
+     * Filter, which Activity to fetch.
      */
-    where?: ActivityLogWhereInput
+    where?: ActivityWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of ActivityLogs to fetch.
+     * Determine the order of Activities to fetch.
      */
-    orderBy?: ActivityLogOrderByWithRelationInput | ActivityLogOrderByWithRelationInput[]
+    orderBy?: ActivityOrderByWithRelationInput | ActivityOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for ActivityLogs.
+     * Sets the position for searching for Activities.
      */
-    cursor?: ActivityLogWhereUniqueInput
+    cursor?: ActivityWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` ActivityLogs from the position of the cursor.
+     * Take `±n` Activities from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` ActivityLogs.
+     * Skip the first `n` Activities.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of ActivityLogs.
+     * Filter by unique combinations of Activities.
      */
-    distinct?: ActivityLogScalarFieldEnum | ActivityLogScalarFieldEnum[]
+    distinct?: ActivityScalarFieldEnum | ActivityScalarFieldEnum[]
   }
 
   /**
-   * ActivityLog findFirstOrThrow
+   * Activity findFirstOrThrow
    */
-  export type ActivityLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ActivityFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ActivityLog
+     * Select specific fields to fetch from the Activity
      */
-    select?: ActivityLogSelect<ExtArgs> | null
+    select?: ActivitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ActivityLog
+     * Omit specific fields from the Activity
      */
-    omit?: ActivityLogOmit<ExtArgs> | null
+    omit?: ActivityOmit<ExtArgs> | null
     /**
-     * Filter, which ActivityLog to fetch.
+     * Filter, which Activity to fetch.
      */
-    where?: ActivityLogWhereInput
+    where?: ActivityWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of ActivityLogs to fetch.
+     * Determine the order of Activities to fetch.
      */
-    orderBy?: ActivityLogOrderByWithRelationInput | ActivityLogOrderByWithRelationInput[]
+    orderBy?: ActivityOrderByWithRelationInput | ActivityOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for ActivityLogs.
+     * Sets the position for searching for Activities.
      */
-    cursor?: ActivityLogWhereUniqueInput
+    cursor?: ActivityWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` ActivityLogs from the position of the cursor.
+     * Take `±n` Activities from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` ActivityLogs.
+     * Skip the first `n` Activities.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of ActivityLogs.
+     * Filter by unique combinations of Activities.
      */
-    distinct?: ActivityLogScalarFieldEnum | ActivityLogScalarFieldEnum[]
+    distinct?: ActivityScalarFieldEnum | ActivityScalarFieldEnum[]
   }
 
   /**
-   * ActivityLog findMany
+   * Activity findMany
    */
-  export type ActivityLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ActivityFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ActivityLog
+     * Select specific fields to fetch from the Activity
      */
-    select?: ActivityLogSelect<ExtArgs> | null
+    select?: ActivitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ActivityLog
+     * Omit specific fields from the Activity
      */
-    omit?: ActivityLogOmit<ExtArgs> | null
+    omit?: ActivityOmit<ExtArgs> | null
     /**
-     * Filter, which ActivityLogs to fetch.
+     * Filter, which Activities to fetch.
      */
-    where?: ActivityLogWhereInput
+    where?: ActivityWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of ActivityLogs to fetch.
+     * Determine the order of Activities to fetch.
      */
-    orderBy?: ActivityLogOrderByWithRelationInput | ActivityLogOrderByWithRelationInput[]
+    orderBy?: ActivityOrderByWithRelationInput | ActivityOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing ActivityLogs.
+     * Sets the position for listing Activities.
      */
-    cursor?: ActivityLogWhereUniqueInput
+    cursor?: ActivityWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` ActivityLogs from the position of the cursor.
+     * Take `±n` Activities from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` ActivityLogs.
+     * Skip the first `n` Activities.
      */
     skip?: number
-    distinct?: ActivityLogScalarFieldEnum | ActivityLogScalarFieldEnum[]
+    distinct?: ActivityScalarFieldEnum | ActivityScalarFieldEnum[]
   }
 
   /**
-   * ActivityLog create
+   * Activity create
    */
-  export type ActivityLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ActivityCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ActivityLog
+     * Select specific fields to fetch from the Activity
      */
-    select?: ActivityLogSelect<ExtArgs> | null
+    select?: ActivitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ActivityLog
+     * Omit specific fields from the Activity
      */
-    omit?: ActivityLogOmit<ExtArgs> | null
+    omit?: ActivityOmit<ExtArgs> | null
     /**
-     * The data needed to create a ActivityLog.
+     * The data needed to create a Activity.
      */
-    data: XOR<ActivityLogCreateInput, ActivityLogUncheckedCreateInput>
+    data: XOR<ActivityCreateInput, ActivityUncheckedCreateInput>
   }
 
   /**
-   * ActivityLog createMany
+   * Activity createMany
    */
-  export type ActivityLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ActivityCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many ActivityLogs.
+     * The data used to create many Activities.
      */
-    data: ActivityLogCreateManyInput | ActivityLogCreateManyInput[]
+    data: ActivityCreateManyInput | ActivityCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * ActivityLog createManyAndReturn
+   * Activity createManyAndReturn
    */
-  export type ActivityLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ActivityCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ActivityLog
+     * Select specific fields to fetch from the Activity
      */
-    select?: ActivityLogSelectCreateManyAndReturn<ExtArgs> | null
+    select?: ActivitySelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the ActivityLog
+     * Omit specific fields from the Activity
      */
-    omit?: ActivityLogOmit<ExtArgs> | null
+    omit?: ActivityOmit<ExtArgs> | null
     /**
-     * The data used to create many ActivityLogs.
+     * The data used to create many Activities.
      */
-    data: ActivityLogCreateManyInput | ActivityLogCreateManyInput[]
+    data: ActivityCreateManyInput | ActivityCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * ActivityLog update
+   * Activity update
    */
-  export type ActivityLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ActivityUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ActivityLog
+     * Select specific fields to fetch from the Activity
      */
-    select?: ActivityLogSelect<ExtArgs> | null
+    select?: ActivitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ActivityLog
+     * Omit specific fields from the Activity
      */
-    omit?: ActivityLogOmit<ExtArgs> | null
+    omit?: ActivityOmit<ExtArgs> | null
     /**
-     * The data needed to update a ActivityLog.
+     * The data needed to update a Activity.
      */
-    data: XOR<ActivityLogUpdateInput, ActivityLogUncheckedUpdateInput>
+    data: XOR<ActivityUpdateInput, ActivityUncheckedUpdateInput>
     /**
-     * Choose, which ActivityLog to update.
+     * Choose, which Activity to update.
      */
-    where: ActivityLogWhereUniqueInput
+    where: ActivityWhereUniqueInput
   }
 
   /**
-   * ActivityLog updateMany
+   * Activity updateMany
    */
-  export type ActivityLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ActivityUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update ActivityLogs.
+     * The data used to update Activities.
      */
-    data: XOR<ActivityLogUpdateManyMutationInput, ActivityLogUncheckedUpdateManyInput>
+    data: XOR<ActivityUpdateManyMutationInput, ActivityUncheckedUpdateManyInput>
     /**
-     * Filter which ActivityLogs to update
+     * Filter which Activities to update
      */
-    where?: ActivityLogWhereInput
+    where?: ActivityWhereInput
     /**
-     * Limit how many ActivityLogs to update.
+     * Limit how many Activities to update.
      */
     limit?: number
   }
 
   /**
-   * ActivityLog updateManyAndReturn
+   * Activity updateManyAndReturn
    */
-  export type ActivityLogUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ActivityUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ActivityLog
+     * Select specific fields to fetch from the Activity
      */
-    select?: ActivityLogSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: ActivitySelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the ActivityLog
+     * Omit specific fields from the Activity
      */
-    omit?: ActivityLogOmit<ExtArgs> | null
+    omit?: ActivityOmit<ExtArgs> | null
     /**
-     * The data used to update ActivityLogs.
+     * The data used to update Activities.
      */
-    data: XOR<ActivityLogUpdateManyMutationInput, ActivityLogUncheckedUpdateManyInput>
+    data: XOR<ActivityUpdateManyMutationInput, ActivityUncheckedUpdateManyInput>
     /**
-     * Filter which ActivityLogs to update
+     * Filter which Activities to update
      */
-    where?: ActivityLogWhereInput
+    where?: ActivityWhereInput
     /**
-     * Limit how many ActivityLogs to update.
+     * Limit how many Activities to update.
      */
     limit?: number
   }
 
   /**
-   * ActivityLog upsert
+   * Activity upsert
    */
-  export type ActivityLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ActivityUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ActivityLog
+     * Select specific fields to fetch from the Activity
      */
-    select?: ActivityLogSelect<ExtArgs> | null
+    select?: ActivitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ActivityLog
+     * Omit specific fields from the Activity
      */
-    omit?: ActivityLogOmit<ExtArgs> | null
+    omit?: ActivityOmit<ExtArgs> | null
     /**
-     * The filter to search for the ActivityLog to update in case it exists.
+     * The filter to search for the Activity to update in case it exists.
      */
-    where: ActivityLogWhereUniqueInput
+    where: ActivityWhereUniqueInput
     /**
-     * In case the ActivityLog found by the `where` argument doesn't exist, create a new ActivityLog with this data.
+     * In case the Activity found by the `where` argument doesn't exist, create a new Activity with this data.
      */
-    create: XOR<ActivityLogCreateInput, ActivityLogUncheckedCreateInput>
+    create: XOR<ActivityCreateInput, ActivityUncheckedCreateInput>
     /**
-     * In case the ActivityLog was found with the provided `where` argument, update it with this data.
+     * In case the Activity was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<ActivityLogUpdateInput, ActivityLogUncheckedUpdateInput>
+    update: XOR<ActivityUpdateInput, ActivityUncheckedUpdateInput>
   }
 
   /**
-   * ActivityLog delete
+   * Activity delete
    */
-  export type ActivityLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ActivityDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ActivityLog
+     * Select specific fields to fetch from the Activity
      */
-    select?: ActivityLogSelect<ExtArgs> | null
+    select?: ActivitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ActivityLog
+     * Omit specific fields from the Activity
      */
-    omit?: ActivityLogOmit<ExtArgs> | null
+    omit?: ActivityOmit<ExtArgs> | null
     /**
-     * Filter which ActivityLog to delete.
+     * Filter which Activity to delete.
      */
-    where: ActivityLogWhereUniqueInput
+    where: ActivityWhereUniqueInput
   }
 
   /**
-   * ActivityLog deleteMany
+   * Activity deleteMany
    */
-  export type ActivityLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ActivityDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which ActivityLogs to delete
+     * Filter which Activities to delete
      */
-    where?: ActivityLogWhereInput
+    where?: ActivityWhereInput
     /**
-     * Limit how many ActivityLogs to delete.
+     * Limit how many Activities to delete.
      */
     limit?: number
   }
 
   /**
-   * ActivityLog without action
+   * Activity without action
    */
-  export type ActivityLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ActivityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ActivityLog
+     * Select specific fields to fetch from the Activity
      */
-    select?: ActivityLogSelect<ExtArgs> | null
+    select?: ActivitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ActivityLog
+     * Omit specific fields from the Activity
      */
-    omit?: ActivityLogOmit<ExtArgs> | null
+    omit?: ActivityOmit<ExtArgs> | null
   }
 
 
@@ -21587,16 +21587,16 @@ export namespace Prisma {
 
 
   /**
-   * Model ErrorLog
+   * Model SystemError
    */
 
-  export type AggregateErrorLog = {
-    _count: ErrorLogCountAggregateOutputType | null
-    _min: ErrorLogMinAggregateOutputType | null
-    _max: ErrorLogMaxAggregateOutputType | null
+  export type AggregateSystemError = {
+    _count: SystemErrorCountAggregateOutputType | null
+    _min: SystemErrorMinAggregateOutputType | null
+    _max: SystemErrorMaxAggregateOutputType | null
   }
 
-  export type ErrorLogMinAggregateOutputType = {
+  export type SystemErrorMinAggregateOutputType = {
     id: string | null
     type: string | null
     context: string | null
@@ -21612,7 +21612,7 @@ export namespace Prisma {
     timestamp: Date | null
   }
 
-  export type ErrorLogMaxAggregateOutputType = {
+  export type SystemErrorMaxAggregateOutputType = {
     id: string | null
     type: string | null
     context: string | null
@@ -21628,7 +21628,7 @@ export namespace Prisma {
     timestamp: Date | null
   }
 
-  export type ErrorLogCountAggregateOutputType = {
+  export type SystemErrorCountAggregateOutputType = {
     id: number
     type: number
     context: number
@@ -21646,7 +21646,7 @@ export namespace Prisma {
   }
 
 
-  export type ErrorLogMinAggregateInputType = {
+  export type SystemErrorMinAggregateInputType = {
     id?: true
     type?: true
     context?: true
@@ -21662,7 +21662,7 @@ export namespace Prisma {
     timestamp?: true
   }
 
-  export type ErrorLogMaxAggregateInputType = {
+  export type SystemErrorMaxAggregateInputType = {
     id?: true
     type?: true
     context?: true
@@ -21678,7 +21678,7 @@ export namespace Prisma {
     timestamp?: true
   }
 
-  export type ErrorLogCountAggregateInputType = {
+  export type SystemErrorCountAggregateInputType = {
     id?: true
     type?: true
     context?: true
@@ -21695,79 +21695,79 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type ErrorLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SystemErrorAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which ErrorLog to aggregate.
+     * Filter which SystemError to aggregate.
      */
-    where?: ErrorLogWhereInput
+    where?: SystemErrorWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of ErrorLogs to fetch.
+     * Determine the order of SystemErrors to fetch.
      */
-    orderBy?: ErrorLogOrderByWithRelationInput | ErrorLogOrderByWithRelationInput[]
+    orderBy?: SystemErrorOrderByWithRelationInput | SystemErrorOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: ErrorLogWhereUniqueInput
+    cursor?: SystemErrorWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` ErrorLogs from the position of the cursor.
+     * Take `±n` SystemErrors from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` ErrorLogs.
+     * Skip the first `n` SystemErrors.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned ErrorLogs
+     * Count returned SystemErrors
     **/
-    _count?: true | ErrorLogCountAggregateInputType
+    _count?: true | SystemErrorCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: ErrorLogMinAggregateInputType
+    _min?: SystemErrorMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: ErrorLogMaxAggregateInputType
+    _max?: SystemErrorMaxAggregateInputType
   }
 
-  export type GetErrorLogAggregateType<T extends ErrorLogAggregateArgs> = {
-        [P in keyof T & keyof AggregateErrorLog]: P extends '_count' | 'count'
+  export type GetSystemErrorAggregateType<T extends SystemErrorAggregateArgs> = {
+        [P in keyof T & keyof AggregateSystemError]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateErrorLog[P]>
-      : GetScalarType<T[P], AggregateErrorLog[P]>
+        : GetScalarType<T[P], AggregateSystemError[P]>
+      : GetScalarType<T[P], AggregateSystemError[P]>
   }
 
 
 
 
-  export type ErrorLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ErrorLogWhereInput
-    orderBy?: ErrorLogOrderByWithAggregationInput | ErrorLogOrderByWithAggregationInput[]
-    by: ErrorLogScalarFieldEnum[] | ErrorLogScalarFieldEnum
-    having?: ErrorLogScalarWhereWithAggregatesInput
+  export type SystemErrorGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SystemErrorWhereInput
+    orderBy?: SystemErrorOrderByWithAggregationInput | SystemErrorOrderByWithAggregationInput[]
+    by: SystemErrorScalarFieldEnum[] | SystemErrorScalarFieldEnum
+    having?: SystemErrorScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: ErrorLogCountAggregateInputType | true
-    _min?: ErrorLogMinAggregateInputType
-    _max?: ErrorLogMaxAggregateInputType
+    _count?: SystemErrorCountAggregateInputType | true
+    _min?: SystemErrorMinAggregateInputType
+    _max?: SystemErrorMaxAggregateInputType
   }
 
-  export type ErrorLogGroupByOutputType = {
+  export type SystemErrorGroupByOutputType = {
     id: string
     type: string
     context: string
@@ -21781,26 +21781,26 @@ export namespace Prisma {
     solvedBy: string | null
     problemLevel: string | null
     timestamp: Date
-    _count: ErrorLogCountAggregateOutputType | null
-    _min: ErrorLogMinAggregateOutputType | null
-    _max: ErrorLogMaxAggregateOutputType | null
+    _count: SystemErrorCountAggregateOutputType | null
+    _min: SystemErrorMinAggregateOutputType | null
+    _max: SystemErrorMaxAggregateOutputType | null
   }
 
-  type GetErrorLogGroupByPayload<T extends ErrorLogGroupByArgs> = Prisma.PrismaPromise<
+  type GetSystemErrorGroupByPayload<T extends SystemErrorGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<ErrorLogGroupByOutputType, T['by']> &
+      PickEnumerable<SystemErrorGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof ErrorLogGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof SystemErrorGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], ErrorLogGroupByOutputType[P]>
-            : GetScalarType<T[P], ErrorLogGroupByOutputType[P]>
+              : GetScalarType<T[P], SystemErrorGroupByOutputType[P]>
+            : GetScalarType<T[P], SystemErrorGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type ErrorLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SystemErrorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     type?: boolean
     context?: boolean
@@ -21814,10 +21814,10 @@ export namespace Prisma {
     solvedBy?: boolean
     problemLevel?: boolean
     timestamp?: boolean
-    account?: boolean | ErrorLog$accountArgs<ExtArgs>
-  }, ExtArgs["result"]["errorLog"]>
+    account?: boolean | SystemError$accountArgs<ExtArgs>
+  }, ExtArgs["result"]["systemError"]>
 
-  export type ErrorLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SystemErrorSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     type?: boolean
     context?: boolean
@@ -21831,10 +21831,10 @@ export namespace Prisma {
     solvedBy?: boolean
     problemLevel?: boolean
     timestamp?: boolean
-    account?: boolean | ErrorLog$accountArgs<ExtArgs>
-  }, ExtArgs["result"]["errorLog"]>
+    account?: boolean | SystemError$accountArgs<ExtArgs>
+  }, ExtArgs["result"]["systemError"]>
 
-  export type ErrorLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SystemErrorSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     type?: boolean
     context?: boolean
@@ -21848,10 +21848,10 @@ export namespace Prisma {
     solvedBy?: boolean
     problemLevel?: boolean
     timestamp?: boolean
-    account?: boolean | ErrorLog$accountArgs<ExtArgs>
-  }, ExtArgs["result"]["errorLog"]>
+    account?: boolean | SystemError$accountArgs<ExtArgs>
+  }, ExtArgs["result"]["systemError"]>
 
-  export type ErrorLogSelectScalar = {
+  export type SystemErrorSelectScalar = {
     id?: boolean
     type?: boolean
     context?: boolean
@@ -21867,19 +21867,19 @@ export namespace Prisma {
     timestamp?: boolean
   }
 
-  export type ErrorLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "context" | "message" | "status" | "accountId" | "ipAddress" | "geolocation" | "reproSteps" | "solution" | "solvedBy" | "problemLevel" | "timestamp", ExtArgs["result"]["errorLog"]>
-  export type ErrorLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | ErrorLog$accountArgs<ExtArgs>
+  export type SystemErrorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "context" | "message" | "status" | "accountId" | "ipAddress" | "geolocation" | "reproSteps" | "solution" | "solvedBy" | "problemLevel" | "timestamp", ExtArgs["result"]["systemError"]>
+  export type SystemErrorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    account?: boolean | SystemError$accountArgs<ExtArgs>
   }
-  export type ErrorLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | ErrorLog$accountArgs<ExtArgs>
+  export type SystemErrorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    account?: boolean | SystemError$accountArgs<ExtArgs>
   }
-  export type ErrorLogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | ErrorLog$accountArgs<ExtArgs>
+  export type SystemErrorIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    account?: boolean | SystemError$accountArgs<ExtArgs>
   }
 
-  export type $ErrorLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "ErrorLog"
+  export type $SystemErrorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SystemError"
     objects: {
       account: Prisma.$AccountPayload<ExtArgs> | null
     }
@@ -21897,136 +21897,136 @@ export namespace Prisma {
       solvedBy: string | null
       problemLevel: string | null
       timestamp: Date
-    }, ExtArgs["result"]["errorLog"]>
+    }, ExtArgs["result"]["systemError"]>
     composites: {}
   }
 
-  type ErrorLogGetPayload<S extends boolean | null | undefined | ErrorLogDefaultArgs> = $Result.GetResult<Prisma.$ErrorLogPayload, S>
+  type SystemErrorGetPayload<S extends boolean | null | undefined | SystemErrorDefaultArgs> = $Result.GetResult<Prisma.$SystemErrorPayload, S>
 
-  type ErrorLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ErrorLogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ErrorLogCountAggregateInputType | true
+  type SystemErrorCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SystemErrorFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SystemErrorCountAggregateInputType | true
     }
 
-  export interface ErrorLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ErrorLog'], meta: { name: 'ErrorLog' } }
+  export interface SystemErrorDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SystemError'], meta: { name: 'SystemError' } }
     /**
-     * Find zero or one ErrorLog that matches the filter.
-     * @param {ErrorLogFindUniqueArgs} args - Arguments to find a ErrorLog
+     * Find zero or one SystemError that matches the filter.
+     * @param {SystemErrorFindUniqueArgs} args - Arguments to find a SystemError
      * @example
-     * // Get one ErrorLog
-     * const errorLog = await prisma.errorLog.findUnique({
+     * // Get one SystemError
+     * const systemError = await prisma.systemError.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends ErrorLogFindUniqueArgs>(args: SelectSubset<T, ErrorLogFindUniqueArgs<ExtArgs>>): Prisma__ErrorLogClient<$Result.GetResult<Prisma.$ErrorLogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends SystemErrorFindUniqueArgs>(args: SelectSubset<T, SystemErrorFindUniqueArgs<ExtArgs>>): Prisma__SystemErrorClient<$Result.GetResult<Prisma.$SystemErrorPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one ErrorLog that matches the filter or throw an error with `error.code='P2025'`
+     * Find one SystemError that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {ErrorLogFindUniqueOrThrowArgs} args - Arguments to find a ErrorLog
+     * @param {SystemErrorFindUniqueOrThrowArgs} args - Arguments to find a SystemError
      * @example
-     * // Get one ErrorLog
-     * const errorLog = await prisma.errorLog.findUniqueOrThrow({
+     * // Get one SystemError
+     * const systemError = await prisma.systemError.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends ErrorLogFindUniqueOrThrowArgs>(args: SelectSubset<T, ErrorLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ErrorLogClient<$Result.GetResult<Prisma.$ErrorLogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends SystemErrorFindUniqueOrThrowArgs>(args: SelectSubset<T, SystemErrorFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SystemErrorClient<$Result.GetResult<Prisma.$SystemErrorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first ErrorLog that matches the filter.
+     * Find the first SystemError that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ErrorLogFindFirstArgs} args - Arguments to find a ErrorLog
+     * @param {SystemErrorFindFirstArgs} args - Arguments to find a SystemError
      * @example
-     * // Get one ErrorLog
-     * const errorLog = await prisma.errorLog.findFirst({
+     * // Get one SystemError
+     * const systemError = await prisma.systemError.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends ErrorLogFindFirstArgs>(args?: SelectSubset<T, ErrorLogFindFirstArgs<ExtArgs>>): Prisma__ErrorLogClient<$Result.GetResult<Prisma.$ErrorLogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends SystemErrorFindFirstArgs>(args?: SelectSubset<T, SystemErrorFindFirstArgs<ExtArgs>>): Prisma__SystemErrorClient<$Result.GetResult<Prisma.$SystemErrorPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first ErrorLog that matches the filter or
+     * Find the first SystemError that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ErrorLogFindFirstOrThrowArgs} args - Arguments to find a ErrorLog
+     * @param {SystemErrorFindFirstOrThrowArgs} args - Arguments to find a SystemError
      * @example
-     * // Get one ErrorLog
-     * const errorLog = await prisma.errorLog.findFirstOrThrow({
+     * // Get one SystemError
+     * const systemError = await prisma.systemError.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends ErrorLogFindFirstOrThrowArgs>(args?: SelectSubset<T, ErrorLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__ErrorLogClient<$Result.GetResult<Prisma.$ErrorLogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends SystemErrorFindFirstOrThrowArgs>(args?: SelectSubset<T, SystemErrorFindFirstOrThrowArgs<ExtArgs>>): Prisma__SystemErrorClient<$Result.GetResult<Prisma.$SystemErrorPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more ErrorLogs that matches the filter.
+     * Find zero or more SystemErrors that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ErrorLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {SystemErrorFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all ErrorLogs
-     * const errorLogs = await prisma.errorLog.findMany()
+     * // Get all SystemErrors
+     * const systemErrors = await prisma.systemError.findMany()
      * 
-     * // Get first 10 ErrorLogs
-     * const errorLogs = await prisma.errorLog.findMany({ take: 10 })
+     * // Get first 10 SystemErrors
+     * const systemErrors = await prisma.systemError.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const errorLogWithIdOnly = await prisma.errorLog.findMany({ select: { id: true } })
+     * const systemErrorWithIdOnly = await prisma.systemError.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends ErrorLogFindManyArgs>(args?: SelectSubset<T, ErrorLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErrorLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends SystemErrorFindManyArgs>(args?: SelectSubset<T, SystemErrorFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemErrorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a ErrorLog.
-     * @param {ErrorLogCreateArgs} args - Arguments to create a ErrorLog.
+     * Create a SystemError.
+     * @param {SystemErrorCreateArgs} args - Arguments to create a SystemError.
      * @example
-     * // Create one ErrorLog
-     * const ErrorLog = await prisma.errorLog.create({
+     * // Create one SystemError
+     * const SystemError = await prisma.systemError.create({
      *   data: {
-     *     // ... data to create a ErrorLog
+     *     // ... data to create a SystemError
      *   }
      * })
      * 
      */
-    create<T extends ErrorLogCreateArgs>(args: SelectSubset<T, ErrorLogCreateArgs<ExtArgs>>): Prisma__ErrorLogClient<$Result.GetResult<Prisma.$ErrorLogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends SystemErrorCreateArgs>(args: SelectSubset<T, SystemErrorCreateArgs<ExtArgs>>): Prisma__SystemErrorClient<$Result.GetResult<Prisma.$SystemErrorPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many ErrorLogs.
-     * @param {ErrorLogCreateManyArgs} args - Arguments to create many ErrorLogs.
+     * Create many SystemErrors.
+     * @param {SystemErrorCreateManyArgs} args - Arguments to create many SystemErrors.
      * @example
-     * // Create many ErrorLogs
-     * const errorLog = await prisma.errorLog.createMany({
+     * // Create many SystemErrors
+     * const systemError = await prisma.systemError.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends ErrorLogCreateManyArgs>(args?: SelectSubset<T, ErrorLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends SystemErrorCreateManyArgs>(args?: SelectSubset<T, SystemErrorCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many ErrorLogs and returns the data saved in the database.
-     * @param {ErrorLogCreateManyAndReturnArgs} args - Arguments to create many ErrorLogs.
+     * Create many SystemErrors and returns the data saved in the database.
+     * @param {SystemErrorCreateManyAndReturnArgs} args - Arguments to create many SystemErrors.
      * @example
-     * // Create many ErrorLogs
-     * const errorLog = await prisma.errorLog.createManyAndReturn({
+     * // Create many SystemErrors
+     * const systemError = await prisma.systemError.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many ErrorLogs and only return the `id`
-     * const errorLogWithIdOnly = await prisma.errorLog.createManyAndReturn({
+     * // Create many SystemErrors and only return the `id`
+     * const systemErrorWithIdOnly = await prisma.systemError.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -22036,28 +22036,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends ErrorLogCreateManyAndReturnArgs>(args?: SelectSubset<T, ErrorLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErrorLogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends SystemErrorCreateManyAndReturnArgs>(args?: SelectSubset<T, SystemErrorCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemErrorPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a ErrorLog.
-     * @param {ErrorLogDeleteArgs} args - Arguments to delete one ErrorLog.
+     * Delete a SystemError.
+     * @param {SystemErrorDeleteArgs} args - Arguments to delete one SystemError.
      * @example
-     * // Delete one ErrorLog
-     * const ErrorLog = await prisma.errorLog.delete({
+     * // Delete one SystemError
+     * const SystemError = await prisma.systemError.delete({
      *   where: {
-     *     // ... filter to delete one ErrorLog
+     *     // ... filter to delete one SystemError
      *   }
      * })
      * 
      */
-    delete<T extends ErrorLogDeleteArgs>(args: SelectSubset<T, ErrorLogDeleteArgs<ExtArgs>>): Prisma__ErrorLogClient<$Result.GetResult<Prisma.$ErrorLogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends SystemErrorDeleteArgs>(args: SelectSubset<T, SystemErrorDeleteArgs<ExtArgs>>): Prisma__SystemErrorClient<$Result.GetResult<Prisma.$SystemErrorPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one ErrorLog.
-     * @param {ErrorLogUpdateArgs} args - Arguments to update one ErrorLog.
+     * Update one SystemError.
+     * @param {SystemErrorUpdateArgs} args - Arguments to update one SystemError.
      * @example
-     * // Update one ErrorLog
-     * const errorLog = await prisma.errorLog.update({
+     * // Update one SystemError
+     * const systemError = await prisma.systemError.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -22067,30 +22067,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends ErrorLogUpdateArgs>(args: SelectSubset<T, ErrorLogUpdateArgs<ExtArgs>>): Prisma__ErrorLogClient<$Result.GetResult<Prisma.$ErrorLogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends SystemErrorUpdateArgs>(args: SelectSubset<T, SystemErrorUpdateArgs<ExtArgs>>): Prisma__SystemErrorClient<$Result.GetResult<Prisma.$SystemErrorPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more ErrorLogs.
-     * @param {ErrorLogDeleteManyArgs} args - Arguments to filter ErrorLogs to delete.
+     * Delete zero or more SystemErrors.
+     * @param {SystemErrorDeleteManyArgs} args - Arguments to filter SystemErrors to delete.
      * @example
-     * // Delete a few ErrorLogs
-     * const { count } = await prisma.errorLog.deleteMany({
+     * // Delete a few SystemErrors
+     * const { count } = await prisma.systemError.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends ErrorLogDeleteManyArgs>(args?: SelectSubset<T, ErrorLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends SystemErrorDeleteManyArgs>(args?: SelectSubset<T, SystemErrorDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more ErrorLogs.
+     * Update zero or more SystemErrors.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ErrorLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {SystemErrorUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many ErrorLogs
-     * const errorLog = await prisma.errorLog.updateMany({
+     * // Update many SystemErrors
+     * const systemError = await prisma.systemError.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -22100,14 +22100,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends ErrorLogUpdateManyArgs>(args: SelectSubset<T, ErrorLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends SystemErrorUpdateManyArgs>(args: SelectSubset<T, SystemErrorUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more ErrorLogs and returns the data updated in the database.
-     * @param {ErrorLogUpdateManyAndReturnArgs} args - Arguments to update many ErrorLogs.
+     * Update zero or more SystemErrors and returns the data updated in the database.
+     * @param {SystemErrorUpdateManyAndReturnArgs} args - Arguments to update many SystemErrors.
      * @example
-     * // Update many ErrorLogs
-     * const errorLog = await prisma.errorLog.updateManyAndReturn({
+     * // Update many SystemErrors
+     * const systemError = await prisma.systemError.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -22116,8 +22116,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more ErrorLogs and only return the `id`
-     * const errorLogWithIdOnly = await prisma.errorLog.updateManyAndReturn({
+     * // Update zero or more SystemErrors and only return the `id`
+     * const systemErrorWithIdOnly = await prisma.systemError.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -22130,56 +22130,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends ErrorLogUpdateManyAndReturnArgs>(args: SelectSubset<T, ErrorLogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErrorLogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends SystemErrorUpdateManyAndReturnArgs>(args: SelectSubset<T, SystemErrorUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemErrorPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one ErrorLog.
-     * @param {ErrorLogUpsertArgs} args - Arguments to update or create a ErrorLog.
+     * Create or update one SystemError.
+     * @param {SystemErrorUpsertArgs} args - Arguments to update or create a SystemError.
      * @example
-     * // Update or create a ErrorLog
-     * const errorLog = await prisma.errorLog.upsert({
+     * // Update or create a SystemError
+     * const systemError = await prisma.systemError.upsert({
      *   create: {
-     *     // ... data to create a ErrorLog
+     *     // ... data to create a SystemError
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the ErrorLog we want to update
+     *     // ... the filter for the SystemError we want to update
      *   }
      * })
      */
-    upsert<T extends ErrorLogUpsertArgs>(args: SelectSubset<T, ErrorLogUpsertArgs<ExtArgs>>): Prisma__ErrorLogClient<$Result.GetResult<Prisma.$ErrorLogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends SystemErrorUpsertArgs>(args: SelectSubset<T, SystemErrorUpsertArgs<ExtArgs>>): Prisma__SystemErrorClient<$Result.GetResult<Prisma.$SystemErrorPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of ErrorLogs.
+     * Count the number of SystemErrors.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ErrorLogCountArgs} args - Arguments to filter ErrorLogs to count.
+     * @param {SystemErrorCountArgs} args - Arguments to filter SystemErrors to count.
      * @example
-     * // Count the number of ErrorLogs
-     * const count = await prisma.errorLog.count({
+     * // Count the number of SystemErrors
+     * const count = await prisma.systemError.count({
      *   where: {
-     *     // ... the filter for the ErrorLogs we want to count
+     *     // ... the filter for the SystemErrors we want to count
      *   }
      * })
     **/
-    count<T extends ErrorLogCountArgs>(
-      args?: Subset<T, ErrorLogCountArgs>,
+    count<T extends SystemErrorCountArgs>(
+      args?: Subset<T, SystemErrorCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], ErrorLogCountAggregateOutputType>
+          : GetScalarType<T['select'], SystemErrorCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a ErrorLog.
+     * Allows you to perform aggregations operations on a SystemError.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ErrorLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {SystemErrorAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -22199,13 +22199,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends ErrorLogAggregateArgs>(args: Subset<T, ErrorLogAggregateArgs>): Prisma.PrismaPromise<GetErrorLogAggregateType<T>>
+    aggregate<T extends SystemErrorAggregateArgs>(args: Subset<T, SystemErrorAggregateArgs>): Prisma.PrismaPromise<GetSystemErrorAggregateType<T>>
 
     /**
-     * Group by ErrorLog.
+     * Group by SystemError.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ErrorLogGroupByArgs} args - Group by arguments.
+     * @param {SystemErrorGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -22220,14 +22220,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends ErrorLogGroupByArgs,
+      T extends SystemErrorGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ErrorLogGroupByArgs['orderBy'] }
-        : { orderBy?: ErrorLogGroupByArgs['orderBy'] },
+        ? { orderBy: SystemErrorGroupByArgs['orderBy'] }
+        : { orderBy?: SystemErrorGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -22276,22 +22276,22 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, ErrorLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetErrorLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, SystemErrorGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSystemErrorGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the ErrorLog model
+   * Fields of the SystemError model
    */
-  readonly fields: ErrorLogFieldRefs;
+  readonly fields: SystemErrorFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for ErrorLog.
+   * The delegate class that acts as a "Promise-like" for SystemError.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__ErrorLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__SystemErrorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    account<T extends ErrorLog$accountArgs<ExtArgs> = {}>(args?: Subset<T, ErrorLog$accountArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    account<T extends SystemError$accountArgs<ExtArgs> = {}>(args?: Subset<T, SystemError$accountArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -22318,421 +22318,421 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the ErrorLog model
+   * Fields of the SystemError model
    */
-  interface ErrorLogFieldRefs {
-    readonly id: FieldRef<"ErrorLog", 'String'>
-    readonly type: FieldRef<"ErrorLog", 'String'>
-    readonly context: FieldRef<"ErrorLog", 'String'>
-    readonly message: FieldRef<"ErrorLog", 'String'>
-    readonly status: FieldRef<"ErrorLog", 'String'>
-    readonly accountId: FieldRef<"ErrorLog", 'String'>
-    readonly ipAddress: FieldRef<"ErrorLog", 'String'>
-    readonly geolocation: FieldRef<"ErrorLog", 'String'>
-    readonly reproSteps: FieldRef<"ErrorLog", 'String'>
-    readonly solution: FieldRef<"ErrorLog", 'String'>
-    readonly solvedBy: FieldRef<"ErrorLog", 'String'>
-    readonly problemLevel: FieldRef<"ErrorLog", 'String'>
-    readonly timestamp: FieldRef<"ErrorLog", 'DateTime'>
+  interface SystemErrorFieldRefs {
+    readonly id: FieldRef<"SystemError", 'String'>
+    readonly type: FieldRef<"SystemError", 'String'>
+    readonly context: FieldRef<"SystemError", 'String'>
+    readonly message: FieldRef<"SystemError", 'String'>
+    readonly status: FieldRef<"SystemError", 'String'>
+    readonly accountId: FieldRef<"SystemError", 'String'>
+    readonly ipAddress: FieldRef<"SystemError", 'String'>
+    readonly geolocation: FieldRef<"SystemError", 'String'>
+    readonly reproSteps: FieldRef<"SystemError", 'String'>
+    readonly solution: FieldRef<"SystemError", 'String'>
+    readonly solvedBy: FieldRef<"SystemError", 'String'>
+    readonly problemLevel: FieldRef<"SystemError", 'String'>
+    readonly timestamp: FieldRef<"SystemError", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * ErrorLog findUnique
+   * SystemError findUnique
    */
-  export type ErrorLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SystemErrorFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ErrorLog
+     * Select specific fields to fetch from the SystemError
      */
-    select?: ErrorLogSelect<ExtArgs> | null
+    select?: SystemErrorSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ErrorLog
+     * Omit specific fields from the SystemError
      */
-    omit?: ErrorLogOmit<ExtArgs> | null
+    omit?: SystemErrorOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ErrorLogInclude<ExtArgs> | null
+    include?: SystemErrorInclude<ExtArgs> | null
     /**
-     * Filter, which ErrorLog to fetch.
+     * Filter, which SystemError to fetch.
      */
-    where: ErrorLogWhereUniqueInput
+    where: SystemErrorWhereUniqueInput
   }
 
   /**
-   * ErrorLog findUniqueOrThrow
+   * SystemError findUniqueOrThrow
    */
-  export type ErrorLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SystemErrorFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ErrorLog
+     * Select specific fields to fetch from the SystemError
      */
-    select?: ErrorLogSelect<ExtArgs> | null
+    select?: SystemErrorSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ErrorLog
+     * Omit specific fields from the SystemError
      */
-    omit?: ErrorLogOmit<ExtArgs> | null
+    omit?: SystemErrorOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ErrorLogInclude<ExtArgs> | null
+    include?: SystemErrorInclude<ExtArgs> | null
     /**
-     * Filter, which ErrorLog to fetch.
+     * Filter, which SystemError to fetch.
      */
-    where: ErrorLogWhereUniqueInput
+    where: SystemErrorWhereUniqueInput
   }
 
   /**
-   * ErrorLog findFirst
+   * SystemError findFirst
    */
-  export type ErrorLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SystemErrorFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ErrorLog
+     * Select specific fields to fetch from the SystemError
      */
-    select?: ErrorLogSelect<ExtArgs> | null
+    select?: SystemErrorSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ErrorLog
+     * Omit specific fields from the SystemError
      */
-    omit?: ErrorLogOmit<ExtArgs> | null
+    omit?: SystemErrorOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ErrorLogInclude<ExtArgs> | null
+    include?: SystemErrorInclude<ExtArgs> | null
     /**
-     * Filter, which ErrorLog to fetch.
+     * Filter, which SystemError to fetch.
      */
-    where?: ErrorLogWhereInput
+    where?: SystemErrorWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of ErrorLogs to fetch.
+     * Determine the order of SystemErrors to fetch.
      */
-    orderBy?: ErrorLogOrderByWithRelationInput | ErrorLogOrderByWithRelationInput[]
+    orderBy?: SystemErrorOrderByWithRelationInput | SystemErrorOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for ErrorLogs.
+     * Sets the position for searching for SystemErrors.
      */
-    cursor?: ErrorLogWhereUniqueInput
+    cursor?: SystemErrorWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` ErrorLogs from the position of the cursor.
+     * Take `±n` SystemErrors from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` ErrorLogs.
+     * Skip the first `n` SystemErrors.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of ErrorLogs.
+     * Filter by unique combinations of SystemErrors.
      */
-    distinct?: ErrorLogScalarFieldEnum | ErrorLogScalarFieldEnum[]
+    distinct?: SystemErrorScalarFieldEnum | SystemErrorScalarFieldEnum[]
   }
 
   /**
-   * ErrorLog findFirstOrThrow
+   * SystemError findFirstOrThrow
    */
-  export type ErrorLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SystemErrorFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ErrorLog
+     * Select specific fields to fetch from the SystemError
      */
-    select?: ErrorLogSelect<ExtArgs> | null
+    select?: SystemErrorSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ErrorLog
+     * Omit specific fields from the SystemError
      */
-    omit?: ErrorLogOmit<ExtArgs> | null
+    omit?: SystemErrorOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ErrorLogInclude<ExtArgs> | null
+    include?: SystemErrorInclude<ExtArgs> | null
     /**
-     * Filter, which ErrorLog to fetch.
+     * Filter, which SystemError to fetch.
      */
-    where?: ErrorLogWhereInput
+    where?: SystemErrorWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of ErrorLogs to fetch.
+     * Determine the order of SystemErrors to fetch.
      */
-    orderBy?: ErrorLogOrderByWithRelationInput | ErrorLogOrderByWithRelationInput[]
+    orderBy?: SystemErrorOrderByWithRelationInput | SystemErrorOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for ErrorLogs.
+     * Sets the position for searching for SystemErrors.
      */
-    cursor?: ErrorLogWhereUniqueInput
+    cursor?: SystemErrorWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` ErrorLogs from the position of the cursor.
+     * Take `±n` SystemErrors from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` ErrorLogs.
+     * Skip the first `n` SystemErrors.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of ErrorLogs.
+     * Filter by unique combinations of SystemErrors.
      */
-    distinct?: ErrorLogScalarFieldEnum | ErrorLogScalarFieldEnum[]
+    distinct?: SystemErrorScalarFieldEnum | SystemErrorScalarFieldEnum[]
   }
 
   /**
-   * ErrorLog findMany
+   * SystemError findMany
    */
-  export type ErrorLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SystemErrorFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ErrorLog
+     * Select specific fields to fetch from the SystemError
      */
-    select?: ErrorLogSelect<ExtArgs> | null
+    select?: SystemErrorSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ErrorLog
+     * Omit specific fields from the SystemError
      */
-    omit?: ErrorLogOmit<ExtArgs> | null
+    omit?: SystemErrorOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ErrorLogInclude<ExtArgs> | null
+    include?: SystemErrorInclude<ExtArgs> | null
     /**
-     * Filter, which ErrorLogs to fetch.
+     * Filter, which SystemErrors to fetch.
      */
-    where?: ErrorLogWhereInput
+    where?: SystemErrorWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of ErrorLogs to fetch.
+     * Determine the order of SystemErrors to fetch.
      */
-    orderBy?: ErrorLogOrderByWithRelationInput | ErrorLogOrderByWithRelationInput[]
+    orderBy?: SystemErrorOrderByWithRelationInput | SystemErrorOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing ErrorLogs.
+     * Sets the position for listing SystemErrors.
      */
-    cursor?: ErrorLogWhereUniqueInput
+    cursor?: SystemErrorWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` ErrorLogs from the position of the cursor.
+     * Take `±n` SystemErrors from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` ErrorLogs.
+     * Skip the first `n` SystemErrors.
      */
     skip?: number
-    distinct?: ErrorLogScalarFieldEnum | ErrorLogScalarFieldEnum[]
+    distinct?: SystemErrorScalarFieldEnum | SystemErrorScalarFieldEnum[]
   }
 
   /**
-   * ErrorLog create
+   * SystemError create
    */
-  export type ErrorLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SystemErrorCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ErrorLog
+     * Select specific fields to fetch from the SystemError
      */
-    select?: ErrorLogSelect<ExtArgs> | null
+    select?: SystemErrorSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ErrorLog
+     * Omit specific fields from the SystemError
      */
-    omit?: ErrorLogOmit<ExtArgs> | null
+    omit?: SystemErrorOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ErrorLogInclude<ExtArgs> | null
+    include?: SystemErrorInclude<ExtArgs> | null
     /**
-     * The data needed to create a ErrorLog.
+     * The data needed to create a SystemError.
      */
-    data: XOR<ErrorLogCreateInput, ErrorLogUncheckedCreateInput>
+    data: XOR<SystemErrorCreateInput, SystemErrorUncheckedCreateInput>
   }
 
   /**
-   * ErrorLog createMany
+   * SystemError createMany
    */
-  export type ErrorLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SystemErrorCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many ErrorLogs.
+     * The data used to create many SystemErrors.
      */
-    data: ErrorLogCreateManyInput | ErrorLogCreateManyInput[]
+    data: SystemErrorCreateManyInput | SystemErrorCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * ErrorLog createManyAndReturn
+   * SystemError createManyAndReturn
    */
-  export type ErrorLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SystemErrorCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ErrorLog
+     * Select specific fields to fetch from the SystemError
      */
-    select?: ErrorLogSelectCreateManyAndReturn<ExtArgs> | null
+    select?: SystemErrorSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the ErrorLog
+     * Omit specific fields from the SystemError
      */
-    omit?: ErrorLogOmit<ExtArgs> | null
+    omit?: SystemErrorOmit<ExtArgs> | null
     /**
-     * The data used to create many ErrorLogs.
+     * The data used to create many SystemErrors.
      */
-    data: ErrorLogCreateManyInput | ErrorLogCreateManyInput[]
+    data: SystemErrorCreateManyInput | SystemErrorCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ErrorLogIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: SystemErrorIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * ErrorLog update
+   * SystemError update
    */
-  export type ErrorLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SystemErrorUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ErrorLog
+     * Select specific fields to fetch from the SystemError
      */
-    select?: ErrorLogSelect<ExtArgs> | null
+    select?: SystemErrorSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ErrorLog
+     * Omit specific fields from the SystemError
      */
-    omit?: ErrorLogOmit<ExtArgs> | null
+    omit?: SystemErrorOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ErrorLogInclude<ExtArgs> | null
+    include?: SystemErrorInclude<ExtArgs> | null
     /**
-     * The data needed to update a ErrorLog.
+     * The data needed to update a SystemError.
      */
-    data: XOR<ErrorLogUpdateInput, ErrorLogUncheckedUpdateInput>
+    data: XOR<SystemErrorUpdateInput, SystemErrorUncheckedUpdateInput>
     /**
-     * Choose, which ErrorLog to update.
+     * Choose, which SystemError to update.
      */
-    where: ErrorLogWhereUniqueInput
+    where: SystemErrorWhereUniqueInput
   }
 
   /**
-   * ErrorLog updateMany
+   * SystemError updateMany
    */
-  export type ErrorLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SystemErrorUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update ErrorLogs.
+     * The data used to update SystemErrors.
      */
-    data: XOR<ErrorLogUpdateManyMutationInput, ErrorLogUncheckedUpdateManyInput>
+    data: XOR<SystemErrorUpdateManyMutationInput, SystemErrorUncheckedUpdateManyInput>
     /**
-     * Filter which ErrorLogs to update
+     * Filter which SystemErrors to update
      */
-    where?: ErrorLogWhereInput
+    where?: SystemErrorWhereInput
     /**
-     * Limit how many ErrorLogs to update.
+     * Limit how many SystemErrors to update.
      */
     limit?: number
   }
 
   /**
-   * ErrorLog updateManyAndReturn
+   * SystemError updateManyAndReturn
    */
-  export type ErrorLogUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SystemErrorUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ErrorLog
+     * Select specific fields to fetch from the SystemError
      */
-    select?: ErrorLogSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: SystemErrorSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the ErrorLog
+     * Omit specific fields from the SystemError
      */
-    omit?: ErrorLogOmit<ExtArgs> | null
+    omit?: SystemErrorOmit<ExtArgs> | null
     /**
-     * The data used to update ErrorLogs.
+     * The data used to update SystemErrors.
      */
-    data: XOR<ErrorLogUpdateManyMutationInput, ErrorLogUncheckedUpdateManyInput>
+    data: XOR<SystemErrorUpdateManyMutationInput, SystemErrorUncheckedUpdateManyInput>
     /**
-     * Filter which ErrorLogs to update
+     * Filter which SystemErrors to update
      */
-    where?: ErrorLogWhereInput
+    where?: SystemErrorWhereInput
     /**
-     * Limit how many ErrorLogs to update.
+     * Limit how many SystemErrors to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ErrorLogIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: SystemErrorIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * ErrorLog upsert
+   * SystemError upsert
    */
-  export type ErrorLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SystemErrorUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ErrorLog
+     * Select specific fields to fetch from the SystemError
      */
-    select?: ErrorLogSelect<ExtArgs> | null
+    select?: SystemErrorSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ErrorLog
+     * Omit specific fields from the SystemError
      */
-    omit?: ErrorLogOmit<ExtArgs> | null
+    omit?: SystemErrorOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ErrorLogInclude<ExtArgs> | null
+    include?: SystemErrorInclude<ExtArgs> | null
     /**
-     * The filter to search for the ErrorLog to update in case it exists.
+     * The filter to search for the SystemError to update in case it exists.
      */
-    where: ErrorLogWhereUniqueInput
+    where: SystemErrorWhereUniqueInput
     /**
-     * In case the ErrorLog found by the `where` argument doesn't exist, create a new ErrorLog with this data.
+     * In case the SystemError found by the `where` argument doesn't exist, create a new SystemError with this data.
      */
-    create: XOR<ErrorLogCreateInput, ErrorLogUncheckedCreateInput>
+    create: XOR<SystemErrorCreateInput, SystemErrorUncheckedCreateInput>
     /**
-     * In case the ErrorLog was found with the provided `where` argument, update it with this data.
+     * In case the SystemError was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<ErrorLogUpdateInput, ErrorLogUncheckedUpdateInput>
+    update: XOR<SystemErrorUpdateInput, SystemErrorUncheckedUpdateInput>
   }
 
   /**
-   * ErrorLog delete
+   * SystemError delete
    */
-  export type ErrorLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SystemErrorDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ErrorLog
+     * Select specific fields to fetch from the SystemError
      */
-    select?: ErrorLogSelect<ExtArgs> | null
+    select?: SystemErrorSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ErrorLog
+     * Omit specific fields from the SystemError
      */
-    omit?: ErrorLogOmit<ExtArgs> | null
+    omit?: SystemErrorOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ErrorLogInclude<ExtArgs> | null
+    include?: SystemErrorInclude<ExtArgs> | null
     /**
-     * Filter which ErrorLog to delete.
+     * Filter which SystemError to delete.
      */
-    where: ErrorLogWhereUniqueInput
+    where: SystemErrorWhereUniqueInput
   }
 
   /**
-   * ErrorLog deleteMany
+   * SystemError deleteMany
    */
-  export type ErrorLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SystemErrorDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which ErrorLogs to delete
+     * Filter which SystemErrors to delete
      */
-    where?: ErrorLogWhereInput
+    where?: SystemErrorWhereInput
     /**
-     * Limit how many ErrorLogs to delete.
+     * Limit how many SystemErrors to delete.
      */
     limit?: number
   }
 
   /**
-   * ErrorLog.account
+   * SystemError.account
    */
-  export type ErrorLog$accountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SystemError$accountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Account
      */
@@ -22749,21 +22749,21 @@ export namespace Prisma {
   }
 
   /**
-   * ErrorLog without action
+   * SystemError without action
    */
-  export type ErrorLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SystemErrorDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ErrorLog
+     * Select specific fields to fetch from the SystemError
      */
-    select?: ErrorLogSelect<ExtArgs> | null
+    select?: SystemErrorSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ErrorLog
+     * Omit specific fields from the SystemError
      */
-    omit?: ErrorLogOmit<ExtArgs> | null
+    omit?: SystemErrorOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ErrorLogInclude<ExtArgs> | null
+    include?: SystemErrorInclude<ExtArgs> | null
   }
 
 
@@ -32767,7 +32767,7 @@ export namespace Prisma {
   export type AuthRequestScalarFieldEnum = (typeof AuthRequestScalarFieldEnum)[keyof typeof AuthRequestScalarFieldEnum]
 
 
-  export const ActivityLogScalarFieldEnum: {
+  export const ActivityScalarFieldEnum: {
     id: 'id',
     targetAccountId: 'targetAccountId',
     actorAccountId: 'actorAccountId',
@@ -32778,7 +32778,7 @@ export namespace Prisma {
     geolocation: 'geolocation'
   };
 
-  export type ActivityLogScalarFieldEnum = (typeof ActivityLogScalarFieldEnum)[keyof typeof ActivityLogScalarFieldEnum]
+  export type ActivityScalarFieldEnum = (typeof ActivityScalarFieldEnum)[keyof typeof ActivityScalarFieldEnum]
 
 
   export const NotificationScalarFieldEnum: {
@@ -32919,7 +32919,7 @@ export namespace Prisma {
   export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
 
 
-  export const ErrorLogScalarFieldEnum: {
+  export const SystemErrorScalarFieldEnum: {
     id: 'id',
     type: 'type',
     context: 'context',
@@ -32935,7 +32935,7 @@ export namespace Prisma {
     timestamp: 'timestamp'
   };
 
-  export type ErrorLogScalarFieldEnum = (typeof ErrorLogScalarFieldEnum)[keyof typeof ErrorLogScalarFieldEnum]
+  export type SystemErrorScalarFieldEnum = (typeof SystemErrorScalarFieldEnum)[keyof typeof SystemErrorScalarFieldEnum]
 
 
   export const ApplicationScalarFieldEnum: {
@@ -33227,7 +33227,7 @@ export namespace Prisma {
     permits?: PermitListRelationFilter
     targetPermits?: PermitListRelationFilter
     sessions?: SessionListRelationFilter
-    errorLogs?: ErrorLogListRelationFilter
+    errorLogs?: SystemErrorListRelationFilter
     appConnections?: UserAppConnectionListRelationFilter
     appAuthentications?: AppAuthenticationListRelationFilter
     appSessions?: AppSessionListRelationFilter
@@ -33260,7 +33260,7 @@ export namespace Prisma {
     permits?: PermitOrderByRelationAggregateInput
     targetPermits?: PermitOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
-    errorLogs?: ErrorLogOrderByRelationAggregateInput
+    errorLogs?: SystemErrorOrderByRelationAggregateInput
     appConnections?: UserAppConnectionOrderByRelationAggregateInput
     appAuthentications?: AppAuthenticationOrderByRelationAggregateInput
     appSessions?: AppSessionOrderByRelationAggregateInput
@@ -33296,7 +33296,7 @@ export namespace Prisma {
     permits?: PermitListRelationFilter
     targetPermits?: PermitListRelationFilter
     sessions?: SessionListRelationFilter
-    errorLogs?: ErrorLogListRelationFilter
+    errorLogs?: SystemErrorListRelationFilter
     appConnections?: UserAppConnectionListRelationFilter
     appAuthentications?: AppAuthenticationListRelationFilter
     appSessions?: AppSessionListRelationFilter
@@ -33629,21 +33629,21 @@ export namespace Prisma {
     expiresAt?: DateTimeWithAggregatesFilter<"AuthRequest"> | Date | string
   }
 
-  export type ActivityLogWhereInput = {
-    AND?: ActivityLogWhereInput | ActivityLogWhereInput[]
-    OR?: ActivityLogWhereInput[]
-    NOT?: ActivityLogWhereInput | ActivityLogWhereInput[]
-    id?: StringFilter<"ActivityLog"> | string
-    targetAccountId?: StringFilter<"ActivityLog"> | string
-    actorAccountId?: StringFilter<"ActivityLog"> | string
-    action?: StringFilter<"ActivityLog"> | string
-    status?: StringFilter<"ActivityLog"> | string
-    ip?: StringFilter<"ActivityLog"> | string
-    timestamp?: DateTimeFilter<"ActivityLog"> | Date | string
-    geolocation?: StringNullableFilter<"ActivityLog"> | string | null
+  export type ActivityWhereInput = {
+    AND?: ActivityWhereInput | ActivityWhereInput[]
+    OR?: ActivityWhereInput[]
+    NOT?: ActivityWhereInput | ActivityWhereInput[]
+    id?: StringFilter<"Activity"> | string
+    targetAccountId?: StringFilter<"Activity"> | string
+    actorAccountId?: StringFilter<"Activity"> | string
+    action?: StringFilter<"Activity"> | string
+    status?: StringFilter<"Activity"> | string
+    ip?: StringFilter<"Activity"> | string
+    timestamp?: DateTimeFilter<"Activity"> | Date | string
+    geolocation?: StringNullableFilter<"Activity"> | string | null
   }
 
-  export type ActivityLogOrderByWithRelationInput = {
+  export type ActivityOrderByWithRelationInput = {
     id?: SortOrder
     targetAccountId?: SortOrder
     actorAccountId?: SortOrder
@@ -33654,21 +33654,21 @@ export namespace Prisma {
     geolocation?: SortOrderInput | SortOrder
   }
 
-  export type ActivityLogWhereUniqueInput = Prisma.AtLeast<{
+  export type ActivityWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: ActivityLogWhereInput | ActivityLogWhereInput[]
-    OR?: ActivityLogWhereInput[]
-    NOT?: ActivityLogWhereInput | ActivityLogWhereInput[]
-    targetAccountId?: StringFilter<"ActivityLog"> | string
-    actorAccountId?: StringFilter<"ActivityLog"> | string
-    action?: StringFilter<"ActivityLog"> | string
-    status?: StringFilter<"ActivityLog"> | string
-    ip?: StringFilter<"ActivityLog"> | string
-    timestamp?: DateTimeFilter<"ActivityLog"> | Date | string
-    geolocation?: StringNullableFilter<"ActivityLog"> | string | null
+    AND?: ActivityWhereInput | ActivityWhereInput[]
+    OR?: ActivityWhereInput[]
+    NOT?: ActivityWhereInput | ActivityWhereInput[]
+    targetAccountId?: StringFilter<"Activity"> | string
+    actorAccountId?: StringFilter<"Activity"> | string
+    action?: StringFilter<"Activity"> | string
+    status?: StringFilter<"Activity"> | string
+    ip?: StringFilter<"Activity"> | string
+    timestamp?: DateTimeFilter<"Activity"> | Date | string
+    geolocation?: StringNullableFilter<"Activity"> | string | null
   }, "id">
 
-  export type ActivityLogOrderByWithAggregationInput = {
+  export type ActivityOrderByWithAggregationInput = {
     id?: SortOrder
     targetAccountId?: SortOrder
     actorAccountId?: SortOrder
@@ -33677,23 +33677,23 @@ export namespace Prisma {
     ip?: SortOrder
     timestamp?: SortOrder
     geolocation?: SortOrderInput | SortOrder
-    _count?: ActivityLogCountOrderByAggregateInput
-    _max?: ActivityLogMaxOrderByAggregateInput
-    _min?: ActivityLogMinOrderByAggregateInput
+    _count?: ActivityCountOrderByAggregateInput
+    _max?: ActivityMaxOrderByAggregateInput
+    _min?: ActivityMinOrderByAggregateInput
   }
 
-  export type ActivityLogScalarWhereWithAggregatesInput = {
-    AND?: ActivityLogScalarWhereWithAggregatesInput | ActivityLogScalarWhereWithAggregatesInput[]
-    OR?: ActivityLogScalarWhereWithAggregatesInput[]
-    NOT?: ActivityLogScalarWhereWithAggregatesInput | ActivityLogScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"ActivityLog"> | string
-    targetAccountId?: StringWithAggregatesFilter<"ActivityLog"> | string
-    actorAccountId?: StringWithAggregatesFilter<"ActivityLog"> | string
-    action?: StringWithAggregatesFilter<"ActivityLog"> | string
-    status?: StringWithAggregatesFilter<"ActivityLog"> | string
-    ip?: StringWithAggregatesFilter<"ActivityLog"> | string
-    timestamp?: DateTimeWithAggregatesFilter<"ActivityLog"> | Date | string
-    geolocation?: StringNullableWithAggregatesFilter<"ActivityLog"> | string | null
+  export type ActivityScalarWhereWithAggregatesInput = {
+    AND?: ActivityScalarWhereWithAggregatesInput | ActivityScalarWhereWithAggregatesInput[]
+    OR?: ActivityScalarWhereWithAggregatesInput[]
+    NOT?: ActivityScalarWhereWithAggregatesInput | ActivityScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Activity"> | string
+    targetAccountId?: StringWithAggregatesFilter<"Activity"> | string
+    actorAccountId?: StringWithAggregatesFilter<"Activity"> | string
+    action?: StringWithAggregatesFilter<"Activity"> | string
+    status?: StringWithAggregatesFilter<"Activity"> | string
+    ip?: StringWithAggregatesFilter<"Activity"> | string
+    timestamp?: DateTimeWithAggregatesFilter<"Activity"> | Date | string
+    geolocation?: StringNullableWithAggregatesFilter<"Activity"> | string | null
   }
 
   export type NotificationWhereInput = {
@@ -34399,27 +34399,27 @@ export namespace Prisma {
     dependentKeys?: JsonNullableWithAggregatesFilter<"Session">
   }
 
-  export type ErrorLogWhereInput = {
-    AND?: ErrorLogWhereInput | ErrorLogWhereInput[]
-    OR?: ErrorLogWhereInput[]
-    NOT?: ErrorLogWhereInput | ErrorLogWhereInput[]
-    id?: StringFilter<"ErrorLog"> | string
-    type?: StringFilter<"ErrorLog"> | string
-    context?: StringFilter<"ErrorLog"> | string
-    message?: StringFilter<"ErrorLog"> | string
-    status?: StringFilter<"ErrorLog"> | string
-    accountId?: StringNullableFilter<"ErrorLog"> | string | null
-    ipAddress?: StringNullableFilter<"ErrorLog"> | string | null
-    geolocation?: StringNullableFilter<"ErrorLog"> | string | null
-    reproSteps?: StringNullableFilter<"ErrorLog"> | string | null
-    solution?: StringNullableFilter<"ErrorLog"> | string | null
-    solvedBy?: StringNullableFilter<"ErrorLog"> | string | null
-    problemLevel?: StringNullableFilter<"ErrorLog"> | string | null
-    timestamp?: DateTimeFilter<"ErrorLog"> | Date | string
+  export type SystemErrorWhereInput = {
+    AND?: SystemErrorWhereInput | SystemErrorWhereInput[]
+    OR?: SystemErrorWhereInput[]
+    NOT?: SystemErrorWhereInput | SystemErrorWhereInput[]
+    id?: StringFilter<"SystemError"> | string
+    type?: StringFilter<"SystemError"> | string
+    context?: StringFilter<"SystemError"> | string
+    message?: StringFilter<"SystemError"> | string
+    status?: StringFilter<"SystemError"> | string
+    accountId?: StringNullableFilter<"SystemError"> | string | null
+    ipAddress?: StringNullableFilter<"SystemError"> | string | null
+    geolocation?: StringNullableFilter<"SystemError"> | string | null
+    reproSteps?: StringNullableFilter<"SystemError"> | string | null
+    solution?: StringNullableFilter<"SystemError"> | string | null
+    solvedBy?: StringNullableFilter<"SystemError"> | string | null
+    problemLevel?: StringNullableFilter<"SystemError"> | string | null
+    timestamp?: DateTimeFilter<"SystemError"> | Date | string
     account?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
   }
 
-  export type ErrorLogOrderByWithRelationInput = {
+  export type SystemErrorOrderByWithRelationInput = {
     id?: SortOrder
     type?: SortOrder
     context?: SortOrder
@@ -34436,27 +34436,27 @@ export namespace Prisma {
     account?: AccountOrderByWithRelationInput
   }
 
-  export type ErrorLogWhereUniqueInput = Prisma.AtLeast<{
+  export type SystemErrorWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: ErrorLogWhereInput | ErrorLogWhereInput[]
-    OR?: ErrorLogWhereInput[]
-    NOT?: ErrorLogWhereInput | ErrorLogWhereInput[]
-    type?: StringFilter<"ErrorLog"> | string
-    context?: StringFilter<"ErrorLog"> | string
-    message?: StringFilter<"ErrorLog"> | string
-    status?: StringFilter<"ErrorLog"> | string
-    accountId?: StringNullableFilter<"ErrorLog"> | string | null
-    ipAddress?: StringNullableFilter<"ErrorLog"> | string | null
-    geolocation?: StringNullableFilter<"ErrorLog"> | string | null
-    reproSteps?: StringNullableFilter<"ErrorLog"> | string | null
-    solution?: StringNullableFilter<"ErrorLog"> | string | null
-    solvedBy?: StringNullableFilter<"ErrorLog"> | string | null
-    problemLevel?: StringNullableFilter<"ErrorLog"> | string | null
-    timestamp?: DateTimeFilter<"ErrorLog"> | Date | string
+    AND?: SystemErrorWhereInput | SystemErrorWhereInput[]
+    OR?: SystemErrorWhereInput[]
+    NOT?: SystemErrorWhereInput | SystemErrorWhereInput[]
+    type?: StringFilter<"SystemError"> | string
+    context?: StringFilter<"SystemError"> | string
+    message?: StringFilter<"SystemError"> | string
+    status?: StringFilter<"SystemError"> | string
+    accountId?: StringNullableFilter<"SystemError"> | string | null
+    ipAddress?: StringNullableFilter<"SystemError"> | string | null
+    geolocation?: StringNullableFilter<"SystemError"> | string | null
+    reproSteps?: StringNullableFilter<"SystemError"> | string | null
+    solution?: StringNullableFilter<"SystemError"> | string | null
+    solvedBy?: StringNullableFilter<"SystemError"> | string | null
+    problemLevel?: StringNullableFilter<"SystemError"> | string | null
+    timestamp?: DateTimeFilter<"SystemError"> | Date | string
     account?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
   }, "id">
 
-  export type ErrorLogOrderByWithAggregationInput = {
+  export type SystemErrorOrderByWithAggregationInput = {
     id?: SortOrder
     type?: SortOrder
     context?: SortOrder
@@ -34470,28 +34470,28 @@ export namespace Prisma {
     solvedBy?: SortOrderInput | SortOrder
     problemLevel?: SortOrderInput | SortOrder
     timestamp?: SortOrder
-    _count?: ErrorLogCountOrderByAggregateInput
-    _max?: ErrorLogMaxOrderByAggregateInput
-    _min?: ErrorLogMinOrderByAggregateInput
+    _count?: SystemErrorCountOrderByAggregateInput
+    _max?: SystemErrorMaxOrderByAggregateInput
+    _min?: SystemErrorMinOrderByAggregateInput
   }
 
-  export type ErrorLogScalarWhereWithAggregatesInput = {
-    AND?: ErrorLogScalarWhereWithAggregatesInput | ErrorLogScalarWhereWithAggregatesInput[]
-    OR?: ErrorLogScalarWhereWithAggregatesInput[]
-    NOT?: ErrorLogScalarWhereWithAggregatesInput | ErrorLogScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"ErrorLog"> | string
-    type?: StringWithAggregatesFilter<"ErrorLog"> | string
-    context?: StringWithAggregatesFilter<"ErrorLog"> | string
-    message?: StringWithAggregatesFilter<"ErrorLog"> | string
-    status?: StringWithAggregatesFilter<"ErrorLog"> | string
-    accountId?: StringNullableWithAggregatesFilter<"ErrorLog"> | string | null
-    ipAddress?: StringNullableWithAggregatesFilter<"ErrorLog"> | string | null
-    geolocation?: StringNullableWithAggregatesFilter<"ErrorLog"> | string | null
-    reproSteps?: StringNullableWithAggregatesFilter<"ErrorLog"> | string | null
-    solution?: StringNullableWithAggregatesFilter<"ErrorLog"> | string | null
-    solvedBy?: StringNullableWithAggregatesFilter<"ErrorLog"> | string | null
-    problemLevel?: StringNullableWithAggregatesFilter<"ErrorLog"> | string | null
-    timestamp?: DateTimeWithAggregatesFilter<"ErrorLog"> | Date | string
+  export type SystemErrorScalarWhereWithAggregatesInput = {
+    AND?: SystemErrorScalarWhereWithAggregatesInput | SystemErrorScalarWhereWithAggregatesInput[]
+    OR?: SystemErrorScalarWhereWithAggregatesInput[]
+    NOT?: SystemErrorScalarWhereWithAggregatesInput | SystemErrorScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SystemError"> | string
+    type?: StringWithAggregatesFilter<"SystemError"> | string
+    context?: StringWithAggregatesFilter<"SystemError"> | string
+    message?: StringWithAggregatesFilter<"SystemError"> | string
+    status?: StringWithAggregatesFilter<"SystemError"> | string
+    accountId?: StringNullableWithAggregatesFilter<"SystemError"> | string | null
+    ipAddress?: StringNullableWithAggregatesFilter<"SystemError"> | string | null
+    geolocation?: StringNullableWithAggregatesFilter<"SystemError"> | string | null
+    reproSteps?: StringNullableWithAggregatesFilter<"SystemError"> | string | null
+    solution?: StringNullableWithAggregatesFilter<"SystemError"> | string | null
+    solvedBy?: StringNullableWithAggregatesFilter<"SystemError"> | string | null
+    problemLevel?: StringNullableWithAggregatesFilter<"SystemError"> | string | null
+    timestamp?: DateTimeWithAggregatesFilter<"SystemError"> | Date | string
   }
 
   export type ApplicationWhereInput = {
@@ -35109,7 +35109,7 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -35142,7 +35142,7 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -35175,7 +35175,7 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -35208,7 +35208,7 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -35554,7 +35554,7 @@ export namespace Prisma {
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ActivityLogCreateInput = {
+  export type ActivityCreateInput = {
     id?: string
     targetAccountId: string
     actorAccountId: string
@@ -35565,7 +35565,7 @@ export namespace Prisma {
     geolocation?: string | null
   }
 
-  export type ActivityLogUncheckedCreateInput = {
+  export type ActivityUncheckedCreateInput = {
     id?: string
     targetAccountId: string
     actorAccountId: string
@@ -35576,7 +35576,7 @@ export namespace Prisma {
     geolocation?: string | null
   }
 
-  export type ActivityLogUpdateInput = {
+  export type ActivityUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     targetAccountId?: StringFieldUpdateOperationsInput | string
     actorAccountId?: StringFieldUpdateOperationsInput | string
@@ -35587,7 +35587,7 @@ export namespace Prisma {
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type ActivityLogUncheckedUpdateInput = {
+  export type ActivityUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     targetAccountId?: StringFieldUpdateOperationsInput | string
     actorAccountId?: StringFieldUpdateOperationsInput | string
@@ -35598,7 +35598,7 @@ export namespace Prisma {
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type ActivityLogCreateManyInput = {
+  export type ActivityCreateManyInput = {
     id?: string
     targetAccountId: string
     actorAccountId: string
@@ -35609,7 +35609,7 @@ export namespace Prisma {
     geolocation?: string | null
   }
 
-  export type ActivityLogUpdateManyMutationInput = {
+  export type ActivityUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     targetAccountId?: StringFieldUpdateOperationsInput | string
     actorAccountId?: StringFieldUpdateOperationsInput | string
@@ -35620,7 +35620,7 @@ export namespace Prisma {
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type ActivityLogUncheckedUpdateManyInput = {
+  export type ActivityUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     targetAccountId?: StringFieldUpdateOperationsInput | string
     actorAccountId?: StringFieldUpdateOperationsInput | string
@@ -36405,7 +36405,7 @@ export namespace Prisma {
     dependentKeys?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type ErrorLogCreateInput = {
+  export type SystemErrorCreateInput = {
     id?: string
     type: string
     context: string
@@ -36421,7 +36421,7 @@ export namespace Prisma {
     account?: AccountCreateNestedOneWithoutErrorLogsInput
   }
 
-  export type ErrorLogUncheckedCreateInput = {
+  export type SystemErrorUncheckedCreateInput = {
     id?: string
     type: string
     context: string
@@ -36437,7 +36437,7 @@ export namespace Prisma {
     timestamp?: Date | string
   }
 
-  export type ErrorLogUpdateInput = {
+  export type SystemErrorUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     context?: StringFieldUpdateOperationsInput | string
@@ -36453,7 +36453,7 @@ export namespace Prisma {
     account?: AccountUpdateOneWithoutErrorLogsNestedInput
   }
 
-  export type ErrorLogUncheckedUpdateInput = {
+  export type SystemErrorUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     context?: StringFieldUpdateOperationsInput | string
@@ -36469,7 +36469,7 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ErrorLogCreateManyInput = {
+  export type SystemErrorCreateManyInput = {
     id?: string
     type: string
     context: string
@@ -36485,7 +36485,7 @@ export namespace Prisma {
     timestamp?: Date | string
   }
 
-  export type ErrorLogUpdateManyMutationInput = {
+  export type SystemErrorUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     context?: StringFieldUpdateOperationsInput | string
@@ -36500,7 +36500,7 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ErrorLogUncheckedUpdateManyInput = {
+  export type SystemErrorUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     context?: StringFieldUpdateOperationsInput | string
@@ -37209,10 +37209,10 @@ export namespace Prisma {
     none?: SessionWhereInput
   }
 
-  export type ErrorLogListRelationFilter = {
-    every?: ErrorLogWhereInput
-    some?: ErrorLogWhereInput
-    none?: ErrorLogWhereInput
+  export type SystemErrorListRelationFilter = {
+    every?: SystemErrorWhereInput
+    some?: SystemErrorWhereInput
+    none?: SystemErrorWhereInput
   }
 
   export type UserAppConnectionListRelationFilter = {
@@ -37312,7 +37312,7 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type ErrorLogOrderByRelationAggregateInput = {
+  export type SystemErrorOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -37692,7 +37692,7 @@ export namespace Prisma {
     expiresAt?: SortOrder
   }
 
-  export type ActivityLogCountOrderByAggregateInput = {
+  export type ActivityCountOrderByAggregateInput = {
     id?: SortOrder
     targetAccountId?: SortOrder
     actorAccountId?: SortOrder
@@ -37703,7 +37703,7 @@ export namespace Prisma {
     geolocation?: SortOrder
   }
 
-  export type ActivityLogMaxOrderByAggregateInput = {
+  export type ActivityMaxOrderByAggregateInput = {
     id?: SortOrder
     targetAccountId?: SortOrder
     actorAccountId?: SortOrder
@@ -37714,7 +37714,7 @@ export namespace Prisma {
     geolocation?: SortOrder
   }
 
-  export type ActivityLogMinOrderByAggregateInput = {
+  export type ActivityMinOrderByAggregateInput = {
     id?: SortOrder
     targetAccountId?: SortOrder
     actorAccountId?: SortOrder
@@ -38124,7 +38124,7 @@ export namespace Prisma {
     authSessionKey?: SortOrder
   }
 
-  export type ErrorLogCountOrderByAggregateInput = {
+  export type SystemErrorCountOrderByAggregateInput = {
     id?: SortOrder
     type?: SortOrder
     context?: SortOrder
@@ -38140,7 +38140,7 @@ export namespace Prisma {
     timestamp?: SortOrder
   }
 
-  export type ErrorLogMaxOrderByAggregateInput = {
+  export type SystemErrorMaxOrderByAggregateInput = {
     id?: SortOrder
     type?: SortOrder
     context?: SortOrder
@@ -38156,7 +38156,7 @@ export namespace Prisma {
     timestamp?: SortOrder
   }
 
-  export type ErrorLogMinOrderByAggregateInput = {
+  export type SystemErrorMinOrderByAggregateInput = {
     id?: SortOrder
     type?: SortOrder
     context?: SortOrder
@@ -38491,11 +38491,11 @@ export namespace Prisma {
     connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
   }
 
-  export type ErrorLogCreateNestedManyWithoutAccountInput = {
-    create?: XOR<ErrorLogCreateWithoutAccountInput, ErrorLogUncheckedCreateWithoutAccountInput> | ErrorLogCreateWithoutAccountInput[] | ErrorLogUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: ErrorLogCreateOrConnectWithoutAccountInput | ErrorLogCreateOrConnectWithoutAccountInput[]
-    createMany?: ErrorLogCreateManyAccountInputEnvelope
-    connect?: ErrorLogWhereUniqueInput | ErrorLogWhereUniqueInput[]
+  export type SystemErrorCreateNestedManyWithoutAccountInput = {
+    create?: XOR<SystemErrorCreateWithoutAccountInput, SystemErrorUncheckedCreateWithoutAccountInput> | SystemErrorCreateWithoutAccountInput[] | SystemErrorUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: SystemErrorCreateOrConnectWithoutAccountInput | SystemErrorCreateOrConnectWithoutAccountInput[]
+    createMany?: SystemErrorCreateManyAccountInputEnvelope
+    connect?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
   }
 
   export type UserAppConnectionCreateNestedManyWithoutAccountInput = {
@@ -38643,11 +38643,11 @@ export namespace Prisma {
     connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
   }
 
-  export type ErrorLogUncheckedCreateNestedManyWithoutAccountInput = {
-    create?: XOR<ErrorLogCreateWithoutAccountInput, ErrorLogUncheckedCreateWithoutAccountInput> | ErrorLogCreateWithoutAccountInput[] | ErrorLogUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: ErrorLogCreateOrConnectWithoutAccountInput | ErrorLogCreateOrConnectWithoutAccountInput[]
-    createMany?: ErrorLogCreateManyAccountInputEnvelope
-    connect?: ErrorLogWhereUniqueInput | ErrorLogWhereUniqueInput[]
+  export type SystemErrorUncheckedCreateNestedManyWithoutAccountInput = {
+    create?: XOR<SystemErrorCreateWithoutAccountInput, SystemErrorUncheckedCreateWithoutAccountInput> | SystemErrorCreateWithoutAccountInput[] | SystemErrorUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: SystemErrorCreateOrConnectWithoutAccountInput | SystemErrorCreateOrConnectWithoutAccountInput[]
+    createMany?: SystemErrorCreateManyAccountInputEnvelope
+    connect?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
   }
 
   export type UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput = {
@@ -38846,18 +38846,18 @@ export namespace Prisma {
     deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
-  export type ErrorLogUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<ErrorLogCreateWithoutAccountInput, ErrorLogUncheckedCreateWithoutAccountInput> | ErrorLogCreateWithoutAccountInput[] | ErrorLogUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: ErrorLogCreateOrConnectWithoutAccountInput | ErrorLogCreateOrConnectWithoutAccountInput[]
-    upsert?: ErrorLogUpsertWithWhereUniqueWithoutAccountInput | ErrorLogUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: ErrorLogCreateManyAccountInputEnvelope
-    set?: ErrorLogWhereUniqueInput | ErrorLogWhereUniqueInput[]
-    disconnect?: ErrorLogWhereUniqueInput | ErrorLogWhereUniqueInput[]
-    delete?: ErrorLogWhereUniqueInput | ErrorLogWhereUniqueInput[]
-    connect?: ErrorLogWhereUniqueInput | ErrorLogWhereUniqueInput[]
-    update?: ErrorLogUpdateWithWhereUniqueWithoutAccountInput | ErrorLogUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: ErrorLogUpdateManyWithWhereWithoutAccountInput | ErrorLogUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: ErrorLogScalarWhereInput | ErrorLogScalarWhereInput[]
+  export type SystemErrorUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<SystemErrorCreateWithoutAccountInput, SystemErrorUncheckedCreateWithoutAccountInput> | SystemErrorCreateWithoutAccountInput[] | SystemErrorUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: SystemErrorCreateOrConnectWithoutAccountInput | SystemErrorCreateOrConnectWithoutAccountInput[]
+    upsert?: SystemErrorUpsertWithWhereUniqueWithoutAccountInput | SystemErrorUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: SystemErrorCreateManyAccountInputEnvelope
+    set?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
+    disconnect?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
+    delete?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
+    connect?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
+    update?: SystemErrorUpdateWithWhereUniqueWithoutAccountInput | SystemErrorUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: SystemErrorUpdateManyWithWhereWithoutAccountInput | SystemErrorUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: SystemErrorScalarWhereInput | SystemErrorScalarWhereInput[]
   }
 
   export type UserAppConnectionUpdateManyWithoutAccountNestedInput = {
@@ -39146,18 +39146,18 @@ export namespace Prisma {
     deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
-  export type ErrorLogUncheckedUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<ErrorLogCreateWithoutAccountInput, ErrorLogUncheckedCreateWithoutAccountInput> | ErrorLogCreateWithoutAccountInput[] | ErrorLogUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: ErrorLogCreateOrConnectWithoutAccountInput | ErrorLogCreateOrConnectWithoutAccountInput[]
-    upsert?: ErrorLogUpsertWithWhereUniqueWithoutAccountInput | ErrorLogUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: ErrorLogCreateManyAccountInputEnvelope
-    set?: ErrorLogWhereUniqueInput | ErrorLogWhereUniqueInput[]
-    disconnect?: ErrorLogWhereUniqueInput | ErrorLogWhereUniqueInput[]
-    delete?: ErrorLogWhereUniqueInput | ErrorLogWhereUniqueInput[]
-    connect?: ErrorLogWhereUniqueInput | ErrorLogWhereUniqueInput[]
-    update?: ErrorLogUpdateWithWhereUniqueWithoutAccountInput | ErrorLogUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: ErrorLogUpdateManyWithWhereWithoutAccountInput | ErrorLogUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: ErrorLogScalarWhereInput | ErrorLogScalarWhereInput[]
+  export type SystemErrorUncheckedUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<SystemErrorCreateWithoutAccountInput, SystemErrorUncheckedCreateWithoutAccountInput> | SystemErrorCreateWithoutAccountInput[] | SystemErrorUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: SystemErrorCreateOrConnectWithoutAccountInput | SystemErrorCreateOrConnectWithoutAccountInput[]
+    upsert?: SystemErrorUpsertWithWhereUniqueWithoutAccountInput | SystemErrorUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: SystemErrorCreateManyAccountInputEnvelope
+    set?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
+    disconnect?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
+    delete?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
+    connect?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
+    update?: SystemErrorUpdateWithWhereUniqueWithoutAccountInput | SystemErrorUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: SystemErrorUpdateManyWithWhereWithoutAccountInput | SystemErrorUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: SystemErrorScalarWhereInput | SystemErrorScalarWhereInput[]
   }
 
   export type UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput = {
@@ -40719,7 +40719,7 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type ErrorLogCreateWithoutAccountInput = {
+  export type SystemErrorCreateWithoutAccountInput = {
     id?: string
     type: string
     context: string
@@ -40734,7 +40734,7 @@ export namespace Prisma {
     timestamp?: Date | string
   }
 
-  export type ErrorLogUncheckedCreateWithoutAccountInput = {
+  export type SystemErrorUncheckedCreateWithoutAccountInput = {
     id?: string
     type: string
     context: string
@@ -40749,13 +40749,13 @@ export namespace Prisma {
     timestamp?: Date | string
   }
 
-  export type ErrorLogCreateOrConnectWithoutAccountInput = {
-    where: ErrorLogWhereUniqueInput
-    create: XOR<ErrorLogCreateWithoutAccountInput, ErrorLogUncheckedCreateWithoutAccountInput>
+  export type SystemErrorCreateOrConnectWithoutAccountInput = {
+    where: SystemErrorWhereUniqueInput
+    create: XOR<SystemErrorCreateWithoutAccountInput, SystemErrorUncheckedCreateWithoutAccountInput>
   }
 
-  export type ErrorLogCreateManyAccountInputEnvelope = {
-    data: ErrorLogCreateManyAccountInput | ErrorLogCreateManyAccountInput[]
+  export type SystemErrorCreateManyAccountInputEnvelope = {
+    data: SystemErrorCreateManyAccountInput | SystemErrorCreateManyAccountInput[]
     skipDuplicates?: boolean
   }
 
@@ -41370,39 +41370,39 @@ export namespace Prisma {
     dependentKeys?: JsonNullableFilter<"Session">
   }
 
-  export type ErrorLogUpsertWithWhereUniqueWithoutAccountInput = {
-    where: ErrorLogWhereUniqueInput
-    update: XOR<ErrorLogUpdateWithoutAccountInput, ErrorLogUncheckedUpdateWithoutAccountInput>
-    create: XOR<ErrorLogCreateWithoutAccountInput, ErrorLogUncheckedCreateWithoutAccountInput>
+  export type SystemErrorUpsertWithWhereUniqueWithoutAccountInput = {
+    where: SystemErrorWhereUniqueInput
+    update: XOR<SystemErrorUpdateWithoutAccountInput, SystemErrorUncheckedUpdateWithoutAccountInput>
+    create: XOR<SystemErrorCreateWithoutAccountInput, SystemErrorUncheckedCreateWithoutAccountInput>
   }
 
-  export type ErrorLogUpdateWithWhereUniqueWithoutAccountInput = {
-    where: ErrorLogWhereUniqueInput
-    data: XOR<ErrorLogUpdateWithoutAccountInput, ErrorLogUncheckedUpdateWithoutAccountInput>
+  export type SystemErrorUpdateWithWhereUniqueWithoutAccountInput = {
+    where: SystemErrorWhereUniqueInput
+    data: XOR<SystemErrorUpdateWithoutAccountInput, SystemErrorUncheckedUpdateWithoutAccountInput>
   }
 
-  export type ErrorLogUpdateManyWithWhereWithoutAccountInput = {
-    where: ErrorLogScalarWhereInput
-    data: XOR<ErrorLogUpdateManyMutationInput, ErrorLogUncheckedUpdateManyWithoutAccountInput>
+  export type SystemErrorUpdateManyWithWhereWithoutAccountInput = {
+    where: SystemErrorScalarWhereInput
+    data: XOR<SystemErrorUpdateManyMutationInput, SystemErrorUncheckedUpdateManyWithoutAccountInput>
   }
 
-  export type ErrorLogScalarWhereInput = {
-    AND?: ErrorLogScalarWhereInput | ErrorLogScalarWhereInput[]
-    OR?: ErrorLogScalarWhereInput[]
-    NOT?: ErrorLogScalarWhereInput | ErrorLogScalarWhereInput[]
-    id?: StringFilter<"ErrorLog"> | string
-    type?: StringFilter<"ErrorLog"> | string
-    context?: StringFilter<"ErrorLog"> | string
-    message?: StringFilter<"ErrorLog"> | string
-    status?: StringFilter<"ErrorLog"> | string
-    accountId?: StringNullableFilter<"ErrorLog"> | string | null
-    ipAddress?: StringNullableFilter<"ErrorLog"> | string | null
-    geolocation?: StringNullableFilter<"ErrorLog"> | string | null
-    reproSteps?: StringNullableFilter<"ErrorLog"> | string | null
-    solution?: StringNullableFilter<"ErrorLog"> | string | null
-    solvedBy?: StringNullableFilter<"ErrorLog"> | string | null
-    problemLevel?: StringNullableFilter<"ErrorLog"> | string | null
-    timestamp?: DateTimeFilter<"ErrorLog"> | Date | string
+  export type SystemErrorScalarWhereInput = {
+    AND?: SystemErrorScalarWhereInput | SystemErrorScalarWhereInput[]
+    OR?: SystemErrorScalarWhereInput[]
+    NOT?: SystemErrorScalarWhereInput | SystemErrorScalarWhereInput[]
+    id?: StringFilter<"SystemError"> | string
+    type?: StringFilter<"SystemError"> | string
+    context?: StringFilter<"SystemError"> | string
+    message?: StringFilter<"SystemError"> | string
+    status?: StringFilter<"SystemError"> | string
+    accountId?: StringNullableFilter<"SystemError"> | string | null
+    ipAddress?: StringNullableFilter<"SystemError"> | string | null
+    geolocation?: StringNullableFilter<"SystemError"> | string | null
+    reproSteps?: StringNullableFilter<"SystemError"> | string | null
+    solution?: StringNullableFilter<"SystemError"> | string | null
+    solvedBy?: StringNullableFilter<"SystemError"> | string | null
+    problemLevel?: StringNullableFilter<"SystemError"> | string | null
+    timestamp?: DateTimeFilter<"SystemError"> | Date | string
   }
 
   export type UserAppConnectionUpsertWithWhereUniqueWithoutAccountInput = {
@@ -41853,7 +41853,7 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -41885,7 +41885,7 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -41961,7 +41961,7 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -41993,7 +41993,7 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -42054,7 +42054,7 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -42086,7 +42086,7 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -42134,7 +42134,7 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -42166,7 +42166,7 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -42198,7 +42198,7 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -42230,7 +42230,7 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -42267,7 +42267,7 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -42299,7 +42299,7 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -42347,7 +42347,7 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -42379,7 +42379,7 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -42422,7 +42422,7 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -42454,7 +42454,7 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -42486,7 +42486,7 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -42518,7 +42518,7 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -42595,7 +42595,7 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -42627,7 +42627,7 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -42694,7 +42694,7 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -42726,7 +42726,7 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -42763,7 +42763,7 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -42795,7 +42795,7 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -42879,7 +42879,7 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -42911,7 +42911,7 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -42954,7 +42954,7 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -42986,7 +42986,7 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -43034,7 +43034,7 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -43066,7 +43066,7 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -43114,7 +43114,7 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -43146,7 +43146,7 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -43177,7 +43177,7 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -43209,7 +43209,7 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -43257,7 +43257,7 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -43289,7 +43289,7 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -43321,7 +43321,7 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -43353,7 +43353,7 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -43401,7 +43401,7 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -43433,7 +43433,7 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -43521,7 +43521,7 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -43553,7 +43553,7 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -43590,7 +43590,7 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -43622,7 +43622,7 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -43670,7 +43670,7 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -43702,7 +43702,7 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -43745,7 +43745,7 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -43777,7 +43777,7 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -43837,7 +43837,7 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -43869,7 +43869,7 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -43933,7 +43933,7 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -43965,7 +43965,7 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -44142,7 +44142,7 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -44174,7 +44174,7 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -44328,7 +44328,7 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -44360,7 +44360,7 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -44660,7 +44660,7 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -44692,7 +44692,7 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -44769,7 +44769,7 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -44801,7 +44801,7 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -44833,7 +44833,7 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -44865,7 +44865,7 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -44936,7 +44936,7 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -44968,7 +44968,7 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -45074,7 +45074,7 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -45106,7 +45106,7 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -45143,7 +45143,7 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
@@ -45175,7 +45175,7 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
@@ -45274,7 +45274,7 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -45306,7 +45306,7 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -45349,7 +45349,7 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
@@ -45381,7 +45381,7 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
@@ -45413,7 +45413,7 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
@@ -45445,7 +45445,7 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
@@ -45538,7 +45538,7 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
@@ -45570,7 +45570,7 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
@@ -45653,7 +45653,7 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
@@ -45685,7 +45685,7 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
@@ -45778,7 +45778,7 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
@@ -45810,7 +45810,7 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
@@ -45893,7 +45893,7 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
@@ -45925,7 +45925,7 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
@@ -46053,7 +46053,7 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
@@ -46085,7 +46085,7 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
@@ -46259,7 +46259,7 @@ export namespace Prisma {
     dependentKeys?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type ErrorLogCreateManyAccountInput = {
+  export type SystemErrorCreateManyAccountInput = {
     id?: string
     type: string
     context: string
@@ -46604,7 +46604,7 @@ export namespace Prisma {
     dependentKeys?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type ErrorLogUpdateWithoutAccountInput = {
+  export type SystemErrorUpdateWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     context?: StringFieldUpdateOperationsInput | string
@@ -46619,7 +46619,7 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ErrorLogUncheckedUpdateWithoutAccountInput = {
+  export type SystemErrorUncheckedUpdateWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     context?: StringFieldUpdateOperationsInput | string
@@ -46634,7 +46634,7 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ErrorLogUncheckedUpdateManyWithoutAccountInput = {
+  export type SystemErrorUncheckedUpdateManyWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     context?: StringFieldUpdateOperationsInput | string
