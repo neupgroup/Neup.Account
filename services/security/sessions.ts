@@ -4,12 +4,20 @@ import prisma from '@/core/helpers/prisma';
 import { getActiveAccountId, getActiveSession } from '@/core/helpers/auth-actions';
 import { logActivity } from '@/core/helpers/log-actions';
 import { logError } from '@/core/helpers/logger';
-import type { Session } from '@/core/helpers/session';
+
+export type ManagedSession = {
+    id: string;
+    ipAddress: string;
+    userAgent: string;
+    lastLoggedIn: string;
+    loginType: string;
+    geolocation?: string;
+};
 
 /**
  * Function getUserSessions.
  */
-export async function getUserSessions(): Promise<Session[]> {
+export async function getUserSessions(): Promise<ManagedSession[]> {
     try {
         const accountId = await getActiveAccountId();
         if (!accountId) {
@@ -26,22 +34,18 @@ export async function getUserSessions(): Promise<Session[]> {
             }
         });
         
-        type SessionInternal = Session & { rawLastLoggedIn: Date };
-
-        const formattedSessions: SessionInternal[] = sessions.map(session => {
+        const formattedSessions: ManagedSession[] = sessions.map(session => {
             return {
                 id: session.id,
-                ipAddress: session.ipAddress,
-                userAgent: session.userAgent,
+                ipAddress: session.ipAddress || 'Unknown IP',
+                userAgent: session.userAgent || 'Unknown Device',
                 lastLoggedIn: session.lastLoggedIn.toLocaleString(),
-                loginType: session.loginType,
+                loginType: session.loginType || 'unknown',
                 geolocation: session.geolocation || undefined,
-                rawLastLoggedIn: session.lastLoggedIn
             };
         });
 
-        // This is a type-only change, so we can cast it.
-        return formattedSessions as unknown as Session[];
+        return formattedSessions;
         
     } catch (error) {
         await logError('database', error, `getUserSessions`);

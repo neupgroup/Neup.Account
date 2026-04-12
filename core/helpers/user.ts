@@ -260,7 +260,14 @@ export async function getUserPermissions(accountId?: string, appId?: string): Pr
 
       externalRole.forEach((access) => collectedPermissions.add(access.role));
       directPermissions.forEach((dp) => collectedPermissions.add(dp.permission));
-      appPermissions?.permissions?.forEach((permission) => collectedPermissions.add(permission));
+      const externalPermissions = appPermissions?.permissions;
+      if (Array.isArray(externalPermissions)) {
+        externalPermissions.forEach((permission) => {
+          if (typeof permission === 'string') {
+            collectedPermissions.add(permission);
+          }
+        });
+      }
     }
 
     // Filter by appId if provided (if your permissions structure supports appId filtering)

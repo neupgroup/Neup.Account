@@ -4,7 +4,13 @@ import prisma from '@/core/helpers/prisma';
 import { logActivity } from '@/core/helpers/log-actions';
 import { logError } from '@/core/helpers/logger';
 import { headers } from 'next/headers';
-import { switchToAccount as switchToAccountAction, switchToBrand as switchToBrandAction, switchToPersonal as switchToPersonalAction, switchToDependent as switchToDependentAction } from '@/core/helpers/session';
+import {
+    switchToAccount as switchToAccountAction,
+    switchToBrand as switchToBrandAction,
+    switchToPersonal as switchToPersonalAction,
+    switchToDependent as switchToDependentAction,
+    switchToDelegated as switchToDelegatedAction,
+} from '@/core/helpers/session';
 import type { StoredAccount } from '@/core/helpers/session';
 import { getSessionCookies, setStoredAccountsCookie, clearSessionCookies } from '@/core/helpers/cookies';
 import { makeNotification } from '../notifications';
@@ -188,6 +194,27 @@ export async function switchToDependent(dependentId: string) {
                 recipient_id: accountId,
                 action: 'informative.switch',
                 message: `You switched context to dependent ${dependentId}.`,
+            });
+        }
+    }
+
+    return result;
+}
+
+
+/**
+ * Function switchToDelegated.
+ */
+export async function switchToDelegated(accountId: string) {
+    const result = await switchToDelegatedAction(accountId);
+
+    if (result.success) {
+        const { accountId: personalAccountId } = await getSessionCookies();
+        if (personalAccountId) {
+            await makeNotification({
+                recipient_id: personalAccountId,
+                action: 'informative.switch',
+                message: `You switched context to delegated account ${accountId}.`,
             });
         }
     }

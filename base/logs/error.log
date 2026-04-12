@@ -1,0 +1,1350 @@
+[2026-04-12T15:42:54.132Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:43:09.399Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:44:57.591Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:09.296Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:15.442Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:18.782Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:21.244Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:23.783Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:24.346Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:26.427Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:26.907Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:27.228Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:27.317Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:27.347Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:27.546Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:27.851Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:28.142Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:28.178Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:28.196Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:28.303Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:28.605Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:28.616Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:28.930Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:28.975Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:29.066Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:29.286Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:29.314Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:29.428Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:29.600Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:29.921Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:30.161Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:30.226Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:30.282Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:30.327Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:31.019Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:31.233Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:31.688Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:31.775Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:31.879Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:32.018Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:32.074Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:32.379Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:33.062Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:33.222Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:33.339Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:33.544Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:34.069Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:34.128Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:34.557Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:34.891Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:34.968Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:35.199Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:35.273Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:35.515Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:35.608Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:35.622Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:36.205Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:36.406Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:36.496Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:36.560Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:36.768Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:37.139Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:37.205Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:37.454Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:37.795Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:37.899Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:38.935Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:39.155Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:39.491Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:39.637Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:39.664Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:39.781Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:39.961Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:40.079Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:40.361Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:40.450Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:40.603Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:40.617Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:40.775Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:41.089Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:48.851Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:46:48.911Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:53:05.371Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:53:05.386Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:53:05.934Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1462:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1535:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1643:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:54:02.002Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1469:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1542:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1650:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:54:02.050Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1469:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1542:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1650:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:54:02.133Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1469:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1542:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1650:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:54:02.134Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1469:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1542:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1650:21)
+--------------------------------------------------------------------------------
+[2026-04-12T15:54:02.313Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+The table `public.system_config` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1469:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1542:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1650:21)
+--------------------------------------------------------------------------------

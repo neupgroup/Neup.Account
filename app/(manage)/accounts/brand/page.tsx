@@ -19,8 +19,11 @@ export default async function BrandAccountsPage() {
     const brandAccounts = await getBrandAccounts();
 
     const mappedBrandAccounts = brandAccounts.map(brand => ({
+        aid: brand.id,
         accountId: brand.id,
+        sid: '',
         sessionId: '',
+        skey: '',
         sessionKey: '',
         expired: false,
         isBrand: true,

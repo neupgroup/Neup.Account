@@ -52,8 +52,11 @@ export async function getAccessibleAccounts(): Promise<AccessibleAccount[]> {
                                 (targetAccount.nameFirst ? `${targetAccount.nameFirst} ${targetAccount.nameLast || ''}`.trim() : 'Unnamed Account');
 
             const accessibleAccount: AccessibleAccount = {
+                aid: targetAccount.id,
                 accountId: targetAccount.id,
+                sid: '',
                 sessionId: '', // No session for managed accounts
+                skey: '',
                 sessionKey: '',
                 neupId: neupId,
                 expired: false,

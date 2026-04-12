@@ -30,7 +30,12 @@ export type StoredAccount = {
 };
 import { setSessionCookies, setStoredAccountsCookie, getSessionCookies, clearManagingCookie, setManagingCookie } from './cookies';
 import { getUserNeupIds, validateNeupId } from './user';
-import { getActiveAccountId, getPersonalAccountId, validateCurrentSession } from './auth-actions';
+import {
+  getActiveSession as getActiveSessionAction,
+  getActiveAccountId as getActiveAccountIdAction,
+  getPersonalAccountId as getPersonalAccountIdAction,
+  validateCurrentSession as validateCurrentSessionAction,
+} from './auth-actions';
 
 // --- Constants ---
 const SESSION_DURATION_DAYS = 30;
@@ -67,6 +72,9 @@ export async function createAndSetSession(
       aid: accountId,
       sid: session.id,
       skey: sessionKey,
+      accountId,
+      sessionId: session.id,
+      sessionKey,
     };
 
     await setSessionCookies(newSession, expiresOn);
@@ -217,6 +225,9 @@ export async function switchToAccount(account: StoredAccount) {
           aid: account.aid,
           sid: account.sid,
           skey: account.skey,
+          accountId: account.aid,
+          sessionId: account.sid,
+          sessionKey: account.skey,
         }, expiresOn);
         
         const { allAccounts } = await getSessionCookies();
@@ -300,4 +311,20 @@ export async function switchToPersonal() {
   } catch (error) {
     await logError('auth', error, `switchToPersonal`);
   }
+}
+
+export async function getActiveSession() {
+  return getActiveSessionAction();
+}
+
+export async function getActiveAccountId() {
+  return getActiveAccountIdAction();
+}
+
+export async function getPersonalAccountId() {
+  return getPersonalAccountIdAction();
+}
+
+export async function validateCurrentSession() {
+  return validateCurrentSessionAction();
 }

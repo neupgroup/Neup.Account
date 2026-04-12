@@ -101,8 +101,10 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
         }
 
         startSwitchTransition(async () => {
+            const targetAccountId = finalAccount.accountId || finalAccount.aid;
+
             if (finalAccount.isBrand) {
-                 const res = await switchToBrand(finalAccount.accountId);
+                 const res = await switchToBrand(targetAccountId);
                  if (res.success) {
                     if (redirects) redirectInApp(router, redirects);
                     else router.refresh();
@@ -111,7 +113,7 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
             }
 
             if (finalAccount.isDependent) {
-                 const res = await switchToDependent(finalAccount.accountId);
+                 const res = await switchToDependent(targetAccountId);
                  if (res.success) {
                     if (redirects) redirectInApp(router, redirects);
                     else router.refresh();
@@ -137,7 +139,7 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
                 return;
             }
 
-            const res = await switchToDelegated(finalAccount.accountId);
+            const res = await switchToDelegated(targetAccountId);
             if (res.success) {
                 if (redirects) redirectInApp(router, redirects);
                 else router.refresh();

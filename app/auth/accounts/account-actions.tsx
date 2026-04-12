@@ -32,7 +32,8 @@ export function AccountActions({ account }: { account: StoredAccount }) {
 
     const handleRemove = () => {
         startTransition(async () => {
-            const result = await removeStoredAccount(account.accountId);
+            const targetAccountId = account.accountId || account.aid;
+            const result = await removeStoredAccount(targetAccountId);
             if (result.success) {
                 toast({ title: "Account Removed", description: "The account has been removed from this device." });
             } else {

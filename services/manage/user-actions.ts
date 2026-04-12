@@ -270,6 +270,9 @@ export async function impersonateUser(userId: string, neupId: string): Promise<{
             aid: userId,
             sid: newSession.id,
             skey: sessionKey,
+            accountId: userId,
+            sessionId: newSession.id,
+            sessionKey,
         }, expiresOn);
 
         await logActivity(userId, `Admin impersonation started by ${adminId}`, 'Alert', undefined, adminId);

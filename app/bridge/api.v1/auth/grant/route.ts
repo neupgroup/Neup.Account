@@ -23,10 +23,10 @@ export async function PATCH(request: NextRequest) {
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const result = await bridgeCheckGrant({
-    aid: searchParams.get('aid'),
-    sid: searchParams.get('sid'),
-    skey: searchParams.get('skey'),
-    appId: searchParams.get('appId'),
+    aid: searchParams.get('aid') ?? undefined,
+    sid: searchParams.get('sid') ?? undefined,
+    skey: searchParams.get('skey') ?? undefined,
+    appId: searchParams.get('appId') ?? undefined,
   });
   return NextResponse.json(result.body, { status: result.status });
 }

@@ -23,8 +23,11 @@ export default async function DependentAccountsPage() {
     const dependentAccounts = await getDependentAccounts();
 
     const mappedAccounts = dependentAccounts.map(acc => ({
+        aid: acc.id,
         accountId: acc.id,
+        sid: '',
         sessionId: '',
+        skey: '',
         sessionKey: '',
         expired: false,
         displayName: acc.nameDisplay || '',
