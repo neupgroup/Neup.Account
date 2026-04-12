@@ -31,21 +31,21 @@ export async function getBrandAccounts(): Promise<BrandAccount[]> {
     }
 
     try {
-        const permits = await prisma.permit.findMany({
+        const ownerships = await prisma.accountOwnership.findMany({
             where: {
-                accountId: personalAccountId,
-                forSelf: false,
-                isRoot: false
-            }
+                parentId: personalAccountId,
+                type: 'brand',
+            },
+            select: {
+                childrenId: true,
+            },
         });
         
-        if (permits.length === 0) {
+        if (ownerships.length === 0) {
             return [];
         }
 
-        const managedAccountIds = permits
-            .map(permit => permit.targetAccountId)
-            .filter((id): id is string => !!id);
+        const managedAccountIds = ownerships.map((ownership) => ownership.childrenId);
 
         if (managedAccountIds.length === 0) {
             return [];
@@ -126,8 +126,12 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
                 data: {
                     accountType: 'brand',
                     accountStatus: 'active',
+                    status: 'active',
                     verified: false,
+                    isVerified: false,
                     nameDisplay: nameBrand,
+                    displayName: nameBrand,
+                    displayImage: null,
                     nameLegal: nameLegal || null,
                     registrationId: registrationId || null,
                     dateCreated: new Date(),
@@ -144,7 +148,24 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
                             contactType: 'headOfficeLocation',
                             value: headOfficeLocation
                         }
-                    } : undefined
+                    } : undefined,
+
+                    brandProfile: {
+                        create: {
+                            brandName: nameBrand,
+                            dateCreated: new Date(),
+                            isLegalEntity: Boolean(nameLegal || registrationId),
+                            originCountry: servingAreas || null,
+                        }
+                    },
+                }
+            });
+
+            await tx.accountOwnership.create({
+                data: {
+                    parentId: creatorAccountId,
+                    childrenId: account.id,
+                    type: 'brand',
                 }
             });
 

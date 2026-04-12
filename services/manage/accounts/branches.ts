@@ -78,7 +78,19 @@ export async function createBranchAccount(data: z.infer<typeof formSchema>, geol
                 data: {
                     accountType: 'branch',
                     parentBrandId: parentBrandId,
+                    status: 'active',
+                    accountStatus: 'active',
+                    isVerified: false,
                     displayName: name,
+                    nameDisplay: name,
+                    brandProfile: {
+                        create: {
+                            brandName: name,
+                            dateCreated: new Date(),
+                            isLegalEntity: false,
+                            originCountry: null,
+                        },
+                    },
                 }
             });
 
@@ -93,6 +105,14 @@ export async function createBranchAccount(data: z.infer<typeof formSchema>, geol
                     createdOn: new Date(),
                     managedBy: personalAccountId,
                 }
+            });
+
+            await tx.accountOwnership.create({
+                data: {
+                    parentId: parentBrandId,
+                    childrenId: branchAccountId,
+                    type: 'branch',
+                },
             });
 
             await tx.neupId.create({
@@ -171,7 +191,14 @@ export async function getBranches(brandId: string): Promise<BranchAccount[]> {
 
     try {
         const branches = await prisma.account.findMany({
-            where: { parentBrandId: brandId },
+            where: {
+                childOwnerships: {
+                    some: {
+                        parentId: brandId,
+                        type: 'branch',
+                    },
+                },
+            },
             include: {
                 contacts: {
                     where: { contactType: 'branchLocation' }

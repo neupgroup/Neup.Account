@@ -55,27 +55,31 @@ export async function getUserProfile(
   try {
     const account = await prisma.account.findUnique({
       where: { id: idToFetch },
+      include: {
+        individualProfile: true,
+        brandProfile: true,
+      },
     });
     
     if (account) {
       const serializedData: UserProfile = {
-        nameFirst: account.nameFirst || undefined,
-        nameMiddle: account.nameMiddle || undefined,
-        nameLast: account.nameLast || undefined,
-        nameDisplay: account.nameDisplay || undefined,
+        nameFirst: account.individualProfile?.firstName || account.nameFirst || undefined,
+        nameMiddle: account.individualProfile?.middleName || account.nameMiddle || undefined,
+        nameLast: account.individualProfile?.lastName || account.nameLast || undefined,
+        nameDisplay: account.brandProfile?.brandName || account.nameDisplay || undefined,
         displayName: account.displayName || undefined,
-        accountPhoto: account.accountPhoto || undefined,
+        accountPhoto: account.displayImage || account.accountPhoto || undefined,
         gender: account.gender || undefined,
-        dateBirth: account.dateBirth?.toISOString() || undefined,
+        dateBirth: account.individualProfile?.dateOfBirth?.toISOString() || account.dateBirth?.toISOString() || undefined,
         dateCreated: account.dateCreated?.toISOString() || undefined,
-        nationality: account.nationality || undefined,
-        isLegalEntity: account.isLegalEntity || undefined,
+        nationality: account.individualProfile?.countryOfResidence || account.nationality || undefined,
+        isLegalEntity: (account.brandProfile?.isLegalEntity ?? account.isLegalEntity) || undefined,
         nameLegal: account.nameLegal || undefined,
         registrationId: account.registrationId || undefined,
-        countryOfOrigin: account.countryOfOrigin || undefined,
+        countryOfOrigin: account.brandProfile?.originCountry || account.countryOfOrigin || undefined,
         dateEstablished: account.dateEstablished?.toISOString() || undefined,
         neupIdPrimary: account.neupIdPrimary || undefined,
-        verified: account.verified || undefined,
+        verified: (account.isVerified ?? account.verified) || undefined,
         accountType: account.accountType || undefined,
         permit: account.permit || 'default',
         pro: account.pro,

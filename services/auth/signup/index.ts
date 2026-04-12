@@ -472,9 +472,12 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
       data: {
         accountType: 'individual',
         accountStatus: 'active',
+        status: 'active',
         verified: false,
+        isVerified: false,
         nameDisplay: nameDisplay,
         accountPhoto: null,
+        displayImage: null,
         nameFirst,
         nameLast,
         nameMiddle: nameMiddle || null,
@@ -504,6 +507,16 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
           create: {
             contactType: 'primaryPhone',
             value: phone,
+          },
+        },
+
+        individualProfile: {
+          create: {
+            firstName: nameFirst,
+            middleName: nameMiddle || null,
+            lastName: nameLast,
+            dateOfBirth: birthDateObj,
+            countryOfResidence: nationality,
           },
         },
       },

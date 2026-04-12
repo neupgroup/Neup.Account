@@ -36,21 +36,21 @@ export async function getDependentAccounts(): Promise<DependentAccount[]> {
     }
 
     try {
-        const permits = await prisma.permit.findMany({
+        const ownerships = await prisma.accountOwnership.findMany({
             where: {
-                accountId: personalAccountId,
-                forSelf: false,
-                isRoot: false
-            }
+                parentId: personalAccountId,
+                type: 'dependent',
+            },
+            select: {
+                childrenId: true,
+            },
         });
         
-        if (permits.length === 0) {
+        if (ownerships.length === 0) {
             return [];
         }
 
-        const dependentAccountIds = permits
-            .map(permit => permit.targetAccountId)
-            .filter((id): id is string => !!id);
+        const dependentAccountIds = ownerships.map((ownership) => ownership.childrenId);
 
         if (dependentAccountIds.length === 0) {
             return [];
@@ -131,9 +131,12 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
             data: {
                 accountType: 'dependent',
                 accountStatus: 'active',
+                status: 'active',
                 verified: false,
+                isVerified: false,
                 nameDisplay: `${profileData.firstName} ${profileData.lastName}`.trim(),
                 accountPhoto: null,
+                displayImage: null,
                 neupIdPrimary: neupId,
                 
                 nameFirst: profileData.firstName,
@@ -144,6 +147,16 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
                 
                 dateBirth: new Date(profileData.dob),
                 dateCreated: new Date(),
+
+                individualProfile: {
+                    create: {
+                        firstName: profileData.firstName,
+                        middleName: profileData.middleName || null,
+                        lastName: profileData.lastName,
+                        dateOfBirth: new Date(profileData.dob),
+                        countryOfResidence: profileData.nationality,
+                    },
+                },
                 
                 neupIds: {
                     create: {
@@ -162,6 +175,14 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
         });
         
         const dependentAccountId = account.id;
+
+        await prisma.accountOwnership.create({
+            data: {
+                parentId: guardianAccountId,
+                childrenId: dependentAccountId,
+                type: 'dependent',
+            }
+        });
         
         // Grant management permission to the guardian
         await prisma.permit.create({

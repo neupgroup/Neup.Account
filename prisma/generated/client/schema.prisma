@@ -11,34 +11,14 @@ datasource db {
 }
 
 model Account {
-  id              String    @id @default(uuid())
-  nameFirst       String?
-  nameMiddle      String?
-  nameLast        String?
-  nameDisplay     String?
-  displayName     String?
-  accountPhoto    String?
-  gender          String?
-  dateBirth       DateTime?
-  dateCreated     DateTime  @default(now())
-  nationality     String?
-  isLegalEntity   Boolean   @default(false)
-  nameLegal       String?
-  registrationId  String?
-  countryOfOrigin String?
-  dateEstablished DateTime?
-  neupIdPrimary   String?
-  verified        Boolean   @default(false)
-  pro             Boolean   @default(false)
-  accountType     String    @default("individual")
-  permit          String    @default("default") // default, addition, reduction, addition_reduction
-  accountStatus   String?
-  parentBrandId   String?
-  parentBrand     Account?  @relation("BrandBranches", fields: [parentBrandId], references: [id])
-  branches        Account[] @relation("BrandBranches")
-
-  // JSON fields for unstructured data like 'block'
-  block Json?
+  id           String   @id @default(uuid())
+  accountType  String   @default("individual")
+  displayImage String?
+  displayName  String?
+  status       String?
+  isVerified   Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  details      Json?
 
   // Relations
   contacts            Contact[]
@@ -66,8 +46,54 @@ model Account {
   externalMemberTeams  AuthTeamExternal[]        @relation("AccountAsExternalTeamMember")
   recipientPermissions AuthPermissionRecipient[] @relation("RecipientPermissions")
   ownerPermissions     AuthPermissionRecipient[] @relation("OwnerPermissions")
+  individualProfile    AccountTypeIndividual?
+  brandProfile         AccountTypeBrand?
+  parentOwnerships     AccountOwnership[]        @relation("AccountOwnershipParent")
+  childOwnerships      AccountOwnership[]        @relation("AccountOwnershipChild")
 
   @@map("accounts")
+}
+
+model AccountTypeIndividual {
+  id                 String    @id @default(uuid())
+  accountId          String    @unique
+  firstName          String?
+  middleName         String?
+  lastName           String?
+  dateOfBirth        DateTime?
+  countryOfResidence String?
+
+  account Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@map("account_type__individual")
+}
+
+model AccountTypeBrand {
+  id            String   @id @default(uuid())
+  accountId     String   @unique
+  brandName     String?
+  dateCreated   DateTime @default(now())
+  isLegalEntity Boolean  @default(false)
+  originCountry String?
+
+  account Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@map("account_type__brand")
+}
+
+model AccountOwnership {
+  id         String @id @default(uuid())
+  parentId   String
+  childrenId String
+  type       String
+
+  parent Account @relation("AccountOwnershipParent", fields: [parentId], references: [id], onDelete: Cascade)
+  child  Account @relation("AccountOwnershipChild", fields: [childrenId], references: [id], onDelete: Cascade)
+
+  @@unique([parentId, childrenId, type])
+  @@index([parentId])
+  @@index([childrenId])
+  @@map("account_ownership")
 }
 
 model SystemConfig {
@@ -184,13 +210,14 @@ model Contact {
 }
 
 model NeupId {
-  id        String  @id // The neupId string itself
+  id        String   @id // The neupId string itself
   accountId String
-  isPrimary Boolean @default(false)
+  dateAdded DateTime @default(now())
+  isPrimary Boolean  @default(false)
 
   account Account @relation(fields: [accountId], references: [id])
 
-  @@map("neup_ids")
+  @@map("account_neupid")
 }
 
 model Password {

@@ -122,29 +122,39 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.AccountScalarFieldEnum = {
   id: 'id',
-  nameFirst: 'nameFirst',
-  nameMiddle: 'nameMiddle',
-  nameLast: 'nameLast',
-  nameDisplay: 'nameDisplay',
-  displayName: 'displayName',
-  accountPhoto: 'accountPhoto',
-  gender: 'gender',
-  dateBirth: 'dateBirth',
-  dateCreated: 'dateCreated',
-  nationality: 'nationality',
-  isLegalEntity: 'isLegalEntity',
-  nameLegal: 'nameLegal',
-  registrationId: 'registrationId',
-  countryOfOrigin: 'countryOfOrigin',
-  dateEstablished: 'dateEstablished',
-  neupIdPrimary: 'neupIdPrimary',
-  verified: 'verified',
-  pro: 'pro',
   accountType: 'accountType',
-  permit: 'permit',
-  accountStatus: 'accountStatus',
-  parentBrandId: 'parentBrandId',
-  block: 'block'
+  displayImage: 'displayImage',
+  displayName: 'displayName',
+  status: 'status',
+  isVerified: 'isVerified',
+  createdAt: 'createdAt',
+  details: 'details'
+};
+
+exports.Prisma.AccountTypeIndividualScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  firstName: 'firstName',
+  middleName: 'middleName',
+  lastName: 'lastName',
+  dateOfBirth: 'dateOfBirth',
+  countryOfResidence: 'countryOfResidence'
+};
+
+exports.Prisma.AccountTypeBrandScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  brandName: 'brandName',
+  dateCreated: 'dateCreated',
+  isLegalEntity: 'isLegalEntity',
+  originCountry: 'originCountry'
+};
+
+exports.Prisma.AccountOwnershipScalarFieldEnum = {
+  id: 'id',
+  parentId: 'parentId',
+  childrenId: 'childrenId',
+  type: 'type'
 };
 
 exports.Prisma.SystemConfigScalarFieldEnum = {
@@ -236,6 +246,7 @@ exports.Prisma.ContactScalarFieldEnum = {
 exports.Prisma.NeupIdScalarFieldEnum = {
   id: 'id',
   accountId: 'accountId',
+  dateAdded: 'dateAdded',
   isPrimary: 'isPrimary'
 };
 
@@ -469,6 +480,9 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   Account: 'Account',
+  AccountTypeIndividual: 'AccountTypeIndividual',
+  AccountTypeBrand: 'AccountTypeBrand',
+  AccountOwnership: 'AccountOwnership',
   SystemConfig: 'SystemConfig',
   AuthRequest: 'AuthRequest',
   ActivityLog: 'ActivityLog',
