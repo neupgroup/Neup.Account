@@ -35,15 +35,21 @@ export async function deactivateAccount(data: z.infer<typeof formSchema>, geoloc
   const { password } = validation.data;
 
   try {
-    const authData = await prisma.password.findUnique({
-        where: { accountId }
+    const authData = await prisma.authMethod.findFirst({
+      where: {
+        accountId,
+        type: 'password',
+        order: 'primary',
+        status: 'active',
+      },
+      select: { value: true },
     });
 
     if (!authData) {
         await logActivity(accountId, 'Deactivation Failed', 'Failed', undefined, undefined, geolocation);
         return { success: false, error: "Authentication data not found." };
     }
-    const isMatch = await bcrypt.compare(password, authData.hash);
+    const isMatch = await bcrypt.compare(password, authData.value);
     if (!isMatch) {
         await logActivity(accountId, 'Deactivation Failed', 'Failed', undefined, undefined, geolocation);
         return { success: false, error: "The password you entered is incorrect." };

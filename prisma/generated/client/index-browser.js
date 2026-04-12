@@ -250,19 +250,14 @@ exports.Prisma.NeupIdScalarFieldEnum = {
   isPrimary: 'isPrimary'
 };
 
-exports.Prisma.PasswordScalarFieldEnum = {
-  accountId: 'accountId',
-  hash: 'hash',
-  passwordLastChanged: 'passwordLastChanged'
-};
-
-exports.Prisma.AuthSecondaryScalarFieldEnum = {
+exports.Prisma.AuthMethodScalarFieldEnum = {
   id: 'id',
   accountId: 'accountId',
-  kind: 'kind',
+  type: 'type',
   value: 'value',
-  used: 'used',
-  createdAt: 'createdAt'
+  order: 'order',
+  status: 'status',
+  detail: 'detail'
 };
 
 exports.Prisma.PermitScalarFieldEnum = {
@@ -448,7 +443,30 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.AuthMethodType = exports.$Enums.AuthMethodType = {
+  totpToken: 'totpToken',
+  otpSms: 'otpSms',
+  otpEmail: 'otpEmail',
+  password: 'password',
+  phonePrompt: 'phonePrompt',
+  qrScan: 'qrScan',
+  keychain: 'keychain',
+  faceRecognition: 'faceRecognition',
+  securityKey: 'securityKey',
+  backupCodes: 'backupCodes'
+};
 
+exports.AuthMethodOrder = exports.$Enums.AuthMethodOrder = {
+  primary: 'primary',
+  secondary: 'secondary',
+  tertiary: 'tertiary',
+  backup: 'backup'
+};
+
+exports.AuthMethodStatus = exports.$Enums.AuthMethodStatus = {
+  expired: 'expired',
+  active: 'active'
+};
 
 exports.Prisma.ModelName = {
   Account: 'Account',
@@ -464,8 +482,7 @@ exports.Prisma.ModelName = {
   Verification: 'Verification',
   Contact: 'Contact',
   NeupId: 'NeupId',
-  Password: 'Password',
-  AuthSecondary: 'AuthSecondary',
+  AuthMethod: 'AuthMethod',
   Permit: 'Permit',
   Session: 'Session',
   ErrorLog: 'ErrorLog',

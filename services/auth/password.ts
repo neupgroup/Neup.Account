@@ -224,18 +224,23 @@ export async function changePassword(input: ChangePasswordInput): Promise<Change
 	}
 
 	try {
-		const passwordRecord = await prisma.password.findUnique({
-			where: { accountId },
-			select: { hash: true },
+		const passwordRecord = await prisma.authMethod.findFirst({
+			where: {
+				accountId,
+				type: 'password',
+				order: 'primary',
+				status: 'active',
+			},
+			select: { value: true },
 		});
 
-		if (!passwordRecord?.hash) {
+		if (!passwordRecord?.value) {
 			return { success: false, error: 'Authentication data not found.' };
 		}
 
 		const currentPasswordCheck = await verifyPassword({
 			password: currentPassword,
-			storedHash: passwordRecord.hash,
+			storedHash: passwordRecord.value,
 			requireHash: true,
 		});
 
@@ -245,11 +250,15 @@ export async function changePassword(input: ChangePasswordInput): Promise<Change
 
 		const newHashedPassword = await bcrypt.hash(newPassword, 10);
 
-		await prisma.password.update({
-			where: { accountId },
+		await prisma.authMethod.updateMany({
+			where: {
+				accountId,
+				type: 'password',
+				order: 'primary',
+			},
 			data: {
-				hash: newHashedPassword,
-				passwordLastChanged: new Date(),
+				value: newHashedPassword,
+				status: 'active',
 			},
 		});
 

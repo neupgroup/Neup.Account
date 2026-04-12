@@ -26,7 +26,29 @@ function generateSingleCode(): string {
     return crypto.randomBytes(4).toString('hex').toUpperCase();
 }
 
-const AUTH_SECONDARY_BACKUP_CODE_KIND = 'backup_code';
+const AUTH_METHOD_BACKUP_TYPE = 'backupCodes';
+
+function readBackupCodes(detail: unknown): BackupCode[] {
+    if (!detail || typeof detail !== 'object') return [];
+    const codes = (detail as { codes?: Array<{ code?: string; status?: string }> }).codes;
+    if (!Array.isArray(codes)) return [];
+
+    return codes
+        .filter((item) => typeof item?.code === 'string')
+        .map((item) => ({
+            code: item.code as string,
+            used: item.status === 'used',
+        }));
+}
+
+function writeBackupCodes(codes: BackupCode[]) {
+    return {
+        codes: codes.map((item) => ({
+            code: item.code,
+            status: item.used ? 'used' : 'active',
+        })),
+    };
+}
 
 
 /**
@@ -40,18 +62,17 @@ export async function getBackupCodes(): Promise<BackupCode[]> {
     if (!accountId) return [];
 
     try {
-        const codes = await prisma.authSecondary.findMany({
+        const row = await prisma.authMethod.findFirst({
             where: {
                 accountId,
-                kind: AUTH_SECONDARY_BACKUP_CODE_KIND,
+                type: AUTH_METHOD_BACKUP_TYPE,
+                order: 'backup',
+                status: 'active',
             },
-            orderBy: { createdAt: 'desc' }
+            select: { detail: true },
         });
 
-        return codes.map(c => ({
-            code: c.value,
-            used: c.used
-        }));
+        return readBackupCodes(row?.detail);
 
     } catch (error) {
         await logError('database', error, `getBackupCodes: ${accountId}`);
@@ -78,24 +99,28 @@ export async function generateBackupCodes(): Promise<BackupCode[]> {
             used: false,
         }));
 
-        await prisma.$transaction([
-            // Invalidate old codes by deleting them.
-            prisma.authSecondary.deleteMany({
-                where: {
+        await prisma.authMethod.upsert({
+            where: {
+                accountId_type_order: {
                     accountId,
-                    kind: AUTH_SECONDARY_BACKUP_CODE_KIND,
-                }
-            }),
-            // Create new codes.
-            prisma.authSecondary.createMany({
-                data: newCodes.map(c => ({
-                    accountId,
-                    kind: AUTH_SECONDARY_BACKUP_CODE_KIND,
-                    value: c.code,
-                    used: false
-                }))
-            })
-        ]);
+                    type: AUTH_METHOD_BACKUP_TYPE,
+                    order: 'backup',
+                },
+            },
+            update: {
+                status: 'active',
+                value: 'backupCodes',
+                detail: writeBackupCodes(newCodes) as any,
+            },
+            create: {
+                accountId,
+                type: AUTH_METHOD_BACKUP_TYPE,
+                order: 'backup',
+                status: 'active',
+                value: 'backupCodes',
+                detail: writeBackupCodes(newCodes) as any,
+            },
+        });
 
         await logActivity(accountId, 'Generated new backup codes', 'Success');
         

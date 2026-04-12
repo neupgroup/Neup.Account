@@ -25,8 +25,6 @@ model Account {
   neupIds            NeupId[]
   permits            Permit[]
   targetPermits      Permit[]            @relation("TargetAccount")
-  password           Password?
-  authSecondary      AuthSecondary[]
   sessions           Session[]
   errorLogs          ErrorLog[]
   appConnections     UserAppConnection[]
@@ -60,7 +58,8 @@ model AccountTypeIndividual {
   dateOfBirth        DateTime?
   countryOfResidence String?
 
-  account Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  account     Account      @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  authMethods AuthMethod[]
 
   @@map("account_type__individual")
 }
@@ -217,28 +216,45 @@ model NeupId {
   @@map("neupid")
 }
 
-model Password {
-  accountId           String   @id
-  hash                String
-  passwordLastChanged DateTime @default(now())
+model AuthMethod {
+  id        String           @id @default(uuid())
+  accountId String
+  type      AuthMethodType
+  value     String
+  order     AuthMethodOrder
+  status    AuthMethodStatus @default(active)
+  detail    Json?
 
-  account Account @relation(fields: [accountId], references: [id])
+  individualProfile AccountTypeIndividual @relation(fields: [accountId], references: [accountId], onDelete: Cascade)
 
-  @@map("auth_password")
+  @@unique([accountId, type, order])
+  @@index([accountId, type])
+  @@map("auth_method")
 }
 
-model AuthSecondary {
-  id        String   @id @default(uuid())
-  accountId String
-  kind      String
-  value     String
-  used      Boolean  @default(false)
-  createdAt DateTime @default(now())
+enum AuthMethodOrder {
+  primary
+  secondary
+  tertiary
+  backup
+}
 
-  account Account @relation(fields: [accountId], references: [id])
+enum AuthMethodStatus {
+  expired
+  active
+}
 
-  @@index([accountId, kind])
-  @@map("auth_secondary")
+enum AuthMethodType {
+  totpToken
+  otpSms
+  otpEmail
+  password
+  phonePrompt
+  qrScan
+  keychain
+  faceRecognition
+  securityKey
+  backupCodes
 }
 
 model Permit {

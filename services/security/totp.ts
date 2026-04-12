@@ -21,7 +21,7 @@ if (!ENCRYPTION_KEY || ENCRYPTION_KEY.length < 64) {
     throw new Error('A 32-byte (64-character hex) NEXT_PUBLIC_TOTP_ENCRYPTION_KEY must be set in .env');
 }
 
-const AUTH_SECONDARY_TOTP_KIND = 'totp';
+const AUTH_METHOD_TOTP_TYPE = 'totpToken';
 
 // Basic encryption/decryption functions using Node.js crypto
 // In a production app, use a dedicated KMS for this.
@@ -57,10 +57,11 @@ export async function getTotpStatus(): Promise<{ isEnabled: boolean }> {
     const accountId = await getActiveAccountId();
     if (!accountId) return { isEnabled: false };
 
-    const totp = await prisma.authSecondary.findFirst({
+    const totp = await prisma.authMethod.findFirst({
         where: {
             accountId,
-            kind: AUTH_SECONDARY_TOTP_KIND,
+            type: AUTH_METHOD_TOTP_TYPE,
+            status: 'active',
         }
     });
 
@@ -109,18 +110,19 @@ export async function verifyAndEnableTotp(data: z.infer<typeof totpEnableSchema>
         const encryptedSecret = await encrypt(secret);
         
         await prisma.$transaction([
-            prisma.authSecondary.deleteMany({
+            prisma.authMethod.deleteMany({
                 where: {
                     accountId,
-                    kind: AUTH_SECONDARY_TOTP_KIND,
+                    type: AUTH_METHOD_TOTP_TYPE,
                 }
             }),
-            prisma.authSecondary.create({
+            prisma.authMethod.create({
                 data: {
                     accountId,
-                    kind: AUTH_SECONDARY_TOTP_KIND,
+                    type: AUTH_METHOD_TOTP_TYPE,
                     value: encryptedSecret,
-                    used: false,
+                    order: 'secondary',
+                    status: 'active',
                 }
             })
         ]);
@@ -156,25 +158,31 @@ export async function disableTotp(data: z.infer<typeof totpDisableSchema>): Prom
 
     try {
         // 1. Verify password
-        const authDoc = await prisma.password.findUnique({
-            where: { accountId }
+        const authDoc = await prisma.authMethod.findFirst({
+            where: {
+                accountId,
+                type: 'password',
+                order: 'primary',
+                status: 'active',
+            },
+            select: { value: true },
         });
 
         if (!authDoc) {
             return { success: false, error: "Authentication data not found." };
         }
 
-        const isMatch = await bcrypt.compare(password, authDoc.hash);
+        const isMatch = await bcrypt.compare(password, authDoc.value);
         if (!isMatch) {
             await logActivity(accountId, 'TOTP Disable Failed', 'Failed');
             return { success: false, error: "The password you entered is incorrect." };
         }
 
         // 2. Delete TOTP secret
-        await prisma.authSecondary.deleteMany({
+        await prisma.authMethod.deleteMany({
             where: {
                 accountId,
-                kind: AUTH_SECONDARY_TOTP_KIND,
+                type: AUTH_METHOD_TOTP_TYPE,
             }
         });
 

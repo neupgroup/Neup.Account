@@ -145,6 +145,14 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
                         lastName: profileData.lastName,
                         dateOfBirth: new Date(profileData.dob),
                         countryOfResidence: profileData.nationality,
+                        authMethods: {
+                            create: {
+                                type: 'password',
+                                order: 'primary',
+                                status: 'active',
+                                value: hashedPassword,
+                            },
+                        },
                     },
                 },
                 
@@ -155,12 +163,6 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
                     }
                 },
                 
-                password: {
-                    create: {
-                        hash: hashedPassword,
-                        passwordLastChanged: new Date()
-                    }
-                }
             }
         });
         

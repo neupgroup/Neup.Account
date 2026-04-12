@@ -111,8 +111,14 @@ export async function submitPassword(data: z.infer<typeof passwordSchema>): Prom
     const requestData = (request.data.data as SigninRequestData) || {};
     const isPendingDeletion = requestData.isPendingDeletion;
 
-    const passwordRecord = await prisma.password.findUnique({
-        where: { accountId },
+    const passwordRecord = await prisma.authMethod.findFirst({
+        where: {
+            accountId,
+            type: 'password',
+            order: 'primary',
+            status: 'active',
+        },
+        select: { value: true },
     });
     if (!passwordRecord) {
         return { success: false, mfaRequired: false, error: "Invalid credentials." };
@@ -120,7 +126,7 @@ export async function submitPassword(data: z.infer<typeof passwordSchema>): Prom
 
     const passwordCheck = await verifyPassword({
         password,
-        storedHash: passwordRecord.hash,
+        storedHash: passwordRecord.value,
     });
 
     if (passwordCheck.status !== 'valid') {

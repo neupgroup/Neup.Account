@@ -64,7 +64,7 @@ const verifyTotpRequestSchema = z.object({
 	authRequestId: z.string().min(1),
 });
 
-const AUTH_SECONDARY_TOTP_KIND = 'totp';
+const AUTH_METHOD_TOTP_TYPE = 'totpToken';
 
 
 /**
@@ -93,18 +93,19 @@ export async function addTotp(input: AddTotpInput): Promise<TotpActionResult> {
 		const encryptedSecret = await encrypt(secret);
 
 		await prisma.$transaction([
-			prisma.authSecondary.deleteMany({
+			prisma.authMethod.deleteMany({
 				where: {
 					accountId,
-					kind: AUTH_SECONDARY_TOTP_KIND,
+					type: AUTH_METHOD_TOTP_TYPE,
 				},
 			}),
-			prisma.authSecondary.create({
+			prisma.authMethod.create({
 				data: {
 					accountId,
-					kind: AUTH_SECONDARY_TOTP_KIND,
+					type: AUTH_METHOD_TOTP_TYPE,
 					value: encryptedSecret,
-					used: false,
+					order: 'secondary',
+					status: 'active',
 				},
 			}),
 		]);
@@ -140,25 +141,30 @@ export async function revokeTotp(input: RevokeTotpInput): Promise<TotpActionResu
 	}
 
 	try {
-		const authDoc = await prisma.password.findUnique({
-			where: { accountId },
-			select: { hash: true },
+		const authDoc = await prisma.authMethod.findFirst({
+			where: {
+				accountId,
+				type: 'password',
+				order: 'primary',
+				status: 'active',
+			},
+			select: { value: true },
 		});
 
-		if (!authDoc?.hash) {
+		if (!authDoc?.value) {
 			return { success: false, error: 'Authentication data not found.' };
 		}
 
-		const isMatch = await bcrypt.compare(password, authDoc.hash);
+		const isMatch = await bcrypt.compare(password, authDoc.value);
 		if (!isMatch) {
 			await logActivity(accountId, 'TOTP Disable Failed', 'Failed');
 			return { success: false, error: 'The password you entered is incorrect.' };
 		}
 
-		await prisma.authSecondary.deleteMany({
+		await prisma.authMethod.deleteMany({
 			where: {
 				accountId,
-				kind: AUTH_SECONDARY_TOTP_KIND,
+				type: AUTH_METHOD_TOTP_TYPE,
 			},
 		});
 
@@ -189,10 +195,11 @@ export async function verifyTotp(input: VerifyTotpInput): Promise<TotpActionResu
 	}
 
 	try {
-		const totp = await prisma.authSecondary.findFirst({
+		const totp = await prisma.authMethod.findFirst({
 			where: {
 				accountId,
-				kind: AUTH_SECONDARY_TOTP_KIND,
+				type: AUTH_METHOD_TOTP_TYPE,
+				status: 'active',
 			},
 			select: { value: true },
 		});

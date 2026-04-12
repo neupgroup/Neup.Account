@@ -79,15 +79,10 @@ export type Contact = $Result.DefaultSelection<Prisma.$ContactPayload>
  */
 export type NeupId = $Result.DefaultSelection<Prisma.$NeupIdPayload>
 /**
- * Model Password
+ * Model AuthMethod
  * 
  */
-export type Password = $Result.DefaultSelection<Prisma.$PasswordPayload>
-/**
- * Model AuthSecondary
- * 
- */
-export type AuthSecondary = $Result.DefaultSelection<Prisma.$AuthSecondaryPayload>
+export type AuthMethod = $Result.DefaultSelection<Prisma.$AuthMethodPayload>
 /**
  * Model Permit
  * 
@@ -158,6 +153,57 @@ export type AppAuthentication = $Result.DefaultSelection<Prisma.$AppAuthenticati
  * 
  */
 export type AppSession = $Result.DefaultSelection<Prisma.$AppSessionPayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const AuthMethodOrder: {
+  primary: 'primary',
+  secondary: 'secondary',
+  tertiary: 'tertiary',
+  backup: 'backup'
+};
+
+export type AuthMethodOrder = (typeof AuthMethodOrder)[keyof typeof AuthMethodOrder]
+
+
+export const AuthMethodStatus: {
+  expired: 'expired',
+  active: 'active'
+};
+
+export type AuthMethodStatus = (typeof AuthMethodStatus)[keyof typeof AuthMethodStatus]
+
+
+export const AuthMethodType: {
+  totpToken: 'totpToken',
+  otpSms: 'otpSms',
+  otpEmail: 'otpEmail',
+  password: 'password',
+  phonePrompt: 'phonePrompt',
+  qrScan: 'qrScan',
+  keychain: 'keychain',
+  faceRecognition: 'faceRecognition',
+  securityKey: 'securityKey',
+  backupCodes: 'backupCodes'
+};
+
+export type AuthMethodType = (typeof AuthMethodType)[keyof typeof AuthMethodType]
+
+}
+
+export type AuthMethodOrder = $Enums.AuthMethodOrder
+
+export const AuthMethodOrder: typeof $Enums.AuthMethodOrder
+
+export type AuthMethodStatus = $Enums.AuthMethodStatus
+
+export const AuthMethodStatus: typeof $Enums.AuthMethodStatus
+
+export type AuthMethodType = $Enums.AuthMethodType
+
+export const AuthMethodType: typeof $Enums.AuthMethodType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -407,24 +453,14 @@ export class PrismaClient<
   get neupId(): Prisma.NeupIdDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.password`: Exposes CRUD operations for the **Password** model.
+   * `prisma.authMethod`: Exposes CRUD operations for the **AuthMethod** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Passwords
-    * const passwords = await prisma.password.findMany()
+    * // Fetch zero or more AuthMethods
+    * const authMethods = await prisma.authMethod.findMany()
     * ```
     */
-  get password(): Prisma.PasswordDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.authSecondary`: Exposes CRUD operations for the **AuthSecondary** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more AuthSecondaries
-    * const authSecondaries = await prisma.authSecondary.findMany()
-    * ```
-    */
-  get authSecondary(): Prisma.AuthSecondaryDelegate<ExtArgs, ClientOptions>;
+  get authMethod(): Prisma.AuthMethodDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.permit`: Exposes CRUD operations for the **Permit** model.
@@ -1012,8 +1048,7 @@ export namespace Prisma {
     Verification: 'Verification',
     Contact: 'Contact',
     NeupId: 'NeupId',
-    Password: 'Password',
-    AuthSecondary: 'AuthSecondary',
+    AuthMethod: 'AuthMethod',
     Permit: 'Permit',
     Session: 'Session',
     ErrorLog: 'ErrorLog',
@@ -1043,7 +1078,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "accountOwnership" | "systemConfig" | "authRequest" | "activityLog" | "notification" | "request" | "family" | "verification" | "contact" | "neupId" | "password" | "authSecondary" | "permit" | "session" | "errorLog" | "bugReport" | "application" | "assetGroupInfo" | "assetGroupMember" | "asset" | "assetMemberRole" | "authTeamExternal" | "authPermissionRecipient" | "userAppConnection" | "appAuthentication" | "appSession"
+      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "accountOwnership" | "systemConfig" | "authRequest" | "activityLog" | "notification" | "request" | "family" | "verification" | "contact" | "neupId" | "authMethod" | "permit" | "session" | "errorLog" | "bugReport" | "application" | "assetGroupInfo" | "assetGroupMember" | "asset" | "assetMemberRole" | "authTeamExternal" | "authPermissionRecipient" | "userAppConnection" | "appAuthentication" | "appSession"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2009,151 +2044,77 @@ export namespace Prisma {
           }
         }
       }
-      Password: {
-        payload: Prisma.$PasswordPayload<ExtArgs>
-        fields: Prisma.PasswordFieldRefs
+      AuthMethod: {
+        payload: Prisma.$AuthMethodPayload<ExtArgs>
+        fields: Prisma.AuthMethodFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.PasswordFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PasswordPayload> | null
+            args: Prisma.AuthMethodFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthMethodPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.PasswordFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PasswordPayload>
+            args: Prisma.AuthMethodFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthMethodPayload>
           }
           findFirst: {
-            args: Prisma.PasswordFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PasswordPayload> | null
+            args: Prisma.AuthMethodFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthMethodPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.PasswordFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PasswordPayload>
+            args: Prisma.AuthMethodFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthMethodPayload>
           }
           findMany: {
-            args: Prisma.PasswordFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PasswordPayload>[]
+            args: Prisma.AuthMethodFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthMethodPayload>[]
           }
           create: {
-            args: Prisma.PasswordCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PasswordPayload>
+            args: Prisma.AuthMethodCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthMethodPayload>
           }
           createMany: {
-            args: Prisma.PasswordCreateManyArgs<ExtArgs>
+            args: Prisma.AuthMethodCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.PasswordCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PasswordPayload>[]
+            args: Prisma.AuthMethodCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthMethodPayload>[]
           }
           delete: {
-            args: Prisma.PasswordDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PasswordPayload>
+            args: Prisma.AuthMethodDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthMethodPayload>
           }
           update: {
-            args: Prisma.PasswordUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PasswordPayload>
+            args: Prisma.AuthMethodUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthMethodPayload>
           }
           deleteMany: {
-            args: Prisma.PasswordDeleteManyArgs<ExtArgs>
+            args: Prisma.AuthMethodDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.PasswordUpdateManyArgs<ExtArgs>
+            args: Prisma.AuthMethodUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.PasswordUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PasswordPayload>[]
+            args: Prisma.AuthMethodUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthMethodPayload>[]
           }
           upsert: {
-            args: Prisma.PasswordUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PasswordPayload>
+            args: Prisma.AuthMethodUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthMethodPayload>
           }
           aggregate: {
-            args: Prisma.PasswordAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregatePassword>
+            args: Prisma.AuthMethodAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAuthMethod>
           }
           groupBy: {
-            args: Prisma.PasswordGroupByArgs<ExtArgs>
-            result: $Utils.Optional<PasswordGroupByOutputType>[]
+            args: Prisma.AuthMethodGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AuthMethodGroupByOutputType>[]
           }
           count: {
-            args: Prisma.PasswordCountArgs<ExtArgs>
-            result: $Utils.Optional<PasswordCountAggregateOutputType> | number
-          }
-        }
-      }
-      AuthSecondary: {
-        payload: Prisma.$AuthSecondaryPayload<ExtArgs>
-        fields: Prisma.AuthSecondaryFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.AuthSecondaryFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSecondaryPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.AuthSecondaryFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSecondaryPayload>
-          }
-          findFirst: {
-            args: Prisma.AuthSecondaryFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSecondaryPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.AuthSecondaryFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSecondaryPayload>
-          }
-          findMany: {
-            args: Prisma.AuthSecondaryFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSecondaryPayload>[]
-          }
-          create: {
-            args: Prisma.AuthSecondaryCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSecondaryPayload>
-          }
-          createMany: {
-            args: Prisma.AuthSecondaryCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.AuthSecondaryCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSecondaryPayload>[]
-          }
-          delete: {
-            args: Prisma.AuthSecondaryDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSecondaryPayload>
-          }
-          update: {
-            args: Prisma.AuthSecondaryUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSecondaryPayload>
-          }
-          deleteMany: {
-            args: Prisma.AuthSecondaryDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.AuthSecondaryUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.AuthSecondaryUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSecondaryPayload>[]
-          }
-          upsert: {
-            args: Prisma.AuthSecondaryUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthSecondaryPayload>
-          }
-          aggregate: {
-            args: Prisma.AuthSecondaryAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateAuthSecondary>
-          }
-          groupBy: {
-            args: Prisma.AuthSecondaryGroupByArgs<ExtArgs>
-            result: $Utils.Optional<AuthSecondaryGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.AuthSecondaryCountArgs<ExtArgs>
-            result: $Utils.Optional<AuthSecondaryCountAggregateOutputType> | number
+            args: Prisma.AuthMethodCountArgs<ExtArgs>
+            result: $Utils.Optional<AuthMethodCountAggregateOutputType> | number
           }
         }
       }
@@ -3314,8 +3275,7 @@ export namespace Prisma {
     verification?: VerificationOmit
     contact?: ContactOmit
     neupId?: NeupIdOmit
-    password?: PasswordOmit
-    authSecondary?: AuthSecondaryOmit
+    authMethod?: AuthMethodOmit
     permit?: PermitOmit
     session?: SessionOmit
     errorLog?: ErrorLogOmit
@@ -3414,7 +3374,6 @@ export namespace Prisma {
     neupIds: number
     permits: number
     targetPermits: number
-    authSecondary: number
     sessions: number
     errorLogs: number
     appConnections: number
@@ -3438,7 +3397,6 @@ export namespace Prisma {
     neupIds?: boolean | AccountCountOutputTypeCountNeupIdsArgs
     permits?: boolean | AccountCountOutputTypeCountPermitsArgs
     targetPermits?: boolean | AccountCountOutputTypeCountTargetPermitsArgs
-    authSecondary?: boolean | AccountCountOutputTypeCountAuthSecondaryArgs
     sessions?: boolean | AccountCountOutputTypeCountSessionsArgs
     errorLogs?: boolean | AccountCountOutputTypeCountErrorLogsArgs
     appConnections?: boolean | AccountCountOutputTypeCountAppConnectionsArgs
@@ -3494,13 +3452,6 @@ export namespace Prisma {
    */
   export type AccountCountOutputTypeCountTargetPermitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PermitWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
-  export type AccountCountOutputTypeCountAuthSecondaryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthSecondaryWhereInput
   }
 
   /**
@@ -3613,6 +3564,37 @@ export namespace Prisma {
    */
   export type AccountCountOutputTypeCountChildOwnershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AccountOwnershipWhereInput
+  }
+
+
+  /**
+   * Count Type AccountTypeIndividualCountOutputType
+   */
+
+  export type AccountTypeIndividualCountOutputType = {
+    authMethods: number
+  }
+
+  export type AccountTypeIndividualCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    authMethods?: boolean | AccountTypeIndividualCountOutputTypeCountAuthMethodsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AccountTypeIndividualCountOutputType without action
+   */
+  export type AccountTypeIndividualCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountTypeIndividualCountOutputType
+     */
+    select?: AccountTypeIndividualCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AccountTypeIndividualCountOutputType without action
+   */
+  export type AccountTypeIndividualCountOutputTypeCountAuthMethodsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AuthMethodWhereInput
   }
 
 
@@ -4039,8 +4021,6 @@ export namespace Prisma {
     neupIds?: boolean | Account$neupIdsArgs<ExtArgs>
     permits?: boolean | Account$permitsArgs<ExtArgs>
     targetPermits?: boolean | Account$targetPermitsArgs<ExtArgs>
-    password?: boolean | Account$passwordArgs<ExtArgs>
-    authSecondary?: boolean | Account$authSecondaryArgs<ExtArgs>
     sessions?: boolean | Account$sessionsArgs<ExtArgs>
     errorLogs?: boolean | Account$errorLogsArgs<ExtArgs>
     appConnections?: boolean | Account$appConnectionsArgs<ExtArgs>
@@ -4101,8 +4081,6 @@ export namespace Prisma {
     neupIds?: boolean | Account$neupIdsArgs<ExtArgs>
     permits?: boolean | Account$permitsArgs<ExtArgs>
     targetPermits?: boolean | Account$targetPermitsArgs<ExtArgs>
-    password?: boolean | Account$passwordArgs<ExtArgs>
-    authSecondary?: boolean | Account$authSecondaryArgs<ExtArgs>
     sessions?: boolean | Account$sessionsArgs<ExtArgs>
     errorLogs?: boolean | Account$errorLogsArgs<ExtArgs>
     appConnections?: boolean | Account$appConnectionsArgs<ExtArgs>
@@ -4133,8 +4111,6 @@ export namespace Prisma {
       neupIds: Prisma.$NeupIdPayload<ExtArgs>[]
       permits: Prisma.$PermitPayload<ExtArgs>[]
       targetPermits: Prisma.$PermitPayload<ExtArgs>[]
-      password: Prisma.$PasswordPayload<ExtArgs> | null
-      authSecondary: Prisma.$AuthSecondaryPayload<ExtArgs>[]
       sessions: Prisma.$SessionPayload<ExtArgs>[]
       errorLogs: Prisma.$ErrorLogPayload<ExtArgs>[]
       appConnections: Prisma.$UserAppConnectionPayload<ExtArgs>[]
@@ -4561,8 +4537,6 @@ export namespace Prisma {
     neupIds<T extends Account$neupIdsArgs<ExtArgs> = {}>(args?: Subset<T, Account$neupIdsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NeupIdPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     permits<T extends Account$permitsArgs<ExtArgs> = {}>(args?: Subset<T, Account$permitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PermitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     targetPermits<T extends Account$targetPermitsArgs<ExtArgs> = {}>(args?: Subset<T, Account$targetPermitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PermitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    password<T extends Account$passwordArgs<ExtArgs> = {}>(args?: Subset<T, Account$passwordArgs<ExtArgs>>): Prisma__PasswordClient<$Result.GetResult<Prisma.$PasswordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    authSecondary<T extends Account$authSecondaryArgs<ExtArgs> = {}>(args?: Subset<T, Account$authSecondaryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthSecondaryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sessions<T extends Account$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     errorLogs<T extends Account$errorLogsArgs<ExtArgs> = {}>(args?: Subset<T, Account$errorLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ErrorLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     appConnections<T extends Account$appConnectionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$appConnectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAppConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5099,49 +5073,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PermitScalarFieldEnum | PermitScalarFieldEnum[]
-  }
-
-  /**
-   * Account.password
-   */
-  export type Account$passwordArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Password
-     */
-    select?: PasswordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Password
-     */
-    omit?: PasswordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PasswordInclude<ExtArgs> | null
-    where?: PasswordWhereInput
-  }
-
-  /**
-   * Account.authSecondary
-   */
-  export type Account$authSecondaryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthSecondary
-     */
-    select?: AuthSecondarySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthSecondary
-     */
-    omit?: AuthSecondaryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthSecondaryInclude<ExtArgs> | null
-    where?: AuthSecondaryWhereInput
-    orderBy?: AuthSecondaryOrderByWithRelationInput | AuthSecondaryOrderByWithRelationInput[]
-    cursor?: AuthSecondaryWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AuthSecondaryScalarFieldEnum | AuthSecondaryScalarFieldEnum[]
   }
 
   /**
@@ -5766,6 +5697,8 @@ export namespace Prisma {
     dateOfBirth?: boolean
     countryOfResidence?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
+    authMethods?: boolean | AccountTypeIndividual$authMethodsArgs<ExtArgs>
+    _count?: boolean | AccountTypeIndividualCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["accountTypeIndividual"]>
 
   export type AccountTypeIndividualSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5803,6 +5736,8 @@ export namespace Prisma {
   export type AccountTypeIndividualOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "firstName" | "middleName" | "lastName" | "dateOfBirth" | "countryOfResidence", ExtArgs["result"]["accountTypeIndividual"]>
   export type AccountTypeIndividualInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
+    authMethods?: boolean | AccountTypeIndividual$authMethodsArgs<ExtArgs>
+    _count?: boolean | AccountTypeIndividualCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AccountTypeIndividualIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
@@ -5815,6 +5750,7 @@ export namespace Prisma {
     name: "AccountTypeIndividual"
     objects: {
       account: Prisma.$AccountPayload<ExtArgs>
+      authMethods: Prisma.$AuthMethodPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6219,6 +6155,7 @@ export namespace Prisma {
   export interface Prisma__AccountTypeIndividualClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     account<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    authMethods<T extends AccountTypeIndividual$authMethodsArgs<ExtArgs> = {}>(args?: Subset<T, AccountTypeIndividual$authMethodsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthMethodPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6648,6 +6585,30 @@ export namespace Prisma {
      * Limit how many AccountTypeIndividuals to delete.
      */
     limit?: number
+  }
+
+  /**
+   * AccountTypeIndividual.authMethods
+   */
+  export type AccountTypeIndividual$authMethodsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuthMethod
+     */
+    select?: AuthMethodSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuthMethod
+     */
+    omit?: AuthMethodOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuthMethodInclude<ExtArgs> | null
+    where?: AuthMethodWhereInput
+    orderBy?: AuthMethodOrderByWithRelationInput | AuthMethodOrderByWithRelationInput[]
+    cursor?: AuthMethodWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AuthMethodScalarFieldEnum | AuthMethodScalarFieldEnum[]
   }
 
   /**
@@ -18382,1394 +18343,370 @@ export namespace Prisma {
 
 
   /**
-   * Model Password
+   * Model AuthMethod
    */
 
-  export type AggregatePassword = {
-    _count: PasswordCountAggregateOutputType | null
-    _min: PasswordMinAggregateOutputType | null
-    _max: PasswordMaxAggregateOutputType | null
+  export type AggregateAuthMethod = {
+    _count: AuthMethodCountAggregateOutputType | null
+    _min: AuthMethodMinAggregateOutputType | null
+    _max: AuthMethodMaxAggregateOutputType | null
   }
 
-  export type PasswordMinAggregateOutputType = {
-    accountId: string | null
-    hash: string | null
-    passwordLastChanged: Date | null
-  }
-
-  export type PasswordMaxAggregateOutputType = {
-    accountId: string | null
-    hash: string | null
-    passwordLastChanged: Date | null
-  }
-
-  export type PasswordCountAggregateOutputType = {
-    accountId: number
-    hash: number
-    passwordLastChanged: number
-    _all: number
-  }
-
-
-  export type PasswordMinAggregateInputType = {
-    accountId?: true
-    hash?: true
-    passwordLastChanged?: true
-  }
-
-  export type PasswordMaxAggregateInputType = {
-    accountId?: true
-    hash?: true
-    passwordLastChanged?: true
-  }
-
-  export type PasswordCountAggregateInputType = {
-    accountId?: true
-    hash?: true
-    passwordLastChanged?: true
-    _all?: true
-  }
-
-  export type PasswordAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Password to aggregate.
-     */
-    where?: PasswordWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Passwords to fetch.
-     */
-    orderBy?: PasswordOrderByWithRelationInput | PasswordOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: PasswordWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Passwords from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Passwords.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Passwords
-    **/
-    _count?: true | PasswordCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: PasswordMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: PasswordMaxAggregateInputType
-  }
-
-  export type GetPasswordAggregateType<T extends PasswordAggregateArgs> = {
-        [P in keyof T & keyof AggregatePassword]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregatePassword[P]>
-      : GetScalarType<T[P], AggregatePassword[P]>
-  }
-
-
-
-
-  export type PasswordGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PasswordWhereInput
-    orderBy?: PasswordOrderByWithAggregationInput | PasswordOrderByWithAggregationInput[]
-    by: PasswordScalarFieldEnum[] | PasswordScalarFieldEnum
-    having?: PasswordScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: PasswordCountAggregateInputType | true
-    _min?: PasswordMinAggregateInputType
-    _max?: PasswordMaxAggregateInputType
-  }
-
-  export type PasswordGroupByOutputType = {
-    accountId: string
-    hash: string
-    passwordLastChanged: Date
-    _count: PasswordCountAggregateOutputType | null
-    _min: PasswordMinAggregateOutputType | null
-    _max: PasswordMaxAggregateOutputType | null
-  }
-
-  type GetPasswordGroupByPayload<T extends PasswordGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<PasswordGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof PasswordGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], PasswordGroupByOutputType[P]>
-            : GetScalarType<T[P], PasswordGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type PasswordSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    accountId?: boolean
-    hash?: boolean
-    passwordLastChanged?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["password"]>
-
-  export type PasswordSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    accountId?: boolean
-    hash?: boolean
-    passwordLastChanged?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["password"]>
-
-  export type PasswordSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    accountId?: boolean
-    hash?: boolean
-    passwordLastChanged?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["password"]>
-
-  export type PasswordSelectScalar = {
-    accountId?: boolean
-    hash?: boolean
-    passwordLastChanged?: boolean
-  }
-
-  export type PasswordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"accountId" | "hash" | "passwordLastChanged", ExtArgs["result"]["password"]>
-  export type PasswordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }
-  export type PasswordIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }
-  export type PasswordIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }
-
-  export type $PasswordPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Password"
-    objects: {
-      account: Prisma.$AccountPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      accountId: string
-      hash: string
-      passwordLastChanged: Date
-    }, ExtArgs["result"]["password"]>
-    composites: {}
-  }
-
-  type PasswordGetPayload<S extends boolean | null | undefined | PasswordDefaultArgs> = $Result.GetResult<Prisma.$PasswordPayload, S>
-
-  type PasswordCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<PasswordFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: PasswordCountAggregateInputType | true
-    }
-
-  export interface PasswordDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Password'], meta: { name: 'Password' } }
-    /**
-     * Find zero or one Password that matches the filter.
-     * @param {PasswordFindUniqueArgs} args - Arguments to find a Password
-     * @example
-     * // Get one Password
-     * const password = await prisma.password.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends PasswordFindUniqueArgs>(args: SelectSubset<T, PasswordFindUniqueArgs<ExtArgs>>): Prisma__PasswordClient<$Result.GetResult<Prisma.$PasswordPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Password that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {PasswordFindUniqueOrThrowArgs} args - Arguments to find a Password
-     * @example
-     * // Get one Password
-     * const password = await prisma.password.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends PasswordFindUniqueOrThrowArgs>(args: SelectSubset<T, PasswordFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PasswordClient<$Result.GetResult<Prisma.$PasswordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Password that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PasswordFindFirstArgs} args - Arguments to find a Password
-     * @example
-     * // Get one Password
-     * const password = await prisma.password.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends PasswordFindFirstArgs>(args?: SelectSubset<T, PasswordFindFirstArgs<ExtArgs>>): Prisma__PasswordClient<$Result.GetResult<Prisma.$PasswordPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Password that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PasswordFindFirstOrThrowArgs} args - Arguments to find a Password
-     * @example
-     * // Get one Password
-     * const password = await prisma.password.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends PasswordFindFirstOrThrowArgs>(args?: SelectSubset<T, PasswordFindFirstOrThrowArgs<ExtArgs>>): Prisma__PasswordClient<$Result.GetResult<Prisma.$PasswordPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Passwords that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PasswordFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Passwords
-     * const passwords = await prisma.password.findMany()
-     * 
-     * // Get first 10 Passwords
-     * const passwords = await prisma.password.findMany({ take: 10 })
-     * 
-     * // Only select the `accountId`
-     * const passwordWithAccountIdOnly = await prisma.password.findMany({ select: { accountId: true } })
-     * 
-     */
-    findMany<T extends PasswordFindManyArgs>(args?: SelectSubset<T, PasswordFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PasswordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Password.
-     * @param {PasswordCreateArgs} args - Arguments to create a Password.
-     * @example
-     * // Create one Password
-     * const Password = await prisma.password.create({
-     *   data: {
-     *     // ... data to create a Password
-     *   }
-     * })
-     * 
-     */
-    create<T extends PasswordCreateArgs>(args: SelectSubset<T, PasswordCreateArgs<ExtArgs>>): Prisma__PasswordClient<$Result.GetResult<Prisma.$PasswordPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Passwords.
-     * @param {PasswordCreateManyArgs} args - Arguments to create many Passwords.
-     * @example
-     * // Create many Passwords
-     * const password = await prisma.password.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends PasswordCreateManyArgs>(args?: SelectSubset<T, PasswordCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Passwords and returns the data saved in the database.
-     * @param {PasswordCreateManyAndReturnArgs} args - Arguments to create many Passwords.
-     * @example
-     * // Create many Passwords
-     * const password = await prisma.password.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Passwords and only return the `accountId`
-     * const passwordWithAccountIdOnly = await prisma.password.createManyAndReturn({
-     *   select: { accountId: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends PasswordCreateManyAndReturnArgs>(args?: SelectSubset<T, PasswordCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PasswordPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Password.
-     * @param {PasswordDeleteArgs} args - Arguments to delete one Password.
-     * @example
-     * // Delete one Password
-     * const Password = await prisma.password.delete({
-     *   where: {
-     *     // ... filter to delete one Password
-     *   }
-     * })
-     * 
-     */
-    delete<T extends PasswordDeleteArgs>(args: SelectSubset<T, PasswordDeleteArgs<ExtArgs>>): Prisma__PasswordClient<$Result.GetResult<Prisma.$PasswordPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Password.
-     * @param {PasswordUpdateArgs} args - Arguments to update one Password.
-     * @example
-     * // Update one Password
-     * const password = await prisma.password.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends PasswordUpdateArgs>(args: SelectSubset<T, PasswordUpdateArgs<ExtArgs>>): Prisma__PasswordClient<$Result.GetResult<Prisma.$PasswordPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Passwords.
-     * @param {PasswordDeleteManyArgs} args - Arguments to filter Passwords to delete.
-     * @example
-     * // Delete a few Passwords
-     * const { count } = await prisma.password.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends PasswordDeleteManyArgs>(args?: SelectSubset<T, PasswordDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Passwords.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PasswordUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Passwords
-     * const password = await prisma.password.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends PasswordUpdateManyArgs>(args: SelectSubset<T, PasswordUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Passwords and returns the data updated in the database.
-     * @param {PasswordUpdateManyAndReturnArgs} args - Arguments to update many Passwords.
-     * @example
-     * // Update many Passwords
-     * const password = await prisma.password.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Passwords and only return the `accountId`
-     * const passwordWithAccountIdOnly = await prisma.password.updateManyAndReturn({
-     *   select: { accountId: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends PasswordUpdateManyAndReturnArgs>(args: SelectSubset<T, PasswordUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PasswordPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Password.
-     * @param {PasswordUpsertArgs} args - Arguments to update or create a Password.
-     * @example
-     * // Update or create a Password
-     * const password = await prisma.password.upsert({
-     *   create: {
-     *     // ... data to create a Password
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Password we want to update
-     *   }
-     * })
-     */
-    upsert<T extends PasswordUpsertArgs>(args: SelectSubset<T, PasswordUpsertArgs<ExtArgs>>): Prisma__PasswordClient<$Result.GetResult<Prisma.$PasswordPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Passwords.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PasswordCountArgs} args - Arguments to filter Passwords to count.
-     * @example
-     * // Count the number of Passwords
-     * const count = await prisma.password.count({
-     *   where: {
-     *     // ... the filter for the Passwords we want to count
-     *   }
-     * })
-    **/
-    count<T extends PasswordCountArgs>(
-      args?: Subset<T, PasswordCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], PasswordCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Password.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PasswordAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends PasswordAggregateArgs>(args: Subset<T, PasswordAggregateArgs>): Prisma.PrismaPromise<GetPasswordAggregateType<T>>
-
-    /**
-     * Group by Password.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PasswordGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends PasswordGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: PasswordGroupByArgs['orderBy'] }
-        : { orderBy?: PasswordGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, PasswordGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPasswordGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Password model
-   */
-  readonly fields: PasswordFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Password.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__PasswordClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    account<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Password model
-   */
-  interface PasswordFieldRefs {
-    readonly accountId: FieldRef<"Password", 'String'>
-    readonly hash: FieldRef<"Password", 'String'>
-    readonly passwordLastChanged: FieldRef<"Password", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Password findUnique
-   */
-  export type PasswordFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Password
-     */
-    select?: PasswordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Password
-     */
-    omit?: PasswordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PasswordInclude<ExtArgs> | null
-    /**
-     * Filter, which Password to fetch.
-     */
-    where: PasswordWhereUniqueInput
-  }
-
-  /**
-   * Password findUniqueOrThrow
-   */
-  export type PasswordFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Password
-     */
-    select?: PasswordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Password
-     */
-    omit?: PasswordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PasswordInclude<ExtArgs> | null
-    /**
-     * Filter, which Password to fetch.
-     */
-    where: PasswordWhereUniqueInput
-  }
-
-  /**
-   * Password findFirst
-   */
-  export type PasswordFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Password
-     */
-    select?: PasswordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Password
-     */
-    omit?: PasswordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PasswordInclude<ExtArgs> | null
-    /**
-     * Filter, which Password to fetch.
-     */
-    where?: PasswordWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Passwords to fetch.
-     */
-    orderBy?: PasswordOrderByWithRelationInput | PasswordOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Passwords.
-     */
-    cursor?: PasswordWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Passwords from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Passwords.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Passwords.
-     */
-    distinct?: PasswordScalarFieldEnum | PasswordScalarFieldEnum[]
-  }
-
-  /**
-   * Password findFirstOrThrow
-   */
-  export type PasswordFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Password
-     */
-    select?: PasswordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Password
-     */
-    omit?: PasswordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PasswordInclude<ExtArgs> | null
-    /**
-     * Filter, which Password to fetch.
-     */
-    where?: PasswordWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Passwords to fetch.
-     */
-    orderBy?: PasswordOrderByWithRelationInput | PasswordOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Passwords.
-     */
-    cursor?: PasswordWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Passwords from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Passwords.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Passwords.
-     */
-    distinct?: PasswordScalarFieldEnum | PasswordScalarFieldEnum[]
-  }
-
-  /**
-   * Password findMany
-   */
-  export type PasswordFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Password
-     */
-    select?: PasswordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Password
-     */
-    omit?: PasswordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PasswordInclude<ExtArgs> | null
-    /**
-     * Filter, which Passwords to fetch.
-     */
-    where?: PasswordWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Passwords to fetch.
-     */
-    orderBy?: PasswordOrderByWithRelationInput | PasswordOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Passwords.
-     */
-    cursor?: PasswordWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Passwords from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Passwords.
-     */
-    skip?: number
-    distinct?: PasswordScalarFieldEnum | PasswordScalarFieldEnum[]
-  }
-
-  /**
-   * Password create
-   */
-  export type PasswordCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Password
-     */
-    select?: PasswordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Password
-     */
-    omit?: PasswordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PasswordInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Password.
-     */
-    data: XOR<PasswordCreateInput, PasswordUncheckedCreateInput>
-  }
-
-  /**
-   * Password createMany
-   */
-  export type PasswordCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Passwords.
-     */
-    data: PasswordCreateManyInput | PasswordCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Password createManyAndReturn
-   */
-  export type PasswordCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Password
-     */
-    select?: PasswordSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Password
-     */
-    omit?: PasswordOmit<ExtArgs> | null
-    /**
-     * The data used to create many Passwords.
-     */
-    data: PasswordCreateManyInput | PasswordCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PasswordIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Password update
-   */
-  export type PasswordUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Password
-     */
-    select?: PasswordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Password
-     */
-    omit?: PasswordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PasswordInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Password.
-     */
-    data: XOR<PasswordUpdateInput, PasswordUncheckedUpdateInput>
-    /**
-     * Choose, which Password to update.
-     */
-    where: PasswordWhereUniqueInput
-  }
-
-  /**
-   * Password updateMany
-   */
-  export type PasswordUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Passwords.
-     */
-    data: XOR<PasswordUpdateManyMutationInput, PasswordUncheckedUpdateManyInput>
-    /**
-     * Filter which Passwords to update
-     */
-    where?: PasswordWhereInput
-    /**
-     * Limit how many Passwords to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Password updateManyAndReturn
-   */
-  export type PasswordUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Password
-     */
-    select?: PasswordSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Password
-     */
-    omit?: PasswordOmit<ExtArgs> | null
-    /**
-     * The data used to update Passwords.
-     */
-    data: XOR<PasswordUpdateManyMutationInput, PasswordUncheckedUpdateManyInput>
-    /**
-     * Filter which Passwords to update
-     */
-    where?: PasswordWhereInput
-    /**
-     * Limit how many Passwords to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PasswordIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Password upsert
-   */
-  export type PasswordUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Password
-     */
-    select?: PasswordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Password
-     */
-    omit?: PasswordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PasswordInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Password to update in case it exists.
-     */
-    where: PasswordWhereUniqueInput
-    /**
-     * In case the Password found by the `where` argument doesn't exist, create a new Password with this data.
-     */
-    create: XOR<PasswordCreateInput, PasswordUncheckedCreateInput>
-    /**
-     * In case the Password was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<PasswordUpdateInput, PasswordUncheckedUpdateInput>
-  }
-
-  /**
-   * Password delete
-   */
-  export type PasswordDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Password
-     */
-    select?: PasswordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Password
-     */
-    omit?: PasswordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PasswordInclude<ExtArgs> | null
-    /**
-     * Filter which Password to delete.
-     */
-    where: PasswordWhereUniqueInput
-  }
-
-  /**
-   * Password deleteMany
-   */
-  export type PasswordDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Passwords to delete
-     */
-    where?: PasswordWhereInput
-    /**
-     * Limit how many Passwords to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Password without action
-   */
-  export type PasswordDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Password
-     */
-    select?: PasswordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Password
-     */
-    omit?: PasswordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PasswordInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model AuthSecondary
-   */
-
-  export type AggregateAuthSecondary = {
-    _count: AuthSecondaryCountAggregateOutputType | null
-    _min: AuthSecondaryMinAggregateOutputType | null
-    _max: AuthSecondaryMaxAggregateOutputType | null
-  }
-
-  export type AuthSecondaryMinAggregateOutputType = {
+  export type AuthMethodMinAggregateOutputType = {
     id: string | null
     accountId: string | null
-    kind: string | null
+    type: $Enums.AuthMethodType | null
     value: string | null
-    used: boolean | null
-    createdAt: Date | null
+    order: $Enums.AuthMethodOrder | null
+    status: $Enums.AuthMethodStatus | null
   }
 
-  export type AuthSecondaryMaxAggregateOutputType = {
+  export type AuthMethodMaxAggregateOutputType = {
     id: string | null
     accountId: string | null
-    kind: string | null
+    type: $Enums.AuthMethodType | null
     value: string | null
-    used: boolean | null
-    createdAt: Date | null
+    order: $Enums.AuthMethodOrder | null
+    status: $Enums.AuthMethodStatus | null
   }
 
-  export type AuthSecondaryCountAggregateOutputType = {
+  export type AuthMethodCountAggregateOutputType = {
     id: number
     accountId: number
-    kind: number
+    type: number
     value: number
-    used: number
-    createdAt: number
+    order: number
+    status: number
+    detail: number
     _all: number
   }
 
 
-  export type AuthSecondaryMinAggregateInputType = {
+  export type AuthMethodMinAggregateInputType = {
     id?: true
     accountId?: true
-    kind?: true
+    type?: true
     value?: true
-    used?: true
-    createdAt?: true
+    order?: true
+    status?: true
   }
 
-  export type AuthSecondaryMaxAggregateInputType = {
+  export type AuthMethodMaxAggregateInputType = {
     id?: true
     accountId?: true
-    kind?: true
+    type?: true
     value?: true
-    used?: true
-    createdAt?: true
+    order?: true
+    status?: true
   }
 
-  export type AuthSecondaryCountAggregateInputType = {
+  export type AuthMethodCountAggregateInputType = {
     id?: true
     accountId?: true
-    kind?: true
+    type?: true
     value?: true
-    used?: true
-    createdAt?: true
+    order?: true
+    status?: true
+    detail?: true
     _all?: true
   }
 
-  export type AuthSecondaryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthMethodAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which AuthSecondary to aggregate.
+     * Filter which AuthMethod to aggregate.
      */
-    where?: AuthSecondaryWhereInput
+    where?: AuthMethodWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of AuthSecondaries to fetch.
+     * Determine the order of AuthMethods to fetch.
      */
-    orderBy?: AuthSecondaryOrderByWithRelationInput | AuthSecondaryOrderByWithRelationInput[]
+    orderBy?: AuthMethodOrderByWithRelationInput | AuthMethodOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: AuthSecondaryWhereUniqueInput
+    cursor?: AuthMethodWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` AuthSecondaries from the position of the cursor.
+     * Take `±n` AuthMethods from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` AuthSecondaries.
+     * Skip the first `n` AuthMethods.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned AuthSecondaries
+     * Count returned AuthMethods
     **/
-    _count?: true | AuthSecondaryCountAggregateInputType
+    _count?: true | AuthMethodCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: AuthSecondaryMinAggregateInputType
+    _min?: AuthMethodMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: AuthSecondaryMaxAggregateInputType
+    _max?: AuthMethodMaxAggregateInputType
   }
 
-  export type GetAuthSecondaryAggregateType<T extends AuthSecondaryAggregateArgs> = {
-        [P in keyof T & keyof AggregateAuthSecondary]: P extends '_count' | 'count'
+  export type GetAuthMethodAggregateType<T extends AuthMethodAggregateArgs> = {
+        [P in keyof T & keyof AggregateAuthMethod]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateAuthSecondary[P]>
-      : GetScalarType<T[P], AggregateAuthSecondary[P]>
+        : GetScalarType<T[P], AggregateAuthMethod[P]>
+      : GetScalarType<T[P], AggregateAuthMethod[P]>
   }
 
 
 
 
-  export type AuthSecondaryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthSecondaryWhereInput
-    orderBy?: AuthSecondaryOrderByWithAggregationInput | AuthSecondaryOrderByWithAggregationInput[]
-    by: AuthSecondaryScalarFieldEnum[] | AuthSecondaryScalarFieldEnum
-    having?: AuthSecondaryScalarWhereWithAggregatesInput
+  export type AuthMethodGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AuthMethodWhereInput
+    orderBy?: AuthMethodOrderByWithAggregationInput | AuthMethodOrderByWithAggregationInput[]
+    by: AuthMethodScalarFieldEnum[] | AuthMethodScalarFieldEnum
+    having?: AuthMethodScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: AuthSecondaryCountAggregateInputType | true
-    _min?: AuthSecondaryMinAggregateInputType
-    _max?: AuthSecondaryMaxAggregateInputType
+    _count?: AuthMethodCountAggregateInputType | true
+    _min?: AuthMethodMinAggregateInputType
+    _max?: AuthMethodMaxAggregateInputType
   }
 
-  export type AuthSecondaryGroupByOutputType = {
+  export type AuthMethodGroupByOutputType = {
     id: string
     accountId: string
-    kind: string
+    type: $Enums.AuthMethodType
     value: string
-    used: boolean
-    createdAt: Date
-    _count: AuthSecondaryCountAggregateOutputType | null
-    _min: AuthSecondaryMinAggregateOutputType | null
-    _max: AuthSecondaryMaxAggregateOutputType | null
+    order: $Enums.AuthMethodOrder
+    status: $Enums.AuthMethodStatus
+    detail: JsonValue | null
+    _count: AuthMethodCountAggregateOutputType | null
+    _min: AuthMethodMinAggregateOutputType | null
+    _max: AuthMethodMaxAggregateOutputType | null
   }
 
-  type GetAuthSecondaryGroupByPayload<T extends AuthSecondaryGroupByArgs> = Prisma.PrismaPromise<
+  type GetAuthMethodGroupByPayload<T extends AuthMethodGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<AuthSecondaryGroupByOutputType, T['by']> &
+      PickEnumerable<AuthMethodGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof AuthSecondaryGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof AuthMethodGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], AuthSecondaryGroupByOutputType[P]>
-            : GetScalarType<T[P], AuthSecondaryGroupByOutputType[P]>
+              : GetScalarType<T[P], AuthMethodGroupByOutputType[P]>
+            : GetScalarType<T[P], AuthMethodGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type AuthSecondarySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type AuthMethodSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     accountId?: boolean
-    kind?: boolean
+    type?: boolean
     value?: boolean
-    used?: boolean
-    createdAt?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["authSecondary"]>
+    order?: boolean
+    status?: boolean
+    detail?: boolean
+    individualProfile?: boolean | AccountTypeIndividualDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["authMethod"]>
 
-  export type AuthSecondarySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type AuthMethodSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     accountId?: boolean
-    kind?: boolean
+    type?: boolean
     value?: boolean
-    used?: boolean
-    createdAt?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["authSecondary"]>
+    order?: boolean
+    status?: boolean
+    detail?: boolean
+    individualProfile?: boolean | AccountTypeIndividualDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["authMethod"]>
 
-  export type AuthSecondarySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type AuthMethodSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     accountId?: boolean
-    kind?: boolean
+    type?: boolean
     value?: boolean
-    used?: boolean
-    createdAt?: boolean
-    account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["authSecondary"]>
+    order?: boolean
+    status?: boolean
+    detail?: boolean
+    individualProfile?: boolean | AccountTypeIndividualDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["authMethod"]>
 
-  export type AuthSecondarySelectScalar = {
+  export type AuthMethodSelectScalar = {
     id?: boolean
     accountId?: boolean
-    kind?: boolean
+    type?: boolean
     value?: boolean
-    used?: boolean
-    createdAt?: boolean
+    order?: boolean
+    status?: boolean
+    detail?: boolean
   }
 
-  export type AuthSecondaryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "kind" | "value" | "used" | "createdAt", ExtArgs["result"]["authSecondary"]>
-  export type AuthSecondaryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
+  export type AuthMethodOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "type" | "value" | "order" | "status" | "detail", ExtArgs["result"]["authMethod"]>
+  export type AuthMethodInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    individualProfile?: boolean | AccountTypeIndividualDefaultArgs<ExtArgs>
   }
-  export type AuthSecondaryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
+  export type AuthMethodIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    individualProfile?: boolean | AccountTypeIndividualDefaultArgs<ExtArgs>
   }
-  export type AuthSecondaryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | AccountDefaultArgs<ExtArgs>
+  export type AuthMethodIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    individualProfile?: boolean | AccountTypeIndividualDefaultArgs<ExtArgs>
   }
 
-  export type $AuthSecondaryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "AuthSecondary"
+  export type $AuthMethodPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AuthMethod"
     objects: {
-      account: Prisma.$AccountPayload<ExtArgs>
+      individualProfile: Prisma.$AccountTypeIndividualPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       accountId: string
-      kind: string
+      type: $Enums.AuthMethodType
       value: string
-      used: boolean
-      createdAt: Date
-    }, ExtArgs["result"]["authSecondary"]>
+      order: $Enums.AuthMethodOrder
+      status: $Enums.AuthMethodStatus
+      detail: Prisma.JsonValue | null
+    }, ExtArgs["result"]["authMethod"]>
     composites: {}
   }
 
-  type AuthSecondaryGetPayload<S extends boolean | null | undefined | AuthSecondaryDefaultArgs> = $Result.GetResult<Prisma.$AuthSecondaryPayload, S>
+  type AuthMethodGetPayload<S extends boolean | null | undefined | AuthMethodDefaultArgs> = $Result.GetResult<Prisma.$AuthMethodPayload, S>
 
-  type AuthSecondaryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<AuthSecondaryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: AuthSecondaryCountAggregateInputType | true
+  type AuthMethodCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AuthMethodFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AuthMethodCountAggregateInputType | true
     }
 
-  export interface AuthSecondaryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AuthSecondary'], meta: { name: 'AuthSecondary' } }
+  export interface AuthMethodDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AuthMethod'], meta: { name: 'AuthMethod' } }
     /**
-     * Find zero or one AuthSecondary that matches the filter.
-     * @param {AuthSecondaryFindUniqueArgs} args - Arguments to find a AuthSecondary
+     * Find zero or one AuthMethod that matches the filter.
+     * @param {AuthMethodFindUniqueArgs} args - Arguments to find a AuthMethod
      * @example
-     * // Get one AuthSecondary
-     * const authSecondary = await prisma.authSecondary.findUnique({
+     * // Get one AuthMethod
+     * const authMethod = await prisma.authMethod.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends AuthSecondaryFindUniqueArgs>(args: SelectSubset<T, AuthSecondaryFindUniqueArgs<ExtArgs>>): Prisma__AuthSecondaryClient<$Result.GetResult<Prisma.$AuthSecondaryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends AuthMethodFindUniqueArgs>(args: SelectSubset<T, AuthMethodFindUniqueArgs<ExtArgs>>): Prisma__AuthMethodClient<$Result.GetResult<Prisma.$AuthMethodPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one AuthSecondary that matches the filter or throw an error with `error.code='P2025'`
+     * Find one AuthMethod that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {AuthSecondaryFindUniqueOrThrowArgs} args - Arguments to find a AuthSecondary
+     * @param {AuthMethodFindUniqueOrThrowArgs} args - Arguments to find a AuthMethod
      * @example
-     * // Get one AuthSecondary
-     * const authSecondary = await prisma.authSecondary.findUniqueOrThrow({
+     * // Get one AuthMethod
+     * const authMethod = await prisma.authMethod.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends AuthSecondaryFindUniqueOrThrowArgs>(args: SelectSubset<T, AuthSecondaryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AuthSecondaryClient<$Result.GetResult<Prisma.$AuthSecondaryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends AuthMethodFindUniqueOrThrowArgs>(args: SelectSubset<T, AuthMethodFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AuthMethodClient<$Result.GetResult<Prisma.$AuthMethodPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first AuthSecondary that matches the filter.
+     * Find the first AuthMethod that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthSecondaryFindFirstArgs} args - Arguments to find a AuthSecondary
+     * @param {AuthMethodFindFirstArgs} args - Arguments to find a AuthMethod
      * @example
-     * // Get one AuthSecondary
-     * const authSecondary = await prisma.authSecondary.findFirst({
+     * // Get one AuthMethod
+     * const authMethod = await prisma.authMethod.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends AuthSecondaryFindFirstArgs>(args?: SelectSubset<T, AuthSecondaryFindFirstArgs<ExtArgs>>): Prisma__AuthSecondaryClient<$Result.GetResult<Prisma.$AuthSecondaryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends AuthMethodFindFirstArgs>(args?: SelectSubset<T, AuthMethodFindFirstArgs<ExtArgs>>): Prisma__AuthMethodClient<$Result.GetResult<Prisma.$AuthMethodPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first AuthSecondary that matches the filter or
+     * Find the first AuthMethod that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthSecondaryFindFirstOrThrowArgs} args - Arguments to find a AuthSecondary
+     * @param {AuthMethodFindFirstOrThrowArgs} args - Arguments to find a AuthMethod
      * @example
-     * // Get one AuthSecondary
-     * const authSecondary = await prisma.authSecondary.findFirstOrThrow({
+     * // Get one AuthMethod
+     * const authMethod = await prisma.authMethod.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends AuthSecondaryFindFirstOrThrowArgs>(args?: SelectSubset<T, AuthSecondaryFindFirstOrThrowArgs<ExtArgs>>): Prisma__AuthSecondaryClient<$Result.GetResult<Prisma.$AuthSecondaryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends AuthMethodFindFirstOrThrowArgs>(args?: SelectSubset<T, AuthMethodFindFirstOrThrowArgs<ExtArgs>>): Prisma__AuthMethodClient<$Result.GetResult<Prisma.$AuthMethodPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more AuthSecondaries that matches the filter.
+     * Find zero or more AuthMethods that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthSecondaryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {AuthMethodFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all AuthSecondaries
-     * const authSecondaries = await prisma.authSecondary.findMany()
+     * // Get all AuthMethods
+     * const authMethods = await prisma.authMethod.findMany()
      * 
-     * // Get first 10 AuthSecondaries
-     * const authSecondaries = await prisma.authSecondary.findMany({ take: 10 })
+     * // Get first 10 AuthMethods
+     * const authMethods = await prisma.authMethod.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const authSecondaryWithIdOnly = await prisma.authSecondary.findMany({ select: { id: true } })
+     * const authMethodWithIdOnly = await prisma.authMethod.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends AuthSecondaryFindManyArgs>(args?: SelectSubset<T, AuthSecondaryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthSecondaryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends AuthMethodFindManyArgs>(args?: SelectSubset<T, AuthMethodFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthMethodPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a AuthSecondary.
-     * @param {AuthSecondaryCreateArgs} args - Arguments to create a AuthSecondary.
+     * Create a AuthMethod.
+     * @param {AuthMethodCreateArgs} args - Arguments to create a AuthMethod.
      * @example
-     * // Create one AuthSecondary
-     * const AuthSecondary = await prisma.authSecondary.create({
+     * // Create one AuthMethod
+     * const AuthMethod = await prisma.authMethod.create({
      *   data: {
-     *     // ... data to create a AuthSecondary
+     *     // ... data to create a AuthMethod
      *   }
      * })
      * 
      */
-    create<T extends AuthSecondaryCreateArgs>(args: SelectSubset<T, AuthSecondaryCreateArgs<ExtArgs>>): Prisma__AuthSecondaryClient<$Result.GetResult<Prisma.$AuthSecondaryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends AuthMethodCreateArgs>(args: SelectSubset<T, AuthMethodCreateArgs<ExtArgs>>): Prisma__AuthMethodClient<$Result.GetResult<Prisma.$AuthMethodPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many AuthSecondaries.
-     * @param {AuthSecondaryCreateManyArgs} args - Arguments to create many AuthSecondaries.
+     * Create many AuthMethods.
+     * @param {AuthMethodCreateManyArgs} args - Arguments to create many AuthMethods.
      * @example
-     * // Create many AuthSecondaries
-     * const authSecondary = await prisma.authSecondary.createMany({
+     * // Create many AuthMethods
+     * const authMethod = await prisma.authMethod.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends AuthSecondaryCreateManyArgs>(args?: SelectSubset<T, AuthSecondaryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends AuthMethodCreateManyArgs>(args?: SelectSubset<T, AuthMethodCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many AuthSecondaries and returns the data saved in the database.
-     * @param {AuthSecondaryCreateManyAndReturnArgs} args - Arguments to create many AuthSecondaries.
+     * Create many AuthMethods and returns the data saved in the database.
+     * @param {AuthMethodCreateManyAndReturnArgs} args - Arguments to create many AuthMethods.
      * @example
-     * // Create many AuthSecondaries
-     * const authSecondary = await prisma.authSecondary.createManyAndReturn({
+     * // Create many AuthMethods
+     * const authMethod = await prisma.authMethod.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many AuthSecondaries and only return the `id`
-     * const authSecondaryWithIdOnly = await prisma.authSecondary.createManyAndReturn({
+     * // Create many AuthMethods and only return the `id`
+     * const authMethodWithIdOnly = await prisma.authMethod.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -19779,28 +18716,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends AuthSecondaryCreateManyAndReturnArgs>(args?: SelectSubset<T, AuthSecondaryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthSecondaryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends AuthMethodCreateManyAndReturnArgs>(args?: SelectSubset<T, AuthMethodCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthMethodPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a AuthSecondary.
-     * @param {AuthSecondaryDeleteArgs} args - Arguments to delete one AuthSecondary.
+     * Delete a AuthMethod.
+     * @param {AuthMethodDeleteArgs} args - Arguments to delete one AuthMethod.
      * @example
-     * // Delete one AuthSecondary
-     * const AuthSecondary = await prisma.authSecondary.delete({
+     * // Delete one AuthMethod
+     * const AuthMethod = await prisma.authMethod.delete({
      *   where: {
-     *     // ... filter to delete one AuthSecondary
+     *     // ... filter to delete one AuthMethod
      *   }
      * })
      * 
      */
-    delete<T extends AuthSecondaryDeleteArgs>(args: SelectSubset<T, AuthSecondaryDeleteArgs<ExtArgs>>): Prisma__AuthSecondaryClient<$Result.GetResult<Prisma.$AuthSecondaryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends AuthMethodDeleteArgs>(args: SelectSubset<T, AuthMethodDeleteArgs<ExtArgs>>): Prisma__AuthMethodClient<$Result.GetResult<Prisma.$AuthMethodPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one AuthSecondary.
-     * @param {AuthSecondaryUpdateArgs} args - Arguments to update one AuthSecondary.
+     * Update one AuthMethod.
+     * @param {AuthMethodUpdateArgs} args - Arguments to update one AuthMethod.
      * @example
-     * // Update one AuthSecondary
-     * const authSecondary = await prisma.authSecondary.update({
+     * // Update one AuthMethod
+     * const authMethod = await prisma.authMethod.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -19810,30 +18747,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends AuthSecondaryUpdateArgs>(args: SelectSubset<T, AuthSecondaryUpdateArgs<ExtArgs>>): Prisma__AuthSecondaryClient<$Result.GetResult<Prisma.$AuthSecondaryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends AuthMethodUpdateArgs>(args: SelectSubset<T, AuthMethodUpdateArgs<ExtArgs>>): Prisma__AuthMethodClient<$Result.GetResult<Prisma.$AuthMethodPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more AuthSecondaries.
-     * @param {AuthSecondaryDeleteManyArgs} args - Arguments to filter AuthSecondaries to delete.
+     * Delete zero or more AuthMethods.
+     * @param {AuthMethodDeleteManyArgs} args - Arguments to filter AuthMethods to delete.
      * @example
-     * // Delete a few AuthSecondaries
-     * const { count } = await prisma.authSecondary.deleteMany({
+     * // Delete a few AuthMethods
+     * const { count } = await prisma.authMethod.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends AuthSecondaryDeleteManyArgs>(args?: SelectSubset<T, AuthSecondaryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends AuthMethodDeleteManyArgs>(args?: SelectSubset<T, AuthMethodDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more AuthSecondaries.
+     * Update zero or more AuthMethods.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthSecondaryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {AuthMethodUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many AuthSecondaries
-     * const authSecondary = await prisma.authSecondary.updateMany({
+     * // Update many AuthMethods
+     * const authMethod = await prisma.authMethod.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -19843,14 +18780,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends AuthSecondaryUpdateManyArgs>(args: SelectSubset<T, AuthSecondaryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends AuthMethodUpdateManyArgs>(args: SelectSubset<T, AuthMethodUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more AuthSecondaries and returns the data updated in the database.
-     * @param {AuthSecondaryUpdateManyAndReturnArgs} args - Arguments to update many AuthSecondaries.
+     * Update zero or more AuthMethods and returns the data updated in the database.
+     * @param {AuthMethodUpdateManyAndReturnArgs} args - Arguments to update many AuthMethods.
      * @example
-     * // Update many AuthSecondaries
-     * const authSecondary = await prisma.authSecondary.updateManyAndReturn({
+     * // Update many AuthMethods
+     * const authMethod = await prisma.authMethod.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -19859,8 +18796,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more AuthSecondaries and only return the `id`
-     * const authSecondaryWithIdOnly = await prisma.authSecondary.updateManyAndReturn({
+     * // Update zero or more AuthMethods and only return the `id`
+     * const authMethodWithIdOnly = await prisma.authMethod.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -19873,56 +18810,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends AuthSecondaryUpdateManyAndReturnArgs>(args: SelectSubset<T, AuthSecondaryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthSecondaryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends AuthMethodUpdateManyAndReturnArgs>(args: SelectSubset<T, AuthMethodUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthMethodPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one AuthSecondary.
-     * @param {AuthSecondaryUpsertArgs} args - Arguments to update or create a AuthSecondary.
+     * Create or update one AuthMethod.
+     * @param {AuthMethodUpsertArgs} args - Arguments to update or create a AuthMethod.
      * @example
-     * // Update or create a AuthSecondary
-     * const authSecondary = await prisma.authSecondary.upsert({
+     * // Update or create a AuthMethod
+     * const authMethod = await prisma.authMethod.upsert({
      *   create: {
-     *     // ... data to create a AuthSecondary
+     *     // ... data to create a AuthMethod
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the AuthSecondary we want to update
+     *     // ... the filter for the AuthMethod we want to update
      *   }
      * })
      */
-    upsert<T extends AuthSecondaryUpsertArgs>(args: SelectSubset<T, AuthSecondaryUpsertArgs<ExtArgs>>): Prisma__AuthSecondaryClient<$Result.GetResult<Prisma.$AuthSecondaryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends AuthMethodUpsertArgs>(args: SelectSubset<T, AuthMethodUpsertArgs<ExtArgs>>): Prisma__AuthMethodClient<$Result.GetResult<Prisma.$AuthMethodPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of AuthSecondaries.
+     * Count the number of AuthMethods.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthSecondaryCountArgs} args - Arguments to filter AuthSecondaries to count.
+     * @param {AuthMethodCountArgs} args - Arguments to filter AuthMethods to count.
      * @example
-     * // Count the number of AuthSecondaries
-     * const count = await prisma.authSecondary.count({
+     * // Count the number of AuthMethods
+     * const count = await prisma.authMethod.count({
      *   where: {
-     *     // ... the filter for the AuthSecondaries we want to count
+     *     // ... the filter for the AuthMethods we want to count
      *   }
      * })
     **/
-    count<T extends AuthSecondaryCountArgs>(
-      args?: Subset<T, AuthSecondaryCountArgs>,
+    count<T extends AuthMethodCountArgs>(
+      args?: Subset<T, AuthMethodCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], AuthSecondaryCountAggregateOutputType>
+          : GetScalarType<T['select'], AuthMethodCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a AuthSecondary.
+     * Allows you to perform aggregations operations on a AuthMethod.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthSecondaryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {AuthMethodAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -19942,13 +18879,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends AuthSecondaryAggregateArgs>(args: Subset<T, AuthSecondaryAggregateArgs>): Prisma.PrismaPromise<GetAuthSecondaryAggregateType<T>>
+    aggregate<T extends AuthMethodAggregateArgs>(args: Subset<T, AuthMethodAggregateArgs>): Prisma.PrismaPromise<GetAuthMethodAggregateType<T>>
 
     /**
-     * Group by AuthSecondary.
+     * Group by AuthMethod.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthSecondaryGroupByArgs} args - Group by arguments.
+     * @param {AuthMethodGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -19963,14 +18900,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends AuthSecondaryGroupByArgs,
+      T extends AuthMethodGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: AuthSecondaryGroupByArgs['orderBy'] }
-        : { orderBy?: AuthSecondaryGroupByArgs['orderBy'] },
+        ? { orderBy: AuthMethodGroupByArgs['orderBy'] }
+        : { orderBy?: AuthMethodGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -20019,22 +18956,22 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, AuthSecondaryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAuthSecondaryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, AuthMethodGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAuthMethodGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the AuthSecondary model
+   * Fields of the AuthMethod model
    */
-  readonly fields: AuthSecondaryFieldRefs;
+  readonly fields: AuthMethodFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for AuthSecondary.
+   * The delegate class that acts as a "Promise-like" for AuthMethod.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__AuthSecondaryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__AuthMethodClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    account<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    individualProfile<T extends AccountTypeIndividualDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountTypeIndividualDefaultArgs<ExtArgs>>): Prisma__AccountTypeIndividualClient<$Result.GetResult<Prisma.$AccountTypeIndividualPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -20061,426 +18998,427 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the AuthSecondary model
+   * Fields of the AuthMethod model
    */
-  interface AuthSecondaryFieldRefs {
-    readonly id: FieldRef<"AuthSecondary", 'String'>
-    readonly accountId: FieldRef<"AuthSecondary", 'String'>
-    readonly kind: FieldRef<"AuthSecondary", 'String'>
-    readonly value: FieldRef<"AuthSecondary", 'String'>
-    readonly used: FieldRef<"AuthSecondary", 'Boolean'>
-    readonly createdAt: FieldRef<"AuthSecondary", 'DateTime'>
+  interface AuthMethodFieldRefs {
+    readonly id: FieldRef<"AuthMethod", 'String'>
+    readonly accountId: FieldRef<"AuthMethod", 'String'>
+    readonly type: FieldRef<"AuthMethod", 'AuthMethodType'>
+    readonly value: FieldRef<"AuthMethod", 'String'>
+    readonly order: FieldRef<"AuthMethod", 'AuthMethodOrder'>
+    readonly status: FieldRef<"AuthMethod", 'AuthMethodStatus'>
+    readonly detail: FieldRef<"AuthMethod", 'Json'>
   }
     
 
   // Custom InputTypes
   /**
-   * AuthSecondary findUnique
+   * AuthMethod findUnique
    */
-  export type AuthSecondaryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthMethodFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthSecondary
+     * Select specific fields to fetch from the AuthMethod
      */
-    select?: AuthSecondarySelect<ExtArgs> | null
+    select?: AuthMethodSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthSecondary
+     * Omit specific fields from the AuthMethod
      */
-    omit?: AuthSecondaryOmit<ExtArgs> | null
+    omit?: AuthMethodOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthSecondaryInclude<ExtArgs> | null
+    include?: AuthMethodInclude<ExtArgs> | null
     /**
-     * Filter, which AuthSecondary to fetch.
+     * Filter, which AuthMethod to fetch.
      */
-    where: AuthSecondaryWhereUniqueInput
+    where: AuthMethodWhereUniqueInput
   }
 
   /**
-   * AuthSecondary findUniqueOrThrow
+   * AuthMethod findUniqueOrThrow
    */
-  export type AuthSecondaryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthMethodFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthSecondary
+     * Select specific fields to fetch from the AuthMethod
      */
-    select?: AuthSecondarySelect<ExtArgs> | null
+    select?: AuthMethodSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthSecondary
+     * Omit specific fields from the AuthMethod
      */
-    omit?: AuthSecondaryOmit<ExtArgs> | null
+    omit?: AuthMethodOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthSecondaryInclude<ExtArgs> | null
+    include?: AuthMethodInclude<ExtArgs> | null
     /**
-     * Filter, which AuthSecondary to fetch.
+     * Filter, which AuthMethod to fetch.
      */
-    where: AuthSecondaryWhereUniqueInput
+    where: AuthMethodWhereUniqueInput
   }
 
   /**
-   * AuthSecondary findFirst
+   * AuthMethod findFirst
    */
-  export type AuthSecondaryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthMethodFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthSecondary
+     * Select specific fields to fetch from the AuthMethod
      */
-    select?: AuthSecondarySelect<ExtArgs> | null
+    select?: AuthMethodSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthSecondary
+     * Omit specific fields from the AuthMethod
      */
-    omit?: AuthSecondaryOmit<ExtArgs> | null
+    omit?: AuthMethodOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthSecondaryInclude<ExtArgs> | null
+    include?: AuthMethodInclude<ExtArgs> | null
     /**
-     * Filter, which AuthSecondary to fetch.
+     * Filter, which AuthMethod to fetch.
      */
-    where?: AuthSecondaryWhereInput
+    where?: AuthMethodWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of AuthSecondaries to fetch.
+     * Determine the order of AuthMethods to fetch.
      */
-    orderBy?: AuthSecondaryOrderByWithRelationInput | AuthSecondaryOrderByWithRelationInput[]
+    orderBy?: AuthMethodOrderByWithRelationInput | AuthMethodOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for AuthSecondaries.
+     * Sets the position for searching for AuthMethods.
      */
-    cursor?: AuthSecondaryWhereUniqueInput
+    cursor?: AuthMethodWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` AuthSecondaries from the position of the cursor.
+     * Take `±n` AuthMethods from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` AuthSecondaries.
+     * Skip the first `n` AuthMethods.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of AuthSecondaries.
+     * Filter by unique combinations of AuthMethods.
      */
-    distinct?: AuthSecondaryScalarFieldEnum | AuthSecondaryScalarFieldEnum[]
+    distinct?: AuthMethodScalarFieldEnum | AuthMethodScalarFieldEnum[]
   }
 
   /**
-   * AuthSecondary findFirstOrThrow
+   * AuthMethod findFirstOrThrow
    */
-  export type AuthSecondaryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthMethodFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthSecondary
+     * Select specific fields to fetch from the AuthMethod
      */
-    select?: AuthSecondarySelect<ExtArgs> | null
+    select?: AuthMethodSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthSecondary
+     * Omit specific fields from the AuthMethod
      */
-    omit?: AuthSecondaryOmit<ExtArgs> | null
+    omit?: AuthMethodOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthSecondaryInclude<ExtArgs> | null
+    include?: AuthMethodInclude<ExtArgs> | null
     /**
-     * Filter, which AuthSecondary to fetch.
+     * Filter, which AuthMethod to fetch.
      */
-    where?: AuthSecondaryWhereInput
+    where?: AuthMethodWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of AuthSecondaries to fetch.
+     * Determine the order of AuthMethods to fetch.
      */
-    orderBy?: AuthSecondaryOrderByWithRelationInput | AuthSecondaryOrderByWithRelationInput[]
+    orderBy?: AuthMethodOrderByWithRelationInput | AuthMethodOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for AuthSecondaries.
+     * Sets the position for searching for AuthMethods.
      */
-    cursor?: AuthSecondaryWhereUniqueInput
+    cursor?: AuthMethodWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` AuthSecondaries from the position of the cursor.
+     * Take `±n` AuthMethods from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` AuthSecondaries.
+     * Skip the first `n` AuthMethods.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of AuthSecondaries.
+     * Filter by unique combinations of AuthMethods.
      */
-    distinct?: AuthSecondaryScalarFieldEnum | AuthSecondaryScalarFieldEnum[]
+    distinct?: AuthMethodScalarFieldEnum | AuthMethodScalarFieldEnum[]
   }
 
   /**
-   * AuthSecondary findMany
+   * AuthMethod findMany
    */
-  export type AuthSecondaryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthMethodFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthSecondary
+     * Select specific fields to fetch from the AuthMethod
      */
-    select?: AuthSecondarySelect<ExtArgs> | null
+    select?: AuthMethodSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthSecondary
+     * Omit specific fields from the AuthMethod
      */
-    omit?: AuthSecondaryOmit<ExtArgs> | null
+    omit?: AuthMethodOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthSecondaryInclude<ExtArgs> | null
+    include?: AuthMethodInclude<ExtArgs> | null
     /**
-     * Filter, which AuthSecondaries to fetch.
+     * Filter, which AuthMethods to fetch.
      */
-    where?: AuthSecondaryWhereInput
+    where?: AuthMethodWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of AuthSecondaries to fetch.
+     * Determine the order of AuthMethods to fetch.
      */
-    orderBy?: AuthSecondaryOrderByWithRelationInput | AuthSecondaryOrderByWithRelationInput[]
+    orderBy?: AuthMethodOrderByWithRelationInput | AuthMethodOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing AuthSecondaries.
+     * Sets the position for listing AuthMethods.
      */
-    cursor?: AuthSecondaryWhereUniqueInput
+    cursor?: AuthMethodWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` AuthSecondaries from the position of the cursor.
+     * Take `±n` AuthMethods from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` AuthSecondaries.
+     * Skip the first `n` AuthMethods.
      */
     skip?: number
-    distinct?: AuthSecondaryScalarFieldEnum | AuthSecondaryScalarFieldEnum[]
+    distinct?: AuthMethodScalarFieldEnum | AuthMethodScalarFieldEnum[]
   }
 
   /**
-   * AuthSecondary create
+   * AuthMethod create
    */
-  export type AuthSecondaryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthMethodCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthSecondary
+     * Select specific fields to fetch from the AuthMethod
      */
-    select?: AuthSecondarySelect<ExtArgs> | null
+    select?: AuthMethodSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthSecondary
+     * Omit specific fields from the AuthMethod
      */
-    omit?: AuthSecondaryOmit<ExtArgs> | null
+    omit?: AuthMethodOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthSecondaryInclude<ExtArgs> | null
+    include?: AuthMethodInclude<ExtArgs> | null
     /**
-     * The data needed to create a AuthSecondary.
+     * The data needed to create a AuthMethod.
      */
-    data: XOR<AuthSecondaryCreateInput, AuthSecondaryUncheckedCreateInput>
+    data: XOR<AuthMethodCreateInput, AuthMethodUncheckedCreateInput>
   }
 
   /**
-   * AuthSecondary createMany
+   * AuthMethod createMany
    */
-  export type AuthSecondaryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthMethodCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many AuthSecondaries.
+     * The data used to create many AuthMethods.
      */
-    data: AuthSecondaryCreateManyInput | AuthSecondaryCreateManyInput[]
+    data: AuthMethodCreateManyInput | AuthMethodCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * AuthSecondary createManyAndReturn
+   * AuthMethod createManyAndReturn
    */
-  export type AuthSecondaryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthMethodCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthSecondary
+     * Select specific fields to fetch from the AuthMethod
      */
-    select?: AuthSecondarySelectCreateManyAndReturn<ExtArgs> | null
+    select?: AuthMethodSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthSecondary
+     * Omit specific fields from the AuthMethod
      */
-    omit?: AuthSecondaryOmit<ExtArgs> | null
+    omit?: AuthMethodOmit<ExtArgs> | null
     /**
-     * The data used to create many AuthSecondaries.
+     * The data used to create many AuthMethods.
      */
-    data: AuthSecondaryCreateManyInput | AuthSecondaryCreateManyInput[]
+    data: AuthMethodCreateManyInput | AuthMethodCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthSecondaryIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: AuthMethodIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * AuthSecondary update
+   * AuthMethod update
    */
-  export type AuthSecondaryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthMethodUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthSecondary
+     * Select specific fields to fetch from the AuthMethod
      */
-    select?: AuthSecondarySelect<ExtArgs> | null
+    select?: AuthMethodSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthSecondary
+     * Omit specific fields from the AuthMethod
      */
-    omit?: AuthSecondaryOmit<ExtArgs> | null
+    omit?: AuthMethodOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthSecondaryInclude<ExtArgs> | null
+    include?: AuthMethodInclude<ExtArgs> | null
     /**
-     * The data needed to update a AuthSecondary.
+     * The data needed to update a AuthMethod.
      */
-    data: XOR<AuthSecondaryUpdateInput, AuthSecondaryUncheckedUpdateInput>
+    data: XOR<AuthMethodUpdateInput, AuthMethodUncheckedUpdateInput>
     /**
-     * Choose, which AuthSecondary to update.
+     * Choose, which AuthMethod to update.
      */
-    where: AuthSecondaryWhereUniqueInput
+    where: AuthMethodWhereUniqueInput
   }
 
   /**
-   * AuthSecondary updateMany
+   * AuthMethod updateMany
    */
-  export type AuthSecondaryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthMethodUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update AuthSecondaries.
+     * The data used to update AuthMethods.
      */
-    data: XOR<AuthSecondaryUpdateManyMutationInput, AuthSecondaryUncheckedUpdateManyInput>
+    data: XOR<AuthMethodUpdateManyMutationInput, AuthMethodUncheckedUpdateManyInput>
     /**
-     * Filter which AuthSecondaries to update
+     * Filter which AuthMethods to update
      */
-    where?: AuthSecondaryWhereInput
+    where?: AuthMethodWhereInput
     /**
-     * Limit how many AuthSecondaries to update.
+     * Limit how many AuthMethods to update.
      */
     limit?: number
   }
 
   /**
-   * AuthSecondary updateManyAndReturn
+   * AuthMethod updateManyAndReturn
    */
-  export type AuthSecondaryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthMethodUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthSecondary
+     * Select specific fields to fetch from the AuthMethod
      */
-    select?: AuthSecondarySelectUpdateManyAndReturn<ExtArgs> | null
+    select?: AuthMethodSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthSecondary
+     * Omit specific fields from the AuthMethod
      */
-    omit?: AuthSecondaryOmit<ExtArgs> | null
+    omit?: AuthMethodOmit<ExtArgs> | null
     /**
-     * The data used to update AuthSecondaries.
+     * The data used to update AuthMethods.
      */
-    data: XOR<AuthSecondaryUpdateManyMutationInput, AuthSecondaryUncheckedUpdateManyInput>
+    data: XOR<AuthMethodUpdateManyMutationInput, AuthMethodUncheckedUpdateManyInput>
     /**
-     * Filter which AuthSecondaries to update
+     * Filter which AuthMethods to update
      */
-    where?: AuthSecondaryWhereInput
+    where?: AuthMethodWhereInput
     /**
-     * Limit how many AuthSecondaries to update.
+     * Limit how many AuthMethods to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthSecondaryIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: AuthMethodIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * AuthSecondary upsert
+   * AuthMethod upsert
    */
-  export type AuthSecondaryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthMethodUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthSecondary
+     * Select specific fields to fetch from the AuthMethod
      */
-    select?: AuthSecondarySelect<ExtArgs> | null
+    select?: AuthMethodSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthSecondary
+     * Omit specific fields from the AuthMethod
      */
-    omit?: AuthSecondaryOmit<ExtArgs> | null
+    omit?: AuthMethodOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthSecondaryInclude<ExtArgs> | null
+    include?: AuthMethodInclude<ExtArgs> | null
     /**
-     * The filter to search for the AuthSecondary to update in case it exists.
+     * The filter to search for the AuthMethod to update in case it exists.
      */
-    where: AuthSecondaryWhereUniqueInput
+    where: AuthMethodWhereUniqueInput
     /**
-     * In case the AuthSecondary found by the `where` argument doesn't exist, create a new AuthSecondary with this data.
+     * In case the AuthMethod found by the `where` argument doesn't exist, create a new AuthMethod with this data.
      */
-    create: XOR<AuthSecondaryCreateInput, AuthSecondaryUncheckedCreateInput>
+    create: XOR<AuthMethodCreateInput, AuthMethodUncheckedCreateInput>
     /**
-     * In case the AuthSecondary was found with the provided `where` argument, update it with this data.
+     * In case the AuthMethod was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<AuthSecondaryUpdateInput, AuthSecondaryUncheckedUpdateInput>
+    update: XOR<AuthMethodUpdateInput, AuthMethodUncheckedUpdateInput>
   }
 
   /**
-   * AuthSecondary delete
+   * AuthMethod delete
    */
-  export type AuthSecondaryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthMethodDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthSecondary
+     * Select specific fields to fetch from the AuthMethod
      */
-    select?: AuthSecondarySelect<ExtArgs> | null
+    select?: AuthMethodSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthSecondary
+     * Omit specific fields from the AuthMethod
      */
-    omit?: AuthSecondaryOmit<ExtArgs> | null
+    omit?: AuthMethodOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthSecondaryInclude<ExtArgs> | null
+    include?: AuthMethodInclude<ExtArgs> | null
     /**
-     * Filter which AuthSecondary to delete.
+     * Filter which AuthMethod to delete.
      */
-    where: AuthSecondaryWhereUniqueInput
+    where: AuthMethodWhereUniqueInput
   }
 
   /**
-   * AuthSecondary deleteMany
+   * AuthMethod deleteMany
    */
-  export type AuthSecondaryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthMethodDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which AuthSecondaries to delete
+     * Filter which AuthMethods to delete
      */
-    where?: AuthSecondaryWhereInput
+    where?: AuthMethodWhereInput
     /**
-     * Limit how many AuthSecondaries to delete.
+     * Limit how many AuthMethods to delete.
      */
     limit?: number
   }
 
   /**
-   * AuthSecondary without action
+   * AuthMethod without action
    */
-  export type AuthSecondaryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthMethodDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthSecondary
+     * Select specific fields to fetch from the AuthMethod
      */
-    select?: AuthSecondarySelect<ExtArgs> | null
+    select?: AuthMethodSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthSecondary
+     * Omit specific fields from the AuthMethod
      */
-    omit?: AuthSecondaryOmit<ExtArgs> | null
+    omit?: AuthMethodOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthSecondaryInclude<ExtArgs> | null
+    include?: AuthMethodInclude<ExtArgs> | null
   }
 
 
@@ -36343,25 +35281,17 @@ export namespace Prisma {
   export type NeupIdScalarFieldEnum = (typeof NeupIdScalarFieldEnum)[keyof typeof NeupIdScalarFieldEnum]
 
 
-  export const PasswordScalarFieldEnum: {
-    accountId: 'accountId',
-    hash: 'hash',
-    passwordLastChanged: 'passwordLastChanged'
-  };
-
-  export type PasswordScalarFieldEnum = (typeof PasswordScalarFieldEnum)[keyof typeof PasswordScalarFieldEnum]
-
-
-  export const AuthSecondaryScalarFieldEnum: {
+  export const AuthMethodScalarFieldEnum: {
     id: 'id',
     accountId: 'accountId',
-    kind: 'kind',
+    type: 'type',
     value: 'value',
-    used: 'used',
-    createdAt: 'createdAt'
+    order: 'order',
+    status: 'status',
+    detail: 'detail'
   };
 
-  export type AuthSecondaryScalarFieldEnum = (typeof AuthSecondaryScalarFieldEnum)[keyof typeof AuthSecondaryScalarFieldEnum]
+  export type AuthMethodScalarFieldEnum = (typeof AuthMethodScalarFieldEnum)[keyof typeof AuthMethodScalarFieldEnum]
 
 
   export const PermitScalarFieldEnum: {
@@ -36663,6 +35593,48 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'AuthMethodType'
+   */
+  export type EnumAuthMethodTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthMethodType'>
+    
+
+
+  /**
+   * Reference to a field of type 'AuthMethodType[]'
+   */
+  export type ListEnumAuthMethodTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthMethodType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'AuthMethodOrder'
+   */
+  export type EnumAuthMethodOrderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthMethodOrder'>
+    
+
+
+  /**
+   * Reference to a field of type 'AuthMethodOrder[]'
+   */
+  export type ListEnumAuthMethodOrderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthMethodOrder[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'AuthMethodStatus'
+   */
+  export type EnumAuthMethodStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthMethodStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'AuthMethodStatus[]'
+   */
+  export type ListEnumAuthMethodStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthMethodStatus[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -36695,8 +35667,6 @@ export namespace Prisma {
     neupIds?: NeupIdListRelationFilter
     permits?: PermitListRelationFilter
     targetPermits?: PermitListRelationFilter
-    password?: XOR<PasswordNullableScalarRelationFilter, PasswordWhereInput> | null
-    authSecondary?: AuthSecondaryListRelationFilter
     sessions?: SessionListRelationFilter
     errorLogs?: ErrorLogListRelationFilter
     appConnections?: UserAppConnectionListRelationFilter
@@ -36730,8 +35700,6 @@ export namespace Prisma {
     neupIds?: NeupIdOrderByRelationAggregateInput
     permits?: PermitOrderByRelationAggregateInput
     targetPermits?: PermitOrderByRelationAggregateInput
-    password?: PasswordOrderByWithRelationInput
-    authSecondary?: AuthSecondaryOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
     errorLogs?: ErrorLogOrderByRelationAggregateInput
     appConnections?: UserAppConnectionOrderByRelationAggregateInput
@@ -36768,8 +35736,6 @@ export namespace Prisma {
     neupIds?: NeupIdListRelationFilter
     permits?: PermitListRelationFilter
     targetPermits?: PermitListRelationFilter
-    password?: XOR<PasswordNullableScalarRelationFilter, PasswordWhereInput> | null
-    authSecondary?: AuthSecondaryListRelationFilter
     sessions?: SessionListRelationFilter
     errorLogs?: ErrorLogListRelationFilter
     appConnections?: UserAppConnectionListRelationFilter
@@ -36830,6 +35796,7 @@ export namespace Prisma {
     dateOfBirth?: DateTimeNullableFilter<"AccountTypeIndividual"> | Date | string | null
     countryOfResidence?: StringNullableFilter<"AccountTypeIndividual"> | string | null
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
+    authMethods?: AuthMethodListRelationFilter
   }
 
   export type AccountTypeIndividualOrderByWithRelationInput = {
@@ -36841,6 +35808,7 @@ export namespace Prisma {
     dateOfBirth?: SortOrderInput | SortOrder
     countryOfResidence?: SortOrderInput | SortOrder
     account?: AccountOrderByWithRelationInput
+    authMethods?: AuthMethodOrderByRelationAggregateInput
   }
 
   export type AccountTypeIndividualWhereUniqueInput = Prisma.AtLeast<{
@@ -36855,6 +35823,7 @@ export namespace Prisma {
     dateOfBirth?: DateTimeNullableFilter<"AccountTypeIndividual"> | Date | string | null
     countryOfResidence?: StringNullableFilter<"AccountTypeIndividual"> | string | null
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
+    authMethods?: AuthMethodListRelationFilter
   }, "id" | "accountId">
 
   export type AccountTypeIndividualOrderByWithAggregationInput = {
@@ -37594,109 +36563,70 @@ export namespace Prisma {
     isPrimary?: BoolWithAggregatesFilter<"NeupId"> | boolean
   }
 
-  export type PasswordWhereInput = {
-    AND?: PasswordWhereInput | PasswordWhereInput[]
-    OR?: PasswordWhereInput[]
-    NOT?: PasswordWhereInput | PasswordWhereInput[]
-    accountId?: StringFilter<"Password"> | string
-    hash?: StringFilter<"Password"> | string
-    passwordLastChanged?: DateTimeFilter<"Password"> | Date | string
-    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
+  export type AuthMethodWhereInput = {
+    AND?: AuthMethodWhereInput | AuthMethodWhereInput[]
+    OR?: AuthMethodWhereInput[]
+    NOT?: AuthMethodWhereInput | AuthMethodWhereInput[]
+    id?: StringFilter<"AuthMethod"> | string
+    accountId?: StringFilter<"AuthMethod"> | string
+    type?: EnumAuthMethodTypeFilter<"AuthMethod"> | $Enums.AuthMethodType
+    value?: StringFilter<"AuthMethod"> | string
+    order?: EnumAuthMethodOrderFilter<"AuthMethod"> | $Enums.AuthMethodOrder
+    status?: EnumAuthMethodStatusFilter<"AuthMethod"> | $Enums.AuthMethodStatus
+    detail?: JsonNullableFilter<"AuthMethod">
+    individualProfile?: XOR<AccountTypeIndividualScalarRelationFilter, AccountTypeIndividualWhereInput>
   }
 
-  export type PasswordOrderByWithRelationInput = {
-    accountId?: SortOrder
-    hash?: SortOrder
-    passwordLastChanged?: SortOrder
-    account?: AccountOrderByWithRelationInput
-  }
-
-  export type PasswordWhereUniqueInput = Prisma.AtLeast<{
-    accountId?: string
-    AND?: PasswordWhereInput | PasswordWhereInput[]
-    OR?: PasswordWhereInput[]
-    NOT?: PasswordWhereInput | PasswordWhereInput[]
-    hash?: StringFilter<"Password"> | string
-    passwordLastChanged?: DateTimeFilter<"Password"> | Date | string
-    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-  }, "accountId">
-
-  export type PasswordOrderByWithAggregationInput = {
-    accountId?: SortOrder
-    hash?: SortOrder
-    passwordLastChanged?: SortOrder
-    _count?: PasswordCountOrderByAggregateInput
-    _max?: PasswordMaxOrderByAggregateInput
-    _min?: PasswordMinOrderByAggregateInput
-  }
-
-  export type PasswordScalarWhereWithAggregatesInput = {
-    AND?: PasswordScalarWhereWithAggregatesInput | PasswordScalarWhereWithAggregatesInput[]
-    OR?: PasswordScalarWhereWithAggregatesInput[]
-    NOT?: PasswordScalarWhereWithAggregatesInput | PasswordScalarWhereWithAggregatesInput[]
-    accountId?: StringWithAggregatesFilter<"Password"> | string
-    hash?: StringWithAggregatesFilter<"Password"> | string
-    passwordLastChanged?: DateTimeWithAggregatesFilter<"Password"> | Date | string
-  }
-
-  export type AuthSecondaryWhereInput = {
-    AND?: AuthSecondaryWhereInput | AuthSecondaryWhereInput[]
-    OR?: AuthSecondaryWhereInput[]
-    NOT?: AuthSecondaryWhereInput | AuthSecondaryWhereInput[]
-    id?: StringFilter<"AuthSecondary"> | string
-    accountId?: StringFilter<"AuthSecondary"> | string
-    kind?: StringFilter<"AuthSecondary"> | string
-    value?: StringFilter<"AuthSecondary"> | string
-    used?: BoolFilter<"AuthSecondary"> | boolean
-    createdAt?: DateTimeFilter<"AuthSecondary"> | Date | string
-    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-  }
-
-  export type AuthSecondaryOrderByWithRelationInput = {
+  export type AuthMethodOrderByWithRelationInput = {
     id?: SortOrder
     accountId?: SortOrder
-    kind?: SortOrder
+    type?: SortOrder
     value?: SortOrder
-    used?: SortOrder
-    createdAt?: SortOrder
-    account?: AccountOrderByWithRelationInput
+    order?: SortOrder
+    status?: SortOrder
+    detail?: SortOrderInput | SortOrder
+    individualProfile?: AccountTypeIndividualOrderByWithRelationInput
   }
 
-  export type AuthSecondaryWhereUniqueInput = Prisma.AtLeast<{
+  export type AuthMethodWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: AuthSecondaryWhereInput | AuthSecondaryWhereInput[]
-    OR?: AuthSecondaryWhereInput[]
-    NOT?: AuthSecondaryWhereInput | AuthSecondaryWhereInput[]
-    accountId?: StringFilter<"AuthSecondary"> | string
-    kind?: StringFilter<"AuthSecondary"> | string
-    value?: StringFilter<"AuthSecondary"> | string
-    used?: BoolFilter<"AuthSecondary"> | boolean
-    createdAt?: DateTimeFilter<"AuthSecondary"> | Date | string
-    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-  }, "id">
+    accountId_type_order?: AuthMethodAccountIdTypeOrderCompoundUniqueInput
+    AND?: AuthMethodWhereInput | AuthMethodWhereInput[]
+    OR?: AuthMethodWhereInput[]
+    NOT?: AuthMethodWhereInput | AuthMethodWhereInput[]
+    accountId?: StringFilter<"AuthMethod"> | string
+    type?: EnumAuthMethodTypeFilter<"AuthMethod"> | $Enums.AuthMethodType
+    value?: StringFilter<"AuthMethod"> | string
+    order?: EnumAuthMethodOrderFilter<"AuthMethod"> | $Enums.AuthMethodOrder
+    status?: EnumAuthMethodStatusFilter<"AuthMethod"> | $Enums.AuthMethodStatus
+    detail?: JsonNullableFilter<"AuthMethod">
+    individualProfile?: XOR<AccountTypeIndividualScalarRelationFilter, AccountTypeIndividualWhereInput>
+  }, "id" | "accountId_type_order">
 
-  export type AuthSecondaryOrderByWithAggregationInput = {
+  export type AuthMethodOrderByWithAggregationInput = {
     id?: SortOrder
     accountId?: SortOrder
-    kind?: SortOrder
+    type?: SortOrder
     value?: SortOrder
-    used?: SortOrder
-    createdAt?: SortOrder
-    _count?: AuthSecondaryCountOrderByAggregateInput
-    _max?: AuthSecondaryMaxOrderByAggregateInput
-    _min?: AuthSecondaryMinOrderByAggregateInput
+    order?: SortOrder
+    status?: SortOrder
+    detail?: SortOrderInput | SortOrder
+    _count?: AuthMethodCountOrderByAggregateInput
+    _max?: AuthMethodMaxOrderByAggregateInput
+    _min?: AuthMethodMinOrderByAggregateInput
   }
 
-  export type AuthSecondaryScalarWhereWithAggregatesInput = {
-    AND?: AuthSecondaryScalarWhereWithAggregatesInput | AuthSecondaryScalarWhereWithAggregatesInput[]
-    OR?: AuthSecondaryScalarWhereWithAggregatesInput[]
-    NOT?: AuthSecondaryScalarWhereWithAggregatesInput | AuthSecondaryScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"AuthSecondary"> | string
-    accountId?: StringWithAggregatesFilter<"AuthSecondary"> | string
-    kind?: StringWithAggregatesFilter<"AuthSecondary"> | string
-    value?: StringWithAggregatesFilter<"AuthSecondary"> | string
-    used?: BoolWithAggregatesFilter<"AuthSecondary"> | boolean
-    createdAt?: DateTimeWithAggregatesFilter<"AuthSecondary"> | Date | string
+  export type AuthMethodScalarWhereWithAggregatesInput = {
+    AND?: AuthMethodScalarWhereWithAggregatesInput | AuthMethodScalarWhereWithAggregatesInput[]
+    OR?: AuthMethodScalarWhereWithAggregatesInput[]
+    NOT?: AuthMethodScalarWhereWithAggregatesInput | AuthMethodScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AuthMethod"> | string
+    accountId?: StringWithAggregatesFilter<"AuthMethod"> | string
+    type?: EnumAuthMethodTypeWithAggregatesFilter<"AuthMethod"> | $Enums.AuthMethodType
+    value?: StringWithAggregatesFilter<"AuthMethod"> | string
+    order?: EnumAuthMethodOrderWithAggregatesFilter<"AuthMethod"> | $Enums.AuthMethodOrder
+    status?: EnumAuthMethodStatusWithAggregatesFilter<"AuthMethod"> | $Enums.AuthMethodStatus
+    detail?: JsonNullableWithAggregatesFilter<"AuthMethod">
   }
 
   export type PermitWhereInput = {
@@ -38751,8 +37681,6 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
@@ -38786,8 +37714,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -38821,8 +37747,6 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
@@ -38856,8 +37780,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -38919,6 +37841,7 @@ export namespace Prisma {
     dateOfBirth?: Date | string | null
     countryOfResidence?: string | null
     account: AccountCreateNestedOneWithoutIndividualProfileInput
+    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
   }
 
   export type AccountTypeIndividualUncheckedCreateInput = {
@@ -38929,6 +37852,7 @@ export namespace Prisma {
     lastName?: string | null
     dateOfBirth?: Date | string | null
     countryOfResidence?: string | null
+    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
   }
 
   export type AccountTypeIndividualUpdateInput = {
@@ -38939,6 +37863,7 @@ export namespace Prisma {
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     countryOfResidence?: NullableStringFieldUpdateOperationsInput | string | null
     account?: AccountUpdateOneRequiredWithoutIndividualProfileNestedInput
+    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
   }
 
   export type AccountTypeIndividualUncheckedUpdateInput = {
@@ -38949,6 +37874,7 @@ export namespace Prisma {
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     countryOfResidence?: NullableStringFieldUpdateOperationsInput | string | null
+    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
   }
 
   export type AccountTypeIndividualCreateManyInput = {
@@ -39737,107 +38663,73 @@ export namespace Prisma {
     isPrimary?: BoolFieldUpdateOperationsInput | boolean
   }
 
-  export type PasswordCreateInput = {
-    hash: string
-    passwordLastChanged?: Date | string
-    account: AccountCreateNestedOneWithoutPasswordInput
-  }
-
-  export type PasswordUncheckedCreateInput = {
-    accountId: string
-    hash: string
-    passwordLastChanged?: Date | string
-  }
-
-  export type PasswordUpdateInput = {
-    hash?: StringFieldUpdateOperationsInput | string
-    passwordLastChanged?: DateTimeFieldUpdateOperationsInput | Date | string
-    account?: AccountUpdateOneRequiredWithoutPasswordNestedInput
-  }
-
-  export type PasswordUncheckedUpdateInput = {
-    accountId?: StringFieldUpdateOperationsInput | string
-    hash?: StringFieldUpdateOperationsInput | string
-    passwordLastChanged?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PasswordCreateManyInput = {
-    accountId: string
-    hash: string
-    passwordLastChanged?: Date | string
-  }
-
-  export type PasswordUpdateManyMutationInput = {
-    hash?: StringFieldUpdateOperationsInput | string
-    passwordLastChanged?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PasswordUncheckedUpdateManyInput = {
-    accountId?: StringFieldUpdateOperationsInput | string
-    hash?: StringFieldUpdateOperationsInput | string
-    passwordLastChanged?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthSecondaryCreateInput = {
+  export type AuthMethodCreateInput = {
     id?: string
-    kind: string
+    type: $Enums.AuthMethodType
     value: string
-    used?: boolean
-    createdAt?: Date | string
-    account: AccountCreateNestedOneWithoutAuthSecondaryInput
+    order: $Enums.AuthMethodOrder
+    status?: $Enums.AuthMethodStatus
+    detail?: NullableJsonNullValueInput | InputJsonValue
+    individualProfile: AccountTypeIndividualCreateNestedOneWithoutAuthMethodsInput
   }
 
-  export type AuthSecondaryUncheckedCreateInput = {
+  export type AuthMethodUncheckedCreateInput = {
     id?: string
     accountId: string
-    kind: string
+    type: $Enums.AuthMethodType
     value: string
-    used?: boolean
-    createdAt?: Date | string
+    order: $Enums.AuthMethodOrder
+    status?: $Enums.AuthMethodStatus
+    detail?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AuthSecondaryUpdateInput = {
+  export type AuthMethodUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    kind?: StringFieldUpdateOperationsInput | string
+    type?: EnumAuthMethodTypeFieldUpdateOperationsInput | $Enums.AuthMethodType
     value?: StringFieldUpdateOperationsInput | string
-    used?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    account?: AccountUpdateOneRequiredWithoutAuthSecondaryNestedInput
+    order?: EnumAuthMethodOrderFieldUpdateOperationsInput | $Enums.AuthMethodOrder
+    status?: EnumAuthMethodStatusFieldUpdateOperationsInput | $Enums.AuthMethodStatus
+    detail?: NullableJsonNullValueInput | InputJsonValue
+    individualProfile?: AccountTypeIndividualUpdateOneRequiredWithoutAuthMethodsNestedInput
   }
 
-  export type AuthSecondaryUncheckedUpdateInput = {
+  export type AuthMethodUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
-    kind?: StringFieldUpdateOperationsInput | string
+    type?: EnumAuthMethodTypeFieldUpdateOperationsInput | $Enums.AuthMethodType
     value?: StringFieldUpdateOperationsInput | string
-    used?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: EnumAuthMethodOrderFieldUpdateOperationsInput | $Enums.AuthMethodOrder
+    status?: EnumAuthMethodStatusFieldUpdateOperationsInput | $Enums.AuthMethodStatus
+    detail?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AuthSecondaryCreateManyInput = {
+  export type AuthMethodCreateManyInput = {
     id?: string
     accountId: string
-    kind: string
+    type: $Enums.AuthMethodType
     value: string
-    used?: boolean
-    createdAt?: Date | string
+    order: $Enums.AuthMethodOrder
+    status?: $Enums.AuthMethodStatus
+    detail?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AuthSecondaryUpdateManyMutationInput = {
+  export type AuthMethodUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    kind?: StringFieldUpdateOperationsInput | string
+    type?: EnumAuthMethodTypeFieldUpdateOperationsInput | $Enums.AuthMethodType
     value?: StringFieldUpdateOperationsInput | string
-    used?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: EnumAuthMethodOrderFieldUpdateOperationsInput | $Enums.AuthMethodOrder
+    status?: EnumAuthMethodStatusFieldUpdateOperationsInput | $Enums.AuthMethodStatus
+    detail?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AuthSecondaryUncheckedUpdateManyInput = {
+  export type AuthMethodUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
-    kind?: StringFieldUpdateOperationsInput | string
+    type?: EnumAuthMethodTypeFieldUpdateOperationsInput | $Enums.AuthMethodType
     value?: StringFieldUpdateOperationsInput | string
-    used?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: EnumAuthMethodOrderFieldUpdateOperationsInput | $Enums.AuthMethodOrder
+    status?: EnumAuthMethodStatusFieldUpdateOperationsInput | $Enums.AuthMethodStatus
+    detail?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type PermitCreateInput = {
@@ -41023,17 +39915,6 @@ export namespace Prisma {
     none?: PermitWhereInput
   }
 
-  export type PasswordNullableScalarRelationFilter = {
-    is?: PasswordWhereInput | null
-    isNot?: PasswordWhereInput | null
-  }
-
-  export type AuthSecondaryListRelationFilter = {
-    every?: AuthSecondaryWhereInput
-    some?: AuthSecondaryWhereInput
-    none?: AuthSecondaryWhereInput
-  }
-
   export type SessionListRelationFilter = {
     every?: SessionWhereInput
     some?: SessionWhereInput
@@ -41130,10 +40011,6 @@ export namespace Prisma {
   }
 
   export type PermitOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type AuthSecondaryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -41314,6 +40191,16 @@ export namespace Prisma {
   export type AccountScalarRelationFilter = {
     is?: AccountWhereInput
     isNot?: AccountWhereInput
+  }
+
+  export type AuthMethodListRelationFilter = {
+    every?: AuthMethodWhereInput
+    some?: AuthMethodWhereInput
+    none?: AuthMethodWhereInput
+  }
+
+  export type AuthMethodOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type AccountTypeIndividualCountOrderByAggregateInput = {
@@ -41745,49 +40632,94 @@ export namespace Prisma {
     isPrimary?: SortOrder
   }
 
-  export type PasswordCountOrderByAggregateInput = {
-    accountId?: SortOrder
-    hash?: SortOrder
-    passwordLastChanged?: SortOrder
+  export type EnumAuthMethodTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuthMethodType | EnumAuthMethodTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.AuthMethodType[] | ListEnumAuthMethodTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AuthMethodType[] | ListEnumAuthMethodTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumAuthMethodTypeFilter<$PrismaModel> | $Enums.AuthMethodType
   }
 
-  export type PasswordMaxOrderByAggregateInput = {
-    accountId?: SortOrder
-    hash?: SortOrder
-    passwordLastChanged?: SortOrder
+  export type EnumAuthMethodOrderFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuthMethodOrder | EnumAuthMethodOrderFieldRefInput<$PrismaModel>
+    in?: $Enums.AuthMethodOrder[] | ListEnumAuthMethodOrderFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AuthMethodOrder[] | ListEnumAuthMethodOrderFieldRefInput<$PrismaModel>
+    not?: NestedEnumAuthMethodOrderFilter<$PrismaModel> | $Enums.AuthMethodOrder
   }
 
-  export type PasswordMinOrderByAggregateInput = {
-    accountId?: SortOrder
-    hash?: SortOrder
-    passwordLastChanged?: SortOrder
+  export type EnumAuthMethodStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuthMethodStatus | EnumAuthMethodStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.AuthMethodStatus[] | ListEnumAuthMethodStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AuthMethodStatus[] | ListEnumAuthMethodStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumAuthMethodStatusFilter<$PrismaModel> | $Enums.AuthMethodStatus
   }
 
-  export type AuthSecondaryCountOrderByAggregateInput = {
+  export type AccountTypeIndividualScalarRelationFilter = {
+    is?: AccountTypeIndividualWhereInput
+    isNot?: AccountTypeIndividualWhereInput
+  }
+
+  export type AuthMethodAccountIdTypeOrderCompoundUniqueInput = {
+    accountId: string
+    type: $Enums.AuthMethodType
+    order: $Enums.AuthMethodOrder
+  }
+
+  export type AuthMethodCountOrderByAggregateInput = {
     id?: SortOrder
     accountId?: SortOrder
-    kind?: SortOrder
+    type?: SortOrder
     value?: SortOrder
-    used?: SortOrder
-    createdAt?: SortOrder
+    order?: SortOrder
+    status?: SortOrder
+    detail?: SortOrder
   }
 
-  export type AuthSecondaryMaxOrderByAggregateInput = {
+  export type AuthMethodMaxOrderByAggregateInput = {
     id?: SortOrder
     accountId?: SortOrder
-    kind?: SortOrder
+    type?: SortOrder
     value?: SortOrder
-    used?: SortOrder
-    createdAt?: SortOrder
+    order?: SortOrder
+    status?: SortOrder
   }
 
-  export type AuthSecondaryMinOrderByAggregateInput = {
+  export type AuthMethodMinOrderByAggregateInput = {
     id?: SortOrder
     accountId?: SortOrder
-    kind?: SortOrder
+    type?: SortOrder
     value?: SortOrder
-    used?: SortOrder
-    createdAt?: SortOrder
+    order?: SortOrder
+    status?: SortOrder
+  }
+
+  export type EnumAuthMethodTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuthMethodType | EnumAuthMethodTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.AuthMethodType[] | ListEnumAuthMethodTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AuthMethodType[] | ListEnumAuthMethodTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumAuthMethodTypeWithAggregatesFilter<$PrismaModel> | $Enums.AuthMethodType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAuthMethodTypeFilter<$PrismaModel>
+    _max?: NestedEnumAuthMethodTypeFilter<$PrismaModel>
+  }
+
+  export type EnumAuthMethodOrderWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuthMethodOrder | EnumAuthMethodOrderFieldRefInput<$PrismaModel>
+    in?: $Enums.AuthMethodOrder[] | ListEnumAuthMethodOrderFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AuthMethodOrder[] | ListEnumAuthMethodOrderFieldRefInput<$PrismaModel>
+    not?: NestedEnumAuthMethodOrderWithAggregatesFilter<$PrismaModel> | $Enums.AuthMethodOrder
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAuthMethodOrderFilter<$PrismaModel>
+    _max?: NestedEnumAuthMethodOrderFilter<$PrismaModel>
+  }
+
+  export type EnumAuthMethodStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuthMethodStatus | EnumAuthMethodStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.AuthMethodStatus[] | ListEnumAuthMethodStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AuthMethodStatus[] | ListEnumAuthMethodStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumAuthMethodStatusWithAggregatesFilter<$PrismaModel> | $Enums.AuthMethodStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAuthMethodStatusFilter<$PrismaModel>
+    _max?: NestedEnumAuthMethodStatusFilter<$PrismaModel>
   }
 
   export type AccountNullableScalarRelationFilter = {
@@ -42352,19 +41284,6 @@ export namespace Prisma {
     connect?: PermitWhereUniqueInput | PermitWhereUniqueInput[]
   }
 
-  export type PasswordCreateNestedOneWithoutAccountInput = {
-    create?: XOR<PasswordCreateWithoutAccountInput, PasswordUncheckedCreateWithoutAccountInput>
-    connectOrCreate?: PasswordCreateOrConnectWithoutAccountInput
-    connect?: PasswordWhereUniqueInput
-  }
-
-  export type AuthSecondaryCreateNestedManyWithoutAccountInput = {
-    create?: XOR<AuthSecondaryCreateWithoutAccountInput, AuthSecondaryUncheckedCreateWithoutAccountInput> | AuthSecondaryCreateWithoutAccountInput[] | AuthSecondaryUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthSecondaryCreateOrConnectWithoutAccountInput | AuthSecondaryCreateOrConnectWithoutAccountInput[]
-    createMany?: AuthSecondaryCreateManyAccountInputEnvelope
-    connect?: AuthSecondaryWhereUniqueInput | AuthSecondaryWhereUniqueInput[]
-  }
-
   export type SessionCreateNestedManyWithoutAccountInput = {
     create?: XOR<SessionCreateWithoutAccountInput, SessionUncheckedCreateWithoutAccountInput> | SessionCreateWithoutAccountInput[] | SessionUncheckedCreateWithoutAccountInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutAccountInput | SessionCreateOrConnectWithoutAccountInput[]
@@ -42515,19 +41434,6 @@ export namespace Prisma {
     connectOrCreate?: PermitCreateOrConnectWithoutTargetAccountInput | PermitCreateOrConnectWithoutTargetAccountInput[]
     createMany?: PermitCreateManyTargetAccountInputEnvelope
     connect?: PermitWhereUniqueInput | PermitWhereUniqueInput[]
-  }
-
-  export type PasswordUncheckedCreateNestedOneWithoutAccountInput = {
-    create?: XOR<PasswordCreateWithoutAccountInput, PasswordUncheckedCreateWithoutAccountInput>
-    connectOrCreate?: PasswordCreateOrConnectWithoutAccountInput
-    connect?: PasswordWhereUniqueInput
-  }
-
-  export type AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput = {
-    create?: XOR<AuthSecondaryCreateWithoutAccountInput, AuthSecondaryUncheckedCreateWithoutAccountInput> | AuthSecondaryCreateWithoutAccountInput[] | AuthSecondaryUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthSecondaryCreateOrConnectWithoutAccountInput | AuthSecondaryCreateOrConnectWithoutAccountInput[]
-    createMany?: AuthSecondaryCreateManyAccountInputEnvelope
-    connect?: AuthSecondaryWhereUniqueInput | AuthSecondaryWhereUniqueInput[]
   }
 
   export type SessionUncheckedCreateNestedManyWithoutAccountInput = {
@@ -42724,30 +41630,6 @@ export namespace Prisma {
     update?: PermitUpdateWithWhereUniqueWithoutTargetAccountInput | PermitUpdateWithWhereUniqueWithoutTargetAccountInput[]
     updateMany?: PermitUpdateManyWithWhereWithoutTargetAccountInput | PermitUpdateManyWithWhereWithoutTargetAccountInput[]
     deleteMany?: PermitScalarWhereInput | PermitScalarWhereInput[]
-  }
-
-  export type PasswordUpdateOneWithoutAccountNestedInput = {
-    create?: XOR<PasswordCreateWithoutAccountInput, PasswordUncheckedCreateWithoutAccountInput>
-    connectOrCreate?: PasswordCreateOrConnectWithoutAccountInput
-    upsert?: PasswordUpsertWithoutAccountInput
-    disconnect?: PasswordWhereInput | boolean
-    delete?: PasswordWhereInput | boolean
-    connect?: PasswordWhereUniqueInput
-    update?: XOR<XOR<PasswordUpdateToOneWithWhereWithoutAccountInput, PasswordUpdateWithoutAccountInput>, PasswordUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type AuthSecondaryUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<AuthSecondaryCreateWithoutAccountInput, AuthSecondaryUncheckedCreateWithoutAccountInput> | AuthSecondaryCreateWithoutAccountInput[] | AuthSecondaryUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthSecondaryCreateOrConnectWithoutAccountInput | AuthSecondaryCreateOrConnectWithoutAccountInput[]
-    upsert?: AuthSecondaryUpsertWithWhereUniqueWithoutAccountInput | AuthSecondaryUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: AuthSecondaryCreateManyAccountInputEnvelope
-    set?: AuthSecondaryWhereUniqueInput | AuthSecondaryWhereUniqueInput[]
-    disconnect?: AuthSecondaryWhereUniqueInput | AuthSecondaryWhereUniqueInput[]
-    delete?: AuthSecondaryWhereUniqueInput | AuthSecondaryWhereUniqueInput[]
-    connect?: AuthSecondaryWhereUniqueInput | AuthSecondaryWhereUniqueInput[]
-    update?: AuthSecondaryUpdateWithWhereUniqueWithoutAccountInput | AuthSecondaryUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: AuthSecondaryUpdateManyWithWhereWithoutAccountInput | AuthSecondaryUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: AuthSecondaryScalarWhereInput | AuthSecondaryScalarWhereInput[]
   }
 
   export type SessionUpdateManyWithoutAccountNestedInput = {
@@ -43050,30 +41932,6 @@ export namespace Prisma {
     deleteMany?: PermitScalarWhereInput | PermitScalarWhereInput[]
   }
 
-  export type PasswordUncheckedUpdateOneWithoutAccountNestedInput = {
-    create?: XOR<PasswordCreateWithoutAccountInput, PasswordUncheckedCreateWithoutAccountInput>
-    connectOrCreate?: PasswordCreateOrConnectWithoutAccountInput
-    upsert?: PasswordUpsertWithoutAccountInput
-    disconnect?: PasswordWhereInput | boolean
-    delete?: PasswordWhereInput | boolean
-    connect?: PasswordWhereUniqueInput
-    update?: XOR<XOR<PasswordUpdateToOneWithWhereWithoutAccountInput, PasswordUpdateWithoutAccountInput>, PasswordUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<AuthSecondaryCreateWithoutAccountInput, AuthSecondaryUncheckedCreateWithoutAccountInput> | AuthSecondaryCreateWithoutAccountInput[] | AuthSecondaryUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthSecondaryCreateOrConnectWithoutAccountInput | AuthSecondaryCreateOrConnectWithoutAccountInput[]
-    upsert?: AuthSecondaryUpsertWithWhereUniqueWithoutAccountInput | AuthSecondaryUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: AuthSecondaryCreateManyAccountInputEnvelope
-    set?: AuthSecondaryWhereUniqueInput | AuthSecondaryWhereUniqueInput[]
-    disconnect?: AuthSecondaryWhereUniqueInput | AuthSecondaryWhereUniqueInput[]
-    delete?: AuthSecondaryWhereUniqueInput | AuthSecondaryWhereUniqueInput[]
-    connect?: AuthSecondaryWhereUniqueInput | AuthSecondaryWhereUniqueInput[]
-    update?: AuthSecondaryUpdateWithWhereUniqueWithoutAccountInput | AuthSecondaryUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: AuthSecondaryUpdateManyWithWhereWithoutAccountInput | AuthSecondaryUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: AuthSecondaryScalarWhereInput | AuthSecondaryScalarWhereInput[]
-  }
-
   export type SessionUncheckedUpdateManyWithoutAccountNestedInput = {
     create?: XOR<SessionCreateWithoutAccountInput, SessionUncheckedCreateWithoutAccountInput> | SessionCreateWithoutAccountInput[] | SessionUncheckedCreateWithoutAccountInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutAccountInput | SessionCreateOrConnectWithoutAccountInput[]
@@ -43324,6 +42182,20 @@ export namespace Prisma {
     connect?: AccountWhereUniqueInput
   }
 
+  export type AuthMethodCreateNestedManyWithoutIndividualProfileInput = {
+    create?: XOR<AuthMethodCreateWithoutIndividualProfileInput, AuthMethodUncheckedCreateWithoutIndividualProfileInput> | AuthMethodCreateWithoutIndividualProfileInput[] | AuthMethodUncheckedCreateWithoutIndividualProfileInput[]
+    connectOrCreate?: AuthMethodCreateOrConnectWithoutIndividualProfileInput | AuthMethodCreateOrConnectWithoutIndividualProfileInput[]
+    createMany?: AuthMethodCreateManyIndividualProfileInputEnvelope
+    connect?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
+  }
+
+  export type AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput = {
+    create?: XOR<AuthMethodCreateWithoutIndividualProfileInput, AuthMethodUncheckedCreateWithoutIndividualProfileInput> | AuthMethodCreateWithoutIndividualProfileInput[] | AuthMethodUncheckedCreateWithoutIndividualProfileInput[]
+    connectOrCreate?: AuthMethodCreateOrConnectWithoutIndividualProfileInput | AuthMethodCreateOrConnectWithoutIndividualProfileInput[]
+    createMany?: AuthMethodCreateManyIndividualProfileInputEnvelope
+    connect?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
+  }
+
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
   }
@@ -43334,6 +42206,34 @@ export namespace Prisma {
     upsert?: AccountUpsertWithoutIndividualProfileInput
     connect?: AccountWhereUniqueInput
     update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutIndividualProfileInput, AccountUpdateWithoutIndividualProfileInput>, AccountUncheckedUpdateWithoutIndividualProfileInput>
+  }
+
+  export type AuthMethodUpdateManyWithoutIndividualProfileNestedInput = {
+    create?: XOR<AuthMethodCreateWithoutIndividualProfileInput, AuthMethodUncheckedCreateWithoutIndividualProfileInput> | AuthMethodCreateWithoutIndividualProfileInput[] | AuthMethodUncheckedCreateWithoutIndividualProfileInput[]
+    connectOrCreate?: AuthMethodCreateOrConnectWithoutIndividualProfileInput | AuthMethodCreateOrConnectWithoutIndividualProfileInput[]
+    upsert?: AuthMethodUpsertWithWhereUniqueWithoutIndividualProfileInput | AuthMethodUpsertWithWhereUniqueWithoutIndividualProfileInput[]
+    createMany?: AuthMethodCreateManyIndividualProfileInputEnvelope
+    set?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
+    disconnect?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
+    delete?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
+    connect?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
+    update?: AuthMethodUpdateWithWhereUniqueWithoutIndividualProfileInput | AuthMethodUpdateWithWhereUniqueWithoutIndividualProfileInput[]
+    updateMany?: AuthMethodUpdateManyWithWhereWithoutIndividualProfileInput | AuthMethodUpdateManyWithWhereWithoutIndividualProfileInput[]
+    deleteMany?: AuthMethodScalarWhereInput | AuthMethodScalarWhereInput[]
+  }
+
+  export type AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput = {
+    create?: XOR<AuthMethodCreateWithoutIndividualProfileInput, AuthMethodUncheckedCreateWithoutIndividualProfileInput> | AuthMethodCreateWithoutIndividualProfileInput[] | AuthMethodUncheckedCreateWithoutIndividualProfileInput[]
+    connectOrCreate?: AuthMethodCreateOrConnectWithoutIndividualProfileInput | AuthMethodCreateOrConnectWithoutIndividualProfileInput[]
+    upsert?: AuthMethodUpsertWithWhereUniqueWithoutIndividualProfileInput | AuthMethodUpsertWithWhereUniqueWithoutIndividualProfileInput[]
+    createMany?: AuthMethodCreateManyIndividualProfileInputEnvelope
+    set?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
+    disconnect?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
+    delete?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
+    connect?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
+    update?: AuthMethodUpdateWithWhereUniqueWithoutIndividualProfileInput | AuthMethodUpdateWithWhereUniqueWithoutIndividualProfileInput[]
+    updateMany?: AuthMethodUpdateManyWithWhereWithoutIndividualProfileInput | AuthMethodUpdateManyWithWhereWithoutIndividualProfileInput[]
+    deleteMany?: AuthMethodScalarWhereInput | AuthMethodScalarWhereInput[]
   }
 
   export type AccountCreateNestedOneWithoutBrandProfileInput = {
@@ -43529,32 +42429,30 @@ export namespace Prisma {
     update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutNeupIdsInput, AccountUpdateWithoutNeupIdsInput>, AccountUncheckedUpdateWithoutNeupIdsInput>
   }
 
-  export type AccountCreateNestedOneWithoutPasswordInput = {
-    create?: XOR<AccountCreateWithoutPasswordInput, AccountUncheckedCreateWithoutPasswordInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutPasswordInput
-    connect?: AccountWhereUniqueInput
+  export type AccountTypeIndividualCreateNestedOneWithoutAuthMethodsInput = {
+    create?: XOR<AccountTypeIndividualCreateWithoutAuthMethodsInput, AccountTypeIndividualUncheckedCreateWithoutAuthMethodsInput>
+    connectOrCreate?: AccountTypeIndividualCreateOrConnectWithoutAuthMethodsInput
+    connect?: AccountTypeIndividualWhereUniqueInput
   }
 
-  export type AccountUpdateOneRequiredWithoutPasswordNestedInput = {
-    create?: XOR<AccountCreateWithoutPasswordInput, AccountUncheckedCreateWithoutPasswordInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutPasswordInput
-    upsert?: AccountUpsertWithoutPasswordInput
-    connect?: AccountWhereUniqueInput
-    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutPasswordInput, AccountUpdateWithoutPasswordInput>, AccountUncheckedUpdateWithoutPasswordInput>
+  export type EnumAuthMethodTypeFieldUpdateOperationsInput = {
+    set?: $Enums.AuthMethodType
   }
 
-  export type AccountCreateNestedOneWithoutAuthSecondaryInput = {
-    create?: XOR<AccountCreateWithoutAuthSecondaryInput, AccountUncheckedCreateWithoutAuthSecondaryInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutAuthSecondaryInput
-    connect?: AccountWhereUniqueInput
+  export type EnumAuthMethodOrderFieldUpdateOperationsInput = {
+    set?: $Enums.AuthMethodOrder
   }
 
-  export type AccountUpdateOneRequiredWithoutAuthSecondaryNestedInput = {
-    create?: XOR<AccountCreateWithoutAuthSecondaryInput, AccountUncheckedCreateWithoutAuthSecondaryInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutAuthSecondaryInput
-    upsert?: AccountUpsertWithoutAuthSecondaryInput
-    connect?: AccountWhereUniqueInput
-    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutAuthSecondaryInput, AccountUpdateWithoutAuthSecondaryInput>, AccountUncheckedUpdateWithoutAuthSecondaryInput>
+  export type EnumAuthMethodStatusFieldUpdateOperationsInput = {
+    set?: $Enums.AuthMethodStatus
+  }
+
+  export type AccountTypeIndividualUpdateOneRequiredWithoutAuthMethodsNestedInput = {
+    create?: XOR<AccountTypeIndividualCreateWithoutAuthMethodsInput, AccountTypeIndividualUncheckedCreateWithoutAuthMethodsInput>
+    connectOrCreate?: AccountTypeIndividualCreateOrConnectWithoutAuthMethodsInput
+    upsert?: AccountTypeIndividualUpsertWithoutAuthMethodsInput
+    connect?: AccountTypeIndividualWhereUniqueInput
+    update?: XOR<XOR<AccountTypeIndividualUpdateToOneWithWhereWithoutAuthMethodsInput, AccountTypeIndividualUpdateWithoutAuthMethodsInput>, AccountTypeIndividualUncheckedUpdateWithoutAuthMethodsInput>
   }
 
   export type PermitCreatepermissionsInput = {
@@ -44502,6 +43400,57 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type NestedEnumAuthMethodTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuthMethodType | EnumAuthMethodTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.AuthMethodType[] | ListEnumAuthMethodTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AuthMethodType[] | ListEnumAuthMethodTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumAuthMethodTypeFilter<$PrismaModel> | $Enums.AuthMethodType
+  }
+
+  export type NestedEnumAuthMethodOrderFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuthMethodOrder | EnumAuthMethodOrderFieldRefInput<$PrismaModel>
+    in?: $Enums.AuthMethodOrder[] | ListEnumAuthMethodOrderFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AuthMethodOrder[] | ListEnumAuthMethodOrderFieldRefInput<$PrismaModel>
+    not?: NestedEnumAuthMethodOrderFilter<$PrismaModel> | $Enums.AuthMethodOrder
+  }
+
+  export type NestedEnumAuthMethodStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuthMethodStatus | EnumAuthMethodStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.AuthMethodStatus[] | ListEnumAuthMethodStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AuthMethodStatus[] | ListEnumAuthMethodStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumAuthMethodStatusFilter<$PrismaModel> | $Enums.AuthMethodStatus
+  }
+
+  export type NestedEnumAuthMethodTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuthMethodType | EnumAuthMethodTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.AuthMethodType[] | ListEnumAuthMethodTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AuthMethodType[] | ListEnumAuthMethodTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumAuthMethodTypeWithAggregatesFilter<$PrismaModel> | $Enums.AuthMethodType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAuthMethodTypeFilter<$PrismaModel>
+    _max?: NestedEnumAuthMethodTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumAuthMethodOrderWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuthMethodOrder | EnumAuthMethodOrderFieldRefInput<$PrismaModel>
+    in?: $Enums.AuthMethodOrder[] | ListEnumAuthMethodOrderFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AuthMethodOrder[] | ListEnumAuthMethodOrderFieldRefInput<$PrismaModel>
+    not?: NestedEnumAuthMethodOrderWithAggregatesFilter<$PrismaModel> | $Enums.AuthMethodOrder
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAuthMethodOrderFilter<$PrismaModel>
+    _max?: NestedEnumAuthMethodOrderFilter<$PrismaModel>
+  }
+
+  export type NestedEnumAuthMethodStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuthMethodStatus | EnumAuthMethodStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.AuthMethodStatus[] | ListEnumAuthMethodStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AuthMethodStatus[] | ListEnumAuthMethodStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumAuthMethodStatusWithAggregatesFilter<$PrismaModel> | $Enums.AuthMethodStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAuthMethodStatusFilter<$PrismaModel>
+    _max?: NestedEnumAuthMethodStatusFilter<$PrismaModel>
+  }
+
   export type ContactCreateWithoutAccountInput = {
     id?: string
     contactType: string
@@ -44639,47 +43588,6 @@ export namespace Prisma {
 
   export type PermitCreateManyTargetAccountInputEnvelope = {
     data: PermitCreateManyTargetAccountInput | PermitCreateManyTargetAccountInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type PasswordCreateWithoutAccountInput = {
-    hash: string
-    passwordLastChanged?: Date | string
-  }
-
-  export type PasswordUncheckedCreateWithoutAccountInput = {
-    hash: string
-    passwordLastChanged?: Date | string
-  }
-
-  export type PasswordCreateOrConnectWithoutAccountInput = {
-    where: PasswordWhereUniqueInput
-    create: XOR<PasswordCreateWithoutAccountInput, PasswordUncheckedCreateWithoutAccountInput>
-  }
-
-  export type AuthSecondaryCreateWithoutAccountInput = {
-    id?: string
-    kind: string
-    value: string
-    used?: boolean
-    createdAt?: Date | string
-  }
-
-  export type AuthSecondaryUncheckedCreateWithoutAccountInput = {
-    id?: string
-    kind: string
-    value: string
-    used?: boolean
-    createdAt?: Date | string
-  }
-
-  export type AuthSecondaryCreateOrConnectWithoutAccountInput = {
-    where: AuthSecondaryWhereUniqueInput
-    create: XOR<AuthSecondaryCreateWithoutAccountInput, AuthSecondaryUncheckedCreateWithoutAccountInput>
-  }
-
-  export type AuthSecondaryCreateManyAccountInputEnvelope = {
-    data: AuthSecondaryCreateManyAccountInput | AuthSecondaryCreateManyAccountInput[]
     skipDuplicates?: boolean
   }
 
@@ -45158,6 +44066,7 @@ export namespace Prisma {
     lastName?: string | null
     dateOfBirth?: Date | string | null
     countryOfResidence?: string | null
+    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
   }
 
   export type AccountTypeIndividualUncheckedCreateWithoutAccountInput = {
@@ -45167,6 +44076,7 @@ export namespace Prisma {
     lastName?: string | null
     dateOfBirth?: Date | string | null
     countryOfResidence?: string | null
+    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
   }
 
   export type AccountTypeIndividualCreateOrConnectWithoutAccountInput = {
@@ -45344,55 +44254,6 @@ export namespace Prisma {
   export type PermitUpdateManyWithWhereWithoutTargetAccountInput = {
     where: PermitScalarWhereInput
     data: XOR<PermitUpdateManyMutationInput, PermitUncheckedUpdateManyWithoutTargetAccountInput>
-  }
-
-  export type PasswordUpsertWithoutAccountInput = {
-    update: XOR<PasswordUpdateWithoutAccountInput, PasswordUncheckedUpdateWithoutAccountInput>
-    create: XOR<PasswordCreateWithoutAccountInput, PasswordUncheckedCreateWithoutAccountInput>
-    where?: PasswordWhereInput
-  }
-
-  export type PasswordUpdateToOneWithWhereWithoutAccountInput = {
-    where?: PasswordWhereInput
-    data: XOR<PasswordUpdateWithoutAccountInput, PasswordUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type PasswordUpdateWithoutAccountInput = {
-    hash?: StringFieldUpdateOperationsInput | string
-    passwordLastChanged?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PasswordUncheckedUpdateWithoutAccountInput = {
-    hash?: StringFieldUpdateOperationsInput | string
-    passwordLastChanged?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthSecondaryUpsertWithWhereUniqueWithoutAccountInput = {
-    where: AuthSecondaryWhereUniqueInput
-    update: XOR<AuthSecondaryUpdateWithoutAccountInput, AuthSecondaryUncheckedUpdateWithoutAccountInput>
-    create: XOR<AuthSecondaryCreateWithoutAccountInput, AuthSecondaryUncheckedCreateWithoutAccountInput>
-  }
-
-  export type AuthSecondaryUpdateWithWhereUniqueWithoutAccountInput = {
-    where: AuthSecondaryWhereUniqueInput
-    data: XOR<AuthSecondaryUpdateWithoutAccountInput, AuthSecondaryUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type AuthSecondaryUpdateManyWithWhereWithoutAccountInput = {
-    where: AuthSecondaryScalarWhereInput
-    data: XOR<AuthSecondaryUpdateManyMutationInput, AuthSecondaryUncheckedUpdateManyWithoutAccountInput>
-  }
-
-  export type AuthSecondaryScalarWhereInput = {
-    AND?: AuthSecondaryScalarWhereInput | AuthSecondaryScalarWhereInput[]
-    OR?: AuthSecondaryScalarWhereInput[]
-    NOT?: AuthSecondaryScalarWhereInput | AuthSecondaryScalarWhereInput[]
-    id?: StringFilter<"AuthSecondary"> | string
-    accountId?: StringFilter<"AuthSecondary"> | string
-    kind?: StringFilter<"AuthSecondary"> | string
-    value?: StringFilter<"AuthSecondary"> | string
-    used?: BoolFilter<"AuthSecondary"> | boolean
-    createdAt?: DateTimeFilter<"AuthSecondary"> | Date | string
   }
 
   export type SessionUpsertWithWhereUniqueWithoutAccountInput = {
@@ -45807,6 +44668,7 @@ export namespace Prisma {
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     countryOfResidence?: NullableStringFieldUpdateOperationsInput | string | null
+    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
   }
 
   export type AccountTypeIndividualUncheckedUpdateWithoutAccountInput = {
@@ -45816,6 +44678,7 @@ export namespace Prisma {
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     countryOfResidence?: NullableStringFieldUpdateOperationsInput | string | null
+    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
   }
 
   export type AccountTypeBrandUpsertWithoutAccountInput = {
@@ -45900,8 +44763,6 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
@@ -45934,8 +44795,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -45958,6 +44817,34 @@ export namespace Prisma {
   export type AccountCreateOrConnectWithoutIndividualProfileInput = {
     where: AccountWhereUniqueInput
     create: XOR<AccountCreateWithoutIndividualProfileInput, AccountUncheckedCreateWithoutIndividualProfileInput>
+  }
+
+  export type AuthMethodCreateWithoutIndividualProfileInput = {
+    id?: string
+    type: $Enums.AuthMethodType
+    value: string
+    order: $Enums.AuthMethodOrder
+    status?: $Enums.AuthMethodStatus
+    detail?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AuthMethodUncheckedCreateWithoutIndividualProfileInput = {
+    id?: string
+    type: $Enums.AuthMethodType
+    value: string
+    order: $Enums.AuthMethodOrder
+    status?: $Enums.AuthMethodStatus
+    detail?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AuthMethodCreateOrConnectWithoutIndividualProfileInput = {
+    where: AuthMethodWhereUniqueInput
+    create: XOR<AuthMethodCreateWithoutIndividualProfileInput, AuthMethodUncheckedCreateWithoutIndividualProfileInput>
+  }
+
+  export type AuthMethodCreateManyIndividualProfileInputEnvelope = {
+    data: AuthMethodCreateManyIndividualProfileInput | AuthMethodCreateManyIndividualProfileInput[]
+    skipDuplicates?: boolean
   }
 
   export type AccountUpsertWithoutIndividualProfileInput = {
@@ -45984,8 +44871,6 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
@@ -46018,8 +44903,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -46039,6 +44922,35 @@ export namespace Prisma {
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
   }
 
+  export type AuthMethodUpsertWithWhereUniqueWithoutIndividualProfileInput = {
+    where: AuthMethodWhereUniqueInput
+    update: XOR<AuthMethodUpdateWithoutIndividualProfileInput, AuthMethodUncheckedUpdateWithoutIndividualProfileInput>
+    create: XOR<AuthMethodCreateWithoutIndividualProfileInput, AuthMethodUncheckedCreateWithoutIndividualProfileInput>
+  }
+
+  export type AuthMethodUpdateWithWhereUniqueWithoutIndividualProfileInput = {
+    where: AuthMethodWhereUniqueInput
+    data: XOR<AuthMethodUpdateWithoutIndividualProfileInput, AuthMethodUncheckedUpdateWithoutIndividualProfileInput>
+  }
+
+  export type AuthMethodUpdateManyWithWhereWithoutIndividualProfileInput = {
+    where: AuthMethodScalarWhereInput
+    data: XOR<AuthMethodUpdateManyMutationInput, AuthMethodUncheckedUpdateManyWithoutIndividualProfileInput>
+  }
+
+  export type AuthMethodScalarWhereInput = {
+    AND?: AuthMethodScalarWhereInput | AuthMethodScalarWhereInput[]
+    OR?: AuthMethodScalarWhereInput[]
+    NOT?: AuthMethodScalarWhereInput | AuthMethodScalarWhereInput[]
+    id?: StringFilter<"AuthMethod"> | string
+    accountId?: StringFilter<"AuthMethod"> | string
+    type?: EnumAuthMethodTypeFilter<"AuthMethod"> | $Enums.AuthMethodType
+    value?: StringFilter<"AuthMethod"> | string
+    order?: EnumAuthMethodOrderFilter<"AuthMethod"> | $Enums.AuthMethodOrder
+    status?: EnumAuthMethodStatusFilter<"AuthMethod"> | $Enums.AuthMethodStatus
+    detail?: JsonNullableFilter<"AuthMethod">
+  }
+
   export type AccountCreateWithoutBrandProfileInput = {
     id?: string
     accountType?: string
@@ -46052,8 +44964,6 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
@@ -46086,8 +44996,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -46136,8 +45044,6 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
@@ -46170,8 +45076,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -46204,8 +45108,6 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
@@ -46238,8 +45140,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -46277,8 +45177,6 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
@@ -46311,8 +45209,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -46361,8 +45257,6 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
@@ -46395,8 +45289,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -46440,8 +45332,6 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
@@ -46474,8 +45364,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -46508,8 +45396,6 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
@@ -46542,8 +45428,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -46621,8 +45505,6 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
@@ -46655,8 +45537,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -46724,8 +45604,6 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
@@ -46758,8 +45636,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -46797,8 +45673,6 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
@@ -46831,8 +45705,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -46917,8 +45789,6 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
@@ -46951,8 +45821,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -46996,8 +45864,6 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
@@ -47030,8 +45896,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -47080,8 +45944,6 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
@@ -47114,8 +45976,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -47164,8 +46024,6 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
@@ -47198,8 +46056,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -47231,8 +46087,6 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
@@ -47265,8 +46119,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -47315,8 +46167,6 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
@@ -47349,8 +46199,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -47383,8 +46231,6 @@ export namespace Prisma {
     contacts?: ContactCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
@@ -47417,8 +46263,6 @@ export namespace Prisma {
     contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -47467,8 +46311,6 @@ export namespace Prisma {
     contacts?: ContactUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
@@ -47501,8 +46343,6 @@ export namespace Prisma {
     contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -47523,308 +46363,60 @@ export namespace Prisma {
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
   }
 
-  export type AccountCreateWithoutPasswordInput = {
+  export type AccountTypeIndividualCreateWithoutAuthMethodsInput = {
     id?: string
-    accountType?: string
-    displayImage?: string | null
-    displayName?: string | null
-    status?: string | null
-    isVerified?: boolean
-    createdAt?: Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
-    permits?: PermitCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
-    recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    firstName?: string | null
+    middleName?: string | null
+    lastName?: string | null
+    dateOfBirth?: Date | string | null
+    countryOfResidence?: string | null
+    account: AccountCreateNestedOneWithoutIndividualProfileInput
   }
 
-  export type AccountUncheckedCreateWithoutPasswordInput = {
+  export type AccountTypeIndividualUncheckedCreateWithoutAuthMethodsInput = {
     id?: string
-    accountType?: string
-    displayImage?: string | null
-    displayName?: string | null
-    status?: string | null
-    isVerified?: boolean
-    createdAt?: Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
-    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    accountId: string
+    firstName?: string | null
+    middleName?: string | null
+    lastName?: string | null
+    dateOfBirth?: Date | string | null
+    countryOfResidence?: string | null
   }
 
-  export type AccountCreateOrConnectWithoutPasswordInput = {
-    where: AccountWhereUniqueInput
-    create: XOR<AccountCreateWithoutPasswordInput, AccountUncheckedCreateWithoutPasswordInput>
+  export type AccountTypeIndividualCreateOrConnectWithoutAuthMethodsInput = {
+    where: AccountTypeIndividualWhereUniqueInput
+    create: XOR<AccountTypeIndividualCreateWithoutAuthMethodsInput, AccountTypeIndividualUncheckedCreateWithoutAuthMethodsInput>
   }
 
-  export type AccountUpsertWithoutPasswordInput = {
-    update: XOR<AccountUpdateWithoutPasswordInput, AccountUncheckedUpdateWithoutPasswordInput>
-    create: XOR<AccountCreateWithoutPasswordInput, AccountUncheckedCreateWithoutPasswordInput>
-    where?: AccountWhereInput
+  export type AccountTypeIndividualUpsertWithoutAuthMethodsInput = {
+    update: XOR<AccountTypeIndividualUpdateWithoutAuthMethodsInput, AccountTypeIndividualUncheckedUpdateWithoutAuthMethodsInput>
+    create: XOR<AccountTypeIndividualCreateWithoutAuthMethodsInput, AccountTypeIndividualUncheckedCreateWithoutAuthMethodsInput>
+    where?: AccountTypeIndividualWhereInput
   }
 
-  export type AccountUpdateToOneWithWhereWithoutPasswordInput = {
-    where?: AccountWhereInput
-    data: XOR<AccountUpdateWithoutPasswordInput, AccountUncheckedUpdateWithoutPasswordInput>
+  export type AccountTypeIndividualUpdateToOneWithWhereWithoutAuthMethodsInput = {
+    where?: AccountTypeIndividualWhereInput
+    data: XOR<AccountTypeIndividualUpdateWithoutAuthMethodsInput, AccountTypeIndividualUncheckedUpdateWithoutAuthMethodsInput>
   }
 
-  export type AccountUpdateWithoutPasswordInput = {
+  export type AccountTypeIndividualUpdateWithoutAuthMethodsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
-    permits?: PermitUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
-    recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    countryOfResidence?: NullableStringFieldUpdateOperationsInput | string | null
+    account?: AccountUpdateOneRequiredWithoutIndividualProfileNestedInput
   }
 
-  export type AccountUncheckedUpdateWithoutPasswordInput = {
+  export type AccountTypeIndividualUncheckedUpdateWithoutAuthMethodsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
-    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
-  }
-
-  export type AccountCreateWithoutAuthSecondaryInput = {
-    id?: string
-    accountType?: string
-    displayImage?: string | null
-    displayName?: string | null
-    status?: string | null
-    isVerified?: boolean
-    createdAt?: Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
-    permits?: PermitCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
-    recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
-  }
-
-  export type AccountUncheckedCreateWithoutAuthSecondaryInput = {
-    id?: string
-    accountType?: string
-    displayImage?: string | null
-    displayName?: string | null
-    status?: string | null
-    isVerified?: boolean
-    createdAt?: Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
-    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
-    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
-    appSessions?: AppSessionUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
-  }
-
-  export type AccountCreateOrConnectWithoutAuthSecondaryInput = {
-    where: AccountWhereUniqueInput
-    create: XOR<AccountCreateWithoutAuthSecondaryInput, AccountUncheckedCreateWithoutAuthSecondaryInput>
-  }
-
-  export type AccountUpsertWithoutAuthSecondaryInput = {
-    update: XOR<AccountUpdateWithoutAuthSecondaryInput, AccountUncheckedUpdateWithoutAuthSecondaryInput>
-    create: XOR<AccountCreateWithoutAuthSecondaryInput, AccountUncheckedCreateWithoutAuthSecondaryInput>
-    where?: AccountWhereInput
-  }
-
-  export type AccountUpdateToOneWithWhereWithoutAuthSecondaryInput = {
-    where?: AccountWhereInput
-    data: XOR<AccountUpdateWithoutAuthSecondaryInput, AccountUncheckedUpdateWithoutAuthSecondaryInput>
-  }
-
-  export type AccountUpdateWithoutAuthSecondaryInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
-    permits?: PermitUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
-    recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
-  }
-
-  export type AccountUncheckedUpdateWithoutAuthSecondaryInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
-    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    accountId?: StringFieldUpdateOperationsInput | string
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    countryOfResidence?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AccountCreateWithoutPermitsInput = {
@@ -47839,8 +46431,6 @@ export namespace Prisma {
     contacts?: ContactCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
@@ -47873,8 +46463,6 @@ export namespace Prisma {
     contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -47912,8 +46500,6 @@ export namespace Prisma {
     contacts?: ContactCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
@@ -47946,8 +46532,6 @@ export namespace Prisma {
     contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -47996,8 +46580,6 @@ export namespace Prisma {
     contacts?: ContactUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
@@ -48030,8 +46612,6 @@ export namespace Prisma {
     contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -48075,8 +46655,6 @@ export namespace Prisma {
     contacts?: ContactUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
@@ -48109,8 +46687,6 @@ export namespace Prisma {
     contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -48172,8 +46748,6 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
@@ -48206,8 +46780,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
@@ -48272,8 +46844,6 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
@@ -48306,8 +46876,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
@@ -48340,8 +46908,6 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
@@ -48374,8 +46940,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
@@ -48424,8 +46988,6 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
@@ -48458,8 +47020,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
@@ -48492,8 +47052,6 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
@@ -48526,8 +47084,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -48708,8 +47264,6 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
@@ -48742,8 +47296,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -49286,8 +47838,6 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
@@ -49320,8 +47870,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -49359,8 +47907,6 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
@@ -49393,8 +47939,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -49496,8 +48040,6 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
@@ -49530,8 +48072,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -49575,8 +48115,6 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
@@ -49609,8 +48147,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -49690,8 +48226,6 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
@@ -49724,8 +48258,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -49763,8 +48295,6 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
@@ -49797,8 +48327,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -49900,8 +48428,6 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
@@ -49934,8 +48460,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -49979,8 +48503,6 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
@@ -50013,8 +48535,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -50047,8 +48567,6 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutAccountInput
@@ -50081,8 +48599,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutAccountInput
@@ -50178,8 +48694,6 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
@@ -50212,8 +48726,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
@@ -50299,8 +48811,6 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
@@ -50333,8 +48843,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -50430,8 +48938,6 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
@@ -50464,8 +48970,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -50551,8 +49055,6 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryCreateNestedManyWithoutAccountInput
     sessions?: SessionCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
@@ -50585,8 +49087,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    password?: PasswordUncheckedCreateNestedOneWithoutAccountInput
-    authSecondary?: AuthSecondaryUncheckedCreateNestedManyWithoutAccountInput
     sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: ErrorLogUncheckedCreateNestedManyWithoutAccountInput
     appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -50717,8 +49217,6 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUpdateManyWithoutAccountNestedInput
     sessions?: SessionUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
@@ -50751,8 +49249,6 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    password?: PasswordUncheckedUpdateOneWithoutAccountNestedInput
-    authSecondary?: AuthSecondaryUncheckedUpdateManyWithoutAccountNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
     appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -50914,14 +49410,6 @@ export namespace Prisma {
     restrictions?: PermitCreaterestrictionsInput | string[]
     createdOn?: Date | string
     managedBy?: string | null
-  }
-
-  export type AuthSecondaryCreateManyAccountInput = {
-    id?: string
-    kind: string
-    value: string
-    used?: boolean
-    createdAt?: Date | string
   }
 
   export type SessionCreateManyAccountInput = {
@@ -51240,30 +49728,6 @@ export namespace Prisma {
     restrictions?: PermitUpdaterestrictionsInput | string[]
     createdOn?: DateTimeFieldUpdateOperationsInput | Date | string
     managedBy?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type AuthSecondaryUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    kind?: StringFieldUpdateOperationsInput | string
-    value?: StringFieldUpdateOperationsInput | string
-    used?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthSecondaryUncheckedUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    kind?: StringFieldUpdateOperationsInput | string
-    value?: StringFieldUpdateOperationsInput | string
-    used?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthSecondaryUncheckedUpdateManyWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    kind?: StringFieldUpdateOperationsInput | string
-    value?: StringFieldUpdateOperationsInput | string
-    used?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SessionUpdateWithoutAccountInput = {
@@ -51784,6 +50248,42 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     parentId?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AuthMethodCreateManyIndividualProfileInput = {
+    id?: string
+    type: $Enums.AuthMethodType
+    value: string
+    order: $Enums.AuthMethodOrder
+    status?: $Enums.AuthMethodStatus
+    detail?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AuthMethodUpdateWithoutIndividualProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumAuthMethodTypeFieldUpdateOperationsInput | $Enums.AuthMethodType
+    value?: StringFieldUpdateOperationsInput | string
+    order?: EnumAuthMethodOrderFieldUpdateOperationsInput | $Enums.AuthMethodOrder
+    status?: EnumAuthMethodStatusFieldUpdateOperationsInput | $Enums.AuthMethodStatus
+    detail?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AuthMethodUncheckedUpdateWithoutIndividualProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumAuthMethodTypeFieldUpdateOperationsInput | $Enums.AuthMethodType
+    value?: StringFieldUpdateOperationsInput | string
+    order?: EnumAuthMethodOrderFieldUpdateOperationsInput | $Enums.AuthMethodOrder
+    status?: EnumAuthMethodStatusFieldUpdateOperationsInput | $Enums.AuthMethodStatus
+    detail?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AuthMethodUncheckedUpdateManyWithoutIndividualProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumAuthMethodTypeFieldUpdateOperationsInput | $Enums.AuthMethodType
+    value?: StringFieldUpdateOperationsInput | string
+    order?: EnumAuthMethodOrderFieldUpdateOperationsInput | $Enums.AuthMethodOrder
+    status?: EnumAuthMethodStatusFieldUpdateOperationsInput | $Enums.AuthMethodStatus
+    detail?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type NotificationCreateManyRequestInput = {

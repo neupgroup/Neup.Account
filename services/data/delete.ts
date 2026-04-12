@@ -37,7 +37,15 @@ export async function requestAccountDeletion(data: z.infer<typeof formSchema>, g
   try {
     const [account, authData] = await Promise.all([
         prisma.account.findUnique({ where: { id: accountId } }),
-        prisma.password.findUnique({ where: { accountId } })
+        prisma.authMethod.findFirst({
+            where: {
+                accountId,
+                type: 'password',
+                order: 'primary',
+                status: 'active',
+            },
+            select: { value: true },
+        })
     ]);
     
     if (account && account.status === 'deletion_requested') {
@@ -48,7 +56,7 @@ export async function requestAccountDeletion(data: z.infer<typeof formSchema>, g
         await logActivity(accountId, 'Account Deletion Request Failed', 'Failed', undefined, undefined, geolocation);
         return { success: false, error: "Authentication data not found." };
     }
-    const isMatch = await bcrypt.compare(password, authData.hash);
+    const isMatch = await bcrypt.compare(password, authData.value);
     if (!isMatch) {
         await logActivity(accountId, 'Account Deletion Request Failed', 'Failed', undefined, undefined, geolocation);
         return { success: false, error: "The password you entered is incorrect." };

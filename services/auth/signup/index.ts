@@ -483,13 +483,6 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
           },
         },
         
-        password: {
-            create: {
-                hash: password,
-                passwordLastChanged: new Date(),
-            }
-        },
-
         contacts: {
           create: {
             contactType: 'primaryPhone',
@@ -504,6 +497,14 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
             lastName: nameLast,
             dateOfBirth: birthDateObj,
             countryOfResidence: nationality,
+            authMethods: {
+              create: {
+                type: 'password',
+                value: password,
+                order: 'primary',
+                status: 'active',
+              },
+            },
           },
         },
       },

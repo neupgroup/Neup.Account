@@ -14,7 +14,6 @@ async function main() {
   const dob = new Date('2004-01-25T00:00:00.000Z');
   const passwordPlain = 'admin112';
 
-  // Find existing account by NeupID
   const existingNeupId = await prisma.neupId.findUnique({ where: { id: NEUP_ID } });
   let accountId: string | null = existingNeupId?.accountId ?? null;
 
@@ -22,37 +21,39 @@ async function main() {
   const hashed = await bcrypt.hash(passwordPlain, 10);
 
   if (!accountId) {
-    // Create fresh account with NeupID and Password
     const created = await prisma.account.create({
       data: {
         accountType: 'individual',
         status: 'active',
         isVerified: false,
         displayName: nameDisplay,
-        neupIds: {
-          create: {
-            id: NEUP_ID,
-            isPrimary: true,
-          },
-        },
         individualProfile: {
           create: {
             firstName,
             lastName,
             dateOfBirth: dob,
             countryOfResidence: nationality,
+            authMethods: {
+              create: {
+                type: 'password',
+                value: hashed,
+                order: 'primary',
+                status: 'active',
+              },
+            },
           },
         },
-        password: {
+        neupIds: {
           create: {
-            hash: hashed,
+            id: NEUP_ID,
+            isPrimary: true,
           },
         },
       },
     });
+
     accountId = created.id;
   } else {
-    // Update existing account and ensure neupid + password
     await prisma.account.update({
       where: { id: accountId },
       data: {
@@ -79,31 +80,40 @@ async function main() {
       },
     });
 
-    // Ensure NeupID record exists and is primary
     const neupRecord = await prisma.neupId.findUnique({ where: { id: NEUP_ID } });
     if (!neupRecord) {
       await prisma.neupId.create({
         data: { id: NEUP_ID, accountId, isPrimary: true },
       });
-    } else if (!neupRecord.isPrimary || neupRecord.accountId !== accountId) {
-      // If NeupID exists but not primary or linked, keep ownership and mark primary if owned by this account
-      if (neupRecord.accountId === accountId) {
-        await prisma.neupId.update({
-          where: { id: NEUP_ID },
-          data: { isPrimary: true },
-        });
-      }
+    } else if (neupRecord.accountId === accountId && !neupRecord.isPrimary) {
+      await prisma.neupId.update({
+        where: { id: NEUP_ID },
+        data: { isPrimary: true },
+      });
     }
 
-    // Upsert password
-    await prisma.password.upsert({
-      where: { accountId },
-      update: { hash: hashed },
-      create: { accountId, hash: hashed },
+    await prisma.authMethod.upsert({
+      where: {
+        accountId_type_order: {
+          accountId,
+          type: 'password',
+          order: 'primary',
+        },
+      },
+      update: {
+        status: 'active',
+        value: hashed,
+      },
+      create: {
+        accountId,
+        type: 'password',
+        value: hashed,
+        order: 'primary',
+        status: 'active',
+      },
     });
   }
 
-  // Ensure root permit attached
   if (accountId) {
     const existingRootPermit = await prisma.permit.findFirst({
       where: { accountId, isRoot: true, forSelf: false },
@@ -115,7 +125,7 @@ async function main() {
           accountId,
           forSelf: false,
           isRoot: true,
-          permissions: [], // Handled by PERMISSION_SET in user.ts
+          permissions: [],
           restrictions: [],
         },
       });
