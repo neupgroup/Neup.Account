@@ -70,12 +70,12 @@ model Account {
   @@map("accounts")
 }
 
-model AppProfile {
+model SystemConfig {
   key       String   @id
   data      Json
   updatedAt DateTime @updatedAt
 
-  @@map("app_profiles")
+  @@map("system_config")
 }
 
 model AuthRequest {

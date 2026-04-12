@@ -147,7 +147,7 @@ exports.Prisma.AccountScalarFieldEnum = {
   block: 'block'
 };
 
-exports.Prisma.AppProfileScalarFieldEnum = {
+exports.Prisma.SystemConfigScalarFieldEnum = {
   key: 'key',
   data: 'data',
   updatedAt: 'updatedAt'
@@ -469,7 +469,7 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   Account: 'Account',
-  AppProfile: 'AppProfile',
+  SystemConfig: 'SystemConfig',
   AuthRequest: 'AuthRequest',
   ActivityLog: 'ActivityLog',
   Notification: 'Notification',

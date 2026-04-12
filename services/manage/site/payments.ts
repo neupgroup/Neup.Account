@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { checkPermissions } from '@/core/helpers/user';
 import { logError } from '@/core/helpers/logger';
-import { APP_PROFILE_KEYS, readAppProfileData, writeAppProfileData } from '@/services/manage/site/app-profile';
+import { SYSTEM_CONFIG_KEYS, readSystemConfigData, writeSystemConfigData } from '@/services/manage/site/system-config';
 
 const optionalText = z
   .string()
@@ -65,7 +65,7 @@ export async function getPaymentSettings(options?: { requirePermission?: boolean
   }
 
   try {
-    const data = await readAppProfileData(APP_PROFILE_KEYS.payments, defaultPaymentSettings);
+    const data = await readSystemConfigData(SYSTEM_CONFIG_KEYS.payments, defaultPaymentSettings);
     const parsed = paymentSettingsSchema.safeParse(data);
     if (!parsed.success) {
       return defaultPaymentSettings;
@@ -100,7 +100,7 @@ export async function updatePaymentSettings(
   }
 
   try {
-    const paymentWrite = await writeAppProfileData(APP_PROFILE_KEYS.payments, validation.data);
+    const paymentWrite = await writeSystemConfigData(SYSTEM_CONFIG_KEYS.payments, validation.data);
     if (!paymentWrite) {
       return { success: false, error: 'Failed to save payment settings.' };
     }

@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { checkPermissions } from '@/core/helpers/user';
 import { logError } from '@/core/helpers/logger';
-import { APP_PROFILE_KEYS, readAppProfileData, writeAppProfileData } from '@/services/manage/site/app-profile';
+import { SYSTEM_CONFIG_KEYS, readSystemConfigData, writeSystemConfigData } from '@/services/manage/site/system-config';
 
 const siteLogoSchema = z.object({
   siteLogoUrl: z
@@ -23,8 +23,8 @@ const siteLogoSchema = z.object({
  */
 export async function getSiteLogoUrl(): Promise<string | undefined> {
   try {
-    const data = await readAppProfileData<{ siteLogoUrl?: string }>(
-      APP_PROFILE_KEYS.siteLogo,
+    const data = await readSystemConfigData<{ siteLogoUrl?: string }>(
+      SYSTEM_CONFIG_KEYS.siteLogo,
       {},
     );
     const parsed = siteLogoSchema.safeParse(data);
@@ -58,7 +58,7 @@ export async function updateSiteLogoUrl(
   }
 
   try {
-    const success = await writeAppProfileData(APP_PROFILE_KEYS.siteLogo, {
+    const success = await writeSystemConfigData(SYSTEM_CONFIG_KEYS.siteLogo, {
       siteLogoUrl: validation.data.siteLogoUrl,
     });
 

@@ -19,7 +19,7 @@ function hasRequiredDelegates(client: ReturnType<typeof prismaClientSingleton> |
     candidate.assetGroupInfo &&
     candidate.assetGroupMember &&
     candidate.assetMemberRole &&
-    candidate.appProfile,
+    candidate.systemConfig,
   )
 }
 

@@ -3,7 +3,7 @@
 
 import type { SocialLink } from '@/services/manage/site/socials';
 import { getPaymentSettings } from '@/services/manage/site/payments';
-import { APP_PROFILE_KEYS, readAppProfileData } from '@/services/manage/site/app-profile';
+import { SYSTEM_CONFIG_KEYS, readSystemConfigData } from '@/services/manage/site/system-config';
 
 /**
  * Type AppInfo.
@@ -31,7 +31,7 @@ export type PaymentDetails = {
  * Function getAppInfo.
  */
 export async function getAppInfo(): Promise<AppInfo | null> {
-    const data = await readAppProfileData<{ links?: SocialLink[] }>(APP_PROFILE_KEYS.socials, {});
+    const data = await readSystemConfigData<{ links?: SocialLink[] }>(SYSTEM_CONFIG_KEYS.socials, {});
     const links = data.links || [];
 
     const findByType = (type: SocialLink['type']) =>

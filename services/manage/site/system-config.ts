@@ -1,35 +1,35 @@
 import prisma from '@/core/helpers/prisma';
 import { logError } from '@/core/helpers/logger';
 
-export const APP_PROFILE_KEYS = {
+export const SYSTEM_CONFIG_KEYS = {
   socials: 'socials',
   payments: 'payments',
   siteLogo: 'siteLogo',
 } as const;
 
-export async function readAppProfileData<T>(
+export async function readSystemConfigData<T>(
   key: string,
   fallback: T,
 ): Promise<T> {
   try {
-    const row = await prisma.appProfile.findUnique({ where: { key } });
+    const row = await prisma.systemConfig.findUnique({ where: { key } });
     if (!row || !row.data || typeof row.data !== 'object') {
       return fallback;
     }
 
     return row.data as T;
   } catch (error) {
-    await logError('database', error, `readAppProfileData:${key}`);
+    await logError('database', error, `readSystemConfigData:${key}`);
     return fallback;
   }
 }
 
-export async function writeAppProfileData<T>(
+export async function writeSystemConfigData<T>(
   key: string,
   data: T,
 ): Promise<boolean> {
   try {
-    await prisma.appProfile.upsert({
+    await prisma.systemConfig.upsert({
       where: { key },
       update: { data: data as any },
       create: {
@@ -40,7 +40,7 @@ export async function writeAppProfileData<T>(
 
     return true;
   } catch (error) {
-    await logError('database', error, `writeAppProfileData:${key}`);
+    await logError('database', error, `writeSystemConfigData:${key}`);
     return false;
   }
 }

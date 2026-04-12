@@ -5,7 +5,7 @@ import {revalidatePath} from 'next/cache';
 import {logError} from '@/core/helpers/logger';
 import {checkPermissions} from '@/core/helpers/user';
 import crypto from 'crypto';
-import { APP_PROFILE_KEYS, readAppProfileData, writeAppProfileData } from '@/services/manage/site/app-profile';
+import { SYSTEM_CONFIG_KEYS, readSystemConfigData, writeSystemConfigData } from '@/services/manage/site/system-config';
 
 export type SocialLink = {
     id: string;
@@ -30,8 +30,8 @@ export async function getSocialLinks(): Promise<SocialLink[]> {
     if (!canView) return [];
 
     try {
-        const data = await readAppProfileData<{ links?: SocialLink[] }>(
-            APP_PROFILE_KEYS.socials,
+        const data = await readSystemConfigData<{ links?: SocialLink[] }>(
+            SYSTEM_CONFIG_KEYS.socials,
             {},
         );
 
@@ -76,12 +76,12 @@ export async function addSocialLink(formData: FormData): Promise<{
             isVisible: true
         };
 
-        const currentData = await readAppProfileData<{ links?: SocialLink[] }>(
-            APP_PROFILE_KEYS.socials,
+        const currentData = await readSystemConfigData<{ links?: SocialLink[] }>(
+            SYSTEM_CONFIG_KEYS.socials,
             {},
         );
         const currentLinks = currentData.links || [];
-        const success = await writeAppProfileData(APP_PROFILE_KEYS.socials, {
+        const success = await writeSystemConfigData(SYSTEM_CONFIG_KEYS.socials, {
             ...currentData,
             links: [...currentLinks, newLink],
         });
@@ -112,15 +112,15 @@ export async function toggleSocialLinkVisibility(id: string, isVisible: boolean)
     if (!canEdit) return {success: false, error: 'Permission denied.'};
 
     try {
-        const currentData = await readAppProfileData<{ links?: SocialLink[] }>(
-            APP_PROFILE_KEYS.socials,
+        const currentData = await readSystemConfigData<{ links?: SocialLink[] }>(
+            SYSTEM_CONFIG_KEYS.socials,
             {},
         );
         const links = currentData.links || [];
         const updatedLinks = links.map(link =>
             link.id === id ? {...link, isVisible: !link.isVisible} : link
         );
-        const success = await writeAppProfileData(APP_PROFILE_KEYS.socials, {
+        const success = await writeSystemConfigData(SYSTEM_CONFIG_KEYS.socials, {
             ...currentData,
             links: updatedLinks,
         });
@@ -148,13 +148,13 @@ export async function deleteSocialLink(id: string): Promise<{ success: boolean; 
     if (!canDelete) return {success: false, error: 'Permission denied.'};
 
     try {
-        const currentData = await readAppProfileData<{ links?: SocialLink[] }>(
-            APP_PROFILE_KEYS.socials,
+        const currentData = await readSystemConfigData<{ links?: SocialLink[] }>(
+            SYSTEM_CONFIG_KEYS.socials,
             {},
         );
         const links = currentData.links || [];
         const updatedLinks = links.filter(link => link.id !== id);
-        const success = await writeAppProfileData(APP_PROFILE_KEYS.socials, {
+        const success = await writeSystemConfigData(SYSTEM_CONFIG_KEYS.socials, {
             ...currentData,
             links: updatedLinks,
         });
