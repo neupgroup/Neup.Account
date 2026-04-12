@@ -329,10 +329,9 @@ export async function deleteUserAccount(userId: string): Promise<{ success: bool
                 } 
             }),
             prisma.notification.deleteMany({ where: { accountId: userId } }),
-            prisma.backupCode.deleteMany({ where: { accountId: userId } }),
             prisma.verification.deleteMany({ where: { accountId: userId } }),
             prisma.password.deleteMany({ where: { accountId: userId } }),
-            prisma.totp.deleteMany({ where: { accountId: userId } }),
+            prisma.authSecondary.deleteMany({ where: { accountId: userId } }),
             prisma.account.delete({ where: { id: userId } }),
         ]);
 

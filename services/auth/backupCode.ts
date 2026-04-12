@@ -53,6 +53,8 @@ function generateSingleCode(): string {
 	return crypto.randomBytes(4).toString('hex').toUpperCase();
 }
 
+const AUTH_SECONDARY_BACKUP_CODE_KIND = 'backup_code';
+
 
 /**
  * Verifies a backup code and marks it used when valid.
@@ -66,10 +68,11 @@ export async function verifyBackupCode(input: VerifyBackupCodeInput): Promise<Ba
 	}
 
 	try {
-		const existing = await prisma.backupCode.findFirst({
+		const existing = await prisma.authSecondary.findFirst({
 			where: {
 				accountId,
-				code,
+				kind: AUTH_SECONDARY_BACKUP_CODE_KIND,
+				value: code,
 				used: false,
 			},
 			select: { id: true },
@@ -79,7 +82,7 @@ export async function verifyBackupCode(input: VerifyBackupCodeInput): Promise<Ba
 			return { success: false, error: 'Invalid backup code.' };
 		}
 
-		await prisma.backupCode.update({
+		await prisma.authSecondary.update({
 			where: { id: existing.id },
 			data: { used: true },
 		});
@@ -109,11 +112,17 @@ export async function generateBackupCode(): Promise<BackupCodeActionResult> {
 		}));
 
 		await prisma.$transaction([
-			prisma.backupCode.deleteMany({ where: { accountId } }),
-			prisma.backupCode.createMany({
+			prisma.authSecondary.deleteMany({
+				where: {
+					accountId,
+					kind: AUTH_SECONDARY_BACKUP_CODE_KIND,
+				},
+			}),
+			prisma.authSecondary.createMany({
 				data: newCodes.map((item) => ({
 					accountId,
-					code: item.code,
+					kind: AUTH_SECONDARY_BACKUP_CODE_KIND,
+					value: item.code,
 					used: false,
 				})),
 			}),
@@ -145,18 +154,21 @@ export async function getBackupCode(): Promise<BackupCodeActionResult> {
 	if (!accountId) return { success: false, error: 'User not authenticated.' };
 
 	try {
-		const codes = await prisma.backupCode.findMany({
-			where: { accountId },
+		const codes = await prisma.authSecondary.findMany({
+			where: {
+				accountId,
+				kind: AUTH_SECONDARY_BACKUP_CODE_KIND,
+			},
 			orderBy: { createdAt: 'desc' },
 			select: {
-				code: true,
+				value: true,
 				used: true,
 			},
 		});
 
 		return {
 			success: true,
-			codes: codes.map((item) => ({ code: item.code, used: item.used })),
+			codes: codes.map((item) => ({ code: item.value, used: item.used })),
 		};
 	} catch (error) {
 		await logError('database', error, `getBackupCode:${accountId}`);
@@ -177,10 +189,11 @@ export async function expireBackupCode(input: ExpireBackupCodeInput): Promise<Ba
 	}
 
 	try {
-		const existing = await prisma.backupCode.findFirst({
+		const existing = await prisma.authSecondary.findFirst({
 			where: {
 				accountId,
-				code,
+				kind: AUTH_SECONDARY_BACKUP_CODE_KIND,
+				value: code,
 				used: false,
 			},
 			select: { id: true },
@@ -190,7 +203,7 @@ export async function expireBackupCode(input: ExpireBackupCodeInput): Promise<Ba
 			return { success: false, error: 'Backup code not found or already expired.' };
 		}
 
-		await prisma.backupCode.update({
+		await prisma.authSecondary.update({
 			where: { id: existing.id },
 			data: { used: true },
 		});

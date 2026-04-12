@@ -64,6 +64,8 @@ const verifyTotpRequestSchema = z.object({
 	authRequestId: z.string().min(1),
 });
 
+const AUTH_SECONDARY_TOTP_KIND = 'totp';
+
 
 /**
  * Adds (enables) TOTP after verifying the token against the provided secret.
@@ -90,11 +92,22 @@ export async function addTotp(input: AddTotpInput): Promise<TotpActionResult> {
 	try {
 		const encryptedSecret = await encrypt(secret);
 
-		await prisma.totp.upsert({
-			where: { accountId },
-			update: { secret: encryptedSecret },
-			create: { accountId, secret: encryptedSecret },
-		});
+		await prisma.$transaction([
+			prisma.authSecondary.deleteMany({
+				where: {
+					accountId,
+					kind: AUTH_SECONDARY_TOTP_KIND,
+				},
+			}),
+			prisma.authSecondary.create({
+				data: {
+					accountId,
+					kind: AUTH_SECONDARY_TOTP_KIND,
+					value: encryptedSecret,
+					used: false,
+				},
+			}),
+		]);
 
 		await logActivity(accountId, 'TOTP Enabled', 'Success');
 		await createNotification({
@@ -142,7 +155,12 @@ export async function revokeTotp(input: RevokeTotpInput): Promise<TotpActionResu
 			return { success: false, error: 'The password you entered is incorrect.' };
 		}
 
-		await prisma.totp.delete({ where: { accountId } });
+		await prisma.authSecondary.deleteMany({
+			where: {
+				accountId,
+				kind: AUTH_SECONDARY_TOTP_KIND,
+			},
+		});
 
 		await logActivity(accountId, 'TOTP Disabled', 'Success');
 		await createNotification({
@@ -171,16 +189,19 @@ export async function verifyTotp(input: VerifyTotpInput): Promise<TotpActionResu
 	}
 
 	try {
-		const totp = await prisma.totp.findUnique({
-			where: { accountId },
-			select: { secret: true },
+		const totp = await prisma.authSecondary.findFirst({
+			where: {
+				accountId,
+				kind: AUTH_SECONDARY_TOTP_KIND,
+			},
+			select: { value: true },
 		});
 
-		if (!totp?.secret) {
+		if (!totp?.value) {
 			return { success: false, error: 'TOTP not enabled for this account.' };
 		}
 
-		const secret = await decrypt(totp.secret);
+		const secret = await decrypt(totp.value);
 		const isValid = authenticator.verify({ token, secret });
 
 		if (!isValid) {

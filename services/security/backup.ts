@@ -26,6 +26,8 @@ function generateSingleCode(): string {
     return crypto.randomBytes(4).toString('hex').toUpperCase();
 }
 
+const AUTH_SECONDARY_BACKUP_CODE_KIND = 'backup_code';
+
 
 /**
  * Function getBackupCodes.
@@ -38,13 +40,16 @@ export async function getBackupCodes(): Promise<BackupCode[]> {
     if (!accountId) return [];
 
     try {
-        const codes = await prisma.backupCode.findMany({
-            where: { accountId },
+        const codes = await prisma.authSecondary.findMany({
+            where: {
+                accountId,
+                kind: AUTH_SECONDARY_BACKUP_CODE_KIND,
+            },
             orderBy: { createdAt: 'desc' }
         });
 
         return codes.map(c => ({
-            code: c.code,
+            code: c.value,
             used: c.used
         }));
 
@@ -75,14 +80,18 @@ export async function generateBackupCodes(): Promise<BackupCode[]> {
 
         await prisma.$transaction([
             // Invalidate old codes by deleting them.
-            prisma.backupCode.deleteMany({
-                where: { accountId }
+            prisma.authSecondary.deleteMany({
+                where: {
+                    accountId,
+                    kind: AUTH_SECONDARY_BACKUP_CODE_KIND,
+                }
             }),
             // Create new codes.
-            prisma.backupCode.createMany({
+            prisma.authSecondary.createMany({
                 data: newCodes.map(c => ({
                     accountId,
-                    code: c.code,
+                    kind: AUTH_SECONDARY_BACKUP_CODE_KIND,
+                    value: c.code,
                     used: false
                 }))
             })

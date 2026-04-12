@@ -46,6 +46,7 @@ model Account {
   permits             Permit[]
   targetPermits       Permit[]                  @relation("TargetAccount")
   password            Password?
+  authSecondary       AuthSecondary[]
   sessions            Session[]
   errorLogs           ErrorLog[]
   appConnections      UserAppConnection[]
@@ -56,32 +57,17 @@ model Account {
   externalPermissions AuthPermissionsExternal[]
   ownedApplications   Application[]
   notifications       Notification[]
-  backupCodes         BackupCode[]
   verifications       Verification[]
-  totp                Totp?
   sentRequests        Request[]                 @relation("SentRequests")
   receivedRequests    Request[]                 @relation("ReceivedRequests")
 
   // New Auth Team & Permission Relations
-  adminTeams           AuthTeam[]                @relation("AccountAsAdmin")
-  memberTeams          AuthTeam[]                @relation("AccountAsTeamMember")
   externalAdminTeams   AuthTeamExternal[]        @relation("AccountAsExternalAdmin")
   externalMemberTeams  AuthTeamExternal[]        @relation("AccountAsExternalTeamMember")
-  authRolesInternal    AuthRole[]
   recipientPermissions AuthPermissionRecipient[] @relation("RecipientPermissions")
   ownerPermissions     AuthPermissionRecipient[] @relation("OwnerPermissions")
 
   @@map("accounts")
-}
-
-model Totp {
-  accountId String   @id
-  secret    String
-  createdAt DateTime @default(now())
-
-  account Account @relation(fields: [accountId], references: [id])
-
-  @@map("auth_totp")
 }
 
 model AppProfile {
@@ -165,18 +151,6 @@ model Family {
   @@map("families")
 }
 
-model BackupCode {
-  id        String   @id @default(uuid())
-  accountId String
-  code      String
-  used      Boolean  @default(false)
-  createdAt DateTime @default(now())
-
-  account Account @relation(fields: [accountId], references: [id])
-
-  @@map("backup_codes")
-}
-
 model Verification {
   id               String    @id @default(uuid())
   accountId        String
@@ -226,7 +200,21 @@ model Password {
 
   account Account @relation(fields: [accountId], references: [id])
 
-  @@map("passwords")
+  @@map("auth_password")
+}
+
+model AuthSecondary {
+  id        String   @id @default(uuid())
+  accountId String
+  kind      String
+  value     String
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  account Account @relation(fields: [accountId], references: [id])
+
+  @@index([accountId, kind])
+  @@map("auth_secondary")
 }
 
 model Permit {
@@ -332,28 +320,10 @@ model Application {
   externalPermissions AuthPermissionsExternal[]
 
   // New Auth Team & Permission Models
-  authTeams                AuthTeam[]
   authTeamsExternal        AuthTeamExternal[]
-  authRoles                AuthRole[]
   authPermissionRecipients AuthPermissionRecipient[]
 
   @@map("applications")
-}
-
-model AuthTeam {
-  id          String   @id @default(uuid())
-  appId       String
-  accountId   String // Admin/Manager account
-  recipientId String // User being added
-  isPermanent Boolean  @default(false)
-  createdAt   DateTime @default(now())
-
-  application Application @relation(fields: [appId], references: [id])
-  account     Account     @relation("AccountAsAdmin", fields: [accountId], references: [id])
-  recipient   Account     @relation("AccountAsTeamMember", fields: [recipientId], references: [id])
-
-  @@unique([appId, accountId, recipientId])
-  @@map("auth_teams")
 }
 
 model AssetGroupInfo {
@@ -426,21 +396,6 @@ model AuthTeamExternal {
 
   @@unique([appId, accountId, recipientId])
   @@map("auth_teams_external")
-}
-
-model AuthRole {
-  id          String   @id @default(uuid())
-  appId       String
-  accountId   String
-  role        String
-  isPermanent Boolean  @default(false)
-  createdAt   DateTime @default(now())
-
-  application Application @relation(fields: [appId], references: [id])
-  account     Account     @relation(fields: [accountId], references: [id])
-
-  @@unique([appId, accountId])
-  @@map("auth_roles")
 }
 
 model AuthPermissionRecipient {

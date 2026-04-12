@@ -147,12 +147,6 @@ exports.Prisma.AccountScalarFieldEnum = {
   block: 'block'
 };
 
-exports.Prisma.TotpScalarFieldEnum = {
-  accountId: 'accountId',
-  secret: 'secret',
-  createdAt: 'createdAt'
-};
-
 exports.Prisma.AppProfileScalarFieldEnum = {
   key: 'key',
   data: 'data',
@@ -215,14 +209,6 @@ exports.Prisma.FamilyScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.BackupCodeScalarFieldEnum = {
-  id: 'id',
-  accountId: 'accountId',
-  code: 'code',
-  used: 'used',
-  createdAt: 'createdAt'
-};
-
 exports.Prisma.VerificationScalarFieldEnum = {
   id: 'id',
   accountId: 'accountId',
@@ -257,6 +243,15 @@ exports.Prisma.PasswordScalarFieldEnum = {
   accountId: 'accountId',
   hash: 'hash',
   passwordLastChanged: 'passwordLastChanged'
+};
+
+exports.Prisma.AuthSecondaryScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  kind: 'kind',
+  value: 'value',
+  used: 'used',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.PermitScalarFieldEnum = {
@@ -337,15 +332,6 @@ exports.Prisma.ApplicationScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
-exports.Prisma.AuthTeamScalarFieldEnum = {
-  id: 'id',
-  appId: 'appId',
-  accountId: 'accountId',
-  recipientId: 'recipientId',
-  isPermanent: 'isPermanent',
-  createdAt: 'createdAt'
-};
-
 exports.Prisma.AssetGroupInfoScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -381,15 +367,6 @@ exports.Prisma.AuthTeamExternalScalarFieldEnum = {
   appId: 'appId',
   accountId: 'accountId',
   recipientId: 'recipientId',
-  isPermanent: 'isPermanent',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.AuthRoleScalarFieldEnum = {
-  id: 'id',
-  appId: 'appId',
-  accountId: 'accountId',
-  role: 'role',
   isPermanent: 'isPermanent',
   createdAt: 'createdAt'
 };
@@ -492,30 +469,27 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   Account: 'Account',
-  Totp: 'Totp',
   AppProfile: 'AppProfile',
   AuthRequest: 'AuthRequest',
   ActivityLog: 'ActivityLog',
   Notification: 'Notification',
   Request: 'Request',
   Family: 'Family',
-  BackupCode: 'BackupCode',
   Verification: 'Verification',
   Contact: 'Contact',
   NeupId: 'NeupId',
   Password: 'Password',
+  AuthSecondary: 'AuthSecondary',
   Permit: 'Permit',
   Session: 'Session',
   ErrorLog: 'ErrorLog',
   BugReport: 'BugReport',
   Application: 'Application',
-  AuthTeam: 'AuthTeam',
   AssetGroupInfo: 'AssetGroupInfo',
   AssetGroupMember: 'AssetGroupMember',
   Asset: 'Asset',
   AssetMemberRole: 'AssetMemberRole',
   AuthTeamExternal: 'AuthTeamExternal',
-  AuthRole: 'AuthRole',
   AuthPermissionRecipient: 'AuthPermissionRecipient',
   UserAppConnection: 'UserAppConnection',
   AppAuthentication: 'AppAuthentication',

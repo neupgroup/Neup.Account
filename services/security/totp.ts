@@ -21,6 +21,8 @@ if (!ENCRYPTION_KEY || ENCRYPTION_KEY.length < 64) {
     throw new Error('A 32-byte (64-character hex) NEXT_PUBLIC_TOTP_ENCRYPTION_KEY must be set in .env');
 }
 
+const AUTH_SECONDARY_TOTP_KIND = 'totp';
+
 // Basic encryption/decryption functions using Node.js crypto
 // In a production app, use a dedicated KMS for this.
 export async function encrypt(text: string): Promise<string> {
@@ -55,8 +57,11 @@ export async function getTotpStatus(): Promise<{ isEnabled: boolean }> {
     const accountId = await getActiveAccountId();
     if (!accountId) return { isEnabled: false };
 
-    const totp = await prisma.totp.findUnique({
-        where: { accountId }
+    const totp = await prisma.authSecondary.findFirst({
+        where: {
+            accountId,
+            kind: AUTH_SECONDARY_TOTP_KIND,
+        }
     });
 
     return { isEnabled: !!totp };
@@ -103,11 +108,22 @@ export async function verifyAndEnableTotp(data: z.infer<typeof totpEnableSchema>
     try {
         const encryptedSecret = await encrypt(secret);
         
-        await prisma.totp.upsert({
-            where: { accountId },
-            update: { secret: encryptedSecret },
-            create: { accountId, secret: encryptedSecret }
-        });
+        await prisma.$transaction([
+            prisma.authSecondary.deleteMany({
+                where: {
+                    accountId,
+                    kind: AUTH_SECONDARY_TOTP_KIND,
+                }
+            }),
+            prisma.authSecondary.create({
+                data: {
+                    accountId,
+                    kind: AUTH_SECONDARY_TOTP_KIND,
+                    value: encryptedSecret,
+                    used: false,
+                }
+            })
+        ]);
 
         await logActivity(accountId, 'TOTP Enabled', 'Success');
         
@@ -155,8 +171,11 @@ export async function disableTotp(data: z.infer<typeof totpDisableSchema>): Prom
         }
 
         // 2. Delete TOTP secret
-        await prisma.totp.delete({
-            where: { accountId }
+        await prisma.authSecondary.deleteMany({
+            where: {
+                accountId,
+                kind: AUTH_SECONDARY_TOTP_KIND,
+            }
         });
 
         await logActivity(accountId, 'TOTP Disabled', 'Success');
