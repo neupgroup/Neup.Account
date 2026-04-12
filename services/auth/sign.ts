@@ -1,5 +1,3 @@
-"use server";
-
 import { getSessionCookies } from '@/core/helpers/cookies';
 import { getValidatedStoredAccounts } from '@/core/helpers/session';
 import { getAppDisplayName } from '@/core/helpers/auth-callback';
