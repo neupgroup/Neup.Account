@@ -323,18 +323,6 @@ model ErrorLog {
   @@map("system_errors")
 }
 
-model BugReport {
-  id          String    @id @default(uuid())
-  reportType  String    @default("submitted")
-  context     String    // title
-  message     String    // description
-  status      String    @default("new") // 'new' | 'in_progress' | 'solved'
-  reportedBy  String?
-  timestamp   DateTime  @default(now())
-  
-  @@map("bug_reports")
-}
-
 model Application {
   id          String   @id
   name        String

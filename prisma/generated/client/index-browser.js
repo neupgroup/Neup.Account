@@ -311,16 +311,6 @@ exports.Prisma.ErrorLogScalarFieldEnum = {
   timestamp: 'timestamp'
 };
 
-exports.Prisma.BugReportScalarFieldEnum = {
-  id: 'id',
-  reportType: 'reportType',
-  context: 'context',
-  message: 'message',
-  status: 'status',
-  reportedBy: 'reportedBy',
-  timestamp: 'timestamp'
-};
-
 exports.Prisma.ApplicationScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -486,7 +476,6 @@ exports.Prisma.ModelName = {
   Permit: 'Permit',
   Session: 'Session',
   ErrorLog: 'ErrorLog',
-  BugReport: 'BugReport',
   Application: 'Application',
   AssetGroupInfo: 'AssetGroupInfo',
   AssetGroupMember: 'AssetGroupMember',
