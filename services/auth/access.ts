@@ -50,8 +50,24 @@ export async function bridgeGetAuthAccess(input: {
     }
 
     const resolvedAppId = appSession.appId;
-    const teamInfo = await prisma.authTeamExternal.findMany({
-      where: { recipientId: aid, appId: resolvedAppId },
+    const teamInfo = await prisma.portfolioMember.findMany({
+      where: {
+        accountId: aid,
+        portfolio: {
+          assets: {
+            some: {
+              assetId: resolvedAppId,
+              assetType: { in: ['application', 'app'] },
+            },
+          },
+        },
+      },
+      select: {
+        id: true,
+        portfolioId: true,
+        accountId: true,
+        details: true,
+      },
     });
 
     const appAuth = await prisma.appAuthentication.findUnique({
@@ -105,10 +121,56 @@ export async function bridgeCreateAuthAccess(input: Record<string, any>): Promis
 
     const appId = appIdOverride || session.appId;
 
-    await prisma.authTeamExternal.upsert({
-      where: { appId_accountId_recipientId: { appId, accountId: aid, recipientId } },
-      update: { isPermanent: !!isPermanent },
-      create: { appId, accountId: aid, recipientId, isPermanent: !!isPermanent },
+    await prisma.$transaction(async (tx) => {
+      let portfolio = await tx.portfolio.findFirst({
+        where: {
+          assets: {
+            some: {
+              assetId: appId,
+              assetType: { in: ['application', 'app'] },
+            },
+          },
+        },
+        select: { id: true },
+      });
+
+      if (!portfolio) {
+        portfolio = await tx.portfolio.create({
+          data: {
+            name: `App Portfolio ${appId}`,
+            description: 'Auto-generated app portfolio for access management.',
+            assets: {
+              create: {
+                assetId: appId,
+                assetType: 'application',
+                details: { primaryPortfolio: true },
+              },
+            },
+          },
+          select: { id: true },
+        });
+      }
+
+      await tx.portfolioMember.upsert({
+        where: {
+          portfolioId_accountId: {
+            portfolioId: portfolio.id,
+            accountId: recipientId,
+          },
+        },
+        update: {
+          details: {
+            isPermanent: !!isPermanent,
+          },
+        },
+        create: {
+          portfolioId: portfolio.id,
+          accountId: recipientId,
+          details: {
+            isPermanent: !!isPermanent,
+          },
+        },
+      });
     });
 
     return { status: 200, body: { success: true, message: 'User added to team' } };

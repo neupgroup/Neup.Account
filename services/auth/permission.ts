@@ -224,49 +224,44 @@ async function resolvePermissionSet(input: {
 	checkFor: string[];
 }): Promise<{ permissions: string[]; matched: string[] }> {
 	const now = new Date();
-	const memberKey = `account:${input.accountId}`;
 
-	const [appRecord, appAssets, appGroup, memberships] = await Promise.all([
+	const [appRecord, portfolios] = await Promise.all([
 		prisma.application.findUnique({
 			where: { id: input.app },
 			select: { id: true, ownerAccountId: true },
 		}),
-		prisma.asset.findMany({
+		prisma.portfolio.findMany({
 			where: {
-				OR: [{ asset: input.app }, { id: input.app }],
-				type: { in: ['app', 'application'] },
-			},
-			select: {
-				id: true,
-				asset: true,
-				type: true,
-				assetGroup: true,
-			},
-		}),
-		prisma.assetGroupInfo.findUnique({
-			where: { id: input.app },
-			select: { id: true },
-		}),
-		prisma.assetGroupMember.findMany({
-			where: {
-				member: memberKey,
-				OR: [{ isPermanent: true }, { validTill: { gt: now } }],
-			},
-			select: {
-				id: true,
-				assetGroup: true,
-				hasFullPermit: true,
-				roles: {
-					select: {
-						role: true,
-						assetRef: {
-							select: {
-								id: true,
-								asset: true,
-								type: true,
-								assetGroup: true,
+				OR: [
+					{ id: input.app },
+					{
+						assets: {
+							some: {
+								assetId: input.app,
+								assetType: { in: ['application', 'app'] },
 							},
 						},
+					},
+				],
+			},
+			select: {
+				id: true,
+				assets: {
+					select: {
+						assetId: true,
+						assetType: true,
+					},
+				},
+				members: {
+					where: { accountId: input.accountId },
+					select: {
+						details: true,
+					},
+				},
+				roles: {
+					where: { accountId: input.accountId },
+					select: {
+						roleId: true,
 					},
 				},
 			},
@@ -276,48 +271,6 @@ async function resolvePermissionSet(input: {
 	if (!appRecord) {
 		return { permissions: [], matched: [] };
 	}
-
-	const appAssetIds = new Set(appAssets.map((asset) => asset.id));
-	const appAssetGroups = new Set(appAssets.map((asset) => asset.assetGroup));
-
-	if (appGroup) {
-		const groupAssets = await prisma.asset.findMany({
-			where: { assetGroup: appGroup.id },
-			select: {
-				id: true,
-				asset: true,
-				type: true,
-				assetGroup: true,
-			},
-		});
-
-		for (const asset of groupAssets) {
-			appAssetIds.add(asset.id);
-			appAssetGroups.add(asset.assetGroup);
-		}
-	}
-
-	const apiAssets = input.api
-		? await prisma.asset.findMany({
-			where: {
-				...(appAssetGroups.size > 0 ? { assetGroup: { in: Array.from(appAssetGroups) } } : {}),
-				OR: [{ asset: input.api }, { id: input.api }, { type: input.api }],
-			},
-			select: {
-				id: true,
-				asset: true,
-				type: true,
-				assetGroup: true,
-			},
-		})
-		: [];
-
-	for (const asset of apiAssets) {
-		appAssetIds.add(asset.id);
-		appAssetGroups.add(asset.assetGroup);
-	}
-
-	const relevantGroups = appAssetGroups.size > 0 ? appAssetGroups : new Set([appRecord.id]);
 	const resolvedPermissions = new Set<string>();
 
 	if (appRecord.ownerAccountId === input.accountId) {
@@ -325,22 +278,40 @@ async function resolvePermissionSet(input: {
 		resolvedPermissions.add('owner');
 	}
 
-	for (const membership of memberships) {
-		if (!relevantGroups.has(membership.assetGroup)) {
+	for (const portfolio of portfolios) {
+		if (portfolio.members.length === 0 && portfolio.roles.length === 0) {
 			continue;
 		}
 
-		if (membership.hasFullPermit) {
+		const apiMatches = !input.api
+			? true
+			: portfolio.assets.some((asset) =>
+				asset.assetId === input.api || asset.assetType === input.api
+			);
+
+		if (!apiMatches) {
+			continue;
+		}
+
+		const hasFullAccess = portfolio.members.some((member) => {
+			const details = (member.details ?? null) as Record<string, unknown> | null;
+			if (!details || typeof details !== 'object') return false;
+			const isPermanent = details.isPermanent === true;
+			const removesOnRaw = details.removesOn;
+			const removesOn =
+				typeof removesOnRaw === 'string' || removesOnRaw instanceof Date
+					? new Date(removesOnRaw as string | Date)
+					: null;
+			const stillValid = isPermanent || (removesOn instanceof Date && !Number.isNaN(removesOn.getTime()) && removesOn > now);
+			return stillValid && details.hasFullAccess === true;
+		});
+
+		if (hasFullAccess) {
 			resolvedPermissions.add('*');
-			continue;
 		}
 
-		for (const role of membership.roles) {
-			if (appAssetIds.size > 0 && !appAssetIds.has(role.assetRef.id)) {
-				continue;
-			}
-
-			resolvedPermissions.add(normalizePermission(role.role));
+		for (const role of portfolio.roles) {
+			resolvedPermissions.add(normalizePermission(role.roleId));
 		}
 	}
 

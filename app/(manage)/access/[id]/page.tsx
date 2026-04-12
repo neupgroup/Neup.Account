@@ -26,7 +26,14 @@ export default async function AssetGroupPage({ params }: PageProps) {
     notFound();
   }
 
-  const assetsById = new Map(group.assets.map((asset) => [asset.id, asset]));
+  const getMemberDetails = (value: unknown) => {
+    const details = value && typeof value === 'object' ? (value as Record<string, unknown>) : {};
+    return {
+      isPermanent: details.isPermanent === true,
+      removesOn: typeof details.removesOn === 'string' ? details.removesOn : null,
+      hasFullAccess: details.hasFullAccess === true,
+    };
+  };
 
   const addMemberAction = addMemberToAssetGroupFromForm.bind(null, id);
   const addAssetAction = addAssetToGroupFromForm.bind(null, id);
@@ -38,19 +45,19 @@ export default async function AssetGroupPage({ params }: PageProps) {
 
       <div>
         <h1 className="text-3xl font-bold tracking-tight">{group.name}</h1>
-        <p className="text-muted-foreground">{group.details || 'Manage members, assets, and roles for this group.'}</p>
+        <p className="text-muted-foreground">{group.description || 'Manage members, assets, and roles for this group.'}</p>
       </div>
 
       <Card>
         <CardHeader>
           <CardTitle>Group Members</CardTitle>
           <CardDescription>
-            Format: type "app:appid" or type "account:id".
+            Use plain account ID or account:id.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <form action={addMemberAction} className="grid gap-3 md:grid-cols-2">
-            <Input name="member" placeholder="account:63b6151e-... or app:neup.account" required />
+            <Input name="member" placeholder="63b6151e-... or account:63b6151e-..." required />
             <Input name="validTill" type="datetime-local" />
             <div className="flex items-center gap-2">
               <Checkbox id="isPermanent" name="isPermanent" />
@@ -69,10 +76,15 @@ export default async function AssetGroupPage({ params }: PageProps) {
             <div className="overflow-hidden rounded-lg border">
               {group.members.map((member) => (
                 <div key={member.id} className="border-b px-4 py-3 text-sm last:border-b-0">
-                  <p className="font-medium">{member.member}</p>
-                  <p className="text-muted-foreground">
-                    permanent: {member.isPermanent ? 'yes' : 'no'} | validTill: {member.validTill ? member.validTill.toLocaleString() : 'not set'} | fullPermit: {member.hasFullPermit ? 'yes' : 'no'}
-                  </p>
+                  <p className="font-medium">{member.accountId}</p>
+                  {(() => {
+                    const d = getMemberDetails(member.details);
+                    return (
+                      <p className="text-muted-foreground">
+                        permanent: {d.isPermanent ? 'yes' : 'no'} | removesOn: {d.removesOn || 'not set'} | fullAccess: {d.hasFullAccess ? 'yes' : 'no'}
+                      </p>
+                    );
+                  })()}
                 </div>
               ))}
             </div>
@@ -101,9 +113,10 @@ export default async function AssetGroupPage({ params }: PageProps) {
             <div className="overflow-hidden rounded-lg border">
               {group.assets.map((asset) => (
                 <div key={asset.id} className="border-b px-4 py-3 text-sm last:border-b-0">
-                  <p className="font-medium">{asset.asset}</p>
-                  <p className="text-muted-foreground">type: {asset.type}</p>
-                  <p className="text-muted-foreground">{asset.details || 'No details.'}</p>
+                  <p className="font-medium">{asset.assetId}</p>
+                  <p className="text-muted-foreground">type: {asset.assetType}</p>
+                  <p className="text-muted-foreground">assetId: {asset.assetId}</p>
+                  <p className="text-muted-foreground">{asset.details ? JSON.stringify(asset.details) : 'No details.'}</p>
                 </div>
               ))}
             </div>
@@ -126,7 +139,7 @@ export default async function AssetGroupPage({ params }: PageProps) {
                 <option value="">Select member</option>
                 {group.members.map((member) => (
                   <option key={member.id} value={member.id}>
-                    {member.member}
+                    {member.accountId}
                   </option>
                 ))}
               </select>
@@ -137,7 +150,7 @@ export default async function AssetGroupPage({ params }: PageProps) {
                 <option value="">Select asset</option>
                 {group.assets.map((asset) => (
                   <option key={asset.id} value={asset.id}>
-                    {asset.asset}
+                    {asset.assetId}
                   </option>
                 ))}
               </select>
@@ -155,12 +168,12 @@ export default async function AssetGroupPage({ params }: PageProps) {
             <div className="overflow-hidden rounded-lg border">
               {group.members.map((member) => (
                 <div key={member.id} className="border-b px-4 py-3 text-sm last:border-b-0">
-                  <p className="font-medium mb-1">{member.member}</p>
-                  {member.roles.length > 0 ? (
+                  <p className="font-medium mb-1">{member.accountId}</p>
+                  {group.roles.filter((roleRow) => roleRow.accountId === member.accountId).length > 0 ? (
                     <ul className="space-y-1 text-muted-foreground">
-                      {member.roles.map((roleRow) => (
+                      {group.roles.filter((roleRow) => roleRow.accountId === member.accountId).map((roleRow) => (
                         <li key={roleRow.id}>
-                          {assetsById.get(roleRow.asset)?.asset || roleRow.asset}: {roleRow.role}
+                          {roleRow.roleId}
                         </li>
                       ))}
                     </ul>

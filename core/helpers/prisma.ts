@@ -16,9 +16,10 @@ function hasRequiredDelegates(client: ReturnType<typeof prismaClientSingleton> |
 
   const candidate = client as any
   return Boolean(
-    candidate.assetGroupInfo &&
-    candidate.assetGroupMember &&
-    candidate.assetMemberRole &&
+    candidate.portfolio &&
+    candidate.portfolioAsset &&
+    candidate.portfolioMember &&
+    candidate.portfolioRole &&
     candidate.systemConfig,
   )
 }

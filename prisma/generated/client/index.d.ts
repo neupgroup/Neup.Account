@@ -104,30 +104,25 @@ export type ErrorLog = $Result.DefaultSelection<Prisma.$ErrorLogPayload>
  */
 export type Application = $Result.DefaultSelection<Prisma.$ApplicationPayload>
 /**
- * Model AssetGroupInfo
+ * Model Portfolio
  * 
  */
-export type AssetGroupInfo = $Result.DefaultSelection<Prisma.$AssetGroupInfoPayload>
+export type Portfolio = $Result.DefaultSelection<Prisma.$PortfolioPayload>
 /**
- * Model AssetGroupMember
+ * Model PortfolioAsset
  * 
  */
-export type AssetGroupMember = $Result.DefaultSelection<Prisma.$AssetGroupMemberPayload>
+export type PortfolioAsset = $Result.DefaultSelection<Prisma.$PortfolioAssetPayload>
 /**
- * Model Asset
+ * Model PortfolioMember
  * 
  */
-export type Asset = $Result.DefaultSelection<Prisma.$AssetPayload>
+export type PortfolioMember = $Result.DefaultSelection<Prisma.$PortfolioMemberPayload>
 /**
- * Model AssetMemberRole
+ * Model PortfolioRole
  * 
  */
-export type AssetMemberRole = $Result.DefaultSelection<Prisma.$AssetMemberRolePayload>
-/**
- * Model AuthTeamExternal
- * 
- */
-export type AuthTeamExternal = $Result.DefaultSelection<Prisma.$AuthTeamExternalPayload>
+export type PortfolioRole = $Result.DefaultSelection<Prisma.$PortfolioRolePayload>
 /**
  * Model AuthPermissionRecipient
  * 
@@ -498,54 +493,44 @@ export class PrismaClient<
   get application(): Prisma.ApplicationDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.assetGroupInfo`: Exposes CRUD operations for the **AssetGroupInfo** model.
+   * `prisma.portfolio`: Exposes CRUD operations for the **Portfolio** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more AssetGroupInfos
-    * const assetGroupInfos = await prisma.assetGroupInfo.findMany()
+    * // Fetch zero or more Portfolios
+    * const portfolios = await prisma.portfolio.findMany()
     * ```
     */
-  get assetGroupInfo(): Prisma.AssetGroupInfoDelegate<ExtArgs, ClientOptions>;
+  get portfolio(): Prisma.PortfolioDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.assetGroupMember`: Exposes CRUD operations for the **AssetGroupMember** model.
+   * `prisma.portfolioAsset`: Exposes CRUD operations for the **PortfolioAsset** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more AssetGroupMembers
-    * const assetGroupMembers = await prisma.assetGroupMember.findMany()
+    * // Fetch zero or more PortfolioAssets
+    * const portfolioAssets = await prisma.portfolioAsset.findMany()
     * ```
     */
-  get assetGroupMember(): Prisma.AssetGroupMemberDelegate<ExtArgs, ClientOptions>;
+  get portfolioAsset(): Prisma.PortfolioAssetDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.asset`: Exposes CRUD operations for the **Asset** model.
+   * `prisma.portfolioMember`: Exposes CRUD operations for the **PortfolioMember** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Assets
-    * const assets = await prisma.asset.findMany()
+    * // Fetch zero or more PortfolioMembers
+    * const portfolioMembers = await prisma.portfolioMember.findMany()
     * ```
     */
-  get asset(): Prisma.AssetDelegate<ExtArgs, ClientOptions>;
+  get portfolioMember(): Prisma.PortfolioMemberDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.assetMemberRole`: Exposes CRUD operations for the **AssetMemberRole** model.
+   * `prisma.portfolioRole`: Exposes CRUD operations for the **PortfolioRole** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more AssetMemberRoles
-    * const assetMemberRoles = await prisma.assetMemberRole.findMany()
+    * // Fetch zero or more PortfolioRoles
+    * const portfolioRoles = await prisma.portfolioRole.findMany()
     * ```
     */
-  get assetMemberRole(): Prisma.AssetMemberRoleDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.authTeamExternal`: Exposes CRUD operations for the **AuthTeamExternal** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more AuthTeamExternals
-    * const authTeamExternals = await prisma.authTeamExternal.findMany()
-    * ```
-    */
-  get authTeamExternal(): Prisma.AuthTeamExternalDelegate<ExtArgs, ClientOptions>;
+  get portfolioRole(): Prisma.PortfolioRoleDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.authPermissionRecipient`: Exposes CRUD operations for the **AuthPermissionRecipient** model.
@@ -1038,11 +1023,10 @@ export namespace Prisma {
     Session: 'Session',
     ErrorLog: 'ErrorLog',
     Application: 'Application',
-    AssetGroupInfo: 'AssetGroupInfo',
-    AssetGroupMember: 'AssetGroupMember',
-    Asset: 'Asset',
-    AssetMemberRole: 'AssetMemberRole',
-    AuthTeamExternal: 'AuthTeamExternal',
+    Portfolio: 'Portfolio',
+    PortfolioAsset: 'PortfolioAsset',
+    PortfolioMember: 'PortfolioMember',
+    PortfolioRole: 'PortfolioRole',
     AuthPermissionRecipient: 'AuthPermissionRecipient',
     UserAppConnection: 'UserAppConnection',
     AppAuthentication: 'AppAuthentication',
@@ -1062,7 +1046,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "accountOwnership" | "systemConfig" | "authRequest" | "activityLog" | "notification" | "request" | "family" | "verification" | "contact" | "neupId" | "authMethod" | "permit" | "session" | "errorLog" | "application" | "assetGroupInfo" | "assetGroupMember" | "asset" | "assetMemberRole" | "authTeamExternal" | "authPermissionRecipient" | "userAppConnection" | "appAuthentication" | "appSession"
+      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "accountOwnership" | "systemConfig" | "authRequest" | "activityLog" | "notification" | "request" | "family" | "verification" | "contact" | "neupId" | "authMethod" | "permit" | "session" | "errorLog" | "application" | "portfolio" | "portfolioAsset" | "portfolioMember" | "portfolioRole" | "authPermissionRecipient" | "userAppConnection" | "appAuthentication" | "appSession"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2398,373 +2382,299 @@ export namespace Prisma {
           }
         }
       }
-      AssetGroupInfo: {
-        payload: Prisma.$AssetGroupInfoPayload<ExtArgs>
-        fields: Prisma.AssetGroupInfoFieldRefs
+      Portfolio: {
+        payload: Prisma.$PortfolioPayload<ExtArgs>
+        fields: Prisma.PortfolioFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.AssetGroupInfoFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload> | null
+            args: Prisma.PortfolioFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.AssetGroupInfoFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload>
+            args: Prisma.PortfolioFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioPayload>
           }
           findFirst: {
-            args: Prisma.AssetGroupInfoFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload> | null
+            args: Prisma.PortfolioFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.AssetGroupInfoFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload>
+            args: Prisma.PortfolioFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioPayload>
           }
           findMany: {
-            args: Prisma.AssetGroupInfoFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload>[]
+            args: Prisma.PortfolioFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioPayload>[]
           }
           create: {
-            args: Prisma.AssetGroupInfoCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload>
+            args: Prisma.PortfolioCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioPayload>
           }
           createMany: {
-            args: Prisma.AssetGroupInfoCreateManyArgs<ExtArgs>
+            args: Prisma.PortfolioCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.AssetGroupInfoCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload>[]
+            args: Prisma.PortfolioCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioPayload>[]
           }
           delete: {
-            args: Prisma.AssetGroupInfoDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload>
+            args: Prisma.PortfolioDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioPayload>
           }
           update: {
-            args: Prisma.AssetGroupInfoUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload>
+            args: Prisma.PortfolioUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioPayload>
           }
           deleteMany: {
-            args: Prisma.AssetGroupInfoDeleteManyArgs<ExtArgs>
+            args: Prisma.PortfolioDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.AssetGroupInfoUpdateManyArgs<ExtArgs>
+            args: Prisma.PortfolioUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.AssetGroupInfoUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload>[]
+            args: Prisma.PortfolioUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioPayload>[]
           }
           upsert: {
-            args: Prisma.AssetGroupInfoUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupInfoPayload>
+            args: Prisma.PortfolioUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioPayload>
           }
           aggregate: {
-            args: Prisma.AssetGroupInfoAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateAssetGroupInfo>
+            args: Prisma.PortfolioAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePortfolio>
           }
           groupBy: {
-            args: Prisma.AssetGroupInfoGroupByArgs<ExtArgs>
-            result: $Utils.Optional<AssetGroupInfoGroupByOutputType>[]
+            args: Prisma.PortfolioGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PortfolioGroupByOutputType>[]
           }
           count: {
-            args: Prisma.AssetGroupInfoCountArgs<ExtArgs>
-            result: $Utils.Optional<AssetGroupInfoCountAggregateOutputType> | number
+            args: Prisma.PortfolioCountArgs<ExtArgs>
+            result: $Utils.Optional<PortfolioCountAggregateOutputType> | number
           }
         }
       }
-      AssetGroupMember: {
-        payload: Prisma.$AssetGroupMemberPayload<ExtArgs>
-        fields: Prisma.AssetGroupMemberFieldRefs
+      PortfolioAsset: {
+        payload: Prisma.$PortfolioAssetPayload<ExtArgs>
+        fields: Prisma.PortfolioAssetFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.AssetGroupMemberFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload> | null
+            args: Prisma.PortfolioAssetFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioAssetPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.AssetGroupMemberFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload>
+            args: Prisma.PortfolioAssetFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioAssetPayload>
           }
           findFirst: {
-            args: Prisma.AssetGroupMemberFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload> | null
+            args: Prisma.PortfolioAssetFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioAssetPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.AssetGroupMemberFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload>
+            args: Prisma.PortfolioAssetFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioAssetPayload>
           }
           findMany: {
-            args: Prisma.AssetGroupMemberFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload>[]
+            args: Prisma.PortfolioAssetFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioAssetPayload>[]
           }
           create: {
-            args: Prisma.AssetGroupMemberCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload>
+            args: Prisma.PortfolioAssetCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioAssetPayload>
           }
           createMany: {
-            args: Prisma.AssetGroupMemberCreateManyArgs<ExtArgs>
+            args: Prisma.PortfolioAssetCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.AssetGroupMemberCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload>[]
+            args: Prisma.PortfolioAssetCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioAssetPayload>[]
           }
           delete: {
-            args: Prisma.AssetGroupMemberDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload>
+            args: Prisma.PortfolioAssetDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioAssetPayload>
           }
           update: {
-            args: Prisma.AssetGroupMemberUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload>
+            args: Prisma.PortfolioAssetUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioAssetPayload>
           }
           deleteMany: {
-            args: Prisma.AssetGroupMemberDeleteManyArgs<ExtArgs>
+            args: Prisma.PortfolioAssetDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.AssetGroupMemberUpdateManyArgs<ExtArgs>
+            args: Prisma.PortfolioAssetUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.AssetGroupMemberUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload>[]
+            args: Prisma.PortfolioAssetUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioAssetPayload>[]
           }
           upsert: {
-            args: Prisma.AssetGroupMemberUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetGroupMemberPayload>
+            args: Prisma.PortfolioAssetUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioAssetPayload>
           }
           aggregate: {
-            args: Prisma.AssetGroupMemberAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateAssetGroupMember>
+            args: Prisma.PortfolioAssetAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePortfolioAsset>
           }
           groupBy: {
-            args: Prisma.AssetGroupMemberGroupByArgs<ExtArgs>
-            result: $Utils.Optional<AssetGroupMemberGroupByOutputType>[]
+            args: Prisma.PortfolioAssetGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PortfolioAssetGroupByOutputType>[]
           }
           count: {
-            args: Prisma.AssetGroupMemberCountArgs<ExtArgs>
-            result: $Utils.Optional<AssetGroupMemberCountAggregateOutputType> | number
+            args: Prisma.PortfolioAssetCountArgs<ExtArgs>
+            result: $Utils.Optional<PortfolioAssetCountAggregateOutputType> | number
           }
         }
       }
-      Asset: {
-        payload: Prisma.$AssetPayload<ExtArgs>
-        fields: Prisma.AssetFieldRefs
+      PortfolioMember: {
+        payload: Prisma.$PortfolioMemberPayload<ExtArgs>
+        fields: Prisma.PortfolioMemberFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.AssetFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetPayload> | null
+            args: Prisma.PortfolioMemberFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioMemberPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.AssetFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetPayload>
+            args: Prisma.PortfolioMemberFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioMemberPayload>
           }
           findFirst: {
-            args: Prisma.AssetFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetPayload> | null
+            args: Prisma.PortfolioMemberFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioMemberPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.AssetFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetPayload>
+            args: Prisma.PortfolioMemberFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioMemberPayload>
           }
           findMany: {
-            args: Prisma.AssetFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetPayload>[]
+            args: Prisma.PortfolioMemberFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioMemberPayload>[]
           }
           create: {
-            args: Prisma.AssetCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetPayload>
+            args: Prisma.PortfolioMemberCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioMemberPayload>
           }
           createMany: {
-            args: Prisma.AssetCreateManyArgs<ExtArgs>
+            args: Prisma.PortfolioMemberCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.AssetCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetPayload>[]
+            args: Prisma.PortfolioMemberCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioMemberPayload>[]
           }
           delete: {
-            args: Prisma.AssetDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetPayload>
+            args: Prisma.PortfolioMemberDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioMemberPayload>
           }
           update: {
-            args: Prisma.AssetUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetPayload>
+            args: Prisma.PortfolioMemberUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioMemberPayload>
           }
           deleteMany: {
-            args: Prisma.AssetDeleteManyArgs<ExtArgs>
+            args: Prisma.PortfolioMemberDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.AssetUpdateManyArgs<ExtArgs>
+            args: Prisma.PortfolioMemberUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.AssetUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetPayload>[]
+            args: Prisma.PortfolioMemberUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioMemberPayload>[]
           }
           upsert: {
-            args: Prisma.AssetUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetPayload>
+            args: Prisma.PortfolioMemberUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioMemberPayload>
           }
           aggregate: {
-            args: Prisma.AssetAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateAsset>
+            args: Prisma.PortfolioMemberAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePortfolioMember>
           }
           groupBy: {
-            args: Prisma.AssetGroupByArgs<ExtArgs>
-            result: $Utils.Optional<AssetGroupByOutputType>[]
+            args: Prisma.PortfolioMemberGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PortfolioMemberGroupByOutputType>[]
           }
           count: {
-            args: Prisma.AssetCountArgs<ExtArgs>
-            result: $Utils.Optional<AssetCountAggregateOutputType> | number
+            args: Prisma.PortfolioMemberCountArgs<ExtArgs>
+            result: $Utils.Optional<PortfolioMemberCountAggregateOutputType> | number
           }
         }
       }
-      AssetMemberRole: {
-        payload: Prisma.$AssetMemberRolePayload<ExtArgs>
-        fields: Prisma.AssetMemberRoleFieldRefs
+      PortfolioRole: {
+        payload: Prisma.$PortfolioRolePayload<ExtArgs>
+        fields: Prisma.PortfolioRoleFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.AssetMemberRoleFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload> | null
+            args: Prisma.PortfolioRoleFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioRolePayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.AssetMemberRoleFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload>
+            args: Prisma.PortfolioRoleFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioRolePayload>
           }
           findFirst: {
-            args: Prisma.AssetMemberRoleFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload> | null
+            args: Prisma.PortfolioRoleFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioRolePayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.AssetMemberRoleFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload>
+            args: Prisma.PortfolioRoleFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioRolePayload>
           }
           findMany: {
-            args: Prisma.AssetMemberRoleFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload>[]
+            args: Prisma.PortfolioRoleFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioRolePayload>[]
           }
           create: {
-            args: Prisma.AssetMemberRoleCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload>
+            args: Prisma.PortfolioRoleCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioRolePayload>
           }
           createMany: {
-            args: Prisma.AssetMemberRoleCreateManyArgs<ExtArgs>
+            args: Prisma.PortfolioRoleCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.AssetMemberRoleCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload>[]
+            args: Prisma.PortfolioRoleCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioRolePayload>[]
           }
           delete: {
-            args: Prisma.AssetMemberRoleDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload>
+            args: Prisma.PortfolioRoleDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioRolePayload>
           }
           update: {
-            args: Prisma.AssetMemberRoleUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload>
+            args: Prisma.PortfolioRoleUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioRolePayload>
           }
           deleteMany: {
-            args: Prisma.AssetMemberRoleDeleteManyArgs<ExtArgs>
+            args: Prisma.PortfolioRoleDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.AssetMemberRoleUpdateManyArgs<ExtArgs>
+            args: Prisma.PortfolioRoleUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.AssetMemberRoleUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload>[]
+            args: Prisma.PortfolioRoleUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioRolePayload>[]
           }
           upsert: {
-            args: Prisma.AssetMemberRoleUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AssetMemberRolePayload>
+            args: Prisma.PortfolioRoleUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PortfolioRolePayload>
           }
           aggregate: {
-            args: Prisma.AssetMemberRoleAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateAssetMemberRole>
+            args: Prisma.PortfolioRoleAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePortfolioRole>
           }
           groupBy: {
-            args: Prisma.AssetMemberRoleGroupByArgs<ExtArgs>
-            result: $Utils.Optional<AssetMemberRoleGroupByOutputType>[]
+            args: Prisma.PortfolioRoleGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PortfolioRoleGroupByOutputType>[]
           }
           count: {
-            args: Prisma.AssetMemberRoleCountArgs<ExtArgs>
-            result: $Utils.Optional<AssetMemberRoleCountAggregateOutputType> | number
-          }
-        }
-      }
-      AuthTeamExternal: {
-        payload: Prisma.$AuthTeamExternalPayload<ExtArgs>
-        fields: Prisma.AuthTeamExternalFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.AuthTeamExternalFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthTeamExternalPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.AuthTeamExternalFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthTeamExternalPayload>
-          }
-          findFirst: {
-            args: Prisma.AuthTeamExternalFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthTeamExternalPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.AuthTeamExternalFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthTeamExternalPayload>
-          }
-          findMany: {
-            args: Prisma.AuthTeamExternalFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthTeamExternalPayload>[]
-          }
-          create: {
-            args: Prisma.AuthTeamExternalCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthTeamExternalPayload>
-          }
-          createMany: {
-            args: Prisma.AuthTeamExternalCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.AuthTeamExternalCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthTeamExternalPayload>[]
-          }
-          delete: {
-            args: Prisma.AuthTeamExternalDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthTeamExternalPayload>
-          }
-          update: {
-            args: Prisma.AuthTeamExternalUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthTeamExternalPayload>
-          }
-          deleteMany: {
-            args: Prisma.AuthTeamExternalDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.AuthTeamExternalUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.AuthTeamExternalUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthTeamExternalPayload>[]
-          }
-          upsert: {
-            args: Prisma.AuthTeamExternalUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthTeamExternalPayload>
-          }
-          aggregate: {
-            args: Prisma.AuthTeamExternalAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateAuthTeamExternal>
-          }
-          groupBy: {
-            args: Prisma.AuthTeamExternalGroupByArgs<ExtArgs>
-            result: $Utils.Optional<AuthTeamExternalGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.AuthTeamExternalCountArgs<ExtArgs>
-            result: $Utils.Optional<AuthTeamExternalCountAggregateOutputType> | number
+            args: Prisma.PortfolioRoleCountArgs<ExtArgs>
+            result: $Utils.Optional<PortfolioRoleCountAggregateOutputType> | number
           }
         }
       }
@@ -3190,11 +3100,10 @@ export namespace Prisma {
     session?: SessionOmit
     errorLog?: ErrorLogOmit
     application?: ApplicationOmit
-    assetGroupInfo?: AssetGroupInfoOmit
-    assetGroupMember?: AssetGroupMemberOmit
-    asset?: AssetOmit
-    assetMemberRole?: AssetMemberRoleOmit
-    authTeamExternal?: AuthTeamExternalOmit
+    portfolio?: PortfolioOmit
+    portfolioAsset?: PortfolioAssetOmit
+    portfolioMember?: PortfolioMemberOmit
+    portfolioRole?: PortfolioRoleOmit
     authPermissionRecipient?: AuthPermissionRecipientOmit
     userAppConnection?: UserAppConnectionOmit
     appAuthentication?: AppAuthenticationOmit
@@ -3293,12 +3202,12 @@ export namespace Prisma {
     verifications: number
     sentRequests: number
     receivedRequests: number
-    externalAdminTeams: number
-    externalMemberTeams: number
     recipientPermissions: number
     ownerPermissions: number
     parentOwnerships: number
     childOwnerships: number
+    portfolioMembers: number
+    portfolioRoles: number
   }
 
   export type AccountCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3316,12 +3225,12 @@ export namespace Prisma {
     verifications?: boolean | AccountCountOutputTypeCountVerificationsArgs
     sentRequests?: boolean | AccountCountOutputTypeCountSentRequestsArgs
     receivedRequests?: boolean | AccountCountOutputTypeCountReceivedRequestsArgs
-    externalAdminTeams?: boolean | AccountCountOutputTypeCountExternalAdminTeamsArgs
-    externalMemberTeams?: boolean | AccountCountOutputTypeCountExternalMemberTeamsArgs
     recipientPermissions?: boolean | AccountCountOutputTypeCountRecipientPermissionsArgs
     ownerPermissions?: boolean | AccountCountOutputTypeCountOwnerPermissionsArgs
     parentOwnerships?: boolean | AccountCountOutputTypeCountParentOwnershipsArgs
     childOwnerships?: boolean | AccountCountOutputTypeCountChildOwnershipsArgs
+    portfolioMembers?: boolean | AccountCountOutputTypeCountPortfolioMembersArgs
+    portfolioRoles?: boolean | AccountCountOutputTypeCountPortfolioRolesArgs
   }
 
   // Custom InputTypes
@@ -3436,20 +3345,6 @@ export namespace Prisma {
   /**
    * AccountCountOutputType without action
    */
-  export type AccountCountOutputTypeCountExternalAdminTeamsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthTeamExternalWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
-  export type AccountCountOutputTypeCountExternalMemberTeamsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthTeamExternalWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
   export type AccountCountOutputTypeCountRecipientPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AuthPermissionRecipientWhereInput
   }
@@ -3473,6 +3368,20 @@ export namespace Prisma {
    */
   export type AccountCountOutputTypeCountChildOwnershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AccountOwnershipWhereInput
+  }
+
+  /**
+   * AccountCountOutputType without action
+   */
+  export type AccountCountOutputTypeCountPortfolioMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PortfolioMemberWhereInput
+  }
+
+  /**
+   * AccountCountOutputType without action
+   */
+  export type AccountCountOutputTypeCountPortfolioRolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PortfolioRoleWhereInput
   }
 
 
@@ -3577,7 +3486,6 @@ export namespace Prisma {
     connections: number
     appAuthentications: number
     appSessions: number
-    authTeamsExternal: number
     authPermissionRecipients: number
   }
 
@@ -3585,7 +3493,6 @@ export namespace Prisma {
     connections?: boolean | ApplicationCountOutputTypeCountConnectionsArgs
     appAuthentications?: boolean | ApplicationCountOutputTypeCountAppAuthenticationsArgs
     appSessions?: boolean | ApplicationCountOutputTypeCountAppSessionsArgs
-    authTeamsExternal?: boolean | ApplicationCountOutputTypeCountAuthTeamsExternalArgs
     authPermissionRecipients?: boolean | ApplicationCountOutputTypeCountAuthPermissionRecipientsArgs
   }
 
@@ -3624,117 +3531,57 @@ export namespace Prisma {
   /**
    * ApplicationCountOutputType without action
    */
-  export type ApplicationCountOutputTypeCountAuthTeamsExternalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthTeamExternalWhereInput
-  }
-
-  /**
-   * ApplicationCountOutputType without action
-   */
   export type ApplicationCountOutputTypeCountAuthPermissionRecipientsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AuthPermissionRecipientWhereInput
   }
 
 
   /**
-   * Count Type AssetGroupInfoCountOutputType
+   * Count Type PortfolioCountOutputType
    */
 
-  export type AssetGroupInfoCountOutputType = {
-    members: number
+  export type PortfolioCountOutputType = {
     assets: number
-  }
-
-  export type AssetGroupInfoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    members?: boolean | AssetGroupInfoCountOutputTypeCountMembersArgs
-    assets?: boolean | AssetGroupInfoCountOutputTypeCountAssetsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * AssetGroupInfoCountOutputType without action
-   */
-  export type AssetGroupInfoCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetGroupInfoCountOutputType
-     */
-    select?: AssetGroupInfoCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * AssetGroupInfoCountOutputType without action
-   */
-  export type AssetGroupInfoCountOutputTypeCountMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AssetGroupMemberWhereInput
-  }
-
-  /**
-   * AssetGroupInfoCountOutputType without action
-   */
-  export type AssetGroupInfoCountOutputTypeCountAssetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AssetWhereInput
-  }
-
-
-  /**
-   * Count Type AssetGroupMemberCountOutputType
-   */
-
-  export type AssetGroupMemberCountOutputType = {
+    members: number
     roles: number
   }
 
-  export type AssetGroupMemberCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    roles?: boolean | AssetGroupMemberCountOutputTypeCountRolesArgs
+  export type PortfolioCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    assets?: boolean | PortfolioCountOutputTypeCountAssetsArgs
+    members?: boolean | PortfolioCountOutputTypeCountMembersArgs
+    roles?: boolean | PortfolioCountOutputTypeCountRolesArgs
   }
 
   // Custom InputTypes
   /**
-   * AssetGroupMemberCountOutputType without action
+   * PortfolioCountOutputType without action
    */
-  export type AssetGroupMemberCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssetGroupMemberCountOutputType
+     * Select specific fields to fetch from the PortfolioCountOutputType
      */
-    select?: AssetGroupMemberCountOutputTypeSelect<ExtArgs> | null
+    select?: PortfolioCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * AssetGroupMemberCountOutputType without action
+   * PortfolioCountOutputType without action
    */
-  export type AssetGroupMemberCountOutputTypeCountRolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AssetMemberRoleWhereInput
-  }
-
-
-  /**
-   * Count Type AssetCountOutputType
-   */
-
-  export type AssetCountOutputType = {
-    roles: number
-  }
-
-  export type AssetCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    roles?: boolean | AssetCountOutputTypeCountRolesArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * AssetCountOutputType without action
-   */
-  export type AssetCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetCountOutputType
-     */
-    select?: AssetCountOutputTypeSelect<ExtArgs> | null
+  export type PortfolioCountOutputTypeCountAssetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PortfolioAssetWhereInput
   }
 
   /**
-   * AssetCountOutputType without action
+   * PortfolioCountOutputType without action
    */
-  export type AssetCountOutputTypeCountRolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AssetMemberRoleWhereInput
+  export type PortfolioCountOutputTypeCountMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PortfolioMemberWhereInput
+  }
+
+  /**
+   * PortfolioCountOutputType without action
+   */
+  export type PortfolioCountOutputTypeCountRolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PortfolioRoleWhereInput
   }
 
 
@@ -3940,14 +3787,14 @@ export namespace Prisma {
     verifications?: boolean | Account$verificationsArgs<ExtArgs>
     sentRequests?: boolean | Account$sentRequestsArgs<ExtArgs>
     receivedRequests?: boolean | Account$receivedRequestsArgs<ExtArgs>
-    externalAdminTeams?: boolean | Account$externalAdminTeamsArgs<ExtArgs>
-    externalMemberTeams?: boolean | Account$externalMemberTeamsArgs<ExtArgs>
     recipientPermissions?: boolean | Account$recipientPermissionsArgs<ExtArgs>
     ownerPermissions?: boolean | Account$ownerPermissionsArgs<ExtArgs>
     individualProfile?: boolean | Account$individualProfileArgs<ExtArgs>
     brandProfile?: boolean | Account$brandProfileArgs<ExtArgs>
     parentOwnerships?: boolean | Account$parentOwnershipsArgs<ExtArgs>
     childOwnerships?: boolean | Account$childOwnershipsArgs<ExtArgs>
+    portfolioMembers?: boolean | Account$portfolioMembersArgs<ExtArgs>
+    portfolioRoles?: boolean | Account$portfolioRolesArgs<ExtArgs>
     _count?: boolean | AccountCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["account"]>
 
@@ -4000,14 +3847,14 @@ export namespace Prisma {
     verifications?: boolean | Account$verificationsArgs<ExtArgs>
     sentRequests?: boolean | Account$sentRequestsArgs<ExtArgs>
     receivedRequests?: boolean | Account$receivedRequestsArgs<ExtArgs>
-    externalAdminTeams?: boolean | Account$externalAdminTeamsArgs<ExtArgs>
-    externalMemberTeams?: boolean | Account$externalMemberTeamsArgs<ExtArgs>
     recipientPermissions?: boolean | Account$recipientPermissionsArgs<ExtArgs>
     ownerPermissions?: boolean | Account$ownerPermissionsArgs<ExtArgs>
     individualProfile?: boolean | Account$individualProfileArgs<ExtArgs>
     brandProfile?: boolean | Account$brandProfileArgs<ExtArgs>
     parentOwnerships?: boolean | Account$parentOwnershipsArgs<ExtArgs>
     childOwnerships?: boolean | Account$childOwnershipsArgs<ExtArgs>
+    portfolioMembers?: boolean | Account$portfolioMembersArgs<ExtArgs>
+    portfolioRoles?: boolean | Account$portfolioRolesArgs<ExtArgs>
     _count?: boolean | AccountCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AccountIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -4030,14 +3877,14 @@ export namespace Prisma {
       verifications: Prisma.$VerificationPayload<ExtArgs>[]
       sentRequests: Prisma.$RequestPayload<ExtArgs>[]
       receivedRequests: Prisma.$RequestPayload<ExtArgs>[]
-      externalAdminTeams: Prisma.$AuthTeamExternalPayload<ExtArgs>[]
-      externalMemberTeams: Prisma.$AuthTeamExternalPayload<ExtArgs>[]
       recipientPermissions: Prisma.$AuthPermissionRecipientPayload<ExtArgs>[]
       ownerPermissions: Prisma.$AuthPermissionRecipientPayload<ExtArgs>[]
       individualProfile: Prisma.$AccountTypeIndividualPayload<ExtArgs> | null
       brandProfile: Prisma.$AccountTypeBrandPayload<ExtArgs> | null
       parentOwnerships: Prisma.$AccountOwnershipPayload<ExtArgs>[]
       childOwnerships: Prisma.$AccountOwnershipPayload<ExtArgs>[]
+      portfolioMembers: Prisma.$PortfolioMemberPayload<ExtArgs>[]
+      portfolioRoles: Prisma.$PortfolioRolePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4456,14 +4303,14 @@ export namespace Prisma {
     verifications<T extends Account$verificationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$verificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VerificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sentRequests<T extends Account$sentRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Account$sentRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     receivedRequests<T extends Account$receivedRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Account$receivedRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    externalAdminTeams<T extends Account$externalAdminTeamsArgs<ExtArgs> = {}>(args?: Subset<T, Account$externalAdminTeamsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthTeamExternalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    externalMemberTeams<T extends Account$externalMemberTeamsArgs<ExtArgs> = {}>(args?: Subset<T, Account$externalMemberTeamsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthTeamExternalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     recipientPermissions<T extends Account$recipientPermissionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$recipientPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthPermissionRecipientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ownerPermissions<T extends Account$ownerPermissionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$ownerPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthPermissionRecipientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     individualProfile<T extends Account$individualProfileArgs<ExtArgs> = {}>(args?: Subset<T, Account$individualProfileArgs<ExtArgs>>): Prisma__AccountTypeIndividualClient<$Result.GetResult<Prisma.$AccountTypeIndividualPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     brandProfile<T extends Account$brandProfileArgs<ExtArgs> = {}>(args?: Subset<T, Account$brandProfileArgs<ExtArgs>>): Prisma__AccountTypeBrandClient<$Result.GetResult<Prisma.$AccountTypeBrandPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     parentOwnerships<T extends Account$parentOwnershipsArgs<ExtArgs> = {}>(args?: Subset<T, Account$parentOwnershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountOwnershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     childOwnerships<T extends Account$childOwnershipsArgs<ExtArgs> = {}>(args?: Subset<T, Account$childOwnershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountOwnershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    portfolioMembers<T extends Account$portfolioMembersArgs<ExtArgs> = {}>(args?: Subset<T, Account$portfolioMembersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PortfolioMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    portfolioRoles<T extends Account$portfolioRolesArgs<ExtArgs> = {}>(args?: Subset<T, Account$portfolioRolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PortfolioRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5225,54 +5072,6 @@ export namespace Prisma {
   }
 
   /**
-   * Account.externalAdminTeams
-   */
-  export type Account$externalAdminTeamsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthTeamExternal
-     */
-    select?: AuthTeamExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthTeamExternal
-     */
-    omit?: AuthTeamExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthTeamExternalInclude<ExtArgs> | null
-    where?: AuthTeamExternalWhereInput
-    orderBy?: AuthTeamExternalOrderByWithRelationInput | AuthTeamExternalOrderByWithRelationInput[]
-    cursor?: AuthTeamExternalWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AuthTeamExternalScalarFieldEnum | AuthTeamExternalScalarFieldEnum[]
-  }
-
-  /**
-   * Account.externalMemberTeams
-   */
-  export type Account$externalMemberTeamsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthTeamExternal
-     */
-    select?: AuthTeamExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthTeamExternal
-     */
-    omit?: AuthTeamExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthTeamExternalInclude<ExtArgs> | null
-    where?: AuthTeamExternalWhereInput
-    orderBy?: AuthTeamExternalOrderByWithRelationInput | AuthTeamExternalOrderByWithRelationInput[]
-    cursor?: AuthTeamExternalWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AuthTeamExternalScalarFieldEnum | AuthTeamExternalScalarFieldEnum[]
-  }
-
-  /**
    * Account.recipientPermissions
    */
   export type Account$recipientPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5404,6 +5203,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AccountOwnershipScalarFieldEnum | AccountOwnershipScalarFieldEnum[]
+  }
+
+  /**
+   * Account.portfolioMembers
+   */
+  export type Account$portfolioMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PortfolioMember
+     */
+    select?: PortfolioMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PortfolioMember
+     */
+    omit?: PortfolioMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PortfolioMemberInclude<ExtArgs> | null
+    where?: PortfolioMemberWhereInput
+    orderBy?: PortfolioMemberOrderByWithRelationInput | PortfolioMemberOrderByWithRelationInput[]
+    cursor?: PortfolioMemberWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PortfolioMemberScalarFieldEnum | PortfolioMemberScalarFieldEnum[]
+  }
+
+  /**
+   * Account.portfolioRoles
+   */
+  export type Account$portfolioRolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PortfolioRole
+     */
+    select?: PortfolioRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PortfolioRole
+     */
+    omit?: PortfolioRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PortfolioRoleInclude<ExtArgs> | null
+    where?: PortfolioRoleWhereInput
+    orderBy?: PortfolioRoleOrderByWithRelationInput | PortfolioRoleOrderByWithRelationInput[]
+    cursor?: PortfolioRoleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PortfolioRoleScalarFieldEnum | PortfolioRoleScalarFieldEnum[]
   }
 
   /**
@@ -23148,7 +22995,6 @@ export namespace Prisma {
     connections?: boolean | Application$connectionsArgs<ExtArgs>
     appAuthentications?: boolean | Application$appAuthenticationsArgs<ExtArgs>
     appSessions?: boolean | Application$appSessionsArgs<ExtArgs>
-    authTeamsExternal?: boolean | Application$authTeamsExternalArgs<ExtArgs>
     authPermissionRecipients?: boolean | Application$authPermissionRecipientsArgs<ExtArgs>
     _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
@@ -23212,7 +23058,6 @@ export namespace Prisma {
     connections?: boolean | Application$connectionsArgs<ExtArgs>
     appAuthentications?: boolean | Application$appAuthenticationsArgs<ExtArgs>
     appSessions?: boolean | Application$appSessionsArgs<ExtArgs>
-    authTeamsExternal?: boolean | Application$authTeamsExternalArgs<ExtArgs>
     authPermissionRecipients?: boolean | Application$authPermissionRecipientsArgs<ExtArgs>
     _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -23230,7 +23075,6 @@ export namespace Prisma {
       connections: Prisma.$UserAppConnectionPayload<ExtArgs>[]
       appAuthentications: Prisma.$AppAuthenticationPayload<ExtArgs>[]
       appSessions: Prisma.$AppSessionPayload<ExtArgs>[]
-      authTeamsExternal: Prisma.$AuthTeamExternalPayload<ExtArgs>[]
       authPermissionRecipients: Prisma.$AuthPermissionRecipientPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -23646,7 +23490,6 @@ export namespace Prisma {
     connections<T extends Application$connectionsArgs<ExtArgs> = {}>(args?: Subset<T, Application$connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAppConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     appAuthentications<T extends Application$appAuthenticationsArgs<ExtArgs> = {}>(args?: Subset<T, Application$appAuthenticationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppAuthenticationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     appSessions<T extends Application$appSessionsArgs<ExtArgs> = {}>(args?: Subset<T, Application$appSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    authTeamsExternal<T extends Application$authTeamsExternalArgs<ExtArgs> = {}>(args?: Subset<T, Application$authTeamsExternalArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthTeamExternalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     authPermissionRecipients<T extends Application$authPermissionRecipientsArgs<ExtArgs> = {}>(args?: Subset<T, Application$authPermissionRecipientsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthPermissionRecipientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -24178,30 +24021,6 @@ export namespace Prisma {
   }
 
   /**
-   * Application.authTeamsExternal
-   */
-  export type Application$authTeamsExternalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthTeamExternal
-     */
-    select?: AuthTeamExternalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthTeamExternal
-     */
-    omit?: AuthTeamExternalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthTeamExternalInclude<ExtArgs> | null
-    where?: AuthTeamExternalWhereInput
-    orderBy?: AuthTeamExternalOrderByWithRelationInput | AuthTeamExternalOrderByWithRelationInput[]
-    cursor?: AuthTeamExternalWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AuthTeamExternalScalarFieldEnum | AuthTeamExternalScalarFieldEnum[]
-  }
-
-  /**
    * Application.authPermissionRecipients
    */
   export type Application$authPermissionRecipientsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -24245,325 +24064,340 @@ export namespace Prisma {
 
 
   /**
-   * Model AssetGroupInfo
+   * Model Portfolio
    */
 
-  export type AggregateAssetGroupInfo = {
-    _count: AssetGroupInfoCountAggregateOutputType | null
-    _min: AssetGroupInfoMinAggregateOutputType | null
-    _max: AssetGroupInfoMaxAggregateOutputType | null
+  export type AggregatePortfolio = {
+    _count: PortfolioCountAggregateOutputType | null
+    _min: PortfolioMinAggregateOutputType | null
+    _max: PortfolioMaxAggregateOutputType | null
   }
 
-  export type AssetGroupInfoMinAggregateOutputType = {
+  export type PortfolioMinAggregateOutputType = {
     id: string | null
     name: string | null
-    details: string | null
+    description: string | null
+    dateCreated: Date | null
   }
 
-  export type AssetGroupInfoMaxAggregateOutputType = {
+  export type PortfolioMaxAggregateOutputType = {
     id: string | null
     name: string | null
-    details: string | null
+    description: string | null
+    dateCreated: Date | null
   }
 
-  export type AssetGroupInfoCountAggregateOutputType = {
+  export type PortfolioCountAggregateOutputType = {
     id: number
     name: number
-    details: number
+    description: number
+    dateCreated: number
     _all: number
   }
 
 
-  export type AssetGroupInfoMinAggregateInputType = {
+  export type PortfolioMinAggregateInputType = {
     id?: true
     name?: true
-    details?: true
+    description?: true
+    dateCreated?: true
   }
 
-  export type AssetGroupInfoMaxAggregateInputType = {
+  export type PortfolioMaxAggregateInputType = {
     id?: true
     name?: true
-    details?: true
+    description?: true
+    dateCreated?: true
   }
 
-  export type AssetGroupInfoCountAggregateInputType = {
+  export type PortfolioCountAggregateInputType = {
     id?: true
     name?: true
-    details?: true
+    description?: true
+    dateCreated?: true
     _all?: true
   }
 
-  export type AssetGroupInfoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which AssetGroupInfo to aggregate.
+     * Filter which Portfolio to aggregate.
      */
-    where?: AssetGroupInfoWhereInput
+    where?: PortfolioWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of AssetGroupInfos to fetch.
+     * Determine the order of Portfolios to fetch.
      */
-    orderBy?: AssetGroupInfoOrderByWithRelationInput | AssetGroupInfoOrderByWithRelationInput[]
+    orderBy?: PortfolioOrderByWithRelationInput | PortfolioOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: AssetGroupInfoWhereUniqueInput
+    cursor?: PortfolioWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` AssetGroupInfos from the position of the cursor.
+     * Take `±n` Portfolios from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` AssetGroupInfos.
+     * Skip the first `n` Portfolios.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned AssetGroupInfos
+     * Count returned Portfolios
     **/
-    _count?: true | AssetGroupInfoCountAggregateInputType
+    _count?: true | PortfolioCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: AssetGroupInfoMinAggregateInputType
+    _min?: PortfolioMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: AssetGroupInfoMaxAggregateInputType
+    _max?: PortfolioMaxAggregateInputType
   }
 
-  export type GetAssetGroupInfoAggregateType<T extends AssetGroupInfoAggregateArgs> = {
-        [P in keyof T & keyof AggregateAssetGroupInfo]: P extends '_count' | 'count'
+  export type GetPortfolioAggregateType<T extends PortfolioAggregateArgs> = {
+        [P in keyof T & keyof AggregatePortfolio]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateAssetGroupInfo[P]>
-      : GetScalarType<T[P], AggregateAssetGroupInfo[P]>
+        : GetScalarType<T[P], AggregatePortfolio[P]>
+      : GetScalarType<T[P], AggregatePortfolio[P]>
   }
 
 
 
 
-  export type AssetGroupInfoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AssetGroupInfoWhereInput
-    orderBy?: AssetGroupInfoOrderByWithAggregationInput | AssetGroupInfoOrderByWithAggregationInput[]
-    by: AssetGroupInfoScalarFieldEnum[] | AssetGroupInfoScalarFieldEnum
-    having?: AssetGroupInfoScalarWhereWithAggregatesInput
+  export type PortfolioGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PortfolioWhereInput
+    orderBy?: PortfolioOrderByWithAggregationInput | PortfolioOrderByWithAggregationInput[]
+    by: PortfolioScalarFieldEnum[] | PortfolioScalarFieldEnum
+    having?: PortfolioScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: AssetGroupInfoCountAggregateInputType | true
-    _min?: AssetGroupInfoMinAggregateInputType
-    _max?: AssetGroupInfoMaxAggregateInputType
+    _count?: PortfolioCountAggregateInputType | true
+    _min?: PortfolioMinAggregateInputType
+    _max?: PortfolioMaxAggregateInputType
   }
 
-  export type AssetGroupInfoGroupByOutputType = {
+  export type PortfolioGroupByOutputType = {
     id: string
     name: string
-    details: string | null
-    _count: AssetGroupInfoCountAggregateOutputType | null
-    _min: AssetGroupInfoMinAggregateOutputType | null
-    _max: AssetGroupInfoMaxAggregateOutputType | null
+    description: string | null
+    dateCreated: Date
+    _count: PortfolioCountAggregateOutputType | null
+    _min: PortfolioMinAggregateOutputType | null
+    _max: PortfolioMaxAggregateOutputType | null
   }
 
-  type GetAssetGroupInfoGroupByPayload<T extends AssetGroupInfoGroupByArgs> = Prisma.PrismaPromise<
+  type GetPortfolioGroupByPayload<T extends PortfolioGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<AssetGroupInfoGroupByOutputType, T['by']> &
+      PickEnumerable<PortfolioGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof AssetGroupInfoGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof PortfolioGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], AssetGroupInfoGroupByOutputType[P]>
-            : GetScalarType<T[P], AssetGroupInfoGroupByOutputType[P]>
+              : GetScalarType<T[P], PortfolioGroupByOutputType[P]>
+            : GetScalarType<T[P], PortfolioGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type AssetGroupInfoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type PortfolioSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    details?: boolean
-    members?: boolean | AssetGroupInfo$membersArgs<ExtArgs>
-    assets?: boolean | AssetGroupInfo$assetsArgs<ExtArgs>
-    _count?: boolean | AssetGroupInfoCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["assetGroupInfo"]>
+    description?: boolean
+    dateCreated?: boolean
+    assets?: boolean | Portfolio$assetsArgs<ExtArgs>
+    members?: boolean | Portfolio$membersArgs<ExtArgs>
+    roles?: boolean | Portfolio$rolesArgs<ExtArgs>
+    _count?: boolean | PortfolioCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["portfolio"]>
 
-  export type AssetGroupInfoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type PortfolioSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    details?: boolean
-  }, ExtArgs["result"]["assetGroupInfo"]>
+    description?: boolean
+    dateCreated?: boolean
+  }, ExtArgs["result"]["portfolio"]>
 
-  export type AssetGroupInfoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type PortfolioSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    details?: boolean
-  }, ExtArgs["result"]["assetGroupInfo"]>
+    description?: boolean
+    dateCreated?: boolean
+  }, ExtArgs["result"]["portfolio"]>
 
-  export type AssetGroupInfoSelectScalar = {
+  export type PortfolioSelectScalar = {
     id?: boolean
     name?: boolean
-    details?: boolean
+    description?: boolean
+    dateCreated?: boolean
   }
 
-  export type AssetGroupInfoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "details", ExtArgs["result"]["assetGroupInfo"]>
-  export type AssetGroupInfoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    members?: boolean | AssetGroupInfo$membersArgs<ExtArgs>
-    assets?: boolean | AssetGroupInfo$assetsArgs<ExtArgs>
-    _count?: boolean | AssetGroupInfoCountOutputTypeDefaultArgs<ExtArgs>
+  export type PortfolioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "dateCreated", ExtArgs["result"]["portfolio"]>
+  export type PortfolioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    assets?: boolean | Portfolio$assetsArgs<ExtArgs>
+    members?: boolean | Portfolio$membersArgs<ExtArgs>
+    roles?: boolean | Portfolio$rolesArgs<ExtArgs>
+    _count?: boolean | PortfolioCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type AssetGroupInfoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type AssetGroupInfoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type PortfolioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type PortfolioIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
-  export type $AssetGroupInfoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "AssetGroupInfo"
+  export type $PortfolioPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Portfolio"
     objects: {
-      members: Prisma.$AssetGroupMemberPayload<ExtArgs>[]
-      assets: Prisma.$AssetPayload<ExtArgs>[]
+      assets: Prisma.$PortfolioAssetPayload<ExtArgs>[]
+      members: Prisma.$PortfolioMemberPayload<ExtArgs>[]
+      roles: Prisma.$PortfolioRolePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
-      details: string | null
-    }, ExtArgs["result"]["assetGroupInfo"]>
+      description: string | null
+      dateCreated: Date
+    }, ExtArgs["result"]["portfolio"]>
     composites: {}
   }
 
-  type AssetGroupInfoGetPayload<S extends boolean | null | undefined | AssetGroupInfoDefaultArgs> = $Result.GetResult<Prisma.$AssetGroupInfoPayload, S>
+  type PortfolioGetPayload<S extends boolean | null | undefined | PortfolioDefaultArgs> = $Result.GetResult<Prisma.$PortfolioPayload, S>
 
-  type AssetGroupInfoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<AssetGroupInfoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: AssetGroupInfoCountAggregateInputType | true
+  type PortfolioCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PortfolioFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PortfolioCountAggregateInputType | true
     }
 
-  export interface AssetGroupInfoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AssetGroupInfo'], meta: { name: 'AssetGroupInfo' } }
+  export interface PortfolioDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Portfolio'], meta: { name: 'Portfolio' } }
     /**
-     * Find zero or one AssetGroupInfo that matches the filter.
-     * @param {AssetGroupInfoFindUniqueArgs} args - Arguments to find a AssetGroupInfo
+     * Find zero or one Portfolio that matches the filter.
+     * @param {PortfolioFindUniqueArgs} args - Arguments to find a Portfolio
      * @example
-     * // Get one AssetGroupInfo
-     * const assetGroupInfo = await prisma.assetGroupInfo.findUnique({
+     * // Get one Portfolio
+     * const portfolio = await prisma.portfolio.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends AssetGroupInfoFindUniqueArgs>(args: SelectSubset<T, AssetGroupInfoFindUniqueArgs<ExtArgs>>): Prisma__AssetGroupInfoClient<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends PortfolioFindUniqueArgs>(args: SelectSubset<T, PortfolioFindUniqueArgs<ExtArgs>>): Prisma__PortfolioClient<$Result.GetResult<Prisma.$PortfolioPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one AssetGroupInfo that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Portfolio that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {AssetGroupInfoFindUniqueOrThrowArgs} args - Arguments to find a AssetGroupInfo
+     * @param {PortfolioFindUniqueOrThrowArgs} args - Arguments to find a Portfolio
      * @example
-     * // Get one AssetGroupInfo
-     * const assetGroupInfo = await prisma.assetGroupInfo.findUniqueOrThrow({
+     * // Get one Portfolio
+     * const portfolio = await prisma.portfolio.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends AssetGroupInfoFindUniqueOrThrowArgs>(args: SelectSubset<T, AssetGroupInfoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AssetGroupInfoClient<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends PortfolioFindUniqueOrThrowArgs>(args: SelectSubset<T, PortfolioFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PortfolioClient<$Result.GetResult<Prisma.$PortfolioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first AssetGroupInfo that matches the filter.
+     * Find the first Portfolio that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetGroupInfoFindFirstArgs} args - Arguments to find a AssetGroupInfo
+     * @param {PortfolioFindFirstArgs} args - Arguments to find a Portfolio
      * @example
-     * // Get one AssetGroupInfo
-     * const assetGroupInfo = await prisma.assetGroupInfo.findFirst({
+     * // Get one Portfolio
+     * const portfolio = await prisma.portfolio.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends AssetGroupInfoFindFirstArgs>(args?: SelectSubset<T, AssetGroupInfoFindFirstArgs<ExtArgs>>): Prisma__AssetGroupInfoClient<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends PortfolioFindFirstArgs>(args?: SelectSubset<T, PortfolioFindFirstArgs<ExtArgs>>): Prisma__PortfolioClient<$Result.GetResult<Prisma.$PortfolioPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first AssetGroupInfo that matches the filter or
+     * Find the first Portfolio that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetGroupInfoFindFirstOrThrowArgs} args - Arguments to find a AssetGroupInfo
+     * @param {PortfolioFindFirstOrThrowArgs} args - Arguments to find a Portfolio
      * @example
-     * // Get one AssetGroupInfo
-     * const assetGroupInfo = await prisma.assetGroupInfo.findFirstOrThrow({
+     * // Get one Portfolio
+     * const portfolio = await prisma.portfolio.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends AssetGroupInfoFindFirstOrThrowArgs>(args?: SelectSubset<T, AssetGroupInfoFindFirstOrThrowArgs<ExtArgs>>): Prisma__AssetGroupInfoClient<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends PortfolioFindFirstOrThrowArgs>(args?: SelectSubset<T, PortfolioFindFirstOrThrowArgs<ExtArgs>>): Prisma__PortfolioClient<$Result.GetResult<Prisma.$PortfolioPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more AssetGroupInfos that matches the filter.
+     * Find zero or more Portfolios that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetGroupInfoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {PortfolioFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all AssetGroupInfos
-     * const assetGroupInfos = await prisma.assetGroupInfo.findMany()
+     * // Get all Portfolios
+     * const portfolios = await prisma.portfolio.findMany()
      * 
-     * // Get first 10 AssetGroupInfos
-     * const assetGroupInfos = await prisma.assetGroupInfo.findMany({ take: 10 })
+     * // Get first 10 Portfolios
+     * const portfolios = await prisma.portfolio.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const assetGroupInfoWithIdOnly = await prisma.assetGroupInfo.findMany({ select: { id: true } })
+     * const portfolioWithIdOnly = await prisma.portfolio.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends AssetGroupInfoFindManyArgs>(args?: SelectSubset<T, AssetGroupInfoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends PortfolioFindManyArgs>(args?: SelectSubset<T, PortfolioFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PortfolioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a AssetGroupInfo.
-     * @param {AssetGroupInfoCreateArgs} args - Arguments to create a AssetGroupInfo.
+     * Create a Portfolio.
+     * @param {PortfolioCreateArgs} args - Arguments to create a Portfolio.
      * @example
-     * // Create one AssetGroupInfo
-     * const AssetGroupInfo = await prisma.assetGroupInfo.create({
+     * // Create one Portfolio
+     * const Portfolio = await prisma.portfolio.create({
      *   data: {
-     *     // ... data to create a AssetGroupInfo
+     *     // ... data to create a Portfolio
      *   }
      * })
      * 
      */
-    create<T extends AssetGroupInfoCreateArgs>(args: SelectSubset<T, AssetGroupInfoCreateArgs<ExtArgs>>): Prisma__AssetGroupInfoClient<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends PortfolioCreateArgs>(args: SelectSubset<T, PortfolioCreateArgs<ExtArgs>>): Prisma__PortfolioClient<$Result.GetResult<Prisma.$PortfolioPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many AssetGroupInfos.
-     * @param {AssetGroupInfoCreateManyArgs} args - Arguments to create many AssetGroupInfos.
+     * Create many Portfolios.
+     * @param {PortfolioCreateManyArgs} args - Arguments to create many Portfolios.
      * @example
-     * // Create many AssetGroupInfos
-     * const assetGroupInfo = await prisma.assetGroupInfo.createMany({
+     * // Create many Portfolios
+     * const portfolio = await prisma.portfolio.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends AssetGroupInfoCreateManyArgs>(args?: SelectSubset<T, AssetGroupInfoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends PortfolioCreateManyArgs>(args?: SelectSubset<T, PortfolioCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many AssetGroupInfos and returns the data saved in the database.
-     * @param {AssetGroupInfoCreateManyAndReturnArgs} args - Arguments to create many AssetGroupInfos.
+     * Create many Portfolios and returns the data saved in the database.
+     * @param {PortfolioCreateManyAndReturnArgs} args - Arguments to create many Portfolios.
      * @example
-     * // Create many AssetGroupInfos
-     * const assetGroupInfo = await prisma.assetGroupInfo.createManyAndReturn({
+     * // Create many Portfolios
+     * const portfolio = await prisma.portfolio.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many AssetGroupInfos and only return the `id`
-     * const assetGroupInfoWithIdOnly = await prisma.assetGroupInfo.createManyAndReturn({
+     * // Create many Portfolios and only return the `id`
+     * const portfolioWithIdOnly = await prisma.portfolio.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -24573,28 +24407,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends AssetGroupInfoCreateManyAndReturnArgs>(args?: SelectSubset<T, AssetGroupInfoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends PortfolioCreateManyAndReturnArgs>(args?: SelectSubset<T, PortfolioCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PortfolioPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a AssetGroupInfo.
-     * @param {AssetGroupInfoDeleteArgs} args - Arguments to delete one AssetGroupInfo.
+     * Delete a Portfolio.
+     * @param {PortfolioDeleteArgs} args - Arguments to delete one Portfolio.
      * @example
-     * // Delete one AssetGroupInfo
-     * const AssetGroupInfo = await prisma.assetGroupInfo.delete({
+     * // Delete one Portfolio
+     * const Portfolio = await prisma.portfolio.delete({
      *   where: {
-     *     // ... filter to delete one AssetGroupInfo
+     *     // ... filter to delete one Portfolio
      *   }
      * })
      * 
      */
-    delete<T extends AssetGroupInfoDeleteArgs>(args: SelectSubset<T, AssetGroupInfoDeleteArgs<ExtArgs>>): Prisma__AssetGroupInfoClient<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends PortfolioDeleteArgs>(args: SelectSubset<T, PortfolioDeleteArgs<ExtArgs>>): Prisma__PortfolioClient<$Result.GetResult<Prisma.$PortfolioPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one AssetGroupInfo.
-     * @param {AssetGroupInfoUpdateArgs} args - Arguments to update one AssetGroupInfo.
+     * Update one Portfolio.
+     * @param {PortfolioUpdateArgs} args - Arguments to update one Portfolio.
      * @example
-     * // Update one AssetGroupInfo
-     * const assetGroupInfo = await prisma.assetGroupInfo.update({
+     * // Update one Portfolio
+     * const portfolio = await prisma.portfolio.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -24604,30 +24438,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends AssetGroupInfoUpdateArgs>(args: SelectSubset<T, AssetGroupInfoUpdateArgs<ExtArgs>>): Prisma__AssetGroupInfoClient<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends PortfolioUpdateArgs>(args: SelectSubset<T, PortfolioUpdateArgs<ExtArgs>>): Prisma__PortfolioClient<$Result.GetResult<Prisma.$PortfolioPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more AssetGroupInfos.
-     * @param {AssetGroupInfoDeleteManyArgs} args - Arguments to filter AssetGroupInfos to delete.
+     * Delete zero or more Portfolios.
+     * @param {PortfolioDeleteManyArgs} args - Arguments to filter Portfolios to delete.
      * @example
-     * // Delete a few AssetGroupInfos
-     * const { count } = await prisma.assetGroupInfo.deleteMany({
+     * // Delete a few Portfolios
+     * const { count } = await prisma.portfolio.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends AssetGroupInfoDeleteManyArgs>(args?: SelectSubset<T, AssetGroupInfoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends PortfolioDeleteManyArgs>(args?: SelectSubset<T, PortfolioDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more AssetGroupInfos.
+     * Update zero or more Portfolios.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetGroupInfoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {PortfolioUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many AssetGroupInfos
-     * const assetGroupInfo = await prisma.assetGroupInfo.updateMany({
+     * // Update many Portfolios
+     * const portfolio = await prisma.portfolio.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -24637,14 +24471,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends AssetGroupInfoUpdateManyArgs>(args: SelectSubset<T, AssetGroupInfoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends PortfolioUpdateManyArgs>(args: SelectSubset<T, PortfolioUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more AssetGroupInfos and returns the data updated in the database.
-     * @param {AssetGroupInfoUpdateManyAndReturnArgs} args - Arguments to update many AssetGroupInfos.
+     * Update zero or more Portfolios and returns the data updated in the database.
+     * @param {PortfolioUpdateManyAndReturnArgs} args - Arguments to update many Portfolios.
      * @example
-     * // Update many AssetGroupInfos
-     * const assetGroupInfo = await prisma.assetGroupInfo.updateManyAndReturn({
+     * // Update many Portfolios
+     * const portfolio = await prisma.portfolio.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -24653,8 +24487,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more AssetGroupInfos and only return the `id`
-     * const assetGroupInfoWithIdOnly = await prisma.assetGroupInfo.updateManyAndReturn({
+     * // Update zero or more Portfolios and only return the `id`
+     * const portfolioWithIdOnly = await prisma.portfolio.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -24667,56 +24501,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends AssetGroupInfoUpdateManyAndReturnArgs>(args: SelectSubset<T, AssetGroupInfoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends PortfolioUpdateManyAndReturnArgs>(args: SelectSubset<T, PortfolioUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PortfolioPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one AssetGroupInfo.
-     * @param {AssetGroupInfoUpsertArgs} args - Arguments to update or create a AssetGroupInfo.
+     * Create or update one Portfolio.
+     * @param {PortfolioUpsertArgs} args - Arguments to update or create a Portfolio.
      * @example
-     * // Update or create a AssetGroupInfo
-     * const assetGroupInfo = await prisma.assetGroupInfo.upsert({
+     * // Update or create a Portfolio
+     * const portfolio = await prisma.portfolio.upsert({
      *   create: {
-     *     // ... data to create a AssetGroupInfo
+     *     // ... data to create a Portfolio
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the AssetGroupInfo we want to update
+     *     // ... the filter for the Portfolio we want to update
      *   }
      * })
      */
-    upsert<T extends AssetGroupInfoUpsertArgs>(args: SelectSubset<T, AssetGroupInfoUpsertArgs<ExtArgs>>): Prisma__AssetGroupInfoClient<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends PortfolioUpsertArgs>(args: SelectSubset<T, PortfolioUpsertArgs<ExtArgs>>): Prisma__PortfolioClient<$Result.GetResult<Prisma.$PortfolioPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of AssetGroupInfos.
+     * Count the number of Portfolios.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetGroupInfoCountArgs} args - Arguments to filter AssetGroupInfos to count.
+     * @param {PortfolioCountArgs} args - Arguments to filter Portfolios to count.
      * @example
-     * // Count the number of AssetGroupInfos
-     * const count = await prisma.assetGroupInfo.count({
+     * // Count the number of Portfolios
+     * const count = await prisma.portfolio.count({
      *   where: {
-     *     // ... the filter for the AssetGroupInfos we want to count
+     *     // ... the filter for the Portfolios we want to count
      *   }
      * })
     **/
-    count<T extends AssetGroupInfoCountArgs>(
-      args?: Subset<T, AssetGroupInfoCountArgs>,
+    count<T extends PortfolioCountArgs>(
+      args?: Subset<T, PortfolioCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], AssetGroupInfoCountAggregateOutputType>
+          : GetScalarType<T['select'], PortfolioCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a AssetGroupInfo.
+     * Allows you to perform aggregations operations on a Portfolio.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetGroupInfoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {PortfolioAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -24736,13 +24570,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends AssetGroupInfoAggregateArgs>(args: Subset<T, AssetGroupInfoAggregateArgs>): Prisma.PrismaPromise<GetAssetGroupInfoAggregateType<T>>
+    aggregate<T extends PortfolioAggregateArgs>(args: Subset<T, PortfolioAggregateArgs>): Prisma.PrismaPromise<GetPortfolioAggregateType<T>>
 
     /**
-     * Group by AssetGroupInfo.
+     * Group by Portfolio.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetGroupInfoGroupByArgs} args - Group by arguments.
+     * @param {PortfolioGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -24757,14 +24591,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends AssetGroupInfoGroupByArgs,
+      T extends PortfolioGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: AssetGroupInfoGroupByArgs['orderBy'] }
-        : { orderBy?: AssetGroupInfoGroupByArgs['orderBy'] },
+        ? { orderBy: PortfolioGroupByArgs['orderBy'] }
+        : { orderBy?: PortfolioGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -24813,23 +24647,24 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, AssetGroupInfoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAssetGroupInfoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, PortfolioGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPortfolioGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the AssetGroupInfo model
+   * Fields of the Portfolio model
    */
-  readonly fields: AssetGroupInfoFieldRefs;
+  readonly fields: PortfolioFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for AssetGroupInfo.
+   * The delegate class that acts as a "Promise-like" for Portfolio.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__AssetGroupInfoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__PortfolioClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    members<T extends AssetGroupInfo$membersArgs<ExtArgs> = {}>(args?: Subset<T, AssetGroupInfo$membersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    assets<T extends AssetGroupInfo$assetsArgs<ExtArgs> = {}>(args?: Subset<T, AssetGroupInfo$assetsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    assets<T extends Portfolio$assetsArgs<ExtArgs> = {}>(args?: Subset<T, Portfolio$assetsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PortfolioAssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    members<T extends Portfolio$membersArgs<ExtArgs> = {}>(args?: Subset<T, Portfolio$membersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PortfolioMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    roles<T extends Portfolio$rolesArgs<ExtArgs> = {}>(args?: Subset<T, Portfolio$rolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PortfolioRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -24856,1917 +24691,832 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the AssetGroupInfo model
+   * Fields of the Portfolio model
    */
-  interface AssetGroupInfoFieldRefs {
-    readonly id: FieldRef<"AssetGroupInfo", 'String'>
-    readonly name: FieldRef<"AssetGroupInfo", 'String'>
-    readonly details: FieldRef<"AssetGroupInfo", 'String'>
+  interface PortfolioFieldRefs {
+    readonly id: FieldRef<"Portfolio", 'String'>
+    readonly name: FieldRef<"Portfolio", 'String'>
+    readonly description: FieldRef<"Portfolio", 'String'>
+    readonly dateCreated: FieldRef<"Portfolio", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * AssetGroupInfo findUnique
+   * Portfolio findUnique
    */
-  export type AssetGroupInfoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssetGroupInfo
+     * Select specific fields to fetch from the Portfolio
      */
-    select?: AssetGroupInfoSelect<ExtArgs> | null
+    select?: PortfolioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssetGroupInfo
+     * Omit specific fields from the Portfolio
      */
-    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    omit?: PortfolioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetGroupInfoInclude<ExtArgs> | null
+    include?: PortfolioInclude<ExtArgs> | null
     /**
-     * Filter, which AssetGroupInfo to fetch.
+     * Filter, which Portfolio to fetch.
      */
-    where: AssetGroupInfoWhereUniqueInput
+    where: PortfolioWhereUniqueInput
   }
 
   /**
-   * AssetGroupInfo findUniqueOrThrow
+   * Portfolio findUniqueOrThrow
    */
-  export type AssetGroupInfoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssetGroupInfo
+     * Select specific fields to fetch from the Portfolio
      */
-    select?: AssetGroupInfoSelect<ExtArgs> | null
+    select?: PortfolioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssetGroupInfo
+     * Omit specific fields from the Portfolio
      */
-    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    omit?: PortfolioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetGroupInfoInclude<ExtArgs> | null
+    include?: PortfolioInclude<ExtArgs> | null
     /**
-     * Filter, which AssetGroupInfo to fetch.
+     * Filter, which Portfolio to fetch.
      */
-    where: AssetGroupInfoWhereUniqueInput
+    where: PortfolioWhereUniqueInput
   }
 
   /**
-   * AssetGroupInfo findFirst
+   * Portfolio findFirst
    */
-  export type AssetGroupInfoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssetGroupInfo
+     * Select specific fields to fetch from the Portfolio
      */
-    select?: AssetGroupInfoSelect<ExtArgs> | null
+    select?: PortfolioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssetGroupInfo
+     * Omit specific fields from the Portfolio
      */
-    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    omit?: PortfolioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetGroupInfoInclude<ExtArgs> | null
+    include?: PortfolioInclude<ExtArgs> | null
     /**
-     * Filter, which AssetGroupInfo to fetch.
+     * Filter, which Portfolio to fetch.
      */
-    where?: AssetGroupInfoWhereInput
+    where?: PortfolioWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of AssetGroupInfos to fetch.
+     * Determine the order of Portfolios to fetch.
      */
-    orderBy?: AssetGroupInfoOrderByWithRelationInput | AssetGroupInfoOrderByWithRelationInput[]
+    orderBy?: PortfolioOrderByWithRelationInput | PortfolioOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for AssetGroupInfos.
+     * Sets the position for searching for Portfolios.
      */
-    cursor?: AssetGroupInfoWhereUniqueInput
+    cursor?: PortfolioWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` AssetGroupInfos from the position of the cursor.
+     * Take `±n` Portfolios from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` AssetGroupInfos.
+     * Skip the first `n` Portfolios.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of AssetGroupInfos.
+     * Filter by unique combinations of Portfolios.
      */
-    distinct?: AssetGroupInfoScalarFieldEnum | AssetGroupInfoScalarFieldEnum[]
+    distinct?: PortfolioScalarFieldEnum | PortfolioScalarFieldEnum[]
   }
 
   /**
-   * AssetGroupInfo findFirstOrThrow
+   * Portfolio findFirstOrThrow
    */
-  export type AssetGroupInfoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssetGroupInfo
+     * Select specific fields to fetch from the Portfolio
      */
-    select?: AssetGroupInfoSelect<ExtArgs> | null
+    select?: PortfolioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssetGroupInfo
+     * Omit specific fields from the Portfolio
      */
-    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    omit?: PortfolioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetGroupInfoInclude<ExtArgs> | null
+    include?: PortfolioInclude<ExtArgs> | null
     /**
-     * Filter, which AssetGroupInfo to fetch.
+     * Filter, which Portfolio to fetch.
      */
-    where?: AssetGroupInfoWhereInput
+    where?: PortfolioWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of AssetGroupInfos to fetch.
+     * Determine the order of Portfolios to fetch.
      */
-    orderBy?: AssetGroupInfoOrderByWithRelationInput | AssetGroupInfoOrderByWithRelationInput[]
+    orderBy?: PortfolioOrderByWithRelationInput | PortfolioOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for AssetGroupInfos.
+     * Sets the position for searching for Portfolios.
      */
-    cursor?: AssetGroupInfoWhereUniqueInput
+    cursor?: PortfolioWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` AssetGroupInfos from the position of the cursor.
+     * Take `±n` Portfolios from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` AssetGroupInfos.
+     * Skip the first `n` Portfolios.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of AssetGroupInfos.
+     * Filter by unique combinations of Portfolios.
      */
-    distinct?: AssetGroupInfoScalarFieldEnum | AssetGroupInfoScalarFieldEnum[]
+    distinct?: PortfolioScalarFieldEnum | PortfolioScalarFieldEnum[]
   }
 
   /**
-   * AssetGroupInfo findMany
+   * Portfolio findMany
    */
-  export type AssetGroupInfoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssetGroupInfo
+     * Select specific fields to fetch from the Portfolio
      */
-    select?: AssetGroupInfoSelect<ExtArgs> | null
+    select?: PortfolioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssetGroupInfo
+     * Omit specific fields from the Portfolio
      */
-    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    omit?: PortfolioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetGroupInfoInclude<ExtArgs> | null
+    include?: PortfolioInclude<ExtArgs> | null
     /**
-     * Filter, which AssetGroupInfos to fetch.
+     * Filter, which Portfolios to fetch.
      */
-    where?: AssetGroupInfoWhereInput
+    where?: PortfolioWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of AssetGroupInfos to fetch.
+     * Determine the order of Portfolios to fetch.
      */
-    orderBy?: AssetGroupInfoOrderByWithRelationInput | AssetGroupInfoOrderByWithRelationInput[]
+    orderBy?: PortfolioOrderByWithRelationInput | PortfolioOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing AssetGroupInfos.
+     * Sets the position for listing Portfolios.
      */
-    cursor?: AssetGroupInfoWhereUniqueInput
+    cursor?: PortfolioWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` AssetGroupInfos from the position of the cursor.
+     * Take `±n` Portfolios from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` AssetGroupInfos.
+     * Skip the first `n` Portfolios.
      */
     skip?: number
-    distinct?: AssetGroupInfoScalarFieldEnum | AssetGroupInfoScalarFieldEnum[]
+    distinct?: PortfolioScalarFieldEnum | PortfolioScalarFieldEnum[]
   }
 
   /**
-   * AssetGroupInfo create
+   * Portfolio create
    */
-  export type AssetGroupInfoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssetGroupInfo
+     * Select specific fields to fetch from the Portfolio
      */
-    select?: AssetGroupInfoSelect<ExtArgs> | null
+    select?: PortfolioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssetGroupInfo
+     * Omit specific fields from the Portfolio
      */
-    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    omit?: PortfolioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetGroupInfoInclude<ExtArgs> | null
+    include?: PortfolioInclude<ExtArgs> | null
     /**
-     * The data needed to create a AssetGroupInfo.
+     * The data needed to create a Portfolio.
      */
-    data: XOR<AssetGroupInfoCreateInput, AssetGroupInfoUncheckedCreateInput>
+    data: XOR<PortfolioCreateInput, PortfolioUncheckedCreateInput>
   }
 
   /**
-   * AssetGroupInfo createMany
+   * Portfolio createMany
    */
-  export type AssetGroupInfoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many AssetGroupInfos.
+     * The data used to create many Portfolios.
      */
-    data: AssetGroupInfoCreateManyInput | AssetGroupInfoCreateManyInput[]
+    data: PortfolioCreateManyInput | PortfolioCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * AssetGroupInfo createManyAndReturn
+   * Portfolio createManyAndReturn
    */
-  export type AssetGroupInfoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssetGroupInfo
+     * Select specific fields to fetch from the Portfolio
      */
-    select?: AssetGroupInfoSelectCreateManyAndReturn<ExtArgs> | null
+    select?: PortfolioSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the AssetGroupInfo
+     * Omit specific fields from the Portfolio
      */
-    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    omit?: PortfolioOmit<ExtArgs> | null
     /**
-     * The data used to create many AssetGroupInfos.
+     * The data used to create many Portfolios.
      */
-    data: AssetGroupInfoCreateManyInput | AssetGroupInfoCreateManyInput[]
+    data: PortfolioCreateManyInput | PortfolioCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * AssetGroupInfo update
+   * Portfolio update
    */
-  export type AssetGroupInfoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssetGroupInfo
+     * Select specific fields to fetch from the Portfolio
      */
-    select?: AssetGroupInfoSelect<ExtArgs> | null
+    select?: PortfolioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssetGroupInfo
+     * Omit specific fields from the Portfolio
      */
-    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    omit?: PortfolioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetGroupInfoInclude<ExtArgs> | null
+    include?: PortfolioInclude<ExtArgs> | null
     /**
-     * The data needed to update a AssetGroupInfo.
+     * The data needed to update a Portfolio.
      */
-    data: XOR<AssetGroupInfoUpdateInput, AssetGroupInfoUncheckedUpdateInput>
+    data: XOR<PortfolioUpdateInput, PortfolioUncheckedUpdateInput>
     /**
-     * Choose, which AssetGroupInfo to update.
+     * Choose, which Portfolio to update.
      */
-    where: AssetGroupInfoWhereUniqueInput
+    where: PortfolioWhereUniqueInput
   }
 
   /**
-   * AssetGroupInfo updateMany
+   * Portfolio updateMany
    */
-  export type AssetGroupInfoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update AssetGroupInfos.
+     * The data used to update Portfolios.
      */
-    data: XOR<AssetGroupInfoUpdateManyMutationInput, AssetGroupInfoUncheckedUpdateManyInput>
+    data: XOR<PortfolioUpdateManyMutationInput, PortfolioUncheckedUpdateManyInput>
     /**
-     * Filter which AssetGroupInfos to update
+     * Filter which Portfolios to update
      */
-    where?: AssetGroupInfoWhereInput
+    where?: PortfolioWhereInput
     /**
-     * Limit how many AssetGroupInfos to update.
+     * Limit how many Portfolios to update.
      */
     limit?: number
   }
 
   /**
-   * AssetGroupInfo updateManyAndReturn
+   * Portfolio updateManyAndReturn
    */
-  export type AssetGroupInfoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssetGroupInfo
+     * Select specific fields to fetch from the Portfolio
      */
-    select?: AssetGroupInfoSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: PortfolioSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the AssetGroupInfo
+     * Omit specific fields from the Portfolio
      */
-    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    omit?: PortfolioOmit<ExtArgs> | null
     /**
-     * The data used to update AssetGroupInfos.
+     * The data used to update Portfolios.
      */
-    data: XOR<AssetGroupInfoUpdateManyMutationInput, AssetGroupInfoUncheckedUpdateManyInput>
+    data: XOR<PortfolioUpdateManyMutationInput, PortfolioUncheckedUpdateManyInput>
     /**
-     * Filter which AssetGroupInfos to update
+     * Filter which Portfolios to update
      */
-    where?: AssetGroupInfoWhereInput
+    where?: PortfolioWhereInput
     /**
-     * Limit how many AssetGroupInfos to update.
+     * Limit how many Portfolios to update.
      */
     limit?: number
   }
 
   /**
-   * AssetGroupInfo upsert
+   * Portfolio upsert
    */
-  export type AssetGroupInfoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssetGroupInfo
+     * Select specific fields to fetch from the Portfolio
      */
-    select?: AssetGroupInfoSelect<ExtArgs> | null
+    select?: PortfolioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssetGroupInfo
+     * Omit specific fields from the Portfolio
      */
-    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    omit?: PortfolioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetGroupInfoInclude<ExtArgs> | null
+    include?: PortfolioInclude<ExtArgs> | null
     /**
-     * The filter to search for the AssetGroupInfo to update in case it exists.
+     * The filter to search for the Portfolio to update in case it exists.
      */
-    where: AssetGroupInfoWhereUniqueInput
+    where: PortfolioWhereUniqueInput
     /**
-     * In case the AssetGroupInfo found by the `where` argument doesn't exist, create a new AssetGroupInfo with this data.
+     * In case the Portfolio found by the `where` argument doesn't exist, create a new Portfolio with this data.
      */
-    create: XOR<AssetGroupInfoCreateInput, AssetGroupInfoUncheckedCreateInput>
+    create: XOR<PortfolioCreateInput, PortfolioUncheckedCreateInput>
     /**
-     * In case the AssetGroupInfo was found with the provided `where` argument, update it with this data.
+     * In case the Portfolio was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<AssetGroupInfoUpdateInput, AssetGroupInfoUncheckedUpdateInput>
+    update: XOR<PortfolioUpdateInput, PortfolioUncheckedUpdateInput>
   }
 
   /**
-   * AssetGroupInfo delete
+   * Portfolio delete
    */
-  export type AssetGroupInfoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssetGroupInfo
+     * Select specific fields to fetch from the Portfolio
      */
-    select?: AssetGroupInfoSelect<ExtArgs> | null
+    select?: PortfolioSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssetGroupInfo
+     * Omit specific fields from the Portfolio
      */
-    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    omit?: PortfolioOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetGroupInfoInclude<ExtArgs> | null
+    include?: PortfolioInclude<ExtArgs> | null
     /**
-     * Filter which AssetGroupInfo to delete.
+     * Filter which Portfolio to delete.
      */
-    where: AssetGroupInfoWhereUniqueInput
+    where: PortfolioWhereUniqueInput
   }
 
   /**
-   * AssetGroupInfo deleteMany
+   * Portfolio deleteMany
    */
-  export type AssetGroupInfoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which AssetGroupInfos to delete
+     * Filter which Portfolios to delete
      */
-    where?: AssetGroupInfoWhereInput
+    where?: PortfolioWhereInput
     /**
-     * Limit how many AssetGroupInfos to delete.
+     * Limit how many Portfolios to delete.
      */
     limit?: number
   }
 
   /**
-   * AssetGroupInfo.members
+   * Portfolio.assets
    */
-  export type AssetGroupInfo$membersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Portfolio$assetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssetGroupMember
+     * Select specific fields to fetch from the PortfolioAsset
      */
-    select?: AssetGroupMemberSelect<ExtArgs> | null
+    select?: PortfolioAssetSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssetGroupMember
+     * Omit specific fields from the PortfolioAsset
      */
-    omit?: AssetGroupMemberOmit<ExtArgs> | null
+    omit?: PortfolioAssetOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetGroupMemberInclude<ExtArgs> | null
-    where?: AssetGroupMemberWhereInput
-    orderBy?: AssetGroupMemberOrderByWithRelationInput | AssetGroupMemberOrderByWithRelationInput[]
-    cursor?: AssetGroupMemberWhereUniqueInput
+    include?: PortfolioAssetInclude<ExtArgs> | null
+    where?: PortfolioAssetWhereInput
+    orderBy?: PortfolioAssetOrderByWithRelationInput | PortfolioAssetOrderByWithRelationInput[]
+    cursor?: PortfolioAssetWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: AssetGroupMemberScalarFieldEnum | AssetGroupMemberScalarFieldEnum[]
+    distinct?: PortfolioAssetScalarFieldEnum | PortfolioAssetScalarFieldEnum[]
   }
 
   /**
-   * AssetGroupInfo.assets
+   * Portfolio.members
    */
-  export type AssetGroupInfo$assetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Portfolio$membersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Asset
+     * Select specific fields to fetch from the PortfolioMember
      */
-    select?: AssetSelect<ExtArgs> | null
+    select?: PortfolioMemberSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Asset
+     * Omit specific fields from the PortfolioMember
      */
-    omit?: AssetOmit<ExtArgs> | null
+    omit?: PortfolioMemberOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetInclude<ExtArgs> | null
-    where?: AssetWhereInput
-    orderBy?: AssetOrderByWithRelationInput | AssetOrderByWithRelationInput[]
-    cursor?: AssetWhereUniqueInput
+    include?: PortfolioMemberInclude<ExtArgs> | null
+    where?: PortfolioMemberWhereInput
+    orderBy?: PortfolioMemberOrderByWithRelationInput | PortfolioMemberOrderByWithRelationInput[]
+    cursor?: PortfolioMemberWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: AssetScalarFieldEnum | AssetScalarFieldEnum[]
+    distinct?: PortfolioMemberScalarFieldEnum | PortfolioMemberScalarFieldEnum[]
   }
 
   /**
-   * AssetGroupInfo without action
+   * Portfolio.roles
    */
-  export type AssetGroupInfoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Portfolio$rolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssetGroupInfo
+     * Select specific fields to fetch from the PortfolioRole
      */
-    select?: AssetGroupInfoSelect<ExtArgs> | null
+    select?: PortfolioRoleSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssetGroupInfo
+     * Omit specific fields from the PortfolioRole
      */
-    omit?: AssetGroupInfoOmit<ExtArgs> | null
+    omit?: PortfolioRoleOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetGroupInfoInclude<ExtArgs> | null
+    include?: PortfolioRoleInclude<ExtArgs> | null
+    where?: PortfolioRoleWhereInput
+    orderBy?: PortfolioRoleOrderByWithRelationInput | PortfolioRoleOrderByWithRelationInput[]
+    cursor?: PortfolioRoleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PortfolioRoleScalarFieldEnum | PortfolioRoleScalarFieldEnum[]
+  }
+
+  /**
+   * Portfolio without action
+   */
+  export type PortfolioDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Portfolio
+     */
+    select?: PortfolioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Portfolio
+     */
+    omit?: PortfolioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PortfolioInclude<ExtArgs> | null
   }
 
 
   /**
-   * Model AssetGroupMember
+   * Model PortfolioAsset
    */
 
-  export type AggregateAssetGroupMember = {
-    _count: AssetGroupMemberCountAggregateOutputType | null
-    _min: AssetGroupMemberMinAggregateOutputType | null
-    _max: AssetGroupMemberMaxAggregateOutputType | null
+  export type AggregatePortfolioAsset = {
+    _count: PortfolioAssetCountAggregateOutputType | null
+    _min: PortfolioAssetMinAggregateOutputType | null
+    _max: PortfolioAssetMaxAggregateOutputType | null
   }
 
-  export type AssetGroupMemberMinAggregateOutputType = {
+  export type PortfolioAssetMinAggregateOutputType = {
     id: string | null
-    assetGroup: string | null
-    member: string | null
-    isPermanent: boolean | null
-    validTill: Date | null
-    hasFullPermit: boolean | null
+    portfolioId: string | null
+    assetType: string | null
+    assetId: string | null
   }
 
-  export type AssetGroupMemberMaxAggregateOutputType = {
+  export type PortfolioAssetMaxAggregateOutputType = {
     id: string | null
-    assetGroup: string | null
-    member: string | null
-    isPermanent: boolean | null
-    validTill: Date | null
-    hasFullPermit: boolean | null
+    portfolioId: string | null
+    assetType: string | null
+    assetId: string | null
   }
 
-  export type AssetGroupMemberCountAggregateOutputType = {
+  export type PortfolioAssetCountAggregateOutputType = {
     id: number
-    assetGroup: number
-    member: number
-    isPermanent: number
-    validTill: number
-    hasFullPermit: number
-    _all: number
-  }
-
-
-  export type AssetGroupMemberMinAggregateInputType = {
-    id?: true
-    assetGroup?: true
-    member?: true
-    isPermanent?: true
-    validTill?: true
-    hasFullPermit?: true
-  }
-
-  export type AssetGroupMemberMaxAggregateInputType = {
-    id?: true
-    assetGroup?: true
-    member?: true
-    isPermanent?: true
-    validTill?: true
-    hasFullPermit?: true
-  }
-
-  export type AssetGroupMemberCountAggregateInputType = {
-    id?: true
-    assetGroup?: true
-    member?: true
-    isPermanent?: true
-    validTill?: true
-    hasFullPermit?: true
-    _all?: true
-  }
-
-  export type AssetGroupMemberAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which AssetGroupMember to aggregate.
-     */
-    where?: AssetGroupMemberWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AssetGroupMembers to fetch.
-     */
-    orderBy?: AssetGroupMemberOrderByWithRelationInput | AssetGroupMemberOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: AssetGroupMemberWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AssetGroupMembers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AssetGroupMembers.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned AssetGroupMembers
-    **/
-    _count?: true | AssetGroupMemberCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: AssetGroupMemberMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: AssetGroupMemberMaxAggregateInputType
-  }
-
-  export type GetAssetGroupMemberAggregateType<T extends AssetGroupMemberAggregateArgs> = {
-        [P in keyof T & keyof AggregateAssetGroupMember]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateAssetGroupMember[P]>
-      : GetScalarType<T[P], AggregateAssetGroupMember[P]>
-  }
-
-
-
-
-  export type AssetGroupMemberGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AssetGroupMemberWhereInput
-    orderBy?: AssetGroupMemberOrderByWithAggregationInput | AssetGroupMemberOrderByWithAggregationInput[]
-    by: AssetGroupMemberScalarFieldEnum[] | AssetGroupMemberScalarFieldEnum
-    having?: AssetGroupMemberScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: AssetGroupMemberCountAggregateInputType | true
-    _min?: AssetGroupMemberMinAggregateInputType
-    _max?: AssetGroupMemberMaxAggregateInputType
-  }
-
-  export type AssetGroupMemberGroupByOutputType = {
-    id: string
-    assetGroup: string
-    member: string
-    isPermanent: boolean
-    validTill: Date | null
-    hasFullPermit: boolean
-    _count: AssetGroupMemberCountAggregateOutputType | null
-    _min: AssetGroupMemberMinAggregateOutputType | null
-    _max: AssetGroupMemberMaxAggregateOutputType | null
-  }
-
-  type GetAssetGroupMemberGroupByPayload<T extends AssetGroupMemberGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<AssetGroupMemberGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof AssetGroupMemberGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], AssetGroupMemberGroupByOutputType[P]>
-            : GetScalarType<T[P], AssetGroupMemberGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type AssetGroupMemberSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    assetGroup?: boolean
-    member?: boolean
-    isPermanent?: boolean
-    validTill?: boolean
-    hasFullPermit?: boolean
-    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
-    roles?: boolean | AssetGroupMember$rolesArgs<ExtArgs>
-    _count?: boolean | AssetGroupMemberCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["assetGroupMember"]>
-
-  export type AssetGroupMemberSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    assetGroup?: boolean
-    member?: boolean
-    isPermanent?: boolean
-    validTill?: boolean
-    hasFullPermit?: boolean
-    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["assetGroupMember"]>
-
-  export type AssetGroupMemberSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    assetGroup?: boolean
-    member?: boolean
-    isPermanent?: boolean
-    validTill?: boolean
-    hasFullPermit?: boolean
-    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["assetGroupMember"]>
-
-  export type AssetGroupMemberSelectScalar = {
-    id?: boolean
-    assetGroup?: boolean
-    member?: boolean
-    isPermanent?: boolean
-    validTill?: boolean
-    hasFullPermit?: boolean
-  }
-
-  export type AssetGroupMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "assetGroup" | "member" | "isPermanent" | "validTill" | "hasFullPermit", ExtArgs["result"]["assetGroupMember"]>
-  export type AssetGroupMemberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
-    roles?: boolean | AssetGroupMember$rolesArgs<ExtArgs>
-    _count?: boolean | AssetGroupMemberCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type AssetGroupMemberIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
-  }
-  export type AssetGroupMemberIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
-  }
-
-  export type $AssetGroupMemberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "AssetGroupMember"
-    objects: {
-      assetGroupInfo: Prisma.$AssetGroupInfoPayload<ExtArgs>
-      roles: Prisma.$AssetMemberRolePayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      assetGroup: string
-      member: string
-      isPermanent: boolean
-      validTill: Date | null
-      hasFullPermit: boolean
-    }, ExtArgs["result"]["assetGroupMember"]>
-    composites: {}
-  }
-
-  type AssetGroupMemberGetPayload<S extends boolean | null | undefined | AssetGroupMemberDefaultArgs> = $Result.GetResult<Prisma.$AssetGroupMemberPayload, S>
-
-  type AssetGroupMemberCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<AssetGroupMemberFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: AssetGroupMemberCountAggregateInputType | true
-    }
-
-  export interface AssetGroupMemberDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AssetGroupMember'], meta: { name: 'AssetGroupMember' } }
-    /**
-     * Find zero or one AssetGroupMember that matches the filter.
-     * @param {AssetGroupMemberFindUniqueArgs} args - Arguments to find a AssetGroupMember
-     * @example
-     * // Get one AssetGroupMember
-     * const assetGroupMember = await prisma.assetGroupMember.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends AssetGroupMemberFindUniqueArgs>(args: SelectSubset<T, AssetGroupMemberFindUniqueArgs<ExtArgs>>): Prisma__AssetGroupMemberClient<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one AssetGroupMember that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {AssetGroupMemberFindUniqueOrThrowArgs} args - Arguments to find a AssetGroupMember
-     * @example
-     * // Get one AssetGroupMember
-     * const assetGroupMember = await prisma.assetGroupMember.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends AssetGroupMemberFindUniqueOrThrowArgs>(args: SelectSubset<T, AssetGroupMemberFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AssetGroupMemberClient<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first AssetGroupMember that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetGroupMemberFindFirstArgs} args - Arguments to find a AssetGroupMember
-     * @example
-     * // Get one AssetGroupMember
-     * const assetGroupMember = await prisma.assetGroupMember.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends AssetGroupMemberFindFirstArgs>(args?: SelectSubset<T, AssetGroupMemberFindFirstArgs<ExtArgs>>): Prisma__AssetGroupMemberClient<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first AssetGroupMember that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetGroupMemberFindFirstOrThrowArgs} args - Arguments to find a AssetGroupMember
-     * @example
-     * // Get one AssetGroupMember
-     * const assetGroupMember = await prisma.assetGroupMember.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends AssetGroupMemberFindFirstOrThrowArgs>(args?: SelectSubset<T, AssetGroupMemberFindFirstOrThrowArgs<ExtArgs>>): Prisma__AssetGroupMemberClient<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more AssetGroupMembers that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetGroupMemberFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all AssetGroupMembers
-     * const assetGroupMembers = await prisma.assetGroupMember.findMany()
-     * 
-     * // Get first 10 AssetGroupMembers
-     * const assetGroupMembers = await prisma.assetGroupMember.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const assetGroupMemberWithIdOnly = await prisma.assetGroupMember.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends AssetGroupMemberFindManyArgs>(args?: SelectSubset<T, AssetGroupMemberFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a AssetGroupMember.
-     * @param {AssetGroupMemberCreateArgs} args - Arguments to create a AssetGroupMember.
-     * @example
-     * // Create one AssetGroupMember
-     * const AssetGroupMember = await prisma.assetGroupMember.create({
-     *   data: {
-     *     // ... data to create a AssetGroupMember
-     *   }
-     * })
-     * 
-     */
-    create<T extends AssetGroupMemberCreateArgs>(args: SelectSubset<T, AssetGroupMemberCreateArgs<ExtArgs>>): Prisma__AssetGroupMemberClient<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many AssetGroupMembers.
-     * @param {AssetGroupMemberCreateManyArgs} args - Arguments to create many AssetGroupMembers.
-     * @example
-     * // Create many AssetGroupMembers
-     * const assetGroupMember = await prisma.assetGroupMember.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends AssetGroupMemberCreateManyArgs>(args?: SelectSubset<T, AssetGroupMemberCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many AssetGroupMembers and returns the data saved in the database.
-     * @param {AssetGroupMemberCreateManyAndReturnArgs} args - Arguments to create many AssetGroupMembers.
-     * @example
-     * // Create many AssetGroupMembers
-     * const assetGroupMember = await prisma.assetGroupMember.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many AssetGroupMembers and only return the `id`
-     * const assetGroupMemberWithIdOnly = await prisma.assetGroupMember.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends AssetGroupMemberCreateManyAndReturnArgs>(args?: SelectSubset<T, AssetGroupMemberCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a AssetGroupMember.
-     * @param {AssetGroupMemberDeleteArgs} args - Arguments to delete one AssetGroupMember.
-     * @example
-     * // Delete one AssetGroupMember
-     * const AssetGroupMember = await prisma.assetGroupMember.delete({
-     *   where: {
-     *     // ... filter to delete one AssetGroupMember
-     *   }
-     * })
-     * 
-     */
-    delete<T extends AssetGroupMemberDeleteArgs>(args: SelectSubset<T, AssetGroupMemberDeleteArgs<ExtArgs>>): Prisma__AssetGroupMemberClient<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one AssetGroupMember.
-     * @param {AssetGroupMemberUpdateArgs} args - Arguments to update one AssetGroupMember.
-     * @example
-     * // Update one AssetGroupMember
-     * const assetGroupMember = await prisma.assetGroupMember.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends AssetGroupMemberUpdateArgs>(args: SelectSubset<T, AssetGroupMemberUpdateArgs<ExtArgs>>): Prisma__AssetGroupMemberClient<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more AssetGroupMembers.
-     * @param {AssetGroupMemberDeleteManyArgs} args - Arguments to filter AssetGroupMembers to delete.
-     * @example
-     * // Delete a few AssetGroupMembers
-     * const { count } = await prisma.assetGroupMember.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends AssetGroupMemberDeleteManyArgs>(args?: SelectSubset<T, AssetGroupMemberDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more AssetGroupMembers.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetGroupMemberUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many AssetGroupMembers
-     * const assetGroupMember = await prisma.assetGroupMember.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends AssetGroupMemberUpdateManyArgs>(args: SelectSubset<T, AssetGroupMemberUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more AssetGroupMembers and returns the data updated in the database.
-     * @param {AssetGroupMemberUpdateManyAndReturnArgs} args - Arguments to update many AssetGroupMembers.
-     * @example
-     * // Update many AssetGroupMembers
-     * const assetGroupMember = await prisma.assetGroupMember.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more AssetGroupMembers and only return the `id`
-     * const assetGroupMemberWithIdOnly = await prisma.assetGroupMember.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends AssetGroupMemberUpdateManyAndReturnArgs>(args: SelectSubset<T, AssetGroupMemberUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one AssetGroupMember.
-     * @param {AssetGroupMemberUpsertArgs} args - Arguments to update or create a AssetGroupMember.
-     * @example
-     * // Update or create a AssetGroupMember
-     * const assetGroupMember = await prisma.assetGroupMember.upsert({
-     *   create: {
-     *     // ... data to create a AssetGroupMember
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the AssetGroupMember we want to update
-     *   }
-     * })
-     */
-    upsert<T extends AssetGroupMemberUpsertArgs>(args: SelectSubset<T, AssetGroupMemberUpsertArgs<ExtArgs>>): Prisma__AssetGroupMemberClient<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of AssetGroupMembers.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetGroupMemberCountArgs} args - Arguments to filter AssetGroupMembers to count.
-     * @example
-     * // Count the number of AssetGroupMembers
-     * const count = await prisma.assetGroupMember.count({
-     *   where: {
-     *     // ... the filter for the AssetGroupMembers we want to count
-     *   }
-     * })
-    **/
-    count<T extends AssetGroupMemberCountArgs>(
-      args?: Subset<T, AssetGroupMemberCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], AssetGroupMemberCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a AssetGroupMember.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetGroupMemberAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends AssetGroupMemberAggregateArgs>(args: Subset<T, AssetGroupMemberAggregateArgs>): Prisma.PrismaPromise<GetAssetGroupMemberAggregateType<T>>
-
-    /**
-     * Group by AssetGroupMember.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetGroupMemberGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends AssetGroupMemberGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: AssetGroupMemberGroupByArgs['orderBy'] }
-        : { orderBy?: AssetGroupMemberGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, AssetGroupMemberGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAssetGroupMemberGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the AssetGroupMember model
-   */
-  readonly fields: AssetGroupMemberFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for AssetGroupMember.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__AssetGroupMemberClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    assetGroupInfo<T extends AssetGroupInfoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssetGroupInfoDefaultArgs<ExtArgs>>): Prisma__AssetGroupInfoClient<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    roles<T extends AssetGroupMember$rolesArgs<ExtArgs> = {}>(args?: Subset<T, AssetGroupMember$rolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the AssetGroupMember model
-   */
-  interface AssetGroupMemberFieldRefs {
-    readonly id: FieldRef<"AssetGroupMember", 'String'>
-    readonly assetGroup: FieldRef<"AssetGroupMember", 'String'>
-    readonly member: FieldRef<"AssetGroupMember", 'String'>
-    readonly isPermanent: FieldRef<"AssetGroupMember", 'Boolean'>
-    readonly validTill: FieldRef<"AssetGroupMember", 'DateTime'>
-    readonly hasFullPermit: FieldRef<"AssetGroupMember", 'Boolean'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * AssetGroupMember findUnique
-   */
-  export type AssetGroupMemberFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetGroupMember
-     */
-    select?: AssetGroupMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetGroupMember
-     */
-    omit?: AssetGroupMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetGroupMemberInclude<ExtArgs> | null
-    /**
-     * Filter, which AssetGroupMember to fetch.
-     */
-    where: AssetGroupMemberWhereUniqueInput
-  }
-
-  /**
-   * AssetGroupMember findUniqueOrThrow
-   */
-  export type AssetGroupMemberFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetGroupMember
-     */
-    select?: AssetGroupMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetGroupMember
-     */
-    omit?: AssetGroupMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetGroupMemberInclude<ExtArgs> | null
-    /**
-     * Filter, which AssetGroupMember to fetch.
-     */
-    where: AssetGroupMemberWhereUniqueInput
-  }
-
-  /**
-   * AssetGroupMember findFirst
-   */
-  export type AssetGroupMemberFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetGroupMember
-     */
-    select?: AssetGroupMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetGroupMember
-     */
-    omit?: AssetGroupMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetGroupMemberInclude<ExtArgs> | null
-    /**
-     * Filter, which AssetGroupMember to fetch.
-     */
-    where?: AssetGroupMemberWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AssetGroupMembers to fetch.
-     */
-    orderBy?: AssetGroupMemberOrderByWithRelationInput | AssetGroupMemberOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for AssetGroupMembers.
-     */
-    cursor?: AssetGroupMemberWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AssetGroupMembers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AssetGroupMembers.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of AssetGroupMembers.
-     */
-    distinct?: AssetGroupMemberScalarFieldEnum | AssetGroupMemberScalarFieldEnum[]
-  }
-
-  /**
-   * AssetGroupMember findFirstOrThrow
-   */
-  export type AssetGroupMemberFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetGroupMember
-     */
-    select?: AssetGroupMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetGroupMember
-     */
-    omit?: AssetGroupMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetGroupMemberInclude<ExtArgs> | null
-    /**
-     * Filter, which AssetGroupMember to fetch.
-     */
-    where?: AssetGroupMemberWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AssetGroupMembers to fetch.
-     */
-    orderBy?: AssetGroupMemberOrderByWithRelationInput | AssetGroupMemberOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for AssetGroupMembers.
-     */
-    cursor?: AssetGroupMemberWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AssetGroupMembers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AssetGroupMembers.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of AssetGroupMembers.
-     */
-    distinct?: AssetGroupMemberScalarFieldEnum | AssetGroupMemberScalarFieldEnum[]
-  }
-
-  /**
-   * AssetGroupMember findMany
-   */
-  export type AssetGroupMemberFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetGroupMember
-     */
-    select?: AssetGroupMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetGroupMember
-     */
-    omit?: AssetGroupMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetGroupMemberInclude<ExtArgs> | null
-    /**
-     * Filter, which AssetGroupMembers to fetch.
-     */
-    where?: AssetGroupMemberWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AssetGroupMembers to fetch.
-     */
-    orderBy?: AssetGroupMemberOrderByWithRelationInput | AssetGroupMemberOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing AssetGroupMembers.
-     */
-    cursor?: AssetGroupMemberWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AssetGroupMembers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AssetGroupMembers.
-     */
-    skip?: number
-    distinct?: AssetGroupMemberScalarFieldEnum | AssetGroupMemberScalarFieldEnum[]
-  }
-
-  /**
-   * AssetGroupMember create
-   */
-  export type AssetGroupMemberCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetGroupMember
-     */
-    select?: AssetGroupMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetGroupMember
-     */
-    omit?: AssetGroupMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetGroupMemberInclude<ExtArgs> | null
-    /**
-     * The data needed to create a AssetGroupMember.
-     */
-    data: XOR<AssetGroupMemberCreateInput, AssetGroupMemberUncheckedCreateInput>
-  }
-
-  /**
-   * AssetGroupMember createMany
-   */
-  export type AssetGroupMemberCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many AssetGroupMembers.
-     */
-    data: AssetGroupMemberCreateManyInput | AssetGroupMemberCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * AssetGroupMember createManyAndReturn
-   */
-  export type AssetGroupMemberCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetGroupMember
-     */
-    select?: AssetGroupMemberSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetGroupMember
-     */
-    omit?: AssetGroupMemberOmit<ExtArgs> | null
-    /**
-     * The data used to create many AssetGroupMembers.
-     */
-    data: AssetGroupMemberCreateManyInput | AssetGroupMemberCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetGroupMemberIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * AssetGroupMember update
-   */
-  export type AssetGroupMemberUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetGroupMember
-     */
-    select?: AssetGroupMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetGroupMember
-     */
-    omit?: AssetGroupMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetGroupMemberInclude<ExtArgs> | null
-    /**
-     * The data needed to update a AssetGroupMember.
-     */
-    data: XOR<AssetGroupMemberUpdateInput, AssetGroupMemberUncheckedUpdateInput>
-    /**
-     * Choose, which AssetGroupMember to update.
-     */
-    where: AssetGroupMemberWhereUniqueInput
-  }
-
-  /**
-   * AssetGroupMember updateMany
-   */
-  export type AssetGroupMemberUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update AssetGroupMembers.
-     */
-    data: XOR<AssetGroupMemberUpdateManyMutationInput, AssetGroupMemberUncheckedUpdateManyInput>
-    /**
-     * Filter which AssetGroupMembers to update
-     */
-    where?: AssetGroupMemberWhereInput
-    /**
-     * Limit how many AssetGroupMembers to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * AssetGroupMember updateManyAndReturn
-   */
-  export type AssetGroupMemberUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetGroupMember
-     */
-    select?: AssetGroupMemberSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetGroupMember
-     */
-    omit?: AssetGroupMemberOmit<ExtArgs> | null
-    /**
-     * The data used to update AssetGroupMembers.
-     */
-    data: XOR<AssetGroupMemberUpdateManyMutationInput, AssetGroupMemberUncheckedUpdateManyInput>
-    /**
-     * Filter which AssetGroupMembers to update
-     */
-    where?: AssetGroupMemberWhereInput
-    /**
-     * Limit how many AssetGroupMembers to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetGroupMemberIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * AssetGroupMember upsert
-   */
-  export type AssetGroupMemberUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetGroupMember
-     */
-    select?: AssetGroupMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetGroupMember
-     */
-    omit?: AssetGroupMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetGroupMemberInclude<ExtArgs> | null
-    /**
-     * The filter to search for the AssetGroupMember to update in case it exists.
-     */
-    where: AssetGroupMemberWhereUniqueInput
-    /**
-     * In case the AssetGroupMember found by the `where` argument doesn't exist, create a new AssetGroupMember with this data.
-     */
-    create: XOR<AssetGroupMemberCreateInput, AssetGroupMemberUncheckedCreateInput>
-    /**
-     * In case the AssetGroupMember was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<AssetGroupMemberUpdateInput, AssetGroupMemberUncheckedUpdateInput>
-  }
-
-  /**
-   * AssetGroupMember delete
-   */
-  export type AssetGroupMemberDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetGroupMember
-     */
-    select?: AssetGroupMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetGroupMember
-     */
-    omit?: AssetGroupMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetGroupMemberInclude<ExtArgs> | null
-    /**
-     * Filter which AssetGroupMember to delete.
-     */
-    where: AssetGroupMemberWhereUniqueInput
-  }
-
-  /**
-   * AssetGroupMember deleteMany
-   */
-  export type AssetGroupMemberDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which AssetGroupMembers to delete
-     */
-    where?: AssetGroupMemberWhereInput
-    /**
-     * Limit how many AssetGroupMembers to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * AssetGroupMember.roles
-   */
-  export type AssetGroupMember$rolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetMemberRole
-     */
-    select?: AssetMemberRoleSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetMemberRole
-     */
-    omit?: AssetMemberRoleOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetMemberRoleInclude<ExtArgs> | null
-    where?: AssetMemberRoleWhereInput
-    orderBy?: AssetMemberRoleOrderByWithRelationInput | AssetMemberRoleOrderByWithRelationInput[]
-    cursor?: AssetMemberRoleWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AssetMemberRoleScalarFieldEnum | AssetMemberRoleScalarFieldEnum[]
-  }
-
-  /**
-   * AssetGroupMember without action
-   */
-  export type AssetGroupMemberDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetGroupMember
-     */
-    select?: AssetGroupMemberSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetGroupMember
-     */
-    omit?: AssetGroupMemberOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetGroupMemberInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model Asset
-   */
-
-  export type AggregateAsset = {
-    _count: AssetCountAggregateOutputType | null
-    _min: AssetMinAggregateOutputType | null
-    _max: AssetMaxAggregateOutputType | null
-  }
-
-  export type AssetMinAggregateOutputType = {
-    id: string | null
-    asset: string | null
-    type: string | null
-    assetGroup: string | null
-    details: string | null
-  }
-
-  export type AssetMaxAggregateOutputType = {
-    id: string | null
-    asset: string | null
-    type: string | null
-    assetGroup: string | null
-    details: string | null
-  }
-
-  export type AssetCountAggregateOutputType = {
-    id: number
-    asset: number
-    type: number
-    assetGroup: number
+    portfolioId: number
+    assetType: number
+    assetId: number
     details: number
     _all: number
   }
 
 
-  export type AssetMinAggregateInputType = {
+  export type PortfolioAssetMinAggregateInputType = {
     id?: true
-    asset?: true
-    type?: true
-    assetGroup?: true
-    details?: true
+    portfolioId?: true
+    assetType?: true
+    assetId?: true
   }
 
-  export type AssetMaxAggregateInputType = {
+  export type PortfolioAssetMaxAggregateInputType = {
     id?: true
-    asset?: true
-    type?: true
-    assetGroup?: true
-    details?: true
+    portfolioId?: true
+    assetType?: true
+    assetId?: true
   }
 
-  export type AssetCountAggregateInputType = {
+  export type PortfolioAssetCountAggregateInputType = {
     id?: true
-    asset?: true
-    type?: true
-    assetGroup?: true
+    portfolioId?: true
+    assetType?: true
+    assetId?: true
     details?: true
     _all?: true
   }
 
-  export type AssetAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioAssetAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Asset to aggregate.
+     * Filter which PortfolioAsset to aggregate.
      */
-    where?: AssetWhereInput
+    where?: PortfolioAssetWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Assets to fetch.
+     * Determine the order of PortfolioAssets to fetch.
      */
-    orderBy?: AssetOrderByWithRelationInput | AssetOrderByWithRelationInput[]
+    orderBy?: PortfolioAssetOrderByWithRelationInput | PortfolioAssetOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: AssetWhereUniqueInput
+    cursor?: PortfolioAssetWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Assets from the position of the cursor.
+     * Take `±n` PortfolioAssets from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Assets.
+     * Skip the first `n` PortfolioAssets.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Assets
+     * Count returned PortfolioAssets
     **/
-    _count?: true | AssetCountAggregateInputType
+    _count?: true | PortfolioAssetCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: AssetMinAggregateInputType
+    _min?: PortfolioAssetMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: AssetMaxAggregateInputType
+    _max?: PortfolioAssetMaxAggregateInputType
   }
 
-  export type GetAssetAggregateType<T extends AssetAggregateArgs> = {
-        [P in keyof T & keyof AggregateAsset]: P extends '_count' | 'count'
+  export type GetPortfolioAssetAggregateType<T extends PortfolioAssetAggregateArgs> = {
+        [P in keyof T & keyof AggregatePortfolioAsset]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateAsset[P]>
-      : GetScalarType<T[P], AggregateAsset[P]>
+        : GetScalarType<T[P], AggregatePortfolioAsset[P]>
+      : GetScalarType<T[P], AggregatePortfolioAsset[P]>
   }
 
 
 
 
-  export type AssetGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AssetWhereInput
-    orderBy?: AssetOrderByWithAggregationInput | AssetOrderByWithAggregationInput[]
-    by: AssetScalarFieldEnum[] | AssetScalarFieldEnum
-    having?: AssetScalarWhereWithAggregatesInput
+  export type PortfolioAssetGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PortfolioAssetWhereInput
+    orderBy?: PortfolioAssetOrderByWithAggregationInput | PortfolioAssetOrderByWithAggregationInput[]
+    by: PortfolioAssetScalarFieldEnum[] | PortfolioAssetScalarFieldEnum
+    having?: PortfolioAssetScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: AssetCountAggregateInputType | true
-    _min?: AssetMinAggregateInputType
-    _max?: AssetMaxAggregateInputType
+    _count?: PortfolioAssetCountAggregateInputType | true
+    _min?: PortfolioAssetMinAggregateInputType
+    _max?: PortfolioAssetMaxAggregateInputType
   }
 
-  export type AssetGroupByOutputType = {
+  export type PortfolioAssetGroupByOutputType = {
     id: string
-    asset: string
-    type: string
-    assetGroup: string
-    details: string | null
-    _count: AssetCountAggregateOutputType | null
-    _min: AssetMinAggregateOutputType | null
-    _max: AssetMaxAggregateOutputType | null
+    portfolioId: string
+    assetType: string
+    assetId: string
+    details: JsonValue | null
+    _count: PortfolioAssetCountAggregateOutputType | null
+    _min: PortfolioAssetMinAggregateOutputType | null
+    _max: PortfolioAssetMaxAggregateOutputType | null
   }
 
-  type GetAssetGroupByPayload<T extends AssetGroupByArgs> = Prisma.PrismaPromise<
+  type GetPortfolioAssetGroupByPayload<T extends PortfolioAssetGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<AssetGroupByOutputType, T['by']> &
+      PickEnumerable<PortfolioAssetGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof AssetGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof PortfolioAssetGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], AssetGroupByOutputType[P]>
-            : GetScalarType<T[P], AssetGroupByOutputType[P]>
+              : GetScalarType<T[P], PortfolioAssetGroupByOutputType[P]>
+            : GetScalarType<T[P], PortfolioAssetGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type AssetSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type PortfolioAssetSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    asset?: boolean
-    type?: boolean
-    assetGroup?: boolean
+    portfolioId?: boolean
+    assetType?: boolean
+    assetId?: boolean
     details?: boolean
-    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
-    roles?: boolean | Asset$rolesArgs<ExtArgs>
-    _count?: boolean | AssetCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["asset"]>
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["portfolioAsset"]>
 
-  export type AssetSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type PortfolioAssetSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    asset?: boolean
-    type?: boolean
-    assetGroup?: boolean
+    portfolioId?: boolean
+    assetType?: boolean
+    assetId?: boolean
     details?: boolean
-    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["asset"]>
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["portfolioAsset"]>
 
-  export type AssetSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type PortfolioAssetSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    asset?: boolean
-    type?: boolean
-    assetGroup?: boolean
+    portfolioId?: boolean
+    assetType?: boolean
+    assetId?: boolean
     details?: boolean
-    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["asset"]>
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["portfolioAsset"]>
 
-  export type AssetSelectScalar = {
+  export type PortfolioAssetSelectScalar = {
     id?: boolean
-    asset?: boolean
-    type?: boolean
-    assetGroup?: boolean
+    portfolioId?: boolean
+    assetType?: boolean
+    assetId?: boolean
     details?: boolean
   }
 
-  export type AssetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "asset" | "type" | "assetGroup" | "details", ExtArgs["result"]["asset"]>
-  export type AssetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
-    roles?: boolean | Asset$rolesArgs<ExtArgs>
-    _count?: boolean | AssetCountOutputTypeDefaultArgs<ExtArgs>
+  export type PortfolioAssetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "portfolioId" | "assetType" | "assetId" | "details", ExtArgs["result"]["portfolioAsset"]>
+  export type PortfolioAssetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
   }
-  export type AssetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
+  export type PortfolioAssetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
   }
-  export type AssetIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    assetGroupInfo?: boolean | AssetGroupInfoDefaultArgs<ExtArgs>
+  export type PortfolioAssetIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
   }
 
-  export type $AssetPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Asset"
+  export type $PortfolioAssetPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PortfolioAsset"
     objects: {
-      assetGroupInfo: Prisma.$AssetGroupInfoPayload<ExtArgs>
-      roles: Prisma.$AssetMemberRolePayload<ExtArgs>[]
+      portfolio: Prisma.$PortfolioPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      asset: string
-      type: string
-      assetGroup: string
-      details: string | null
-    }, ExtArgs["result"]["asset"]>
+      portfolioId: string
+      assetType: string
+      assetId: string
+      details: Prisma.JsonValue | null
+    }, ExtArgs["result"]["portfolioAsset"]>
     composites: {}
   }
 
-  type AssetGetPayload<S extends boolean | null | undefined | AssetDefaultArgs> = $Result.GetResult<Prisma.$AssetPayload, S>
+  type PortfolioAssetGetPayload<S extends boolean | null | undefined | PortfolioAssetDefaultArgs> = $Result.GetResult<Prisma.$PortfolioAssetPayload, S>
 
-  type AssetCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<AssetFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: AssetCountAggregateInputType | true
+  type PortfolioAssetCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PortfolioAssetFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PortfolioAssetCountAggregateInputType | true
     }
 
-  export interface AssetDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Asset'], meta: { name: 'Asset' } }
+  export interface PortfolioAssetDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PortfolioAsset'], meta: { name: 'PortfolioAsset' } }
     /**
-     * Find zero or one Asset that matches the filter.
-     * @param {AssetFindUniqueArgs} args - Arguments to find a Asset
+     * Find zero or one PortfolioAsset that matches the filter.
+     * @param {PortfolioAssetFindUniqueArgs} args - Arguments to find a PortfolioAsset
      * @example
-     * // Get one Asset
-     * const asset = await prisma.asset.findUnique({
+     * // Get one PortfolioAsset
+     * const portfolioAsset = await prisma.portfolioAsset.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends AssetFindUniqueArgs>(args: SelectSubset<T, AssetFindUniqueArgs<ExtArgs>>): Prisma__AssetClient<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends PortfolioAssetFindUniqueArgs>(args: SelectSubset<T, PortfolioAssetFindUniqueArgs<ExtArgs>>): Prisma__PortfolioAssetClient<$Result.GetResult<Prisma.$PortfolioAssetPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Asset that matches the filter or throw an error with `error.code='P2025'`
+     * Find one PortfolioAsset that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {AssetFindUniqueOrThrowArgs} args - Arguments to find a Asset
+     * @param {PortfolioAssetFindUniqueOrThrowArgs} args - Arguments to find a PortfolioAsset
      * @example
-     * // Get one Asset
-     * const asset = await prisma.asset.findUniqueOrThrow({
+     * // Get one PortfolioAsset
+     * const portfolioAsset = await prisma.portfolioAsset.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends AssetFindUniqueOrThrowArgs>(args: SelectSubset<T, AssetFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AssetClient<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends PortfolioAssetFindUniqueOrThrowArgs>(args: SelectSubset<T, PortfolioAssetFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PortfolioAssetClient<$Result.GetResult<Prisma.$PortfolioAssetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Asset that matches the filter.
+     * Find the first PortfolioAsset that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetFindFirstArgs} args - Arguments to find a Asset
+     * @param {PortfolioAssetFindFirstArgs} args - Arguments to find a PortfolioAsset
      * @example
-     * // Get one Asset
-     * const asset = await prisma.asset.findFirst({
+     * // Get one PortfolioAsset
+     * const portfolioAsset = await prisma.portfolioAsset.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends AssetFindFirstArgs>(args?: SelectSubset<T, AssetFindFirstArgs<ExtArgs>>): Prisma__AssetClient<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends PortfolioAssetFindFirstArgs>(args?: SelectSubset<T, PortfolioAssetFindFirstArgs<ExtArgs>>): Prisma__PortfolioAssetClient<$Result.GetResult<Prisma.$PortfolioAssetPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Asset that matches the filter or
+     * Find the first PortfolioAsset that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetFindFirstOrThrowArgs} args - Arguments to find a Asset
+     * @param {PortfolioAssetFindFirstOrThrowArgs} args - Arguments to find a PortfolioAsset
      * @example
-     * // Get one Asset
-     * const asset = await prisma.asset.findFirstOrThrow({
+     * // Get one PortfolioAsset
+     * const portfolioAsset = await prisma.portfolioAsset.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends AssetFindFirstOrThrowArgs>(args?: SelectSubset<T, AssetFindFirstOrThrowArgs<ExtArgs>>): Prisma__AssetClient<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends PortfolioAssetFindFirstOrThrowArgs>(args?: SelectSubset<T, PortfolioAssetFindFirstOrThrowArgs<ExtArgs>>): Prisma__PortfolioAssetClient<$Result.GetResult<Prisma.$PortfolioAssetPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Assets that matches the filter.
+     * Find zero or more PortfolioAssets that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {PortfolioAssetFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Assets
-     * const assets = await prisma.asset.findMany()
+     * // Get all PortfolioAssets
+     * const portfolioAssets = await prisma.portfolioAsset.findMany()
      * 
-     * // Get first 10 Assets
-     * const assets = await prisma.asset.findMany({ take: 10 })
+     * // Get first 10 PortfolioAssets
+     * const portfolioAssets = await prisma.portfolioAsset.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const assetWithIdOnly = await prisma.asset.findMany({ select: { id: true } })
+     * const portfolioAssetWithIdOnly = await prisma.portfolioAsset.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends AssetFindManyArgs>(args?: SelectSubset<T, AssetFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends PortfolioAssetFindManyArgs>(args?: SelectSubset<T, PortfolioAssetFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PortfolioAssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Asset.
-     * @param {AssetCreateArgs} args - Arguments to create a Asset.
+     * Create a PortfolioAsset.
+     * @param {PortfolioAssetCreateArgs} args - Arguments to create a PortfolioAsset.
      * @example
-     * // Create one Asset
-     * const Asset = await prisma.asset.create({
+     * // Create one PortfolioAsset
+     * const PortfolioAsset = await prisma.portfolioAsset.create({
      *   data: {
-     *     // ... data to create a Asset
+     *     // ... data to create a PortfolioAsset
      *   }
      * })
      * 
      */
-    create<T extends AssetCreateArgs>(args: SelectSubset<T, AssetCreateArgs<ExtArgs>>): Prisma__AssetClient<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends PortfolioAssetCreateArgs>(args: SelectSubset<T, PortfolioAssetCreateArgs<ExtArgs>>): Prisma__PortfolioAssetClient<$Result.GetResult<Prisma.$PortfolioAssetPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Assets.
-     * @param {AssetCreateManyArgs} args - Arguments to create many Assets.
+     * Create many PortfolioAssets.
+     * @param {PortfolioAssetCreateManyArgs} args - Arguments to create many PortfolioAssets.
      * @example
-     * // Create many Assets
-     * const asset = await prisma.asset.createMany({
+     * // Create many PortfolioAssets
+     * const portfolioAsset = await prisma.portfolioAsset.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends AssetCreateManyArgs>(args?: SelectSubset<T, AssetCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends PortfolioAssetCreateManyArgs>(args?: SelectSubset<T, PortfolioAssetCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Assets and returns the data saved in the database.
-     * @param {AssetCreateManyAndReturnArgs} args - Arguments to create many Assets.
+     * Create many PortfolioAssets and returns the data saved in the database.
+     * @param {PortfolioAssetCreateManyAndReturnArgs} args - Arguments to create many PortfolioAssets.
      * @example
-     * // Create many Assets
-     * const asset = await prisma.asset.createManyAndReturn({
+     * // Create many PortfolioAssets
+     * const portfolioAsset = await prisma.portfolioAsset.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Assets and only return the `id`
-     * const assetWithIdOnly = await prisma.asset.createManyAndReturn({
+     * // Create many PortfolioAssets and only return the `id`
+     * const portfolioAssetWithIdOnly = await prisma.portfolioAsset.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -26776,28 +25526,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends AssetCreateManyAndReturnArgs>(args?: SelectSubset<T, AssetCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends PortfolioAssetCreateManyAndReturnArgs>(args?: SelectSubset<T, PortfolioAssetCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PortfolioAssetPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Asset.
-     * @param {AssetDeleteArgs} args - Arguments to delete one Asset.
+     * Delete a PortfolioAsset.
+     * @param {PortfolioAssetDeleteArgs} args - Arguments to delete one PortfolioAsset.
      * @example
-     * // Delete one Asset
-     * const Asset = await prisma.asset.delete({
+     * // Delete one PortfolioAsset
+     * const PortfolioAsset = await prisma.portfolioAsset.delete({
      *   where: {
-     *     // ... filter to delete one Asset
+     *     // ... filter to delete one PortfolioAsset
      *   }
      * })
      * 
      */
-    delete<T extends AssetDeleteArgs>(args: SelectSubset<T, AssetDeleteArgs<ExtArgs>>): Prisma__AssetClient<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends PortfolioAssetDeleteArgs>(args: SelectSubset<T, PortfolioAssetDeleteArgs<ExtArgs>>): Prisma__PortfolioAssetClient<$Result.GetResult<Prisma.$PortfolioAssetPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Asset.
-     * @param {AssetUpdateArgs} args - Arguments to update one Asset.
+     * Update one PortfolioAsset.
+     * @param {PortfolioAssetUpdateArgs} args - Arguments to update one PortfolioAsset.
      * @example
-     * // Update one Asset
-     * const asset = await prisma.asset.update({
+     * // Update one PortfolioAsset
+     * const portfolioAsset = await prisma.portfolioAsset.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -26807,30 +25557,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends AssetUpdateArgs>(args: SelectSubset<T, AssetUpdateArgs<ExtArgs>>): Prisma__AssetClient<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends PortfolioAssetUpdateArgs>(args: SelectSubset<T, PortfolioAssetUpdateArgs<ExtArgs>>): Prisma__PortfolioAssetClient<$Result.GetResult<Prisma.$PortfolioAssetPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Assets.
-     * @param {AssetDeleteManyArgs} args - Arguments to filter Assets to delete.
+     * Delete zero or more PortfolioAssets.
+     * @param {PortfolioAssetDeleteManyArgs} args - Arguments to filter PortfolioAssets to delete.
      * @example
-     * // Delete a few Assets
-     * const { count } = await prisma.asset.deleteMany({
+     * // Delete a few PortfolioAssets
+     * const { count } = await prisma.portfolioAsset.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends AssetDeleteManyArgs>(args?: SelectSubset<T, AssetDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends PortfolioAssetDeleteManyArgs>(args?: SelectSubset<T, PortfolioAssetDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Assets.
+     * Update zero or more PortfolioAssets.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {PortfolioAssetUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Assets
-     * const asset = await prisma.asset.updateMany({
+     * // Update many PortfolioAssets
+     * const portfolioAsset = await prisma.portfolioAsset.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -26840,14 +25590,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends AssetUpdateManyArgs>(args: SelectSubset<T, AssetUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends PortfolioAssetUpdateManyArgs>(args: SelectSubset<T, PortfolioAssetUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Assets and returns the data updated in the database.
-     * @param {AssetUpdateManyAndReturnArgs} args - Arguments to update many Assets.
+     * Update zero or more PortfolioAssets and returns the data updated in the database.
+     * @param {PortfolioAssetUpdateManyAndReturnArgs} args - Arguments to update many PortfolioAssets.
      * @example
-     * // Update many Assets
-     * const asset = await prisma.asset.updateManyAndReturn({
+     * // Update many PortfolioAssets
+     * const portfolioAsset = await prisma.portfolioAsset.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -26856,8 +25606,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Assets and only return the `id`
-     * const assetWithIdOnly = await prisma.asset.updateManyAndReturn({
+     * // Update zero or more PortfolioAssets and only return the `id`
+     * const portfolioAssetWithIdOnly = await prisma.portfolioAsset.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -26870,56 +25620,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends AssetUpdateManyAndReturnArgs>(args: SelectSubset<T, AssetUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends PortfolioAssetUpdateManyAndReturnArgs>(args: SelectSubset<T, PortfolioAssetUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PortfolioAssetPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Asset.
-     * @param {AssetUpsertArgs} args - Arguments to update or create a Asset.
+     * Create or update one PortfolioAsset.
+     * @param {PortfolioAssetUpsertArgs} args - Arguments to update or create a PortfolioAsset.
      * @example
-     * // Update or create a Asset
-     * const asset = await prisma.asset.upsert({
+     * // Update or create a PortfolioAsset
+     * const portfolioAsset = await prisma.portfolioAsset.upsert({
      *   create: {
-     *     // ... data to create a Asset
+     *     // ... data to create a PortfolioAsset
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Asset we want to update
+     *     // ... the filter for the PortfolioAsset we want to update
      *   }
      * })
      */
-    upsert<T extends AssetUpsertArgs>(args: SelectSubset<T, AssetUpsertArgs<ExtArgs>>): Prisma__AssetClient<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends PortfolioAssetUpsertArgs>(args: SelectSubset<T, PortfolioAssetUpsertArgs<ExtArgs>>): Prisma__PortfolioAssetClient<$Result.GetResult<Prisma.$PortfolioAssetPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Assets.
+     * Count the number of PortfolioAssets.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetCountArgs} args - Arguments to filter Assets to count.
+     * @param {PortfolioAssetCountArgs} args - Arguments to filter PortfolioAssets to count.
      * @example
-     * // Count the number of Assets
-     * const count = await prisma.asset.count({
+     * // Count the number of PortfolioAssets
+     * const count = await prisma.portfolioAsset.count({
      *   where: {
-     *     // ... the filter for the Assets we want to count
+     *     // ... the filter for the PortfolioAssets we want to count
      *   }
      * })
     **/
-    count<T extends AssetCountArgs>(
-      args?: Subset<T, AssetCountArgs>,
+    count<T extends PortfolioAssetCountArgs>(
+      args?: Subset<T, PortfolioAssetCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], AssetCountAggregateOutputType>
+          : GetScalarType<T['select'], PortfolioAssetCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Asset.
+     * Allows you to perform aggregations operations on a PortfolioAsset.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {PortfolioAssetAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -26939,13 +25689,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends AssetAggregateArgs>(args: Subset<T, AssetAggregateArgs>): Prisma.PrismaPromise<GetAssetAggregateType<T>>
+    aggregate<T extends PortfolioAssetAggregateArgs>(args: Subset<T, PortfolioAssetAggregateArgs>): Prisma.PrismaPromise<GetPortfolioAssetAggregateType<T>>
 
     /**
-     * Group by Asset.
+     * Group by PortfolioAsset.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetGroupByArgs} args - Group by arguments.
+     * @param {PortfolioAssetGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -26960,14 +25710,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends AssetGroupByArgs,
+      T extends PortfolioAssetGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: AssetGroupByArgs['orderBy'] }
-        : { orderBy?: AssetGroupByArgs['orderBy'] },
+        ? { orderBy: PortfolioAssetGroupByArgs['orderBy'] }
+        : { orderBy?: PortfolioAssetGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -27016,23 +25766,22 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, AssetGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAssetGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, PortfolioAssetGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPortfolioAssetGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Asset model
+   * Fields of the PortfolioAsset model
    */
-  readonly fields: AssetFieldRefs;
+  readonly fields: PortfolioAssetFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Asset.
+   * The delegate class that acts as a "Promise-like" for PortfolioAsset.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__AssetClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__PortfolioAssetClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    assetGroupInfo<T extends AssetGroupInfoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssetGroupInfoDefaultArgs<ExtArgs>>): Prisma__AssetGroupInfoClient<$Result.GetResult<Prisma.$AssetGroupInfoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    roles<T extends Asset$rolesArgs<ExtArgs> = {}>(args?: Subset<T, Asset$rolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    portfolio<T extends PortfolioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PortfolioDefaultArgs<ExtArgs>>): Prisma__PortfolioClient<$Result.GetResult<Prisma.$PortfolioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -27059,1876 +25808,764 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Asset model
+   * Fields of the PortfolioAsset model
    */
-  interface AssetFieldRefs {
-    readonly id: FieldRef<"Asset", 'String'>
-    readonly asset: FieldRef<"Asset", 'String'>
-    readonly type: FieldRef<"Asset", 'String'>
-    readonly assetGroup: FieldRef<"Asset", 'String'>
-    readonly details: FieldRef<"Asset", 'String'>
+  interface PortfolioAssetFieldRefs {
+    readonly id: FieldRef<"PortfolioAsset", 'String'>
+    readonly portfolioId: FieldRef<"PortfolioAsset", 'String'>
+    readonly assetType: FieldRef<"PortfolioAsset", 'String'>
+    readonly assetId: FieldRef<"PortfolioAsset", 'String'>
+    readonly details: FieldRef<"PortfolioAsset", 'Json'>
   }
     
 
   // Custom InputTypes
   /**
-   * Asset findUnique
+   * PortfolioAsset findUnique
    */
-  export type AssetFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioAssetFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Asset
+     * Select specific fields to fetch from the PortfolioAsset
      */
-    select?: AssetSelect<ExtArgs> | null
+    select?: PortfolioAssetSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Asset
+     * Omit specific fields from the PortfolioAsset
      */
-    omit?: AssetOmit<ExtArgs> | null
+    omit?: PortfolioAssetOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetInclude<ExtArgs> | null
+    include?: PortfolioAssetInclude<ExtArgs> | null
     /**
-     * Filter, which Asset to fetch.
+     * Filter, which PortfolioAsset to fetch.
      */
-    where: AssetWhereUniqueInput
+    where: PortfolioAssetWhereUniqueInput
   }
 
   /**
-   * Asset findUniqueOrThrow
+   * PortfolioAsset findUniqueOrThrow
    */
-  export type AssetFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioAssetFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Asset
+     * Select specific fields to fetch from the PortfolioAsset
      */
-    select?: AssetSelect<ExtArgs> | null
+    select?: PortfolioAssetSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Asset
+     * Omit specific fields from the PortfolioAsset
      */
-    omit?: AssetOmit<ExtArgs> | null
+    omit?: PortfolioAssetOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetInclude<ExtArgs> | null
+    include?: PortfolioAssetInclude<ExtArgs> | null
     /**
-     * Filter, which Asset to fetch.
+     * Filter, which PortfolioAsset to fetch.
      */
-    where: AssetWhereUniqueInput
+    where: PortfolioAssetWhereUniqueInput
   }
 
   /**
-   * Asset findFirst
+   * PortfolioAsset findFirst
    */
-  export type AssetFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioAssetFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Asset
+     * Select specific fields to fetch from the PortfolioAsset
      */
-    select?: AssetSelect<ExtArgs> | null
+    select?: PortfolioAssetSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Asset
+     * Omit specific fields from the PortfolioAsset
      */
-    omit?: AssetOmit<ExtArgs> | null
+    omit?: PortfolioAssetOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetInclude<ExtArgs> | null
+    include?: PortfolioAssetInclude<ExtArgs> | null
     /**
-     * Filter, which Asset to fetch.
+     * Filter, which PortfolioAsset to fetch.
      */
-    where?: AssetWhereInput
+    where?: PortfolioAssetWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Assets to fetch.
+     * Determine the order of PortfolioAssets to fetch.
      */
-    orderBy?: AssetOrderByWithRelationInput | AssetOrderByWithRelationInput[]
+    orderBy?: PortfolioAssetOrderByWithRelationInput | PortfolioAssetOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Assets.
+     * Sets the position for searching for PortfolioAssets.
      */
-    cursor?: AssetWhereUniqueInput
+    cursor?: PortfolioAssetWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Assets from the position of the cursor.
+     * Take `±n` PortfolioAssets from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Assets.
+     * Skip the first `n` PortfolioAssets.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Assets.
+     * Filter by unique combinations of PortfolioAssets.
      */
-    distinct?: AssetScalarFieldEnum | AssetScalarFieldEnum[]
+    distinct?: PortfolioAssetScalarFieldEnum | PortfolioAssetScalarFieldEnum[]
   }
 
   /**
-   * Asset findFirstOrThrow
+   * PortfolioAsset findFirstOrThrow
    */
-  export type AssetFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioAssetFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Asset
+     * Select specific fields to fetch from the PortfolioAsset
      */
-    select?: AssetSelect<ExtArgs> | null
+    select?: PortfolioAssetSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Asset
+     * Omit specific fields from the PortfolioAsset
      */
-    omit?: AssetOmit<ExtArgs> | null
+    omit?: PortfolioAssetOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetInclude<ExtArgs> | null
+    include?: PortfolioAssetInclude<ExtArgs> | null
     /**
-     * Filter, which Asset to fetch.
+     * Filter, which PortfolioAsset to fetch.
      */
-    where?: AssetWhereInput
+    where?: PortfolioAssetWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Assets to fetch.
+     * Determine the order of PortfolioAssets to fetch.
      */
-    orderBy?: AssetOrderByWithRelationInput | AssetOrderByWithRelationInput[]
+    orderBy?: PortfolioAssetOrderByWithRelationInput | PortfolioAssetOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Assets.
+     * Sets the position for searching for PortfolioAssets.
      */
-    cursor?: AssetWhereUniqueInput
+    cursor?: PortfolioAssetWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Assets from the position of the cursor.
+     * Take `±n` PortfolioAssets from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Assets.
+     * Skip the first `n` PortfolioAssets.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Assets.
+     * Filter by unique combinations of PortfolioAssets.
      */
-    distinct?: AssetScalarFieldEnum | AssetScalarFieldEnum[]
+    distinct?: PortfolioAssetScalarFieldEnum | PortfolioAssetScalarFieldEnum[]
   }
 
   /**
-   * Asset findMany
+   * PortfolioAsset findMany
    */
-  export type AssetFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioAssetFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Asset
+     * Select specific fields to fetch from the PortfolioAsset
      */
-    select?: AssetSelect<ExtArgs> | null
+    select?: PortfolioAssetSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Asset
+     * Omit specific fields from the PortfolioAsset
      */
-    omit?: AssetOmit<ExtArgs> | null
+    omit?: PortfolioAssetOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetInclude<ExtArgs> | null
+    include?: PortfolioAssetInclude<ExtArgs> | null
     /**
-     * Filter, which Assets to fetch.
+     * Filter, which PortfolioAssets to fetch.
      */
-    where?: AssetWhereInput
+    where?: PortfolioAssetWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Assets to fetch.
+     * Determine the order of PortfolioAssets to fetch.
      */
-    orderBy?: AssetOrderByWithRelationInput | AssetOrderByWithRelationInput[]
+    orderBy?: PortfolioAssetOrderByWithRelationInput | PortfolioAssetOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Assets.
+     * Sets the position for listing PortfolioAssets.
      */
-    cursor?: AssetWhereUniqueInput
+    cursor?: PortfolioAssetWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Assets from the position of the cursor.
+     * Take `±n` PortfolioAssets from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Assets.
+     * Skip the first `n` PortfolioAssets.
      */
     skip?: number
-    distinct?: AssetScalarFieldEnum | AssetScalarFieldEnum[]
+    distinct?: PortfolioAssetScalarFieldEnum | PortfolioAssetScalarFieldEnum[]
   }
 
   /**
-   * Asset create
+   * PortfolioAsset create
    */
-  export type AssetCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioAssetCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Asset
+     * Select specific fields to fetch from the PortfolioAsset
      */
-    select?: AssetSelect<ExtArgs> | null
+    select?: PortfolioAssetSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Asset
+     * Omit specific fields from the PortfolioAsset
      */
-    omit?: AssetOmit<ExtArgs> | null
+    omit?: PortfolioAssetOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetInclude<ExtArgs> | null
+    include?: PortfolioAssetInclude<ExtArgs> | null
     /**
-     * The data needed to create a Asset.
+     * The data needed to create a PortfolioAsset.
      */
-    data: XOR<AssetCreateInput, AssetUncheckedCreateInput>
+    data: XOR<PortfolioAssetCreateInput, PortfolioAssetUncheckedCreateInput>
   }
 
   /**
-   * Asset createMany
+   * PortfolioAsset createMany
    */
-  export type AssetCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioAssetCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Assets.
+     * The data used to create many PortfolioAssets.
      */
-    data: AssetCreateManyInput | AssetCreateManyInput[]
+    data: PortfolioAssetCreateManyInput | PortfolioAssetCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Asset createManyAndReturn
+   * PortfolioAsset createManyAndReturn
    */
-  export type AssetCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioAssetCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Asset
+     * Select specific fields to fetch from the PortfolioAsset
      */
-    select?: AssetSelectCreateManyAndReturn<ExtArgs> | null
+    select?: PortfolioAssetSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Asset
+     * Omit specific fields from the PortfolioAsset
      */
-    omit?: AssetOmit<ExtArgs> | null
+    omit?: PortfolioAssetOmit<ExtArgs> | null
     /**
-     * The data used to create many Assets.
+     * The data used to create many PortfolioAssets.
      */
-    data: AssetCreateManyInput | AssetCreateManyInput[]
+    data: PortfolioAssetCreateManyInput | PortfolioAssetCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: PortfolioAssetIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Asset update
+   * PortfolioAsset update
    */
-  export type AssetUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioAssetUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Asset
+     * Select specific fields to fetch from the PortfolioAsset
      */
-    select?: AssetSelect<ExtArgs> | null
+    select?: PortfolioAssetSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Asset
+     * Omit specific fields from the PortfolioAsset
      */
-    omit?: AssetOmit<ExtArgs> | null
+    omit?: PortfolioAssetOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetInclude<ExtArgs> | null
+    include?: PortfolioAssetInclude<ExtArgs> | null
     /**
-     * The data needed to update a Asset.
+     * The data needed to update a PortfolioAsset.
      */
-    data: XOR<AssetUpdateInput, AssetUncheckedUpdateInput>
+    data: XOR<PortfolioAssetUpdateInput, PortfolioAssetUncheckedUpdateInput>
     /**
-     * Choose, which Asset to update.
+     * Choose, which PortfolioAsset to update.
      */
-    where: AssetWhereUniqueInput
+    where: PortfolioAssetWhereUniqueInput
   }
 
   /**
-   * Asset updateMany
+   * PortfolioAsset updateMany
    */
-  export type AssetUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioAssetUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Assets.
+     * The data used to update PortfolioAssets.
      */
-    data: XOR<AssetUpdateManyMutationInput, AssetUncheckedUpdateManyInput>
+    data: XOR<PortfolioAssetUpdateManyMutationInput, PortfolioAssetUncheckedUpdateManyInput>
     /**
-     * Filter which Assets to update
+     * Filter which PortfolioAssets to update
      */
-    where?: AssetWhereInput
+    where?: PortfolioAssetWhereInput
     /**
-     * Limit how many Assets to update.
+     * Limit how many PortfolioAssets to update.
      */
     limit?: number
   }
 
   /**
-   * Asset updateManyAndReturn
+   * PortfolioAsset updateManyAndReturn
    */
-  export type AssetUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioAssetUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Asset
+     * Select specific fields to fetch from the PortfolioAsset
      */
-    select?: AssetSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: PortfolioAssetSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Asset
+     * Omit specific fields from the PortfolioAsset
      */
-    omit?: AssetOmit<ExtArgs> | null
+    omit?: PortfolioAssetOmit<ExtArgs> | null
     /**
-     * The data used to update Assets.
+     * The data used to update PortfolioAssets.
      */
-    data: XOR<AssetUpdateManyMutationInput, AssetUncheckedUpdateManyInput>
+    data: XOR<PortfolioAssetUpdateManyMutationInput, PortfolioAssetUncheckedUpdateManyInput>
     /**
-     * Filter which Assets to update
+     * Filter which PortfolioAssets to update
      */
-    where?: AssetWhereInput
+    where?: PortfolioAssetWhereInput
     /**
-     * Limit how many Assets to update.
+     * Limit how many PortfolioAssets to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: PortfolioAssetIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Asset upsert
+   * PortfolioAsset upsert
    */
-  export type AssetUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioAssetUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Asset
+     * Select specific fields to fetch from the PortfolioAsset
      */
-    select?: AssetSelect<ExtArgs> | null
+    select?: PortfolioAssetSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Asset
+     * Omit specific fields from the PortfolioAsset
      */
-    omit?: AssetOmit<ExtArgs> | null
+    omit?: PortfolioAssetOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetInclude<ExtArgs> | null
+    include?: PortfolioAssetInclude<ExtArgs> | null
     /**
-     * The filter to search for the Asset to update in case it exists.
+     * The filter to search for the PortfolioAsset to update in case it exists.
      */
-    where: AssetWhereUniqueInput
+    where: PortfolioAssetWhereUniqueInput
     /**
-     * In case the Asset found by the `where` argument doesn't exist, create a new Asset with this data.
+     * In case the PortfolioAsset found by the `where` argument doesn't exist, create a new PortfolioAsset with this data.
      */
-    create: XOR<AssetCreateInput, AssetUncheckedCreateInput>
+    create: XOR<PortfolioAssetCreateInput, PortfolioAssetUncheckedCreateInput>
     /**
-     * In case the Asset was found with the provided `where` argument, update it with this data.
+     * In case the PortfolioAsset was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<AssetUpdateInput, AssetUncheckedUpdateInput>
+    update: XOR<PortfolioAssetUpdateInput, PortfolioAssetUncheckedUpdateInput>
   }
 
   /**
-   * Asset delete
+   * PortfolioAsset delete
    */
-  export type AssetDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioAssetDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Asset
+     * Select specific fields to fetch from the PortfolioAsset
      */
-    select?: AssetSelect<ExtArgs> | null
+    select?: PortfolioAssetSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Asset
+     * Omit specific fields from the PortfolioAsset
      */
-    omit?: AssetOmit<ExtArgs> | null
+    omit?: PortfolioAssetOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetInclude<ExtArgs> | null
+    include?: PortfolioAssetInclude<ExtArgs> | null
     /**
-     * Filter which Asset to delete.
+     * Filter which PortfolioAsset to delete.
      */
-    where: AssetWhereUniqueInput
+    where: PortfolioAssetWhereUniqueInput
   }
 
   /**
-   * Asset deleteMany
+   * PortfolioAsset deleteMany
    */
-  export type AssetDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioAssetDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Assets to delete
+     * Filter which PortfolioAssets to delete
      */
-    where?: AssetWhereInput
+    where?: PortfolioAssetWhereInput
     /**
-     * Limit how many Assets to delete.
+     * Limit how many PortfolioAssets to delete.
      */
     limit?: number
   }
 
   /**
-   * Asset.roles
+   * PortfolioAsset without action
    */
-  export type Asset$rolesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioAssetDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AssetMemberRole
+     * Select specific fields to fetch from the PortfolioAsset
      */
-    select?: AssetMemberRoleSelect<ExtArgs> | null
+    select?: PortfolioAssetSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AssetMemberRole
+     * Omit specific fields from the PortfolioAsset
      */
-    omit?: AssetMemberRoleOmit<ExtArgs> | null
+    omit?: PortfolioAssetOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AssetMemberRoleInclude<ExtArgs> | null
-    where?: AssetMemberRoleWhereInput
-    orderBy?: AssetMemberRoleOrderByWithRelationInput | AssetMemberRoleOrderByWithRelationInput[]
-    cursor?: AssetMemberRoleWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AssetMemberRoleScalarFieldEnum | AssetMemberRoleScalarFieldEnum[]
-  }
-
-  /**
-   * Asset without action
-   */
-  export type AssetDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Asset
-     */
-    select?: AssetSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Asset
-     */
-    omit?: AssetOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetInclude<ExtArgs> | null
+    include?: PortfolioAssetInclude<ExtArgs> | null
   }
 
 
   /**
-   * Model AssetMemberRole
+   * Model PortfolioMember
    */
 
-  export type AggregateAssetMemberRole = {
-    _count: AssetMemberRoleCountAggregateOutputType | null
-    _min: AssetMemberRoleMinAggregateOutputType | null
-    _max: AssetMemberRoleMaxAggregateOutputType | null
+  export type AggregatePortfolioMember = {
+    _count: PortfolioMemberCountAggregateOutputType | null
+    _min: PortfolioMemberMinAggregateOutputType | null
+    _max: PortfolioMemberMaxAggregateOutputType | null
   }
 
-  export type AssetMemberRoleMinAggregateOutputType = {
+  export type PortfolioMemberMinAggregateOutputType = {
     id: string | null
-    assetMember: string | null
-    asset: string | null
-    role: string | null
-  }
-
-  export type AssetMemberRoleMaxAggregateOutputType = {
-    id: string | null
-    assetMember: string | null
-    asset: string | null
-    role: string | null
-  }
-
-  export type AssetMemberRoleCountAggregateOutputType = {
-    id: number
-    assetMember: number
-    asset: number
-    role: number
-    _all: number
-  }
-
-
-  export type AssetMemberRoleMinAggregateInputType = {
-    id?: true
-    assetMember?: true
-    asset?: true
-    role?: true
-  }
-
-  export type AssetMemberRoleMaxAggregateInputType = {
-    id?: true
-    assetMember?: true
-    asset?: true
-    role?: true
-  }
-
-  export type AssetMemberRoleCountAggregateInputType = {
-    id?: true
-    assetMember?: true
-    asset?: true
-    role?: true
-    _all?: true
-  }
-
-  export type AssetMemberRoleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which AssetMemberRole to aggregate.
-     */
-    where?: AssetMemberRoleWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AssetMemberRoles to fetch.
-     */
-    orderBy?: AssetMemberRoleOrderByWithRelationInput | AssetMemberRoleOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: AssetMemberRoleWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AssetMemberRoles from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AssetMemberRoles.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned AssetMemberRoles
-    **/
-    _count?: true | AssetMemberRoleCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: AssetMemberRoleMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: AssetMemberRoleMaxAggregateInputType
-  }
-
-  export type GetAssetMemberRoleAggregateType<T extends AssetMemberRoleAggregateArgs> = {
-        [P in keyof T & keyof AggregateAssetMemberRole]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateAssetMemberRole[P]>
-      : GetScalarType<T[P], AggregateAssetMemberRole[P]>
-  }
-
-
-
-
-  export type AssetMemberRoleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AssetMemberRoleWhereInput
-    orderBy?: AssetMemberRoleOrderByWithAggregationInput | AssetMemberRoleOrderByWithAggregationInput[]
-    by: AssetMemberRoleScalarFieldEnum[] | AssetMemberRoleScalarFieldEnum
-    having?: AssetMemberRoleScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: AssetMemberRoleCountAggregateInputType | true
-    _min?: AssetMemberRoleMinAggregateInputType
-    _max?: AssetMemberRoleMaxAggregateInputType
-  }
-
-  export type AssetMemberRoleGroupByOutputType = {
-    id: string
-    assetMember: string
-    asset: string
-    role: string
-    _count: AssetMemberRoleCountAggregateOutputType | null
-    _min: AssetMemberRoleMinAggregateOutputType | null
-    _max: AssetMemberRoleMaxAggregateOutputType | null
-  }
-
-  type GetAssetMemberRoleGroupByPayload<T extends AssetMemberRoleGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<AssetMemberRoleGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof AssetMemberRoleGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], AssetMemberRoleGroupByOutputType[P]>
-            : GetScalarType<T[P], AssetMemberRoleGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type AssetMemberRoleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    assetMember?: boolean
-    asset?: boolean
-    role?: boolean
-    member?: boolean | AssetGroupMemberDefaultArgs<ExtArgs>
-    assetRef?: boolean | AssetDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["assetMemberRole"]>
-
-  export type AssetMemberRoleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    assetMember?: boolean
-    asset?: boolean
-    role?: boolean
-    member?: boolean | AssetGroupMemberDefaultArgs<ExtArgs>
-    assetRef?: boolean | AssetDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["assetMemberRole"]>
-
-  export type AssetMemberRoleSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    assetMember?: boolean
-    asset?: boolean
-    role?: boolean
-    member?: boolean | AssetGroupMemberDefaultArgs<ExtArgs>
-    assetRef?: boolean | AssetDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["assetMemberRole"]>
-
-  export type AssetMemberRoleSelectScalar = {
-    id?: boolean
-    assetMember?: boolean
-    asset?: boolean
-    role?: boolean
-  }
-
-  export type AssetMemberRoleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "assetMember" | "asset" | "role", ExtArgs["result"]["assetMemberRole"]>
-  export type AssetMemberRoleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    member?: boolean | AssetGroupMemberDefaultArgs<ExtArgs>
-    assetRef?: boolean | AssetDefaultArgs<ExtArgs>
-  }
-  export type AssetMemberRoleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    member?: boolean | AssetGroupMemberDefaultArgs<ExtArgs>
-    assetRef?: boolean | AssetDefaultArgs<ExtArgs>
-  }
-  export type AssetMemberRoleIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    member?: boolean | AssetGroupMemberDefaultArgs<ExtArgs>
-    assetRef?: boolean | AssetDefaultArgs<ExtArgs>
-  }
-
-  export type $AssetMemberRolePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "AssetMemberRole"
-    objects: {
-      member: Prisma.$AssetGroupMemberPayload<ExtArgs>
-      assetRef: Prisma.$AssetPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      assetMember: string
-      asset: string
-      role: string
-    }, ExtArgs["result"]["assetMemberRole"]>
-    composites: {}
-  }
-
-  type AssetMemberRoleGetPayload<S extends boolean | null | undefined | AssetMemberRoleDefaultArgs> = $Result.GetResult<Prisma.$AssetMemberRolePayload, S>
-
-  type AssetMemberRoleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<AssetMemberRoleFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: AssetMemberRoleCountAggregateInputType | true
-    }
-
-  export interface AssetMemberRoleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AssetMemberRole'], meta: { name: 'AssetMemberRole' } }
-    /**
-     * Find zero or one AssetMemberRole that matches the filter.
-     * @param {AssetMemberRoleFindUniqueArgs} args - Arguments to find a AssetMemberRole
-     * @example
-     * // Get one AssetMemberRole
-     * const assetMemberRole = await prisma.assetMemberRole.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends AssetMemberRoleFindUniqueArgs>(args: SelectSubset<T, AssetMemberRoleFindUniqueArgs<ExtArgs>>): Prisma__AssetMemberRoleClient<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one AssetMemberRole that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {AssetMemberRoleFindUniqueOrThrowArgs} args - Arguments to find a AssetMemberRole
-     * @example
-     * // Get one AssetMemberRole
-     * const assetMemberRole = await prisma.assetMemberRole.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends AssetMemberRoleFindUniqueOrThrowArgs>(args: SelectSubset<T, AssetMemberRoleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AssetMemberRoleClient<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first AssetMemberRole that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetMemberRoleFindFirstArgs} args - Arguments to find a AssetMemberRole
-     * @example
-     * // Get one AssetMemberRole
-     * const assetMemberRole = await prisma.assetMemberRole.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends AssetMemberRoleFindFirstArgs>(args?: SelectSubset<T, AssetMemberRoleFindFirstArgs<ExtArgs>>): Prisma__AssetMemberRoleClient<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first AssetMemberRole that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetMemberRoleFindFirstOrThrowArgs} args - Arguments to find a AssetMemberRole
-     * @example
-     * // Get one AssetMemberRole
-     * const assetMemberRole = await prisma.assetMemberRole.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends AssetMemberRoleFindFirstOrThrowArgs>(args?: SelectSubset<T, AssetMemberRoleFindFirstOrThrowArgs<ExtArgs>>): Prisma__AssetMemberRoleClient<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more AssetMemberRoles that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetMemberRoleFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all AssetMemberRoles
-     * const assetMemberRoles = await prisma.assetMemberRole.findMany()
-     * 
-     * // Get first 10 AssetMemberRoles
-     * const assetMemberRoles = await prisma.assetMemberRole.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const assetMemberRoleWithIdOnly = await prisma.assetMemberRole.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends AssetMemberRoleFindManyArgs>(args?: SelectSubset<T, AssetMemberRoleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a AssetMemberRole.
-     * @param {AssetMemberRoleCreateArgs} args - Arguments to create a AssetMemberRole.
-     * @example
-     * // Create one AssetMemberRole
-     * const AssetMemberRole = await prisma.assetMemberRole.create({
-     *   data: {
-     *     // ... data to create a AssetMemberRole
-     *   }
-     * })
-     * 
-     */
-    create<T extends AssetMemberRoleCreateArgs>(args: SelectSubset<T, AssetMemberRoleCreateArgs<ExtArgs>>): Prisma__AssetMemberRoleClient<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many AssetMemberRoles.
-     * @param {AssetMemberRoleCreateManyArgs} args - Arguments to create many AssetMemberRoles.
-     * @example
-     * // Create many AssetMemberRoles
-     * const assetMemberRole = await prisma.assetMemberRole.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends AssetMemberRoleCreateManyArgs>(args?: SelectSubset<T, AssetMemberRoleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many AssetMemberRoles and returns the data saved in the database.
-     * @param {AssetMemberRoleCreateManyAndReturnArgs} args - Arguments to create many AssetMemberRoles.
-     * @example
-     * // Create many AssetMemberRoles
-     * const assetMemberRole = await prisma.assetMemberRole.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many AssetMemberRoles and only return the `id`
-     * const assetMemberRoleWithIdOnly = await prisma.assetMemberRole.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends AssetMemberRoleCreateManyAndReturnArgs>(args?: SelectSubset<T, AssetMemberRoleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a AssetMemberRole.
-     * @param {AssetMemberRoleDeleteArgs} args - Arguments to delete one AssetMemberRole.
-     * @example
-     * // Delete one AssetMemberRole
-     * const AssetMemberRole = await prisma.assetMemberRole.delete({
-     *   where: {
-     *     // ... filter to delete one AssetMemberRole
-     *   }
-     * })
-     * 
-     */
-    delete<T extends AssetMemberRoleDeleteArgs>(args: SelectSubset<T, AssetMemberRoleDeleteArgs<ExtArgs>>): Prisma__AssetMemberRoleClient<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one AssetMemberRole.
-     * @param {AssetMemberRoleUpdateArgs} args - Arguments to update one AssetMemberRole.
-     * @example
-     * // Update one AssetMemberRole
-     * const assetMemberRole = await prisma.assetMemberRole.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends AssetMemberRoleUpdateArgs>(args: SelectSubset<T, AssetMemberRoleUpdateArgs<ExtArgs>>): Prisma__AssetMemberRoleClient<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more AssetMemberRoles.
-     * @param {AssetMemberRoleDeleteManyArgs} args - Arguments to filter AssetMemberRoles to delete.
-     * @example
-     * // Delete a few AssetMemberRoles
-     * const { count } = await prisma.assetMemberRole.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends AssetMemberRoleDeleteManyArgs>(args?: SelectSubset<T, AssetMemberRoleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more AssetMemberRoles.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetMemberRoleUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many AssetMemberRoles
-     * const assetMemberRole = await prisma.assetMemberRole.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends AssetMemberRoleUpdateManyArgs>(args: SelectSubset<T, AssetMemberRoleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more AssetMemberRoles and returns the data updated in the database.
-     * @param {AssetMemberRoleUpdateManyAndReturnArgs} args - Arguments to update many AssetMemberRoles.
-     * @example
-     * // Update many AssetMemberRoles
-     * const assetMemberRole = await prisma.assetMemberRole.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more AssetMemberRoles and only return the `id`
-     * const assetMemberRoleWithIdOnly = await prisma.assetMemberRole.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends AssetMemberRoleUpdateManyAndReturnArgs>(args: SelectSubset<T, AssetMemberRoleUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one AssetMemberRole.
-     * @param {AssetMemberRoleUpsertArgs} args - Arguments to update or create a AssetMemberRole.
-     * @example
-     * // Update or create a AssetMemberRole
-     * const assetMemberRole = await prisma.assetMemberRole.upsert({
-     *   create: {
-     *     // ... data to create a AssetMemberRole
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the AssetMemberRole we want to update
-     *   }
-     * })
-     */
-    upsert<T extends AssetMemberRoleUpsertArgs>(args: SelectSubset<T, AssetMemberRoleUpsertArgs<ExtArgs>>): Prisma__AssetMemberRoleClient<$Result.GetResult<Prisma.$AssetMemberRolePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of AssetMemberRoles.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetMemberRoleCountArgs} args - Arguments to filter AssetMemberRoles to count.
-     * @example
-     * // Count the number of AssetMemberRoles
-     * const count = await prisma.assetMemberRole.count({
-     *   where: {
-     *     // ... the filter for the AssetMemberRoles we want to count
-     *   }
-     * })
-    **/
-    count<T extends AssetMemberRoleCountArgs>(
-      args?: Subset<T, AssetMemberRoleCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], AssetMemberRoleCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a AssetMemberRole.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetMemberRoleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends AssetMemberRoleAggregateArgs>(args: Subset<T, AssetMemberRoleAggregateArgs>): Prisma.PrismaPromise<GetAssetMemberRoleAggregateType<T>>
-
-    /**
-     * Group by AssetMemberRole.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AssetMemberRoleGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends AssetMemberRoleGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: AssetMemberRoleGroupByArgs['orderBy'] }
-        : { orderBy?: AssetMemberRoleGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, AssetMemberRoleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAssetMemberRoleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the AssetMemberRole model
-   */
-  readonly fields: AssetMemberRoleFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for AssetMemberRole.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__AssetMemberRoleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    member<T extends AssetGroupMemberDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssetGroupMemberDefaultArgs<ExtArgs>>): Prisma__AssetGroupMemberClient<$Result.GetResult<Prisma.$AssetGroupMemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    assetRef<T extends AssetDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssetDefaultArgs<ExtArgs>>): Prisma__AssetClient<$Result.GetResult<Prisma.$AssetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the AssetMemberRole model
-   */
-  interface AssetMemberRoleFieldRefs {
-    readonly id: FieldRef<"AssetMemberRole", 'String'>
-    readonly assetMember: FieldRef<"AssetMemberRole", 'String'>
-    readonly asset: FieldRef<"AssetMemberRole", 'String'>
-    readonly role: FieldRef<"AssetMemberRole", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * AssetMemberRole findUnique
-   */
-  export type AssetMemberRoleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetMemberRole
-     */
-    select?: AssetMemberRoleSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetMemberRole
-     */
-    omit?: AssetMemberRoleOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetMemberRoleInclude<ExtArgs> | null
-    /**
-     * Filter, which AssetMemberRole to fetch.
-     */
-    where: AssetMemberRoleWhereUniqueInput
-  }
-
-  /**
-   * AssetMemberRole findUniqueOrThrow
-   */
-  export type AssetMemberRoleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetMemberRole
-     */
-    select?: AssetMemberRoleSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetMemberRole
-     */
-    omit?: AssetMemberRoleOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetMemberRoleInclude<ExtArgs> | null
-    /**
-     * Filter, which AssetMemberRole to fetch.
-     */
-    where: AssetMemberRoleWhereUniqueInput
-  }
-
-  /**
-   * AssetMemberRole findFirst
-   */
-  export type AssetMemberRoleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetMemberRole
-     */
-    select?: AssetMemberRoleSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetMemberRole
-     */
-    omit?: AssetMemberRoleOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetMemberRoleInclude<ExtArgs> | null
-    /**
-     * Filter, which AssetMemberRole to fetch.
-     */
-    where?: AssetMemberRoleWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AssetMemberRoles to fetch.
-     */
-    orderBy?: AssetMemberRoleOrderByWithRelationInput | AssetMemberRoleOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for AssetMemberRoles.
-     */
-    cursor?: AssetMemberRoleWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AssetMemberRoles from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AssetMemberRoles.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of AssetMemberRoles.
-     */
-    distinct?: AssetMemberRoleScalarFieldEnum | AssetMemberRoleScalarFieldEnum[]
-  }
-
-  /**
-   * AssetMemberRole findFirstOrThrow
-   */
-  export type AssetMemberRoleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetMemberRole
-     */
-    select?: AssetMemberRoleSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetMemberRole
-     */
-    omit?: AssetMemberRoleOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetMemberRoleInclude<ExtArgs> | null
-    /**
-     * Filter, which AssetMemberRole to fetch.
-     */
-    where?: AssetMemberRoleWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AssetMemberRoles to fetch.
-     */
-    orderBy?: AssetMemberRoleOrderByWithRelationInput | AssetMemberRoleOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for AssetMemberRoles.
-     */
-    cursor?: AssetMemberRoleWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AssetMemberRoles from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AssetMemberRoles.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of AssetMemberRoles.
-     */
-    distinct?: AssetMemberRoleScalarFieldEnum | AssetMemberRoleScalarFieldEnum[]
-  }
-
-  /**
-   * AssetMemberRole findMany
-   */
-  export type AssetMemberRoleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetMemberRole
-     */
-    select?: AssetMemberRoleSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetMemberRole
-     */
-    omit?: AssetMemberRoleOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetMemberRoleInclude<ExtArgs> | null
-    /**
-     * Filter, which AssetMemberRoles to fetch.
-     */
-    where?: AssetMemberRoleWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AssetMemberRoles to fetch.
-     */
-    orderBy?: AssetMemberRoleOrderByWithRelationInput | AssetMemberRoleOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing AssetMemberRoles.
-     */
-    cursor?: AssetMemberRoleWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AssetMemberRoles from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AssetMemberRoles.
-     */
-    skip?: number
-    distinct?: AssetMemberRoleScalarFieldEnum | AssetMemberRoleScalarFieldEnum[]
-  }
-
-  /**
-   * AssetMemberRole create
-   */
-  export type AssetMemberRoleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetMemberRole
-     */
-    select?: AssetMemberRoleSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetMemberRole
-     */
-    omit?: AssetMemberRoleOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetMemberRoleInclude<ExtArgs> | null
-    /**
-     * The data needed to create a AssetMemberRole.
-     */
-    data: XOR<AssetMemberRoleCreateInput, AssetMemberRoleUncheckedCreateInput>
-  }
-
-  /**
-   * AssetMemberRole createMany
-   */
-  export type AssetMemberRoleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many AssetMemberRoles.
-     */
-    data: AssetMemberRoleCreateManyInput | AssetMemberRoleCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * AssetMemberRole createManyAndReturn
-   */
-  export type AssetMemberRoleCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetMemberRole
-     */
-    select?: AssetMemberRoleSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetMemberRole
-     */
-    omit?: AssetMemberRoleOmit<ExtArgs> | null
-    /**
-     * The data used to create many AssetMemberRoles.
-     */
-    data: AssetMemberRoleCreateManyInput | AssetMemberRoleCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetMemberRoleIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * AssetMemberRole update
-   */
-  export type AssetMemberRoleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetMemberRole
-     */
-    select?: AssetMemberRoleSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetMemberRole
-     */
-    omit?: AssetMemberRoleOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetMemberRoleInclude<ExtArgs> | null
-    /**
-     * The data needed to update a AssetMemberRole.
-     */
-    data: XOR<AssetMemberRoleUpdateInput, AssetMemberRoleUncheckedUpdateInput>
-    /**
-     * Choose, which AssetMemberRole to update.
-     */
-    where: AssetMemberRoleWhereUniqueInput
-  }
-
-  /**
-   * AssetMemberRole updateMany
-   */
-  export type AssetMemberRoleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update AssetMemberRoles.
-     */
-    data: XOR<AssetMemberRoleUpdateManyMutationInput, AssetMemberRoleUncheckedUpdateManyInput>
-    /**
-     * Filter which AssetMemberRoles to update
-     */
-    where?: AssetMemberRoleWhereInput
-    /**
-     * Limit how many AssetMemberRoles to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * AssetMemberRole updateManyAndReturn
-   */
-  export type AssetMemberRoleUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetMemberRole
-     */
-    select?: AssetMemberRoleSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetMemberRole
-     */
-    omit?: AssetMemberRoleOmit<ExtArgs> | null
-    /**
-     * The data used to update AssetMemberRoles.
-     */
-    data: XOR<AssetMemberRoleUpdateManyMutationInput, AssetMemberRoleUncheckedUpdateManyInput>
-    /**
-     * Filter which AssetMemberRoles to update
-     */
-    where?: AssetMemberRoleWhereInput
-    /**
-     * Limit how many AssetMemberRoles to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetMemberRoleIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * AssetMemberRole upsert
-   */
-  export type AssetMemberRoleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetMemberRole
-     */
-    select?: AssetMemberRoleSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetMemberRole
-     */
-    omit?: AssetMemberRoleOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetMemberRoleInclude<ExtArgs> | null
-    /**
-     * The filter to search for the AssetMemberRole to update in case it exists.
-     */
-    where: AssetMemberRoleWhereUniqueInput
-    /**
-     * In case the AssetMemberRole found by the `where` argument doesn't exist, create a new AssetMemberRole with this data.
-     */
-    create: XOR<AssetMemberRoleCreateInput, AssetMemberRoleUncheckedCreateInput>
-    /**
-     * In case the AssetMemberRole was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<AssetMemberRoleUpdateInput, AssetMemberRoleUncheckedUpdateInput>
-  }
-
-  /**
-   * AssetMemberRole delete
-   */
-  export type AssetMemberRoleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetMemberRole
-     */
-    select?: AssetMemberRoleSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetMemberRole
-     */
-    omit?: AssetMemberRoleOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetMemberRoleInclude<ExtArgs> | null
-    /**
-     * Filter which AssetMemberRole to delete.
-     */
-    where: AssetMemberRoleWhereUniqueInput
-  }
-
-  /**
-   * AssetMemberRole deleteMany
-   */
-  export type AssetMemberRoleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which AssetMemberRoles to delete
-     */
-    where?: AssetMemberRoleWhereInput
-    /**
-     * Limit how many AssetMemberRoles to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * AssetMemberRole without action
-   */
-  export type AssetMemberRoleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssetMemberRole
-     */
-    select?: AssetMemberRoleSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AssetMemberRole
-     */
-    omit?: AssetMemberRoleOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AssetMemberRoleInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model AuthTeamExternal
-   */
-
-  export type AggregateAuthTeamExternal = {
-    _count: AuthTeamExternalCountAggregateOutputType | null
-    _min: AuthTeamExternalMinAggregateOutputType | null
-    _max: AuthTeamExternalMaxAggregateOutputType | null
-  }
-
-  export type AuthTeamExternalMinAggregateOutputType = {
-    id: string | null
-    appId: string | null
+    portfolioId: string | null
     accountId: string | null
-    recipientId: string | null
-    isPermanent: boolean | null
-    createdAt: Date | null
   }
 
-  export type AuthTeamExternalMaxAggregateOutputType = {
+  export type PortfolioMemberMaxAggregateOutputType = {
     id: string | null
-    appId: string | null
+    portfolioId: string | null
     accountId: string | null
-    recipientId: string | null
-    isPermanent: boolean | null
-    createdAt: Date | null
   }
 
-  export type AuthTeamExternalCountAggregateOutputType = {
+  export type PortfolioMemberCountAggregateOutputType = {
     id: number
-    appId: number
+    portfolioId: number
     accountId: number
-    recipientId: number
-    isPermanent: number
-    createdAt: number
+    details: number
     _all: number
   }
 
 
-  export type AuthTeamExternalMinAggregateInputType = {
+  export type PortfolioMemberMinAggregateInputType = {
     id?: true
-    appId?: true
+    portfolioId?: true
     accountId?: true
-    recipientId?: true
-    isPermanent?: true
-    createdAt?: true
   }
 
-  export type AuthTeamExternalMaxAggregateInputType = {
+  export type PortfolioMemberMaxAggregateInputType = {
     id?: true
-    appId?: true
+    portfolioId?: true
     accountId?: true
-    recipientId?: true
-    isPermanent?: true
-    createdAt?: true
   }
 
-  export type AuthTeamExternalCountAggregateInputType = {
+  export type PortfolioMemberCountAggregateInputType = {
     id?: true
-    appId?: true
+    portfolioId?: true
     accountId?: true
-    recipientId?: true
-    isPermanent?: true
-    createdAt?: true
+    details?: true
     _all?: true
   }
 
-  export type AuthTeamExternalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioMemberAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which AuthTeamExternal to aggregate.
+     * Filter which PortfolioMember to aggregate.
      */
-    where?: AuthTeamExternalWhereInput
+    where?: PortfolioMemberWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of AuthTeamExternals to fetch.
+     * Determine the order of PortfolioMembers to fetch.
      */
-    orderBy?: AuthTeamExternalOrderByWithRelationInput | AuthTeamExternalOrderByWithRelationInput[]
+    orderBy?: PortfolioMemberOrderByWithRelationInput | PortfolioMemberOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: AuthTeamExternalWhereUniqueInput
+    cursor?: PortfolioMemberWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` AuthTeamExternals from the position of the cursor.
+     * Take `±n` PortfolioMembers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` AuthTeamExternals.
+     * Skip the first `n` PortfolioMembers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned AuthTeamExternals
+     * Count returned PortfolioMembers
     **/
-    _count?: true | AuthTeamExternalCountAggregateInputType
+    _count?: true | PortfolioMemberCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: AuthTeamExternalMinAggregateInputType
+    _min?: PortfolioMemberMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: AuthTeamExternalMaxAggregateInputType
+    _max?: PortfolioMemberMaxAggregateInputType
   }
 
-  export type GetAuthTeamExternalAggregateType<T extends AuthTeamExternalAggregateArgs> = {
-        [P in keyof T & keyof AggregateAuthTeamExternal]: P extends '_count' | 'count'
+  export type GetPortfolioMemberAggregateType<T extends PortfolioMemberAggregateArgs> = {
+        [P in keyof T & keyof AggregatePortfolioMember]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateAuthTeamExternal[P]>
-      : GetScalarType<T[P], AggregateAuthTeamExternal[P]>
+        : GetScalarType<T[P], AggregatePortfolioMember[P]>
+      : GetScalarType<T[P], AggregatePortfolioMember[P]>
   }
 
 
 
 
-  export type AuthTeamExternalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthTeamExternalWhereInput
-    orderBy?: AuthTeamExternalOrderByWithAggregationInput | AuthTeamExternalOrderByWithAggregationInput[]
-    by: AuthTeamExternalScalarFieldEnum[] | AuthTeamExternalScalarFieldEnum
-    having?: AuthTeamExternalScalarWhereWithAggregatesInput
+  export type PortfolioMemberGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PortfolioMemberWhereInput
+    orderBy?: PortfolioMemberOrderByWithAggregationInput | PortfolioMemberOrderByWithAggregationInput[]
+    by: PortfolioMemberScalarFieldEnum[] | PortfolioMemberScalarFieldEnum
+    having?: PortfolioMemberScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: AuthTeamExternalCountAggregateInputType | true
-    _min?: AuthTeamExternalMinAggregateInputType
-    _max?: AuthTeamExternalMaxAggregateInputType
+    _count?: PortfolioMemberCountAggregateInputType | true
+    _min?: PortfolioMemberMinAggregateInputType
+    _max?: PortfolioMemberMaxAggregateInputType
   }
 
-  export type AuthTeamExternalGroupByOutputType = {
+  export type PortfolioMemberGroupByOutputType = {
     id: string
-    appId: string
+    portfolioId: string
     accountId: string
-    recipientId: string
-    isPermanent: boolean
-    createdAt: Date
-    _count: AuthTeamExternalCountAggregateOutputType | null
-    _min: AuthTeamExternalMinAggregateOutputType | null
-    _max: AuthTeamExternalMaxAggregateOutputType | null
+    details: JsonValue | null
+    _count: PortfolioMemberCountAggregateOutputType | null
+    _min: PortfolioMemberMinAggregateOutputType | null
+    _max: PortfolioMemberMaxAggregateOutputType | null
   }
 
-  type GetAuthTeamExternalGroupByPayload<T extends AuthTeamExternalGroupByArgs> = Prisma.PrismaPromise<
+  type GetPortfolioMemberGroupByPayload<T extends PortfolioMemberGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<AuthTeamExternalGroupByOutputType, T['by']> &
+      PickEnumerable<PortfolioMemberGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof AuthTeamExternalGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof PortfolioMemberGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], AuthTeamExternalGroupByOutputType[P]>
-            : GetScalarType<T[P], AuthTeamExternalGroupByOutputType[P]>
+              : GetScalarType<T[P], PortfolioMemberGroupByOutputType[P]>
+            : GetScalarType<T[P], PortfolioMemberGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type AuthTeamExternalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type PortfolioMemberSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    appId?: boolean
+    portfolioId?: boolean
     accountId?: boolean
-    recipientId?: boolean
-    isPermanent?: boolean
-    createdAt?: boolean
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    details?: boolean
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
     account?: boolean | AccountDefaultArgs<ExtArgs>
-    recipient?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["authTeamExternal"]>
+  }, ExtArgs["result"]["portfolioMember"]>
 
-  export type AuthTeamExternalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type PortfolioMemberSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    appId?: boolean
+    portfolioId?: boolean
     accountId?: boolean
-    recipientId?: boolean
-    isPermanent?: boolean
-    createdAt?: boolean
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    details?: boolean
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
     account?: boolean | AccountDefaultArgs<ExtArgs>
-    recipient?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["authTeamExternal"]>
+  }, ExtArgs["result"]["portfolioMember"]>
 
-  export type AuthTeamExternalSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type PortfolioMemberSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    appId?: boolean
+    portfolioId?: boolean
     accountId?: boolean
-    recipientId?: boolean
-    isPermanent?: boolean
-    createdAt?: boolean
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    details?: boolean
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
     account?: boolean | AccountDefaultArgs<ExtArgs>
-    recipient?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["authTeamExternal"]>
+  }, ExtArgs["result"]["portfolioMember"]>
 
-  export type AuthTeamExternalSelectScalar = {
+  export type PortfolioMemberSelectScalar = {
     id?: boolean
-    appId?: boolean
+    portfolioId?: boolean
     accountId?: boolean
-    recipientId?: boolean
-    isPermanent?: boolean
-    createdAt?: boolean
+    details?: boolean
   }
 
-  export type AuthTeamExternalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "appId" | "accountId" | "recipientId" | "isPermanent" | "createdAt", ExtArgs["result"]["authTeamExternal"]>
-  export type AuthTeamExternalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  export type PortfolioMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "portfolioId" | "accountId" | "details", ExtArgs["result"]["portfolioMember"]>
+  export type PortfolioMemberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
     account?: boolean | AccountDefaultArgs<ExtArgs>
-    recipient?: boolean | AccountDefaultArgs<ExtArgs>
   }
-  export type AuthTeamExternalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  export type PortfolioMemberIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
     account?: boolean | AccountDefaultArgs<ExtArgs>
-    recipient?: boolean | AccountDefaultArgs<ExtArgs>
   }
-  export type AuthTeamExternalIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  export type PortfolioMemberIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
     account?: boolean | AccountDefaultArgs<ExtArgs>
-    recipient?: boolean | AccountDefaultArgs<ExtArgs>
   }
 
-  export type $AuthTeamExternalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "AuthTeamExternal"
+  export type $PortfolioMemberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PortfolioMember"
     objects: {
-      application: Prisma.$ApplicationPayload<ExtArgs>
+      portfolio: Prisma.$PortfolioPayload<ExtArgs>
       account: Prisma.$AccountPayload<ExtArgs>
-      recipient: Prisma.$AccountPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      appId: string
+      portfolioId: string
       accountId: string
-      recipientId: string
-      isPermanent: boolean
-      createdAt: Date
-    }, ExtArgs["result"]["authTeamExternal"]>
+      details: Prisma.JsonValue | null
+    }, ExtArgs["result"]["portfolioMember"]>
     composites: {}
   }
 
-  type AuthTeamExternalGetPayload<S extends boolean | null | undefined | AuthTeamExternalDefaultArgs> = $Result.GetResult<Prisma.$AuthTeamExternalPayload, S>
+  type PortfolioMemberGetPayload<S extends boolean | null | undefined | PortfolioMemberDefaultArgs> = $Result.GetResult<Prisma.$PortfolioMemberPayload, S>
 
-  type AuthTeamExternalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<AuthTeamExternalFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: AuthTeamExternalCountAggregateInputType | true
+  type PortfolioMemberCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PortfolioMemberFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PortfolioMemberCountAggregateInputType | true
     }
 
-  export interface AuthTeamExternalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AuthTeamExternal'], meta: { name: 'AuthTeamExternal' } }
+  export interface PortfolioMemberDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PortfolioMember'], meta: { name: 'PortfolioMember' } }
     /**
-     * Find zero or one AuthTeamExternal that matches the filter.
-     * @param {AuthTeamExternalFindUniqueArgs} args - Arguments to find a AuthTeamExternal
+     * Find zero or one PortfolioMember that matches the filter.
+     * @param {PortfolioMemberFindUniqueArgs} args - Arguments to find a PortfolioMember
      * @example
-     * // Get one AuthTeamExternal
-     * const authTeamExternal = await prisma.authTeamExternal.findUnique({
+     * // Get one PortfolioMember
+     * const portfolioMember = await prisma.portfolioMember.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends AuthTeamExternalFindUniqueArgs>(args: SelectSubset<T, AuthTeamExternalFindUniqueArgs<ExtArgs>>): Prisma__AuthTeamExternalClient<$Result.GetResult<Prisma.$AuthTeamExternalPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends PortfolioMemberFindUniqueArgs>(args: SelectSubset<T, PortfolioMemberFindUniqueArgs<ExtArgs>>): Prisma__PortfolioMemberClient<$Result.GetResult<Prisma.$PortfolioMemberPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one AuthTeamExternal that matches the filter or throw an error with `error.code='P2025'`
+     * Find one PortfolioMember that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {AuthTeamExternalFindUniqueOrThrowArgs} args - Arguments to find a AuthTeamExternal
+     * @param {PortfolioMemberFindUniqueOrThrowArgs} args - Arguments to find a PortfolioMember
      * @example
-     * // Get one AuthTeamExternal
-     * const authTeamExternal = await prisma.authTeamExternal.findUniqueOrThrow({
+     * // Get one PortfolioMember
+     * const portfolioMember = await prisma.portfolioMember.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends AuthTeamExternalFindUniqueOrThrowArgs>(args: SelectSubset<T, AuthTeamExternalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AuthTeamExternalClient<$Result.GetResult<Prisma.$AuthTeamExternalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends PortfolioMemberFindUniqueOrThrowArgs>(args: SelectSubset<T, PortfolioMemberFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PortfolioMemberClient<$Result.GetResult<Prisma.$PortfolioMemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first AuthTeamExternal that matches the filter.
+     * Find the first PortfolioMember that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthTeamExternalFindFirstArgs} args - Arguments to find a AuthTeamExternal
+     * @param {PortfolioMemberFindFirstArgs} args - Arguments to find a PortfolioMember
      * @example
-     * // Get one AuthTeamExternal
-     * const authTeamExternal = await prisma.authTeamExternal.findFirst({
+     * // Get one PortfolioMember
+     * const portfolioMember = await prisma.portfolioMember.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends AuthTeamExternalFindFirstArgs>(args?: SelectSubset<T, AuthTeamExternalFindFirstArgs<ExtArgs>>): Prisma__AuthTeamExternalClient<$Result.GetResult<Prisma.$AuthTeamExternalPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends PortfolioMemberFindFirstArgs>(args?: SelectSubset<T, PortfolioMemberFindFirstArgs<ExtArgs>>): Prisma__PortfolioMemberClient<$Result.GetResult<Prisma.$PortfolioMemberPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first AuthTeamExternal that matches the filter or
+     * Find the first PortfolioMember that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthTeamExternalFindFirstOrThrowArgs} args - Arguments to find a AuthTeamExternal
+     * @param {PortfolioMemberFindFirstOrThrowArgs} args - Arguments to find a PortfolioMember
      * @example
-     * // Get one AuthTeamExternal
-     * const authTeamExternal = await prisma.authTeamExternal.findFirstOrThrow({
+     * // Get one PortfolioMember
+     * const portfolioMember = await prisma.portfolioMember.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends AuthTeamExternalFindFirstOrThrowArgs>(args?: SelectSubset<T, AuthTeamExternalFindFirstOrThrowArgs<ExtArgs>>): Prisma__AuthTeamExternalClient<$Result.GetResult<Prisma.$AuthTeamExternalPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends PortfolioMemberFindFirstOrThrowArgs>(args?: SelectSubset<T, PortfolioMemberFindFirstOrThrowArgs<ExtArgs>>): Prisma__PortfolioMemberClient<$Result.GetResult<Prisma.$PortfolioMemberPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more AuthTeamExternals that matches the filter.
+     * Find zero or more PortfolioMembers that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthTeamExternalFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {PortfolioMemberFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all AuthTeamExternals
-     * const authTeamExternals = await prisma.authTeamExternal.findMany()
+     * // Get all PortfolioMembers
+     * const portfolioMembers = await prisma.portfolioMember.findMany()
      * 
-     * // Get first 10 AuthTeamExternals
-     * const authTeamExternals = await prisma.authTeamExternal.findMany({ take: 10 })
+     * // Get first 10 PortfolioMembers
+     * const portfolioMembers = await prisma.portfolioMember.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const authTeamExternalWithIdOnly = await prisma.authTeamExternal.findMany({ select: { id: true } })
+     * const portfolioMemberWithIdOnly = await prisma.portfolioMember.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends AuthTeamExternalFindManyArgs>(args?: SelectSubset<T, AuthTeamExternalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthTeamExternalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends PortfolioMemberFindManyArgs>(args?: SelectSubset<T, PortfolioMemberFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PortfolioMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a AuthTeamExternal.
-     * @param {AuthTeamExternalCreateArgs} args - Arguments to create a AuthTeamExternal.
+     * Create a PortfolioMember.
+     * @param {PortfolioMemberCreateArgs} args - Arguments to create a PortfolioMember.
      * @example
-     * // Create one AuthTeamExternal
-     * const AuthTeamExternal = await prisma.authTeamExternal.create({
+     * // Create one PortfolioMember
+     * const PortfolioMember = await prisma.portfolioMember.create({
      *   data: {
-     *     // ... data to create a AuthTeamExternal
+     *     // ... data to create a PortfolioMember
      *   }
      * })
      * 
      */
-    create<T extends AuthTeamExternalCreateArgs>(args: SelectSubset<T, AuthTeamExternalCreateArgs<ExtArgs>>): Prisma__AuthTeamExternalClient<$Result.GetResult<Prisma.$AuthTeamExternalPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends PortfolioMemberCreateArgs>(args: SelectSubset<T, PortfolioMemberCreateArgs<ExtArgs>>): Prisma__PortfolioMemberClient<$Result.GetResult<Prisma.$PortfolioMemberPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many AuthTeamExternals.
-     * @param {AuthTeamExternalCreateManyArgs} args - Arguments to create many AuthTeamExternals.
+     * Create many PortfolioMembers.
+     * @param {PortfolioMemberCreateManyArgs} args - Arguments to create many PortfolioMembers.
      * @example
-     * // Create many AuthTeamExternals
-     * const authTeamExternal = await prisma.authTeamExternal.createMany({
+     * // Create many PortfolioMembers
+     * const portfolioMember = await prisma.portfolioMember.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends AuthTeamExternalCreateManyArgs>(args?: SelectSubset<T, AuthTeamExternalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends PortfolioMemberCreateManyArgs>(args?: SelectSubset<T, PortfolioMemberCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many AuthTeamExternals and returns the data saved in the database.
-     * @param {AuthTeamExternalCreateManyAndReturnArgs} args - Arguments to create many AuthTeamExternals.
+     * Create many PortfolioMembers and returns the data saved in the database.
+     * @param {PortfolioMemberCreateManyAndReturnArgs} args - Arguments to create many PortfolioMembers.
      * @example
-     * // Create many AuthTeamExternals
-     * const authTeamExternal = await prisma.authTeamExternal.createManyAndReturn({
+     * // Create many PortfolioMembers
+     * const portfolioMember = await prisma.portfolioMember.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many AuthTeamExternals and only return the `id`
-     * const authTeamExternalWithIdOnly = await prisma.authTeamExternal.createManyAndReturn({
+     * // Create many PortfolioMembers and only return the `id`
+     * const portfolioMemberWithIdOnly = await prisma.portfolioMember.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -28938,28 +26575,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends AuthTeamExternalCreateManyAndReturnArgs>(args?: SelectSubset<T, AuthTeamExternalCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthTeamExternalPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends PortfolioMemberCreateManyAndReturnArgs>(args?: SelectSubset<T, PortfolioMemberCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PortfolioMemberPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a AuthTeamExternal.
-     * @param {AuthTeamExternalDeleteArgs} args - Arguments to delete one AuthTeamExternal.
+     * Delete a PortfolioMember.
+     * @param {PortfolioMemberDeleteArgs} args - Arguments to delete one PortfolioMember.
      * @example
-     * // Delete one AuthTeamExternal
-     * const AuthTeamExternal = await prisma.authTeamExternal.delete({
+     * // Delete one PortfolioMember
+     * const PortfolioMember = await prisma.portfolioMember.delete({
      *   where: {
-     *     // ... filter to delete one AuthTeamExternal
+     *     // ... filter to delete one PortfolioMember
      *   }
      * })
      * 
      */
-    delete<T extends AuthTeamExternalDeleteArgs>(args: SelectSubset<T, AuthTeamExternalDeleteArgs<ExtArgs>>): Prisma__AuthTeamExternalClient<$Result.GetResult<Prisma.$AuthTeamExternalPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends PortfolioMemberDeleteArgs>(args: SelectSubset<T, PortfolioMemberDeleteArgs<ExtArgs>>): Prisma__PortfolioMemberClient<$Result.GetResult<Prisma.$PortfolioMemberPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one AuthTeamExternal.
-     * @param {AuthTeamExternalUpdateArgs} args - Arguments to update one AuthTeamExternal.
+     * Update one PortfolioMember.
+     * @param {PortfolioMemberUpdateArgs} args - Arguments to update one PortfolioMember.
      * @example
-     * // Update one AuthTeamExternal
-     * const authTeamExternal = await prisma.authTeamExternal.update({
+     * // Update one PortfolioMember
+     * const portfolioMember = await prisma.portfolioMember.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -28969,30 +26606,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends AuthTeamExternalUpdateArgs>(args: SelectSubset<T, AuthTeamExternalUpdateArgs<ExtArgs>>): Prisma__AuthTeamExternalClient<$Result.GetResult<Prisma.$AuthTeamExternalPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends PortfolioMemberUpdateArgs>(args: SelectSubset<T, PortfolioMemberUpdateArgs<ExtArgs>>): Prisma__PortfolioMemberClient<$Result.GetResult<Prisma.$PortfolioMemberPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more AuthTeamExternals.
-     * @param {AuthTeamExternalDeleteManyArgs} args - Arguments to filter AuthTeamExternals to delete.
+     * Delete zero or more PortfolioMembers.
+     * @param {PortfolioMemberDeleteManyArgs} args - Arguments to filter PortfolioMembers to delete.
      * @example
-     * // Delete a few AuthTeamExternals
-     * const { count } = await prisma.authTeamExternal.deleteMany({
+     * // Delete a few PortfolioMembers
+     * const { count } = await prisma.portfolioMember.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends AuthTeamExternalDeleteManyArgs>(args?: SelectSubset<T, AuthTeamExternalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends PortfolioMemberDeleteManyArgs>(args?: SelectSubset<T, PortfolioMemberDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more AuthTeamExternals.
+     * Update zero or more PortfolioMembers.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthTeamExternalUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {PortfolioMemberUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many AuthTeamExternals
-     * const authTeamExternal = await prisma.authTeamExternal.updateMany({
+     * // Update many PortfolioMembers
+     * const portfolioMember = await prisma.portfolioMember.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -29002,14 +26639,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends AuthTeamExternalUpdateManyArgs>(args: SelectSubset<T, AuthTeamExternalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends PortfolioMemberUpdateManyArgs>(args: SelectSubset<T, PortfolioMemberUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more AuthTeamExternals and returns the data updated in the database.
-     * @param {AuthTeamExternalUpdateManyAndReturnArgs} args - Arguments to update many AuthTeamExternals.
+     * Update zero or more PortfolioMembers and returns the data updated in the database.
+     * @param {PortfolioMemberUpdateManyAndReturnArgs} args - Arguments to update many PortfolioMembers.
      * @example
-     * // Update many AuthTeamExternals
-     * const authTeamExternal = await prisma.authTeamExternal.updateManyAndReturn({
+     * // Update many PortfolioMembers
+     * const portfolioMember = await prisma.portfolioMember.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -29018,8 +26655,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more AuthTeamExternals and only return the `id`
-     * const authTeamExternalWithIdOnly = await prisma.authTeamExternal.updateManyAndReturn({
+     * // Update zero or more PortfolioMembers and only return the `id`
+     * const portfolioMemberWithIdOnly = await prisma.portfolioMember.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -29032,56 +26669,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends AuthTeamExternalUpdateManyAndReturnArgs>(args: SelectSubset<T, AuthTeamExternalUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthTeamExternalPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends PortfolioMemberUpdateManyAndReturnArgs>(args: SelectSubset<T, PortfolioMemberUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PortfolioMemberPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one AuthTeamExternal.
-     * @param {AuthTeamExternalUpsertArgs} args - Arguments to update or create a AuthTeamExternal.
+     * Create or update one PortfolioMember.
+     * @param {PortfolioMemberUpsertArgs} args - Arguments to update or create a PortfolioMember.
      * @example
-     * // Update or create a AuthTeamExternal
-     * const authTeamExternal = await prisma.authTeamExternal.upsert({
+     * // Update or create a PortfolioMember
+     * const portfolioMember = await prisma.portfolioMember.upsert({
      *   create: {
-     *     // ... data to create a AuthTeamExternal
+     *     // ... data to create a PortfolioMember
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the AuthTeamExternal we want to update
+     *     // ... the filter for the PortfolioMember we want to update
      *   }
      * })
      */
-    upsert<T extends AuthTeamExternalUpsertArgs>(args: SelectSubset<T, AuthTeamExternalUpsertArgs<ExtArgs>>): Prisma__AuthTeamExternalClient<$Result.GetResult<Prisma.$AuthTeamExternalPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends PortfolioMemberUpsertArgs>(args: SelectSubset<T, PortfolioMemberUpsertArgs<ExtArgs>>): Prisma__PortfolioMemberClient<$Result.GetResult<Prisma.$PortfolioMemberPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of AuthTeamExternals.
+     * Count the number of PortfolioMembers.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthTeamExternalCountArgs} args - Arguments to filter AuthTeamExternals to count.
+     * @param {PortfolioMemberCountArgs} args - Arguments to filter PortfolioMembers to count.
      * @example
-     * // Count the number of AuthTeamExternals
-     * const count = await prisma.authTeamExternal.count({
+     * // Count the number of PortfolioMembers
+     * const count = await prisma.portfolioMember.count({
      *   where: {
-     *     // ... the filter for the AuthTeamExternals we want to count
+     *     // ... the filter for the PortfolioMembers we want to count
      *   }
      * })
     **/
-    count<T extends AuthTeamExternalCountArgs>(
-      args?: Subset<T, AuthTeamExternalCountArgs>,
+    count<T extends PortfolioMemberCountArgs>(
+      args?: Subset<T, PortfolioMemberCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], AuthTeamExternalCountAggregateOutputType>
+          : GetScalarType<T['select'], PortfolioMemberCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a AuthTeamExternal.
+     * Allows you to perform aggregations operations on a PortfolioMember.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthTeamExternalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {PortfolioMemberAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -29101,13 +26738,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends AuthTeamExternalAggregateArgs>(args: Subset<T, AuthTeamExternalAggregateArgs>): Prisma.PrismaPromise<GetAuthTeamExternalAggregateType<T>>
+    aggregate<T extends PortfolioMemberAggregateArgs>(args: Subset<T, PortfolioMemberAggregateArgs>): Prisma.PrismaPromise<GetPortfolioMemberAggregateType<T>>
 
     /**
-     * Group by AuthTeamExternal.
+     * Group by PortfolioMember.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthTeamExternalGroupByArgs} args - Group by arguments.
+     * @param {PortfolioMemberGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -29122,14 +26759,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends AuthTeamExternalGroupByArgs,
+      T extends PortfolioMemberGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: AuthTeamExternalGroupByArgs['orderBy'] }
-        : { orderBy?: AuthTeamExternalGroupByArgs['orderBy'] },
+        ? { orderBy: PortfolioMemberGroupByArgs['orderBy'] }
+        : { orderBy?: PortfolioMemberGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -29178,24 +26815,23 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, AuthTeamExternalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAuthTeamExternalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, PortfolioMemberGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPortfolioMemberGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the AuthTeamExternal model
+   * Fields of the PortfolioMember model
    */
-  readonly fields: AuthTeamExternalFieldRefs;
+  readonly fields: PortfolioMemberFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for AuthTeamExternal.
+   * The delegate class that acts as a "Promise-like" for PortfolioMember.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__AuthTeamExternalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__PortfolioMemberClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    application<T extends ApplicationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationDefaultArgs<ExtArgs>>): Prisma__ApplicationClient<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    portfolio<T extends PortfolioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PortfolioDefaultArgs<ExtArgs>>): Prisma__PortfolioClient<$Result.GetResult<Prisma.$PortfolioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     account<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    recipient<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -29222,426 +26858,1486 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the AuthTeamExternal model
+   * Fields of the PortfolioMember model
    */
-  interface AuthTeamExternalFieldRefs {
-    readonly id: FieldRef<"AuthTeamExternal", 'String'>
-    readonly appId: FieldRef<"AuthTeamExternal", 'String'>
-    readonly accountId: FieldRef<"AuthTeamExternal", 'String'>
-    readonly recipientId: FieldRef<"AuthTeamExternal", 'String'>
-    readonly isPermanent: FieldRef<"AuthTeamExternal", 'Boolean'>
-    readonly createdAt: FieldRef<"AuthTeamExternal", 'DateTime'>
+  interface PortfolioMemberFieldRefs {
+    readonly id: FieldRef<"PortfolioMember", 'String'>
+    readonly portfolioId: FieldRef<"PortfolioMember", 'String'>
+    readonly accountId: FieldRef<"PortfolioMember", 'String'>
+    readonly details: FieldRef<"PortfolioMember", 'Json'>
   }
     
 
   // Custom InputTypes
   /**
-   * AuthTeamExternal findUnique
+   * PortfolioMember findUnique
    */
-  export type AuthTeamExternalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioMemberFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthTeamExternal
+     * Select specific fields to fetch from the PortfolioMember
      */
-    select?: AuthTeamExternalSelect<ExtArgs> | null
+    select?: PortfolioMemberSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthTeamExternal
+     * Omit specific fields from the PortfolioMember
      */
-    omit?: AuthTeamExternalOmit<ExtArgs> | null
+    omit?: PortfolioMemberOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthTeamExternalInclude<ExtArgs> | null
+    include?: PortfolioMemberInclude<ExtArgs> | null
     /**
-     * Filter, which AuthTeamExternal to fetch.
+     * Filter, which PortfolioMember to fetch.
      */
-    where: AuthTeamExternalWhereUniqueInput
+    where: PortfolioMemberWhereUniqueInput
   }
 
   /**
-   * AuthTeamExternal findUniqueOrThrow
+   * PortfolioMember findUniqueOrThrow
    */
-  export type AuthTeamExternalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioMemberFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthTeamExternal
+     * Select specific fields to fetch from the PortfolioMember
      */
-    select?: AuthTeamExternalSelect<ExtArgs> | null
+    select?: PortfolioMemberSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthTeamExternal
+     * Omit specific fields from the PortfolioMember
      */
-    omit?: AuthTeamExternalOmit<ExtArgs> | null
+    omit?: PortfolioMemberOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthTeamExternalInclude<ExtArgs> | null
+    include?: PortfolioMemberInclude<ExtArgs> | null
     /**
-     * Filter, which AuthTeamExternal to fetch.
+     * Filter, which PortfolioMember to fetch.
      */
-    where: AuthTeamExternalWhereUniqueInput
+    where: PortfolioMemberWhereUniqueInput
   }
 
   /**
-   * AuthTeamExternal findFirst
+   * PortfolioMember findFirst
    */
-  export type AuthTeamExternalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioMemberFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthTeamExternal
+     * Select specific fields to fetch from the PortfolioMember
      */
-    select?: AuthTeamExternalSelect<ExtArgs> | null
+    select?: PortfolioMemberSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthTeamExternal
+     * Omit specific fields from the PortfolioMember
      */
-    omit?: AuthTeamExternalOmit<ExtArgs> | null
+    omit?: PortfolioMemberOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthTeamExternalInclude<ExtArgs> | null
+    include?: PortfolioMemberInclude<ExtArgs> | null
     /**
-     * Filter, which AuthTeamExternal to fetch.
+     * Filter, which PortfolioMember to fetch.
      */
-    where?: AuthTeamExternalWhereInput
+    where?: PortfolioMemberWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of AuthTeamExternals to fetch.
+     * Determine the order of PortfolioMembers to fetch.
      */
-    orderBy?: AuthTeamExternalOrderByWithRelationInput | AuthTeamExternalOrderByWithRelationInput[]
+    orderBy?: PortfolioMemberOrderByWithRelationInput | PortfolioMemberOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for AuthTeamExternals.
+     * Sets the position for searching for PortfolioMembers.
      */
-    cursor?: AuthTeamExternalWhereUniqueInput
+    cursor?: PortfolioMemberWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` AuthTeamExternals from the position of the cursor.
+     * Take `±n` PortfolioMembers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` AuthTeamExternals.
+     * Skip the first `n` PortfolioMembers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of AuthTeamExternals.
+     * Filter by unique combinations of PortfolioMembers.
      */
-    distinct?: AuthTeamExternalScalarFieldEnum | AuthTeamExternalScalarFieldEnum[]
+    distinct?: PortfolioMemberScalarFieldEnum | PortfolioMemberScalarFieldEnum[]
   }
 
   /**
-   * AuthTeamExternal findFirstOrThrow
+   * PortfolioMember findFirstOrThrow
    */
-  export type AuthTeamExternalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioMemberFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthTeamExternal
+     * Select specific fields to fetch from the PortfolioMember
      */
-    select?: AuthTeamExternalSelect<ExtArgs> | null
+    select?: PortfolioMemberSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthTeamExternal
+     * Omit specific fields from the PortfolioMember
      */
-    omit?: AuthTeamExternalOmit<ExtArgs> | null
+    omit?: PortfolioMemberOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthTeamExternalInclude<ExtArgs> | null
+    include?: PortfolioMemberInclude<ExtArgs> | null
     /**
-     * Filter, which AuthTeamExternal to fetch.
+     * Filter, which PortfolioMember to fetch.
      */
-    where?: AuthTeamExternalWhereInput
+    where?: PortfolioMemberWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of AuthTeamExternals to fetch.
+     * Determine the order of PortfolioMembers to fetch.
      */
-    orderBy?: AuthTeamExternalOrderByWithRelationInput | AuthTeamExternalOrderByWithRelationInput[]
+    orderBy?: PortfolioMemberOrderByWithRelationInput | PortfolioMemberOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for AuthTeamExternals.
+     * Sets the position for searching for PortfolioMembers.
      */
-    cursor?: AuthTeamExternalWhereUniqueInput
+    cursor?: PortfolioMemberWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` AuthTeamExternals from the position of the cursor.
+     * Take `±n` PortfolioMembers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` AuthTeamExternals.
+     * Skip the first `n` PortfolioMembers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of AuthTeamExternals.
+     * Filter by unique combinations of PortfolioMembers.
      */
-    distinct?: AuthTeamExternalScalarFieldEnum | AuthTeamExternalScalarFieldEnum[]
+    distinct?: PortfolioMemberScalarFieldEnum | PortfolioMemberScalarFieldEnum[]
   }
 
   /**
-   * AuthTeamExternal findMany
+   * PortfolioMember findMany
    */
-  export type AuthTeamExternalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioMemberFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthTeamExternal
+     * Select specific fields to fetch from the PortfolioMember
      */
-    select?: AuthTeamExternalSelect<ExtArgs> | null
+    select?: PortfolioMemberSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthTeamExternal
+     * Omit specific fields from the PortfolioMember
      */
-    omit?: AuthTeamExternalOmit<ExtArgs> | null
+    omit?: PortfolioMemberOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthTeamExternalInclude<ExtArgs> | null
+    include?: PortfolioMemberInclude<ExtArgs> | null
     /**
-     * Filter, which AuthTeamExternals to fetch.
+     * Filter, which PortfolioMembers to fetch.
      */
-    where?: AuthTeamExternalWhereInput
+    where?: PortfolioMemberWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of AuthTeamExternals to fetch.
+     * Determine the order of PortfolioMembers to fetch.
      */
-    orderBy?: AuthTeamExternalOrderByWithRelationInput | AuthTeamExternalOrderByWithRelationInput[]
+    orderBy?: PortfolioMemberOrderByWithRelationInput | PortfolioMemberOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing AuthTeamExternals.
+     * Sets the position for listing PortfolioMembers.
      */
-    cursor?: AuthTeamExternalWhereUniqueInput
+    cursor?: PortfolioMemberWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` AuthTeamExternals from the position of the cursor.
+     * Take `±n` PortfolioMembers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` AuthTeamExternals.
+     * Skip the first `n` PortfolioMembers.
      */
     skip?: number
-    distinct?: AuthTeamExternalScalarFieldEnum | AuthTeamExternalScalarFieldEnum[]
+    distinct?: PortfolioMemberScalarFieldEnum | PortfolioMemberScalarFieldEnum[]
   }
 
   /**
-   * AuthTeamExternal create
+   * PortfolioMember create
    */
-  export type AuthTeamExternalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioMemberCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthTeamExternal
+     * Select specific fields to fetch from the PortfolioMember
      */
-    select?: AuthTeamExternalSelect<ExtArgs> | null
+    select?: PortfolioMemberSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthTeamExternal
+     * Omit specific fields from the PortfolioMember
      */
-    omit?: AuthTeamExternalOmit<ExtArgs> | null
+    omit?: PortfolioMemberOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthTeamExternalInclude<ExtArgs> | null
+    include?: PortfolioMemberInclude<ExtArgs> | null
     /**
-     * The data needed to create a AuthTeamExternal.
+     * The data needed to create a PortfolioMember.
      */
-    data: XOR<AuthTeamExternalCreateInput, AuthTeamExternalUncheckedCreateInput>
+    data: XOR<PortfolioMemberCreateInput, PortfolioMemberUncheckedCreateInput>
   }
 
   /**
-   * AuthTeamExternal createMany
+   * PortfolioMember createMany
    */
-  export type AuthTeamExternalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioMemberCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many AuthTeamExternals.
+     * The data used to create many PortfolioMembers.
      */
-    data: AuthTeamExternalCreateManyInput | AuthTeamExternalCreateManyInput[]
+    data: PortfolioMemberCreateManyInput | PortfolioMemberCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * AuthTeamExternal createManyAndReturn
+   * PortfolioMember createManyAndReturn
    */
-  export type AuthTeamExternalCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioMemberCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthTeamExternal
+     * Select specific fields to fetch from the PortfolioMember
      */
-    select?: AuthTeamExternalSelectCreateManyAndReturn<ExtArgs> | null
+    select?: PortfolioMemberSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthTeamExternal
+     * Omit specific fields from the PortfolioMember
      */
-    omit?: AuthTeamExternalOmit<ExtArgs> | null
+    omit?: PortfolioMemberOmit<ExtArgs> | null
     /**
-     * The data used to create many AuthTeamExternals.
+     * The data used to create many PortfolioMembers.
      */
-    data: AuthTeamExternalCreateManyInput | AuthTeamExternalCreateManyInput[]
+    data: PortfolioMemberCreateManyInput | PortfolioMemberCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthTeamExternalIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: PortfolioMemberIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * AuthTeamExternal update
+   * PortfolioMember update
    */
-  export type AuthTeamExternalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioMemberUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthTeamExternal
+     * Select specific fields to fetch from the PortfolioMember
      */
-    select?: AuthTeamExternalSelect<ExtArgs> | null
+    select?: PortfolioMemberSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthTeamExternal
+     * Omit specific fields from the PortfolioMember
      */
-    omit?: AuthTeamExternalOmit<ExtArgs> | null
+    omit?: PortfolioMemberOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthTeamExternalInclude<ExtArgs> | null
+    include?: PortfolioMemberInclude<ExtArgs> | null
     /**
-     * The data needed to update a AuthTeamExternal.
+     * The data needed to update a PortfolioMember.
      */
-    data: XOR<AuthTeamExternalUpdateInput, AuthTeamExternalUncheckedUpdateInput>
+    data: XOR<PortfolioMemberUpdateInput, PortfolioMemberUncheckedUpdateInput>
     /**
-     * Choose, which AuthTeamExternal to update.
+     * Choose, which PortfolioMember to update.
      */
-    where: AuthTeamExternalWhereUniqueInput
+    where: PortfolioMemberWhereUniqueInput
   }
 
   /**
-   * AuthTeamExternal updateMany
+   * PortfolioMember updateMany
    */
-  export type AuthTeamExternalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioMemberUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update AuthTeamExternals.
+     * The data used to update PortfolioMembers.
      */
-    data: XOR<AuthTeamExternalUpdateManyMutationInput, AuthTeamExternalUncheckedUpdateManyInput>
+    data: XOR<PortfolioMemberUpdateManyMutationInput, PortfolioMemberUncheckedUpdateManyInput>
     /**
-     * Filter which AuthTeamExternals to update
+     * Filter which PortfolioMembers to update
      */
-    where?: AuthTeamExternalWhereInput
+    where?: PortfolioMemberWhereInput
     /**
-     * Limit how many AuthTeamExternals to update.
+     * Limit how many PortfolioMembers to update.
      */
     limit?: number
   }
 
   /**
-   * AuthTeamExternal updateManyAndReturn
+   * PortfolioMember updateManyAndReturn
    */
-  export type AuthTeamExternalUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioMemberUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthTeamExternal
+     * Select specific fields to fetch from the PortfolioMember
      */
-    select?: AuthTeamExternalSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: PortfolioMemberSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthTeamExternal
+     * Omit specific fields from the PortfolioMember
      */
-    omit?: AuthTeamExternalOmit<ExtArgs> | null
+    omit?: PortfolioMemberOmit<ExtArgs> | null
     /**
-     * The data used to update AuthTeamExternals.
+     * The data used to update PortfolioMembers.
      */
-    data: XOR<AuthTeamExternalUpdateManyMutationInput, AuthTeamExternalUncheckedUpdateManyInput>
+    data: XOR<PortfolioMemberUpdateManyMutationInput, PortfolioMemberUncheckedUpdateManyInput>
     /**
-     * Filter which AuthTeamExternals to update
+     * Filter which PortfolioMembers to update
      */
-    where?: AuthTeamExternalWhereInput
+    where?: PortfolioMemberWhereInput
     /**
-     * Limit how many AuthTeamExternals to update.
+     * Limit how many PortfolioMembers to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthTeamExternalIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: PortfolioMemberIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * AuthTeamExternal upsert
+   * PortfolioMember upsert
    */
-  export type AuthTeamExternalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioMemberUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthTeamExternal
+     * Select specific fields to fetch from the PortfolioMember
      */
-    select?: AuthTeamExternalSelect<ExtArgs> | null
+    select?: PortfolioMemberSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthTeamExternal
+     * Omit specific fields from the PortfolioMember
      */
-    omit?: AuthTeamExternalOmit<ExtArgs> | null
+    omit?: PortfolioMemberOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthTeamExternalInclude<ExtArgs> | null
+    include?: PortfolioMemberInclude<ExtArgs> | null
     /**
-     * The filter to search for the AuthTeamExternal to update in case it exists.
+     * The filter to search for the PortfolioMember to update in case it exists.
      */
-    where: AuthTeamExternalWhereUniqueInput
+    where: PortfolioMemberWhereUniqueInput
     /**
-     * In case the AuthTeamExternal found by the `where` argument doesn't exist, create a new AuthTeamExternal with this data.
+     * In case the PortfolioMember found by the `where` argument doesn't exist, create a new PortfolioMember with this data.
      */
-    create: XOR<AuthTeamExternalCreateInput, AuthTeamExternalUncheckedCreateInput>
+    create: XOR<PortfolioMemberCreateInput, PortfolioMemberUncheckedCreateInput>
     /**
-     * In case the AuthTeamExternal was found with the provided `where` argument, update it with this data.
+     * In case the PortfolioMember was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<AuthTeamExternalUpdateInput, AuthTeamExternalUncheckedUpdateInput>
+    update: XOR<PortfolioMemberUpdateInput, PortfolioMemberUncheckedUpdateInput>
   }
 
   /**
-   * AuthTeamExternal delete
+   * PortfolioMember delete
    */
-  export type AuthTeamExternalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioMemberDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthTeamExternal
+     * Select specific fields to fetch from the PortfolioMember
      */
-    select?: AuthTeamExternalSelect<ExtArgs> | null
+    select?: PortfolioMemberSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthTeamExternal
+     * Omit specific fields from the PortfolioMember
      */
-    omit?: AuthTeamExternalOmit<ExtArgs> | null
+    omit?: PortfolioMemberOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthTeamExternalInclude<ExtArgs> | null
+    include?: PortfolioMemberInclude<ExtArgs> | null
     /**
-     * Filter which AuthTeamExternal to delete.
+     * Filter which PortfolioMember to delete.
      */
-    where: AuthTeamExternalWhereUniqueInput
+    where: PortfolioMemberWhereUniqueInput
   }
 
   /**
-   * AuthTeamExternal deleteMany
+   * PortfolioMember deleteMany
    */
-  export type AuthTeamExternalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioMemberDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which AuthTeamExternals to delete
+     * Filter which PortfolioMembers to delete
      */
-    where?: AuthTeamExternalWhereInput
+    where?: PortfolioMemberWhereInput
     /**
-     * Limit how many AuthTeamExternals to delete.
+     * Limit how many PortfolioMembers to delete.
      */
     limit?: number
   }
 
   /**
-   * AuthTeamExternal without action
+   * PortfolioMember without action
    */
-  export type AuthTeamExternalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PortfolioMemberDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthTeamExternal
+     * Select specific fields to fetch from the PortfolioMember
      */
-    select?: AuthTeamExternalSelect<ExtArgs> | null
+    select?: PortfolioMemberSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthTeamExternal
+     * Omit specific fields from the PortfolioMember
      */
-    omit?: AuthTeamExternalOmit<ExtArgs> | null
+    omit?: PortfolioMemberOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthTeamExternalInclude<ExtArgs> | null
+    include?: PortfolioMemberInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PortfolioRole
+   */
+
+  export type AggregatePortfolioRole = {
+    _count: PortfolioRoleCountAggregateOutputType | null
+    _min: PortfolioRoleMinAggregateOutputType | null
+    _max: PortfolioRoleMaxAggregateOutputType | null
+  }
+
+  export type PortfolioRoleMinAggregateOutputType = {
+    id: string | null
+    accountId: string | null
+    portfolioId: string | null
+    roleId: string | null
+  }
+
+  export type PortfolioRoleMaxAggregateOutputType = {
+    id: string | null
+    accountId: string | null
+    portfolioId: string | null
+    roleId: string | null
+  }
+
+  export type PortfolioRoleCountAggregateOutputType = {
+    id: number
+    accountId: number
+    portfolioId: number
+    roleId: number
+    details: number
+    _all: number
+  }
+
+
+  export type PortfolioRoleMinAggregateInputType = {
+    id?: true
+    accountId?: true
+    portfolioId?: true
+    roleId?: true
+  }
+
+  export type PortfolioRoleMaxAggregateInputType = {
+    id?: true
+    accountId?: true
+    portfolioId?: true
+    roleId?: true
+  }
+
+  export type PortfolioRoleCountAggregateInputType = {
+    id?: true
+    accountId?: true
+    portfolioId?: true
+    roleId?: true
+    details?: true
+    _all?: true
+  }
+
+  export type PortfolioRoleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PortfolioRole to aggregate.
+     */
+    where?: PortfolioRoleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PortfolioRoles to fetch.
+     */
+    orderBy?: PortfolioRoleOrderByWithRelationInput | PortfolioRoleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PortfolioRoleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PortfolioRoles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PortfolioRoles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PortfolioRoles
+    **/
+    _count?: true | PortfolioRoleCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PortfolioRoleMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PortfolioRoleMaxAggregateInputType
+  }
+
+  export type GetPortfolioRoleAggregateType<T extends PortfolioRoleAggregateArgs> = {
+        [P in keyof T & keyof AggregatePortfolioRole]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePortfolioRole[P]>
+      : GetScalarType<T[P], AggregatePortfolioRole[P]>
+  }
+
+
+
+
+  export type PortfolioRoleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PortfolioRoleWhereInput
+    orderBy?: PortfolioRoleOrderByWithAggregationInput | PortfolioRoleOrderByWithAggregationInput[]
+    by: PortfolioRoleScalarFieldEnum[] | PortfolioRoleScalarFieldEnum
+    having?: PortfolioRoleScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PortfolioRoleCountAggregateInputType | true
+    _min?: PortfolioRoleMinAggregateInputType
+    _max?: PortfolioRoleMaxAggregateInputType
+  }
+
+  export type PortfolioRoleGroupByOutputType = {
+    id: string
+    accountId: string
+    portfolioId: string
+    roleId: string
+    details: JsonValue | null
+    _count: PortfolioRoleCountAggregateOutputType | null
+    _min: PortfolioRoleMinAggregateOutputType | null
+    _max: PortfolioRoleMaxAggregateOutputType | null
+  }
+
+  type GetPortfolioRoleGroupByPayload<T extends PortfolioRoleGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PortfolioRoleGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PortfolioRoleGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PortfolioRoleGroupByOutputType[P]>
+            : GetScalarType<T[P], PortfolioRoleGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PortfolioRoleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    accountId?: boolean
+    portfolioId?: boolean
+    roleId?: boolean
+    details?: boolean
+    account?: boolean | AccountDefaultArgs<ExtArgs>
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["portfolioRole"]>
+
+  export type PortfolioRoleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    accountId?: boolean
+    portfolioId?: boolean
+    roleId?: boolean
+    details?: boolean
+    account?: boolean | AccountDefaultArgs<ExtArgs>
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["portfolioRole"]>
+
+  export type PortfolioRoleSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    accountId?: boolean
+    portfolioId?: boolean
+    roleId?: boolean
+    details?: boolean
+    account?: boolean | AccountDefaultArgs<ExtArgs>
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["portfolioRole"]>
+
+  export type PortfolioRoleSelectScalar = {
+    id?: boolean
+    accountId?: boolean
+    portfolioId?: boolean
+    roleId?: boolean
+    details?: boolean
+  }
+
+  export type PortfolioRoleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "portfolioId" | "roleId" | "details", ExtArgs["result"]["portfolioRole"]>
+  export type PortfolioRoleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    account?: boolean | AccountDefaultArgs<ExtArgs>
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
+  }
+  export type PortfolioRoleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    account?: boolean | AccountDefaultArgs<ExtArgs>
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
+  }
+  export type PortfolioRoleIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    account?: boolean | AccountDefaultArgs<ExtArgs>
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
+  }
+
+  export type $PortfolioRolePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PortfolioRole"
+    objects: {
+      account: Prisma.$AccountPayload<ExtArgs>
+      portfolio: Prisma.$PortfolioPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      accountId: string
+      portfolioId: string
+      roleId: string
+      details: Prisma.JsonValue | null
+    }, ExtArgs["result"]["portfolioRole"]>
+    composites: {}
+  }
+
+  type PortfolioRoleGetPayload<S extends boolean | null | undefined | PortfolioRoleDefaultArgs> = $Result.GetResult<Prisma.$PortfolioRolePayload, S>
+
+  type PortfolioRoleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PortfolioRoleFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PortfolioRoleCountAggregateInputType | true
+    }
+
+  export interface PortfolioRoleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PortfolioRole'], meta: { name: 'PortfolioRole' } }
+    /**
+     * Find zero or one PortfolioRole that matches the filter.
+     * @param {PortfolioRoleFindUniqueArgs} args - Arguments to find a PortfolioRole
+     * @example
+     * // Get one PortfolioRole
+     * const portfolioRole = await prisma.portfolioRole.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PortfolioRoleFindUniqueArgs>(args: SelectSubset<T, PortfolioRoleFindUniqueArgs<ExtArgs>>): Prisma__PortfolioRoleClient<$Result.GetResult<Prisma.$PortfolioRolePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PortfolioRole that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PortfolioRoleFindUniqueOrThrowArgs} args - Arguments to find a PortfolioRole
+     * @example
+     * // Get one PortfolioRole
+     * const portfolioRole = await prisma.portfolioRole.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PortfolioRoleFindUniqueOrThrowArgs>(args: SelectSubset<T, PortfolioRoleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PortfolioRoleClient<$Result.GetResult<Prisma.$PortfolioRolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PortfolioRole that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PortfolioRoleFindFirstArgs} args - Arguments to find a PortfolioRole
+     * @example
+     * // Get one PortfolioRole
+     * const portfolioRole = await prisma.portfolioRole.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PortfolioRoleFindFirstArgs>(args?: SelectSubset<T, PortfolioRoleFindFirstArgs<ExtArgs>>): Prisma__PortfolioRoleClient<$Result.GetResult<Prisma.$PortfolioRolePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PortfolioRole that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PortfolioRoleFindFirstOrThrowArgs} args - Arguments to find a PortfolioRole
+     * @example
+     * // Get one PortfolioRole
+     * const portfolioRole = await prisma.portfolioRole.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PortfolioRoleFindFirstOrThrowArgs>(args?: SelectSubset<T, PortfolioRoleFindFirstOrThrowArgs<ExtArgs>>): Prisma__PortfolioRoleClient<$Result.GetResult<Prisma.$PortfolioRolePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PortfolioRoles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PortfolioRoleFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PortfolioRoles
+     * const portfolioRoles = await prisma.portfolioRole.findMany()
+     * 
+     * // Get first 10 PortfolioRoles
+     * const portfolioRoles = await prisma.portfolioRole.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const portfolioRoleWithIdOnly = await prisma.portfolioRole.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PortfolioRoleFindManyArgs>(args?: SelectSubset<T, PortfolioRoleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PortfolioRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PortfolioRole.
+     * @param {PortfolioRoleCreateArgs} args - Arguments to create a PortfolioRole.
+     * @example
+     * // Create one PortfolioRole
+     * const PortfolioRole = await prisma.portfolioRole.create({
+     *   data: {
+     *     // ... data to create a PortfolioRole
+     *   }
+     * })
+     * 
+     */
+    create<T extends PortfolioRoleCreateArgs>(args: SelectSubset<T, PortfolioRoleCreateArgs<ExtArgs>>): Prisma__PortfolioRoleClient<$Result.GetResult<Prisma.$PortfolioRolePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PortfolioRoles.
+     * @param {PortfolioRoleCreateManyArgs} args - Arguments to create many PortfolioRoles.
+     * @example
+     * // Create many PortfolioRoles
+     * const portfolioRole = await prisma.portfolioRole.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PortfolioRoleCreateManyArgs>(args?: SelectSubset<T, PortfolioRoleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PortfolioRoles and returns the data saved in the database.
+     * @param {PortfolioRoleCreateManyAndReturnArgs} args - Arguments to create many PortfolioRoles.
+     * @example
+     * // Create many PortfolioRoles
+     * const portfolioRole = await prisma.portfolioRole.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PortfolioRoles and only return the `id`
+     * const portfolioRoleWithIdOnly = await prisma.portfolioRole.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PortfolioRoleCreateManyAndReturnArgs>(args?: SelectSubset<T, PortfolioRoleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PortfolioRolePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PortfolioRole.
+     * @param {PortfolioRoleDeleteArgs} args - Arguments to delete one PortfolioRole.
+     * @example
+     * // Delete one PortfolioRole
+     * const PortfolioRole = await prisma.portfolioRole.delete({
+     *   where: {
+     *     // ... filter to delete one PortfolioRole
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PortfolioRoleDeleteArgs>(args: SelectSubset<T, PortfolioRoleDeleteArgs<ExtArgs>>): Prisma__PortfolioRoleClient<$Result.GetResult<Prisma.$PortfolioRolePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PortfolioRole.
+     * @param {PortfolioRoleUpdateArgs} args - Arguments to update one PortfolioRole.
+     * @example
+     * // Update one PortfolioRole
+     * const portfolioRole = await prisma.portfolioRole.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PortfolioRoleUpdateArgs>(args: SelectSubset<T, PortfolioRoleUpdateArgs<ExtArgs>>): Prisma__PortfolioRoleClient<$Result.GetResult<Prisma.$PortfolioRolePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PortfolioRoles.
+     * @param {PortfolioRoleDeleteManyArgs} args - Arguments to filter PortfolioRoles to delete.
+     * @example
+     * // Delete a few PortfolioRoles
+     * const { count } = await prisma.portfolioRole.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PortfolioRoleDeleteManyArgs>(args?: SelectSubset<T, PortfolioRoleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PortfolioRoles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PortfolioRoleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PortfolioRoles
+     * const portfolioRole = await prisma.portfolioRole.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PortfolioRoleUpdateManyArgs>(args: SelectSubset<T, PortfolioRoleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PortfolioRoles and returns the data updated in the database.
+     * @param {PortfolioRoleUpdateManyAndReturnArgs} args - Arguments to update many PortfolioRoles.
+     * @example
+     * // Update many PortfolioRoles
+     * const portfolioRole = await prisma.portfolioRole.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PortfolioRoles and only return the `id`
+     * const portfolioRoleWithIdOnly = await prisma.portfolioRole.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PortfolioRoleUpdateManyAndReturnArgs>(args: SelectSubset<T, PortfolioRoleUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PortfolioRolePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PortfolioRole.
+     * @param {PortfolioRoleUpsertArgs} args - Arguments to update or create a PortfolioRole.
+     * @example
+     * // Update or create a PortfolioRole
+     * const portfolioRole = await prisma.portfolioRole.upsert({
+     *   create: {
+     *     // ... data to create a PortfolioRole
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PortfolioRole we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PortfolioRoleUpsertArgs>(args: SelectSubset<T, PortfolioRoleUpsertArgs<ExtArgs>>): Prisma__PortfolioRoleClient<$Result.GetResult<Prisma.$PortfolioRolePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PortfolioRoles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PortfolioRoleCountArgs} args - Arguments to filter PortfolioRoles to count.
+     * @example
+     * // Count the number of PortfolioRoles
+     * const count = await prisma.portfolioRole.count({
+     *   where: {
+     *     // ... the filter for the PortfolioRoles we want to count
+     *   }
+     * })
+    **/
+    count<T extends PortfolioRoleCountArgs>(
+      args?: Subset<T, PortfolioRoleCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PortfolioRoleCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PortfolioRole.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PortfolioRoleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PortfolioRoleAggregateArgs>(args: Subset<T, PortfolioRoleAggregateArgs>): Prisma.PrismaPromise<GetPortfolioRoleAggregateType<T>>
+
+    /**
+     * Group by PortfolioRole.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PortfolioRoleGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PortfolioRoleGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PortfolioRoleGroupByArgs['orderBy'] }
+        : { orderBy?: PortfolioRoleGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PortfolioRoleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPortfolioRoleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PortfolioRole model
+   */
+  readonly fields: PortfolioRoleFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PortfolioRole.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PortfolioRoleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    account<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    portfolio<T extends PortfolioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PortfolioDefaultArgs<ExtArgs>>): Prisma__PortfolioClient<$Result.GetResult<Prisma.$PortfolioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PortfolioRole model
+   */
+  interface PortfolioRoleFieldRefs {
+    readonly id: FieldRef<"PortfolioRole", 'String'>
+    readonly accountId: FieldRef<"PortfolioRole", 'String'>
+    readonly portfolioId: FieldRef<"PortfolioRole", 'String'>
+    readonly roleId: FieldRef<"PortfolioRole", 'String'>
+    readonly details: FieldRef<"PortfolioRole", 'Json'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PortfolioRole findUnique
+   */
+  export type PortfolioRoleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PortfolioRole
+     */
+    select?: PortfolioRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PortfolioRole
+     */
+    omit?: PortfolioRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PortfolioRoleInclude<ExtArgs> | null
+    /**
+     * Filter, which PortfolioRole to fetch.
+     */
+    where: PortfolioRoleWhereUniqueInput
+  }
+
+  /**
+   * PortfolioRole findUniqueOrThrow
+   */
+  export type PortfolioRoleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PortfolioRole
+     */
+    select?: PortfolioRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PortfolioRole
+     */
+    omit?: PortfolioRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PortfolioRoleInclude<ExtArgs> | null
+    /**
+     * Filter, which PortfolioRole to fetch.
+     */
+    where: PortfolioRoleWhereUniqueInput
+  }
+
+  /**
+   * PortfolioRole findFirst
+   */
+  export type PortfolioRoleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PortfolioRole
+     */
+    select?: PortfolioRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PortfolioRole
+     */
+    omit?: PortfolioRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PortfolioRoleInclude<ExtArgs> | null
+    /**
+     * Filter, which PortfolioRole to fetch.
+     */
+    where?: PortfolioRoleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PortfolioRoles to fetch.
+     */
+    orderBy?: PortfolioRoleOrderByWithRelationInput | PortfolioRoleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PortfolioRoles.
+     */
+    cursor?: PortfolioRoleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PortfolioRoles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PortfolioRoles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PortfolioRoles.
+     */
+    distinct?: PortfolioRoleScalarFieldEnum | PortfolioRoleScalarFieldEnum[]
+  }
+
+  /**
+   * PortfolioRole findFirstOrThrow
+   */
+  export type PortfolioRoleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PortfolioRole
+     */
+    select?: PortfolioRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PortfolioRole
+     */
+    omit?: PortfolioRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PortfolioRoleInclude<ExtArgs> | null
+    /**
+     * Filter, which PortfolioRole to fetch.
+     */
+    where?: PortfolioRoleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PortfolioRoles to fetch.
+     */
+    orderBy?: PortfolioRoleOrderByWithRelationInput | PortfolioRoleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PortfolioRoles.
+     */
+    cursor?: PortfolioRoleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PortfolioRoles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PortfolioRoles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PortfolioRoles.
+     */
+    distinct?: PortfolioRoleScalarFieldEnum | PortfolioRoleScalarFieldEnum[]
+  }
+
+  /**
+   * PortfolioRole findMany
+   */
+  export type PortfolioRoleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PortfolioRole
+     */
+    select?: PortfolioRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PortfolioRole
+     */
+    omit?: PortfolioRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PortfolioRoleInclude<ExtArgs> | null
+    /**
+     * Filter, which PortfolioRoles to fetch.
+     */
+    where?: PortfolioRoleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PortfolioRoles to fetch.
+     */
+    orderBy?: PortfolioRoleOrderByWithRelationInput | PortfolioRoleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PortfolioRoles.
+     */
+    cursor?: PortfolioRoleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PortfolioRoles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PortfolioRoles.
+     */
+    skip?: number
+    distinct?: PortfolioRoleScalarFieldEnum | PortfolioRoleScalarFieldEnum[]
+  }
+
+  /**
+   * PortfolioRole create
+   */
+  export type PortfolioRoleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PortfolioRole
+     */
+    select?: PortfolioRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PortfolioRole
+     */
+    omit?: PortfolioRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PortfolioRoleInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PortfolioRole.
+     */
+    data: XOR<PortfolioRoleCreateInput, PortfolioRoleUncheckedCreateInput>
+  }
+
+  /**
+   * PortfolioRole createMany
+   */
+  export type PortfolioRoleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PortfolioRoles.
+     */
+    data: PortfolioRoleCreateManyInput | PortfolioRoleCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PortfolioRole createManyAndReturn
+   */
+  export type PortfolioRoleCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PortfolioRole
+     */
+    select?: PortfolioRoleSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PortfolioRole
+     */
+    omit?: PortfolioRoleOmit<ExtArgs> | null
+    /**
+     * The data used to create many PortfolioRoles.
+     */
+    data: PortfolioRoleCreateManyInput | PortfolioRoleCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PortfolioRoleIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PortfolioRole update
+   */
+  export type PortfolioRoleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PortfolioRole
+     */
+    select?: PortfolioRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PortfolioRole
+     */
+    omit?: PortfolioRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PortfolioRoleInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PortfolioRole.
+     */
+    data: XOR<PortfolioRoleUpdateInput, PortfolioRoleUncheckedUpdateInput>
+    /**
+     * Choose, which PortfolioRole to update.
+     */
+    where: PortfolioRoleWhereUniqueInput
+  }
+
+  /**
+   * PortfolioRole updateMany
+   */
+  export type PortfolioRoleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PortfolioRoles.
+     */
+    data: XOR<PortfolioRoleUpdateManyMutationInput, PortfolioRoleUncheckedUpdateManyInput>
+    /**
+     * Filter which PortfolioRoles to update
+     */
+    where?: PortfolioRoleWhereInput
+    /**
+     * Limit how many PortfolioRoles to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PortfolioRole updateManyAndReturn
+   */
+  export type PortfolioRoleUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PortfolioRole
+     */
+    select?: PortfolioRoleSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PortfolioRole
+     */
+    omit?: PortfolioRoleOmit<ExtArgs> | null
+    /**
+     * The data used to update PortfolioRoles.
+     */
+    data: XOR<PortfolioRoleUpdateManyMutationInput, PortfolioRoleUncheckedUpdateManyInput>
+    /**
+     * Filter which PortfolioRoles to update
+     */
+    where?: PortfolioRoleWhereInput
+    /**
+     * Limit how many PortfolioRoles to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PortfolioRoleIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PortfolioRole upsert
+   */
+  export type PortfolioRoleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PortfolioRole
+     */
+    select?: PortfolioRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PortfolioRole
+     */
+    omit?: PortfolioRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PortfolioRoleInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PortfolioRole to update in case it exists.
+     */
+    where: PortfolioRoleWhereUniqueInput
+    /**
+     * In case the PortfolioRole found by the `where` argument doesn't exist, create a new PortfolioRole with this data.
+     */
+    create: XOR<PortfolioRoleCreateInput, PortfolioRoleUncheckedCreateInput>
+    /**
+     * In case the PortfolioRole was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PortfolioRoleUpdateInput, PortfolioRoleUncheckedUpdateInput>
+  }
+
+  /**
+   * PortfolioRole delete
+   */
+  export type PortfolioRoleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PortfolioRole
+     */
+    select?: PortfolioRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PortfolioRole
+     */
+    omit?: PortfolioRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PortfolioRoleInclude<ExtArgs> | null
+    /**
+     * Filter which PortfolioRole to delete.
+     */
+    where: PortfolioRoleWhereUniqueInput
+  }
+
+  /**
+   * PortfolioRole deleteMany
+   */
+  export type PortfolioRoleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PortfolioRoles to delete
+     */
+    where?: PortfolioRoleWhereInput
+    /**
+     * Limit how many PortfolioRoles to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PortfolioRole without action
+   */
+  export type PortfolioRoleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PortfolioRole
+     */
+    select?: PortfolioRoleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PortfolioRole
+     */
+    omit?: PortfolioRoleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PortfolioRoleInclude<ExtArgs> | null
   }
 
 
@@ -34262,58 +32958,46 @@ export namespace Prisma {
   export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
 
 
-  export const AssetGroupInfoScalarFieldEnum: {
+  export const PortfolioScalarFieldEnum: {
     id: 'id',
     name: 'name',
+    description: 'description',
+    dateCreated: 'dateCreated'
+  };
+
+  export type PortfolioScalarFieldEnum = (typeof PortfolioScalarFieldEnum)[keyof typeof PortfolioScalarFieldEnum]
+
+
+  export const PortfolioAssetScalarFieldEnum: {
+    id: 'id',
+    portfolioId: 'portfolioId',
+    assetType: 'assetType',
+    assetId: 'assetId',
     details: 'details'
   };
 
-  export type AssetGroupInfoScalarFieldEnum = (typeof AssetGroupInfoScalarFieldEnum)[keyof typeof AssetGroupInfoScalarFieldEnum]
+  export type PortfolioAssetScalarFieldEnum = (typeof PortfolioAssetScalarFieldEnum)[keyof typeof PortfolioAssetScalarFieldEnum]
 
 
-  export const AssetGroupMemberScalarFieldEnum: {
+  export const PortfolioMemberScalarFieldEnum: {
     id: 'id',
-    assetGroup: 'assetGroup',
-    member: 'member',
-    isPermanent: 'isPermanent',
-    validTill: 'validTill',
-    hasFullPermit: 'hasFullPermit'
-  };
-
-  export type AssetGroupMemberScalarFieldEnum = (typeof AssetGroupMemberScalarFieldEnum)[keyof typeof AssetGroupMemberScalarFieldEnum]
-
-
-  export const AssetScalarFieldEnum: {
-    id: 'id',
-    asset: 'asset',
-    type: 'type',
-    assetGroup: 'assetGroup',
-    details: 'details'
-  };
-
-  export type AssetScalarFieldEnum = (typeof AssetScalarFieldEnum)[keyof typeof AssetScalarFieldEnum]
-
-
-  export const AssetMemberRoleScalarFieldEnum: {
-    id: 'id',
-    assetMember: 'assetMember',
-    asset: 'asset',
-    role: 'role'
-  };
-
-  export type AssetMemberRoleScalarFieldEnum = (typeof AssetMemberRoleScalarFieldEnum)[keyof typeof AssetMemberRoleScalarFieldEnum]
-
-
-  export const AuthTeamExternalScalarFieldEnum: {
-    id: 'id',
-    appId: 'appId',
+    portfolioId: 'portfolioId',
     accountId: 'accountId',
-    recipientId: 'recipientId',
-    isPermanent: 'isPermanent',
-    createdAt: 'createdAt'
+    details: 'details'
   };
 
-  export type AuthTeamExternalScalarFieldEnum = (typeof AuthTeamExternalScalarFieldEnum)[keyof typeof AuthTeamExternalScalarFieldEnum]
+  export type PortfolioMemberScalarFieldEnum = (typeof PortfolioMemberScalarFieldEnum)[keyof typeof PortfolioMemberScalarFieldEnum]
+
+
+  export const PortfolioRoleScalarFieldEnum: {
+    id: 'id',
+    accountId: 'accountId',
+    portfolioId: 'portfolioId',
+    roleId: 'roleId',
+    details: 'details'
+  };
+
+  export type PortfolioRoleScalarFieldEnum = (typeof PortfolioRoleScalarFieldEnum)[keyof typeof PortfolioRoleScalarFieldEnum]
 
 
   export const AuthPermissionRecipientScalarFieldEnum: {
@@ -34552,14 +33236,14 @@ export namespace Prisma {
     verifications?: VerificationListRelationFilter
     sentRequests?: RequestListRelationFilter
     receivedRequests?: RequestListRelationFilter
-    externalAdminTeams?: AuthTeamExternalListRelationFilter
-    externalMemberTeams?: AuthTeamExternalListRelationFilter
     recipientPermissions?: AuthPermissionRecipientListRelationFilter
     ownerPermissions?: AuthPermissionRecipientListRelationFilter
     individualProfile?: XOR<AccountTypeIndividualNullableScalarRelationFilter, AccountTypeIndividualWhereInput> | null
     brandProfile?: XOR<AccountTypeBrandNullableScalarRelationFilter, AccountTypeBrandWhereInput> | null
     parentOwnerships?: AccountOwnershipListRelationFilter
     childOwnerships?: AccountOwnershipListRelationFilter
+    portfolioMembers?: PortfolioMemberListRelationFilter
+    portfolioRoles?: PortfolioRoleListRelationFilter
   }
 
   export type AccountOrderByWithRelationInput = {
@@ -34585,14 +33269,14 @@ export namespace Prisma {
     verifications?: VerificationOrderByRelationAggregateInput
     sentRequests?: RequestOrderByRelationAggregateInput
     receivedRequests?: RequestOrderByRelationAggregateInput
-    externalAdminTeams?: AuthTeamExternalOrderByRelationAggregateInput
-    externalMemberTeams?: AuthTeamExternalOrderByRelationAggregateInput
     recipientPermissions?: AuthPermissionRecipientOrderByRelationAggregateInput
     ownerPermissions?: AuthPermissionRecipientOrderByRelationAggregateInput
     individualProfile?: AccountTypeIndividualOrderByWithRelationInput
     brandProfile?: AccountTypeBrandOrderByWithRelationInput
     parentOwnerships?: AccountOwnershipOrderByRelationAggregateInput
     childOwnerships?: AccountOwnershipOrderByRelationAggregateInput
+    portfolioMembers?: PortfolioMemberOrderByRelationAggregateInput
+    portfolioRoles?: PortfolioRoleOrderByRelationAggregateInput
   }
 
   export type AccountWhereUniqueInput = Prisma.AtLeast<{
@@ -34621,14 +33305,14 @@ export namespace Prisma {
     verifications?: VerificationListRelationFilter
     sentRequests?: RequestListRelationFilter
     receivedRequests?: RequestListRelationFilter
-    externalAdminTeams?: AuthTeamExternalListRelationFilter
-    externalMemberTeams?: AuthTeamExternalListRelationFilter
     recipientPermissions?: AuthPermissionRecipientListRelationFilter
     ownerPermissions?: AuthPermissionRecipientListRelationFilter
     individualProfile?: XOR<AccountTypeIndividualNullableScalarRelationFilter, AccountTypeIndividualWhereInput> | null
     brandProfile?: XOR<AccountTypeBrandNullableScalarRelationFilter, AccountTypeBrandWhereInput> | null
     parentOwnerships?: AccountOwnershipListRelationFilter
     childOwnerships?: AccountOwnershipListRelationFilter
+    portfolioMembers?: PortfolioMemberListRelationFilter
+    portfolioRoles?: PortfolioRoleListRelationFilter
   }, "id">
 
   export type AccountOrderByWithAggregationInput = {
@@ -35832,7 +34516,6 @@ export namespace Prisma {
     connections?: UserAppConnectionListRelationFilter
     appAuthentications?: AppAuthenticationListRelationFilter
     appSessions?: AppSessionListRelationFilter
-    authTeamsExternal?: AuthTeamExternalListRelationFilter
     authPermissionRecipients?: AuthPermissionRecipientListRelationFilter
   }
 
@@ -35855,7 +34538,6 @@ export namespace Prisma {
     connections?: UserAppConnectionOrderByRelationAggregateInput
     appAuthentications?: AppAuthenticationOrderByRelationAggregateInput
     appSessions?: AppSessionOrderByRelationAggregateInput
-    authTeamsExternal?: AuthTeamExternalOrderByRelationAggregateInput
     authPermissionRecipients?: AuthPermissionRecipientOrderByRelationAggregateInput
   }
 
@@ -35881,7 +34563,6 @@ export namespace Prisma {
     connections?: UserAppConnectionListRelationFilter
     appAuthentications?: AppAuthenticationListRelationFilter
     appSessions?: AppSessionListRelationFilter
-    authTeamsExternal?: AuthTeamExternalListRelationFilter
     authPermissionRecipients?: AuthPermissionRecipientListRelationFilter
   }, "id">
 
@@ -35925,295 +34606,228 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Application"> | Date | string
   }
 
-  export type AssetGroupInfoWhereInput = {
-    AND?: AssetGroupInfoWhereInput | AssetGroupInfoWhereInput[]
-    OR?: AssetGroupInfoWhereInput[]
-    NOT?: AssetGroupInfoWhereInput | AssetGroupInfoWhereInput[]
-    id?: StringFilter<"AssetGroupInfo"> | string
-    name?: StringFilter<"AssetGroupInfo"> | string
-    details?: StringNullableFilter<"AssetGroupInfo"> | string | null
-    members?: AssetGroupMemberListRelationFilter
-    assets?: AssetListRelationFilter
+  export type PortfolioWhereInput = {
+    AND?: PortfolioWhereInput | PortfolioWhereInput[]
+    OR?: PortfolioWhereInput[]
+    NOT?: PortfolioWhereInput | PortfolioWhereInput[]
+    id?: StringFilter<"Portfolio"> | string
+    name?: StringFilter<"Portfolio"> | string
+    description?: StringNullableFilter<"Portfolio"> | string | null
+    dateCreated?: DateTimeFilter<"Portfolio"> | Date | string
+    assets?: PortfolioAssetListRelationFilter
+    members?: PortfolioMemberListRelationFilter
+    roles?: PortfolioRoleListRelationFilter
   }
 
-  export type AssetGroupInfoOrderByWithRelationInput = {
+  export type PortfolioOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    details?: SortOrderInput | SortOrder
-    members?: AssetGroupMemberOrderByRelationAggregateInput
-    assets?: AssetOrderByRelationAggregateInput
+    description?: SortOrderInput | SortOrder
+    dateCreated?: SortOrder
+    assets?: PortfolioAssetOrderByRelationAggregateInput
+    members?: PortfolioMemberOrderByRelationAggregateInput
+    roles?: PortfolioRoleOrderByRelationAggregateInput
   }
 
-  export type AssetGroupInfoWhereUniqueInput = Prisma.AtLeast<{
+  export type PortfolioWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: AssetGroupInfoWhereInput | AssetGroupInfoWhereInput[]
-    OR?: AssetGroupInfoWhereInput[]
-    NOT?: AssetGroupInfoWhereInput | AssetGroupInfoWhereInput[]
-    name?: StringFilter<"AssetGroupInfo"> | string
-    details?: StringNullableFilter<"AssetGroupInfo"> | string | null
-    members?: AssetGroupMemberListRelationFilter
-    assets?: AssetListRelationFilter
+    AND?: PortfolioWhereInput | PortfolioWhereInput[]
+    OR?: PortfolioWhereInput[]
+    NOT?: PortfolioWhereInput | PortfolioWhereInput[]
+    name?: StringFilter<"Portfolio"> | string
+    description?: StringNullableFilter<"Portfolio"> | string | null
+    dateCreated?: DateTimeFilter<"Portfolio"> | Date | string
+    assets?: PortfolioAssetListRelationFilter
+    members?: PortfolioMemberListRelationFilter
+    roles?: PortfolioRoleListRelationFilter
   }, "id">
 
-  export type AssetGroupInfoOrderByWithAggregationInput = {
+  export type PortfolioOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    dateCreated?: SortOrder
+    _count?: PortfolioCountOrderByAggregateInput
+    _max?: PortfolioMaxOrderByAggregateInput
+    _min?: PortfolioMinOrderByAggregateInput
+  }
+
+  export type PortfolioScalarWhereWithAggregatesInput = {
+    AND?: PortfolioScalarWhereWithAggregatesInput | PortfolioScalarWhereWithAggregatesInput[]
+    OR?: PortfolioScalarWhereWithAggregatesInput[]
+    NOT?: PortfolioScalarWhereWithAggregatesInput | PortfolioScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Portfolio"> | string
+    name?: StringWithAggregatesFilter<"Portfolio"> | string
+    description?: StringNullableWithAggregatesFilter<"Portfolio"> | string | null
+    dateCreated?: DateTimeWithAggregatesFilter<"Portfolio"> | Date | string
+  }
+
+  export type PortfolioAssetWhereInput = {
+    AND?: PortfolioAssetWhereInput | PortfolioAssetWhereInput[]
+    OR?: PortfolioAssetWhereInput[]
+    NOT?: PortfolioAssetWhereInput | PortfolioAssetWhereInput[]
+    id?: StringFilter<"PortfolioAsset"> | string
+    portfolioId?: StringFilter<"PortfolioAsset"> | string
+    assetType?: StringFilter<"PortfolioAsset"> | string
+    assetId?: StringFilter<"PortfolioAsset"> | string
+    details?: JsonNullableFilter<"PortfolioAsset">
+    portfolio?: XOR<PortfolioScalarRelationFilter, PortfolioWhereInput>
+  }
+
+  export type PortfolioAssetOrderByWithRelationInput = {
+    id?: SortOrder
+    portfolioId?: SortOrder
+    assetType?: SortOrder
+    assetId?: SortOrder
     details?: SortOrderInput | SortOrder
-    _count?: AssetGroupInfoCountOrderByAggregateInput
-    _max?: AssetGroupInfoMaxOrderByAggregateInput
-    _min?: AssetGroupInfoMinOrderByAggregateInput
+    portfolio?: PortfolioOrderByWithRelationInput
   }
 
-  export type AssetGroupInfoScalarWhereWithAggregatesInput = {
-    AND?: AssetGroupInfoScalarWhereWithAggregatesInput | AssetGroupInfoScalarWhereWithAggregatesInput[]
-    OR?: AssetGroupInfoScalarWhereWithAggregatesInput[]
-    NOT?: AssetGroupInfoScalarWhereWithAggregatesInput | AssetGroupInfoScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"AssetGroupInfo"> | string
-    name?: StringWithAggregatesFilter<"AssetGroupInfo"> | string
-    details?: StringNullableWithAggregatesFilter<"AssetGroupInfo"> | string | null
-  }
-
-  export type AssetGroupMemberWhereInput = {
-    AND?: AssetGroupMemberWhereInput | AssetGroupMemberWhereInput[]
-    OR?: AssetGroupMemberWhereInput[]
-    NOT?: AssetGroupMemberWhereInput | AssetGroupMemberWhereInput[]
-    id?: StringFilter<"AssetGroupMember"> | string
-    assetGroup?: StringFilter<"AssetGroupMember"> | string
-    member?: StringFilter<"AssetGroupMember"> | string
-    isPermanent?: BoolFilter<"AssetGroupMember"> | boolean
-    validTill?: DateTimeNullableFilter<"AssetGroupMember"> | Date | string | null
-    hasFullPermit?: BoolFilter<"AssetGroupMember"> | boolean
-    assetGroupInfo?: XOR<AssetGroupInfoScalarRelationFilter, AssetGroupInfoWhereInput>
-    roles?: AssetMemberRoleListRelationFilter
-  }
-
-  export type AssetGroupMemberOrderByWithRelationInput = {
-    id?: SortOrder
-    assetGroup?: SortOrder
-    member?: SortOrder
-    isPermanent?: SortOrder
-    validTill?: SortOrderInput | SortOrder
-    hasFullPermit?: SortOrder
-    assetGroupInfo?: AssetGroupInfoOrderByWithRelationInput
-    roles?: AssetMemberRoleOrderByRelationAggregateInput
-  }
-
-  export type AssetGroupMemberWhereUniqueInput = Prisma.AtLeast<{
+  export type PortfolioAssetWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    assetGroup_member?: AssetGroupMemberAssetGroupMemberCompoundUniqueInput
-    AND?: AssetGroupMemberWhereInput | AssetGroupMemberWhereInput[]
-    OR?: AssetGroupMemberWhereInput[]
-    NOT?: AssetGroupMemberWhereInput | AssetGroupMemberWhereInput[]
-    assetGroup?: StringFilter<"AssetGroupMember"> | string
-    member?: StringFilter<"AssetGroupMember"> | string
-    isPermanent?: BoolFilter<"AssetGroupMember"> | boolean
-    validTill?: DateTimeNullableFilter<"AssetGroupMember"> | Date | string | null
-    hasFullPermit?: BoolFilter<"AssetGroupMember"> | boolean
-    assetGroupInfo?: XOR<AssetGroupInfoScalarRelationFilter, AssetGroupInfoWhereInput>
-    roles?: AssetMemberRoleListRelationFilter
-  }, "id" | "assetGroup_member">
-
-  export type AssetGroupMemberOrderByWithAggregationInput = {
-    id?: SortOrder
-    assetGroup?: SortOrder
-    member?: SortOrder
-    isPermanent?: SortOrder
-    validTill?: SortOrderInput | SortOrder
-    hasFullPermit?: SortOrder
-    _count?: AssetGroupMemberCountOrderByAggregateInput
-    _max?: AssetGroupMemberMaxOrderByAggregateInput
-    _min?: AssetGroupMemberMinOrderByAggregateInput
-  }
-
-  export type AssetGroupMemberScalarWhereWithAggregatesInput = {
-    AND?: AssetGroupMemberScalarWhereWithAggregatesInput | AssetGroupMemberScalarWhereWithAggregatesInput[]
-    OR?: AssetGroupMemberScalarWhereWithAggregatesInput[]
-    NOT?: AssetGroupMemberScalarWhereWithAggregatesInput | AssetGroupMemberScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"AssetGroupMember"> | string
-    assetGroup?: StringWithAggregatesFilter<"AssetGroupMember"> | string
-    member?: StringWithAggregatesFilter<"AssetGroupMember"> | string
-    isPermanent?: BoolWithAggregatesFilter<"AssetGroupMember"> | boolean
-    validTill?: DateTimeNullableWithAggregatesFilter<"AssetGroupMember"> | Date | string | null
-    hasFullPermit?: BoolWithAggregatesFilter<"AssetGroupMember"> | boolean
-  }
-
-  export type AssetWhereInput = {
-    AND?: AssetWhereInput | AssetWhereInput[]
-    OR?: AssetWhereInput[]
-    NOT?: AssetWhereInput | AssetWhereInput[]
-    id?: StringFilter<"Asset"> | string
-    asset?: StringFilter<"Asset"> | string
-    type?: StringFilter<"Asset"> | string
-    assetGroup?: StringFilter<"Asset"> | string
-    details?: StringNullableFilter<"Asset"> | string | null
-    assetGroupInfo?: XOR<AssetGroupInfoScalarRelationFilter, AssetGroupInfoWhereInput>
-    roles?: AssetMemberRoleListRelationFilter
-  }
-
-  export type AssetOrderByWithRelationInput = {
-    id?: SortOrder
-    asset?: SortOrder
-    type?: SortOrder
-    assetGroup?: SortOrder
-    details?: SortOrderInput | SortOrder
-    assetGroupInfo?: AssetGroupInfoOrderByWithRelationInput
-    roles?: AssetMemberRoleOrderByRelationAggregateInput
-  }
-
-  export type AssetWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: AssetWhereInput | AssetWhereInput[]
-    OR?: AssetWhereInput[]
-    NOT?: AssetWhereInput | AssetWhereInput[]
-    asset?: StringFilter<"Asset"> | string
-    type?: StringFilter<"Asset"> | string
-    assetGroup?: StringFilter<"Asset"> | string
-    details?: StringNullableFilter<"Asset"> | string | null
-    assetGroupInfo?: XOR<AssetGroupInfoScalarRelationFilter, AssetGroupInfoWhereInput>
-    roles?: AssetMemberRoleListRelationFilter
+    AND?: PortfolioAssetWhereInput | PortfolioAssetWhereInput[]
+    OR?: PortfolioAssetWhereInput[]
+    NOT?: PortfolioAssetWhereInput | PortfolioAssetWhereInput[]
+    portfolioId?: StringFilter<"PortfolioAsset"> | string
+    assetType?: StringFilter<"PortfolioAsset"> | string
+    assetId?: StringFilter<"PortfolioAsset"> | string
+    details?: JsonNullableFilter<"PortfolioAsset">
+    portfolio?: XOR<PortfolioScalarRelationFilter, PortfolioWhereInput>
   }, "id">
 
-  export type AssetOrderByWithAggregationInput = {
+  export type PortfolioAssetOrderByWithAggregationInput = {
     id?: SortOrder
-    asset?: SortOrder
-    type?: SortOrder
-    assetGroup?: SortOrder
+    portfolioId?: SortOrder
+    assetType?: SortOrder
+    assetId?: SortOrder
     details?: SortOrderInput | SortOrder
-    _count?: AssetCountOrderByAggregateInput
-    _max?: AssetMaxOrderByAggregateInput
-    _min?: AssetMinOrderByAggregateInput
+    _count?: PortfolioAssetCountOrderByAggregateInput
+    _max?: PortfolioAssetMaxOrderByAggregateInput
+    _min?: PortfolioAssetMinOrderByAggregateInput
   }
 
-  export type AssetScalarWhereWithAggregatesInput = {
-    AND?: AssetScalarWhereWithAggregatesInput | AssetScalarWhereWithAggregatesInput[]
-    OR?: AssetScalarWhereWithAggregatesInput[]
-    NOT?: AssetScalarWhereWithAggregatesInput | AssetScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Asset"> | string
-    asset?: StringWithAggregatesFilter<"Asset"> | string
-    type?: StringWithAggregatesFilter<"Asset"> | string
-    assetGroup?: StringWithAggregatesFilter<"Asset"> | string
-    details?: StringNullableWithAggregatesFilter<"Asset"> | string | null
+  export type PortfolioAssetScalarWhereWithAggregatesInput = {
+    AND?: PortfolioAssetScalarWhereWithAggregatesInput | PortfolioAssetScalarWhereWithAggregatesInput[]
+    OR?: PortfolioAssetScalarWhereWithAggregatesInput[]
+    NOT?: PortfolioAssetScalarWhereWithAggregatesInput | PortfolioAssetScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PortfolioAsset"> | string
+    portfolioId?: StringWithAggregatesFilter<"PortfolioAsset"> | string
+    assetType?: StringWithAggregatesFilter<"PortfolioAsset"> | string
+    assetId?: StringWithAggregatesFilter<"PortfolioAsset"> | string
+    details?: JsonNullableWithAggregatesFilter<"PortfolioAsset">
   }
 
-  export type AssetMemberRoleWhereInput = {
-    AND?: AssetMemberRoleWhereInput | AssetMemberRoleWhereInput[]
-    OR?: AssetMemberRoleWhereInput[]
-    NOT?: AssetMemberRoleWhereInput | AssetMemberRoleWhereInput[]
-    id?: StringFilter<"AssetMemberRole"> | string
-    assetMember?: StringFilter<"AssetMemberRole"> | string
-    asset?: StringFilter<"AssetMemberRole"> | string
-    role?: StringFilter<"AssetMemberRole"> | string
-    member?: XOR<AssetGroupMemberScalarRelationFilter, AssetGroupMemberWhereInput>
-    assetRef?: XOR<AssetScalarRelationFilter, AssetWhereInput>
-  }
-
-  export type AssetMemberRoleOrderByWithRelationInput = {
-    id?: SortOrder
-    assetMember?: SortOrder
-    asset?: SortOrder
-    role?: SortOrder
-    member?: AssetGroupMemberOrderByWithRelationInput
-    assetRef?: AssetOrderByWithRelationInput
-  }
-
-  export type AssetMemberRoleWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    assetMember_asset?: AssetMemberRoleAssetMemberAssetCompoundUniqueInput
-    AND?: AssetMemberRoleWhereInput | AssetMemberRoleWhereInput[]
-    OR?: AssetMemberRoleWhereInput[]
-    NOT?: AssetMemberRoleWhereInput | AssetMemberRoleWhereInput[]
-    assetMember?: StringFilter<"AssetMemberRole"> | string
-    asset?: StringFilter<"AssetMemberRole"> | string
-    role?: StringFilter<"AssetMemberRole"> | string
-    member?: XOR<AssetGroupMemberScalarRelationFilter, AssetGroupMemberWhereInput>
-    assetRef?: XOR<AssetScalarRelationFilter, AssetWhereInput>
-  }, "id" | "assetMember_asset">
-
-  export type AssetMemberRoleOrderByWithAggregationInput = {
-    id?: SortOrder
-    assetMember?: SortOrder
-    asset?: SortOrder
-    role?: SortOrder
-    _count?: AssetMemberRoleCountOrderByAggregateInput
-    _max?: AssetMemberRoleMaxOrderByAggregateInput
-    _min?: AssetMemberRoleMinOrderByAggregateInput
-  }
-
-  export type AssetMemberRoleScalarWhereWithAggregatesInput = {
-    AND?: AssetMemberRoleScalarWhereWithAggregatesInput | AssetMemberRoleScalarWhereWithAggregatesInput[]
-    OR?: AssetMemberRoleScalarWhereWithAggregatesInput[]
-    NOT?: AssetMemberRoleScalarWhereWithAggregatesInput | AssetMemberRoleScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"AssetMemberRole"> | string
-    assetMember?: StringWithAggregatesFilter<"AssetMemberRole"> | string
-    asset?: StringWithAggregatesFilter<"AssetMemberRole"> | string
-    role?: StringWithAggregatesFilter<"AssetMemberRole"> | string
-  }
-
-  export type AuthTeamExternalWhereInput = {
-    AND?: AuthTeamExternalWhereInput | AuthTeamExternalWhereInput[]
-    OR?: AuthTeamExternalWhereInput[]
-    NOT?: AuthTeamExternalWhereInput | AuthTeamExternalWhereInput[]
-    id?: StringFilter<"AuthTeamExternal"> | string
-    appId?: StringFilter<"AuthTeamExternal"> | string
-    accountId?: StringFilter<"AuthTeamExternal"> | string
-    recipientId?: StringFilter<"AuthTeamExternal"> | string
-    isPermanent?: BoolFilter<"AuthTeamExternal"> | boolean
-    createdAt?: DateTimeFilter<"AuthTeamExternal"> | Date | string
-    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
+  export type PortfolioMemberWhereInput = {
+    AND?: PortfolioMemberWhereInput | PortfolioMemberWhereInput[]
+    OR?: PortfolioMemberWhereInput[]
+    NOT?: PortfolioMemberWhereInput | PortfolioMemberWhereInput[]
+    id?: StringFilter<"PortfolioMember"> | string
+    portfolioId?: StringFilter<"PortfolioMember"> | string
+    accountId?: StringFilter<"PortfolioMember"> | string
+    details?: JsonNullableFilter<"PortfolioMember">
+    portfolio?: XOR<PortfolioScalarRelationFilter, PortfolioWhereInput>
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-    recipient?: XOR<AccountScalarRelationFilter, AccountWhereInput>
   }
 
-  export type AuthTeamExternalOrderByWithRelationInput = {
+  export type PortfolioMemberOrderByWithRelationInput = {
     id?: SortOrder
-    appId?: SortOrder
+    portfolioId?: SortOrder
     accountId?: SortOrder
-    recipientId?: SortOrder
-    isPermanent?: SortOrder
-    createdAt?: SortOrder
-    application?: ApplicationOrderByWithRelationInput
+    details?: SortOrderInput | SortOrder
+    portfolio?: PortfolioOrderByWithRelationInput
     account?: AccountOrderByWithRelationInput
-    recipient?: AccountOrderByWithRelationInput
   }
 
-  export type AuthTeamExternalWhereUniqueInput = Prisma.AtLeast<{
+  export type PortfolioMemberWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    appId_accountId_recipientId?: AuthTeamExternalAppIdAccountIdRecipientIdCompoundUniqueInput
-    AND?: AuthTeamExternalWhereInput | AuthTeamExternalWhereInput[]
-    OR?: AuthTeamExternalWhereInput[]
-    NOT?: AuthTeamExternalWhereInput | AuthTeamExternalWhereInput[]
-    appId?: StringFilter<"AuthTeamExternal"> | string
-    accountId?: StringFilter<"AuthTeamExternal"> | string
-    recipientId?: StringFilter<"AuthTeamExternal"> | string
-    isPermanent?: BoolFilter<"AuthTeamExternal"> | boolean
-    createdAt?: DateTimeFilter<"AuthTeamExternal"> | Date | string
-    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
+    portfolioId_accountId?: PortfolioMemberPortfolioIdAccountIdCompoundUniqueInput
+    AND?: PortfolioMemberWhereInput | PortfolioMemberWhereInput[]
+    OR?: PortfolioMemberWhereInput[]
+    NOT?: PortfolioMemberWhereInput | PortfolioMemberWhereInput[]
+    portfolioId?: StringFilter<"PortfolioMember"> | string
+    accountId?: StringFilter<"PortfolioMember"> | string
+    details?: JsonNullableFilter<"PortfolioMember">
+    portfolio?: XOR<PortfolioScalarRelationFilter, PortfolioWhereInput>
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-    recipient?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-  }, "id" | "appId_accountId_recipientId">
+  }, "id" | "portfolioId_accountId">
 
-  export type AuthTeamExternalOrderByWithAggregationInput = {
+  export type PortfolioMemberOrderByWithAggregationInput = {
     id?: SortOrder
-    appId?: SortOrder
+    portfolioId?: SortOrder
     accountId?: SortOrder
-    recipientId?: SortOrder
-    isPermanent?: SortOrder
-    createdAt?: SortOrder
-    _count?: AuthTeamExternalCountOrderByAggregateInput
-    _max?: AuthTeamExternalMaxOrderByAggregateInput
-    _min?: AuthTeamExternalMinOrderByAggregateInput
+    details?: SortOrderInput | SortOrder
+    _count?: PortfolioMemberCountOrderByAggregateInput
+    _max?: PortfolioMemberMaxOrderByAggregateInput
+    _min?: PortfolioMemberMinOrderByAggregateInput
   }
 
-  export type AuthTeamExternalScalarWhereWithAggregatesInput = {
-    AND?: AuthTeamExternalScalarWhereWithAggregatesInput | AuthTeamExternalScalarWhereWithAggregatesInput[]
-    OR?: AuthTeamExternalScalarWhereWithAggregatesInput[]
-    NOT?: AuthTeamExternalScalarWhereWithAggregatesInput | AuthTeamExternalScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"AuthTeamExternal"> | string
-    appId?: StringWithAggregatesFilter<"AuthTeamExternal"> | string
-    accountId?: StringWithAggregatesFilter<"AuthTeamExternal"> | string
-    recipientId?: StringWithAggregatesFilter<"AuthTeamExternal"> | string
-    isPermanent?: BoolWithAggregatesFilter<"AuthTeamExternal"> | boolean
-    createdAt?: DateTimeWithAggregatesFilter<"AuthTeamExternal"> | Date | string
+  export type PortfolioMemberScalarWhereWithAggregatesInput = {
+    AND?: PortfolioMemberScalarWhereWithAggregatesInput | PortfolioMemberScalarWhereWithAggregatesInput[]
+    OR?: PortfolioMemberScalarWhereWithAggregatesInput[]
+    NOT?: PortfolioMemberScalarWhereWithAggregatesInput | PortfolioMemberScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PortfolioMember"> | string
+    portfolioId?: StringWithAggregatesFilter<"PortfolioMember"> | string
+    accountId?: StringWithAggregatesFilter<"PortfolioMember"> | string
+    details?: JsonNullableWithAggregatesFilter<"PortfolioMember">
+  }
+
+  export type PortfolioRoleWhereInput = {
+    AND?: PortfolioRoleWhereInput | PortfolioRoleWhereInput[]
+    OR?: PortfolioRoleWhereInput[]
+    NOT?: PortfolioRoleWhereInput | PortfolioRoleWhereInput[]
+    id?: StringFilter<"PortfolioRole"> | string
+    accountId?: StringFilter<"PortfolioRole"> | string
+    portfolioId?: StringFilter<"PortfolioRole"> | string
+    roleId?: StringFilter<"PortfolioRole"> | string
+    details?: JsonNullableFilter<"PortfolioRole">
+    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
+    portfolio?: XOR<PortfolioScalarRelationFilter, PortfolioWhereInput>
+  }
+
+  export type PortfolioRoleOrderByWithRelationInput = {
+    id?: SortOrder
+    accountId?: SortOrder
+    portfolioId?: SortOrder
+    roleId?: SortOrder
+    details?: SortOrderInput | SortOrder
+    account?: AccountOrderByWithRelationInput
+    portfolio?: PortfolioOrderByWithRelationInput
+  }
+
+  export type PortfolioRoleWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    accountId_portfolioId_roleId?: PortfolioRoleAccountIdPortfolioIdRoleIdCompoundUniqueInput
+    AND?: PortfolioRoleWhereInput | PortfolioRoleWhereInput[]
+    OR?: PortfolioRoleWhereInput[]
+    NOT?: PortfolioRoleWhereInput | PortfolioRoleWhereInput[]
+    accountId?: StringFilter<"PortfolioRole"> | string
+    portfolioId?: StringFilter<"PortfolioRole"> | string
+    roleId?: StringFilter<"PortfolioRole"> | string
+    details?: JsonNullableFilter<"PortfolioRole">
+    account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
+    portfolio?: XOR<PortfolioScalarRelationFilter, PortfolioWhereInput>
+  }, "id" | "accountId_portfolioId_roleId">
+
+  export type PortfolioRoleOrderByWithAggregationInput = {
+    id?: SortOrder
+    accountId?: SortOrder
+    portfolioId?: SortOrder
+    roleId?: SortOrder
+    details?: SortOrderInput | SortOrder
+    _count?: PortfolioRoleCountOrderByAggregateInput
+    _max?: PortfolioRoleMaxOrderByAggregateInput
+    _min?: PortfolioRoleMinOrderByAggregateInput
+  }
+
+  export type PortfolioRoleScalarWhereWithAggregatesInput = {
+    AND?: PortfolioRoleScalarWhereWithAggregatesInput | PortfolioRoleScalarWhereWithAggregatesInput[]
+    OR?: PortfolioRoleScalarWhereWithAggregatesInput[]
+    NOT?: PortfolioRoleScalarWhereWithAggregatesInput | PortfolioRoleScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PortfolioRole"> | string
+    accountId?: StringWithAggregatesFilter<"PortfolioRole"> | string
+    portfolioId?: StringWithAggregatesFilter<"PortfolioRole"> | string
+    roleId?: StringWithAggregatesFilter<"PortfolioRole"> | string
+    details?: JsonNullableWithAggregatesFilter<"PortfolioRole">
   }
 
   export type AuthPermissionRecipientWhereInput = {
@@ -36504,14 +35118,14 @@ export namespace Prisma {
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateInput = {
@@ -36537,14 +35151,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUpdateInput = {
@@ -36570,14 +35184,14 @@ export namespace Prisma {
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateInput = {
@@ -36603,14 +35217,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateManyInput = {
@@ -37920,7 +36534,6 @@ export namespace Prisma {
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
-    authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
   }
 
@@ -37942,7 +36555,6 @@ export namespace Prisma {
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutApplicationInput
-    authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
   }
 
@@ -37964,7 +36576,6 @@ export namespace Prisma {
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
-    authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
   }
 
@@ -37986,7 +36597,6 @@ export namespace Prisma {
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutApplicationNestedInput
-    authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
@@ -38040,286 +36650,221 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type AssetGroupInfoCreateInput = {
+  export type PortfolioCreateInput = {
     id?: string
     name: string
-    details?: string | null
-    members?: AssetGroupMemberCreateNestedManyWithoutAssetGroupInfoInput
-    assets?: AssetCreateNestedManyWithoutAssetGroupInfoInput
+    description?: string | null
+    dateCreated?: Date | string
+    assets?: PortfolioAssetCreateNestedManyWithoutPortfolioInput
+    members?: PortfolioMemberCreateNestedManyWithoutPortfolioInput
+    roles?: PortfolioRoleCreateNestedManyWithoutPortfolioInput
   }
 
-  export type AssetGroupInfoUncheckedCreateInput = {
+  export type PortfolioUncheckedCreateInput = {
     id?: string
     name: string
-    details?: string | null
-    members?: AssetGroupMemberUncheckedCreateNestedManyWithoutAssetGroupInfoInput
-    assets?: AssetUncheckedCreateNestedManyWithoutAssetGroupInfoInput
+    description?: string | null
+    dateCreated?: Date | string
+    assets?: PortfolioAssetUncheckedCreateNestedManyWithoutPortfolioInput
+    members?: PortfolioMemberUncheckedCreateNestedManyWithoutPortfolioInput
+    roles?: PortfolioRoleUncheckedCreateNestedManyWithoutPortfolioInput
   }
 
-  export type AssetGroupInfoUpdateInput = {
+  export type PortfolioUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    details?: NullableStringFieldUpdateOperationsInput | string | null
-    members?: AssetGroupMemberUpdateManyWithoutAssetGroupInfoNestedInput
-    assets?: AssetUpdateManyWithoutAssetGroupInfoNestedInput
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    assets?: PortfolioAssetUpdateManyWithoutPortfolioNestedInput
+    members?: PortfolioMemberUpdateManyWithoutPortfolioNestedInput
+    roles?: PortfolioRoleUpdateManyWithoutPortfolioNestedInput
   }
 
-  export type AssetGroupInfoUncheckedUpdateInput = {
+  export type PortfolioUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    details?: NullableStringFieldUpdateOperationsInput | string | null
-    members?: AssetGroupMemberUncheckedUpdateManyWithoutAssetGroupInfoNestedInput
-    assets?: AssetUncheckedUpdateManyWithoutAssetGroupInfoNestedInput
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    assets?: PortfolioAssetUncheckedUpdateManyWithoutPortfolioNestedInput
+    members?: PortfolioMemberUncheckedUpdateManyWithoutPortfolioNestedInput
+    roles?: PortfolioRoleUncheckedUpdateManyWithoutPortfolioNestedInput
   }
 
-  export type AssetGroupInfoCreateManyInput = {
+  export type PortfolioCreateManyInput = {
     id?: string
     name: string
-    details?: string | null
+    description?: string | null
+    dateCreated?: Date | string
   }
 
-  export type AssetGroupInfoUpdateManyMutationInput = {
+  export type PortfolioUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    details?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type AssetGroupInfoUncheckedUpdateManyInput = {
+  export type PortfolioUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    details?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type AssetGroupMemberCreateInput = {
+  export type PortfolioAssetCreateInput = {
     id?: string
-    member: string
-    isPermanent?: boolean
-    validTill?: Date | string | null
-    hasFullPermit?: boolean
-    assetGroupInfo: AssetGroupInfoCreateNestedOneWithoutMembersInput
-    roles?: AssetMemberRoleCreateNestedManyWithoutMemberInput
+    assetType: string
+    assetId: string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    portfolio: PortfolioCreateNestedOneWithoutAssetsInput
   }
 
-  export type AssetGroupMemberUncheckedCreateInput = {
+  export type PortfolioAssetUncheckedCreateInput = {
     id?: string
-    assetGroup: string
-    member: string
-    isPermanent?: boolean
-    validTill?: Date | string | null
-    hasFullPermit?: boolean
-    roles?: AssetMemberRoleUncheckedCreateNestedManyWithoutMemberInput
+    portfolioId: string
+    assetType: string
+    assetId: string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AssetGroupMemberUpdateInput = {
+  export type PortfolioAssetUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    member?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    hasFullPermit?: BoolFieldUpdateOperationsInput | boolean
-    assetGroupInfo?: AssetGroupInfoUpdateOneRequiredWithoutMembersNestedInput
-    roles?: AssetMemberRoleUpdateManyWithoutMemberNestedInput
+    assetType?: StringFieldUpdateOperationsInput | string
+    assetId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    portfolio?: PortfolioUpdateOneRequiredWithoutAssetsNestedInput
   }
 
-  export type AssetGroupMemberUncheckedUpdateInput = {
+  export type PortfolioAssetUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    assetGroup?: StringFieldUpdateOperationsInput | string
-    member?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    hasFullPermit?: BoolFieldUpdateOperationsInput | boolean
-    roles?: AssetMemberRoleUncheckedUpdateManyWithoutMemberNestedInput
+    portfolioId?: StringFieldUpdateOperationsInput | string
+    assetType?: StringFieldUpdateOperationsInput | string
+    assetId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AssetGroupMemberCreateManyInput = {
+  export type PortfolioAssetCreateManyInput = {
     id?: string
-    assetGroup: string
-    member: string
-    isPermanent?: boolean
-    validTill?: Date | string | null
-    hasFullPermit?: boolean
+    portfolioId: string
+    assetType: string
+    assetId: string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AssetGroupMemberUpdateManyMutationInput = {
+  export type PortfolioAssetUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    member?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    hasFullPermit?: BoolFieldUpdateOperationsInput | boolean
+    assetType?: StringFieldUpdateOperationsInput | string
+    assetId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AssetGroupMemberUncheckedUpdateManyInput = {
+  export type PortfolioAssetUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    assetGroup?: StringFieldUpdateOperationsInput | string
-    member?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    hasFullPermit?: BoolFieldUpdateOperationsInput | boolean
+    portfolioId?: StringFieldUpdateOperationsInput | string
+    assetType?: StringFieldUpdateOperationsInput | string
+    assetId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AssetCreateInput = {
+  export type PortfolioMemberCreateInput = {
     id?: string
-    asset: string
-    type: string
-    details?: string | null
-    assetGroupInfo: AssetGroupInfoCreateNestedOneWithoutAssetsInput
-    roles?: AssetMemberRoleCreateNestedManyWithoutAssetRefInput
+    details?: NullableJsonNullValueInput | InputJsonValue
+    portfolio: PortfolioCreateNestedOneWithoutMembersInput
+    account: AccountCreateNestedOneWithoutPortfolioMembersInput
   }
 
-  export type AssetUncheckedCreateInput = {
+  export type PortfolioMemberUncheckedCreateInput = {
     id?: string
-    asset: string
-    type: string
-    assetGroup: string
-    details?: string | null
-    roles?: AssetMemberRoleUncheckedCreateNestedManyWithoutAssetRefInput
-  }
-
-  export type AssetUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    asset?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    details?: NullableStringFieldUpdateOperationsInput | string | null
-    assetGroupInfo?: AssetGroupInfoUpdateOneRequiredWithoutAssetsNestedInput
-    roles?: AssetMemberRoleUpdateManyWithoutAssetRefNestedInput
-  }
-
-  export type AssetUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    asset?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    assetGroup?: StringFieldUpdateOperationsInput | string
-    details?: NullableStringFieldUpdateOperationsInput | string | null
-    roles?: AssetMemberRoleUncheckedUpdateManyWithoutAssetRefNestedInput
-  }
-
-  export type AssetCreateManyInput = {
-    id?: string
-    asset: string
-    type: string
-    assetGroup: string
-    details?: string | null
-  }
-
-  export type AssetUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    asset?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    details?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type AssetUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    asset?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    assetGroup?: StringFieldUpdateOperationsInput | string
-    details?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type AssetMemberRoleCreateInput = {
-    id?: string
-    role: string
-    member: AssetGroupMemberCreateNestedOneWithoutRolesInput
-    assetRef: AssetCreateNestedOneWithoutRolesInput
-  }
-
-  export type AssetMemberRoleUncheckedCreateInput = {
-    id?: string
-    assetMember: string
-    asset: string
-    role: string
-  }
-
-  export type AssetMemberRoleUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    member?: AssetGroupMemberUpdateOneRequiredWithoutRolesNestedInput
-    assetRef?: AssetUpdateOneRequiredWithoutRolesNestedInput
-  }
-
-  export type AssetMemberRoleUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    assetMember?: StringFieldUpdateOperationsInput | string
-    asset?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type AssetMemberRoleCreateManyInput = {
-    id?: string
-    assetMember: string
-    asset: string
-    role: string
-  }
-
-  export type AssetMemberRoleUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type AssetMemberRoleUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    assetMember?: StringFieldUpdateOperationsInput | string
-    asset?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type AuthTeamExternalCreateInput = {
-    id?: string
-    isPermanent?: boolean
-    createdAt?: Date | string
-    application: ApplicationCreateNestedOneWithoutAuthTeamsExternalInput
-    account: AccountCreateNestedOneWithoutExternalAdminTeamsInput
-    recipient: AccountCreateNestedOneWithoutExternalMemberTeamsInput
-  }
-
-  export type AuthTeamExternalUncheckedCreateInput = {
-    id?: string
-    appId: string
+    portfolioId: string
     accountId: string
-    recipientId: string
-    isPermanent?: boolean
-    createdAt?: Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AuthTeamExternalUpdateInput = {
+  export type PortfolioMemberUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    application?: ApplicationUpdateOneRequiredWithoutAuthTeamsExternalNestedInput
-    account?: AccountUpdateOneRequiredWithoutExternalAdminTeamsNestedInput
-    recipient?: AccountUpdateOneRequiredWithoutExternalMemberTeamsNestedInput
+    details?: NullableJsonNullValueInput | InputJsonValue
+    portfolio?: PortfolioUpdateOneRequiredWithoutMembersNestedInput
+    account?: AccountUpdateOneRequiredWithoutPortfolioMembersNestedInput
   }
 
-  export type AuthTeamExternalUncheckedUpdateInput = {
+  export type PortfolioMemberUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
+    portfolioId?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
-    recipientId?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AuthTeamExternalCreateManyInput = {
+  export type PortfolioMemberCreateManyInput = {
     id?: string
-    appId: string
+    portfolioId: string
     accountId: string
-    recipientId: string
-    isPermanent?: boolean
-    createdAt?: Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AuthTeamExternalUpdateManyMutationInput = {
+  export type PortfolioMemberUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AuthTeamExternalUncheckedUpdateManyInput = {
+  export type PortfolioMemberUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
+    portfolioId?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
-    recipientId?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type PortfolioRoleCreateInput = {
+    id?: string
+    roleId: string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    account: AccountCreateNestedOneWithoutPortfolioRolesInput
+    portfolio: PortfolioCreateNestedOneWithoutRolesInput
+  }
+
+  export type PortfolioRoleUncheckedCreateInput = {
+    id?: string
+    accountId: string
+    portfolioId: string
+    roleId: string
+    details?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type PortfolioRoleUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roleId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    account?: AccountUpdateOneRequiredWithoutPortfolioRolesNestedInput
+    portfolio?: PortfolioUpdateOneRequiredWithoutRolesNestedInput
+  }
+
+  export type PortfolioRoleUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    portfolioId?: StringFieldUpdateOperationsInput | string
+    roleId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type PortfolioRoleCreateManyInput = {
+    id?: string
+    accountId: string
+    portfolioId: string
+    roleId: string
+    details?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type PortfolioRoleUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roleId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type PortfolioRoleUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    portfolioId?: StringFieldUpdateOperationsInput | string
+    roleId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type AuthPermissionRecipientCreateInput = {
@@ -38712,12 +37257,6 @@ export namespace Prisma {
     none?: RequestWhereInput
   }
 
-  export type AuthTeamExternalListRelationFilter = {
-    every?: AuthTeamExternalWhereInput
-    some?: AuthTeamExternalWhereInput
-    none?: AuthTeamExternalWhereInput
-  }
-
   export type AuthPermissionRecipientListRelationFilter = {
     every?: AuthPermissionRecipientWhereInput
     some?: AuthPermissionRecipientWhereInput
@@ -38738,6 +37277,18 @@ export namespace Prisma {
     every?: AccountOwnershipWhereInput
     some?: AccountOwnershipWhereInput
     none?: AccountOwnershipWhereInput
+  }
+
+  export type PortfolioMemberListRelationFilter = {
+    every?: PortfolioMemberWhereInput
+    some?: PortfolioMemberWhereInput
+    none?: PortfolioMemberWhereInput
+  }
+
+  export type PortfolioRoleListRelationFilter = {
+    every?: PortfolioRoleWhereInput
+    some?: PortfolioRoleWhereInput
+    none?: PortfolioRoleWhereInput
   }
 
   export type SortOrderInput = {
@@ -38793,15 +37344,19 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type AuthTeamExternalOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type AuthPermissionRecipientOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type AccountOwnershipOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PortfolioMemberOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PortfolioRoleOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -39662,187 +38217,119 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
-  export type AssetGroupMemberListRelationFilter = {
-    every?: AssetGroupMemberWhereInput
-    some?: AssetGroupMemberWhereInput
-    none?: AssetGroupMemberWhereInput
+  export type PortfolioAssetListRelationFilter = {
+    every?: PortfolioAssetWhereInput
+    some?: PortfolioAssetWhereInput
+    none?: PortfolioAssetWhereInput
   }
 
-  export type AssetListRelationFilter = {
-    every?: AssetWhereInput
-    some?: AssetWhereInput
-    none?: AssetWhereInput
-  }
-
-  export type AssetGroupMemberOrderByRelationAggregateInput = {
+  export type PortfolioAssetOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type AssetOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type AssetGroupInfoCountOrderByAggregateInput = {
+  export type PortfolioCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    details?: SortOrder
+    description?: SortOrder
+    dateCreated?: SortOrder
   }
 
-  export type AssetGroupInfoMaxOrderByAggregateInput = {
+  export type PortfolioMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    details?: SortOrder
+    description?: SortOrder
+    dateCreated?: SortOrder
   }
 
-  export type AssetGroupInfoMinOrderByAggregateInput = {
+  export type PortfolioMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    description?: SortOrder
+    dateCreated?: SortOrder
+  }
+
+  export type PortfolioScalarRelationFilter = {
+    is?: PortfolioWhereInput
+    isNot?: PortfolioWhereInput
+  }
+
+  export type PortfolioAssetCountOrderByAggregateInput = {
+    id?: SortOrder
+    portfolioId?: SortOrder
+    assetType?: SortOrder
+    assetId?: SortOrder
     details?: SortOrder
   }
 
-  export type AssetGroupInfoScalarRelationFilter = {
-    is?: AssetGroupInfoWhereInput
-    isNot?: AssetGroupInfoWhereInput
-  }
-
-  export type AssetMemberRoleListRelationFilter = {
-    every?: AssetMemberRoleWhereInput
-    some?: AssetMemberRoleWhereInput
-    none?: AssetMemberRoleWhereInput
-  }
-
-  export type AssetMemberRoleOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type AssetGroupMemberAssetGroupMemberCompoundUniqueInput = {
-    assetGroup: string
-    member: string
-  }
-
-  export type AssetGroupMemberCountOrderByAggregateInput = {
+  export type PortfolioAssetMaxOrderByAggregateInput = {
     id?: SortOrder
-    assetGroup?: SortOrder
-    member?: SortOrder
-    isPermanent?: SortOrder
-    validTill?: SortOrder
-    hasFullPermit?: SortOrder
+    portfolioId?: SortOrder
+    assetType?: SortOrder
+    assetId?: SortOrder
   }
 
-  export type AssetGroupMemberMaxOrderByAggregateInput = {
+  export type PortfolioAssetMinOrderByAggregateInput = {
     id?: SortOrder
-    assetGroup?: SortOrder
-    member?: SortOrder
-    isPermanent?: SortOrder
-    validTill?: SortOrder
-    hasFullPermit?: SortOrder
+    portfolioId?: SortOrder
+    assetType?: SortOrder
+    assetId?: SortOrder
   }
 
-  export type AssetGroupMemberMinOrderByAggregateInput = {
-    id?: SortOrder
-    assetGroup?: SortOrder
-    member?: SortOrder
-    isPermanent?: SortOrder
-    validTill?: SortOrder
-    hasFullPermit?: SortOrder
+  export type PortfolioMemberPortfolioIdAccountIdCompoundUniqueInput = {
+    portfolioId: string
+    accountId: string
   }
 
-  export type AssetCountOrderByAggregateInput = {
+  export type PortfolioMemberCountOrderByAggregateInput = {
     id?: SortOrder
-    asset?: SortOrder
-    type?: SortOrder
-    assetGroup?: SortOrder
+    portfolioId?: SortOrder
+    accountId?: SortOrder
     details?: SortOrder
   }
 
-  export type AssetMaxOrderByAggregateInput = {
+  export type PortfolioMemberMaxOrderByAggregateInput = {
     id?: SortOrder
-    asset?: SortOrder
-    type?: SortOrder
-    assetGroup?: SortOrder
+    portfolioId?: SortOrder
+    accountId?: SortOrder
+  }
+
+  export type PortfolioMemberMinOrderByAggregateInput = {
+    id?: SortOrder
+    portfolioId?: SortOrder
+    accountId?: SortOrder
+  }
+
+  export type PortfolioRoleAccountIdPortfolioIdRoleIdCompoundUniqueInput = {
+    accountId: string
+    portfolioId: string
+    roleId: string
+  }
+
+  export type PortfolioRoleCountOrderByAggregateInput = {
+    id?: SortOrder
+    accountId?: SortOrder
+    portfolioId?: SortOrder
+    roleId?: SortOrder
     details?: SortOrder
   }
 
-  export type AssetMinOrderByAggregateInput = {
+  export type PortfolioRoleMaxOrderByAggregateInput = {
     id?: SortOrder
-    asset?: SortOrder
-    type?: SortOrder
-    assetGroup?: SortOrder
-    details?: SortOrder
+    accountId?: SortOrder
+    portfolioId?: SortOrder
+    roleId?: SortOrder
   }
 
-  export type AssetGroupMemberScalarRelationFilter = {
-    is?: AssetGroupMemberWhereInput
-    isNot?: AssetGroupMemberWhereInput
-  }
-
-  export type AssetScalarRelationFilter = {
-    is?: AssetWhereInput
-    isNot?: AssetWhereInput
-  }
-
-  export type AssetMemberRoleAssetMemberAssetCompoundUniqueInput = {
-    assetMember: string
-    asset: string
-  }
-
-  export type AssetMemberRoleCountOrderByAggregateInput = {
+  export type PortfolioRoleMinOrderByAggregateInput = {
     id?: SortOrder
-    assetMember?: SortOrder
-    asset?: SortOrder
-    role?: SortOrder
-  }
-
-  export type AssetMemberRoleMaxOrderByAggregateInput = {
-    id?: SortOrder
-    assetMember?: SortOrder
-    asset?: SortOrder
-    role?: SortOrder
-  }
-
-  export type AssetMemberRoleMinOrderByAggregateInput = {
-    id?: SortOrder
-    assetMember?: SortOrder
-    asset?: SortOrder
-    role?: SortOrder
+    accountId?: SortOrder
+    portfolioId?: SortOrder
+    roleId?: SortOrder
   }
 
   export type ApplicationScalarRelationFilter = {
     is?: ApplicationWhereInput
     isNot?: ApplicationWhereInput
-  }
-
-  export type AuthTeamExternalAppIdAccountIdRecipientIdCompoundUniqueInput = {
-    appId: string
-    accountId: string
-    recipientId: string
-  }
-
-  export type AuthTeamExternalCountOrderByAggregateInput = {
-    id?: SortOrder
-    appId?: SortOrder
-    accountId?: SortOrder
-    recipientId?: SortOrder
-    isPermanent?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type AuthTeamExternalMaxOrderByAggregateInput = {
-    id?: SortOrder
-    appId?: SortOrder
-    accountId?: SortOrder
-    recipientId?: SortOrder
-    isPermanent?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type AuthTeamExternalMinOrderByAggregateInput = {
-    id?: SortOrder
-    appId?: SortOrder
-    accountId?: SortOrder
-    recipientId?: SortOrder
-    isPermanent?: SortOrder
-    createdAt?: SortOrder
   }
 
   export type AuthPermissionRecipientCountOrderByAggregateInput = {
@@ -40067,20 +38554,6 @@ export namespace Prisma {
     connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
   }
 
-  export type AuthTeamExternalCreateNestedManyWithoutAccountInput = {
-    create?: XOR<AuthTeamExternalCreateWithoutAccountInput, AuthTeamExternalUncheckedCreateWithoutAccountInput> | AuthTeamExternalCreateWithoutAccountInput[] | AuthTeamExternalUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthTeamExternalCreateOrConnectWithoutAccountInput | AuthTeamExternalCreateOrConnectWithoutAccountInput[]
-    createMany?: AuthTeamExternalCreateManyAccountInputEnvelope
-    connect?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-  }
-
-  export type AuthTeamExternalCreateNestedManyWithoutRecipientInput = {
-    create?: XOR<AuthTeamExternalCreateWithoutRecipientInput, AuthTeamExternalUncheckedCreateWithoutRecipientInput> | AuthTeamExternalCreateWithoutRecipientInput[] | AuthTeamExternalUncheckedCreateWithoutRecipientInput[]
-    connectOrCreate?: AuthTeamExternalCreateOrConnectWithoutRecipientInput | AuthTeamExternalCreateOrConnectWithoutRecipientInput[]
-    createMany?: AuthTeamExternalCreateManyRecipientInputEnvelope
-    connect?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-  }
-
   export type AuthPermissionRecipientCreateNestedManyWithoutRecipientInput = {
     create?: XOR<AuthPermissionRecipientCreateWithoutRecipientInput, AuthPermissionRecipientUncheckedCreateWithoutRecipientInput> | AuthPermissionRecipientCreateWithoutRecipientInput[] | AuthPermissionRecipientUncheckedCreateWithoutRecipientInput[]
     connectOrCreate?: AuthPermissionRecipientCreateOrConnectWithoutRecipientInput | AuthPermissionRecipientCreateOrConnectWithoutRecipientInput[]
@@ -40119,6 +38592,20 @@ export namespace Prisma {
     connectOrCreate?: AccountOwnershipCreateOrConnectWithoutChildInput | AccountOwnershipCreateOrConnectWithoutChildInput[]
     createMany?: AccountOwnershipCreateManyChildInputEnvelope
     connect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+  }
+
+  export type PortfolioMemberCreateNestedManyWithoutAccountInput = {
+    create?: XOR<PortfolioMemberCreateWithoutAccountInput, PortfolioMemberUncheckedCreateWithoutAccountInput> | PortfolioMemberCreateWithoutAccountInput[] | PortfolioMemberUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: PortfolioMemberCreateOrConnectWithoutAccountInput | PortfolioMemberCreateOrConnectWithoutAccountInput[]
+    createMany?: PortfolioMemberCreateManyAccountInputEnvelope
+    connect?: PortfolioMemberWhereUniqueInput | PortfolioMemberWhereUniqueInput[]
+  }
+
+  export type PortfolioRoleCreateNestedManyWithoutAccountInput = {
+    create?: XOR<PortfolioRoleCreateWithoutAccountInput, PortfolioRoleUncheckedCreateWithoutAccountInput> | PortfolioRoleCreateWithoutAccountInput[] | PortfolioRoleUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: PortfolioRoleCreateOrConnectWithoutAccountInput | PortfolioRoleCreateOrConnectWithoutAccountInput[]
+    createMany?: PortfolioRoleCreateManyAccountInputEnvelope
+    connect?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
   }
 
   export type ContactUncheckedCreateNestedManyWithoutAccountInput = {
@@ -40219,20 +38706,6 @@ export namespace Prisma {
     connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
   }
 
-  export type AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput = {
-    create?: XOR<AuthTeamExternalCreateWithoutAccountInput, AuthTeamExternalUncheckedCreateWithoutAccountInput> | AuthTeamExternalCreateWithoutAccountInput[] | AuthTeamExternalUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthTeamExternalCreateOrConnectWithoutAccountInput | AuthTeamExternalCreateOrConnectWithoutAccountInput[]
-    createMany?: AuthTeamExternalCreateManyAccountInputEnvelope
-    connect?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-  }
-
-  export type AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput = {
-    create?: XOR<AuthTeamExternalCreateWithoutRecipientInput, AuthTeamExternalUncheckedCreateWithoutRecipientInput> | AuthTeamExternalCreateWithoutRecipientInput[] | AuthTeamExternalUncheckedCreateWithoutRecipientInput[]
-    connectOrCreate?: AuthTeamExternalCreateOrConnectWithoutRecipientInput | AuthTeamExternalCreateOrConnectWithoutRecipientInput[]
-    createMany?: AuthTeamExternalCreateManyRecipientInputEnvelope
-    connect?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-  }
-
   export type AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput = {
     create?: XOR<AuthPermissionRecipientCreateWithoutRecipientInput, AuthPermissionRecipientUncheckedCreateWithoutRecipientInput> | AuthPermissionRecipientCreateWithoutRecipientInput[] | AuthPermissionRecipientUncheckedCreateWithoutRecipientInput[]
     connectOrCreate?: AuthPermissionRecipientCreateOrConnectWithoutRecipientInput | AuthPermissionRecipientCreateOrConnectWithoutRecipientInput[]
@@ -40271,6 +38744,20 @@ export namespace Prisma {
     connectOrCreate?: AccountOwnershipCreateOrConnectWithoutChildInput | AccountOwnershipCreateOrConnectWithoutChildInput[]
     createMany?: AccountOwnershipCreateManyChildInputEnvelope
     connect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+  }
+
+  export type PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput = {
+    create?: XOR<PortfolioMemberCreateWithoutAccountInput, PortfolioMemberUncheckedCreateWithoutAccountInput> | PortfolioMemberCreateWithoutAccountInput[] | PortfolioMemberUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: PortfolioMemberCreateOrConnectWithoutAccountInput | PortfolioMemberCreateOrConnectWithoutAccountInput[]
+    createMany?: PortfolioMemberCreateManyAccountInputEnvelope
+    connect?: PortfolioMemberWhereUniqueInput | PortfolioMemberWhereUniqueInput[]
+  }
+
+  export type PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput = {
+    create?: XOR<PortfolioRoleCreateWithoutAccountInput, PortfolioRoleUncheckedCreateWithoutAccountInput> | PortfolioRoleCreateWithoutAccountInput[] | PortfolioRoleUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: PortfolioRoleCreateOrConnectWithoutAccountInput | PortfolioRoleCreateOrConnectWithoutAccountInput[]
+    createMany?: PortfolioRoleCreateManyAccountInputEnvelope
+    connect?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -40485,34 +38972,6 @@ export namespace Prisma {
     deleteMany?: RequestScalarWhereInput | RequestScalarWhereInput[]
   }
 
-  export type AuthTeamExternalUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<AuthTeamExternalCreateWithoutAccountInput, AuthTeamExternalUncheckedCreateWithoutAccountInput> | AuthTeamExternalCreateWithoutAccountInput[] | AuthTeamExternalUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthTeamExternalCreateOrConnectWithoutAccountInput | AuthTeamExternalCreateOrConnectWithoutAccountInput[]
-    upsert?: AuthTeamExternalUpsertWithWhereUniqueWithoutAccountInput | AuthTeamExternalUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: AuthTeamExternalCreateManyAccountInputEnvelope
-    set?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    disconnect?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    delete?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    connect?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    update?: AuthTeamExternalUpdateWithWhereUniqueWithoutAccountInput | AuthTeamExternalUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: AuthTeamExternalUpdateManyWithWhereWithoutAccountInput | AuthTeamExternalUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: AuthTeamExternalScalarWhereInput | AuthTeamExternalScalarWhereInput[]
-  }
-
-  export type AuthTeamExternalUpdateManyWithoutRecipientNestedInput = {
-    create?: XOR<AuthTeamExternalCreateWithoutRecipientInput, AuthTeamExternalUncheckedCreateWithoutRecipientInput> | AuthTeamExternalCreateWithoutRecipientInput[] | AuthTeamExternalUncheckedCreateWithoutRecipientInput[]
-    connectOrCreate?: AuthTeamExternalCreateOrConnectWithoutRecipientInput | AuthTeamExternalCreateOrConnectWithoutRecipientInput[]
-    upsert?: AuthTeamExternalUpsertWithWhereUniqueWithoutRecipientInput | AuthTeamExternalUpsertWithWhereUniqueWithoutRecipientInput[]
-    createMany?: AuthTeamExternalCreateManyRecipientInputEnvelope
-    set?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    disconnect?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    delete?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    connect?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    update?: AuthTeamExternalUpdateWithWhereUniqueWithoutRecipientInput | AuthTeamExternalUpdateWithWhereUniqueWithoutRecipientInput[]
-    updateMany?: AuthTeamExternalUpdateManyWithWhereWithoutRecipientInput | AuthTeamExternalUpdateManyWithWhereWithoutRecipientInput[]
-    deleteMany?: AuthTeamExternalScalarWhereInput | AuthTeamExternalScalarWhereInput[]
-  }
-
   export type AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput = {
     create?: XOR<AuthPermissionRecipientCreateWithoutRecipientInput, AuthPermissionRecipientUncheckedCreateWithoutRecipientInput> | AuthPermissionRecipientCreateWithoutRecipientInput[] | AuthPermissionRecipientUncheckedCreateWithoutRecipientInput[]
     connectOrCreate?: AuthPermissionRecipientCreateOrConnectWithoutRecipientInput | AuthPermissionRecipientCreateOrConnectWithoutRecipientInput[]
@@ -40587,6 +39046,34 @@ export namespace Prisma {
     update?: AccountOwnershipUpdateWithWhereUniqueWithoutChildInput | AccountOwnershipUpdateWithWhereUniqueWithoutChildInput[]
     updateMany?: AccountOwnershipUpdateManyWithWhereWithoutChildInput | AccountOwnershipUpdateManyWithWhereWithoutChildInput[]
     deleteMany?: AccountOwnershipScalarWhereInput | AccountOwnershipScalarWhereInput[]
+  }
+
+  export type PortfolioMemberUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<PortfolioMemberCreateWithoutAccountInput, PortfolioMemberUncheckedCreateWithoutAccountInput> | PortfolioMemberCreateWithoutAccountInput[] | PortfolioMemberUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: PortfolioMemberCreateOrConnectWithoutAccountInput | PortfolioMemberCreateOrConnectWithoutAccountInput[]
+    upsert?: PortfolioMemberUpsertWithWhereUniqueWithoutAccountInput | PortfolioMemberUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: PortfolioMemberCreateManyAccountInputEnvelope
+    set?: PortfolioMemberWhereUniqueInput | PortfolioMemberWhereUniqueInput[]
+    disconnect?: PortfolioMemberWhereUniqueInput | PortfolioMemberWhereUniqueInput[]
+    delete?: PortfolioMemberWhereUniqueInput | PortfolioMemberWhereUniqueInput[]
+    connect?: PortfolioMemberWhereUniqueInput | PortfolioMemberWhereUniqueInput[]
+    update?: PortfolioMemberUpdateWithWhereUniqueWithoutAccountInput | PortfolioMemberUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: PortfolioMemberUpdateManyWithWhereWithoutAccountInput | PortfolioMemberUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: PortfolioMemberScalarWhereInput | PortfolioMemberScalarWhereInput[]
+  }
+
+  export type PortfolioRoleUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<PortfolioRoleCreateWithoutAccountInput, PortfolioRoleUncheckedCreateWithoutAccountInput> | PortfolioRoleCreateWithoutAccountInput[] | PortfolioRoleUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: PortfolioRoleCreateOrConnectWithoutAccountInput | PortfolioRoleCreateOrConnectWithoutAccountInput[]
+    upsert?: PortfolioRoleUpsertWithWhereUniqueWithoutAccountInput | PortfolioRoleUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: PortfolioRoleCreateManyAccountInputEnvelope
+    set?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
+    disconnect?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
+    delete?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
+    connect?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
+    update?: PortfolioRoleUpdateWithWhereUniqueWithoutAccountInput | PortfolioRoleUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: PortfolioRoleUpdateManyWithWhereWithoutAccountInput | PortfolioRoleUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: PortfolioRoleScalarWhereInput | PortfolioRoleScalarWhereInput[]
   }
 
   export type ContactUncheckedUpdateManyWithoutAccountNestedInput = {
@@ -40785,34 +39272,6 @@ export namespace Prisma {
     deleteMany?: RequestScalarWhereInput | RequestScalarWhereInput[]
   }
 
-  export type AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<AuthTeamExternalCreateWithoutAccountInput, AuthTeamExternalUncheckedCreateWithoutAccountInput> | AuthTeamExternalCreateWithoutAccountInput[] | AuthTeamExternalUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthTeamExternalCreateOrConnectWithoutAccountInput | AuthTeamExternalCreateOrConnectWithoutAccountInput[]
-    upsert?: AuthTeamExternalUpsertWithWhereUniqueWithoutAccountInput | AuthTeamExternalUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: AuthTeamExternalCreateManyAccountInputEnvelope
-    set?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    disconnect?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    delete?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    connect?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    update?: AuthTeamExternalUpdateWithWhereUniqueWithoutAccountInput | AuthTeamExternalUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: AuthTeamExternalUpdateManyWithWhereWithoutAccountInput | AuthTeamExternalUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: AuthTeamExternalScalarWhereInput | AuthTeamExternalScalarWhereInput[]
-  }
-
-  export type AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput = {
-    create?: XOR<AuthTeamExternalCreateWithoutRecipientInput, AuthTeamExternalUncheckedCreateWithoutRecipientInput> | AuthTeamExternalCreateWithoutRecipientInput[] | AuthTeamExternalUncheckedCreateWithoutRecipientInput[]
-    connectOrCreate?: AuthTeamExternalCreateOrConnectWithoutRecipientInput | AuthTeamExternalCreateOrConnectWithoutRecipientInput[]
-    upsert?: AuthTeamExternalUpsertWithWhereUniqueWithoutRecipientInput | AuthTeamExternalUpsertWithWhereUniqueWithoutRecipientInput[]
-    createMany?: AuthTeamExternalCreateManyRecipientInputEnvelope
-    set?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    disconnect?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    delete?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    connect?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    update?: AuthTeamExternalUpdateWithWhereUniqueWithoutRecipientInput | AuthTeamExternalUpdateWithWhereUniqueWithoutRecipientInput[]
-    updateMany?: AuthTeamExternalUpdateManyWithWhereWithoutRecipientInput | AuthTeamExternalUpdateManyWithWhereWithoutRecipientInput[]
-    deleteMany?: AuthTeamExternalScalarWhereInput | AuthTeamExternalScalarWhereInput[]
-  }
-
   export type AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput = {
     create?: XOR<AuthPermissionRecipientCreateWithoutRecipientInput, AuthPermissionRecipientUncheckedCreateWithoutRecipientInput> | AuthPermissionRecipientCreateWithoutRecipientInput[] | AuthPermissionRecipientUncheckedCreateWithoutRecipientInput[]
     connectOrCreate?: AuthPermissionRecipientCreateOrConnectWithoutRecipientInput | AuthPermissionRecipientCreateOrConnectWithoutRecipientInput[]
@@ -40887,6 +39346,34 @@ export namespace Prisma {
     update?: AccountOwnershipUpdateWithWhereUniqueWithoutChildInput | AccountOwnershipUpdateWithWhereUniqueWithoutChildInput[]
     updateMany?: AccountOwnershipUpdateManyWithWhereWithoutChildInput | AccountOwnershipUpdateManyWithWhereWithoutChildInput[]
     deleteMany?: AccountOwnershipScalarWhereInput | AccountOwnershipScalarWhereInput[]
+  }
+
+  export type PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<PortfolioMemberCreateWithoutAccountInput, PortfolioMemberUncheckedCreateWithoutAccountInput> | PortfolioMemberCreateWithoutAccountInput[] | PortfolioMemberUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: PortfolioMemberCreateOrConnectWithoutAccountInput | PortfolioMemberCreateOrConnectWithoutAccountInput[]
+    upsert?: PortfolioMemberUpsertWithWhereUniqueWithoutAccountInput | PortfolioMemberUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: PortfolioMemberCreateManyAccountInputEnvelope
+    set?: PortfolioMemberWhereUniqueInput | PortfolioMemberWhereUniqueInput[]
+    disconnect?: PortfolioMemberWhereUniqueInput | PortfolioMemberWhereUniqueInput[]
+    delete?: PortfolioMemberWhereUniqueInput | PortfolioMemberWhereUniqueInput[]
+    connect?: PortfolioMemberWhereUniqueInput | PortfolioMemberWhereUniqueInput[]
+    update?: PortfolioMemberUpdateWithWhereUniqueWithoutAccountInput | PortfolioMemberUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: PortfolioMemberUpdateManyWithWhereWithoutAccountInput | PortfolioMemberUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: PortfolioMemberScalarWhereInput | PortfolioMemberScalarWhereInput[]
+  }
+
+  export type PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<PortfolioRoleCreateWithoutAccountInput, PortfolioRoleUncheckedCreateWithoutAccountInput> | PortfolioRoleCreateWithoutAccountInput[] | PortfolioRoleUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: PortfolioRoleCreateOrConnectWithoutAccountInput | PortfolioRoleCreateOrConnectWithoutAccountInput[]
+    upsert?: PortfolioRoleUpsertWithWhereUniqueWithoutAccountInput | PortfolioRoleUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: PortfolioRoleCreateManyAccountInputEnvelope
+    set?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
+    disconnect?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
+    delete?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
+    connect?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
+    update?: PortfolioRoleUpdateWithWhereUniqueWithoutAccountInput | PortfolioRoleUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: PortfolioRoleUpdateManyWithWhereWithoutAccountInput | PortfolioRoleUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: PortfolioRoleScalarWhereInput | PortfolioRoleScalarWhereInput[]
   }
 
   export type AccountCreateNestedOneWithoutIndividualProfileInput = {
@@ -41315,13 +39802,6 @@ export namespace Prisma {
     connect?: AppSessionWhereUniqueInput | AppSessionWhereUniqueInput[]
   }
 
-  export type AuthTeamExternalCreateNestedManyWithoutApplicationInput = {
-    create?: XOR<AuthTeamExternalCreateWithoutApplicationInput, AuthTeamExternalUncheckedCreateWithoutApplicationInput> | AuthTeamExternalCreateWithoutApplicationInput[] | AuthTeamExternalUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: AuthTeamExternalCreateOrConnectWithoutApplicationInput | AuthTeamExternalCreateOrConnectWithoutApplicationInput[]
-    createMany?: AuthTeamExternalCreateManyApplicationInputEnvelope
-    connect?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-  }
-
   export type AuthPermissionRecipientCreateNestedManyWithoutApplicationInput = {
     create?: XOR<AuthPermissionRecipientCreateWithoutApplicationInput, AuthPermissionRecipientUncheckedCreateWithoutApplicationInput> | AuthPermissionRecipientCreateWithoutApplicationInput[] | AuthPermissionRecipientUncheckedCreateWithoutApplicationInput[]
     connectOrCreate?: AuthPermissionRecipientCreateOrConnectWithoutApplicationInput | AuthPermissionRecipientCreateOrConnectWithoutApplicationInput[]
@@ -41348,13 +39828,6 @@ export namespace Prisma {
     connectOrCreate?: AppSessionCreateOrConnectWithoutApplicationInput | AppSessionCreateOrConnectWithoutApplicationInput[]
     createMany?: AppSessionCreateManyApplicationInputEnvelope
     connect?: AppSessionWhereUniqueInput | AppSessionWhereUniqueInput[]
-  }
-
-  export type AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput = {
-    create?: XOR<AuthTeamExternalCreateWithoutApplicationInput, AuthTeamExternalUncheckedCreateWithoutApplicationInput> | AuthTeamExternalCreateWithoutApplicationInput[] | AuthTeamExternalUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: AuthTeamExternalCreateOrConnectWithoutApplicationInput | AuthTeamExternalCreateOrConnectWithoutApplicationInput[]
-    createMany?: AuthTeamExternalCreateManyApplicationInputEnvelope
-    connect?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
   }
 
   export type AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput = {
@@ -41416,20 +39889,6 @@ export namespace Prisma {
     deleteMany?: AppSessionScalarWhereInput | AppSessionScalarWhereInput[]
   }
 
-  export type AuthTeamExternalUpdateManyWithoutApplicationNestedInput = {
-    create?: XOR<AuthTeamExternalCreateWithoutApplicationInput, AuthTeamExternalUncheckedCreateWithoutApplicationInput> | AuthTeamExternalCreateWithoutApplicationInput[] | AuthTeamExternalUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: AuthTeamExternalCreateOrConnectWithoutApplicationInput | AuthTeamExternalCreateOrConnectWithoutApplicationInput[]
-    upsert?: AuthTeamExternalUpsertWithWhereUniqueWithoutApplicationInput | AuthTeamExternalUpsertWithWhereUniqueWithoutApplicationInput[]
-    createMany?: AuthTeamExternalCreateManyApplicationInputEnvelope
-    set?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    disconnect?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    delete?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    connect?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    update?: AuthTeamExternalUpdateWithWhereUniqueWithoutApplicationInput | AuthTeamExternalUpdateWithWhereUniqueWithoutApplicationInput[]
-    updateMany?: AuthTeamExternalUpdateManyWithWhereWithoutApplicationInput | AuthTeamExternalUpdateManyWithWhereWithoutApplicationInput[]
-    deleteMany?: AuthTeamExternalScalarWhereInput | AuthTeamExternalScalarWhereInput[]
-  }
-
   export type AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput = {
     create?: XOR<AuthPermissionRecipientCreateWithoutApplicationInput, AuthPermissionRecipientUncheckedCreateWithoutApplicationInput> | AuthPermissionRecipientCreateWithoutApplicationInput[] | AuthPermissionRecipientUncheckedCreateWithoutApplicationInput[]
     connectOrCreate?: AuthPermissionRecipientCreateOrConnectWithoutApplicationInput | AuthPermissionRecipientCreateOrConnectWithoutApplicationInput[]
@@ -41486,20 +39945,6 @@ export namespace Prisma {
     deleteMany?: AppSessionScalarWhereInput | AppSessionScalarWhereInput[]
   }
 
-  export type AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput = {
-    create?: XOR<AuthTeamExternalCreateWithoutApplicationInput, AuthTeamExternalUncheckedCreateWithoutApplicationInput> | AuthTeamExternalCreateWithoutApplicationInput[] | AuthTeamExternalUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: AuthTeamExternalCreateOrConnectWithoutApplicationInput | AuthTeamExternalCreateOrConnectWithoutApplicationInput[]
-    upsert?: AuthTeamExternalUpsertWithWhereUniqueWithoutApplicationInput | AuthTeamExternalUpsertWithWhereUniqueWithoutApplicationInput[]
-    createMany?: AuthTeamExternalCreateManyApplicationInputEnvelope
-    set?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    disconnect?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    delete?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    connect?: AuthTeamExternalWhereUniqueInput | AuthTeamExternalWhereUniqueInput[]
-    update?: AuthTeamExternalUpdateWithWhereUniqueWithoutApplicationInput | AuthTeamExternalUpdateWithWhereUniqueWithoutApplicationInput[]
-    updateMany?: AuthTeamExternalUpdateManyWithWhereWithoutApplicationInput | AuthTeamExternalUpdateManyWithWhereWithoutApplicationInput[]
-    deleteMany?: AuthTeamExternalScalarWhereInput | AuthTeamExternalScalarWhereInput[]
-  }
-
   export type AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput = {
     create?: XOR<AuthPermissionRecipientCreateWithoutApplicationInput, AuthPermissionRecipientUncheckedCreateWithoutApplicationInput> | AuthPermissionRecipientCreateWithoutApplicationInput[] | AuthPermissionRecipientUncheckedCreateWithoutApplicationInput[]
     connectOrCreate?: AuthPermissionRecipientCreateOrConnectWithoutApplicationInput | AuthPermissionRecipientCreateOrConnectWithoutApplicationInput[]
@@ -41514,270 +39959,200 @@ export namespace Prisma {
     deleteMany?: AuthPermissionRecipientScalarWhereInput | AuthPermissionRecipientScalarWhereInput[]
   }
 
-  export type AssetGroupMemberCreateNestedManyWithoutAssetGroupInfoInput = {
-    create?: XOR<AssetGroupMemberCreateWithoutAssetGroupInfoInput, AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput> | AssetGroupMemberCreateWithoutAssetGroupInfoInput[] | AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput[]
-    connectOrCreate?: AssetGroupMemberCreateOrConnectWithoutAssetGroupInfoInput | AssetGroupMemberCreateOrConnectWithoutAssetGroupInfoInput[]
-    createMany?: AssetGroupMemberCreateManyAssetGroupInfoInputEnvelope
-    connect?: AssetGroupMemberWhereUniqueInput | AssetGroupMemberWhereUniqueInput[]
+  export type PortfolioAssetCreateNestedManyWithoutPortfolioInput = {
+    create?: XOR<PortfolioAssetCreateWithoutPortfolioInput, PortfolioAssetUncheckedCreateWithoutPortfolioInput> | PortfolioAssetCreateWithoutPortfolioInput[] | PortfolioAssetUncheckedCreateWithoutPortfolioInput[]
+    connectOrCreate?: PortfolioAssetCreateOrConnectWithoutPortfolioInput | PortfolioAssetCreateOrConnectWithoutPortfolioInput[]
+    createMany?: PortfolioAssetCreateManyPortfolioInputEnvelope
+    connect?: PortfolioAssetWhereUniqueInput | PortfolioAssetWhereUniqueInput[]
   }
 
-  export type AssetCreateNestedManyWithoutAssetGroupInfoInput = {
-    create?: XOR<AssetCreateWithoutAssetGroupInfoInput, AssetUncheckedCreateWithoutAssetGroupInfoInput> | AssetCreateWithoutAssetGroupInfoInput[] | AssetUncheckedCreateWithoutAssetGroupInfoInput[]
-    connectOrCreate?: AssetCreateOrConnectWithoutAssetGroupInfoInput | AssetCreateOrConnectWithoutAssetGroupInfoInput[]
-    createMany?: AssetCreateManyAssetGroupInfoInputEnvelope
-    connect?: AssetWhereUniqueInput | AssetWhereUniqueInput[]
+  export type PortfolioMemberCreateNestedManyWithoutPortfolioInput = {
+    create?: XOR<PortfolioMemberCreateWithoutPortfolioInput, PortfolioMemberUncheckedCreateWithoutPortfolioInput> | PortfolioMemberCreateWithoutPortfolioInput[] | PortfolioMemberUncheckedCreateWithoutPortfolioInput[]
+    connectOrCreate?: PortfolioMemberCreateOrConnectWithoutPortfolioInput | PortfolioMemberCreateOrConnectWithoutPortfolioInput[]
+    createMany?: PortfolioMemberCreateManyPortfolioInputEnvelope
+    connect?: PortfolioMemberWhereUniqueInput | PortfolioMemberWhereUniqueInput[]
   }
 
-  export type AssetGroupMemberUncheckedCreateNestedManyWithoutAssetGroupInfoInput = {
-    create?: XOR<AssetGroupMemberCreateWithoutAssetGroupInfoInput, AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput> | AssetGroupMemberCreateWithoutAssetGroupInfoInput[] | AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput[]
-    connectOrCreate?: AssetGroupMemberCreateOrConnectWithoutAssetGroupInfoInput | AssetGroupMemberCreateOrConnectWithoutAssetGroupInfoInput[]
-    createMany?: AssetGroupMemberCreateManyAssetGroupInfoInputEnvelope
-    connect?: AssetGroupMemberWhereUniqueInput | AssetGroupMemberWhereUniqueInput[]
+  export type PortfolioRoleCreateNestedManyWithoutPortfolioInput = {
+    create?: XOR<PortfolioRoleCreateWithoutPortfolioInput, PortfolioRoleUncheckedCreateWithoutPortfolioInput> | PortfolioRoleCreateWithoutPortfolioInput[] | PortfolioRoleUncheckedCreateWithoutPortfolioInput[]
+    connectOrCreate?: PortfolioRoleCreateOrConnectWithoutPortfolioInput | PortfolioRoleCreateOrConnectWithoutPortfolioInput[]
+    createMany?: PortfolioRoleCreateManyPortfolioInputEnvelope
+    connect?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
   }
 
-  export type AssetUncheckedCreateNestedManyWithoutAssetGroupInfoInput = {
-    create?: XOR<AssetCreateWithoutAssetGroupInfoInput, AssetUncheckedCreateWithoutAssetGroupInfoInput> | AssetCreateWithoutAssetGroupInfoInput[] | AssetUncheckedCreateWithoutAssetGroupInfoInput[]
-    connectOrCreate?: AssetCreateOrConnectWithoutAssetGroupInfoInput | AssetCreateOrConnectWithoutAssetGroupInfoInput[]
-    createMany?: AssetCreateManyAssetGroupInfoInputEnvelope
-    connect?: AssetWhereUniqueInput | AssetWhereUniqueInput[]
+  export type PortfolioAssetUncheckedCreateNestedManyWithoutPortfolioInput = {
+    create?: XOR<PortfolioAssetCreateWithoutPortfolioInput, PortfolioAssetUncheckedCreateWithoutPortfolioInput> | PortfolioAssetCreateWithoutPortfolioInput[] | PortfolioAssetUncheckedCreateWithoutPortfolioInput[]
+    connectOrCreate?: PortfolioAssetCreateOrConnectWithoutPortfolioInput | PortfolioAssetCreateOrConnectWithoutPortfolioInput[]
+    createMany?: PortfolioAssetCreateManyPortfolioInputEnvelope
+    connect?: PortfolioAssetWhereUniqueInput | PortfolioAssetWhereUniqueInput[]
   }
 
-  export type AssetGroupMemberUpdateManyWithoutAssetGroupInfoNestedInput = {
-    create?: XOR<AssetGroupMemberCreateWithoutAssetGroupInfoInput, AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput> | AssetGroupMemberCreateWithoutAssetGroupInfoInput[] | AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput[]
-    connectOrCreate?: AssetGroupMemberCreateOrConnectWithoutAssetGroupInfoInput | AssetGroupMemberCreateOrConnectWithoutAssetGroupInfoInput[]
-    upsert?: AssetGroupMemberUpsertWithWhereUniqueWithoutAssetGroupInfoInput | AssetGroupMemberUpsertWithWhereUniqueWithoutAssetGroupInfoInput[]
-    createMany?: AssetGroupMemberCreateManyAssetGroupInfoInputEnvelope
-    set?: AssetGroupMemberWhereUniqueInput | AssetGroupMemberWhereUniqueInput[]
-    disconnect?: AssetGroupMemberWhereUniqueInput | AssetGroupMemberWhereUniqueInput[]
-    delete?: AssetGroupMemberWhereUniqueInput | AssetGroupMemberWhereUniqueInput[]
-    connect?: AssetGroupMemberWhereUniqueInput | AssetGroupMemberWhereUniqueInput[]
-    update?: AssetGroupMemberUpdateWithWhereUniqueWithoutAssetGroupInfoInput | AssetGroupMemberUpdateWithWhereUniqueWithoutAssetGroupInfoInput[]
-    updateMany?: AssetGroupMemberUpdateManyWithWhereWithoutAssetGroupInfoInput | AssetGroupMemberUpdateManyWithWhereWithoutAssetGroupInfoInput[]
-    deleteMany?: AssetGroupMemberScalarWhereInput | AssetGroupMemberScalarWhereInput[]
+  export type PortfolioMemberUncheckedCreateNestedManyWithoutPortfolioInput = {
+    create?: XOR<PortfolioMemberCreateWithoutPortfolioInput, PortfolioMemberUncheckedCreateWithoutPortfolioInput> | PortfolioMemberCreateWithoutPortfolioInput[] | PortfolioMemberUncheckedCreateWithoutPortfolioInput[]
+    connectOrCreate?: PortfolioMemberCreateOrConnectWithoutPortfolioInput | PortfolioMemberCreateOrConnectWithoutPortfolioInput[]
+    createMany?: PortfolioMemberCreateManyPortfolioInputEnvelope
+    connect?: PortfolioMemberWhereUniqueInput | PortfolioMemberWhereUniqueInput[]
   }
 
-  export type AssetUpdateManyWithoutAssetGroupInfoNestedInput = {
-    create?: XOR<AssetCreateWithoutAssetGroupInfoInput, AssetUncheckedCreateWithoutAssetGroupInfoInput> | AssetCreateWithoutAssetGroupInfoInput[] | AssetUncheckedCreateWithoutAssetGroupInfoInput[]
-    connectOrCreate?: AssetCreateOrConnectWithoutAssetGroupInfoInput | AssetCreateOrConnectWithoutAssetGroupInfoInput[]
-    upsert?: AssetUpsertWithWhereUniqueWithoutAssetGroupInfoInput | AssetUpsertWithWhereUniqueWithoutAssetGroupInfoInput[]
-    createMany?: AssetCreateManyAssetGroupInfoInputEnvelope
-    set?: AssetWhereUniqueInput | AssetWhereUniqueInput[]
-    disconnect?: AssetWhereUniqueInput | AssetWhereUniqueInput[]
-    delete?: AssetWhereUniqueInput | AssetWhereUniqueInput[]
-    connect?: AssetWhereUniqueInput | AssetWhereUniqueInput[]
-    update?: AssetUpdateWithWhereUniqueWithoutAssetGroupInfoInput | AssetUpdateWithWhereUniqueWithoutAssetGroupInfoInput[]
-    updateMany?: AssetUpdateManyWithWhereWithoutAssetGroupInfoInput | AssetUpdateManyWithWhereWithoutAssetGroupInfoInput[]
-    deleteMany?: AssetScalarWhereInput | AssetScalarWhereInput[]
+  export type PortfolioRoleUncheckedCreateNestedManyWithoutPortfolioInput = {
+    create?: XOR<PortfolioRoleCreateWithoutPortfolioInput, PortfolioRoleUncheckedCreateWithoutPortfolioInput> | PortfolioRoleCreateWithoutPortfolioInput[] | PortfolioRoleUncheckedCreateWithoutPortfolioInput[]
+    connectOrCreate?: PortfolioRoleCreateOrConnectWithoutPortfolioInput | PortfolioRoleCreateOrConnectWithoutPortfolioInput[]
+    createMany?: PortfolioRoleCreateManyPortfolioInputEnvelope
+    connect?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
   }
 
-  export type AssetGroupMemberUncheckedUpdateManyWithoutAssetGroupInfoNestedInput = {
-    create?: XOR<AssetGroupMemberCreateWithoutAssetGroupInfoInput, AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput> | AssetGroupMemberCreateWithoutAssetGroupInfoInput[] | AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput[]
-    connectOrCreate?: AssetGroupMemberCreateOrConnectWithoutAssetGroupInfoInput | AssetGroupMemberCreateOrConnectWithoutAssetGroupInfoInput[]
-    upsert?: AssetGroupMemberUpsertWithWhereUniqueWithoutAssetGroupInfoInput | AssetGroupMemberUpsertWithWhereUniqueWithoutAssetGroupInfoInput[]
-    createMany?: AssetGroupMemberCreateManyAssetGroupInfoInputEnvelope
-    set?: AssetGroupMemberWhereUniqueInput | AssetGroupMemberWhereUniqueInput[]
-    disconnect?: AssetGroupMemberWhereUniqueInput | AssetGroupMemberWhereUniqueInput[]
-    delete?: AssetGroupMemberWhereUniqueInput | AssetGroupMemberWhereUniqueInput[]
-    connect?: AssetGroupMemberWhereUniqueInput | AssetGroupMemberWhereUniqueInput[]
-    update?: AssetGroupMemberUpdateWithWhereUniqueWithoutAssetGroupInfoInput | AssetGroupMemberUpdateWithWhereUniqueWithoutAssetGroupInfoInput[]
-    updateMany?: AssetGroupMemberUpdateManyWithWhereWithoutAssetGroupInfoInput | AssetGroupMemberUpdateManyWithWhereWithoutAssetGroupInfoInput[]
-    deleteMany?: AssetGroupMemberScalarWhereInput | AssetGroupMemberScalarWhereInput[]
+  export type PortfolioAssetUpdateManyWithoutPortfolioNestedInput = {
+    create?: XOR<PortfolioAssetCreateWithoutPortfolioInput, PortfolioAssetUncheckedCreateWithoutPortfolioInput> | PortfolioAssetCreateWithoutPortfolioInput[] | PortfolioAssetUncheckedCreateWithoutPortfolioInput[]
+    connectOrCreate?: PortfolioAssetCreateOrConnectWithoutPortfolioInput | PortfolioAssetCreateOrConnectWithoutPortfolioInput[]
+    upsert?: PortfolioAssetUpsertWithWhereUniqueWithoutPortfolioInput | PortfolioAssetUpsertWithWhereUniqueWithoutPortfolioInput[]
+    createMany?: PortfolioAssetCreateManyPortfolioInputEnvelope
+    set?: PortfolioAssetWhereUniqueInput | PortfolioAssetWhereUniqueInput[]
+    disconnect?: PortfolioAssetWhereUniqueInput | PortfolioAssetWhereUniqueInput[]
+    delete?: PortfolioAssetWhereUniqueInput | PortfolioAssetWhereUniqueInput[]
+    connect?: PortfolioAssetWhereUniqueInput | PortfolioAssetWhereUniqueInput[]
+    update?: PortfolioAssetUpdateWithWhereUniqueWithoutPortfolioInput | PortfolioAssetUpdateWithWhereUniqueWithoutPortfolioInput[]
+    updateMany?: PortfolioAssetUpdateManyWithWhereWithoutPortfolioInput | PortfolioAssetUpdateManyWithWhereWithoutPortfolioInput[]
+    deleteMany?: PortfolioAssetScalarWhereInput | PortfolioAssetScalarWhereInput[]
   }
 
-  export type AssetUncheckedUpdateManyWithoutAssetGroupInfoNestedInput = {
-    create?: XOR<AssetCreateWithoutAssetGroupInfoInput, AssetUncheckedCreateWithoutAssetGroupInfoInput> | AssetCreateWithoutAssetGroupInfoInput[] | AssetUncheckedCreateWithoutAssetGroupInfoInput[]
-    connectOrCreate?: AssetCreateOrConnectWithoutAssetGroupInfoInput | AssetCreateOrConnectWithoutAssetGroupInfoInput[]
-    upsert?: AssetUpsertWithWhereUniqueWithoutAssetGroupInfoInput | AssetUpsertWithWhereUniqueWithoutAssetGroupInfoInput[]
-    createMany?: AssetCreateManyAssetGroupInfoInputEnvelope
-    set?: AssetWhereUniqueInput | AssetWhereUniqueInput[]
-    disconnect?: AssetWhereUniqueInput | AssetWhereUniqueInput[]
-    delete?: AssetWhereUniqueInput | AssetWhereUniqueInput[]
-    connect?: AssetWhereUniqueInput | AssetWhereUniqueInput[]
-    update?: AssetUpdateWithWhereUniqueWithoutAssetGroupInfoInput | AssetUpdateWithWhereUniqueWithoutAssetGroupInfoInput[]
-    updateMany?: AssetUpdateManyWithWhereWithoutAssetGroupInfoInput | AssetUpdateManyWithWhereWithoutAssetGroupInfoInput[]
-    deleteMany?: AssetScalarWhereInput | AssetScalarWhereInput[]
+  export type PortfolioMemberUpdateManyWithoutPortfolioNestedInput = {
+    create?: XOR<PortfolioMemberCreateWithoutPortfolioInput, PortfolioMemberUncheckedCreateWithoutPortfolioInput> | PortfolioMemberCreateWithoutPortfolioInput[] | PortfolioMemberUncheckedCreateWithoutPortfolioInput[]
+    connectOrCreate?: PortfolioMemberCreateOrConnectWithoutPortfolioInput | PortfolioMemberCreateOrConnectWithoutPortfolioInput[]
+    upsert?: PortfolioMemberUpsertWithWhereUniqueWithoutPortfolioInput | PortfolioMemberUpsertWithWhereUniqueWithoutPortfolioInput[]
+    createMany?: PortfolioMemberCreateManyPortfolioInputEnvelope
+    set?: PortfolioMemberWhereUniqueInput | PortfolioMemberWhereUniqueInput[]
+    disconnect?: PortfolioMemberWhereUniqueInput | PortfolioMemberWhereUniqueInput[]
+    delete?: PortfolioMemberWhereUniqueInput | PortfolioMemberWhereUniqueInput[]
+    connect?: PortfolioMemberWhereUniqueInput | PortfolioMemberWhereUniqueInput[]
+    update?: PortfolioMemberUpdateWithWhereUniqueWithoutPortfolioInput | PortfolioMemberUpdateWithWhereUniqueWithoutPortfolioInput[]
+    updateMany?: PortfolioMemberUpdateManyWithWhereWithoutPortfolioInput | PortfolioMemberUpdateManyWithWhereWithoutPortfolioInput[]
+    deleteMany?: PortfolioMemberScalarWhereInput | PortfolioMemberScalarWhereInput[]
   }
 
-  export type AssetGroupInfoCreateNestedOneWithoutMembersInput = {
-    create?: XOR<AssetGroupInfoCreateWithoutMembersInput, AssetGroupInfoUncheckedCreateWithoutMembersInput>
-    connectOrCreate?: AssetGroupInfoCreateOrConnectWithoutMembersInput
-    connect?: AssetGroupInfoWhereUniqueInput
+  export type PortfolioRoleUpdateManyWithoutPortfolioNestedInput = {
+    create?: XOR<PortfolioRoleCreateWithoutPortfolioInput, PortfolioRoleUncheckedCreateWithoutPortfolioInput> | PortfolioRoleCreateWithoutPortfolioInput[] | PortfolioRoleUncheckedCreateWithoutPortfolioInput[]
+    connectOrCreate?: PortfolioRoleCreateOrConnectWithoutPortfolioInput | PortfolioRoleCreateOrConnectWithoutPortfolioInput[]
+    upsert?: PortfolioRoleUpsertWithWhereUniqueWithoutPortfolioInput | PortfolioRoleUpsertWithWhereUniqueWithoutPortfolioInput[]
+    createMany?: PortfolioRoleCreateManyPortfolioInputEnvelope
+    set?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
+    disconnect?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
+    delete?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
+    connect?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
+    update?: PortfolioRoleUpdateWithWhereUniqueWithoutPortfolioInput | PortfolioRoleUpdateWithWhereUniqueWithoutPortfolioInput[]
+    updateMany?: PortfolioRoleUpdateManyWithWhereWithoutPortfolioInput | PortfolioRoleUpdateManyWithWhereWithoutPortfolioInput[]
+    deleteMany?: PortfolioRoleScalarWhereInput | PortfolioRoleScalarWhereInput[]
   }
 
-  export type AssetMemberRoleCreateNestedManyWithoutMemberInput = {
-    create?: XOR<AssetMemberRoleCreateWithoutMemberInput, AssetMemberRoleUncheckedCreateWithoutMemberInput> | AssetMemberRoleCreateWithoutMemberInput[] | AssetMemberRoleUncheckedCreateWithoutMemberInput[]
-    connectOrCreate?: AssetMemberRoleCreateOrConnectWithoutMemberInput | AssetMemberRoleCreateOrConnectWithoutMemberInput[]
-    createMany?: AssetMemberRoleCreateManyMemberInputEnvelope
-    connect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+  export type PortfolioAssetUncheckedUpdateManyWithoutPortfolioNestedInput = {
+    create?: XOR<PortfolioAssetCreateWithoutPortfolioInput, PortfolioAssetUncheckedCreateWithoutPortfolioInput> | PortfolioAssetCreateWithoutPortfolioInput[] | PortfolioAssetUncheckedCreateWithoutPortfolioInput[]
+    connectOrCreate?: PortfolioAssetCreateOrConnectWithoutPortfolioInput | PortfolioAssetCreateOrConnectWithoutPortfolioInput[]
+    upsert?: PortfolioAssetUpsertWithWhereUniqueWithoutPortfolioInput | PortfolioAssetUpsertWithWhereUniqueWithoutPortfolioInput[]
+    createMany?: PortfolioAssetCreateManyPortfolioInputEnvelope
+    set?: PortfolioAssetWhereUniqueInput | PortfolioAssetWhereUniqueInput[]
+    disconnect?: PortfolioAssetWhereUniqueInput | PortfolioAssetWhereUniqueInput[]
+    delete?: PortfolioAssetWhereUniqueInput | PortfolioAssetWhereUniqueInput[]
+    connect?: PortfolioAssetWhereUniqueInput | PortfolioAssetWhereUniqueInput[]
+    update?: PortfolioAssetUpdateWithWhereUniqueWithoutPortfolioInput | PortfolioAssetUpdateWithWhereUniqueWithoutPortfolioInput[]
+    updateMany?: PortfolioAssetUpdateManyWithWhereWithoutPortfolioInput | PortfolioAssetUpdateManyWithWhereWithoutPortfolioInput[]
+    deleteMany?: PortfolioAssetScalarWhereInput | PortfolioAssetScalarWhereInput[]
   }
 
-  export type AssetMemberRoleUncheckedCreateNestedManyWithoutMemberInput = {
-    create?: XOR<AssetMemberRoleCreateWithoutMemberInput, AssetMemberRoleUncheckedCreateWithoutMemberInput> | AssetMemberRoleCreateWithoutMemberInput[] | AssetMemberRoleUncheckedCreateWithoutMemberInput[]
-    connectOrCreate?: AssetMemberRoleCreateOrConnectWithoutMemberInput | AssetMemberRoleCreateOrConnectWithoutMemberInput[]
-    createMany?: AssetMemberRoleCreateManyMemberInputEnvelope
-    connect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
+  export type PortfolioMemberUncheckedUpdateManyWithoutPortfolioNestedInput = {
+    create?: XOR<PortfolioMemberCreateWithoutPortfolioInput, PortfolioMemberUncheckedCreateWithoutPortfolioInput> | PortfolioMemberCreateWithoutPortfolioInput[] | PortfolioMemberUncheckedCreateWithoutPortfolioInput[]
+    connectOrCreate?: PortfolioMemberCreateOrConnectWithoutPortfolioInput | PortfolioMemberCreateOrConnectWithoutPortfolioInput[]
+    upsert?: PortfolioMemberUpsertWithWhereUniqueWithoutPortfolioInput | PortfolioMemberUpsertWithWhereUniqueWithoutPortfolioInput[]
+    createMany?: PortfolioMemberCreateManyPortfolioInputEnvelope
+    set?: PortfolioMemberWhereUniqueInput | PortfolioMemberWhereUniqueInput[]
+    disconnect?: PortfolioMemberWhereUniqueInput | PortfolioMemberWhereUniqueInput[]
+    delete?: PortfolioMemberWhereUniqueInput | PortfolioMemberWhereUniqueInput[]
+    connect?: PortfolioMemberWhereUniqueInput | PortfolioMemberWhereUniqueInput[]
+    update?: PortfolioMemberUpdateWithWhereUniqueWithoutPortfolioInput | PortfolioMemberUpdateWithWhereUniqueWithoutPortfolioInput[]
+    updateMany?: PortfolioMemberUpdateManyWithWhereWithoutPortfolioInput | PortfolioMemberUpdateManyWithWhereWithoutPortfolioInput[]
+    deleteMany?: PortfolioMemberScalarWhereInput | PortfolioMemberScalarWhereInput[]
   }
 
-  export type AssetGroupInfoUpdateOneRequiredWithoutMembersNestedInput = {
-    create?: XOR<AssetGroupInfoCreateWithoutMembersInput, AssetGroupInfoUncheckedCreateWithoutMembersInput>
-    connectOrCreate?: AssetGroupInfoCreateOrConnectWithoutMembersInput
-    upsert?: AssetGroupInfoUpsertWithoutMembersInput
-    connect?: AssetGroupInfoWhereUniqueInput
-    update?: XOR<XOR<AssetGroupInfoUpdateToOneWithWhereWithoutMembersInput, AssetGroupInfoUpdateWithoutMembersInput>, AssetGroupInfoUncheckedUpdateWithoutMembersInput>
+  export type PortfolioRoleUncheckedUpdateManyWithoutPortfolioNestedInput = {
+    create?: XOR<PortfolioRoleCreateWithoutPortfolioInput, PortfolioRoleUncheckedCreateWithoutPortfolioInput> | PortfolioRoleCreateWithoutPortfolioInput[] | PortfolioRoleUncheckedCreateWithoutPortfolioInput[]
+    connectOrCreate?: PortfolioRoleCreateOrConnectWithoutPortfolioInput | PortfolioRoleCreateOrConnectWithoutPortfolioInput[]
+    upsert?: PortfolioRoleUpsertWithWhereUniqueWithoutPortfolioInput | PortfolioRoleUpsertWithWhereUniqueWithoutPortfolioInput[]
+    createMany?: PortfolioRoleCreateManyPortfolioInputEnvelope
+    set?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
+    disconnect?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
+    delete?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
+    connect?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
+    update?: PortfolioRoleUpdateWithWhereUniqueWithoutPortfolioInput | PortfolioRoleUpdateWithWhereUniqueWithoutPortfolioInput[]
+    updateMany?: PortfolioRoleUpdateManyWithWhereWithoutPortfolioInput | PortfolioRoleUpdateManyWithWhereWithoutPortfolioInput[]
+    deleteMany?: PortfolioRoleScalarWhereInput | PortfolioRoleScalarWhereInput[]
   }
 
-  export type AssetMemberRoleUpdateManyWithoutMemberNestedInput = {
-    create?: XOR<AssetMemberRoleCreateWithoutMemberInput, AssetMemberRoleUncheckedCreateWithoutMemberInput> | AssetMemberRoleCreateWithoutMemberInput[] | AssetMemberRoleUncheckedCreateWithoutMemberInput[]
-    connectOrCreate?: AssetMemberRoleCreateOrConnectWithoutMemberInput | AssetMemberRoleCreateOrConnectWithoutMemberInput[]
-    upsert?: AssetMemberRoleUpsertWithWhereUniqueWithoutMemberInput | AssetMemberRoleUpsertWithWhereUniqueWithoutMemberInput[]
-    createMany?: AssetMemberRoleCreateManyMemberInputEnvelope
-    set?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
-    disconnect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
-    delete?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
-    connect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
-    update?: AssetMemberRoleUpdateWithWhereUniqueWithoutMemberInput | AssetMemberRoleUpdateWithWhereUniqueWithoutMemberInput[]
-    updateMany?: AssetMemberRoleUpdateManyWithWhereWithoutMemberInput | AssetMemberRoleUpdateManyWithWhereWithoutMemberInput[]
-    deleteMany?: AssetMemberRoleScalarWhereInput | AssetMemberRoleScalarWhereInput[]
+  export type PortfolioCreateNestedOneWithoutAssetsInput = {
+    create?: XOR<PortfolioCreateWithoutAssetsInput, PortfolioUncheckedCreateWithoutAssetsInput>
+    connectOrCreate?: PortfolioCreateOrConnectWithoutAssetsInput
+    connect?: PortfolioWhereUniqueInput
   }
 
-  export type AssetMemberRoleUncheckedUpdateManyWithoutMemberNestedInput = {
-    create?: XOR<AssetMemberRoleCreateWithoutMemberInput, AssetMemberRoleUncheckedCreateWithoutMemberInput> | AssetMemberRoleCreateWithoutMemberInput[] | AssetMemberRoleUncheckedCreateWithoutMemberInput[]
-    connectOrCreate?: AssetMemberRoleCreateOrConnectWithoutMemberInput | AssetMemberRoleCreateOrConnectWithoutMemberInput[]
-    upsert?: AssetMemberRoleUpsertWithWhereUniqueWithoutMemberInput | AssetMemberRoleUpsertWithWhereUniqueWithoutMemberInput[]
-    createMany?: AssetMemberRoleCreateManyMemberInputEnvelope
-    set?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
-    disconnect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
-    delete?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
-    connect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
-    update?: AssetMemberRoleUpdateWithWhereUniqueWithoutMemberInput | AssetMemberRoleUpdateWithWhereUniqueWithoutMemberInput[]
-    updateMany?: AssetMemberRoleUpdateManyWithWhereWithoutMemberInput | AssetMemberRoleUpdateManyWithWhereWithoutMemberInput[]
-    deleteMany?: AssetMemberRoleScalarWhereInput | AssetMemberRoleScalarWhereInput[]
+  export type PortfolioUpdateOneRequiredWithoutAssetsNestedInput = {
+    create?: XOR<PortfolioCreateWithoutAssetsInput, PortfolioUncheckedCreateWithoutAssetsInput>
+    connectOrCreate?: PortfolioCreateOrConnectWithoutAssetsInput
+    upsert?: PortfolioUpsertWithoutAssetsInput
+    connect?: PortfolioWhereUniqueInput
+    update?: XOR<XOR<PortfolioUpdateToOneWithWhereWithoutAssetsInput, PortfolioUpdateWithoutAssetsInput>, PortfolioUncheckedUpdateWithoutAssetsInput>
   }
 
-  export type AssetGroupInfoCreateNestedOneWithoutAssetsInput = {
-    create?: XOR<AssetGroupInfoCreateWithoutAssetsInput, AssetGroupInfoUncheckedCreateWithoutAssetsInput>
-    connectOrCreate?: AssetGroupInfoCreateOrConnectWithoutAssetsInput
-    connect?: AssetGroupInfoWhereUniqueInput
+  export type PortfolioCreateNestedOneWithoutMembersInput = {
+    create?: XOR<PortfolioCreateWithoutMembersInput, PortfolioUncheckedCreateWithoutMembersInput>
+    connectOrCreate?: PortfolioCreateOrConnectWithoutMembersInput
+    connect?: PortfolioWhereUniqueInput
   }
 
-  export type AssetMemberRoleCreateNestedManyWithoutAssetRefInput = {
-    create?: XOR<AssetMemberRoleCreateWithoutAssetRefInput, AssetMemberRoleUncheckedCreateWithoutAssetRefInput> | AssetMemberRoleCreateWithoutAssetRefInput[] | AssetMemberRoleUncheckedCreateWithoutAssetRefInput[]
-    connectOrCreate?: AssetMemberRoleCreateOrConnectWithoutAssetRefInput | AssetMemberRoleCreateOrConnectWithoutAssetRefInput[]
-    createMany?: AssetMemberRoleCreateManyAssetRefInputEnvelope
-    connect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
-  }
-
-  export type AssetMemberRoleUncheckedCreateNestedManyWithoutAssetRefInput = {
-    create?: XOR<AssetMemberRoleCreateWithoutAssetRefInput, AssetMemberRoleUncheckedCreateWithoutAssetRefInput> | AssetMemberRoleCreateWithoutAssetRefInput[] | AssetMemberRoleUncheckedCreateWithoutAssetRefInput[]
-    connectOrCreate?: AssetMemberRoleCreateOrConnectWithoutAssetRefInput | AssetMemberRoleCreateOrConnectWithoutAssetRefInput[]
-    createMany?: AssetMemberRoleCreateManyAssetRefInputEnvelope
-    connect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
-  }
-
-  export type AssetGroupInfoUpdateOneRequiredWithoutAssetsNestedInput = {
-    create?: XOR<AssetGroupInfoCreateWithoutAssetsInput, AssetGroupInfoUncheckedCreateWithoutAssetsInput>
-    connectOrCreate?: AssetGroupInfoCreateOrConnectWithoutAssetsInput
-    upsert?: AssetGroupInfoUpsertWithoutAssetsInput
-    connect?: AssetGroupInfoWhereUniqueInput
-    update?: XOR<XOR<AssetGroupInfoUpdateToOneWithWhereWithoutAssetsInput, AssetGroupInfoUpdateWithoutAssetsInput>, AssetGroupInfoUncheckedUpdateWithoutAssetsInput>
-  }
-
-  export type AssetMemberRoleUpdateManyWithoutAssetRefNestedInput = {
-    create?: XOR<AssetMemberRoleCreateWithoutAssetRefInput, AssetMemberRoleUncheckedCreateWithoutAssetRefInput> | AssetMemberRoleCreateWithoutAssetRefInput[] | AssetMemberRoleUncheckedCreateWithoutAssetRefInput[]
-    connectOrCreate?: AssetMemberRoleCreateOrConnectWithoutAssetRefInput | AssetMemberRoleCreateOrConnectWithoutAssetRefInput[]
-    upsert?: AssetMemberRoleUpsertWithWhereUniqueWithoutAssetRefInput | AssetMemberRoleUpsertWithWhereUniqueWithoutAssetRefInput[]
-    createMany?: AssetMemberRoleCreateManyAssetRefInputEnvelope
-    set?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
-    disconnect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
-    delete?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
-    connect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
-    update?: AssetMemberRoleUpdateWithWhereUniqueWithoutAssetRefInput | AssetMemberRoleUpdateWithWhereUniqueWithoutAssetRefInput[]
-    updateMany?: AssetMemberRoleUpdateManyWithWhereWithoutAssetRefInput | AssetMemberRoleUpdateManyWithWhereWithoutAssetRefInput[]
-    deleteMany?: AssetMemberRoleScalarWhereInput | AssetMemberRoleScalarWhereInput[]
-  }
-
-  export type AssetMemberRoleUncheckedUpdateManyWithoutAssetRefNestedInput = {
-    create?: XOR<AssetMemberRoleCreateWithoutAssetRefInput, AssetMemberRoleUncheckedCreateWithoutAssetRefInput> | AssetMemberRoleCreateWithoutAssetRefInput[] | AssetMemberRoleUncheckedCreateWithoutAssetRefInput[]
-    connectOrCreate?: AssetMemberRoleCreateOrConnectWithoutAssetRefInput | AssetMemberRoleCreateOrConnectWithoutAssetRefInput[]
-    upsert?: AssetMemberRoleUpsertWithWhereUniqueWithoutAssetRefInput | AssetMemberRoleUpsertWithWhereUniqueWithoutAssetRefInput[]
-    createMany?: AssetMemberRoleCreateManyAssetRefInputEnvelope
-    set?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
-    disconnect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
-    delete?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
-    connect?: AssetMemberRoleWhereUniqueInput | AssetMemberRoleWhereUniqueInput[]
-    update?: AssetMemberRoleUpdateWithWhereUniqueWithoutAssetRefInput | AssetMemberRoleUpdateWithWhereUniqueWithoutAssetRefInput[]
-    updateMany?: AssetMemberRoleUpdateManyWithWhereWithoutAssetRefInput | AssetMemberRoleUpdateManyWithWhereWithoutAssetRefInput[]
-    deleteMany?: AssetMemberRoleScalarWhereInput | AssetMemberRoleScalarWhereInput[]
-  }
-
-  export type AssetGroupMemberCreateNestedOneWithoutRolesInput = {
-    create?: XOR<AssetGroupMemberCreateWithoutRolesInput, AssetGroupMemberUncheckedCreateWithoutRolesInput>
-    connectOrCreate?: AssetGroupMemberCreateOrConnectWithoutRolesInput
-    connect?: AssetGroupMemberWhereUniqueInput
-  }
-
-  export type AssetCreateNestedOneWithoutRolesInput = {
-    create?: XOR<AssetCreateWithoutRolesInput, AssetUncheckedCreateWithoutRolesInput>
-    connectOrCreate?: AssetCreateOrConnectWithoutRolesInput
-    connect?: AssetWhereUniqueInput
-  }
-
-  export type AssetGroupMemberUpdateOneRequiredWithoutRolesNestedInput = {
-    create?: XOR<AssetGroupMemberCreateWithoutRolesInput, AssetGroupMemberUncheckedCreateWithoutRolesInput>
-    connectOrCreate?: AssetGroupMemberCreateOrConnectWithoutRolesInput
-    upsert?: AssetGroupMemberUpsertWithoutRolesInput
-    connect?: AssetGroupMemberWhereUniqueInput
-    update?: XOR<XOR<AssetGroupMemberUpdateToOneWithWhereWithoutRolesInput, AssetGroupMemberUpdateWithoutRolesInput>, AssetGroupMemberUncheckedUpdateWithoutRolesInput>
-  }
-
-  export type AssetUpdateOneRequiredWithoutRolesNestedInput = {
-    create?: XOR<AssetCreateWithoutRolesInput, AssetUncheckedCreateWithoutRolesInput>
-    connectOrCreate?: AssetCreateOrConnectWithoutRolesInput
-    upsert?: AssetUpsertWithoutRolesInput
-    connect?: AssetWhereUniqueInput
-    update?: XOR<XOR<AssetUpdateToOneWithWhereWithoutRolesInput, AssetUpdateWithoutRolesInput>, AssetUncheckedUpdateWithoutRolesInput>
-  }
-
-  export type ApplicationCreateNestedOneWithoutAuthTeamsExternalInput = {
-    create?: XOR<ApplicationCreateWithoutAuthTeamsExternalInput, ApplicationUncheckedCreateWithoutAuthTeamsExternalInput>
-    connectOrCreate?: ApplicationCreateOrConnectWithoutAuthTeamsExternalInput
-    connect?: ApplicationWhereUniqueInput
-  }
-
-  export type AccountCreateNestedOneWithoutExternalAdminTeamsInput = {
-    create?: XOR<AccountCreateWithoutExternalAdminTeamsInput, AccountUncheckedCreateWithoutExternalAdminTeamsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutExternalAdminTeamsInput
+  export type AccountCreateNestedOneWithoutPortfolioMembersInput = {
+    create?: XOR<AccountCreateWithoutPortfolioMembersInput, AccountUncheckedCreateWithoutPortfolioMembersInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutPortfolioMembersInput
     connect?: AccountWhereUniqueInput
   }
 
-  export type AccountCreateNestedOneWithoutExternalMemberTeamsInput = {
-    create?: XOR<AccountCreateWithoutExternalMemberTeamsInput, AccountUncheckedCreateWithoutExternalMemberTeamsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutExternalMemberTeamsInput
+  export type PortfolioUpdateOneRequiredWithoutMembersNestedInput = {
+    create?: XOR<PortfolioCreateWithoutMembersInput, PortfolioUncheckedCreateWithoutMembersInput>
+    connectOrCreate?: PortfolioCreateOrConnectWithoutMembersInput
+    upsert?: PortfolioUpsertWithoutMembersInput
+    connect?: PortfolioWhereUniqueInput
+    update?: XOR<XOR<PortfolioUpdateToOneWithWhereWithoutMembersInput, PortfolioUpdateWithoutMembersInput>, PortfolioUncheckedUpdateWithoutMembersInput>
+  }
+
+  export type AccountUpdateOneRequiredWithoutPortfolioMembersNestedInput = {
+    create?: XOR<AccountCreateWithoutPortfolioMembersInput, AccountUncheckedCreateWithoutPortfolioMembersInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutPortfolioMembersInput
+    upsert?: AccountUpsertWithoutPortfolioMembersInput
+    connect?: AccountWhereUniqueInput
+    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutPortfolioMembersInput, AccountUpdateWithoutPortfolioMembersInput>, AccountUncheckedUpdateWithoutPortfolioMembersInput>
+  }
+
+  export type AccountCreateNestedOneWithoutPortfolioRolesInput = {
+    create?: XOR<AccountCreateWithoutPortfolioRolesInput, AccountUncheckedCreateWithoutPortfolioRolesInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutPortfolioRolesInput
     connect?: AccountWhereUniqueInput
   }
 
-  export type ApplicationUpdateOneRequiredWithoutAuthTeamsExternalNestedInput = {
-    create?: XOR<ApplicationCreateWithoutAuthTeamsExternalInput, ApplicationUncheckedCreateWithoutAuthTeamsExternalInput>
-    connectOrCreate?: ApplicationCreateOrConnectWithoutAuthTeamsExternalInput
-    upsert?: ApplicationUpsertWithoutAuthTeamsExternalInput
-    connect?: ApplicationWhereUniqueInput
-    update?: XOR<XOR<ApplicationUpdateToOneWithWhereWithoutAuthTeamsExternalInput, ApplicationUpdateWithoutAuthTeamsExternalInput>, ApplicationUncheckedUpdateWithoutAuthTeamsExternalInput>
+  export type PortfolioCreateNestedOneWithoutRolesInput = {
+    create?: XOR<PortfolioCreateWithoutRolesInput, PortfolioUncheckedCreateWithoutRolesInput>
+    connectOrCreate?: PortfolioCreateOrConnectWithoutRolesInput
+    connect?: PortfolioWhereUniqueInput
   }
 
-  export type AccountUpdateOneRequiredWithoutExternalAdminTeamsNestedInput = {
-    create?: XOR<AccountCreateWithoutExternalAdminTeamsInput, AccountUncheckedCreateWithoutExternalAdminTeamsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutExternalAdminTeamsInput
-    upsert?: AccountUpsertWithoutExternalAdminTeamsInput
+  export type AccountUpdateOneRequiredWithoutPortfolioRolesNestedInput = {
+    create?: XOR<AccountCreateWithoutPortfolioRolesInput, AccountUncheckedCreateWithoutPortfolioRolesInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutPortfolioRolesInput
+    upsert?: AccountUpsertWithoutPortfolioRolesInput
     connect?: AccountWhereUniqueInput
-    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutExternalAdminTeamsInput, AccountUpdateWithoutExternalAdminTeamsInput>, AccountUncheckedUpdateWithoutExternalAdminTeamsInput>
+    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutPortfolioRolesInput, AccountUpdateWithoutPortfolioRolesInput>, AccountUncheckedUpdateWithoutPortfolioRolesInput>
   }
 
-  export type AccountUpdateOneRequiredWithoutExternalMemberTeamsNestedInput = {
-    create?: XOR<AccountCreateWithoutExternalMemberTeamsInput, AccountUncheckedCreateWithoutExternalMemberTeamsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutExternalMemberTeamsInput
-    upsert?: AccountUpsertWithoutExternalMemberTeamsInput
-    connect?: AccountWhereUniqueInput
-    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutExternalMemberTeamsInput, AccountUpdateWithoutExternalMemberTeamsInput>, AccountUncheckedUpdateWithoutExternalMemberTeamsInput>
+  export type PortfolioUpdateOneRequiredWithoutRolesNestedInput = {
+    create?: XOR<PortfolioCreateWithoutRolesInput, PortfolioUncheckedCreateWithoutRolesInput>
+    connectOrCreate?: PortfolioCreateOrConnectWithoutRolesInput
+    upsert?: PortfolioUpsertWithoutRolesInput
+    connect?: PortfolioWhereUniqueInput
+    update?: XOR<XOR<PortfolioUpdateToOneWithWhereWithoutRolesInput, PortfolioUpdateWithoutRolesInput>, PortfolioUncheckedUpdateWithoutRolesInput>
   }
 
   export type ApplicationCreateNestedOneWithoutAuthPermissionRecipientsInput = {
@@ -42475,7 +40850,6 @@ export namespace Prisma {
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
-    authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
   }
 
@@ -42496,7 +40870,6 @@ export namespace Prisma {
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutApplicationInput
-    authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
   }
 
@@ -42656,58 +41029,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type AuthTeamExternalCreateWithoutAccountInput = {
-    id?: string
-    isPermanent?: boolean
-    createdAt?: Date | string
-    application: ApplicationCreateNestedOneWithoutAuthTeamsExternalInput
-    recipient: AccountCreateNestedOneWithoutExternalMemberTeamsInput
-  }
-
-  export type AuthTeamExternalUncheckedCreateWithoutAccountInput = {
-    id?: string
-    appId: string
-    recipientId: string
-    isPermanent?: boolean
-    createdAt?: Date | string
-  }
-
-  export type AuthTeamExternalCreateOrConnectWithoutAccountInput = {
-    where: AuthTeamExternalWhereUniqueInput
-    create: XOR<AuthTeamExternalCreateWithoutAccountInput, AuthTeamExternalUncheckedCreateWithoutAccountInput>
-  }
-
-  export type AuthTeamExternalCreateManyAccountInputEnvelope = {
-    data: AuthTeamExternalCreateManyAccountInput | AuthTeamExternalCreateManyAccountInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type AuthTeamExternalCreateWithoutRecipientInput = {
-    id?: string
-    isPermanent?: boolean
-    createdAt?: Date | string
-    application: ApplicationCreateNestedOneWithoutAuthTeamsExternalInput
-    account: AccountCreateNestedOneWithoutExternalAdminTeamsInput
-  }
-
-  export type AuthTeamExternalUncheckedCreateWithoutRecipientInput = {
-    id?: string
-    appId: string
-    accountId: string
-    isPermanent?: boolean
-    createdAt?: Date | string
-  }
-
-  export type AuthTeamExternalCreateOrConnectWithoutRecipientInput = {
-    where: AuthTeamExternalWhereUniqueInput
-    create: XOR<AuthTeamExternalCreateWithoutRecipientInput, AuthTeamExternalUncheckedCreateWithoutRecipientInput>
-  }
-
-  export type AuthTeamExternalCreateManyRecipientInputEnvelope = {
-    data: AuthTeamExternalCreateManyRecipientInput | AuthTeamExternalCreateManyRecipientInput[]
-    skipDuplicates?: boolean
-  }
-
   export type AuthPermissionRecipientCreateWithoutRecipientInput = {
     id?: string
     assetId?: string | null
@@ -42859,6 +41180,52 @@ export namespace Prisma {
 
   export type AccountOwnershipCreateManyChildInputEnvelope = {
     data: AccountOwnershipCreateManyChildInput | AccountOwnershipCreateManyChildInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PortfolioMemberCreateWithoutAccountInput = {
+    id?: string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    portfolio: PortfolioCreateNestedOneWithoutMembersInput
+  }
+
+  export type PortfolioMemberUncheckedCreateWithoutAccountInput = {
+    id?: string
+    portfolioId: string
+    details?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type PortfolioMemberCreateOrConnectWithoutAccountInput = {
+    where: PortfolioMemberWhereUniqueInput
+    create: XOR<PortfolioMemberCreateWithoutAccountInput, PortfolioMemberUncheckedCreateWithoutAccountInput>
+  }
+
+  export type PortfolioMemberCreateManyAccountInputEnvelope = {
+    data: PortfolioMemberCreateManyAccountInput | PortfolioMemberCreateManyAccountInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PortfolioRoleCreateWithoutAccountInput = {
+    id?: string
+    roleId: string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    portfolio: PortfolioCreateNestedOneWithoutRolesInput
+  }
+
+  export type PortfolioRoleUncheckedCreateWithoutAccountInput = {
+    id?: string
+    portfolioId: string
+    roleId: string
+    details?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type PortfolioRoleCreateOrConnectWithoutAccountInput = {
+    where: PortfolioRoleWhereUniqueInput
+    create: XOR<PortfolioRoleCreateWithoutAccountInput, PortfolioRoleUncheckedCreateWithoutAccountInput>
+  }
+
+  export type PortfolioRoleCreateManyAccountInputEnvelope = {
+    data: PortfolioRoleCreateManyAccountInput | PortfolioRoleCreateManyAccountInput[]
     skipDuplicates?: boolean
   }
 
@@ -43272,50 +41639,6 @@ export namespace Prisma {
     data: XOR<RequestUpdateManyMutationInput, RequestUncheckedUpdateManyWithoutRecipientInput>
   }
 
-  export type AuthTeamExternalUpsertWithWhereUniqueWithoutAccountInput = {
-    where: AuthTeamExternalWhereUniqueInput
-    update: XOR<AuthTeamExternalUpdateWithoutAccountInput, AuthTeamExternalUncheckedUpdateWithoutAccountInput>
-    create: XOR<AuthTeamExternalCreateWithoutAccountInput, AuthTeamExternalUncheckedCreateWithoutAccountInput>
-  }
-
-  export type AuthTeamExternalUpdateWithWhereUniqueWithoutAccountInput = {
-    where: AuthTeamExternalWhereUniqueInput
-    data: XOR<AuthTeamExternalUpdateWithoutAccountInput, AuthTeamExternalUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type AuthTeamExternalUpdateManyWithWhereWithoutAccountInput = {
-    where: AuthTeamExternalScalarWhereInput
-    data: XOR<AuthTeamExternalUpdateManyMutationInput, AuthTeamExternalUncheckedUpdateManyWithoutAccountInput>
-  }
-
-  export type AuthTeamExternalScalarWhereInput = {
-    AND?: AuthTeamExternalScalarWhereInput | AuthTeamExternalScalarWhereInput[]
-    OR?: AuthTeamExternalScalarWhereInput[]
-    NOT?: AuthTeamExternalScalarWhereInput | AuthTeamExternalScalarWhereInput[]
-    id?: StringFilter<"AuthTeamExternal"> | string
-    appId?: StringFilter<"AuthTeamExternal"> | string
-    accountId?: StringFilter<"AuthTeamExternal"> | string
-    recipientId?: StringFilter<"AuthTeamExternal"> | string
-    isPermanent?: BoolFilter<"AuthTeamExternal"> | boolean
-    createdAt?: DateTimeFilter<"AuthTeamExternal"> | Date | string
-  }
-
-  export type AuthTeamExternalUpsertWithWhereUniqueWithoutRecipientInput = {
-    where: AuthTeamExternalWhereUniqueInput
-    update: XOR<AuthTeamExternalUpdateWithoutRecipientInput, AuthTeamExternalUncheckedUpdateWithoutRecipientInput>
-    create: XOR<AuthTeamExternalCreateWithoutRecipientInput, AuthTeamExternalUncheckedCreateWithoutRecipientInput>
-  }
-
-  export type AuthTeamExternalUpdateWithWhereUniqueWithoutRecipientInput = {
-    where: AuthTeamExternalWhereUniqueInput
-    data: XOR<AuthTeamExternalUpdateWithoutRecipientInput, AuthTeamExternalUncheckedUpdateWithoutRecipientInput>
-  }
-
-  export type AuthTeamExternalUpdateManyWithWhereWithoutRecipientInput = {
-    where: AuthTeamExternalScalarWhereInput
-    data: XOR<AuthTeamExternalUpdateManyMutationInput, AuthTeamExternalUncheckedUpdateManyWithoutRecipientInput>
-  }
-
   export type AuthPermissionRecipientUpsertWithWhereUniqueWithoutRecipientInput = {
     where: AuthPermissionRecipientWhereUniqueInput
     update: XOR<AuthPermissionRecipientUpdateWithoutRecipientInput, AuthPermissionRecipientUncheckedUpdateWithoutRecipientInput>
@@ -43463,6 +41786,59 @@ export namespace Prisma {
     data: XOR<AccountOwnershipUpdateManyMutationInput, AccountOwnershipUncheckedUpdateManyWithoutChildInput>
   }
 
+  export type PortfolioMemberUpsertWithWhereUniqueWithoutAccountInput = {
+    where: PortfolioMemberWhereUniqueInput
+    update: XOR<PortfolioMemberUpdateWithoutAccountInput, PortfolioMemberUncheckedUpdateWithoutAccountInput>
+    create: XOR<PortfolioMemberCreateWithoutAccountInput, PortfolioMemberUncheckedCreateWithoutAccountInput>
+  }
+
+  export type PortfolioMemberUpdateWithWhereUniqueWithoutAccountInput = {
+    where: PortfolioMemberWhereUniqueInput
+    data: XOR<PortfolioMemberUpdateWithoutAccountInput, PortfolioMemberUncheckedUpdateWithoutAccountInput>
+  }
+
+  export type PortfolioMemberUpdateManyWithWhereWithoutAccountInput = {
+    where: PortfolioMemberScalarWhereInput
+    data: XOR<PortfolioMemberUpdateManyMutationInput, PortfolioMemberUncheckedUpdateManyWithoutAccountInput>
+  }
+
+  export type PortfolioMemberScalarWhereInput = {
+    AND?: PortfolioMemberScalarWhereInput | PortfolioMemberScalarWhereInput[]
+    OR?: PortfolioMemberScalarWhereInput[]
+    NOT?: PortfolioMemberScalarWhereInput | PortfolioMemberScalarWhereInput[]
+    id?: StringFilter<"PortfolioMember"> | string
+    portfolioId?: StringFilter<"PortfolioMember"> | string
+    accountId?: StringFilter<"PortfolioMember"> | string
+    details?: JsonNullableFilter<"PortfolioMember">
+  }
+
+  export type PortfolioRoleUpsertWithWhereUniqueWithoutAccountInput = {
+    where: PortfolioRoleWhereUniqueInput
+    update: XOR<PortfolioRoleUpdateWithoutAccountInput, PortfolioRoleUncheckedUpdateWithoutAccountInput>
+    create: XOR<PortfolioRoleCreateWithoutAccountInput, PortfolioRoleUncheckedCreateWithoutAccountInput>
+  }
+
+  export type PortfolioRoleUpdateWithWhereUniqueWithoutAccountInput = {
+    where: PortfolioRoleWhereUniqueInput
+    data: XOR<PortfolioRoleUpdateWithoutAccountInput, PortfolioRoleUncheckedUpdateWithoutAccountInput>
+  }
+
+  export type PortfolioRoleUpdateManyWithWhereWithoutAccountInput = {
+    where: PortfolioRoleScalarWhereInput
+    data: XOR<PortfolioRoleUpdateManyMutationInput, PortfolioRoleUncheckedUpdateManyWithoutAccountInput>
+  }
+
+  export type PortfolioRoleScalarWhereInput = {
+    AND?: PortfolioRoleScalarWhereInput | PortfolioRoleScalarWhereInput[]
+    OR?: PortfolioRoleScalarWhereInput[]
+    NOT?: PortfolioRoleScalarWhereInput | PortfolioRoleScalarWhereInput[]
+    id?: StringFilter<"PortfolioRole"> | string
+    accountId?: StringFilter<"PortfolioRole"> | string
+    portfolioId?: StringFilter<"PortfolioRole"> | string
+    roleId?: StringFilter<"PortfolioRole"> | string
+    details?: JsonNullableFilter<"PortfolioRole">
+  }
+
   export type AccountCreateWithoutIndividualProfileInput = {
     id?: string
     accountType?: string
@@ -43486,13 +41862,13 @@ export namespace Prisma {
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutIndividualProfileInput = {
@@ -43518,13 +41894,13 @@ export namespace Prisma {
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutIndividualProfileInput = {
@@ -43594,13 +41970,13 @@ export namespace Prisma {
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutIndividualProfileInput = {
@@ -43626,13 +42002,13 @@ export namespace Prisma {
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AuthMethodUpsertWithWhereUniqueWithoutIndividualProfileInput = {
@@ -43687,13 +42063,13 @@ export namespace Prisma {
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutBrandProfileInput = {
@@ -43719,13 +42095,13 @@ export namespace Prisma {
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutBrandProfileInput = {
@@ -43767,13 +42143,13 @@ export namespace Prisma {
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutBrandProfileInput = {
@@ -43799,13 +42175,13 @@ export namespace Prisma {
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutParentOwnershipsInput = {
@@ -43831,13 +42207,13 @@ export namespace Prisma {
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutParentOwnershipsInput = {
@@ -43863,13 +42239,13 @@ export namespace Prisma {
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutParentOwnershipsInput = {
@@ -43900,13 +42276,13 @@ export namespace Prisma {
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutChildOwnershipsInput = {
@@ -43932,13 +42308,13 @@ export namespace Prisma {
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutChildOwnershipsInput = {
@@ -43980,13 +42356,13 @@ export namespace Prisma {
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutParentOwnershipsInput = {
@@ -44012,13 +42388,13 @@ export namespace Prisma {
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUpsertWithoutChildOwnershipsInput = {
@@ -44055,13 +42431,13 @@ export namespace Prisma {
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutChildOwnershipsInput = {
@@ -44087,13 +42463,13 @@ export namespace Prisma {
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutNotificationsInput = {
@@ -44118,14 +42494,14 @@ export namespace Prisma {
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutNotificationsInput = {
@@ -44150,14 +42526,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutNotificationsInput = {
@@ -44227,14 +42603,14 @@ export namespace Prisma {
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutNotificationsInput = {
@@ -44259,14 +42635,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type RequestUpsertWithoutNotificationsInput = {
@@ -44326,14 +42702,14 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutSentRequestsInput = {
@@ -44358,14 +42734,14 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutSentRequestsInput = {
@@ -44395,14 +42771,14 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutReceivedRequestsInput = {
@@ -44427,14 +42803,14 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutReceivedRequestsInput = {
@@ -44511,14 +42887,14 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutSentRequestsInput = {
@@ -44543,14 +42919,14 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUpsertWithoutReceivedRequestsInput = {
@@ -44586,14 +42962,14 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutReceivedRequestsInput = {
@@ -44618,14 +42994,14 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type NotificationUpsertWithWhereUniqueWithoutRequestInput = {
@@ -44666,14 +43042,14 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutVerificationsInput = {
@@ -44698,14 +43074,14 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutVerificationsInput = {
@@ -44746,14 +43122,14 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutVerificationsInput = {
@@ -44778,14 +43154,14 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutContactsInput = {
@@ -44810,14 +43186,14 @@ export namespace Prisma {
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutContactsInput = {
@@ -44842,14 +43218,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutContactsInput = {
@@ -44890,14 +43266,14 @@ export namespace Prisma {
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutContactsInput = {
@@ -44922,14 +43298,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutNeupIdsInput = {
@@ -44954,14 +43330,14 @@ export namespace Prisma {
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutNeupIdsInput = {
@@ -44986,14 +43362,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutNeupIdsInput = {
@@ -45034,14 +43410,14 @@ export namespace Prisma {
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutNeupIdsInput = {
@@ -45066,14 +43442,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountTypeIndividualCreateWithoutAuthMethodsInput = {
@@ -45154,14 +43530,14 @@ export namespace Prisma {
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutPermitsInput = {
@@ -45186,14 +43562,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutPermitsInput = {
@@ -45223,14 +43599,14 @@ export namespace Prisma {
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutTargetPermitsInput = {
@@ -45255,14 +43631,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutTargetPermitsInput = {
@@ -45303,14 +43679,14 @@ export namespace Prisma {
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutPermitsInput = {
@@ -45335,14 +43711,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUpsertWithoutTargetPermitsInput = {
@@ -45378,14 +43754,14 @@ export namespace Prisma {
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutTargetPermitsInput = {
@@ -45410,14 +43786,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AppSessionCreateWithoutSessionInput = {
@@ -45470,14 +43846,14 @@ export namespace Prisma {
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutSessionsInput = {
@@ -45502,14 +43878,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutSessionsInput = {
@@ -45566,14 +43942,14 @@ export namespace Prisma {
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutSessionsInput = {
@@ -45598,14 +43974,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutErrorLogsInput = {
@@ -45630,14 +44006,14 @@ export namespace Prisma {
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutErrorLogsInput = {
@@ -45662,14 +44038,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutErrorLogsInput = {
@@ -45710,14 +44086,14 @@ export namespace Prisma {
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutErrorLogsInput = {
@@ -45742,14 +44118,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutOwnedApplicationsInput = {
@@ -45774,14 +44150,14 @@ export namespace Prisma {
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutOwnedApplicationsInput = {
@@ -45806,14 +44182,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutOwnedApplicationsInput = {
@@ -45895,32 +44271,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type AuthTeamExternalCreateWithoutApplicationInput = {
-    id?: string
-    isPermanent?: boolean
-    createdAt?: Date | string
-    account: AccountCreateNestedOneWithoutExternalAdminTeamsInput
-    recipient: AccountCreateNestedOneWithoutExternalMemberTeamsInput
-  }
-
-  export type AuthTeamExternalUncheckedCreateWithoutApplicationInput = {
-    id?: string
-    accountId: string
-    recipientId: string
-    isPermanent?: boolean
-    createdAt?: Date | string
-  }
-
-  export type AuthTeamExternalCreateOrConnectWithoutApplicationInput = {
-    where: AuthTeamExternalWhereUniqueInput
-    create: XOR<AuthTeamExternalCreateWithoutApplicationInput, AuthTeamExternalUncheckedCreateWithoutApplicationInput>
-  }
-
-  export type AuthTeamExternalCreateManyApplicationInputEnvelope = {
-    data: AuthTeamExternalCreateManyApplicationInput | AuthTeamExternalCreateManyApplicationInput[]
-    skipDuplicates?: boolean
-  }
-
   export type AuthPermissionRecipientCreateWithoutApplicationInput = {
     id?: string
     assetId?: string | null
@@ -45986,14 +44336,14 @@ export namespace Prisma {
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutOwnedApplicationsInput = {
@@ -46018,14 +44368,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type UserAppConnectionUpsertWithWhereUniqueWithoutApplicationInput = {
@@ -46076,22 +44426,6 @@ export namespace Prisma {
     data: XOR<AppSessionUpdateManyMutationInput, AppSessionUncheckedUpdateManyWithoutApplicationInput>
   }
 
-  export type AuthTeamExternalUpsertWithWhereUniqueWithoutApplicationInput = {
-    where: AuthTeamExternalWhereUniqueInput
-    update: XOR<AuthTeamExternalUpdateWithoutApplicationInput, AuthTeamExternalUncheckedUpdateWithoutApplicationInput>
-    create: XOR<AuthTeamExternalCreateWithoutApplicationInput, AuthTeamExternalUncheckedCreateWithoutApplicationInput>
-  }
-
-  export type AuthTeamExternalUpdateWithWhereUniqueWithoutApplicationInput = {
-    where: AuthTeamExternalWhereUniqueInput
-    data: XOR<AuthTeamExternalUpdateWithoutApplicationInput, AuthTeamExternalUncheckedUpdateWithoutApplicationInput>
-  }
-
-  export type AuthTeamExternalUpdateManyWithWhereWithoutApplicationInput = {
-    where: AuthTeamExternalScalarWhereInput
-    data: XOR<AuthTeamExternalUpdateManyMutationInput, AuthTeamExternalUncheckedUpdateManyWithoutApplicationInput>
-  }
-
   export type AuthPermissionRecipientUpsertWithWhereUniqueWithoutApplicationInput = {
     where: AuthPermissionRecipientWhereUniqueInput
     update: XOR<AuthPermissionRecipientUpdateWithoutApplicationInput, AuthPermissionRecipientUncheckedUpdateWithoutApplicationInput>
@@ -46108,437 +44442,211 @@ export namespace Prisma {
     data: XOR<AuthPermissionRecipientUpdateManyMutationInput, AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationInput>
   }
 
-  export type AssetGroupMemberCreateWithoutAssetGroupInfoInput = {
+  export type PortfolioAssetCreateWithoutPortfolioInput = {
     id?: string
-    member: string
-    isPermanent?: boolean
-    validTill?: Date | string | null
-    hasFullPermit?: boolean
-    roles?: AssetMemberRoleCreateNestedManyWithoutMemberInput
+    assetType: string
+    assetId: string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput = {
+  export type PortfolioAssetUncheckedCreateWithoutPortfolioInput = {
     id?: string
-    member: string
-    isPermanent?: boolean
-    validTill?: Date | string | null
-    hasFullPermit?: boolean
-    roles?: AssetMemberRoleUncheckedCreateNestedManyWithoutMemberInput
+    assetType: string
+    assetId: string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AssetGroupMemberCreateOrConnectWithoutAssetGroupInfoInput = {
-    where: AssetGroupMemberWhereUniqueInput
-    create: XOR<AssetGroupMemberCreateWithoutAssetGroupInfoInput, AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput>
+  export type PortfolioAssetCreateOrConnectWithoutPortfolioInput = {
+    where: PortfolioAssetWhereUniqueInput
+    create: XOR<PortfolioAssetCreateWithoutPortfolioInput, PortfolioAssetUncheckedCreateWithoutPortfolioInput>
   }
 
-  export type AssetGroupMemberCreateManyAssetGroupInfoInputEnvelope = {
-    data: AssetGroupMemberCreateManyAssetGroupInfoInput | AssetGroupMemberCreateManyAssetGroupInfoInput[]
+  export type PortfolioAssetCreateManyPortfolioInputEnvelope = {
+    data: PortfolioAssetCreateManyPortfolioInput | PortfolioAssetCreateManyPortfolioInput[]
     skipDuplicates?: boolean
   }
 
-  export type AssetCreateWithoutAssetGroupInfoInput = {
+  export type PortfolioMemberCreateWithoutPortfolioInput = {
     id?: string
-    asset: string
-    type: string
-    details?: string | null
-    roles?: AssetMemberRoleCreateNestedManyWithoutAssetRefInput
+    details?: NullableJsonNullValueInput | InputJsonValue
+    account: AccountCreateNestedOneWithoutPortfolioMembersInput
   }
 
-  export type AssetUncheckedCreateWithoutAssetGroupInfoInput = {
+  export type PortfolioMemberUncheckedCreateWithoutPortfolioInput = {
     id?: string
-    asset: string
-    type: string
-    details?: string | null
-    roles?: AssetMemberRoleUncheckedCreateNestedManyWithoutAssetRefInput
+    accountId: string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AssetCreateOrConnectWithoutAssetGroupInfoInput = {
-    where: AssetWhereUniqueInput
-    create: XOR<AssetCreateWithoutAssetGroupInfoInput, AssetUncheckedCreateWithoutAssetGroupInfoInput>
+  export type PortfolioMemberCreateOrConnectWithoutPortfolioInput = {
+    where: PortfolioMemberWhereUniqueInput
+    create: XOR<PortfolioMemberCreateWithoutPortfolioInput, PortfolioMemberUncheckedCreateWithoutPortfolioInput>
   }
 
-  export type AssetCreateManyAssetGroupInfoInputEnvelope = {
-    data: AssetCreateManyAssetGroupInfoInput | AssetCreateManyAssetGroupInfoInput[]
+  export type PortfolioMemberCreateManyPortfolioInputEnvelope = {
+    data: PortfolioMemberCreateManyPortfolioInput | PortfolioMemberCreateManyPortfolioInput[]
     skipDuplicates?: boolean
   }
 
-  export type AssetGroupMemberUpsertWithWhereUniqueWithoutAssetGroupInfoInput = {
-    where: AssetGroupMemberWhereUniqueInput
-    update: XOR<AssetGroupMemberUpdateWithoutAssetGroupInfoInput, AssetGroupMemberUncheckedUpdateWithoutAssetGroupInfoInput>
-    create: XOR<AssetGroupMemberCreateWithoutAssetGroupInfoInput, AssetGroupMemberUncheckedCreateWithoutAssetGroupInfoInput>
-  }
-
-  export type AssetGroupMemberUpdateWithWhereUniqueWithoutAssetGroupInfoInput = {
-    where: AssetGroupMemberWhereUniqueInput
-    data: XOR<AssetGroupMemberUpdateWithoutAssetGroupInfoInput, AssetGroupMemberUncheckedUpdateWithoutAssetGroupInfoInput>
-  }
-
-  export type AssetGroupMemberUpdateManyWithWhereWithoutAssetGroupInfoInput = {
-    where: AssetGroupMemberScalarWhereInput
-    data: XOR<AssetGroupMemberUpdateManyMutationInput, AssetGroupMemberUncheckedUpdateManyWithoutAssetGroupInfoInput>
-  }
-
-  export type AssetGroupMemberScalarWhereInput = {
-    AND?: AssetGroupMemberScalarWhereInput | AssetGroupMemberScalarWhereInput[]
-    OR?: AssetGroupMemberScalarWhereInput[]
-    NOT?: AssetGroupMemberScalarWhereInput | AssetGroupMemberScalarWhereInput[]
-    id?: StringFilter<"AssetGroupMember"> | string
-    assetGroup?: StringFilter<"AssetGroupMember"> | string
-    member?: StringFilter<"AssetGroupMember"> | string
-    isPermanent?: BoolFilter<"AssetGroupMember"> | boolean
-    validTill?: DateTimeNullableFilter<"AssetGroupMember"> | Date | string | null
-    hasFullPermit?: BoolFilter<"AssetGroupMember"> | boolean
-  }
-
-  export type AssetUpsertWithWhereUniqueWithoutAssetGroupInfoInput = {
-    where: AssetWhereUniqueInput
-    update: XOR<AssetUpdateWithoutAssetGroupInfoInput, AssetUncheckedUpdateWithoutAssetGroupInfoInput>
-    create: XOR<AssetCreateWithoutAssetGroupInfoInput, AssetUncheckedCreateWithoutAssetGroupInfoInput>
-  }
-
-  export type AssetUpdateWithWhereUniqueWithoutAssetGroupInfoInput = {
-    where: AssetWhereUniqueInput
-    data: XOR<AssetUpdateWithoutAssetGroupInfoInput, AssetUncheckedUpdateWithoutAssetGroupInfoInput>
-  }
-
-  export type AssetUpdateManyWithWhereWithoutAssetGroupInfoInput = {
-    where: AssetScalarWhereInput
-    data: XOR<AssetUpdateManyMutationInput, AssetUncheckedUpdateManyWithoutAssetGroupInfoInput>
-  }
-
-  export type AssetScalarWhereInput = {
-    AND?: AssetScalarWhereInput | AssetScalarWhereInput[]
-    OR?: AssetScalarWhereInput[]
-    NOT?: AssetScalarWhereInput | AssetScalarWhereInput[]
-    id?: StringFilter<"Asset"> | string
-    asset?: StringFilter<"Asset"> | string
-    type?: StringFilter<"Asset"> | string
-    assetGroup?: StringFilter<"Asset"> | string
-    details?: StringNullableFilter<"Asset"> | string | null
-  }
-
-  export type AssetGroupInfoCreateWithoutMembersInput = {
+  export type PortfolioRoleCreateWithoutPortfolioInput = {
     id?: string
-    name: string
-    details?: string | null
-    assets?: AssetCreateNestedManyWithoutAssetGroupInfoInput
+    roleId: string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    account: AccountCreateNestedOneWithoutPortfolioRolesInput
   }
 
-  export type AssetGroupInfoUncheckedCreateWithoutMembersInput = {
+  export type PortfolioRoleUncheckedCreateWithoutPortfolioInput = {
     id?: string
-    name: string
-    details?: string | null
-    assets?: AssetUncheckedCreateNestedManyWithoutAssetGroupInfoInput
+    accountId: string
+    roleId: string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AssetGroupInfoCreateOrConnectWithoutMembersInput = {
-    where: AssetGroupInfoWhereUniqueInput
-    create: XOR<AssetGroupInfoCreateWithoutMembersInput, AssetGroupInfoUncheckedCreateWithoutMembersInput>
+  export type PortfolioRoleCreateOrConnectWithoutPortfolioInput = {
+    where: PortfolioRoleWhereUniqueInput
+    create: XOR<PortfolioRoleCreateWithoutPortfolioInput, PortfolioRoleUncheckedCreateWithoutPortfolioInput>
   }
 
-  export type AssetMemberRoleCreateWithoutMemberInput = {
-    id?: string
-    role: string
-    assetRef: AssetCreateNestedOneWithoutRolesInput
-  }
-
-  export type AssetMemberRoleUncheckedCreateWithoutMemberInput = {
-    id?: string
-    asset: string
-    role: string
-  }
-
-  export type AssetMemberRoleCreateOrConnectWithoutMemberInput = {
-    where: AssetMemberRoleWhereUniqueInput
-    create: XOR<AssetMemberRoleCreateWithoutMemberInput, AssetMemberRoleUncheckedCreateWithoutMemberInput>
-  }
-
-  export type AssetMemberRoleCreateManyMemberInputEnvelope = {
-    data: AssetMemberRoleCreateManyMemberInput | AssetMemberRoleCreateManyMemberInput[]
+  export type PortfolioRoleCreateManyPortfolioInputEnvelope = {
+    data: PortfolioRoleCreateManyPortfolioInput | PortfolioRoleCreateManyPortfolioInput[]
     skipDuplicates?: boolean
   }
 
-  export type AssetGroupInfoUpsertWithoutMembersInput = {
-    update: XOR<AssetGroupInfoUpdateWithoutMembersInput, AssetGroupInfoUncheckedUpdateWithoutMembersInput>
-    create: XOR<AssetGroupInfoCreateWithoutMembersInput, AssetGroupInfoUncheckedCreateWithoutMembersInput>
-    where?: AssetGroupInfoWhereInput
+  export type PortfolioAssetUpsertWithWhereUniqueWithoutPortfolioInput = {
+    where: PortfolioAssetWhereUniqueInput
+    update: XOR<PortfolioAssetUpdateWithoutPortfolioInput, PortfolioAssetUncheckedUpdateWithoutPortfolioInput>
+    create: XOR<PortfolioAssetCreateWithoutPortfolioInput, PortfolioAssetUncheckedCreateWithoutPortfolioInput>
   }
 
-  export type AssetGroupInfoUpdateToOneWithWhereWithoutMembersInput = {
-    where?: AssetGroupInfoWhereInput
-    data: XOR<AssetGroupInfoUpdateWithoutMembersInput, AssetGroupInfoUncheckedUpdateWithoutMembersInput>
+  export type PortfolioAssetUpdateWithWhereUniqueWithoutPortfolioInput = {
+    where: PortfolioAssetWhereUniqueInput
+    data: XOR<PortfolioAssetUpdateWithoutPortfolioInput, PortfolioAssetUncheckedUpdateWithoutPortfolioInput>
   }
 
-  export type AssetGroupInfoUpdateWithoutMembersInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    details?: NullableStringFieldUpdateOperationsInput | string | null
-    assets?: AssetUpdateManyWithoutAssetGroupInfoNestedInput
+  export type PortfolioAssetUpdateManyWithWhereWithoutPortfolioInput = {
+    where: PortfolioAssetScalarWhereInput
+    data: XOR<PortfolioAssetUpdateManyMutationInput, PortfolioAssetUncheckedUpdateManyWithoutPortfolioInput>
   }
 
-  export type AssetGroupInfoUncheckedUpdateWithoutMembersInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    details?: NullableStringFieldUpdateOperationsInput | string | null
-    assets?: AssetUncheckedUpdateManyWithoutAssetGroupInfoNestedInput
+  export type PortfolioAssetScalarWhereInput = {
+    AND?: PortfolioAssetScalarWhereInput | PortfolioAssetScalarWhereInput[]
+    OR?: PortfolioAssetScalarWhereInput[]
+    NOT?: PortfolioAssetScalarWhereInput | PortfolioAssetScalarWhereInput[]
+    id?: StringFilter<"PortfolioAsset"> | string
+    portfolioId?: StringFilter<"PortfolioAsset"> | string
+    assetType?: StringFilter<"PortfolioAsset"> | string
+    assetId?: StringFilter<"PortfolioAsset"> | string
+    details?: JsonNullableFilter<"PortfolioAsset">
   }
 
-  export type AssetMemberRoleUpsertWithWhereUniqueWithoutMemberInput = {
-    where: AssetMemberRoleWhereUniqueInput
-    update: XOR<AssetMemberRoleUpdateWithoutMemberInput, AssetMemberRoleUncheckedUpdateWithoutMemberInput>
-    create: XOR<AssetMemberRoleCreateWithoutMemberInput, AssetMemberRoleUncheckedCreateWithoutMemberInput>
+  export type PortfolioMemberUpsertWithWhereUniqueWithoutPortfolioInput = {
+    where: PortfolioMemberWhereUniqueInput
+    update: XOR<PortfolioMemberUpdateWithoutPortfolioInput, PortfolioMemberUncheckedUpdateWithoutPortfolioInput>
+    create: XOR<PortfolioMemberCreateWithoutPortfolioInput, PortfolioMemberUncheckedCreateWithoutPortfolioInput>
   }
 
-  export type AssetMemberRoleUpdateWithWhereUniqueWithoutMemberInput = {
-    where: AssetMemberRoleWhereUniqueInput
-    data: XOR<AssetMemberRoleUpdateWithoutMemberInput, AssetMemberRoleUncheckedUpdateWithoutMemberInput>
+  export type PortfolioMemberUpdateWithWhereUniqueWithoutPortfolioInput = {
+    where: PortfolioMemberWhereUniqueInput
+    data: XOR<PortfolioMemberUpdateWithoutPortfolioInput, PortfolioMemberUncheckedUpdateWithoutPortfolioInput>
   }
 
-  export type AssetMemberRoleUpdateManyWithWhereWithoutMemberInput = {
-    where: AssetMemberRoleScalarWhereInput
-    data: XOR<AssetMemberRoleUpdateManyMutationInput, AssetMemberRoleUncheckedUpdateManyWithoutMemberInput>
+  export type PortfolioMemberUpdateManyWithWhereWithoutPortfolioInput = {
+    where: PortfolioMemberScalarWhereInput
+    data: XOR<PortfolioMemberUpdateManyMutationInput, PortfolioMemberUncheckedUpdateManyWithoutPortfolioInput>
   }
 
-  export type AssetMemberRoleScalarWhereInput = {
-    AND?: AssetMemberRoleScalarWhereInput | AssetMemberRoleScalarWhereInput[]
-    OR?: AssetMemberRoleScalarWhereInput[]
-    NOT?: AssetMemberRoleScalarWhereInput | AssetMemberRoleScalarWhereInput[]
-    id?: StringFilter<"AssetMemberRole"> | string
-    assetMember?: StringFilter<"AssetMemberRole"> | string
-    asset?: StringFilter<"AssetMemberRole"> | string
-    role?: StringFilter<"AssetMemberRole"> | string
+  export type PortfolioRoleUpsertWithWhereUniqueWithoutPortfolioInput = {
+    where: PortfolioRoleWhereUniqueInput
+    update: XOR<PortfolioRoleUpdateWithoutPortfolioInput, PortfolioRoleUncheckedUpdateWithoutPortfolioInput>
+    create: XOR<PortfolioRoleCreateWithoutPortfolioInput, PortfolioRoleUncheckedCreateWithoutPortfolioInput>
   }
 
-  export type AssetGroupInfoCreateWithoutAssetsInput = {
+  export type PortfolioRoleUpdateWithWhereUniqueWithoutPortfolioInput = {
+    where: PortfolioRoleWhereUniqueInput
+    data: XOR<PortfolioRoleUpdateWithoutPortfolioInput, PortfolioRoleUncheckedUpdateWithoutPortfolioInput>
+  }
+
+  export type PortfolioRoleUpdateManyWithWhereWithoutPortfolioInput = {
+    where: PortfolioRoleScalarWhereInput
+    data: XOR<PortfolioRoleUpdateManyMutationInput, PortfolioRoleUncheckedUpdateManyWithoutPortfolioInput>
+  }
+
+  export type PortfolioCreateWithoutAssetsInput = {
     id?: string
     name: string
-    details?: string | null
-    members?: AssetGroupMemberCreateNestedManyWithoutAssetGroupInfoInput
-  }
-
-  export type AssetGroupInfoUncheckedCreateWithoutAssetsInput = {
-    id?: string
-    name: string
-    details?: string | null
-    members?: AssetGroupMemberUncheckedCreateNestedManyWithoutAssetGroupInfoInput
-  }
-
-  export type AssetGroupInfoCreateOrConnectWithoutAssetsInput = {
-    where: AssetGroupInfoWhereUniqueInput
-    create: XOR<AssetGroupInfoCreateWithoutAssetsInput, AssetGroupInfoUncheckedCreateWithoutAssetsInput>
-  }
-
-  export type AssetMemberRoleCreateWithoutAssetRefInput = {
-    id?: string
-    role: string
-    member: AssetGroupMemberCreateNestedOneWithoutRolesInput
-  }
-
-  export type AssetMemberRoleUncheckedCreateWithoutAssetRefInput = {
-    id?: string
-    assetMember: string
-    role: string
-  }
-
-  export type AssetMemberRoleCreateOrConnectWithoutAssetRefInput = {
-    where: AssetMemberRoleWhereUniqueInput
-    create: XOR<AssetMemberRoleCreateWithoutAssetRefInput, AssetMemberRoleUncheckedCreateWithoutAssetRefInput>
-  }
-
-  export type AssetMemberRoleCreateManyAssetRefInputEnvelope = {
-    data: AssetMemberRoleCreateManyAssetRefInput | AssetMemberRoleCreateManyAssetRefInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type AssetGroupInfoUpsertWithoutAssetsInput = {
-    update: XOR<AssetGroupInfoUpdateWithoutAssetsInput, AssetGroupInfoUncheckedUpdateWithoutAssetsInput>
-    create: XOR<AssetGroupInfoCreateWithoutAssetsInput, AssetGroupInfoUncheckedCreateWithoutAssetsInput>
-    where?: AssetGroupInfoWhereInput
-  }
-
-  export type AssetGroupInfoUpdateToOneWithWhereWithoutAssetsInput = {
-    where?: AssetGroupInfoWhereInput
-    data: XOR<AssetGroupInfoUpdateWithoutAssetsInput, AssetGroupInfoUncheckedUpdateWithoutAssetsInput>
-  }
-
-  export type AssetGroupInfoUpdateWithoutAssetsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    details?: NullableStringFieldUpdateOperationsInput | string | null
-    members?: AssetGroupMemberUpdateManyWithoutAssetGroupInfoNestedInput
-  }
-
-  export type AssetGroupInfoUncheckedUpdateWithoutAssetsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    details?: NullableStringFieldUpdateOperationsInput | string | null
-    members?: AssetGroupMemberUncheckedUpdateManyWithoutAssetGroupInfoNestedInput
-  }
-
-  export type AssetMemberRoleUpsertWithWhereUniqueWithoutAssetRefInput = {
-    where: AssetMemberRoleWhereUniqueInput
-    update: XOR<AssetMemberRoleUpdateWithoutAssetRefInput, AssetMemberRoleUncheckedUpdateWithoutAssetRefInput>
-    create: XOR<AssetMemberRoleCreateWithoutAssetRefInput, AssetMemberRoleUncheckedCreateWithoutAssetRefInput>
-  }
-
-  export type AssetMemberRoleUpdateWithWhereUniqueWithoutAssetRefInput = {
-    where: AssetMemberRoleWhereUniqueInput
-    data: XOR<AssetMemberRoleUpdateWithoutAssetRefInput, AssetMemberRoleUncheckedUpdateWithoutAssetRefInput>
-  }
-
-  export type AssetMemberRoleUpdateManyWithWhereWithoutAssetRefInput = {
-    where: AssetMemberRoleScalarWhereInput
-    data: XOR<AssetMemberRoleUpdateManyMutationInput, AssetMemberRoleUncheckedUpdateManyWithoutAssetRefInput>
-  }
-
-  export type AssetGroupMemberCreateWithoutRolesInput = {
-    id?: string
-    member: string
-    isPermanent?: boolean
-    validTill?: Date | string | null
-    hasFullPermit?: boolean
-    assetGroupInfo: AssetGroupInfoCreateNestedOneWithoutMembersInput
-  }
-
-  export type AssetGroupMemberUncheckedCreateWithoutRolesInput = {
-    id?: string
-    assetGroup: string
-    member: string
-    isPermanent?: boolean
-    validTill?: Date | string | null
-    hasFullPermit?: boolean
-  }
-
-  export type AssetGroupMemberCreateOrConnectWithoutRolesInput = {
-    where: AssetGroupMemberWhereUniqueInput
-    create: XOR<AssetGroupMemberCreateWithoutRolesInput, AssetGroupMemberUncheckedCreateWithoutRolesInput>
-  }
-
-  export type AssetCreateWithoutRolesInput = {
-    id?: string
-    asset: string
-    type: string
-    details?: string | null
-    assetGroupInfo: AssetGroupInfoCreateNestedOneWithoutAssetsInput
-  }
-
-  export type AssetUncheckedCreateWithoutRolesInput = {
-    id?: string
-    asset: string
-    type: string
-    assetGroup: string
-    details?: string | null
-  }
-
-  export type AssetCreateOrConnectWithoutRolesInput = {
-    where: AssetWhereUniqueInput
-    create: XOR<AssetCreateWithoutRolesInput, AssetUncheckedCreateWithoutRolesInput>
-  }
-
-  export type AssetGroupMemberUpsertWithoutRolesInput = {
-    update: XOR<AssetGroupMemberUpdateWithoutRolesInput, AssetGroupMemberUncheckedUpdateWithoutRolesInput>
-    create: XOR<AssetGroupMemberCreateWithoutRolesInput, AssetGroupMemberUncheckedCreateWithoutRolesInput>
-    where?: AssetGroupMemberWhereInput
-  }
-
-  export type AssetGroupMemberUpdateToOneWithWhereWithoutRolesInput = {
-    where?: AssetGroupMemberWhereInput
-    data: XOR<AssetGroupMemberUpdateWithoutRolesInput, AssetGroupMemberUncheckedUpdateWithoutRolesInput>
-  }
-
-  export type AssetGroupMemberUpdateWithoutRolesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    member?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    hasFullPermit?: BoolFieldUpdateOperationsInput | boolean
-    assetGroupInfo?: AssetGroupInfoUpdateOneRequiredWithoutMembersNestedInput
-  }
-
-  export type AssetGroupMemberUncheckedUpdateWithoutRolesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    assetGroup?: StringFieldUpdateOperationsInput | string
-    member?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    hasFullPermit?: BoolFieldUpdateOperationsInput | boolean
-  }
-
-  export type AssetUpsertWithoutRolesInput = {
-    update: XOR<AssetUpdateWithoutRolesInput, AssetUncheckedUpdateWithoutRolesInput>
-    create: XOR<AssetCreateWithoutRolesInput, AssetUncheckedCreateWithoutRolesInput>
-    where?: AssetWhereInput
-  }
-
-  export type AssetUpdateToOneWithWhereWithoutRolesInput = {
-    where?: AssetWhereInput
-    data: XOR<AssetUpdateWithoutRolesInput, AssetUncheckedUpdateWithoutRolesInput>
-  }
-
-  export type AssetUpdateWithoutRolesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    asset?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    details?: NullableStringFieldUpdateOperationsInput | string | null
-    assetGroupInfo?: AssetGroupInfoUpdateOneRequiredWithoutAssetsNestedInput
-  }
-
-  export type AssetUncheckedUpdateWithoutRolesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    asset?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    assetGroup?: StringFieldUpdateOperationsInput | string
-    details?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type ApplicationCreateWithoutAuthTeamsExternalInput = {
-    id: string
-    name: string
-    status?: string
-    party?: string
     description?: string | null
-    icon?: string | null
-    website?: string | null
-    developer?: string | null
-    appSecret?: string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
-    connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
-    appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
-    appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
-    authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
+    dateCreated?: Date | string
+    members?: PortfolioMemberCreateNestedManyWithoutPortfolioInput
+    roles?: PortfolioRoleCreateNestedManyWithoutPortfolioInput
   }
 
-  export type ApplicationUncheckedCreateWithoutAuthTeamsExternalInput = {
-    id: string
+  export type PortfolioUncheckedCreateWithoutAssetsInput = {
+    id?: string
     name: string
-    status?: string
-    party?: string
     description?: string | null
-    icon?: string | null
-    website?: string | null
-    developer?: string | null
-    appSecret?: string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    ownerAccountId?: string | null
-    createdAt?: Date | string
-    connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
-    appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
-    appSessions?: AppSessionUncheckedCreateNestedManyWithoutApplicationInput
-    authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
+    dateCreated?: Date | string
+    members?: PortfolioMemberUncheckedCreateNestedManyWithoutPortfolioInput
+    roles?: PortfolioRoleUncheckedCreateNestedManyWithoutPortfolioInput
   }
 
-  export type ApplicationCreateOrConnectWithoutAuthTeamsExternalInput = {
-    where: ApplicationWhereUniqueInput
-    create: XOR<ApplicationCreateWithoutAuthTeamsExternalInput, ApplicationUncheckedCreateWithoutAuthTeamsExternalInput>
+  export type PortfolioCreateOrConnectWithoutAssetsInput = {
+    where: PortfolioWhereUniqueInput
+    create: XOR<PortfolioCreateWithoutAssetsInput, PortfolioUncheckedCreateWithoutAssetsInput>
   }
 
-  export type AccountCreateWithoutExternalAdminTeamsInput = {
+  export type PortfolioUpsertWithoutAssetsInput = {
+    update: XOR<PortfolioUpdateWithoutAssetsInput, PortfolioUncheckedUpdateWithoutAssetsInput>
+    create: XOR<PortfolioCreateWithoutAssetsInput, PortfolioUncheckedCreateWithoutAssetsInput>
+    where?: PortfolioWhereInput
+  }
+
+  export type PortfolioUpdateToOneWithWhereWithoutAssetsInput = {
+    where?: PortfolioWhereInput
+    data: XOR<PortfolioUpdateWithoutAssetsInput, PortfolioUncheckedUpdateWithoutAssetsInput>
+  }
+
+  export type PortfolioUpdateWithoutAssetsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: PortfolioMemberUpdateManyWithoutPortfolioNestedInput
+    roles?: PortfolioRoleUpdateManyWithoutPortfolioNestedInput
+  }
+
+  export type PortfolioUncheckedUpdateWithoutAssetsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: PortfolioMemberUncheckedUpdateManyWithoutPortfolioNestedInput
+    roles?: PortfolioRoleUncheckedUpdateManyWithoutPortfolioNestedInput
+  }
+
+  export type PortfolioCreateWithoutMembersInput = {
+    id?: string
+    name: string
+    description?: string | null
+    dateCreated?: Date | string
+    assets?: PortfolioAssetCreateNestedManyWithoutPortfolioInput
+    roles?: PortfolioRoleCreateNestedManyWithoutPortfolioInput
+  }
+
+  export type PortfolioUncheckedCreateWithoutMembersInput = {
+    id?: string
+    name: string
+    description?: string | null
+    dateCreated?: Date | string
+    assets?: PortfolioAssetUncheckedCreateNestedManyWithoutPortfolioInput
+    roles?: PortfolioRoleUncheckedCreateNestedManyWithoutPortfolioInput
+  }
+
+  export type PortfolioCreateOrConnectWithoutMembersInput = {
+    where: PortfolioWhereUniqueInput
+    create: XOR<PortfolioCreateWithoutMembersInput, PortfolioUncheckedCreateWithoutMembersInput>
+  }
+
+  export type AccountCreateWithoutPortfolioMembersInput = {
     id?: string
     accountType?: string
     displayImage?: string | null
@@ -46561,16 +44669,16 @@ export namespace Prisma {
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
-  export type AccountUncheckedCreateWithoutExternalAdminTeamsInput = {
+  export type AccountUncheckedCreateWithoutPortfolioMembersInput = {
     id?: string
     accountType?: string
     displayImage?: string | null
@@ -46593,21 +44701,125 @@ export namespace Prisma {
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
-  export type AccountCreateOrConnectWithoutExternalAdminTeamsInput = {
+  export type AccountCreateOrConnectWithoutPortfolioMembersInput = {
     where: AccountWhereUniqueInput
-    create: XOR<AccountCreateWithoutExternalAdminTeamsInput, AccountUncheckedCreateWithoutExternalAdminTeamsInput>
+    create: XOR<AccountCreateWithoutPortfolioMembersInput, AccountUncheckedCreateWithoutPortfolioMembersInput>
   }
 
-  export type AccountCreateWithoutExternalMemberTeamsInput = {
+  export type PortfolioUpsertWithoutMembersInput = {
+    update: XOR<PortfolioUpdateWithoutMembersInput, PortfolioUncheckedUpdateWithoutMembersInput>
+    create: XOR<PortfolioCreateWithoutMembersInput, PortfolioUncheckedCreateWithoutMembersInput>
+    where?: PortfolioWhereInput
+  }
+
+  export type PortfolioUpdateToOneWithWhereWithoutMembersInput = {
+    where?: PortfolioWhereInput
+    data: XOR<PortfolioUpdateWithoutMembersInput, PortfolioUncheckedUpdateWithoutMembersInput>
+  }
+
+  export type PortfolioUpdateWithoutMembersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    assets?: PortfolioAssetUpdateManyWithoutPortfolioNestedInput
+    roles?: PortfolioRoleUpdateManyWithoutPortfolioNestedInput
+  }
+
+  export type PortfolioUncheckedUpdateWithoutMembersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    assets?: PortfolioAssetUncheckedUpdateManyWithoutPortfolioNestedInput
+    roles?: PortfolioRoleUncheckedUpdateManyWithoutPortfolioNestedInput
+  }
+
+  export type AccountUpsertWithoutPortfolioMembersInput = {
+    update: XOR<AccountUpdateWithoutPortfolioMembersInput, AccountUncheckedUpdateWithoutPortfolioMembersInput>
+    create: XOR<AccountCreateWithoutPortfolioMembersInput, AccountUncheckedCreateWithoutPortfolioMembersInput>
+    where?: AccountWhereInput
+  }
+
+  export type AccountUpdateToOneWithWhereWithoutPortfolioMembersInput = {
+    where?: AccountWhereInput
+    data: XOR<AccountUpdateWithoutPortfolioMembersInput, AccountUncheckedUpdateWithoutPortfolioMembersInput>
+  }
+
+  export type AccountUpdateWithoutPortfolioMembersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountType?: StringFieldUpdateOperationsInput | string
+    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    contacts?: ContactUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    permits?: PermitUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
+    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
+    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
+    appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
+    ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+  }
+
+  export type AccountUncheckedUpdateWithoutPortfolioMembersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountType?: StringFieldUpdateOperationsInput | string
+    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
+    appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
+    ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
+  }
+
+  export type AccountCreateWithoutPortfolioRolesInput = {
     id?: string
     accountType?: string
     displayImage?: string | null
@@ -46630,16 +44842,16 @@ export namespace Prisma {
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
   }
 
-  export type AccountUncheckedCreateWithoutExternalMemberTeamsInput = {
+  export type AccountUncheckedCreateWithoutPortfolioRolesInput = {
     id?: string
     accountType?: string
     displayImage?: string | null
@@ -46662,85 +44874,55 @@ export namespace Prisma {
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
   }
 
-  export type AccountCreateOrConnectWithoutExternalMemberTeamsInput = {
+  export type AccountCreateOrConnectWithoutPortfolioRolesInput = {
     where: AccountWhereUniqueInput
-    create: XOR<AccountCreateWithoutExternalMemberTeamsInput, AccountUncheckedCreateWithoutExternalMemberTeamsInput>
+    create: XOR<AccountCreateWithoutPortfolioRolesInput, AccountUncheckedCreateWithoutPortfolioRolesInput>
   }
 
-  export type ApplicationUpsertWithoutAuthTeamsExternalInput = {
-    update: XOR<ApplicationUpdateWithoutAuthTeamsExternalInput, ApplicationUncheckedUpdateWithoutAuthTeamsExternalInput>
-    create: XOR<ApplicationCreateWithoutAuthTeamsExternalInput, ApplicationUncheckedCreateWithoutAuthTeamsExternalInput>
-    where?: ApplicationWhereInput
+  export type PortfolioCreateWithoutRolesInput = {
+    id?: string
+    name: string
+    description?: string | null
+    dateCreated?: Date | string
+    assets?: PortfolioAssetCreateNestedManyWithoutPortfolioInput
+    members?: PortfolioMemberCreateNestedManyWithoutPortfolioInput
   }
 
-  export type ApplicationUpdateToOneWithWhereWithoutAuthTeamsExternalInput = {
-    where?: ApplicationWhereInput
-    data: XOR<ApplicationUpdateWithoutAuthTeamsExternalInput, ApplicationUncheckedUpdateWithoutAuthTeamsExternalInput>
+  export type PortfolioUncheckedCreateWithoutRolesInput = {
+    id?: string
+    name: string
+    description?: string | null
+    dateCreated?: Date | string
+    assets?: PortfolioAssetUncheckedCreateNestedManyWithoutPortfolioInput
+    members?: PortfolioMemberUncheckedCreateNestedManyWithoutPortfolioInput
   }
 
-  export type ApplicationUpdateWithoutAuthTeamsExternalInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    party?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
-    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
-    connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
-    appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
-    appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
-    authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
+  export type PortfolioCreateOrConnectWithoutRolesInput = {
+    where: PortfolioWhereUniqueInput
+    create: XOR<PortfolioCreateWithoutRolesInput, PortfolioUncheckedCreateWithoutRolesInput>
   }
 
-  export type ApplicationUncheckedUpdateWithoutAuthTeamsExternalInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    party?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
-    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
-    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
-    appSessions?: AppSessionUncheckedUpdateManyWithoutApplicationNestedInput
-    authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
-  }
-
-  export type AccountUpsertWithoutExternalAdminTeamsInput = {
-    update: XOR<AccountUpdateWithoutExternalAdminTeamsInput, AccountUncheckedUpdateWithoutExternalAdminTeamsInput>
-    create: XOR<AccountCreateWithoutExternalAdminTeamsInput, AccountUncheckedCreateWithoutExternalAdminTeamsInput>
+  export type AccountUpsertWithoutPortfolioRolesInput = {
+    update: XOR<AccountUpdateWithoutPortfolioRolesInput, AccountUncheckedUpdateWithoutPortfolioRolesInput>
+    create: XOR<AccountCreateWithoutPortfolioRolesInput, AccountUncheckedCreateWithoutPortfolioRolesInput>
     where?: AccountWhereInput
   }
 
-  export type AccountUpdateToOneWithWhereWithoutExternalAdminTeamsInput = {
+  export type AccountUpdateToOneWithWhereWithoutPortfolioRolesInput = {
     where?: AccountWhereInput
-    data: XOR<AccountUpdateWithoutExternalAdminTeamsInput, AccountUncheckedUpdateWithoutExternalAdminTeamsInput>
+    data: XOR<AccountUpdateWithoutPortfolioRolesInput, AccountUncheckedUpdateWithoutPortfolioRolesInput>
   }
 
-  export type AccountUpdateWithoutExternalAdminTeamsInput = {
+  export type AccountUpdateWithoutPortfolioRolesInput = {
     id?: StringFieldUpdateOperationsInput | string
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
@@ -46763,16 +44945,16 @@ export namespace Prisma {
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
   }
 
-  export type AccountUncheckedUpdateWithoutExternalAdminTeamsInput = {
+  export type AccountUncheckedUpdateWithoutPortfolioRolesInput = {
     id?: StringFieldUpdateOperationsInput | string
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
@@ -46795,88 +44977,42 @@ export namespace Prisma {
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
   }
 
-  export type AccountUpsertWithoutExternalMemberTeamsInput = {
-    update: XOR<AccountUpdateWithoutExternalMemberTeamsInput, AccountUncheckedUpdateWithoutExternalMemberTeamsInput>
-    create: XOR<AccountCreateWithoutExternalMemberTeamsInput, AccountUncheckedCreateWithoutExternalMemberTeamsInput>
-    where?: AccountWhereInput
+  export type PortfolioUpsertWithoutRolesInput = {
+    update: XOR<PortfolioUpdateWithoutRolesInput, PortfolioUncheckedUpdateWithoutRolesInput>
+    create: XOR<PortfolioCreateWithoutRolesInput, PortfolioUncheckedCreateWithoutRolesInput>
+    where?: PortfolioWhereInput
   }
 
-  export type AccountUpdateToOneWithWhereWithoutExternalMemberTeamsInput = {
-    where?: AccountWhereInput
-    data: XOR<AccountUpdateWithoutExternalMemberTeamsInput, AccountUncheckedUpdateWithoutExternalMemberTeamsInput>
+  export type PortfolioUpdateToOneWithWhereWithoutRolesInput = {
+    where?: PortfolioWhereInput
+    data: XOR<PortfolioUpdateWithoutRolesInput, PortfolioUncheckedUpdateWithoutRolesInput>
   }
 
-  export type AccountUpdateWithoutExternalMemberTeamsInput = {
+  export type PortfolioUpdateWithoutRolesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
-    permits?: PermitUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    assets?: PortfolioAssetUpdateManyWithoutPortfolioNestedInput
+    members?: PortfolioMemberUpdateManyWithoutPortfolioNestedInput
   }
 
-  export type AccountUncheckedUpdateWithoutExternalMemberTeamsInput = {
+  export type PortfolioUncheckedUpdateWithoutRolesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
-    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: ErrorLogUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutAccountNestedInput
-    appSessions?: AppSessionUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
-    ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    assets?: PortfolioAssetUncheckedUpdateManyWithoutPortfolioNestedInput
+    members?: PortfolioMemberUncheckedUpdateManyWithoutPortfolioNestedInput
   }
 
   export type ApplicationCreateWithoutAuthPermissionRecipientsInput = {
@@ -46897,7 +45033,6 @@ export namespace Prisma {
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
-    authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutAuthPermissionRecipientsInput = {
@@ -46918,7 +45053,6 @@ export namespace Prisma {
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutApplicationInput
-    authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutAuthPermissionRecipientsInput = {
@@ -46949,13 +45083,13 @@ export namespace Prisma {
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutRecipientPermissionsInput = {
@@ -46981,13 +45115,13 @@ export namespace Prisma {
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutRecipientPermissionsInput = {
@@ -47018,13 +45152,13 @@ export namespace Prisma {
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutOwnerPermissionsInput = {
@@ -47050,13 +45184,13 @@ export namespace Prisma {
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutOwnerPermissionsInput = {
@@ -47093,7 +45227,6 @@ export namespace Prisma {
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
-    authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutAuthPermissionRecipientsInput = {
@@ -47114,7 +45247,6 @@ export namespace Prisma {
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutApplicationNestedInput
-    authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type AccountUpsertWithoutRecipientPermissionsInput = {
@@ -47151,13 +45283,13 @@ export namespace Prisma {
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutRecipientPermissionsInput = {
@@ -47183,13 +45315,13 @@ export namespace Prisma {
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUpsertWithoutOwnerPermissionsInput = {
@@ -47226,13 +45358,13 @@ export namespace Prisma {
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutOwnerPermissionsInput = {
@@ -47258,13 +45390,13 @@ export namespace Prisma {
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutAppConnectionsInput = {
@@ -47289,14 +45421,14 @@ export namespace Prisma {
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutAppConnectionsInput = {
@@ -47321,14 +45453,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutAppConnectionsInput = {
@@ -47353,7 +45485,6 @@ export namespace Prisma {
     owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
-    authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
   }
 
@@ -47374,7 +45505,6 @@ export namespace Prisma {
     createdAt?: Date | string
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutApplicationInput
-    authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
   }
 
@@ -47416,14 +45546,14 @@ export namespace Prisma {
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutAppConnectionsInput = {
@@ -47448,14 +45578,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type ApplicationUpsertWithoutConnectionsInput = {
@@ -47486,7 +45616,6 @@ export namespace Prisma {
     owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
-    authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
   }
 
@@ -47507,7 +45636,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutApplicationNestedInput
-    authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
@@ -47533,14 +45661,14 @@ export namespace Prisma {
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutAppAuthenticationsInput = {
@@ -47565,14 +45693,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutAppAuthenticationsInput = {
@@ -47597,7 +45725,6 @@ export namespace Prisma {
     owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionCreateNestedManyWithoutApplicationInput
-    authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
   }
 
@@ -47618,7 +45745,6 @@ export namespace Prisma {
     createdAt?: Date | string
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appSessions?: AppSessionUncheckedCreateNestedManyWithoutApplicationInput
-    authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
   }
 
@@ -47660,14 +45786,14 @@ export namespace Prisma {
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutAppAuthenticationsInput = {
@@ -47692,14 +45818,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type ApplicationUpsertWithoutAppAuthenticationsInput = {
@@ -47730,7 +45856,6 @@ export namespace Prisma {
     owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
-    authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
   }
 
@@ -47751,7 +45876,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutApplicationNestedInput
-    authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
@@ -47777,14 +45901,14 @@ export namespace Prisma {
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutAppSessionsInput = {
@@ -47809,14 +45933,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    externalAdminTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutAccountInput
-    externalMemberTeams?: AuthTeamExternalUncheckedCreateNestedManyWithoutRecipientInput
     recipientPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutRecipientInput
     ownerPermissions?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutOwnerInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutAppSessionsInput = {
@@ -47841,7 +45965,6 @@ export namespace Prisma {
     owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
     connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationCreateNestedManyWithoutApplicationInput
-    authTeamsExternal?: AuthTeamExternalCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientCreateNestedManyWithoutApplicationInput
   }
 
@@ -47862,7 +45985,6 @@ export namespace Prisma {
     createdAt?: Date | string
     connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
     appAuthentications?: AppAuthenticationUncheckedCreateNestedManyWithoutApplicationInput
-    authTeamsExternal?: AuthTeamExternalUncheckedCreateNestedManyWithoutApplicationInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedCreateNestedManyWithoutApplicationInput
   }
 
@@ -47939,14 +46061,14 @@ export namespace Prisma {
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutAppSessionsInput = {
@@ -47971,14 +46093,14 @@ export namespace Prisma {
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    externalAdminTeams?: AuthTeamExternalUncheckedUpdateManyWithoutAccountNestedInput
-    externalMemberTeams?: AuthTeamExternalUncheckedUpdateManyWithoutRecipientNestedInput
     recipientPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutRecipientNestedInput
     ownerPermissions?: AuthPermissionRecipientUncheckedUpdateManyWithoutOwnerNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type ApplicationUpsertWithoutAppSessionsInput = {
@@ -48009,7 +46131,6 @@ export namespace Prisma {
     owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
-    authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
   }
 
@@ -48030,7 +46151,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
-    authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
@@ -48243,22 +46363,6 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type AuthTeamExternalCreateManyAccountInput = {
-    id?: string
-    appId: string
-    recipientId: string
-    isPermanent?: boolean
-    createdAt?: Date | string
-  }
-
-  export type AuthTeamExternalCreateManyRecipientInput = {
-    id?: string
-    appId: string
-    accountId: string
-    isPermanent?: boolean
-    createdAt?: Date | string
-  }
-
   export type AuthPermissionRecipientCreateManyRecipientInput = {
     id?: string
     appId: string
@@ -48291,6 +46395,19 @@ export namespace Prisma {
     id?: string
     parentId: string
     type: string
+  }
+
+  export type PortfolioMemberCreateManyAccountInput = {
+    id?: string
+    portfolioId: string
+    details?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type PortfolioRoleCreateManyAccountInput = {
+    id?: string
+    portfolioId: string
+    roleId: string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type ContactUpdateWithoutAccountInput = {
@@ -48615,7 +46732,6 @@ export namespace Prisma {
     connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUpdateManyWithoutApplicationNestedInput
-    authTeamsExternal?: AuthTeamExternalUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUpdateManyWithoutApplicationNestedInput
   }
 
@@ -48636,7 +46752,6 @@ export namespace Prisma {
     connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     appAuthentications?: AppAuthenticationUncheckedUpdateManyWithoutApplicationNestedInput
     appSessions?: AppSessionUncheckedUpdateManyWithoutApplicationNestedInput
-    authTeamsExternal?: AuthTeamExternalUncheckedUpdateManyWithoutApplicationNestedInput
     authPermissionRecipients?: AuthPermissionRecipientUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
@@ -48813,54 +46928,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type AuthTeamExternalUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    application?: ApplicationUpdateOneRequiredWithoutAuthTeamsExternalNestedInput
-    recipient?: AccountUpdateOneRequiredWithoutExternalMemberTeamsNestedInput
-  }
-
-  export type AuthTeamExternalUncheckedUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
-    recipientId?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthTeamExternalUncheckedUpdateManyWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
-    recipientId?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthTeamExternalUpdateWithoutRecipientInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    application?: ApplicationUpdateOneRequiredWithoutAuthTeamsExternalNestedInput
-    account?: AccountUpdateOneRequiredWithoutExternalAdminTeamsNestedInput
-  }
-
-  export type AuthTeamExternalUncheckedUpdateWithoutRecipientInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthTeamExternalUncheckedUpdateManyWithoutRecipientInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type AuthPermissionRecipientUpdateWithoutRecipientInput = {
     id?: StringFieldUpdateOperationsInput | string
     assetId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -48961,6 +47028,45 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     parentId?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PortfolioMemberUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    portfolio?: PortfolioUpdateOneRequiredWithoutMembersNestedInput
+  }
+
+  export type PortfolioMemberUncheckedUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    portfolioId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type PortfolioMemberUncheckedUpdateManyWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    portfolioId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type PortfolioRoleUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roleId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    portfolio?: PortfolioUpdateOneRequiredWithoutRolesNestedInput
+  }
+
+  export type PortfolioRoleUncheckedUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    portfolioId?: StringFieldUpdateOperationsInput | string
+    roleId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type PortfolioRoleUncheckedUpdateManyWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    portfolioId?: StringFieldUpdateOperationsInput | string
+    roleId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type AuthMethodCreateManyIndividualProfileInput = {
@@ -49109,14 +47215,6 @@ export namespace Prisma {
     activeTill: Date | string
   }
 
-  export type AuthTeamExternalCreateManyApplicationInput = {
-    id?: string
-    accountId: string
-    recipientId: string
-    isPermanent?: boolean
-    createdAt?: Date | string
-  }
-
   export type AuthPermissionRecipientCreateManyApplicationInput = {
     id?: string
     recipientId: string
@@ -49194,30 +47292,6 @@ export namespace Prisma {
     activeTill?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type AuthTeamExternalUpdateWithoutApplicationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    account?: AccountUpdateOneRequiredWithoutExternalAdminTeamsNestedInput
-    recipient?: AccountUpdateOneRequiredWithoutExternalMemberTeamsNestedInput
-  }
-
-  export type AuthTeamExternalUncheckedUpdateWithoutApplicationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    recipientId?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthTeamExternalUncheckedUpdateManyWithoutApplicationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    recipientId?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type AuthPermissionRecipientUpdateWithoutApplicationInput = {
     id?: StringFieldUpdateOperationsInput | string
     assetId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -49251,116 +47325,84 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type AssetGroupMemberCreateManyAssetGroupInfoInput = {
+  export type PortfolioAssetCreateManyPortfolioInput = {
     id?: string
-    member: string
-    isPermanent?: boolean
-    validTill?: Date | string | null
-    hasFullPermit?: boolean
+    assetType: string
+    assetId: string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AssetCreateManyAssetGroupInfoInput = {
+  export type PortfolioMemberCreateManyPortfolioInput = {
     id?: string
-    asset: string
-    type: string
-    details?: string | null
+    accountId: string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AssetGroupMemberUpdateWithoutAssetGroupInfoInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    member?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    hasFullPermit?: BoolFieldUpdateOperationsInput | boolean
-    roles?: AssetMemberRoleUpdateManyWithoutMemberNestedInput
-  }
-
-  export type AssetGroupMemberUncheckedUpdateWithoutAssetGroupInfoInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    member?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    hasFullPermit?: BoolFieldUpdateOperationsInput | boolean
-    roles?: AssetMemberRoleUncheckedUpdateManyWithoutMemberNestedInput
-  }
-
-  export type AssetGroupMemberUncheckedUpdateManyWithoutAssetGroupInfoInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    member?: StringFieldUpdateOperationsInput | string
-    isPermanent?: BoolFieldUpdateOperationsInput | boolean
-    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    hasFullPermit?: BoolFieldUpdateOperationsInput | boolean
-  }
-
-  export type AssetUpdateWithoutAssetGroupInfoInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    asset?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    details?: NullableStringFieldUpdateOperationsInput | string | null
-    roles?: AssetMemberRoleUpdateManyWithoutAssetRefNestedInput
-  }
-
-  export type AssetUncheckedUpdateWithoutAssetGroupInfoInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    asset?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    details?: NullableStringFieldUpdateOperationsInput | string | null
-    roles?: AssetMemberRoleUncheckedUpdateManyWithoutAssetRefNestedInput
-  }
-
-  export type AssetUncheckedUpdateManyWithoutAssetGroupInfoInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    asset?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    details?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type AssetMemberRoleCreateManyMemberInput = {
+  export type PortfolioRoleCreateManyPortfolioInput = {
     id?: string
-    asset: string
-    role: string
+    accountId: string
+    roleId: string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AssetMemberRoleUpdateWithoutMemberInput = {
+  export type PortfolioAssetUpdateWithoutPortfolioInput = {
     id?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    assetRef?: AssetUpdateOneRequiredWithoutRolesNestedInput
+    assetType?: StringFieldUpdateOperationsInput | string
+    assetId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AssetMemberRoleUncheckedUpdateWithoutMemberInput = {
+  export type PortfolioAssetUncheckedUpdateWithoutPortfolioInput = {
     id?: StringFieldUpdateOperationsInput | string
-    asset?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    assetType?: StringFieldUpdateOperationsInput | string
+    assetId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AssetMemberRoleUncheckedUpdateManyWithoutMemberInput = {
+  export type PortfolioAssetUncheckedUpdateManyWithoutPortfolioInput = {
     id?: StringFieldUpdateOperationsInput | string
-    asset?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    assetType?: StringFieldUpdateOperationsInput | string
+    assetId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AssetMemberRoleCreateManyAssetRefInput = {
-    id?: string
-    assetMember: string
-    role: string
-  }
-
-  export type AssetMemberRoleUpdateWithoutAssetRefInput = {
+  export type PortfolioMemberUpdateWithoutPortfolioInput = {
     id?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    member?: AssetGroupMemberUpdateOneRequiredWithoutRolesNestedInput
+    details?: NullableJsonNullValueInput | InputJsonValue
+    account?: AccountUpdateOneRequiredWithoutPortfolioMembersNestedInput
   }
 
-  export type AssetMemberRoleUncheckedUpdateWithoutAssetRefInput = {
+  export type PortfolioMemberUncheckedUpdateWithoutPortfolioInput = {
     id?: StringFieldUpdateOperationsInput | string
-    assetMember?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AssetMemberRoleUncheckedUpdateManyWithoutAssetRefInput = {
+  export type PortfolioMemberUncheckedUpdateManyWithoutPortfolioInput = {
     id?: StringFieldUpdateOperationsInput | string
-    assetMember?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type PortfolioRoleUpdateWithoutPortfolioInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roleId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    account?: AccountUpdateOneRequiredWithoutPortfolioRolesNestedInput
+  }
+
+  export type PortfolioRoleUncheckedUpdateWithoutPortfolioInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    roleId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type PortfolioRoleUncheckedUpdateManyWithoutPortfolioInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    roleId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
   }
 
 

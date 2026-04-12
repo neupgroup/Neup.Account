@@ -328,43 +328,34 @@ exports.Prisma.ApplicationScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
-exports.Prisma.AssetGroupInfoScalarFieldEnum = {
+exports.Prisma.PortfolioScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  description: 'description',
+  dateCreated: 'dateCreated'
+};
+
+exports.Prisma.PortfolioAssetScalarFieldEnum = {
+  id: 'id',
+  portfolioId: 'portfolioId',
+  assetType: 'assetType',
+  assetId: 'assetId',
   details: 'details'
 };
 
-exports.Prisma.AssetGroupMemberScalarFieldEnum = {
+exports.Prisma.PortfolioMemberScalarFieldEnum = {
   id: 'id',
-  assetGroup: 'assetGroup',
-  member: 'member',
-  isPermanent: 'isPermanent',
-  validTill: 'validTill',
-  hasFullPermit: 'hasFullPermit'
-};
-
-exports.Prisma.AssetScalarFieldEnum = {
-  id: 'id',
-  asset: 'asset',
-  type: 'type',
-  assetGroup: 'assetGroup',
-  details: 'details'
-};
-
-exports.Prisma.AssetMemberRoleScalarFieldEnum = {
-  id: 'id',
-  assetMember: 'assetMember',
-  asset: 'asset',
-  role: 'role'
-};
-
-exports.Prisma.AuthTeamExternalScalarFieldEnum = {
-  id: 'id',
-  appId: 'appId',
+  portfolioId: 'portfolioId',
   accountId: 'accountId',
-  recipientId: 'recipientId',
-  isPermanent: 'isPermanent',
-  createdAt: 'createdAt'
+  details: 'details'
+};
+
+exports.Prisma.PortfolioRoleScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  portfolioId: 'portfolioId',
+  roleId: 'roleId',
+  details: 'details'
 };
 
 exports.Prisma.AuthPermissionRecipientScalarFieldEnum = {
@@ -477,11 +468,10 @@ exports.Prisma.ModelName = {
   Session: 'Session',
   ErrorLog: 'ErrorLog',
   Application: 'Application',
-  AssetGroupInfo: 'AssetGroupInfo',
-  AssetGroupMember: 'AssetGroupMember',
-  Asset: 'Asset',
-  AssetMemberRole: 'AssetMemberRole',
-  AuthTeamExternal: 'AuthTeamExternal',
+  Portfolio: 'Portfolio',
+  PortfolioAsset: 'PortfolioAsset',
+  PortfolioMember: 'PortfolioMember',
+  PortfolioRole: 'PortfolioRole',
   AuthPermissionRecipient: 'AuthPermissionRecipient',
   UserAppConnection: 'UserAppConnection',
   AppAuthentication: 'AppAuthentication',

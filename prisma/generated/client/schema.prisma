@@ -37,14 +37,14 @@ model Account {
   receivedRequests   Request[]           @relation("ReceivedRequests")
 
   // New Auth Team & Permission Relations
-  externalAdminTeams   AuthTeamExternal[]        @relation("AccountAsExternalAdmin")
-  externalMemberTeams  AuthTeamExternal[]        @relation("AccountAsExternalTeamMember")
   recipientPermissions AuthPermissionRecipient[] @relation("RecipientPermissions")
   ownerPermissions     AuthPermissionRecipient[] @relation("OwnerPermissions")
   individualProfile    AccountTypeIndividual?
   brandProfile         AccountTypeBrand?
   parentOwnerships     AccountOwnership[]        @relation("AccountOwnershipParent")
   childOwnerships      AccountOwnership[]        @relation("AccountOwnershipChild")
+  portfolioMembers     PortfolioMember[]
+  portfolioRoles       PortfolioRole[]
 
   @@map("account")
 }
@@ -344,83 +344,68 @@ model Application {
   appAuthentications AppAuthentication[]
   appSessions        AppSession[]
 
-  // New Auth Team & Permission Models
-  authTeamsExternal        AuthTeamExternal[]
   authPermissionRecipients AuthPermissionRecipient[]
 
   @@map("application")
 }
 
-model AssetGroupInfo {
-  id      String  @id @default(uuid())
-  name    String
-  details String?
-
-  members AssetGroupMember[]
-  assets  Asset[]
-
-  @@map("assetGroupInfo")
-}
-
-model AssetGroupMember {
-  id            String    @id @default(uuid())
-  assetGroup    String
-  member        String
-  isPermanent   Boolean   @default(false)
-  validTill     DateTime?
-  hasFullPermit Boolean   @default(false)
-
-  assetGroupInfo AssetGroupInfo    @relation(fields: [assetGroup], references: [id], onDelete: Cascade)
-  roles          AssetMemberRole[]
-
-  @@unique([assetGroup, member])
-  @@index([assetGroup])
-  @@map("assetGroupMember")
-}
-
-model Asset {
-  id         String  @id @default(uuid())
-  asset      String
-  type       String
-  assetGroup String
-  details    String?
-
-  assetGroupInfo AssetGroupInfo    @relation(fields: [assetGroup], references: [id], onDelete: Cascade)
-  roles          AssetMemberRole[] @relation("AssetToMemberRoles")
-
-  @@index([assetGroup])
-  @@map("asset")
-}
-
-model AssetMemberRole {
-  id          String @id @default(uuid())
-  assetMember String
-  asset       String
-  role        String
-
-  member   AssetGroupMember @relation(fields: [assetMember], references: [id], onDelete: Cascade)
-  assetRef Asset            @relation("AssetToMemberRoles", fields: [asset], references: [id], onDelete: Cascade)
-
-  @@unique([assetMember, asset])
-  @@index([assetMember])
-  @@index([asset])
-  @@map("assetMemberRole")
-}
-
-model AuthTeamExternal {
+model Portfolio {
   id          String   @id @default(uuid())
-  appId       String
-  accountId   String // Admin/Manager account
-  recipientId String // User being added
-  isPermanent Boolean  @default(false)
-  createdAt   DateTime @default(now())
+  name        String
+  description String?
+  dateCreated DateTime @default(now())
 
-  application Application @relation(fields: [appId], references: [id])
-  account     Account     @relation("AccountAsExternalAdmin", fields: [accountId], references: [id])
-  recipient   Account     @relation("AccountAsExternalTeamMember", fields: [recipientId], references: [id])
+  assets  PortfolioAsset[]
+  members PortfolioMember[]
+  roles   PortfolioRole[]
 
-  @@unique([appId, accountId, recipientId])
-  @@map("auth_teams_external")
+  @@map("portfolio")
+}
+
+model PortfolioAsset {
+  id          String @id @default(uuid())
+  portfolioId String
+  assetType   String
+  assetId     String
+  details     Json?
+
+  portfolio Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+
+  @@index([portfolioId])
+  @@index([assetType, assetId])
+  @@map("portfolio_assets")
+}
+
+model PortfolioMember {
+  id          String @id @default(uuid())
+  portfolioId String
+  accountId   String
+  details     Json?
+
+  portfolio Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  account   Account   @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@unique([portfolioId, accountId])
+  @@index([portfolioId])
+  @@index([accountId])
+  @@map("portfolio_members")
+}
+
+model PortfolioRole {
+  id          String @id @default(uuid())
+  accountId   String
+  portfolioId String
+  roleId      String
+  details     Json?
+
+  account   Account   @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  portfolio Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+
+  @@unique([accountId, portfolioId, roleId])
+  @@index([accountId])
+  @@index([portfolioId])
+  @@index([roleId])
+  @@map("portfolio_role")
 }
 
 model AuthPermissionRecipient {

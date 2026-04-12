@@ -139,37 +139,62 @@ function normalizeEndpoints(value: unknown): ApplicationEndpointConfig {
  */
 async function resolveApplicationAccessForAccount(accountId: string, appId: string): Promise<{ canView: boolean; canEdit: boolean }> {
   try {
-    const memberKey = `account:${accountId}`;
-    const memberRoles = await prisma.assetMemberRole.findMany({
-      where: {
-        assetRef: {
-          asset: appId,
-          type: { in: applicationAssetTypes },
-        },
-        member: {
-          member: memberKey,
-          OR: [{ isPermanent: true }, { validTill: { gt: new Date() } }],
-        },
-      },
-      select: {
-        role: true,
-        member: {
-          select: {
-            hasFullPermit: true,
+    const [roleRows, memberRows] = await Promise.all([
+      prisma.portfolioRole.findMany({
+        where: {
+          accountId,
+          portfolio: {
+            assets: {
+              some: {
+                assetId: appId,
+                assetType: { in: applicationAssetTypes },
+              },
+            },
           },
         },
-      },
-    });
+        select: {
+          roleId: true,
+        },
+      }),
+      prisma.portfolioMember.findMany({
+        where: {
+          accountId,
+          portfolio: {
+            assets: {
+              some: {
+                assetId: appId,
+                assetType: { in: applicationAssetTypes },
+              },
+            },
+          },
+        },
+        select: {
+          details: true,
+        },
+      }),
+    ]);
 
-    if (memberRoles.length === 0) {
+    if (roleRows.length === 0 && memberRows.length === 0) {
       return { canView: false, canEdit: false };
     }
 
-    if (memberRoles.some((row) => row.member.hasFullPermit)) {
+    const hasFullAccess = memberRows.some((row) => {
+      const details = (row.details ?? null) as Record<string, unknown> | null;
+      if (!details || typeof details !== 'object') return false;
+      const isPermanent = details.isPermanent === true;
+      const removesOnRaw = details.removesOn;
+      const removesOn = typeof removesOnRaw === 'string' || removesOnRaw instanceof Date
+        ? new Date(removesOnRaw as string | Date)
+        : null;
+      const stillValid = isPermanent || (removesOn instanceof Date && !Number.isNaN(removesOn.getTime()) && removesOn > new Date());
+      return stillValid && details.hasFullAccess === true;
+    });
+
+    if (hasFullAccess) {
       return { canView: true, canEdit: true };
     }
 
-    const normalizedRoles = new Set(memberRoles.map((row) => row.role.trim().toLowerCase()));
+    const normalizedRoles = new Set(roleRows.map((row) => row.roleId.trim().toLowerCase()));
     const canEdit = Array.from(normalizedRoles).some((role) => editRoleKeys.has(role));
     const canView = canEdit || Array.from(normalizedRoles).some((role) => viewRoleKeys.has(role));
 
@@ -215,23 +240,24 @@ async function isApplicationOwnerForAccount(accountId: string, appId: string): P
   if (!app) return false;
   if (app.ownerAccountId === accountId) return true;
 
-  const ownerRoleRows = await prisma.assetMemberRole.findMany({
+  const ownerRoleRows = await prisma.portfolioRole.findMany({
     where: {
-      assetRef: {
-        asset: appId,
-        type: { in: applicationAssetTypes },
-      },
-      member: {
-        member: `account:${accountId}`,
-        OR: [{ isPermanent: true }, { validTill: { gt: new Date() } }],
+      accountId,
+      portfolio: {
+        assets: {
+          some: {
+            assetId: appId,
+            assetType: { in: applicationAssetTypes },
+          },
+        },
       },
     },
     select: {
-      role: true,
+      roleId: true,
     },
   });
 
-  return ownerRoleRows.some((row) => ownerRoleKeys.has(row.role.trim().toLowerCase()));
+  return ownerRoleRows.some((row) => ownerRoleKeys.has(row.roleId.trim().toLowerCase()));
 }
 
 
@@ -399,88 +425,91 @@ export async function createManagedApplication(input: { name: string }) {
         },
       });
 
-      const memberKey = `account:${accountId}`;
-
-      let assetGroup = await tx.assetGroupInfo.findFirst({
+      let portfolio = await tx.portfolio.findFirst({
         where: {
           members: {
             some: {
-              member: memberKey,
+              accountId,
             },
           },
         },
         select: { id: true },
       });
 
-      if (!assetGroup) {
-        assetGroup = await tx.assetGroupInfo.create({
+      if (!portfolio) {
+        portfolio = await tx.portfolio.create({
           data: {
-            name: 'My Assets Group',
-            details: 'Default asset group for your owned applications.',
+            name: 'My Portfolio',
+            description: 'Default portfolio for your owned applications.',
           },
           select: { id: true },
         });
       }
 
-      let groupMember = await tx.assetGroupMember.findFirst({
+      await tx.portfolioMember.upsert({
         where: {
-          assetGroup: assetGroup.id,
-          member: memberKey,
+          portfolioId_accountId: {
+            portfolioId: portfolio.id,
+            accountId,
+          },
         },
-        select: { id: true },
+        update: {
+          details: {
+            isPermanent: true,
+            hasFullAccess: true,
+          },
+        },
+        create: {
+          portfolioId: portfolio.id,
+          accountId,
+          details: {
+            isPermanent: true,
+            hasFullAccess: true,
+          },
+        },
       });
 
-      if (!groupMember) {
-        groupMember = await tx.assetGroupMember.create({
-          data: {
-            assetGroup: assetGroup.id,
-            member: memberKey,
-            isPermanent: true,
-            hasFullPermit: true,
-          },
-          select: { id: true },
-        });
-      }
-
-      let appAsset = await tx.asset.findFirst({
+      let appAsset = await tx.portfolioAsset.findFirst({
         where: {
-          assetGroup: assetGroup.id,
-          asset: createdApp.id,
-          type: 'app',
+          portfolioId: portfolio.id,
+          assetId: createdApp.id,
+          assetType: 'application',
         },
         select: { id: true },
       });
 
       if (!appAsset) {
-        appAsset = await tx.asset.create({
+        appAsset = await tx.portfolioAsset.create({
           data: {
-            asset: createdApp.id,
-            type: 'app',
-            assetGroup: assetGroup.id,
-            details: `Application asset for ${createdApp.name}`,
+            portfolioId: portfolio.id,
+            assetId: createdApp.id,
+            assetType: 'application',
+            details: { primaryPortfolio: true },
           },
           select: { id: true },
         });
       }
 
-      await tx.assetMemberRole.upsert({
+      await tx.portfolioRole.upsert({
         where: {
-          assetMember_asset: {
-            assetMember: groupMember.id,
-            asset: appAsset.id,
+          accountId_portfolioId_roleId: {
+            accountId,
+            portfolioId: portfolio.id,
+            roleId: 'application.owner',
           },
         },
         create: {
-          assetMember: groupMember.id,
-          asset: appAsset.id,
-          role: 'application.owner',
+          accountId,
+          portfolioId: portfolio.id,
+          roleId: 'application.owner',
+          details: { assetId: createdApp.id },
         },
         update: {
-          role: 'application.owner',
+          details: { assetId: createdApp.id },
         },
       });
 
-      return { id: createdApp.id, groupId: assetGroup.id };
+      return { id: createdApp.id, groupId: portfolio.id };
     });
 
     revalidatePath('/data/applications');
@@ -520,36 +549,68 @@ export async function getManagedApplications(): Promise<Array<{ id: string; name
 
     const ownedIds = new Set(ownedApplications.map((app) => app.id));
 
-    const roleRows = await prisma.assetMemberRole.findMany({
-      where: {
-        member: {
-          member: `account:${accountId}`,
-          OR: [{ isPermanent: true }, { validTill: { gt: new Date() } }],
-        },
-        assetRef: {
-          type: { in: applicationAssetTypes },
-        },
-      },
-      select: {
-        role: true,
-        member: {
-          select: {
-            hasFullPermit: true,
+    const [roleRows, memberRows] = await Promise.all([
+      prisma.portfolioRole.findMany({
+        where: {
+          accountId,
+          portfolio: {
+            assets: {
+              some: {
+                assetType: { in: applicationAssetTypes },
+              },
+            },
           },
         },
-        assetRef: {
-          select: {
-            asset: true,
+        select: {
+          roleId: true,
+          portfolio: {
+            select: {
+              assets: {
+                where: { assetType: { in: applicationAssetTypes } },
+                select: { assetId: true },
+              },
+            },
           },
         },
-      },
-    });
+      }),
+      prisma.portfolioMember.findMany({
+        where: {
+          accountId,
+          portfolio: {
+            assets: {
+              some: {
+                assetType: { in: applicationAssetTypes },
+              },
+            },
+          },
+        },
+        select: {
+          details: true,
+          portfolio: {
+            select: {
+              assets: {
+                where: { assetType: { in: applicationAssetTypes } },
+                select: { assetId: true },
+              },
+            },
+          },
+        },
+      }),
+    ]);
 
     const permittedViewAppIds = new Set<string>();
     for (const row of roleRows) {
-      const normalizedRole = row.role.trim().toLowerCase();
-      if (row.member.hasFullPermit || viewRoleKeys.has(normalizedRole)) {
-        permittedViewAppIds.add(row.assetRef.asset);
+      const normalizedRole = row.roleId.trim().toLowerCase();
+      if (viewRoleKeys.has(normalizedRole)) {
+        row.portfolio.assets.forEach((asset) => permittedViewAppIds.add(asset.assetId));
+      }
+    }
+
+    for (const row of memberRows) {
+      const details = (row.details ?? null) as Record<string, unknown> | null;
+      const hasFullAccess = Boolean(details && typeof details === 'object' && details.hasFullAccess === true);
+      if (hasFullAccess) {
+        row.portfolio.assets.forEach((asset) => permittedViewAppIds.add(asset.assetId));
       }
     }
 

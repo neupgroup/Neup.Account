@@ -28,7 +28,7 @@ export default async function AccessControlPage() {
                     <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
                   </CardTitle>
                   <CardDescription className="line-clamp-2">
-                    {group.details || 'No details provided.'}
+                    {group.description || 'No details provided.'}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -42,7 +42,7 @@ export default async function AccessControlPage() {
         </div>
       ) : (
         <Card className="border-2 border-dotted bg-transparent">
-          <CardContent className="p-6 text-center text-sm text-muted-foreground">no assets group</CardContent>
+          <CardContent className="p-6 text-center text-sm text-muted-foreground">no portfolio yet</CardContent>
         </Card>
       )}
     </div>

@@ -6,7 +6,7 @@ import prisma from '@/core/helpers/prisma';
 import { getActiveAccountId } from '@/core/helpers/auth-actions';
 import { logError } from '@/core/helpers/logger';
 
-const memberPattern = /^(app|account):[^\s:]+$/;
+const memberPattern = /^(account:)?[^\s:]+$/;
 
 const createAssetGroupSchema = z.object({
   name: z.string().trim().min(1, 'Group name is required.').max(120, 'Group name is too long.'),
@@ -15,7 +15,7 @@ const createAssetGroupSchema = z.object({
 
 const addMemberSchema = z.object({
   groupId: z.string().min(1),
-  member: z.string().trim().regex(memberPattern, 'Use format app:appid or account:id.'),
+  member: z.string().trim().regex(memberPattern, 'Use account ID or account:<id>.'),
   isPermanent: z.boolean().default(false),
   validTill: z.date().optional(),
   hasFullPermit: z.boolean().default(false),
@@ -48,12 +48,10 @@ function normalizeDetails(value?: string): string | null {
  * Function canAccessGroup.
  */
 async function canAccessGroup(groupId: string, accountId: string): Promise<boolean> {
-  const memberKey = `account:${accountId}`;
-
-  const member = await prisma.assetGroupMember.findFirst({
+  const member = await prisma.portfolioMember.findFirst({
     where: {
-      assetGroup: groupId,
-      member: memberKey,
+      portfolioId: groupId,
+      accountId,
     },
     select: { id: true },
   });
@@ -69,14 +67,12 @@ export async function getAccessAssetGroups() {
   const accountId = await getActiveAccountId();
   if (!accountId) return [];
 
-  const memberKey = `account:${accountId}`;
-
   try {
-    return await prisma.assetGroupInfo.findMany({
+    return await prisma.portfolio.findMany({
       where: {
         members: {
           some: {
-            member: memberKey,
+            accountId,
           },
         },
       },
@@ -110,20 +106,22 @@ export async function getAccessAssetGroup(groupId: string) {
     const allowed = await canAccessGroup(groupId, accountId);
     if (!allowed) return null;
 
-    return await prisma.assetGroupInfo.findUnique({
+    return await prisma.portfolio.findUnique({
       where: { id: groupId },
       include: {
         members: {
-          include: {
-            roles: true,
-          },
           orderBy: {
-            member: 'asc',
+            accountId: 'asc',
           },
         },
         assets: {
           orderBy: {
-            asset: 'asc',
+            assetId: 'asc',
+          },
+        },
+        roles: {
+          orderBy: {
+            roleId: 'asc',
           },
         },
       },
@@ -151,19 +149,21 @@ export async function createAssetGroup(input: { name: string; details?: string }
 
   try {
     const created = await prisma.$transaction(async (tx) => {
-      const group = await tx.assetGroupInfo.create({
+      const group = await tx.portfolio.create({
         data: {
           name: parsed.data.name,
-          details: normalizeDetails(parsed.data.details),
+          description: normalizeDetails(parsed.data.details),
         },
       });
 
-      await tx.assetGroupMember.create({
+      await tx.portfolioMember.create({
         data: {
-          assetGroup: group.id,
-          member: `account:${accountId}`,
-          isPermanent: true,
-          hasFullPermit: true,
+          portfolioId: group.id,
+          accountId,
+          details: {
+            isPermanent: true,
+            hasFullAccess: true,
+          },
         },
       });
 
@@ -220,13 +220,19 @@ export async function addAssetGroupMember(input: {
       return { success: false, error: 'Permission denied.' };
     }
 
-    await prisma.assetGroupMember.create({
+    const normalizedMemberId = parsed.data.member.startsWith('account:')
+      ? parsed.data.member.slice('account:'.length)
+      : parsed.data.member;
+
+    await prisma.portfolioMember.create({
       data: {
-        assetGroup: parsed.data.groupId,
-        member: parsed.data.member,
-        isPermanent: parsed.data.isPermanent,
-        validTill: parsed.data.isPermanent ? null : parsed.data.validTill || null,
-        hasFullPermit: parsed.data.hasFullPermit,
+        portfolioId: parsed.data.groupId,
+        accountId: normalizedMemberId,
+        details: {
+          isPermanent: parsed.data.isPermanent,
+          removesOn: parsed.data.isPermanent ? null : parsed.data.validTill || null,
+          hasFullAccess: parsed.data.hasFullPermit,
+        },
       },
     });
 
@@ -260,12 +266,14 @@ export async function addAssetToGroup(input: { groupId: string; asset: string; t
       return { success: false, error: 'Permission denied.' };
     }
 
-    await prisma.asset.create({
+    await prisma.portfolioAsset.create({
       data: {
-        asset: parsed.data.asset,
-        type: parsed.data.type,
-        assetGroup: parsed.data.groupId,
-        details: normalizeDetails(parsed.data.details),
+        portfolioId: parsed.data.groupId,
+        assetId: parsed.data.asset,
+        assetType: parsed.data.type,
+        details: {
+          note: normalizeDetails(parsed.data.details),
+        },
       },
     });
 
@@ -304,41 +312,34 @@ export async function assignAssetMemberRole(input: {
       return { success: false, error: 'Permission denied.' };
     }
 
-    const [member, asset] = await Promise.all([
-      prisma.assetGroupMember.findFirst({
-        where: {
-          id: parsed.data.assetMember,
-          assetGroup: parsed.data.groupId,
-        },
-        select: { id: true },
-      }),
-      prisma.asset.findFirst({
-        where: {
-          id: parsed.data.asset,
-          assetGroup: parsed.data.groupId,
-        },
-        select: { id: true },
-      }),
-    ]);
+    const member = await prisma.portfolioMember.findFirst({
+      where: {
+        id: parsed.data.assetMember,
+        portfolioId: parsed.data.groupId,
+      },
+      select: { id: true, accountId: true },
+    });
 
-    if (!member || !asset) {
-      return { success: false, error: 'Member or asset not found in this group.' };
+    if (!member) {
+      return { success: false, error: 'Member not found in this group.' };
     }
 
-    await prisma.assetMemberRole.upsert({
+    await prisma.portfolioRole.upsert({
       where: {
-        assetMember_asset: {
-          assetMember: parsed.data.assetMember,
-          asset: parsed.data.asset,
+        accountId_portfolioId_roleId: {
+          accountId: member.accountId,
+          portfolioId: parsed.data.groupId,
+          roleId: parsed.data.role,
         },
       },
       create: {
-        assetMember: parsed.data.assetMember,
-        asset: parsed.data.asset,
-        role: parsed.data.role,
+        accountId: member.accountId,
+        portfolioId: parsed.data.groupId,
+        roleId: parsed.data.role,
+        details: {},
       },
       update: {
-        role: parsed.data.role,
+        details: {},
       },
     });
 
