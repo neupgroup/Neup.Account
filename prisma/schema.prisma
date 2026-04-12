@@ -48,7 +48,7 @@ model Account {
   parentOwnerships   AccountOwnership[] @relation("AccountOwnershipParent")
   childOwnerships    AccountOwnership[] @relation("AccountOwnershipChild")
 
-  @@map("accounts")
+  @@map("account")
 }
 
 model AccountTypeIndividual {
@@ -75,7 +75,7 @@ model AccountTypeBrand {
 
   account        Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
 
-  @@map("account_type__brand")
+  @@map("account_meta__brand")
 }
 
 model AccountOwnership {
