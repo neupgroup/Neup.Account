@@ -170,7 +170,7 @@ export async function bridgeRefreshGrant(input: {
   }
 
   try {
-    const externalSession = await prisma.appSession.findFirst({
+    const appSession = await prisma.appSession.findFirst({
       where: {
         id: sid,
         accountId: aid,
@@ -183,7 +183,7 @@ export async function bridgeRefreshGrant(input: {
       },
     });
 
-    if (!externalSession) {
+    if (!appSession) {
       return {
         status: 401,
         body: { error: 'invalid_session', error_description: 'Session not found or expired' },
@@ -219,14 +219,14 @@ export async function bridgeRefreshGrant(input: {
       payload.per = permissions;
     }
 
-    if (!externalSession.application.appSecret) {
+    if (!appSession.application.appSecret) {
       return {
         status: 500,
         body: { error: 'invalid_app', error_description: 'Application configuration error' },
       };
     }
 
-    const newToken = jwt.sign(payload, externalSession.application.appSecret);
+    const newToken = jwt.sign(payload, appSession.application.appSecret);
 
     await prisma.appSession.update({
       where: { id: sid },
@@ -275,7 +275,7 @@ export async function bridgeCheckGrant(input: {
   }
 
   try {
-    const externalSession = await prisma.appSession.findFirst({
+    const appSession = await prisma.appSession.findFirst({
       where: {
         id: sid,
         accountId: aid,
@@ -285,7 +285,7 @@ export async function bridgeCheckGrant(input: {
       },
     });
 
-    if (!externalSession) {
+    if (!appSession) {
       return {
         status: 401,
         body: { error: 'invalid_grant', error_description: 'Grant not found or expired' },
@@ -296,10 +296,10 @@ export async function bridgeCheckGrant(input: {
       status: 200,
       body: {
         success: true,
-        aid: externalSession.accountId,
-        appId: externalSession.appId,
-        expiresOn: externalSession.activeTill,
-        lastLoggedIn: externalSession.createdOn,
+        aid: appSession.accountId,
+        appId: appSession.appId,
+        expiresOn: appSession.activeTill,
+        lastLoggedIn: appSession.createdOn,
       },
     };
   } catch (error) {

@@ -32,7 +32,7 @@ export async function bridgeGetAuthAccess(input: {
   }
 
   try {
-    const externalSession = await prisma.appSession.findFirst({
+    const appSession = await prisma.appSession.findFirst({
       where: {
         id: sid,
         accountId: aid,
@@ -42,14 +42,14 @@ export async function bridgeGetAuthAccess(input: {
       },
     });
 
-    if (!externalSession) {
+    if (!appSession) {
       return {
         status: 401,
         body: { error: 'invalid_session', error_description: 'Session not found or expired' },
       };
     }
 
-    const resolvedAppId = externalSession.appId;
+    const resolvedAppId = appSession.appId;
     const teamInfo = await prisma.authTeamExternal.findMany({
       where: { recipientId: aid, appId: resolvedAppId },
     });

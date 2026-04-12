@@ -36,7 +36,7 @@ export async function getUserApplicationAccess(appId: string): Promise<UserAppli
   }
 
   try {
-    const [application, appAuthentication, externalSession] = await Promise.all([
+    const [application, appAuthentication, appSession] = await Promise.all([
       prisma.application.findUnique({
         where: { id: appId },
       }),
@@ -59,11 +59,11 @@ export async function getUserApplicationAccess(appId: string): Promise<UserAppli
       }),
     ]);
 
-    if (!application || (!appAuthentication && !externalSession)) {
+    if (!application || (!appAuthentication && !appSession)) {
       return null;
     }
 
-    const connectionType: UserApplicationAccess['connectionType'] = appAuthentication && externalSession
+    const connectionType: UserApplicationAccess['connectionType'] = appAuthentication && appSession
       ? 'both'
       : appAuthentication
         ? 'internal'
@@ -73,7 +73,7 @@ export async function getUserApplicationAccess(appId: string): Promise<UserAppli
       ? (appAuthentication?.permissions as string[])
       : [];
 
-    const connectedOnCandidates = [appAuthentication?.createdAt, externalSession?.createdOn].filter(Boolean) as Date[];
+    const connectedOnCandidates = [appAuthentication?.createdAt, appSession?.createdOn].filter(Boolean) as Date[];
     const connectedOn = connectedOnCandidates.length > 0
       ? connectedOnCandidates.reduce((earliest, current) => (current < earliest ? current : earliest))
       : new Date();

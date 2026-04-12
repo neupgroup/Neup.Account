@@ -41,16 +41,16 @@ export async function validateJwt(input: ValidateJwtInput): Promise<JwtValidatio
 		return { status: 'unauthorized' };
 	}
 
-	  const externalSession = await prisma.appSession.findFirst({
+	const appSession = await prisma.appSession.findFirst({
 		where: {
 			id: sid,
 			accountId: aid,
-				sessionValue: skey,
+			sessionValue: skey,
 		},
 		select: {
 			accountId: true,
-				activeTill: true,
-				appId: true,
+			activeTill: true,
+			appId: true,
 			application: {
 				select: {
 					appSecret: true,
@@ -59,15 +59,15 @@ export async function validateJwt(input: ValidateJwtInput): Promise<JwtValidatio
 		},
 	});
 
-	if (!externalSession) {
+	if (!appSession) {
 		return { status: 'unauthorized' };
 	}
 
-	if (!externalSession.activeTill || externalSession.activeTill <= new Date()) {
+	if (!appSession.activeTill || appSession.activeTill <= new Date()) {
 		return { status: 'expired' };
 	}
 
-	const appSecret = externalSession.application?.appSecret;
+	const appSecret = appSession.application?.appSecret;
 	if (!appSecret) {
 		return { status: 'unauthorized' };
 	}
@@ -83,7 +83,7 @@ export async function validateJwt(input: ValidateJwtInput): Promise<JwtValidatio
 			return { status: 'invalid' };
 		}
 
-		if (payload?.appId && payload.appId !== externalSession.appId) {
+		if (payload?.appId && payload.appId !== appSession.appId) {
 			return { status: 'invalid' };
 		}
 

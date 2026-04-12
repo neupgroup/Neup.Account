@@ -31,7 +31,7 @@ export async function bridgeGetProfile(input: {
     let isTempTokenAuth = false;
 
     if (headerAid && headerSid && headerSkey) {
-      const externalSession = await prisma.appSession.findFirst({
+      const appSession = await prisma.appSession.findFirst({
         where: {
           id: headerSid,
           accountId: headerAid,
@@ -40,7 +40,7 @@ export async function bridgeGetProfile(input: {
         },
       });
 
-      if (externalSession) {
+      if (appSession) {
         authenticatedAccountId = headerAid;
       }
     } else if (tempToken && appId) {

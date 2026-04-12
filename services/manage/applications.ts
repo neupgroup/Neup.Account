@@ -266,7 +266,7 @@ export async function getApplicationDetailsForViewer(appId: string): Promise<App
     const authorization = await getApplicationAuthorization(activeAccountId, appId);
     if (!authorization.exists || !authorization.canView) return null;
 
-    const [application, appAuthentication, externalSession, canDelete] = await Promise.all([
+    const [application, appAuthentication, appSession, canDelete] = await Promise.all([
       prisma.application.findUnique({
         where: { id: appId },
         select: {
@@ -325,7 +325,7 @@ export async function getApplicationDetailsForViewer(appId: string): Promise<App
       developer: application.developer || undefined,
       configuredAccess,
       accessedData,
-      hasUsedApp: Boolean(appAuthentication || externalSession),
+      hasUsedApp: Boolean(appAuthentication || appSession),
       policies,
       endpoints,
       canDelete,
