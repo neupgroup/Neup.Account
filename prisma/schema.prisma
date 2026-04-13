@@ -28,17 +28,12 @@ model Account {
   sessions        Session[]
   errorLogs       SystemError[]
   appConnections  UserAppConnection[]
-  appAuthentications AppAuthentication[]
-  appSessions     AppSession[]
   ownedApplications Application[]
   notifications   Notification[]
   verifications   Verification[]
   sentRequests    Request[] @relation("SentRequests")
   receivedRequests Request[] @relation("ReceivedRequests")
 
-  // New Auth Team & Permission Relations
-  recipientPermissions AuthPermissionRecipient[] @relation("RecipientPermissions")
-  ownerPermissions   AuthPermissionRecipient[] @relation("OwnerPermissions")
   individualProfile  AccountTypeIndividual?
   brandProfile       AccountTypeBrand?
   parentOwnerships   AccountOwnership[] @relation("AccountOwnershipParent")
@@ -285,6 +280,9 @@ model Permit {
 model Session {
   id          String   @id @default(uuid())
   accountId   String
+  application String?  // neup.account for internal apps, or external application id/name
+  applicationType String @default("internal") // internal | external
+  applicationDomain String?
   ipAddress   String
   userAgent   String
   lastLoggedIn DateTime
@@ -295,8 +293,8 @@ model Session {
   isExpired       Boolean   @default(false)
   authSessionKey  String?
   dependentKeys   Json?
+  permissions     Json?     @default("[]")
   
-  appSessions     AppSession[]
   account     Account  @relation(fields: [accountId], references: [id])
 
   @@map("sessions")
@@ -341,10 +339,6 @@ model Application {
 
   owner       Account? @relation(fields: [ownerAccountId], references: [id])
   connections UserAppConnection[]
-  appAuthentications AppAuthentication[]
-  appSessions     AppSession[]
-
-  authPermissionRecipients AuthPermissionRecipient[]
 
   @@map("application")
 }
@@ -408,24 +402,6 @@ model PortfolioRole {
   @@map("portfolio_role")
 }
 
-model AuthPermissionRecipient {
-  id           String   @id @default(uuid())
-  appId        String
-  recipientId  String
-  ownerId      String
-  assetId      String?  // Optional asset identifier
-  permission   String
-  isPermanent  Boolean  @default(true)
-  expiresAt    DateTime?
-  createdAt    DateTime @default(now())
-
-  application  Application @relation(fields: [appId], references: [id])
-  recipient    Account     @relation("RecipientPermissions", fields: [recipientId], references: [id])
-  owner        Account     @relation("OwnerPermissions", fields: [ownerId], references: [id])
-
-  @@map("auth_permission_recipients")
-}
-
 model UserAppConnection {
   id        String   @id @default(uuid())
   accountId String
@@ -437,34 +413,4 @@ model UserAppConnection {
 
   @@unique([accountId, appId])
   @@map("application_connection")
-}
-
-model AppAuthentication {
-  id          String   @id @default(uuid())
-  appId       String
-  accountId   String
-  permissions Json?    @default("[]")
-  createdAt   DateTime @default(now())
-
-  account     Account     @relation(fields: [accountId], references: [id])
-  application Application @relation(fields: [appId], references: [id])
-
-  @@unique([appId, accountId])
-  @@map("app_authentications")
-}
-
-model AppSession {
-  id           String   @id @default(uuid())
-  accountId    String
-  sessionId    String   // Link to NeupAccount session
-  appId        String
-  sessionValue String   @unique // The specific session token for the app
-  createdOn    DateTime @default(now())
-  activeTill   DateTime
-
-  account      Account     @relation(fields: [accountId], references: [id])
-  application  Application @relation(fields: [appId], references: [id])
-  session      Session     @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-
-  @@map("app_sessions")
 }

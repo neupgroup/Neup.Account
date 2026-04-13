@@ -315,26 +315,17 @@ export async function bridgeSignIntoApplication(input: { appId?: string; appType
 
 		const { accountId } = validation.user;
 
-		let appAuth = await prisma.appAuthentication.findUnique({
+		const existingExternal = await prisma.session.findFirst({
 			where: {
-				appId_accountId: {
-					appId,
-					accountId,
-				},
+				accountId,
+				application: appId,
+				applicationType: 'external',
+				isExpired: false,
 			},
+			select: { id: true },
 		});
 
-		let isNewSignup = false;
-		if (!appAuth) {
-			appAuth = await prisma.appAuthentication.create({
-				data: {
-					appId,
-					accountId,
-					permissions: [],
-				},
-			});
-			isNewSignup = true;
-		}
+		const isNewSignup = !existingExternal;
 
 		const profile = await getUserProfile(accountId);
 		if (!profile) {
@@ -346,7 +337,7 @@ export async function bridgeSignIntoApplication(input: { appId?: string; appType
 			accountId,
 			displayName: profile.nameDisplay || `${profile.nameFirst || ''} ${profile.nameLast || ''}`.trim(),
 			displayImage: profile.accountPhoto || '',
-			permissions: appAuth.permissions,
+			permissions: [],
 			isNewSignup,
 		};
 
@@ -360,13 +351,23 @@ export async function bridgeSignIntoApplication(input: { appId?: string; appType
 			const activeTill = new Date();
 			activeTill.setDate(activeTill.getDate() + 30);
 
-			await prisma.appSession.create({
+			await prisma.session.create({
 				data: {
 					accountId,
-					appId,
-					sessionId: authSid,
-					sessionValue,
-					activeTill,
+					application: appId,
+					applicationType: 'external',
+					ipAddress: 'Unknown IP',
+					userAgent: 'External Application',
+					lastLoggedIn: new Date(),
+					loginType: 'external_app',
+					expiresOn: activeTill,
+					isExpired: false,
+					authSessionKey: sessionValue,
+					dependentKeys: {
+						parentSessionId: authSid,
+						appId,
+					},
+					permissions: [],
 				},
 			});
 

@@ -46,68 +46,60 @@ export async function getSignedApplications(): Promise<SignedApplicationsResult>
   }
 
   try {
-    const [authConnections, appSessions] = await Promise.all([
-      prisma.appAuthentication.findMany({
-        where: { accountId },
-        include: {
-          application: true,
-        },
-      }),
-      prisma.appSession.findMany({
-        where: { accountId },
-        distinct: ['appId'],
-        include: {
-          application: true,
-        },
-        orderBy: {
-          createdOn: 'asc',
-        },
-      }),
-    ]);
+    const appSessions = await prisma.session.findMany({
+      where: {
+        accountId,
+        application: { not: null },
+      },
+      distinct: ['application'],
+      orderBy: {
+        lastLoggedIn: 'asc',
+      },
+    });
 
+    const appIds = Array.from(
+      new Set(appSessions.map((row) => row.application).filter((id): id is string => Boolean(id)))
+    );
+    const appRows = await prisma.application.findMany({
+      where: { id: { in: appIds } },
+    });
+
+    const appById = new Map(appRows.map((app) => [app.id, app]));
     const byAppId = new Map<string, SignedApplication>();
 
-    for (const row of authConnections) {
-      byAppId.set(row.appId, {
-        id: row.appId,
-        name: row.application.name,
-        icon: row.application.icon || undefined,
-        description: row.application.description || '',
-        website: row.application.website || undefined,
-        developer: row.application.developer || undefined,
-        signedAt: row.createdAt,
-      });
-    }
-
     for (const row of appSessions) {
-      const existing = byAppId.get(row.appId);
+      if (!row.application) continue;
+      const application = appById.get(row.application);
+      if (!application) continue;
+
+      const existing = byAppId.get(row.application);
 
       if (!existing) {
-        byAppId.set(row.appId, {
-          id: row.appId,
-          name: row.application.name,
-          icon: row.application.icon || undefined,
-          description: row.application.description || '',
-          website: row.application.website || undefined,
-          developer: row.application.developer || undefined,
-          signedAt: row.createdOn,
+        byAppId.set(row.application, {
+          id: row.application,
+          name: application.name,
+          icon: application.icon || undefined,
+          description: application.description || '',
+          website: application.website || undefined,
+          developer: application.developer || undefined,
+          signedAt: row.lastLoggedIn,
         });
         continue;
       }
 
-      if (row.createdOn < existing.signedAt) {
-        byAppId.set(row.appId, {
+      if (row.lastLoggedIn < existing.signedAt) {
+        byAppId.set(row.application, {
           ...existing,
-          signedAt: row.createdOn,
+          signedAt: row.lastLoggedIn,
         });
       }
     }
 
-    const applications = Array.from(byAppId.values()).sort((a, b) => b.signedAt.getTime() - a.signedAt.getTime());
+    const resolvedApplications = Array.from(byAppId.values()).sort((a, b) => b.signedAt.getTime() - a.signedAt.getTime());
 
     return {
-      internal: applications.filter((app) => isInternalApp(app.id)),
-      external: applications.filter((app) => !isInternalApp(app.id)),
+      internal: resolvedApplications.filter((app) => isInternalApp(app.id)),
+      external: resolvedApplications.filter((app) => !isInternalApp(app.id)),
     };
   } catch (error) {
     await logError('database', error, 'getSignedApplications');

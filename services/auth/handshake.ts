@@ -83,16 +83,17 @@ export async function bridgeBuildGrantRedirect(input: {
       },
     });
 
-    const appAuth = await prisma.appAuthentication.findUnique({
+    const existingExternalSession = await prisma.session.findFirst({
       where: {
-        appId_accountId: {
-          appId,
-          accountId: session.accountId,
-        },
+        accountId: session.accountId,
+        application: appId,
+        applicationType: 'external',
+        isExpired: false,
       },
+      select: { id: true },
     });
 
-    const authType = appAuth ? 'signin' : 'signup';
+    const authType = existingExternalSession ? 'signin' : 'signup';
 
     finalRedirectUrl.searchParams.set('tempToken', tempToken);
     finalRedirectUrl.searchParams.set('authType', authType);

@@ -292,7 +292,7 @@ export async function getApplicationDetailsForViewer(appId: string): Promise<App
     const authorization = await getApplicationAuthorization(activeAccountId, appId);
     if (!authorization.exists || !authorization.canView) return null;
 
-    const [application, appAuthentication, appSession, canDelete] = await Promise.all([
+    const [application, appSessions, canDelete] = await Promise.all([
       prisma.application.findUnique({
         where: { id: appId },
         select: {
@@ -307,29 +307,17 @@ export async function getApplicationDetailsForViewer(appId: string): Promise<App
         },
       }),
       personalAccountId
-        ? prisma.appAuthentication.findUnique({
+        ? prisma.session.findMany({
             where: {
-              appId_accountId: {
-                appId,
-                accountId: personalAccountId,
-              },
-            },
-            select: {
-              permissions: true,
-            },
-          })
-        : null,
-      personalAccountId
-        ? prisma.appSession.findFirst({
-            where: {
-              appId,
               accountId: personalAccountId,
+              application: appId,
             },
             select: {
               id: true,
+              permissions: true,
             },
           })
-        : null,
+        : [],
       isApplicationOwnerForAccount(activeAccountId, appId),
     ]);
 
@@ -339,9 +327,13 @@ export async function getApplicationDetailsForViewer(appId: string): Promise<App
     const policies = normalizePolicies(application.policies);
     const endpoints = normalizeEndpoints(application.endpoints);
 
-    const accessedData = Array.isArray(appAuthentication?.permissions)
-      ? (appAuthentication?.permissions as string[])
-      : [];
+    const accessedData = Array.from(
+      new Set(
+        appSessions.flatMap((session) =>
+          Array.isArray(session.permissions) ? (session.permissions as string[]) : []
+        )
+      )
+    );
 
     return {
       id: application.id,
@@ -351,7 +343,7 @@ export async function getApplicationDetailsForViewer(appId: string): Promise<App
       developer: application.developer || undefined,
       configuredAccess,
       accessedData,
-      hasUsedApp: Boolean(appAuthentication || appSession),
+      hasUsedApp: appSessions.length > 0,
       policies,
       endpoints,
       canDelete,

@@ -89,9 +89,6 @@ export async function logoutStoredSession(sessionId: string): Promise<{ success:
             prisma.session.update({
                 where: { id: sessionId },
                 data: { isExpired: true }
-            }),
-            prisma.appSession.deleteMany({
-                where: { sessionId: sessionId }
             })
         ]);
 

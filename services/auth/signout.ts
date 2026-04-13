@@ -27,9 +27,6 @@ export async function logoutActiveSession() {
                 await logError('auth', expireResult.error || 'Unknown error', 'logoutActiveSession:expireSession');
             }
 
-            await prisma.appSession.deleteMany({
-                where: { sessionId: sid }
-            });
             await logActivity(aid, 'Signout', 'Success', ipAddress);
 
             if (allAccounts.length > 0) {
@@ -71,17 +68,24 @@ export async function bridgeSignoutExternalSession(input: {
     }
 
     try {
-        const appSession = await prisma.appSession.findUnique({
-            where: { sessionValue },
+        const appSession = await prisma.session.findFirst({
+            where: {
+                authSessionKey: sessionValue,
+                applicationType: 'external',
+            },
         });
 
         if (appSession) {
-            if (appId && appSession.appId !== appId) {
+            if (appId && appSession.application !== appId) {
                 return { status: 403, body: { success: false, error: 'Unauthorized session.' } };
             }
 
-            await prisma.appSession.delete({
-                where: { sessionValue },
+            await prisma.session.update({
+                where: { id: appSession.id },
+                data: {
+                    isExpired: true,
+                    expiresOn: new Date(),
+                },
             });
         }
 

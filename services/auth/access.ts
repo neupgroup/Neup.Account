@@ -3,28 +3,42 @@ import { logError } from '@/core/helpers/logger';
 
 const INTERNAL_APP_PREFIX = 'neup.';
 
-/**
- * Function isInternalApp.
- */
 function isInternalApp(appId: string) {
   return appId.startsWith(INTERNAL_APP_PREFIX);
 }
 
+async function resolveSession(input: { aid?: string | null; sid?: string | null; skey?: string | null; appId?: string | null }) {
+  const { aid, sid, skey, appId } = input;
+  if (!aid || !sid || !skey) return null;
 
+  return prisma.session.findFirst({
+    where: {
+      id: sid,
+      accountId: aid,
+      authSessionKey: skey,
+      isExpired: false,
+      expiresOn: { gt: new Date() },
+      ...(appId
+        ? {
+            OR: [
+              { applicationType: 'internal' },
+              { applicationType: 'external', application: appId },
+            ],
+          }
+        : {}),
+    },
+  });
+}
 
-
-/**
- * Function bridgeGetAuthAccess.
- */
 export async function bridgeGetAuthAccess(input: {
   aid?: string | null;
   sid?: string | null;
   skey?: string | null;
   appId?: string | null;
 }): Promise<{ status: number; body: Record<string, any> }> {
-  const { aid, sid, skey, appId } = input;
+  const { aid, appId } = input;
 
-  if (!aid || !sid || !skey) {
+  if (!aid || !input.sid || !input.skey) {
     return {
       status: 400,
       body: { error: 'invalid_request', error_description: 'Missing aid, sid, or skey' },
@@ -32,52 +46,53 @@ export async function bridgeGetAuthAccess(input: {
   }
 
   try {
-    const appSession = await prisma.appSession.findFirst({
-      where: {
-        id: sid,
-        accountId: aid,
-        sessionValue: skey,
-        ...(appId ? { appId } : {}),
-        activeTill: { gt: new Date() },
-      },
-    });
-
-    if (!appSession) {
+    const session = await resolveSession(input);
+    if (!session) {
       return {
         status: 401,
         body: { error: 'invalid_session', error_description: 'Session not found or expired' },
       };
     }
 
-    const resolvedAppId = appSession.appId;
-    const teamInfo = await prisma.portfolioMember.findMany({
-      where: {
-        accountId: aid,
-        portfolio: {
-          assets: {
-            some: {
-              assetId: resolvedAppId,
-              assetType: { in: ['application', 'app'] },
+    const resolvedAppId = appId || session.application || 'neup.account';
+
+    const [teamInfo, roleRows] = await Promise.all([
+      prisma.portfolioMember.findMany({
+        where: {
+          accountId: aid,
+          portfolio: {
+            assets: {
+              some: {
+                assetId: resolvedAppId,
+                assetType: { in: ['application', 'app'] },
+              },
             },
           },
         },
-      },
-      select: {
-        id: true,
-        portfolioId: true,
-        accountId: true,
-        details: true,
-      },
-    });
+        select: {
+          id: true,
+          portfolioId: true,
+          accountId: true,
+          details: true,
+        },
+      }),
+      prisma.portfolioRole.findMany({
+        where: {
+          accountId: aid,
+          portfolio: {
+            assets: {
+              some: {
+                assetId: resolvedAppId,
+                assetType: { in: ['application', 'app'] },
+              },
+            },
+          },
+        },
+        select: { roleId: true },
+      }),
+    ]);
 
-    const appAuth = await prisma.appAuthentication.findUnique({
-      where: { appId_accountId: { appId: resolvedAppId, accountId: aid } },
-      select: { permissions: true },
-    });
-
-    const assetPermissions = await prisma.authPermissionRecipient.findMany({
-      where: { recipientId: aid, appId: resolvedAppId },
-    });
+    const permissions = Array.from(new Set(roleRows.map((row) => row.roleId)));
 
     return {
       status: 200,
@@ -88,10 +103,10 @@ export async function bridgeGetAuthAccess(input: {
         isInternal: isInternalApp(resolvedAppId),
         role: 'user',
         teams: teamInfo,
-        permissions: Array.isArray(appAuth?.permissions) ? appAuth.permissions : [],
-        assetPermissions,
-        resourcePermissions: assetPermissions,
-        accountAccess: assetPermissions,
+        permissions,
+        assetPermissions: [],
+        resourcePermissions: [],
+        accountAccess: [],
         timestamp: new Date().toISOString(),
       },
     };
@@ -101,25 +116,18 @@ export async function bridgeGetAuthAccess(input: {
   }
 }
 
-
-/**
- * Function bridgeCreateAuthAccess.
- */
 export async function bridgeCreateAuthAccess(input: Record<string, any>): Promise<{ status: number; body: Record<string, any> }> {
-  const { aid, sid, skey, recipientId, isPermanent, status, parentOwnerId, appId: appIdOverride } = input;
+  const { aid, sid, skey, recipientId, isPermanent, appId: appIdOverride } = input;
 
   if (!aid || !sid || !skey || !recipientId) {
     return { status: 400, body: { error: 'missing_parameters' } };
   }
 
   try {
-    const session = await prisma.appSession.findFirst({
-      where: { id: sid, accountId: aid, sessionValue: skey, activeTill: { gt: new Date() } },
-    });
-
+    const session = await resolveSession({ aid, sid, skey, appId: appIdOverride || null });
     if (!session) return { status: 401, body: { error: 'unauthorized' } };
 
-    const appId = appIdOverride || session.appId;
+    const appId = appIdOverride || session.application || 'neup.account';
 
     await prisma.$transaction(async (tx) => {
       let portfolio = await tx.portfolio.findFirst({
@@ -173,85 +181,71 @@ export async function bridgeCreateAuthAccess(input: Record<string, any>): Promis
       });
     });
 
-    return { status: 200, body: { success: true, message: 'User added to team' } };
+    return { status: 200, body: { success: true, message: 'User added to portfolio.' } };
   } catch (error) {
     await logError('auth', error, 'bridge_create_auth_access');
     return { status: 500, body: { error: 'internal_server_error' } };
   }
 }
 
-
-/**
- * Function bridgeUpdateAuthAccess.
- */
 export async function bridgeUpdateAuthAccess(input: Record<string, any>): Promise<{ status: number; body: Record<string, any> }> {
-  const {
-    aid,
-    sid,
-    skey,
-    update,
-    role,
-    status,
-    add,
-    remove,
-    resourceId,
-    assetId,
-    parentOwnerId,
-    ownerId,
-    recipientId: targetId,
-  } = input;
+  const { aid, sid, skey, add, remove, appId: appIdOverride, recipientId: targetId } = input;
 
   try {
-    const session = await prisma.appSession.findFirst({
-      where: { id: sid, accountId: aid, sessionValue: skey, activeTill: { gt: new Date() } },
+    const session = await resolveSession({ aid, sid, skey, appId: appIdOverride || null });
+    if (!session || !aid) return { status: 401, body: { error: 'unauthorized' } };
+
+    const appId = appIdOverride || session.application || 'neup.account';
+    const recipientId = targetId || aid;
+
+    const portfolio = await prisma.portfolio.findFirst({
+      where: {
+        assets: {
+          some: {
+            assetId: appId,
+            assetType: { in: ['application', 'app'] },
+          },
+        },
+      },
+      select: { id: true },
     });
 
-    if (!session) return { status: 401, body: { error: 'unauthorized' } };
+    if (!portfolio) {
+      return { status: 404, body: { error: 'portfolio_not_found' } };
+    }
 
-    const appId = session.appId;
-    const recipientId = targetId || aid;
-    const resolvedParentOwnerId =
-      typeof parentOwnerId === 'string' && parentOwnerId.trim()
-        ? parentOwnerId.trim()
-        : typeof ownerId === 'string' && ownerId.trim()
-          ? ownerId.trim()
-          : aid;
-    const resolvedResourceId = typeof resourceId === 'string' && resourceId.trim()
-      ? resourceId.trim()
-      : typeof assetId === 'string' && assetId.trim()
-        ? assetId.trim()
-        : null;
+    const addRoles = Array.isArray(add) ? add : add ? [add] : [];
+    const removeRoles = Array.isArray(remove) ? remove : remove ? [remove] : [];
 
-    if (resourceId || assetId || parentOwnerId || ownerId) {
-      const finalOwnerId = resolvedParentOwnerId;
-
-      if (add && Array.isArray(add)) {
-        for (const perm of add) {
-          await prisma.authPermissionRecipient.create({
-            data: { appId, recipientId, ownerId: finalOwnerId, assetId: resolvedResourceId, permission: perm },
-          });
-        }
-      }
-      if (remove && Array.isArray(remove)) {
-        await prisma.authPermissionRecipient.deleteMany({
-          where: { appId, recipientId, ownerId: finalOwnerId, assetId: resolvedResourceId, permission: { in: remove } },
+    await prisma.$transaction(async (tx) => {
+      if (removeRoles.length > 0) {
+        await tx.portfolioRole.deleteMany({
+          where: {
+            accountId: recipientId,
+            portfolioId: portfolio.id,
+            roleId: { in: removeRoles },
+          },
         });
       }
-    } else if (add || remove) {
-      const existing = await prisma.appAuthentication.findUnique({
-        where: { appId_accountId: { accountId: recipientId, appId } },
-        select: { permissions: true },
-      });
-      let perms = (existing?.permissions as string[]) || [];
-      if (add) perms = Array.from(new Set([...perms, ...(Array.isArray(add) ? add : [add])]));
-      if (remove) perms = perms.filter((p) => !(Array.isArray(remove) ? remove : [remove]).includes(p));
 
-      await prisma.appAuthentication.upsert({
-        where: { appId_accountId: { accountId: recipientId, appId } },
-        update: { permissions: perms },
-        create: { accountId: recipientId, appId, permissions: perms },
-      });
-    }
+      for (const roleId of addRoles) {
+        await tx.portfolioRole.upsert({
+          where: {
+            accountId_portfolioId_roleId: {
+              accountId: recipientId,
+              portfolioId: portfolio.id,
+              roleId,
+            },
+          },
+          update: {},
+          create: {
+            accountId: recipientId,
+            portfolioId: portfolio.id,
+            roleId,
+          },
+        });
+      }
+    });
 
     return { status: 200, body: { success: true } };
   } catch (error) {

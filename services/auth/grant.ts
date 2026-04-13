@@ -67,15 +67,8 @@ export async function bridgeIssueGrant(input: {
       data: { dependentKeys },
     });
 
-    const appAuthentication = await prisma.appAuthentication.findUnique({
-      where: { appId_accountId: { appId, accountId: sessionWithToken.accountId } },
-      select: { permissions: true },
-    });
-
     const roleName = 'user';
-    const permissions = Array.isArray(appAuthentication?.permissions)
-      ? (appAuthentication.permissions as string[])
-      : [];
+    const permissions: string[] = [];
 
     const sid = crypto.randomUUID();
     const skey = crypto.randomBytes(32).toString('hex');
@@ -112,14 +105,25 @@ export async function bridgeIssueGrant(input: {
 
     const token = jwt.sign(payload, application.appSecret);
 
-    await prisma.appSession.create({
+    const externalSession = await prisma.session.create({
       data: {
-        id: sid,
         accountId: sessionWithToken.accountId,
-        appId,
-        sessionId: sessionWithToken.id,
-        sessionValue: skey,
-        activeTill: sessionExpiresOn,
+        application: appId,
+        applicationType: 'external',
+        applicationDomain: application.website || null,
+        ipAddress: sessionWithToken.ipAddress,
+        userAgent: sessionWithToken.userAgent,
+        geolocation: sessionWithToken.geolocation,
+        lastLoggedIn: new Date(),
+        loginType: 'external_app',
+        expiresOn: sessionExpiresOn,
+        isExpired: false,
+        authSessionKey: skey,
+        dependentKeys: {
+          parentSessionId: sessionWithToken.id,
+          appId,
+        },
+        permissions,
       },
     });
 
@@ -133,7 +137,7 @@ export async function bridgeIssueGrant(input: {
       status: 200,
       body: {
         aid: sessionWithToken.accountId,
-        sid,
+        sid: externalSession.id,
         skey,
         jwt: token,
         exp: jwtExp,
@@ -170,16 +174,15 @@ export async function bridgeRefreshGrant(input: {
   }
 
   try {
-    const appSession = await prisma.appSession.findFirst({
+    const appSession = await prisma.session.findFirst({
       where: {
         id: sid,
         accountId: aid,
-        sessionValue: skey,
-        appId,
-        activeTill: { gt: new Date() },
-      },
-      include: {
-        application: true,
+        authSessionKey: skey,
+        application: appId,
+        applicationType: 'external',
+        isExpired: false,
+        expiresOn: { gt: new Date() },
       },
     });
 
@@ -190,14 +193,9 @@ export async function bridgeRefreshGrant(input: {
       };
     }
 
-    const appAuthentication = await prisma.appAuthentication.findUnique({
-      where: { appId_accountId: { appId, accountId: aid } },
-      select: { permissions: true },
-    });
-
     const roleName = 'user';
-    const permissions = Array.isArray(appAuthentication?.permissions)
-      ? (appAuthentication.permissions as string[])
+    const permissions = Array.isArray(appSession.permissions)
+      ? (appSession.permissions as string[])
       : [];
 
     const sessionExpSeconds = 60 * 60 * 24 * 7;
@@ -219,19 +217,21 @@ export async function bridgeRefreshGrant(input: {
       payload.per = permissions;
     }
 
-    if (!appSession.application.appSecret) {
+    const application = await prisma.application.findUnique({ where: { id: appId } });
+    if (!application?.appSecret) {
       return {
         status: 500,
         body: { error: 'invalid_app', error_description: 'Application configuration error' },
       };
     }
 
-    const newToken = jwt.sign(payload, appSession.application.appSecret);
+    const newToken = jwt.sign(payload, application.appSecret);
 
-    await prisma.appSession.update({
+    await prisma.session.update({
       where: { id: sid },
       data: {
-        activeTill: newSessionExpiresOn,
+        expiresOn: newSessionExpiresOn,
+        lastLoggedIn: new Date(),
       },
     });
 
@@ -275,13 +275,15 @@ export async function bridgeCheckGrant(input: {
   }
 
   try {
-    const appSession = await prisma.appSession.findFirst({
+    const appSession = await prisma.session.findFirst({
       where: {
         id: sid,
         accountId: aid,
-        sessionValue: skey,
-        appId,
-        activeTill: { gt: new Date() },
+        authSessionKey: skey,
+        application: appId,
+        applicationType: 'external',
+        isExpired: false,
+        expiresOn: { gt: new Date() },
       },
     });
 
@@ -297,9 +299,9 @@ export async function bridgeCheckGrant(input: {
       body: {
         success: true,
         aid: appSession.accountId,
-        appId: appSession.appId,
-        expiresOn: appSession.activeTill,
-        lastLoggedIn: appSession.createdOn,
+        appId: appSession.application,
+        expiresOn: appSession.expiresOn,
+        lastLoggedIn: appSession.lastLoggedIn,
       },
     };
   } catch (error) {

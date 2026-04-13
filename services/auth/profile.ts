@@ -31,12 +31,14 @@ export async function bridgeGetProfile(input: {
     let isTempTokenAuth = false;
 
     if (headerAid && headerSid && headerSkey) {
-      const appSession = await prisma.appSession.findFirst({
+      const appSession = await prisma.session.findFirst({
         where: {
           id: headerSid,
           accountId: headerAid,
-          sessionValue: headerSkey,
-          activeTill: { gt: new Date() },
+          authSessionKey: headerSkey,
+          applicationType: 'external',
+          isExpired: false,
+          expiresOn: { gt: new Date() },
         },
       });
 

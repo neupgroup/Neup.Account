@@ -11,9 +11,6 @@ const manageApplicationSchema = z.object({
   permissions: z.array(z.string().min(1)).default([]),
 });
 
-/**
- * Type UserApplicationAccess.
- */
 export type UserApplicationAccess = {
   id: string;
   name: string;
@@ -25,10 +22,6 @@ export type UserApplicationAccess = {
   connectedOn: Date;
 };
 
-
-/**
- * Function getUserApplicationAccess.
- */
 export async function getUserApplicationAccess(appId: string): Promise<UserApplicationAccess | null> {
   const accountId = await getPersonalAccountId();
   if (!accountId) {
@@ -36,47 +29,39 @@ export async function getUserApplicationAccess(appId: string): Promise<UserAppli
   }
 
   try {
-    const [application, appAuthentication, appSession] = await Promise.all([
-      prisma.application.findUnique({
-        where: { id: appId },
-      }),
-      prisma.appAuthentication.findUnique({
+    const [application, sessions] = await Promise.all([
+      prisma.application.findUnique({ where: { id: appId } }),
+      prisma.session.findMany({
         where: {
-          appId_accountId: {
-            appId,
-            accountId,
-          },
-        },
-      }),
-      prisma.appSession.findFirst({
-        where: {
-          appId,
           accountId,
+          application: appId,
         },
         orderBy: {
-          createdOn: 'asc',
+          lastLoggedIn: 'asc',
         },
       }),
     ]);
 
-    if (!application || (!appAuthentication && !appSession)) {
+    if (!application || sessions.length === 0) {
       return null;
     }
 
-    const connectionType: UserApplicationAccess['connectionType'] = appAuthentication && appSession
+    const hasInternal = sessions.some((row) => row.applicationType === 'internal');
+    const hasExternal = sessions.some((row) => row.applicationType === 'external');
+
+    const connectionType: UserApplicationAccess['connectionType'] = hasInternal && hasExternal
       ? 'both'
-      : appAuthentication
+      : hasInternal
         ? 'internal'
         : 'external';
 
-    const permissions = Array.isArray(appAuthentication?.permissions)
-      ? (appAuthentication?.permissions as string[])
-      : [];
+    const permissions = Array.from(
+      new Set(
+        sessions.flatMap((row) => (Array.isArray(row.permissions) ? (row.permissions as string[]) : []))
+      )
+    );
 
-    const connectedOnCandidates = [appAuthentication?.createdAt, appSession?.createdOn].filter(Boolean) as Date[];
-    const connectedOn = connectedOnCandidates.length > 0
-      ? connectedOnCandidates.reduce((earliest, current) => (current < earliest ? current : earliest))
-      : new Date();
+    const connectedOn = sessions[0]?.lastLoggedIn || new Date();
 
     return {
       id: application.id,
@@ -94,10 +79,6 @@ export async function getUserApplicationAccess(appId: string): Promise<UserAppli
   }
 }
 
-
-/**
- * Function addUserApplicationAccess.
- */
 export async function addUserApplicationAccess(input: { appId: string; permissions: string[] }) {
   const parsed = manageApplicationSchema.safeParse(input);
   if (!parsed.success) {
@@ -121,22 +102,38 @@ export async function addUserApplicationAccess(input: { appId: string; permissio
       return { success: false, error: 'Application not found.' };
     }
 
-    await prisma.appAuthentication.upsert({
+    const existing = await prisma.session.findFirst({
       where: {
-        appId_accountId: {
-          appId,
-          accountId,
-        },
-      },
-      create: {
-        appId,
         accountId,
-        permissions,
+        application: appId,
+        applicationType: 'internal',
       },
-      update: {
-        permissions,
-      },
+      select: { id: true },
     });
+
+    if (existing) {
+      await prisma.session.update({
+        where: { id: existing.id },
+        data: {
+          permissions,
+          lastLoggedIn: new Date(),
+        },
+      });
+    } else {
+      await prisma.session.create({
+        data: {
+          accountId,
+          application: appId,
+          applicationType: 'internal',
+          ipAddress: 'Unknown IP',
+          userAgent: 'Internal Application Access',
+          lastLoggedIn: new Date(),
+          loginType: 'internal_app_access',
+          isExpired: false,
+          permissions,
+        },
+      });
+    }
 
     revalidatePath('/data/applications');
     revalidatePath(`/data/applications/${appId}`);
@@ -149,10 +146,6 @@ export async function addUserApplicationAccess(input: { appId: string; permissio
   }
 }
 
-
-/**
- * Function updateUserApplicationPermissions.
- */
 export async function updateUserApplicationPermissions(input: { appId: string; permissions: string[] }) {
   const parsed = manageApplicationSchema.safeParse(input);
   if (!parsed.success) {
@@ -167,26 +160,22 @@ export async function updateUserApplicationPermissions(input: { appId: string; p
   const { appId, permissions } = parsed.data;
 
   try {
-    const existing = await prisma.appAuthentication.findUnique({
+    const existing = await prisma.session.findFirst({
       where: {
-        appId_accountId: {
-          appId,
-          accountId,
-        },
+        accountId,
+        application: appId,
       },
       select: { id: true },
     });
 
     if (!existing) {
-      return { success: false, error: 'Internal application access not found for edit.' };
+      return { success: false, error: 'Application access not found for edit.' };
     }
 
-    await prisma.appAuthentication.update({
+    await prisma.session.updateMany({
       where: {
-        appId_accountId: {
-          appId,
-          accountId,
-        },
+        accountId,
+        application: appId,
       },
       data: {
         permissions,

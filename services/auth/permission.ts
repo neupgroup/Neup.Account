@@ -160,28 +160,32 @@ function hasPermission(granted: Set<string>, required: string): boolean {
 async function resolveAuthenticatedAccount(input: { app: string; sid: string; skey: string }): Promise<ResolvedAuth | null> {
 	const now = new Date();
 
-	const appSession = await prisma.appSession.findFirst({
-		where: { id: input.sid },
+	const externalSession = await prisma.session.findFirst({
+		where: {
+			id: input.sid,
+			applicationType: 'external',
+			application: input.app,
+		},
 		select: {
 			accountId: true,
-			appId: true,
-			sessionValue: true,
-			activeTill: true,
+			authSessionKey: true,
+			expiresOn: true,
+			isExpired: true,
 		},
 	});
 
-	if (appSession) {
-		if (appSession.appId !== input.app || appSession.sessionValue !== input.skey) {
+	if (externalSession) {
+		if (externalSession.authSessionKey !== input.skey) {
 			return null;
 		}
 
-		if (appSession.activeTill <= now) {
+		if (!externalSession.expiresOn || externalSession.isExpired || externalSession.expiresOn <= now) {
 			return null;
 		}
 
 		return {
-			accountId: appSession.accountId,
-			validTill: appSession.activeTill,
+			accountId: externalSession.accountId,
+			validTill: externalSession.expiresOn,
 		};
 	}
 
@@ -314,36 +318,6 @@ async function resolvePermissionSet(input: {
 			resolvedPermissions.add(normalizePermission(role.roleId));
 		}
 	}
-
-	const directPermissions = await prisma.authPermissionRecipient.findMany({
-		where: {
-			appId: input.app,
-			recipientId: input.accountId,
-			OR: [
-				{ isPermanent: true },
-				{ expiresAt: { gt: now } },
-			],
-			...(input.api
-				? {
-					AND: [
-						{
-							OR: [
-								{ assetId: null },
-								{ assetId: input.api },
-							],
-						},
-					],
-				}
-				: {}),
-		},
-		select: {
-			permission: true,
-		},
-	});
-
-	directPermissions.forEach((permissionRow) => {
-		resolvedPermissions.add(normalizePermission(permissionRow.permission));
-	});
 
 	const matched = input.checkFor.filter((permission) => hasPermission(resolvedPermissions, permission));
 	return {
@@ -481,31 +455,11 @@ export async function updatePermission(input: UpdatePermissionInput): Promise<Pe
 			return { success: false, error: 'Forbidden.' };
 		}
 
-		await prisma.$transaction(async (tx) => {
-			await tx.authPermissionRecipient.deleteMany({
-				where: {
-					appId: app,
-					recipientId: targetAccountId,
-					ownerId: auth.accountId,
-					assetId: api,
-				},
-			});
-
-			if (nextPermissions.length > 0) {
-				await tx.authPermissionRecipient.createMany({
-					data: nextPermissions.map((permission) => ({
-						appId: app,
-						recipientId: targetAccountId,
-						ownerId: auth.accountId,
-						assetId: api,
-						permission,
-						isPermanent: true,
-					})),
-				});
-			}
-		});
-
-		return { success: true, permissions: nextPermissions };
+		return {
+			success: false,
+			error: 'Direct permission mutation is deprecated. Assign portfolio roles for accountId + assetType + assetId.',
+			permissions: nextPermissions,
+		};
 	} catch (error) {
 		await logError('database', error, `updatePermission:${app}:${targetAccountId}`);
 		return { success: false, error: 'Failed to update permission.' };
@@ -547,29 +501,10 @@ export async function revokePermission(input: RevokePermissionInput): Promise<Pe
 			return { success: false, error: 'Forbidden.' };
 		}
 
-		await prisma.authPermissionRecipient.deleteMany({
-			where: {
-				appId: app,
-				recipientId: targetAccountId,
-				ownerId: auth.accountId,
-				assetId: api,
-				permission: { in: toRevoke },
-			},
-		});
-
-		const remaining = await prisma.authPermissionRecipient.findMany({
-			where: {
-				appId: app,
-				recipientId: targetAccountId,
-				ownerId: auth.accountId,
-				assetId: api,
-			},
-			select: { permission: true },
-		});
-
 		return {
-			success: true,
-			permissions: Array.from(new Set(remaining.map((item) => item.permission))),
+			success: false,
+			error: 'Direct permission revocation is deprecated. Remove portfolio roles for accountId + assetType + assetId.',
+			permissions: toRevoke,
 		};
 	} catch (error) {
 		await logError('database', error, `revokePermission:${app}:${targetAccountId}`);

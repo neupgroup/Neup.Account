@@ -66,9 +66,6 @@ export async function logoutSessionById(sessionId: string): Promise<{ success: b
             prisma.session.update({
                 where: { id: sessionId },
                 data: { isExpired: true }
-            }),
-            prisma.appSession.deleteMany({
-                where: { sessionId: sessionId }
             })
         ]);
         
@@ -114,13 +111,6 @@ export async function logoutAllOtherSessions(): Promise<{ success: boolean, erro
                     id: { in: otherSessionIds }
                 },
                 data: { isExpired: true }
-            });
-
-            // 3. Delete all AppSessions for these sessions
-            await tx.appSession.deleteMany({
-                where: {
-                    sessionId: { in: otherSessionIds }
-                }
             });
 
             return updateResult;

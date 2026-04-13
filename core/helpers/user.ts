@@ -231,32 +231,24 @@ export async function getUserPermissions(accountId?: string, appId?: string): Pr
     });
 
     if (appId) {
-      const [directPermissions, appPermissions] = await Promise.all([
-        prisma.authPermissionRecipient.findMany({
-          where: {
-            recipientId: activeId,
-            appId,
-            OR: [{ isPermanent: true }, { expiresAt: { gt: new Date() } }],
+      const roleRows = await prisma.portfolioRole.findMany({
+        where: {
+          accountId: activeId,
+          portfolio: {
+            assets: {
+              some: {
+                assetId: appId,
+                assetType: { in: ['application', 'app'] },
+              },
+            },
           },
-          select: { permission: true },
-        }),
-        prisma.appAuthentication.findUnique({
-          where: {
-            appId_accountId: { appId, accountId: activeId },
-          },
-          select: { permissions: true },
-        }),
-      ]);
+        },
+        select: { roleId: true },
+      });
 
-      directPermissions.forEach((dp) => collectedPermissions.add(dp.permission));
-      const externalPermissions = appPermissions?.permissions;
-      if (Array.isArray(externalPermissions)) {
-        externalPermissions.forEach((permission) => {
-          if (typeof permission === 'string') {
-            collectedPermissions.add(permission);
-          }
-        });
-      }
+      roleRows.forEach((row) => {
+        collectedPermissions.add(row.roleId);
+      });
     }
 
     // Filter by appId if provided (if your permissions structure supports appId filtering)

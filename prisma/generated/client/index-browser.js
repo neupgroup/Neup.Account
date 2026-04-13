@@ -283,6 +283,9 @@ exports.Prisma.PermitScalarFieldEnum = {
 exports.Prisma.SessionScalarFieldEnum = {
   id: 'id',
   accountId: 'accountId',
+  application: 'application',
+  applicationType: 'applicationType',
+  applicationDomain: 'applicationDomain',
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
   lastLoggedIn: 'lastLoggedIn',
@@ -292,7 +295,8 @@ exports.Prisma.SessionScalarFieldEnum = {
   expiresOn: 'expiresOn',
   isExpired: 'isExpired',
   authSessionKey: 'authSessionKey',
-  dependentKeys: 'dependentKeys'
+  dependentKeys: 'dependentKeys',
+  permissions: 'permissions'
 };
 
 exports.Prisma.SystemErrorScalarFieldEnum = {
@@ -358,41 +362,11 @@ exports.Prisma.PortfolioRoleScalarFieldEnum = {
   details: 'details'
 };
 
-exports.Prisma.AuthPermissionRecipientScalarFieldEnum = {
-  id: 'id',
-  appId: 'appId',
-  recipientId: 'recipientId',
-  ownerId: 'ownerId',
-  assetId: 'assetId',
-  permission: 'permission',
-  isPermanent: 'isPermanent',
-  expiresAt: 'expiresAt',
-  createdAt: 'createdAt'
-};
-
 exports.Prisma.UserAppConnectionScalarFieldEnum = {
   id: 'id',
   accountId: 'accountId',
   appId: 'appId',
   connectedAt: 'connectedAt'
-};
-
-exports.Prisma.AppAuthenticationScalarFieldEnum = {
-  id: 'id',
-  appId: 'appId',
-  accountId: 'accountId',
-  permissions: 'permissions',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.AppSessionScalarFieldEnum = {
-  id: 'id',
-  accountId: 'accountId',
-  sessionId: 'sessionId',
-  appId: 'appId',
-  sessionValue: 'sessionValue',
-  createdOn: 'createdOn',
-  activeTill: 'activeTill'
 };
 
 exports.Prisma.SortOrder = {
@@ -472,10 +446,7 @@ exports.Prisma.ModelName = {
   PortfolioAsset: 'PortfolioAsset',
   PortfolioMember: 'PortfolioMember',
   PortfolioRole: 'PortfolioRole',
-  AuthPermissionRecipient: 'AuthPermissionRecipient',
-  UserAppConnection: 'UserAppConnection',
-  AppAuthentication: 'AppAuthentication',
-  AppSession: 'AppSession'
+  UserAppConnection: 'UserAppConnection'
 };
 
 /**
