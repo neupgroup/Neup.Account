@@ -2,7 +2,7 @@
 
 This file lists the current auth/application access data model after consolidation into sessions.
 
-## Session / sessions
+## AuthSession / auth_session
 Source of truth for internal and external app sessions.
 
 Important fields:
@@ -25,7 +25,7 @@ Used in:
 - [services/data/signed-applications.ts](services/data/signed-applications.ts)
 - [services/manage/applications.ts](services/manage/applications.ts)
 
-## UserAppConnection / application_connection
+## ApplicationConnection / application_connection
 Kept for user-to-application connection listing.
 
 Used in:

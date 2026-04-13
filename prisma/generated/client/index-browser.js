@@ -280,7 +280,7 @@ exports.Prisma.PermitScalarFieldEnum = {
   managedBy: 'managedBy'
 };
 
-exports.Prisma.SessionScalarFieldEnum = {
+exports.Prisma.AuthSessionScalarFieldEnum = {
   id: 'id',
   accountId: 'accountId',
   application: 'application',
@@ -362,7 +362,7 @@ exports.Prisma.PortfolioRoleScalarFieldEnum = {
   details: 'details'
 };
 
-exports.Prisma.UserAppConnectionScalarFieldEnum = {
+exports.Prisma.ApplicationConnectionScalarFieldEnum = {
   id: 'id',
   accountId: 'accountId',
   appId: 'appId',
@@ -439,14 +439,14 @@ exports.Prisma.ModelName = {
   NeupId: 'NeupId',
   AuthMethod: 'AuthMethod',
   Permit: 'Permit',
-  Session: 'Session',
+  AuthSession: 'AuthSession',
   SystemError: 'SystemError',
   Application: 'Application',
   Portfolio: 'Portfolio',
   PortfolioAsset: 'PortfolioAsset',
   PortfolioMember: 'PortfolioMember',
   PortfolioRole: 'PortfolioRole',
-  UserAppConnection: 'UserAppConnection'
+  ApplicationConnection: 'ApplicationConnection'
 };
 
 /**

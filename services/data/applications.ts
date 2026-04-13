@@ -28,7 +28,7 @@ export async function getConnectedApplications(): Promise<ConnectedApplications>
     }
 
     try {
-        const connections = await prisma.userAppConnection.findMany({
+        const connections = await prisma.applicationConnection.findMany({
             where: { accountId },
             include: { application: true }
         });

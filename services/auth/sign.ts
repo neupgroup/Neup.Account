@@ -315,7 +315,7 @@ export async function bridgeSignIntoApplication(input: { appId?: string; appType
 
 		const { accountId } = validation.user;
 
-		const existingExternal = await prisma.session.findFirst({
+		const existingExternal = await prisma.authSession.findFirst({
 			where: {
 				accountId,
 				application: appId,
@@ -351,7 +351,7 @@ export async function bridgeSignIntoApplication(input: { appId?: string; appType
 			const activeTill = new Date();
 			activeTill.setDate(activeTill.getDate() + 30);
 
-			await prisma.session.create({
+			await prisma.authSession.create({
 				data: {
 					accountId,
 					application: appId,

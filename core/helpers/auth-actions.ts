@@ -41,7 +41,7 @@ export async function getActiveSession(): Promise<Session | null> {
   }
 
   try {
-    const session = await prisma.session.findUnique({
+    const session = await prisma.authSession.findUnique({
       where: { id: sessionId },
     });
 

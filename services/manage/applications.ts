@@ -307,7 +307,7 @@ export async function getApplicationDetailsForViewer(appId: string): Promise<App
         },
       }),
       personalAccountId
-        ? prisma.session.findMany({
+        ? prisma.authSession.findMany({
             where: {
               accountId: personalAccountId,
               application: appId,

@@ -41,7 +41,7 @@ export async function validateJwt(input: ValidateJwtInput): Promise<JwtValidatio
 		return { status: 'unauthorized' };
 	}
 
-	const appSession = await prisma.session.findFirst({
+	const appSession = await prisma.authSession.findFirst({
 		where: {
 			id: sid,
 			accountId: aid,

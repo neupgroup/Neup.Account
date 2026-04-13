@@ -11,7 +11,7 @@ async function resolveSession(input: { aid?: string | null; sid?: string | null;
   const { aid, sid, skey, appId } = input;
   if (!aid || !sid || !skey) return null;
 
-  return prisma.session.findFirst({
+  return prisma.authSession.findFirst({
     where: {
       id: sid,
       accountId: aid,

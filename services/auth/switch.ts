@@ -75,7 +75,7 @@ export async function logoutStoredSession(sessionId: string): Promise<{ success:
     const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';
     
     try {
-        const session = await prisma.session.findUnique({
+        const session = await prisma.authSession.findUnique({
             where: { id: sessionId }
         });
 
@@ -86,7 +86,7 @@ export async function logoutStoredSession(sessionId: string): Promise<{ success:
         const accountId = session.accountId;
         
         await prisma.$transaction([
-            prisma.session.update({
+            prisma.authSession.update({
                 where: { id: sessionId },
                 data: { isExpired: true }
             })
@@ -292,7 +292,7 @@ async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
     if (!account.sid || !account.skey) return { ...account, expired: true };
 
       try {
-        const session = await prisma.session.findUnique({
+        const session = await prisma.authSession.findUnique({
             where: { id: account.sid }
         });
 

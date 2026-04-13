@@ -68,7 +68,7 @@ export async function bridgeSignoutExternalSession(input: {
     }
 
     try {
-        const appSession = await prisma.session.findFirst({
+        const appSession = await prisma.authSession.findFirst({
             where: {
                 authSessionKey: sessionValue,
                 applicationType: 'external',
@@ -80,7 +80,7 @@ export async function bridgeSignoutExternalSession(input: {
                 return { status: 403, body: { success: false, error: 'Unauthorized session.' } };
             }
 
-            await prisma.session.update({
+            await prisma.authSession.update({
                 where: { id: appSession.id },
                 data: {
                     isExpired: true,

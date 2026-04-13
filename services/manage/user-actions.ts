@@ -280,7 +280,7 @@ export async function impersonateUser(userId: string, neupId: string): Promise<{
         expiresOn.setHours(expiresOn.getHours() + 1); // 1 hour impersonation
         const sessionKey = crypto.randomUUID();
 
-        const newSession = await prisma.session.create({
+        const newSession = await prisma.authSession.create({
             data: {
                 accountId: userId,
                 authSessionKey: sessionKey,
@@ -349,7 +349,7 @@ export async function deleteUserAccount(userId: string): Promise<{ success: bool
                     ]
                 } 
             }),
-            prisma.session.deleteMany({ where: { accountId: userId } }),
+            prisma.authSession.deleteMany({ where: { accountId: userId } }),
             prisma.activity.deleteMany({ 
                 where: { 
                     OR: [

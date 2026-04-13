@@ -21,7 +21,7 @@ export async function bridgeIssueGrant(input: {
   }
 
   try {
-    const sessions = await prisma.session.findMany({
+    const sessions = await prisma.authSession.findMany({
       where: {
         isExpired: false,
         expiresOn: { gt: new Date() },
@@ -62,7 +62,7 @@ export async function bridgeIssueGrant(input: {
     }
 
     dependentKeys[tokenIndex].isUsed = true;
-    await prisma.session.update({
+    await prisma.authSession.update({
       where: { id: sessionWithToken.id },
       data: { dependentKeys },
     });
@@ -105,7 +105,7 @@ export async function bridgeIssueGrant(input: {
 
     const token = jwt.sign(payload, application.appSecret);
 
-    const externalSession = await prisma.session.create({
+    const externalSession = await prisma.authSession.create({
       data: {
         accountId: sessionWithToken.accountId,
         application: appId,
@@ -174,7 +174,7 @@ export async function bridgeRefreshGrant(input: {
   }
 
   try {
-    const appSession = await prisma.session.findFirst({
+    const appSession = await prisma.authSession.findFirst({
       where: {
         id: sid,
         accountId: aid,
@@ -227,7 +227,7 @@ export async function bridgeRefreshGrant(input: {
 
     const newToken = jwt.sign(payload, application.appSecret);
 
-    await prisma.session.update({
+    await prisma.authSession.update({
       where: { id: sid },
       data: {
         expiresOn: newSessionExpiresOn,
@@ -275,7 +275,7 @@ export async function bridgeCheckGrant(input: {
   }
 
   try {
-    const appSession = await prisma.session.findFirst({
+    const appSession = await prisma.authSession.findFirst({
       where: {
         id: sid,
         accountId: aid,

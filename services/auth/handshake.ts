@@ -62,7 +62,7 @@ export async function bridgeBuildGrantRedirect(input: {
     const expiresOn = new Date();
     expiresOn.setMinutes(expiresOn.getMinutes() + 5);
 
-    const currentSession = await prisma.session.findUnique({
+    const currentSession = await prisma.authSession.findUnique({
       where: { id: session.sessionId },
       select: { dependentKeys: true },
     });
@@ -76,14 +76,14 @@ export async function bridgeBuildGrantRedirect(input: {
       isUsed: false,
     };
 
-    await prisma.session.update({
+    await prisma.authSession.update({
       where: { id: session.sessionId },
       data: {
         dependentKeys: [...existingKeys, newKeyEntry],
       },
     });
 
-    const existingExternalSession = await prisma.session.findFirst({
+    const existingExternalSession = await prisma.authSession.findFirst({
       where: {
         accountId: session.accountId,
         application: appId,

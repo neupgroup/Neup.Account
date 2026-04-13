@@ -89,10 +89,10 @@ export type AuthMethod = $Result.DefaultSelection<Prisma.$AuthMethodPayload>
  */
 export type Permit = $Result.DefaultSelection<Prisma.$PermitPayload>
 /**
- * Model Session
+ * Model AuthSession
  * 
  */
-export type Session = $Result.DefaultSelection<Prisma.$SessionPayload>
+export type AuthSession = $Result.DefaultSelection<Prisma.$AuthSessionPayload>
 /**
  * Model SystemError
  * 
@@ -124,10 +124,10 @@ export type PortfolioMember = $Result.DefaultSelection<Prisma.$PortfolioMemberPa
  */
 export type PortfolioRole = $Result.DefaultSelection<Prisma.$PortfolioRolePayload>
 /**
- * Model UserAppConnection
+ * Model ApplicationConnection
  * 
  */
-export type UserAppConnection = $Result.DefaultSelection<Prisma.$UserAppConnectionPayload>
+export type ApplicationConnection = $Result.DefaultSelection<Prisma.$ApplicationConnectionPayload>
 
 /**
  * Enums
@@ -448,14 +448,14 @@ export class PrismaClient<
   get permit(): Prisma.PermitDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.session`: Exposes CRUD operations for the **Session** model.
+   * `prisma.authSession`: Exposes CRUD operations for the **AuthSession** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Sessions
-    * const sessions = await prisma.session.findMany()
+    * // Fetch zero or more AuthSessions
+    * const authSessions = await prisma.authSession.findMany()
     * ```
     */
-  get session(): Prisma.SessionDelegate<ExtArgs, ClientOptions>;
+  get authSession(): Prisma.AuthSessionDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.systemError`: Exposes CRUD operations for the **SystemError** model.
@@ -518,14 +518,14 @@ export class PrismaClient<
   get portfolioRole(): Prisma.PortfolioRoleDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.userAppConnection`: Exposes CRUD operations for the **UserAppConnection** model.
+   * `prisma.applicationConnection`: Exposes CRUD operations for the **ApplicationConnection** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more UserAppConnections
-    * const userAppConnections = await prisma.userAppConnection.findMany()
+    * // Fetch zero or more ApplicationConnections
+    * const applicationConnections = await prisma.applicationConnection.findMany()
     * ```
     */
-  get userAppConnection(): Prisma.UserAppConnectionDelegate<ExtArgs, ClientOptions>;
+  get applicationConnection(): Prisma.ApplicationConnectionDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -975,14 +975,14 @@ export namespace Prisma {
     NeupId: 'NeupId',
     AuthMethod: 'AuthMethod',
     Permit: 'Permit',
-    Session: 'Session',
+    AuthSession: 'AuthSession',
     SystemError: 'SystemError',
     Application: 'Application',
     Portfolio: 'Portfolio',
     PortfolioAsset: 'PortfolioAsset',
     PortfolioMember: 'PortfolioMember',
     PortfolioRole: 'PortfolioRole',
-    UserAppConnection: 'UserAppConnection'
+    ApplicationConnection: 'ApplicationConnection'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -998,7 +998,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "accountOwnership" | "systemConfig" | "authRequest" | "activity" | "notification" | "request" | "family" | "verification" | "contact" | "neupId" | "authMethod" | "permit" | "session" | "systemError" | "application" | "portfolio" | "portfolioAsset" | "portfolioMember" | "portfolioRole" | "userAppConnection"
+      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "accountOwnership" | "systemConfig" | "authRequest" | "activity" | "notification" | "request" | "family" | "verification" | "contact" | "neupId" | "authMethod" | "permit" | "authSession" | "systemError" | "application" | "portfolio" | "portfolioAsset" | "portfolioMember" | "portfolioRole" | "applicationConnection"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2112,77 +2112,77 @@ export namespace Prisma {
           }
         }
       }
-      Session: {
-        payload: Prisma.$SessionPayload<ExtArgs>
-        fields: Prisma.SessionFieldRefs
+      AuthSession: {
+        payload: Prisma.$AuthSessionPayload<ExtArgs>
+        fields: Prisma.AuthSessionFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.SessionFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SessionPayload> | null
+            args: Prisma.AuthSessionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthSessionPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.SessionFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SessionPayload>
+            args: Prisma.AuthSessionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthSessionPayload>
           }
           findFirst: {
-            args: Prisma.SessionFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SessionPayload> | null
+            args: Prisma.AuthSessionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthSessionPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.SessionFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SessionPayload>
+            args: Prisma.AuthSessionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthSessionPayload>
           }
           findMany: {
-            args: Prisma.SessionFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SessionPayload>[]
+            args: Prisma.AuthSessionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthSessionPayload>[]
           }
           create: {
-            args: Prisma.SessionCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SessionPayload>
+            args: Prisma.AuthSessionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthSessionPayload>
           }
           createMany: {
-            args: Prisma.SessionCreateManyArgs<ExtArgs>
+            args: Prisma.AuthSessionCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.SessionCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SessionPayload>[]
+            args: Prisma.AuthSessionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthSessionPayload>[]
           }
           delete: {
-            args: Prisma.SessionDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SessionPayload>
+            args: Prisma.AuthSessionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthSessionPayload>
           }
           update: {
-            args: Prisma.SessionUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SessionPayload>
+            args: Prisma.AuthSessionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthSessionPayload>
           }
           deleteMany: {
-            args: Prisma.SessionDeleteManyArgs<ExtArgs>
+            args: Prisma.AuthSessionDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.SessionUpdateManyArgs<ExtArgs>
+            args: Prisma.AuthSessionUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.SessionUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SessionPayload>[]
+            args: Prisma.AuthSessionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthSessionPayload>[]
           }
           upsert: {
-            args: Prisma.SessionUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SessionPayload>
+            args: Prisma.AuthSessionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthSessionPayload>
           }
           aggregate: {
-            args: Prisma.SessionAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateSession>
+            args: Prisma.AuthSessionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAuthSession>
           }
           groupBy: {
-            args: Prisma.SessionGroupByArgs<ExtArgs>
-            result: $Utils.Optional<SessionGroupByOutputType>[]
+            args: Prisma.AuthSessionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AuthSessionGroupByOutputType>[]
           }
           count: {
-            args: Prisma.SessionCountArgs<ExtArgs>
-            result: $Utils.Optional<SessionCountAggregateOutputType> | number
+            args: Prisma.AuthSessionCountArgs<ExtArgs>
+            result: $Utils.Optional<AuthSessionCountAggregateOutputType> | number
           }
         }
       }
@@ -2630,77 +2630,77 @@ export namespace Prisma {
           }
         }
       }
-      UserAppConnection: {
-        payload: Prisma.$UserAppConnectionPayload<ExtArgs>
-        fields: Prisma.UserAppConnectionFieldRefs
+      ApplicationConnection: {
+        payload: Prisma.$ApplicationConnectionPayload<ExtArgs>
+        fields: Prisma.ApplicationConnectionFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.UserAppConnectionFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserAppConnectionPayload> | null
+            args: Prisma.ApplicationConnectionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationConnectionPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.UserAppConnectionFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserAppConnectionPayload>
+            args: Prisma.ApplicationConnectionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationConnectionPayload>
           }
           findFirst: {
-            args: Prisma.UserAppConnectionFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserAppConnectionPayload> | null
+            args: Prisma.ApplicationConnectionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationConnectionPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.UserAppConnectionFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserAppConnectionPayload>
+            args: Prisma.ApplicationConnectionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationConnectionPayload>
           }
           findMany: {
-            args: Prisma.UserAppConnectionFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserAppConnectionPayload>[]
+            args: Prisma.ApplicationConnectionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationConnectionPayload>[]
           }
           create: {
-            args: Prisma.UserAppConnectionCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserAppConnectionPayload>
+            args: Prisma.ApplicationConnectionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationConnectionPayload>
           }
           createMany: {
-            args: Prisma.UserAppConnectionCreateManyArgs<ExtArgs>
+            args: Prisma.ApplicationConnectionCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.UserAppConnectionCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserAppConnectionPayload>[]
+            args: Prisma.ApplicationConnectionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationConnectionPayload>[]
           }
           delete: {
-            args: Prisma.UserAppConnectionDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserAppConnectionPayload>
+            args: Prisma.ApplicationConnectionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationConnectionPayload>
           }
           update: {
-            args: Prisma.UserAppConnectionUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserAppConnectionPayload>
+            args: Prisma.ApplicationConnectionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationConnectionPayload>
           }
           deleteMany: {
-            args: Prisma.UserAppConnectionDeleteManyArgs<ExtArgs>
+            args: Prisma.ApplicationConnectionDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.UserAppConnectionUpdateManyArgs<ExtArgs>
+            args: Prisma.ApplicationConnectionUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.UserAppConnectionUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserAppConnectionPayload>[]
+            args: Prisma.ApplicationConnectionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationConnectionPayload>[]
           }
           upsert: {
-            args: Prisma.UserAppConnectionUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserAppConnectionPayload>
+            args: Prisma.ApplicationConnectionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationConnectionPayload>
           }
           aggregate: {
-            args: Prisma.UserAppConnectionAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateUserAppConnection>
+            args: Prisma.ApplicationConnectionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateApplicationConnection>
           }
           groupBy: {
-            args: Prisma.UserAppConnectionGroupByArgs<ExtArgs>
-            result: $Utils.Optional<UserAppConnectionGroupByOutputType>[]
+            args: Prisma.ApplicationConnectionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationConnectionGroupByOutputType>[]
           }
           count: {
-            args: Prisma.UserAppConnectionCountArgs<ExtArgs>
-            result: $Utils.Optional<UserAppConnectionCountAggregateOutputType> | number
+            args: Prisma.ApplicationConnectionCountArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationConnectionCountAggregateOutputType> | number
           }
         }
       }
@@ -2827,14 +2827,14 @@ export namespace Prisma {
     neupId?: NeupIdOmit
     authMethod?: AuthMethodOmit
     permit?: PermitOmit
-    session?: SessionOmit
+    authSession?: AuthSessionOmit
     systemError?: SystemErrorOmit
     application?: ApplicationOmit
     portfolio?: PortfolioOmit
     portfolioAsset?: PortfolioAssetOmit
     portfolioMember?: PortfolioMemberOmit
     portfolioRole?: PortfolioRoleOmit
-    userAppConnection?: UserAppConnectionOmit
+    applicationConnection?: ApplicationConnectionOmit
   }
 
   /* Types for Logging */
@@ -2995,7 +2995,7 @@ export namespace Prisma {
    * AccountCountOutputType without action
    */
   export type AccountCountOutputTypeCountSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SessionWhereInput
+    where?: AuthSessionWhereInput
   }
 
   /**
@@ -3009,7 +3009,7 @@ export namespace Prisma {
    * AccountCountOutputType without action
    */
   export type AccountCountOutputTypeCountAppConnectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UserAppConnectionWhereInput
+    where?: ApplicationConnectionWhereInput
   }
 
   /**
@@ -3165,7 +3165,7 @@ export namespace Prisma {
    * ApplicationCountOutputType without action
    */
   export type ApplicationCountOutputTypeCountConnectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UserAppConnectionWhereInput
+    where?: ApplicationConnectionWhereInput
   }
 
 
@@ -3492,9 +3492,9 @@ export namespace Prisma {
       neupIds: Prisma.$NeupIdPayload<ExtArgs>[]
       permits: Prisma.$PermitPayload<ExtArgs>[]
       targetPermits: Prisma.$PermitPayload<ExtArgs>[]
-      sessions: Prisma.$SessionPayload<ExtArgs>[]
+      sessions: Prisma.$AuthSessionPayload<ExtArgs>[]
       errorLogs: Prisma.$SystemErrorPayload<ExtArgs>[]
-      appConnections: Prisma.$UserAppConnectionPayload<ExtArgs>[]
+      appConnections: Prisma.$ApplicationConnectionPayload<ExtArgs>[]
       ownedApplications: Prisma.$ApplicationPayload<ExtArgs>[]
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
       verifications: Prisma.$VerificationPayload<ExtArgs>[]
@@ -3914,9 +3914,9 @@ export namespace Prisma {
     neupIds<T extends Account$neupIdsArgs<ExtArgs> = {}>(args?: Subset<T, Account$neupIdsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NeupIdPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     permits<T extends Account$permitsArgs<ExtArgs> = {}>(args?: Subset<T, Account$permitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PermitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     targetPermits<T extends Account$targetPermitsArgs<ExtArgs> = {}>(args?: Subset<T, Account$targetPermitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PermitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    sessions<T extends Account$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sessions<T extends Account$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     errorLogs<T extends Account$errorLogsArgs<ExtArgs> = {}>(args?: Subset<T, Account$errorLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemErrorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    appConnections<T extends Account$appConnectionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$appConnectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAppConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    appConnections<T extends Account$appConnectionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$appConnectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ownedApplications<T extends Account$ownedApplicationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$ownedApplicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notifications<T extends Account$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     verifications<T extends Account$verificationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$verificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VerificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4453,23 +4453,23 @@ export namespace Prisma {
    */
   export type Account$sessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Session
+     * Select specific fields to fetch from the AuthSession
      */
-    select?: SessionSelect<ExtArgs> | null
+    select?: AuthSessionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Session
+     * Omit specific fields from the AuthSession
      */
-    omit?: SessionOmit<ExtArgs> | null
+    omit?: AuthSessionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SessionInclude<ExtArgs> | null
-    where?: SessionWhereInput
-    orderBy?: SessionOrderByWithRelationInput | SessionOrderByWithRelationInput[]
-    cursor?: SessionWhereUniqueInput
+    include?: AuthSessionInclude<ExtArgs> | null
+    where?: AuthSessionWhereInput
+    orderBy?: AuthSessionOrderByWithRelationInput | AuthSessionOrderByWithRelationInput[]
+    cursor?: AuthSessionWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
+    distinct?: AuthSessionScalarFieldEnum | AuthSessionScalarFieldEnum[]
   }
 
   /**
@@ -4501,23 +4501,23 @@ export namespace Prisma {
    */
   export type Account$appConnectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserAppConnection
+     * Select specific fields to fetch from the ApplicationConnection
      */
-    select?: UserAppConnectionSelect<ExtArgs> | null
+    select?: ApplicationConnectionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserAppConnection
+     * Omit specific fields from the ApplicationConnection
      */
-    omit?: UserAppConnectionOmit<ExtArgs> | null
+    omit?: ApplicationConnectionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserAppConnectionInclude<ExtArgs> | null
-    where?: UserAppConnectionWhereInput
-    orderBy?: UserAppConnectionOrderByWithRelationInput | UserAppConnectionOrderByWithRelationInput[]
-    cursor?: UserAppConnectionWhereUniqueInput
+    include?: ApplicationConnectionInclude<ExtArgs> | null
+    where?: ApplicationConnectionWhereInput
+    orderBy?: ApplicationConnectionOrderByWithRelationInput | ApplicationConnectionOrderByWithRelationInput[]
+    cursor?: ApplicationConnectionWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: UserAppConnectionScalarFieldEnum | UserAppConnectionScalarFieldEnum[]
+    distinct?: ApplicationConnectionScalarFieldEnum | ApplicationConnectionScalarFieldEnum[]
   }
 
   /**
@@ -19933,16 +19933,16 @@ export namespace Prisma {
 
 
   /**
-   * Model Session
+   * Model AuthSession
    */
 
-  export type AggregateSession = {
-    _count: SessionCountAggregateOutputType | null
-    _min: SessionMinAggregateOutputType | null
-    _max: SessionMaxAggregateOutputType | null
+  export type AggregateAuthSession = {
+    _count: AuthSessionCountAggregateOutputType | null
+    _min: AuthSessionMinAggregateOutputType | null
+    _max: AuthSessionMaxAggregateOutputType | null
   }
 
-  export type SessionMinAggregateOutputType = {
+  export type AuthSessionMinAggregateOutputType = {
     id: string | null
     accountId: string | null
     application: string | null
@@ -19959,7 +19959,7 @@ export namespace Prisma {
     authSessionKey: string | null
   }
 
-  export type SessionMaxAggregateOutputType = {
+  export type AuthSessionMaxAggregateOutputType = {
     id: string | null
     accountId: string | null
     application: string | null
@@ -19976,7 +19976,7 @@ export namespace Prisma {
     authSessionKey: string | null
   }
 
-  export type SessionCountAggregateOutputType = {
+  export type AuthSessionCountAggregateOutputType = {
     id: number
     accountId: number
     application: number
@@ -19997,7 +19997,7 @@ export namespace Prisma {
   }
 
 
-  export type SessionMinAggregateInputType = {
+  export type AuthSessionMinAggregateInputType = {
     id?: true
     accountId?: true
     application?: true
@@ -20014,7 +20014,7 @@ export namespace Prisma {
     authSessionKey?: true
   }
 
-  export type SessionMaxAggregateInputType = {
+  export type AuthSessionMaxAggregateInputType = {
     id?: true
     accountId?: true
     application?: true
@@ -20031,7 +20031,7 @@ export namespace Prisma {
     authSessionKey?: true
   }
 
-  export type SessionCountAggregateInputType = {
+  export type AuthSessionCountAggregateInputType = {
     id?: true
     accountId?: true
     application?: true
@@ -20051,79 +20051,79 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type SessionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthSessionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Session to aggregate.
+     * Filter which AuthSession to aggregate.
      */
-    where?: SessionWhereInput
+    where?: AuthSessionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Sessions to fetch.
+     * Determine the order of AuthSessions to fetch.
      */
-    orderBy?: SessionOrderByWithRelationInput | SessionOrderByWithRelationInput[]
+    orderBy?: AuthSessionOrderByWithRelationInput | AuthSessionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: SessionWhereUniqueInput
+    cursor?: AuthSessionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Sessions from the position of the cursor.
+     * Take `±n` AuthSessions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Sessions.
+     * Skip the first `n` AuthSessions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Sessions
+     * Count returned AuthSessions
     **/
-    _count?: true | SessionCountAggregateInputType
+    _count?: true | AuthSessionCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: SessionMinAggregateInputType
+    _min?: AuthSessionMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: SessionMaxAggregateInputType
+    _max?: AuthSessionMaxAggregateInputType
   }
 
-  export type GetSessionAggregateType<T extends SessionAggregateArgs> = {
-        [P in keyof T & keyof AggregateSession]: P extends '_count' | 'count'
+  export type GetAuthSessionAggregateType<T extends AuthSessionAggregateArgs> = {
+        [P in keyof T & keyof AggregateAuthSession]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateSession[P]>
-      : GetScalarType<T[P], AggregateSession[P]>
+        : GetScalarType<T[P], AggregateAuthSession[P]>
+      : GetScalarType<T[P], AggregateAuthSession[P]>
   }
 
 
 
 
-  export type SessionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SessionWhereInput
-    orderBy?: SessionOrderByWithAggregationInput | SessionOrderByWithAggregationInput[]
-    by: SessionScalarFieldEnum[] | SessionScalarFieldEnum
-    having?: SessionScalarWhereWithAggregatesInput
+  export type AuthSessionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AuthSessionWhereInput
+    orderBy?: AuthSessionOrderByWithAggregationInput | AuthSessionOrderByWithAggregationInput[]
+    by: AuthSessionScalarFieldEnum[] | AuthSessionScalarFieldEnum
+    having?: AuthSessionScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: SessionCountAggregateInputType | true
-    _min?: SessionMinAggregateInputType
-    _max?: SessionMaxAggregateInputType
+    _count?: AuthSessionCountAggregateInputType | true
+    _min?: AuthSessionMinAggregateInputType
+    _max?: AuthSessionMaxAggregateInputType
   }
 
-  export type SessionGroupByOutputType = {
+  export type AuthSessionGroupByOutputType = {
     id: string
     accountId: string
     application: string | null
@@ -20140,26 +20140,26 @@ export namespace Prisma {
     authSessionKey: string | null
     dependentKeys: JsonValue | null
     permissions: JsonValue | null
-    _count: SessionCountAggregateOutputType | null
-    _min: SessionMinAggregateOutputType | null
-    _max: SessionMaxAggregateOutputType | null
+    _count: AuthSessionCountAggregateOutputType | null
+    _min: AuthSessionMinAggregateOutputType | null
+    _max: AuthSessionMaxAggregateOutputType | null
   }
 
-  type GetSessionGroupByPayload<T extends SessionGroupByArgs> = Prisma.PrismaPromise<
+  type GetAuthSessionGroupByPayload<T extends AuthSessionGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<SessionGroupByOutputType, T['by']> &
+      PickEnumerable<AuthSessionGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof SessionGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof AuthSessionGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], SessionGroupByOutputType[P]>
-            : GetScalarType<T[P], SessionGroupByOutputType[P]>
+              : GetScalarType<T[P], AuthSessionGroupByOutputType[P]>
+            : GetScalarType<T[P], AuthSessionGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type SessionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type AuthSessionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     accountId?: boolean
     application?: boolean
@@ -20177,9 +20177,9 @@ export namespace Prisma {
     dependentKeys?: boolean
     permissions?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["session"]>
+  }, ExtArgs["result"]["authSession"]>
 
-  export type SessionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type AuthSessionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     accountId?: boolean
     application?: boolean
@@ -20197,9 +20197,9 @@ export namespace Prisma {
     dependentKeys?: boolean
     permissions?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["session"]>
+  }, ExtArgs["result"]["authSession"]>
 
-  export type SessionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type AuthSessionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     accountId?: boolean
     application?: boolean
@@ -20217,9 +20217,9 @@ export namespace Prisma {
     dependentKeys?: boolean
     permissions?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["session"]>
+  }, ExtArgs["result"]["authSession"]>
 
-  export type SessionSelectScalar = {
+  export type AuthSessionSelectScalar = {
     id?: boolean
     accountId?: boolean
     application?: boolean
@@ -20238,19 +20238,19 @@ export namespace Prisma {
     permissions?: boolean
   }
 
-  export type SessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "application" | "applicationType" | "applicationDomain" | "ipAddress" | "userAgent" | "lastLoggedIn" | "loginType" | "geolocation" | "deviceType" | "expiresOn" | "isExpired" | "authSessionKey" | "dependentKeys" | "permissions", ExtArgs["result"]["session"]>
-  export type SessionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthSessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "application" | "applicationType" | "applicationDomain" | "ipAddress" | "userAgent" | "lastLoggedIn" | "loginType" | "geolocation" | "deviceType" | "expiresOn" | "isExpired" | "authSessionKey" | "dependentKeys" | "permissions", ExtArgs["result"]["authSession"]>
+  export type AuthSessionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }
-  export type SessionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthSessionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }
-  export type SessionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthSessionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }
 
-  export type $SessionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Session"
+  export type $AuthSessionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AuthSession"
     objects: {
       account: Prisma.$AccountPayload<ExtArgs>
     }
@@ -20271,136 +20271,136 @@ export namespace Prisma {
       authSessionKey: string | null
       dependentKeys: Prisma.JsonValue | null
       permissions: Prisma.JsonValue | null
-    }, ExtArgs["result"]["session"]>
+    }, ExtArgs["result"]["authSession"]>
     composites: {}
   }
 
-  type SessionGetPayload<S extends boolean | null | undefined | SessionDefaultArgs> = $Result.GetResult<Prisma.$SessionPayload, S>
+  type AuthSessionGetPayload<S extends boolean | null | undefined | AuthSessionDefaultArgs> = $Result.GetResult<Prisma.$AuthSessionPayload, S>
 
-  type SessionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<SessionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: SessionCountAggregateInputType | true
+  type AuthSessionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AuthSessionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AuthSessionCountAggregateInputType | true
     }
 
-  export interface SessionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Session'], meta: { name: 'Session' } }
+  export interface AuthSessionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AuthSession'], meta: { name: 'AuthSession' } }
     /**
-     * Find zero or one Session that matches the filter.
-     * @param {SessionFindUniqueArgs} args - Arguments to find a Session
+     * Find zero or one AuthSession that matches the filter.
+     * @param {AuthSessionFindUniqueArgs} args - Arguments to find a AuthSession
      * @example
-     * // Get one Session
-     * const session = await prisma.session.findUnique({
+     * // Get one AuthSession
+     * const authSession = await prisma.authSession.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends SessionFindUniqueArgs>(args: SelectSubset<T, SessionFindUniqueArgs<ExtArgs>>): Prisma__SessionClient<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends AuthSessionFindUniqueArgs>(args: SelectSubset<T, AuthSessionFindUniqueArgs<ExtArgs>>): Prisma__AuthSessionClient<$Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Session that matches the filter or throw an error with `error.code='P2025'`
+     * Find one AuthSession that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {SessionFindUniqueOrThrowArgs} args - Arguments to find a Session
+     * @param {AuthSessionFindUniqueOrThrowArgs} args - Arguments to find a AuthSession
      * @example
-     * // Get one Session
-     * const session = await prisma.session.findUniqueOrThrow({
+     * // Get one AuthSession
+     * const authSession = await prisma.authSession.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends SessionFindUniqueOrThrowArgs>(args: SelectSubset<T, SessionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SessionClient<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends AuthSessionFindUniqueOrThrowArgs>(args: SelectSubset<T, AuthSessionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AuthSessionClient<$Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Session that matches the filter.
+     * Find the first AuthSession that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SessionFindFirstArgs} args - Arguments to find a Session
+     * @param {AuthSessionFindFirstArgs} args - Arguments to find a AuthSession
      * @example
-     * // Get one Session
-     * const session = await prisma.session.findFirst({
+     * // Get one AuthSession
+     * const authSession = await prisma.authSession.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends SessionFindFirstArgs>(args?: SelectSubset<T, SessionFindFirstArgs<ExtArgs>>): Prisma__SessionClient<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends AuthSessionFindFirstArgs>(args?: SelectSubset<T, AuthSessionFindFirstArgs<ExtArgs>>): Prisma__AuthSessionClient<$Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Session that matches the filter or
+     * Find the first AuthSession that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SessionFindFirstOrThrowArgs} args - Arguments to find a Session
+     * @param {AuthSessionFindFirstOrThrowArgs} args - Arguments to find a AuthSession
      * @example
-     * // Get one Session
-     * const session = await prisma.session.findFirstOrThrow({
+     * // Get one AuthSession
+     * const authSession = await prisma.authSession.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends SessionFindFirstOrThrowArgs>(args?: SelectSubset<T, SessionFindFirstOrThrowArgs<ExtArgs>>): Prisma__SessionClient<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends AuthSessionFindFirstOrThrowArgs>(args?: SelectSubset<T, AuthSessionFindFirstOrThrowArgs<ExtArgs>>): Prisma__AuthSessionClient<$Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Sessions that matches the filter.
+     * Find zero or more AuthSessions that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SessionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {AuthSessionFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Sessions
-     * const sessions = await prisma.session.findMany()
+     * // Get all AuthSessions
+     * const authSessions = await prisma.authSession.findMany()
      * 
-     * // Get first 10 Sessions
-     * const sessions = await prisma.session.findMany({ take: 10 })
+     * // Get first 10 AuthSessions
+     * const authSessions = await prisma.authSession.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const sessionWithIdOnly = await prisma.session.findMany({ select: { id: true } })
+     * const authSessionWithIdOnly = await prisma.authSession.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends SessionFindManyArgs>(args?: SelectSubset<T, SessionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends AuthSessionFindManyArgs>(args?: SelectSubset<T, AuthSessionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Session.
-     * @param {SessionCreateArgs} args - Arguments to create a Session.
+     * Create a AuthSession.
+     * @param {AuthSessionCreateArgs} args - Arguments to create a AuthSession.
      * @example
-     * // Create one Session
-     * const Session = await prisma.session.create({
+     * // Create one AuthSession
+     * const AuthSession = await prisma.authSession.create({
      *   data: {
-     *     // ... data to create a Session
+     *     // ... data to create a AuthSession
      *   }
      * })
      * 
      */
-    create<T extends SessionCreateArgs>(args: SelectSubset<T, SessionCreateArgs<ExtArgs>>): Prisma__SessionClient<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends AuthSessionCreateArgs>(args: SelectSubset<T, AuthSessionCreateArgs<ExtArgs>>): Prisma__AuthSessionClient<$Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Sessions.
-     * @param {SessionCreateManyArgs} args - Arguments to create many Sessions.
+     * Create many AuthSessions.
+     * @param {AuthSessionCreateManyArgs} args - Arguments to create many AuthSessions.
      * @example
-     * // Create many Sessions
-     * const session = await prisma.session.createMany({
+     * // Create many AuthSessions
+     * const authSession = await prisma.authSession.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends SessionCreateManyArgs>(args?: SelectSubset<T, SessionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends AuthSessionCreateManyArgs>(args?: SelectSubset<T, AuthSessionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Sessions and returns the data saved in the database.
-     * @param {SessionCreateManyAndReturnArgs} args - Arguments to create many Sessions.
+     * Create many AuthSessions and returns the data saved in the database.
+     * @param {AuthSessionCreateManyAndReturnArgs} args - Arguments to create many AuthSessions.
      * @example
-     * // Create many Sessions
-     * const session = await prisma.session.createManyAndReturn({
+     * // Create many AuthSessions
+     * const authSession = await prisma.authSession.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Sessions and only return the `id`
-     * const sessionWithIdOnly = await prisma.session.createManyAndReturn({
+     * // Create many AuthSessions and only return the `id`
+     * const authSessionWithIdOnly = await prisma.authSession.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -20410,28 +20410,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends SessionCreateManyAndReturnArgs>(args?: SelectSubset<T, SessionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends AuthSessionCreateManyAndReturnArgs>(args?: SelectSubset<T, AuthSessionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Session.
-     * @param {SessionDeleteArgs} args - Arguments to delete one Session.
+     * Delete a AuthSession.
+     * @param {AuthSessionDeleteArgs} args - Arguments to delete one AuthSession.
      * @example
-     * // Delete one Session
-     * const Session = await prisma.session.delete({
+     * // Delete one AuthSession
+     * const AuthSession = await prisma.authSession.delete({
      *   where: {
-     *     // ... filter to delete one Session
+     *     // ... filter to delete one AuthSession
      *   }
      * })
      * 
      */
-    delete<T extends SessionDeleteArgs>(args: SelectSubset<T, SessionDeleteArgs<ExtArgs>>): Prisma__SessionClient<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends AuthSessionDeleteArgs>(args: SelectSubset<T, AuthSessionDeleteArgs<ExtArgs>>): Prisma__AuthSessionClient<$Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Session.
-     * @param {SessionUpdateArgs} args - Arguments to update one Session.
+     * Update one AuthSession.
+     * @param {AuthSessionUpdateArgs} args - Arguments to update one AuthSession.
      * @example
-     * // Update one Session
-     * const session = await prisma.session.update({
+     * // Update one AuthSession
+     * const authSession = await prisma.authSession.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -20441,30 +20441,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends SessionUpdateArgs>(args: SelectSubset<T, SessionUpdateArgs<ExtArgs>>): Prisma__SessionClient<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends AuthSessionUpdateArgs>(args: SelectSubset<T, AuthSessionUpdateArgs<ExtArgs>>): Prisma__AuthSessionClient<$Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Sessions.
-     * @param {SessionDeleteManyArgs} args - Arguments to filter Sessions to delete.
+     * Delete zero or more AuthSessions.
+     * @param {AuthSessionDeleteManyArgs} args - Arguments to filter AuthSessions to delete.
      * @example
-     * // Delete a few Sessions
-     * const { count } = await prisma.session.deleteMany({
+     * // Delete a few AuthSessions
+     * const { count } = await prisma.authSession.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends SessionDeleteManyArgs>(args?: SelectSubset<T, SessionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends AuthSessionDeleteManyArgs>(args?: SelectSubset<T, AuthSessionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Sessions.
+     * Update zero or more AuthSessions.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SessionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {AuthSessionUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Sessions
-     * const session = await prisma.session.updateMany({
+     * // Update many AuthSessions
+     * const authSession = await prisma.authSession.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -20474,14 +20474,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends SessionUpdateManyArgs>(args: SelectSubset<T, SessionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends AuthSessionUpdateManyArgs>(args: SelectSubset<T, AuthSessionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Sessions and returns the data updated in the database.
-     * @param {SessionUpdateManyAndReturnArgs} args - Arguments to update many Sessions.
+     * Update zero or more AuthSessions and returns the data updated in the database.
+     * @param {AuthSessionUpdateManyAndReturnArgs} args - Arguments to update many AuthSessions.
      * @example
-     * // Update many Sessions
-     * const session = await prisma.session.updateManyAndReturn({
+     * // Update many AuthSessions
+     * const authSession = await prisma.authSession.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -20490,8 +20490,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Sessions and only return the `id`
-     * const sessionWithIdOnly = await prisma.session.updateManyAndReturn({
+     * // Update zero or more AuthSessions and only return the `id`
+     * const authSessionWithIdOnly = await prisma.authSession.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -20504,56 +20504,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends SessionUpdateManyAndReturnArgs>(args: SelectSubset<T, SessionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends AuthSessionUpdateManyAndReturnArgs>(args: SelectSubset<T, AuthSessionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Session.
-     * @param {SessionUpsertArgs} args - Arguments to update or create a Session.
+     * Create or update one AuthSession.
+     * @param {AuthSessionUpsertArgs} args - Arguments to update or create a AuthSession.
      * @example
-     * // Update or create a Session
-     * const session = await prisma.session.upsert({
+     * // Update or create a AuthSession
+     * const authSession = await prisma.authSession.upsert({
      *   create: {
-     *     // ... data to create a Session
+     *     // ... data to create a AuthSession
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Session we want to update
+     *     // ... the filter for the AuthSession we want to update
      *   }
      * })
      */
-    upsert<T extends SessionUpsertArgs>(args: SelectSubset<T, SessionUpsertArgs<ExtArgs>>): Prisma__SessionClient<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends AuthSessionUpsertArgs>(args: SelectSubset<T, AuthSessionUpsertArgs<ExtArgs>>): Prisma__AuthSessionClient<$Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Sessions.
+     * Count the number of AuthSessions.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SessionCountArgs} args - Arguments to filter Sessions to count.
+     * @param {AuthSessionCountArgs} args - Arguments to filter AuthSessions to count.
      * @example
-     * // Count the number of Sessions
-     * const count = await prisma.session.count({
+     * // Count the number of AuthSessions
+     * const count = await prisma.authSession.count({
      *   where: {
-     *     // ... the filter for the Sessions we want to count
+     *     // ... the filter for the AuthSessions we want to count
      *   }
      * })
     **/
-    count<T extends SessionCountArgs>(
-      args?: Subset<T, SessionCountArgs>,
+    count<T extends AuthSessionCountArgs>(
+      args?: Subset<T, AuthSessionCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], SessionCountAggregateOutputType>
+          : GetScalarType<T['select'], AuthSessionCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Session.
+     * Allows you to perform aggregations operations on a AuthSession.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SessionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {AuthSessionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -20573,13 +20573,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends SessionAggregateArgs>(args: Subset<T, SessionAggregateArgs>): Prisma.PrismaPromise<GetSessionAggregateType<T>>
+    aggregate<T extends AuthSessionAggregateArgs>(args: Subset<T, AuthSessionAggregateArgs>): Prisma.PrismaPromise<GetAuthSessionAggregateType<T>>
 
     /**
-     * Group by Session.
+     * Group by AuthSession.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SessionGroupByArgs} args - Group by arguments.
+     * @param {AuthSessionGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -20594,14 +20594,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends SessionGroupByArgs,
+      T extends AuthSessionGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: SessionGroupByArgs['orderBy'] }
-        : { orderBy?: SessionGroupByArgs['orderBy'] },
+        ? { orderBy: AuthSessionGroupByArgs['orderBy'] }
+        : { orderBy?: AuthSessionGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -20650,20 +20650,20 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, SessionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSessionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, AuthSessionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAuthSessionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Session model
+   * Fields of the AuthSession model
    */
-  readonly fields: SessionFieldRefs;
+  readonly fields: AuthSessionFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Session.
+   * The delegate class that acts as a "Promise-like" for AuthSession.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__SessionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__AuthSessionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     account<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
@@ -20692,436 +20692,436 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Session model
+   * Fields of the AuthSession model
    */
-  interface SessionFieldRefs {
-    readonly id: FieldRef<"Session", 'String'>
-    readonly accountId: FieldRef<"Session", 'String'>
-    readonly application: FieldRef<"Session", 'String'>
-    readonly applicationType: FieldRef<"Session", 'String'>
-    readonly applicationDomain: FieldRef<"Session", 'String'>
-    readonly ipAddress: FieldRef<"Session", 'String'>
-    readonly userAgent: FieldRef<"Session", 'String'>
-    readonly lastLoggedIn: FieldRef<"Session", 'DateTime'>
-    readonly loginType: FieldRef<"Session", 'String'>
-    readonly geolocation: FieldRef<"Session", 'String'>
-    readonly deviceType: FieldRef<"Session", 'String'>
-    readonly expiresOn: FieldRef<"Session", 'DateTime'>
-    readonly isExpired: FieldRef<"Session", 'Boolean'>
-    readonly authSessionKey: FieldRef<"Session", 'String'>
-    readonly dependentKeys: FieldRef<"Session", 'Json'>
-    readonly permissions: FieldRef<"Session", 'Json'>
+  interface AuthSessionFieldRefs {
+    readonly id: FieldRef<"AuthSession", 'String'>
+    readonly accountId: FieldRef<"AuthSession", 'String'>
+    readonly application: FieldRef<"AuthSession", 'String'>
+    readonly applicationType: FieldRef<"AuthSession", 'String'>
+    readonly applicationDomain: FieldRef<"AuthSession", 'String'>
+    readonly ipAddress: FieldRef<"AuthSession", 'String'>
+    readonly userAgent: FieldRef<"AuthSession", 'String'>
+    readonly lastLoggedIn: FieldRef<"AuthSession", 'DateTime'>
+    readonly loginType: FieldRef<"AuthSession", 'String'>
+    readonly geolocation: FieldRef<"AuthSession", 'String'>
+    readonly deviceType: FieldRef<"AuthSession", 'String'>
+    readonly expiresOn: FieldRef<"AuthSession", 'DateTime'>
+    readonly isExpired: FieldRef<"AuthSession", 'Boolean'>
+    readonly authSessionKey: FieldRef<"AuthSession", 'String'>
+    readonly dependentKeys: FieldRef<"AuthSession", 'Json'>
+    readonly permissions: FieldRef<"AuthSession", 'Json'>
   }
     
 
   // Custom InputTypes
   /**
-   * Session findUnique
+   * AuthSession findUnique
    */
-  export type SessionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthSessionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Session
+     * Select specific fields to fetch from the AuthSession
      */
-    select?: SessionSelect<ExtArgs> | null
+    select?: AuthSessionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Session
+     * Omit specific fields from the AuthSession
      */
-    omit?: SessionOmit<ExtArgs> | null
+    omit?: AuthSessionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SessionInclude<ExtArgs> | null
+    include?: AuthSessionInclude<ExtArgs> | null
     /**
-     * Filter, which Session to fetch.
+     * Filter, which AuthSession to fetch.
      */
-    where: SessionWhereUniqueInput
+    where: AuthSessionWhereUniqueInput
   }
 
   /**
-   * Session findUniqueOrThrow
+   * AuthSession findUniqueOrThrow
    */
-  export type SessionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthSessionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Session
+     * Select specific fields to fetch from the AuthSession
      */
-    select?: SessionSelect<ExtArgs> | null
+    select?: AuthSessionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Session
+     * Omit specific fields from the AuthSession
      */
-    omit?: SessionOmit<ExtArgs> | null
+    omit?: AuthSessionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SessionInclude<ExtArgs> | null
+    include?: AuthSessionInclude<ExtArgs> | null
     /**
-     * Filter, which Session to fetch.
+     * Filter, which AuthSession to fetch.
      */
-    where: SessionWhereUniqueInput
+    where: AuthSessionWhereUniqueInput
   }
 
   /**
-   * Session findFirst
+   * AuthSession findFirst
    */
-  export type SessionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthSessionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Session
+     * Select specific fields to fetch from the AuthSession
      */
-    select?: SessionSelect<ExtArgs> | null
+    select?: AuthSessionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Session
+     * Omit specific fields from the AuthSession
      */
-    omit?: SessionOmit<ExtArgs> | null
+    omit?: AuthSessionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SessionInclude<ExtArgs> | null
+    include?: AuthSessionInclude<ExtArgs> | null
     /**
-     * Filter, which Session to fetch.
+     * Filter, which AuthSession to fetch.
      */
-    where?: SessionWhereInput
+    where?: AuthSessionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Sessions to fetch.
+     * Determine the order of AuthSessions to fetch.
      */
-    orderBy?: SessionOrderByWithRelationInput | SessionOrderByWithRelationInput[]
+    orderBy?: AuthSessionOrderByWithRelationInput | AuthSessionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Sessions.
+     * Sets the position for searching for AuthSessions.
      */
-    cursor?: SessionWhereUniqueInput
+    cursor?: AuthSessionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Sessions from the position of the cursor.
+     * Take `±n` AuthSessions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Sessions.
+     * Skip the first `n` AuthSessions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Sessions.
+     * Filter by unique combinations of AuthSessions.
      */
-    distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
+    distinct?: AuthSessionScalarFieldEnum | AuthSessionScalarFieldEnum[]
   }
 
   /**
-   * Session findFirstOrThrow
+   * AuthSession findFirstOrThrow
    */
-  export type SessionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthSessionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Session
+     * Select specific fields to fetch from the AuthSession
      */
-    select?: SessionSelect<ExtArgs> | null
+    select?: AuthSessionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Session
+     * Omit specific fields from the AuthSession
      */
-    omit?: SessionOmit<ExtArgs> | null
+    omit?: AuthSessionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SessionInclude<ExtArgs> | null
+    include?: AuthSessionInclude<ExtArgs> | null
     /**
-     * Filter, which Session to fetch.
+     * Filter, which AuthSession to fetch.
      */
-    where?: SessionWhereInput
+    where?: AuthSessionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Sessions to fetch.
+     * Determine the order of AuthSessions to fetch.
      */
-    orderBy?: SessionOrderByWithRelationInput | SessionOrderByWithRelationInput[]
+    orderBy?: AuthSessionOrderByWithRelationInput | AuthSessionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Sessions.
+     * Sets the position for searching for AuthSessions.
      */
-    cursor?: SessionWhereUniqueInput
+    cursor?: AuthSessionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Sessions from the position of the cursor.
+     * Take `±n` AuthSessions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Sessions.
+     * Skip the first `n` AuthSessions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Sessions.
+     * Filter by unique combinations of AuthSessions.
      */
-    distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
+    distinct?: AuthSessionScalarFieldEnum | AuthSessionScalarFieldEnum[]
   }
 
   /**
-   * Session findMany
+   * AuthSession findMany
    */
-  export type SessionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthSessionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Session
+     * Select specific fields to fetch from the AuthSession
      */
-    select?: SessionSelect<ExtArgs> | null
+    select?: AuthSessionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Session
+     * Omit specific fields from the AuthSession
      */
-    omit?: SessionOmit<ExtArgs> | null
+    omit?: AuthSessionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SessionInclude<ExtArgs> | null
+    include?: AuthSessionInclude<ExtArgs> | null
     /**
-     * Filter, which Sessions to fetch.
+     * Filter, which AuthSessions to fetch.
      */
-    where?: SessionWhereInput
+    where?: AuthSessionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Sessions to fetch.
+     * Determine the order of AuthSessions to fetch.
      */
-    orderBy?: SessionOrderByWithRelationInput | SessionOrderByWithRelationInput[]
+    orderBy?: AuthSessionOrderByWithRelationInput | AuthSessionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Sessions.
+     * Sets the position for listing AuthSessions.
      */
-    cursor?: SessionWhereUniqueInput
+    cursor?: AuthSessionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Sessions from the position of the cursor.
+     * Take `±n` AuthSessions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Sessions.
+     * Skip the first `n` AuthSessions.
      */
     skip?: number
-    distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
+    distinct?: AuthSessionScalarFieldEnum | AuthSessionScalarFieldEnum[]
   }
 
   /**
-   * Session create
+   * AuthSession create
    */
-  export type SessionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthSessionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Session
+     * Select specific fields to fetch from the AuthSession
      */
-    select?: SessionSelect<ExtArgs> | null
+    select?: AuthSessionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Session
+     * Omit specific fields from the AuthSession
      */
-    omit?: SessionOmit<ExtArgs> | null
+    omit?: AuthSessionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SessionInclude<ExtArgs> | null
+    include?: AuthSessionInclude<ExtArgs> | null
     /**
-     * The data needed to create a Session.
+     * The data needed to create a AuthSession.
      */
-    data: XOR<SessionCreateInput, SessionUncheckedCreateInput>
+    data: XOR<AuthSessionCreateInput, AuthSessionUncheckedCreateInput>
   }
 
   /**
-   * Session createMany
+   * AuthSession createMany
    */
-  export type SessionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthSessionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Sessions.
+     * The data used to create many AuthSessions.
      */
-    data: SessionCreateManyInput | SessionCreateManyInput[]
+    data: AuthSessionCreateManyInput | AuthSessionCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Session createManyAndReturn
+   * AuthSession createManyAndReturn
    */
-  export type SessionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthSessionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Session
+     * Select specific fields to fetch from the AuthSession
      */
-    select?: SessionSelectCreateManyAndReturn<ExtArgs> | null
+    select?: AuthSessionSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Session
+     * Omit specific fields from the AuthSession
      */
-    omit?: SessionOmit<ExtArgs> | null
+    omit?: AuthSessionOmit<ExtArgs> | null
     /**
-     * The data used to create many Sessions.
+     * The data used to create many AuthSessions.
      */
-    data: SessionCreateManyInput | SessionCreateManyInput[]
+    data: AuthSessionCreateManyInput | AuthSessionCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SessionIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: AuthSessionIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Session update
+   * AuthSession update
    */
-  export type SessionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthSessionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Session
+     * Select specific fields to fetch from the AuthSession
      */
-    select?: SessionSelect<ExtArgs> | null
+    select?: AuthSessionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Session
+     * Omit specific fields from the AuthSession
      */
-    omit?: SessionOmit<ExtArgs> | null
+    omit?: AuthSessionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SessionInclude<ExtArgs> | null
+    include?: AuthSessionInclude<ExtArgs> | null
     /**
-     * The data needed to update a Session.
+     * The data needed to update a AuthSession.
      */
-    data: XOR<SessionUpdateInput, SessionUncheckedUpdateInput>
+    data: XOR<AuthSessionUpdateInput, AuthSessionUncheckedUpdateInput>
     /**
-     * Choose, which Session to update.
+     * Choose, which AuthSession to update.
      */
-    where: SessionWhereUniqueInput
+    where: AuthSessionWhereUniqueInput
   }
 
   /**
-   * Session updateMany
+   * AuthSession updateMany
    */
-  export type SessionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthSessionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Sessions.
+     * The data used to update AuthSessions.
      */
-    data: XOR<SessionUpdateManyMutationInput, SessionUncheckedUpdateManyInput>
+    data: XOR<AuthSessionUpdateManyMutationInput, AuthSessionUncheckedUpdateManyInput>
     /**
-     * Filter which Sessions to update
+     * Filter which AuthSessions to update
      */
-    where?: SessionWhereInput
+    where?: AuthSessionWhereInput
     /**
-     * Limit how many Sessions to update.
+     * Limit how many AuthSessions to update.
      */
     limit?: number
   }
 
   /**
-   * Session updateManyAndReturn
+   * AuthSession updateManyAndReturn
    */
-  export type SessionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthSessionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Session
+     * Select specific fields to fetch from the AuthSession
      */
-    select?: SessionSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: AuthSessionSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Session
+     * Omit specific fields from the AuthSession
      */
-    omit?: SessionOmit<ExtArgs> | null
+    omit?: AuthSessionOmit<ExtArgs> | null
     /**
-     * The data used to update Sessions.
+     * The data used to update AuthSessions.
      */
-    data: XOR<SessionUpdateManyMutationInput, SessionUncheckedUpdateManyInput>
+    data: XOR<AuthSessionUpdateManyMutationInput, AuthSessionUncheckedUpdateManyInput>
     /**
-     * Filter which Sessions to update
+     * Filter which AuthSessions to update
      */
-    where?: SessionWhereInput
+    where?: AuthSessionWhereInput
     /**
-     * Limit how many Sessions to update.
+     * Limit how many AuthSessions to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SessionIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: AuthSessionIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Session upsert
+   * AuthSession upsert
    */
-  export type SessionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthSessionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Session
+     * Select specific fields to fetch from the AuthSession
      */
-    select?: SessionSelect<ExtArgs> | null
+    select?: AuthSessionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Session
+     * Omit specific fields from the AuthSession
      */
-    omit?: SessionOmit<ExtArgs> | null
+    omit?: AuthSessionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SessionInclude<ExtArgs> | null
+    include?: AuthSessionInclude<ExtArgs> | null
     /**
-     * The filter to search for the Session to update in case it exists.
+     * The filter to search for the AuthSession to update in case it exists.
      */
-    where: SessionWhereUniqueInput
+    where: AuthSessionWhereUniqueInput
     /**
-     * In case the Session found by the `where` argument doesn't exist, create a new Session with this data.
+     * In case the AuthSession found by the `where` argument doesn't exist, create a new AuthSession with this data.
      */
-    create: XOR<SessionCreateInput, SessionUncheckedCreateInput>
+    create: XOR<AuthSessionCreateInput, AuthSessionUncheckedCreateInput>
     /**
-     * In case the Session was found with the provided `where` argument, update it with this data.
+     * In case the AuthSession was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<SessionUpdateInput, SessionUncheckedUpdateInput>
+    update: XOR<AuthSessionUpdateInput, AuthSessionUncheckedUpdateInput>
   }
 
   /**
-   * Session delete
+   * AuthSession delete
    */
-  export type SessionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthSessionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Session
+     * Select specific fields to fetch from the AuthSession
      */
-    select?: SessionSelect<ExtArgs> | null
+    select?: AuthSessionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Session
+     * Omit specific fields from the AuthSession
      */
-    omit?: SessionOmit<ExtArgs> | null
+    omit?: AuthSessionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SessionInclude<ExtArgs> | null
+    include?: AuthSessionInclude<ExtArgs> | null
     /**
-     * Filter which Session to delete.
+     * Filter which AuthSession to delete.
      */
-    where: SessionWhereUniqueInput
+    where: AuthSessionWhereUniqueInput
   }
 
   /**
-   * Session deleteMany
+   * AuthSession deleteMany
    */
-  export type SessionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthSessionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Sessions to delete
+     * Filter which AuthSessions to delete
      */
-    where?: SessionWhereInput
+    where?: AuthSessionWhereInput
     /**
-     * Limit how many Sessions to delete.
+     * Limit how many AuthSessions to delete.
      */
     limit?: number
   }
 
   /**
-   * Session without action
+   * AuthSession without action
    */
-  export type SessionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthSessionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Session
+     * Select specific fields to fetch from the AuthSession
      */
-    select?: SessionSelect<ExtArgs> | null
+    select?: AuthSessionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Session
+     * Omit specific fields from the AuthSession
      */
-    omit?: SessionOmit<ExtArgs> | null
+    omit?: AuthSessionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SessionInclude<ExtArgs> | null
+    include?: AuthSessionInclude<ExtArgs> | null
   }
 
 
@@ -22605,7 +22605,7 @@ export namespace Prisma {
     name: "Application"
     objects: {
       owner: Prisma.$AccountPayload<ExtArgs> | null
-      connections: Prisma.$UserAppConnectionPayload<ExtArgs>[]
+      connections: Prisma.$ApplicationConnectionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -23017,7 +23017,7 @@ export namespace Prisma {
   export interface Prisma__ApplicationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     owner<T extends Application$ownerArgs<ExtArgs> = {}>(args?: Subset<T, Application$ownerArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    connections<T extends Application$connectionsArgs<ExtArgs> = {}>(args?: Subset<T, Application$connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAppConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    connections<T extends Application$connectionsArgs<ExtArgs> = {}>(args?: Subset<T, Application$connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -23480,23 +23480,23 @@ export namespace Prisma {
    */
   export type Application$connectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserAppConnection
+     * Select specific fields to fetch from the ApplicationConnection
      */
-    select?: UserAppConnectionSelect<ExtArgs> | null
+    select?: ApplicationConnectionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserAppConnection
+     * Omit specific fields from the ApplicationConnection
      */
-    omit?: UserAppConnectionOmit<ExtArgs> | null
+    omit?: ApplicationConnectionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserAppConnectionInclude<ExtArgs> | null
-    where?: UserAppConnectionWhereInput
-    orderBy?: UserAppConnectionOrderByWithRelationInput | UserAppConnectionOrderByWithRelationInput[]
-    cursor?: UserAppConnectionWhereUniqueInput
+    include?: ApplicationConnectionInclude<ExtArgs> | null
+    where?: ApplicationConnectionWhereInput
+    orderBy?: ApplicationConnectionOrderByWithRelationInput | ApplicationConnectionOrderByWithRelationInput[]
+    cursor?: ApplicationConnectionWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: UserAppConnectionScalarFieldEnum | UserAppConnectionScalarFieldEnum[]
+    distinct?: ApplicationConnectionScalarFieldEnum | ApplicationConnectionScalarFieldEnum[]
   }
 
   /**
@@ -27797,30 +27797,30 @@ export namespace Prisma {
 
 
   /**
-   * Model UserAppConnection
+   * Model ApplicationConnection
    */
 
-  export type AggregateUserAppConnection = {
-    _count: UserAppConnectionCountAggregateOutputType | null
-    _min: UserAppConnectionMinAggregateOutputType | null
-    _max: UserAppConnectionMaxAggregateOutputType | null
+  export type AggregateApplicationConnection = {
+    _count: ApplicationConnectionCountAggregateOutputType | null
+    _min: ApplicationConnectionMinAggregateOutputType | null
+    _max: ApplicationConnectionMaxAggregateOutputType | null
   }
 
-  export type UserAppConnectionMinAggregateOutputType = {
+  export type ApplicationConnectionMinAggregateOutputType = {
     id: string | null
     accountId: string | null
     appId: string | null
     connectedAt: Date | null
   }
 
-  export type UserAppConnectionMaxAggregateOutputType = {
+  export type ApplicationConnectionMaxAggregateOutputType = {
     id: string | null
     accountId: string | null
     appId: string | null
     connectedAt: Date | null
   }
 
-  export type UserAppConnectionCountAggregateOutputType = {
+  export type ApplicationConnectionCountAggregateOutputType = {
     id: number
     accountId: number
     appId: number
@@ -27829,21 +27829,21 @@ export namespace Prisma {
   }
 
 
-  export type UserAppConnectionMinAggregateInputType = {
+  export type ApplicationConnectionMinAggregateInputType = {
     id?: true
     accountId?: true
     appId?: true
     connectedAt?: true
   }
 
-  export type UserAppConnectionMaxAggregateInputType = {
+  export type ApplicationConnectionMaxAggregateInputType = {
     id?: true
     accountId?: true
     appId?: true
     connectedAt?: true
   }
 
-  export type UserAppConnectionCountAggregateInputType = {
+  export type ApplicationConnectionCountAggregateInputType = {
     id?: true
     accountId?: true
     appId?: true
@@ -27851,152 +27851,152 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type UserAppConnectionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ApplicationConnectionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which UserAppConnection to aggregate.
+     * Filter which ApplicationConnection to aggregate.
      */
-    where?: UserAppConnectionWhereInput
+    where?: ApplicationConnectionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of UserAppConnections to fetch.
+     * Determine the order of ApplicationConnections to fetch.
      */
-    orderBy?: UserAppConnectionOrderByWithRelationInput | UserAppConnectionOrderByWithRelationInput[]
+    orderBy?: ApplicationConnectionOrderByWithRelationInput | ApplicationConnectionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: UserAppConnectionWhereUniqueInput
+    cursor?: ApplicationConnectionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` UserAppConnections from the position of the cursor.
+     * Take `±n` ApplicationConnections from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` UserAppConnections.
+     * Skip the first `n` ApplicationConnections.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned UserAppConnections
+     * Count returned ApplicationConnections
     **/
-    _count?: true | UserAppConnectionCountAggregateInputType
+    _count?: true | ApplicationConnectionCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: UserAppConnectionMinAggregateInputType
+    _min?: ApplicationConnectionMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: UserAppConnectionMaxAggregateInputType
+    _max?: ApplicationConnectionMaxAggregateInputType
   }
 
-  export type GetUserAppConnectionAggregateType<T extends UserAppConnectionAggregateArgs> = {
-        [P in keyof T & keyof AggregateUserAppConnection]: P extends '_count' | 'count'
+  export type GetApplicationConnectionAggregateType<T extends ApplicationConnectionAggregateArgs> = {
+        [P in keyof T & keyof AggregateApplicationConnection]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateUserAppConnection[P]>
-      : GetScalarType<T[P], AggregateUserAppConnection[P]>
+        : GetScalarType<T[P], AggregateApplicationConnection[P]>
+      : GetScalarType<T[P], AggregateApplicationConnection[P]>
   }
 
 
 
 
-  export type UserAppConnectionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UserAppConnectionWhereInput
-    orderBy?: UserAppConnectionOrderByWithAggregationInput | UserAppConnectionOrderByWithAggregationInput[]
-    by: UserAppConnectionScalarFieldEnum[] | UserAppConnectionScalarFieldEnum
-    having?: UserAppConnectionScalarWhereWithAggregatesInput
+  export type ApplicationConnectionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationConnectionWhereInput
+    orderBy?: ApplicationConnectionOrderByWithAggregationInput | ApplicationConnectionOrderByWithAggregationInput[]
+    by: ApplicationConnectionScalarFieldEnum[] | ApplicationConnectionScalarFieldEnum
+    having?: ApplicationConnectionScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: UserAppConnectionCountAggregateInputType | true
-    _min?: UserAppConnectionMinAggregateInputType
-    _max?: UserAppConnectionMaxAggregateInputType
+    _count?: ApplicationConnectionCountAggregateInputType | true
+    _min?: ApplicationConnectionMinAggregateInputType
+    _max?: ApplicationConnectionMaxAggregateInputType
   }
 
-  export type UserAppConnectionGroupByOutputType = {
+  export type ApplicationConnectionGroupByOutputType = {
     id: string
     accountId: string
     appId: string
     connectedAt: Date
-    _count: UserAppConnectionCountAggregateOutputType | null
-    _min: UserAppConnectionMinAggregateOutputType | null
-    _max: UserAppConnectionMaxAggregateOutputType | null
+    _count: ApplicationConnectionCountAggregateOutputType | null
+    _min: ApplicationConnectionMinAggregateOutputType | null
+    _max: ApplicationConnectionMaxAggregateOutputType | null
   }
 
-  type GetUserAppConnectionGroupByPayload<T extends UserAppConnectionGroupByArgs> = Prisma.PrismaPromise<
+  type GetApplicationConnectionGroupByPayload<T extends ApplicationConnectionGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<UserAppConnectionGroupByOutputType, T['by']> &
+      PickEnumerable<ApplicationConnectionGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof UserAppConnectionGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof ApplicationConnectionGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], UserAppConnectionGroupByOutputType[P]>
-            : GetScalarType<T[P], UserAppConnectionGroupByOutputType[P]>
+              : GetScalarType<T[P], ApplicationConnectionGroupByOutputType[P]>
+            : GetScalarType<T[P], ApplicationConnectionGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type UserAppConnectionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ApplicationConnectionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     accountId?: boolean
     appId?: boolean
     connectedAt?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["userAppConnection"]>
+  }, ExtArgs["result"]["applicationConnection"]>
 
-  export type UserAppConnectionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ApplicationConnectionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     accountId?: boolean
     appId?: boolean
     connectedAt?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["userAppConnection"]>
+  }, ExtArgs["result"]["applicationConnection"]>
 
-  export type UserAppConnectionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ApplicationConnectionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     accountId?: boolean
     appId?: boolean
     connectedAt?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["userAppConnection"]>
+  }, ExtArgs["result"]["applicationConnection"]>
 
-  export type UserAppConnectionSelectScalar = {
+  export type ApplicationConnectionSelectScalar = {
     id?: boolean
     accountId?: boolean
     appId?: boolean
     connectedAt?: boolean
   }
 
-  export type UserAppConnectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "appId" | "connectedAt", ExtArgs["result"]["userAppConnection"]>
-  export type UserAppConnectionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ApplicationConnectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "appId" | "connectedAt", ExtArgs["result"]["applicationConnection"]>
+  export type ApplicationConnectionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
   }
-  export type UserAppConnectionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ApplicationConnectionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
   }
-  export type UserAppConnectionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ApplicationConnectionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
   }
 
-  export type $UserAppConnectionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "UserAppConnection"
+  export type $ApplicationConnectionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ApplicationConnection"
     objects: {
       account: Prisma.$AccountPayload<ExtArgs>
       application: Prisma.$ApplicationPayload<ExtArgs>
@@ -28006,136 +28006,136 @@ export namespace Prisma {
       accountId: string
       appId: string
       connectedAt: Date
-    }, ExtArgs["result"]["userAppConnection"]>
+    }, ExtArgs["result"]["applicationConnection"]>
     composites: {}
   }
 
-  type UserAppConnectionGetPayload<S extends boolean | null | undefined | UserAppConnectionDefaultArgs> = $Result.GetResult<Prisma.$UserAppConnectionPayload, S>
+  type ApplicationConnectionGetPayload<S extends boolean | null | undefined | ApplicationConnectionDefaultArgs> = $Result.GetResult<Prisma.$ApplicationConnectionPayload, S>
 
-  type UserAppConnectionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<UserAppConnectionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: UserAppConnectionCountAggregateInputType | true
+  type ApplicationConnectionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ApplicationConnectionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ApplicationConnectionCountAggregateInputType | true
     }
 
-  export interface UserAppConnectionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserAppConnection'], meta: { name: 'UserAppConnection' } }
+  export interface ApplicationConnectionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ApplicationConnection'], meta: { name: 'ApplicationConnection' } }
     /**
-     * Find zero or one UserAppConnection that matches the filter.
-     * @param {UserAppConnectionFindUniqueArgs} args - Arguments to find a UserAppConnection
+     * Find zero or one ApplicationConnection that matches the filter.
+     * @param {ApplicationConnectionFindUniqueArgs} args - Arguments to find a ApplicationConnection
      * @example
-     * // Get one UserAppConnection
-     * const userAppConnection = await prisma.userAppConnection.findUnique({
+     * // Get one ApplicationConnection
+     * const applicationConnection = await prisma.applicationConnection.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends UserAppConnectionFindUniqueArgs>(args: SelectSubset<T, UserAppConnectionFindUniqueArgs<ExtArgs>>): Prisma__UserAppConnectionClient<$Result.GetResult<Prisma.$UserAppConnectionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends ApplicationConnectionFindUniqueArgs>(args: SelectSubset<T, ApplicationConnectionFindUniqueArgs<ExtArgs>>): Prisma__ApplicationConnectionClient<$Result.GetResult<Prisma.$ApplicationConnectionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one UserAppConnection that matches the filter or throw an error with `error.code='P2025'`
+     * Find one ApplicationConnection that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {UserAppConnectionFindUniqueOrThrowArgs} args - Arguments to find a UserAppConnection
+     * @param {ApplicationConnectionFindUniqueOrThrowArgs} args - Arguments to find a ApplicationConnection
      * @example
-     * // Get one UserAppConnection
-     * const userAppConnection = await prisma.userAppConnection.findUniqueOrThrow({
+     * // Get one ApplicationConnection
+     * const applicationConnection = await prisma.applicationConnection.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends UserAppConnectionFindUniqueOrThrowArgs>(args: SelectSubset<T, UserAppConnectionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserAppConnectionClient<$Result.GetResult<Prisma.$UserAppConnectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends ApplicationConnectionFindUniqueOrThrowArgs>(args: SelectSubset<T, ApplicationConnectionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ApplicationConnectionClient<$Result.GetResult<Prisma.$ApplicationConnectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first UserAppConnection that matches the filter.
+     * Find the first ApplicationConnection that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserAppConnectionFindFirstArgs} args - Arguments to find a UserAppConnection
+     * @param {ApplicationConnectionFindFirstArgs} args - Arguments to find a ApplicationConnection
      * @example
-     * // Get one UserAppConnection
-     * const userAppConnection = await prisma.userAppConnection.findFirst({
+     * // Get one ApplicationConnection
+     * const applicationConnection = await prisma.applicationConnection.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends UserAppConnectionFindFirstArgs>(args?: SelectSubset<T, UserAppConnectionFindFirstArgs<ExtArgs>>): Prisma__UserAppConnectionClient<$Result.GetResult<Prisma.$UserAppConnectionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends ApplicationConnectionFindFirstArgs>(args?: SelectSubset<T, ApplicationConnectionFindFirstArgs<ExtArgs>>): Prisma__ApplicationConnectionClient<$Result.GetResult<Prisma.$ApplicationConnectionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first UserAppConnection that matches the filter or
+     * Find the first ApplicationConnection that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserAppConnectionFindFirstOrThrowArgs} args - Arguments to find a UserAppConnection
+     * @param {ApplicationConnectionFindFirstOrThrowArgs} args - Arguments to find a ApplicationConnection
      * @example
-     * // Get one UserAppConnection
-     * const userAppConnection = await prisma.userAppConnection.findFirstOrThrow({
+     * // Get one ApplicationConnection
+     * const applicationConnection = await prisma.applicationConnection.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends UserAppConnectionFindFirstOrThrowArgs>(args?: SelectSubset<T, UserAppConnectionFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserAppConnectionClient<$Result.GetResult<Prisma.$UserAppConnectionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends ApplicationConnectionFindFirstOrThrowArgs>(args?: SelectSubset<T, ApplicationConnectionFindFirstOrThrowArgs<ExtArgs>>): Prisma__ApplicationConnectionClient<$Result.GetResult<Prisma.$ApplicationConnectionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more UserAppConnections that matches the filter.
+     * Find zero or more ApplicationConnections that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserAppConnectionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {ApplicationConnectionFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all UserAppConnections
-     * const userAppConnections = await prisma.userAppConnection.findMany()
+     * // Get all ApplicationConnections
+     * const applicationConnections = await prisma.applicationConnection.findMany()
      * 
-     * // Get first 10 UserAppConnections
-     * const userAppConnections = await prisma.userAppConnection.findMany({ take: 10 })
+     * // Get first 10 ApplicationConnections
+     * const applicationConnections = await prisma.applicationConnection.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const userAppConnectionWithIdOnly = await prisma.userAppConnection.findMany({ select: { id: true } })
+     * const applicationConnectionWithIdOnly = await prisma.applicationConnection.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends UserAppConnectionFindManyArgs>(args?: SelectSubset<T, UserAppConnectionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAppConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends ApplicationConnectionFindManyArgs>(args?: SelectSubset<T, ApplicationConnectionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a UserAppConnection.
-     * @param {UserAppConnectionCreateArgs} args - Arguments to create a UserAppConnection.
+     * Create a ApplicationConnection.
+     * @param {ApplicationConnectionCreateArgs} args - Arguments to create a ApplicationConnection.
      * @example
-     * // Create one UserAppConnection
-     * const UserAppConnection = await prisma.userAppConnection.create({
+     * // Create one ApplicationConnection
+     * const ApplicationConnection = await prisma.applicationConnection.create({
      *   data: {
-     *     // ... data to create a UserAppConnection
+     *     // ... data to create a ApplicationConnection
      *   }
      * })
      * 
      */
-    create<T extends UserAppConnectionCreateArgs>(args: SelectSubset<T, UserAppConnectionCreateArgs<ExtArgs>>): Prisma__UserAppConnectionClient<$Result.GetResult<Prisma.$UserAppConnectionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends ApplicationConnectionCreateArgs>(args: SelectSubset<T, ApplicationConnectionCreateArgs<ExtArgs>>): Prisma__ApplicationConnectionClient<$Result.GetResult<Prisma.$ApplicationConnectionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many UserAppConnections.
-     * @param {UserAppConnectionCreateManyArgs} args - Arguments to create many UserAppConnections.
+     * Create many ApplicationConnections.
+     * @param {ApplicationConnectionCreateManyArgs} args - Arguments to create many ApplicationConnections.
      * @example
-     * // Create many UserAppConnections
-     * const userAppConnection = await prisma.userAppConnection.createMany({
+     * // Create many ApplicationConnections
+     * const applicationConnection = await prisma.applicationConnection.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends UserAppConnectionCreateManyArgs>(args?: SelectSubset<T, UserAppConnectionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends ApplicationConnectionCreateManyArgs>(args?: SelectSubset<T, ApplicationConnectionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many UserAppConnections and returns the data saved in the database.
-     * @param {UserAppConnectionCreateManyAndReturnArgs} args - Arguments to create many UserAppConnections.
+     * Create many ApplicationConnections and returns the data saved in the database.
+     * @param {ApplicationConnectionCreateManyAndReturnArgs} args - Arguments to create many ApplicationConnections.
      * @example
-     * // Create many UserAppConnections
-     * const userAppConnection = await prisma.userAppConnection.createManyAndReturn({
+     * // Create many ApplicationConnections
+     * const applicationConnection = await prisma.applicationConnection.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many UserAppConnections and only return the `id`
-     * const userAppConnectionWithIdOnly = await prisma.userAppConnection.createManyAndReturn({
+     * // Create many ApplicationConnections and only return the `id`
+     * const applicationConnectionWithIdOnly = await prisma.applicationConnection.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -28145,28 +28145,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends UserAppConnectionCreateManyAndReturnArgs>(args?: SelectSubset<T, UserAppConnectionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAppConnectionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends ApplicationConnectionCreateManyAndReturnArgs>(args?: SelectSubset<T, ApplicationConnectionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationConnectionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a UserAppConnection.
-     * @param {UserAppConnectionDeleteArgs} args - Arguments to delete one UserAppConnection.
+     * Delete a ApplicationConnection.
+     * @param {ApplicationConnectionDeleteArgs} args - Arguments to delete one ApplicationConnection.
      * @example
-     * // Delete one UserAppConnection
-     * const UserAppConnection = await prisma.userAppConnection.delete({
+     * // Delete one ApplicationConnection
+     * const ApplicationConnection = await prisma.applicationConnection.delete({
      *   where: {
-     *     // ... filter to delete one UserAppConnection
+     *     // ... filter to delete one ApplicationConnection
      *   }
      * })
      * 
      */
-    delete<T extends UserAppConnectionDeleteArgs>(args: SelectSubset<T, UserAppConnectionDeleteArgs<ExtArgs>>): Prisma__UserAppConnectionClient<$Result.GetResult<Prisma.$UserAppConnectionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends ApplicationConnectionDeleteArgs>(args: SelectSubset<T, ApplicationConnectionDeleteArgs<ExtArgs>>): Prisma__ApplicationConnectionClient<$Result.GetResult<Prisma.$ApplicationConnectionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one UserAppConnection.
-     * @param {UserAppConnectionUpdateArgs} args - Arguments to update one UserAppConnection.
+     * Update one ApplicationConnection.
+     * @param {ApplicationConnectionUpdateArgs} args - Arguments to update one ApplicationConnection.
      * @example
-     * // Update one UserAppConnection
-     * const userAppConnection = await prisma.userAppConnection.update({
+     * // Update one ApplicationConnection
+     * const applicationConnection = await prisma.applicationConnection.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -28176,30 +28176,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends UserAppConnectionUpdateArgs>(args: SelectSubset<T, UserAppConnectionUpdateArgs<ExtArgs>>): Prisma__UserAppConnectionClient<$Result.GetResult<Prisma.$UserAppConnectionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends ApplicationConnectionUpdateArgs>(args: SelectSubset<T, ApplicationConnectionUpdateArgs<ExtArgs>>): Prisma__ApplicationConnectionClient<$Result.GetResult<Prisma.$ApplicationConnectionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more UserAppConnections.
-     * @param {UserAppConnectionDeleteManyArgs} args - Arguments to filter UserAppConnections to delete.
+     * Delete zero or more ApplicationConnections.
+     * @param {ApplicationConnectionDeleteManyArgs} args - Arguments to filter ApplicationConnections to delete.
      * @example
-     * // Delete a few UserAppConnections
-     * const { count } = await prisma.userAppConnection.deleteMany({
+     * // Delete a few ApplicationConnections
+     * const { count } = await prisma.applicationConnection.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends UserAppConnectionDeleteManyArgs>(args?: SelectSubset<T, UserAppConnectionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends ApplicationConnectionDeleteManyArgs>(args?: SelectSubset<T, ApplicationConnectionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more UserAppConnections.
+     * Update zero or more ApplicationConnections.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserAppConnectionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {ApplicationConnectionUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many UserAppConnections
-     * const userAppConnection = await prisma.userAppConnection.updateMany({
+     * // Update many ApplicationConnections
+     * const applicationConnection = await prisma.applicationConnection.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -28209,14 +28209,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends UserAppConnectionUpdateManyArgs>(args: SelectSubset<T, UserAppConnectionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends ApplicationConnectionUpdateManyArgs>(args: SelectSubset<T, ApplicationConnectionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more UserAppConnections and returns the data updated in the database.
-     * @param {UserAppConnectionUpdateManyAndReturnArgs} args - Arguments to update many UserAppConnections.
+     * Update zero or more ApplicationConnections and returns the data updated in the database.
+     * @param {ApplicationConnectionUpdateManyAndReturnArgs} args - Arguments to update many ApplicationConnections.
      * @example
-     * // Update many UserAppConnections
-     * const userAppConnection = await prisma.userAppConnection.updateManyAndReturn({
+     * // Update many ApplicationConnections
+     * const applicationConnection = await prisma.applicationConnection.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -28225,8 +28225,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more UserAppConnections and only return the `id`
-     * const userAppConnectionWithIdOnly = await prisma.userAppConnection.updateManyAndReturn({
+     * // Update zero or more ApplicationConnections and only return the `id`
+     * const applicationConnectionWithIdOnly = await prisma.applicationConnection.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -28239,56 +28239,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends UserAppConnectionUpdateManyAndReturnArgs>(args: SelectSubset<T, UserAppConnectionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAppConnectionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends ApplicationConnectionUpdateManyAndReturnArgs>(args: SelectSubset<T, ApplicationConnectionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationConnectionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one UserAppConnection.
-     * @param {UserAppConnectionUpsertArgs} args - Arguments to update or create a UserAppConnection.
+     * Create or update one ApplicationConnection.
+     * @param {ApplicationConnectionUpsertArgs} args - Arguments to update or create a ApplicationConnection.
      * @example
-     * // Update or create a UserAppConnection
-     * const userAppConnection = await prisma.userAppConnection.upsert({
+     * // Update or create a ApplicationConnection
+     * const applicationConnection = await prisma.applicationConnection.upsert({
      *   create: {
-     *     // ... data to create a UserAppConnection
+     *     // ... data to create a ApplicationConnection
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the UserAppConnection we want to update
+     *     // ... the filter for the ApplicationConnection we want to update
      *   }
      * })
      */
-    upsert<T extends UserAppConnectionUpsertArgs>(args: SelectSubset<T, UserAppConnectionUpsertArgs<ExtArgs>>): Prisma__UserAppConnectionClient<$Result.GetResult<Prisma.$UserAppConnectionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends ApplicationConnectionUpsertArgs>(args: SelectSubset<T, ApplicationConnectionUpsertArgs<ExtArgs>>): Prisma__ApplicationConnectionClient<$Result.GetResult<Prisma.$ApplicationConnectionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of UserAppConnections.
+     * Count the number of ApplicationConnections.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserAppConnectionCountArgs} args - Arguments to filter UserAppConnections to count.
+     * @param {ApplicationConnectionCountArgs} args - Arguments to filter ApplicationConnections to count.
      * @example
-     * // Count the number of UserAppConnections
-     * const count = await prisma.userAppConnection.count({
+     * // Count the number of ApplicationConnections
+     * const count = await prisma.applicationConnection.count({
      *   where: {
-     *     // ... the filter for the UserAppConnections we want to count
+     *     // ... the filter for the ApplicationConnections we want to count
      *   }
      * })
     **/
-    count<T extends UserAppConnectionCountArgs>(
-      args?: Subset<T, UserAppConnectionCountArgs>,
+    count<T extends ApplicationConnectionCountArgs>(
+      args?: Subset<T, ApplicationConnectionCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], UserAppConnectionCountAggregateOutputType>
+          : GetScalarType<T['select'], ApplicationConnectionCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a UserAppConnection.
+     * Allows you to perform aggregations operations on a ApplicationConnection.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserAppConnectionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {ApplicationConnectionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -28308,13 +28308,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends UserAppConnectionAggregateArgs>(args: Subset<T, UserAppConnectionAggregateArgs>): Prisma.PrismaPromise<GetUserAppConnectionAggregateType<T>>
+    aggregate<T extends ApplicationConnectionAggregateArgs>(args: Subset<T, ApplicationConnectionAggregateArgs>): Prisma.PrismaPromise<GetApplicationConnectionAggregateType<T>>
 
     /**
-     * Group by UserAppConnection.
+     * Group by ApplicationConnection.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserAppConnectionGroupByArgs} args - Group by arguments.
+     * @param {ApplicationConnectionGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -28329,14 +28329,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends UserAppConnectionGroupByArgs,
+      T extends ApplicationConnectionGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: UserAppConnectionGroupByArgs['orderBy'] }
-        : { orderBy?: UserAppConnectionGroupByArgs['orderBy'] },
+        ? { orderBy: ApplicationConnectionGroupByArgs['orderBy'] }
+        : { orderBy?: ApplicationConnectionGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -28385,20 +28385,20 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, UserAppConnectionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserAppConnectionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, ApplicationConnectionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetApplicationConnectionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the UserAppConnection model
+   * Fields of the ApplicationConnection model
    */
-  readonly fields: UserAppConnectionFieldRefs;
+  readonly fields: ApplicationConnectionFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for UserAppConnection.
+   * The delegate class that acts as a "Promise-like" for ApplicationConnection.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__UserAppConnectionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__ApplicationConnectionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     account<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     application<T extends ApplicationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationDefaultArgs<ExtArgs>>): Prisma__ApplicationClient<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -28428,424 +28428,424 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the UserAppConnection model
+   * Fields of the ApplicationConnection model
    */
-  interface UserAppConnectionFieldRefs {
-    readonly id: FieldRef<"UserAppConnection", 'String'>
-    readonly accountId: FieldRef<"UserAppConnection", 'String'>
-    readonly appId: FieldRef<"UserAppConnection", 'String'>
-    readonly connectedAt: FieldRef<"UserAppConnection", 'DateTime'>
+  interface ApplicationConnectionFieldRefs {
+    readonly id: FieldRef<"ApplicationConnection", 'String'>
+    readonly accountId: FieldRef<"ApplicationConnection", 'String'>
+    readonly appId: FieldRef<"ApplicationConnection", 'String'>
+    readonly connectedAt: FieldRef<"ApplicationConnection", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * UserAppConnection findUnique
+   * ApplicationConnection findUnique
    */
-  export type UserAppConnectionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ApplicationConnectionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserAppConnection
+     * Select specific fields to fetch from the ApplicationConnection
      */
-    select?: UserAppConnectionSelect<ExtArgs> | null
+    select?: ApplicationConnectionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserAppConnection
+     * Omit specific fields from the ApplicationConnection
      */
-    omit?: UserAppConnectionOmit<ExtArgs> | null
+    omit?: ApplicationConnectionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserAppConnectionInclude<ExtArgs> | null
+    include?: ApplicationConnectionInclude<ExtArgs> | null
     /**
-     * Filter, which UserAppConnection to fetch.
+     * Filter, which ApplicationConnection to fetch.
      */
-    where: UserAppConnectionWhereUniqueInput
+    where: ApplicationConnectionWhereUniqueInput
   }
 
   /**
-   * UserAppConnection findUniqueOrThrow
+   * ApplicationConnection findUniqueOrThrow
    */
-  export type UserAppConnectionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ApplicationConnectionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserAppConnection
+     * Select specific fields to fetch from the ApplicationConnection
      */
-    select?: UserAppConnectionSelect<ExtArgs> | null
+    select?: ApplicationConnectionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserAppConnection
+     * Omit specific fields from the ApplicationConnection
      */
-    omit?: UserAppConnectionOmit<ExtArgs> | null
+    omit?: ApplicationConnectionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserAppConnectionInclude<ExtArgs> | null
+    include?: ApplicationConnectionInclude<ExtArgs> | null
     /**
-     * Filter, which UserAppConnection to fetch.
+     * Filter, which ApplicationConnection to fetch.
      */
-    where: UserAppConnectionWhereUniqueInput
+    where: ApplicationConnectionWhereUniqueInput
   }
 
   /**
-   * UserAppConnection findFirst
+   * ApplicationConnection findFirst
    */
-  export type UserAppConnectionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ApplicationConnectionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserAppConnection
+     * Select specific fields to fetch from the ApplicationConnection
      */
-    select?: UserAppConnectionSelect<ExtArgs> | null
+    select?: ApplicationConnectionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserAppConnection
+     * Omit specific fields from the ApplicationConnection
      */
-    omit?: UserAppConnectionOmit<ExtArgs> | null
+    omit?: ApplicationConnectionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserAppConnectionInclude<ExtArgs> | null
+    include?: ApplicationConnectionInclude<ExtArgs> | null
     /**
-     * Filter, which UserAppConnection to fetch.
+     * Filter, which ApplicationConnection to fetch.
      */
-    where?: UserAppConnectionWhereInput
+    where?: ApplicationConnectionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of UserAppConnections to fetch.
+     * Determine the order of ApplicationConnections to fetch.
      */
-    orderBy?: UserAppConnectionOrderByWithRelationInput | UserAppConnectionOrderByWithRelationInput[]
+    orderBy?: ApplicationConnectionOrderByWithRelationInput | ApplicationConnectionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for UserAppConnections.
+     * Sets the position for searching for ApplicationConnections.
      */
-    cursor?: UserAppConnectionWhereUniqueInput
+    cursor?: ApplicationConnectionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` UserAppConnections from the position of the cursor.
+     * Take `±n` ApplicationConnections from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` UserAppConnections.
+     * Skip the first `n` ApplicationConnections.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of UserAppConnections.
+     * Filter by unique combinations of ApplicationConnections.
      */
-    distinct?: UserAppConnectionScalarFieldEnum | UserAppConnectionScalarFieldEnum[]
+    distinct?: ApplicationConnectionScalarFieldEnum | ApplicationConnectionScalarFieldEnum[]
   }
 
   /**
-   * UserAppConnection findFirstOrThrow
+   * ApplicationConnection findFirstOrThrow
    */
-  export type UserAppConnectionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ApplicationConnectionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserAppConnection
+     * Select specific fields to fetch from the ApplicationConnection
      */
-    select?: UserAppConnectionSelect<ExtArgs> | null
+    select?: ApplicationConnectionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserAppConnection
+     * Omit specific fields from the ApplicationConnection
      */
-    omit?: UserAppConnectionOmit<ExtArgs> | null
+    omit?: ApplicationConnectionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserAppConnectionInclude<ExtArgs> | null
+    include?: ApplicationConnectionInclude<ExtArgs> | null
     /**
-     * Filter, which UserAppConnection to fetch.
+     * Filter, which ApplicationConnection to fetch.
      */
-    where?: UserAppConnectionWhereInput
+    where?: ApplicationConnectionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of UserAppConnections to fetch.
+     * Determine the order of ApplicationConnections to fetch.
      */
-    orderBy?: UserAppConnectionOrderByWithRelationInput | UserAppConnectionOrderByWithRelationInput[]
+    orderBy?: ApplicationConnectionOrderByWithRelationInput | ApplicationConnectionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for UserAppConnections.
+     * Sets the position for searching for ApplicationConnections.
      */
-    cursor?: UserAppConnectionWhereUniqueInput
+    cursor?: ApplicationConnectionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` UserAppConnections from the position of the cursor.
+     * Take `±n` ApplicationConnections from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` UserAppConnections.
+     * Skip the first `n` ApplicationConnections.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of UserAppConnections.
+     * Filter by unique combinations of ApplicationConnections.
      */
-    distinct?: UserAppConnectionScalarFieldEnum | UserAppConnectionScalarFieldEnum[]
+    distinct?: ApplicationConnectionScalarFieldEnum | ApplicationConnectionScalarFieldEnum[]
   }
 
   /**
-   * UserAppConnection findMany
+   * ApplicationConnection findMany
    */
-  export type UserAppConnectionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ApplicationConnectionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserAppConnection
+     * Select specific fields to fetch from the ApplicationConnection
      */
-    select?: UserAppConnectionSelect<ExtArgs> | null
+    select?: ApplicationConnectionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserAppConnection
+     * Omit specific fields from the ApplicationConnection
      */
-    omit?: UserAppConnectionOmit<ExtArgs> | null
+    omit?: ApplicationConnectionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserAppConnectionInclude<ExtArgs> | null
+    include?: ApplicationConnectionInclude<ExtArgs> | null
     /**
-     * Filter, which UserAppConnections to fetch.
+     * Filter, which ApplicationConnections to fetch.
      */
-    where?: UserAppConnectionWhereInput
+    where?: ApplicationConnectionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of UserAppConnections to fetch.
+     * Determine the order of ApplicationConnections to fetch.
      */
-    orderBy?: UserAppConnectionOrderByWithRelationInput | UserAppConnectionOrderByWithRelationInput[]
+    orderBy?: ApplicationConnectionOrderByWithRelationInput | ApplicationConnectionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing UserAppConnections.
+     * Sets the position for listing ApplicationConnections.
      */
-    cursor?: UserAppConnectionWhereUniqueInput
+    cursor?: ApplicationConnectionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` UserAppConnections from the position of the cursor.
+     * Take `±n` ApplicationConnections from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` UserAppConnections.
+     * Skip the first `n` ApplicationConnections.
      */
     skip?: number
-    distinct?: UserAppConnectionScalarFieldEnum | UserAppConnectionScalarFieldEnum[]
+    distinct?: ApplicationConnectionScalarFieldEnum | ApplicationConnectionScalarFieldEnum[]
   }
 
   /**
-   * UserAppConnection create
+   * ApplicationConnection create
    */
-  export type UserAppConnectionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ApplicationConnectionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserAppConnection
+     * Select specific fields to fetch from the ApplicationConnection
      */
-    select?: UserAppConnectionSelect<ExtArgs> | null
+    select?: ApplicationConnectionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserAppConnection
+     * Omit specific fields from the ApplicationConnection
      */
-    omit?: UserAppConnectionOmit<ExtArgs> | null
+    omit?: ApplicationConnectionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserAppConnectionInclude<ExtArgs> | null
+    include?: ApplicationConnectionInclude<ExtArgs> | null
     /**
-     * The data needed to create a UserAppConnection.
+     * The data needed to create a ApplicationConnection.
      */
-    data: XOR<UserAppConnectionCreateInput, UserAppConnectionUncheckedCreateInput>
+    data: XOR<ApplicationConnectionCreateInput, ApplicationConnectionUncheckedCreateInput>
   }
 
   /**
-   * UserAppConnection createMany
+   * ApplicationConnection createMany
    */
-  export type UserAppConnectionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ApplicationConnectionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many UserAppConnections.
+     * The data used to create many ApplicationConnections.
      */
-    data: UserAppConnectionCreateManyInput | UserAppConnectionCreateManyInput[]
+    data: ApplicationConnectionCreateManyInput | ApplicationConnectionCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * UserAppConnection createManyAndReturn
+   * ApplicationConnection createManyAndReturn
    */
-  export type UserAppConnectionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ApplicationConnectionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserAppConnection
+     * Select specific fields to fetch from the ApplicationConnection
      */
-    select?: UserAppConnectionSelectCreateManyAndReturn<ExtArgs> | null
+    select?: ApplicationConnectionSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the UserAppConnection
+     * Omit specific fields from the ApplicationConnection
      */
-    omit?: UserAppConnectionOmit<ExtArgs> | null
+    omit?: ApplicationConnectionOmit<ExtArgs> | null
     /**
-     * The data used to create many UserAppConnections.
+     * The data used to create many ApplicationConnections.
      */
-    data: UserAppConnectionCreateManyInput | UserAppConnectionCreateManyInput[]
+    data: ApplicationConnectionCreateManyInput | ApplicationConnectionCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserAppConnectionIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: ApplicationConnectionIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * UserAppConnection update
+   * ApplicationConnection update
    */
-  export type UserAppConnectionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ApplicationConnectionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserAppConnection
+     * Select specific fields to fetch from the ApplicationConnection
      */
-    select?: UserAppConnectionSelect<ExtArgs> | null
+    select?: ApplicationConnectionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserAppConnection
+     * Omit specific fields from the ApplicationConnection
      */
-    omit?: UserAppConnectionOmit<ExtArgs> | null
+    omit?: ApplicationConnectionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserAppConnectionInclude<ExtArgs> | null
+    include?: ApplicationConnectionInclude<ExtArgs> | null
     /**
-     * The data needed to update a UserAppConnection.
+     * The data needed to update a ApplicationConnection.
      */
-    data: XOR<UserAppConnectionUpdateInput, UserAppConnectionUncheckedUpdateInput>
+    data: XOR<ApplicationConnectionUpdateInput, ApplicationConnectionUncheckedUpdateInput>
     /**
-     * Choose, which UserAppConnection to update.
+     * Choose, which ApplicationConnection to update.
      */
-    where: UserAppConnectionWhereUniqueInput
+    where: ApplicationConnectionWhereUniqueInput
   }
 
   /**
-   * UserAppConnection updateMany
+   * ApplicationConnection updateMany
    */
-  export type UserAppConnectionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ApplicationConnectionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update UserAppConnections.
+     * The data used to update ApplicationConnections.
      */
-    data: XOR<UserAppConnectionUpdateManyMutationInput, UserAppConnectionUncheckedUpdateManyInput>
+    data: XOR<ApplicationConnectionUpdateManyMutationInput, ApplicationConnectionUncheckedUpdateManyInput>
     /**
-     * Filter which UserAppConnections to update
+     * Filter which ApplicationConnections to update
      */
-    where?: UserAppConnectionWhereInput
+    where?: ApplicationConnectionWhereInput
     /**
-     * Limit how many UserAppConnections to update.
+     * Limit how many ApplicationConnections to update.
      */
     limit?: number
   }
 
   /**
-   * UserAppConnection updateManyAndReturn
+   * ApplicationConnection updateManyAndReturn
    */
-  export type UserAppConnectionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ApplicationConnectionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserAppConnection
+     * Select specific fields to fetch from the ApplicationConnection
      */
-    select?: UserAppConnectionSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: ApplicationConnectionSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the UserAppConnection
+     * Omit specific fields from the ApplicationConnection
      */
-    omit?: UserAppConnectionOmit<ExtArgs> | null
+    omit?: ApplicationConnectionOmit<ExtArgs> | null
     /**
-     * The data used to update UserAppConnections.
+     * The data used to update ApplicationConnections.
      */
-    data: XOR<UserAppConnectionUpdateManyMutationInput, UserAppConnectionUncheckedUpdateManyInput>
+    data: XOR<ApplicationConnectionUpdateManyMutationInput, ApplicationConnectionUncheckedUpdateManyInput>
     /**
-     * Filter which UserAppConnections to update
+     * Filter which ApplicationConnections to update
      */
-    where?: UserAppConnectionWhereInput
+    where?: ApplicationConnectionWhereInput
     /**
-     * Limit how many UserAppConnections to update.
+     * Limit how many ApplicationConnections to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserAppConnectionIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: ApplicationConnectionIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * UserAppConnection upsert
+   * ApplicationConnection upsert
    */
-  export type UserAppConnectionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ApplicationConnectionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserAppConnection
+     * Select specific fields to fetch from the ApplicationConnection
      */
-    select?: UserAppConnectionSelect<ExtArgs> | null
+    select?: ApplicationConnectionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserAppConnection
+     * Omit specific fields from the ApplicationConnection
      */
-    omit?: UserAppConnectionOmit<ExtArgs> | null
+    omit?: ApplicationConnectionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserAppConnectionInclude<ExtArgs> | null
+    include?: ApplicationConnectionInclude<ExtArgs> | null
     /**
-     * The filter to search for the UserAppConnection to update in case it exists.
+     * The filter to search for the ApplicationConnection to update in case it exists.
      */
-    where: UserAppConnectionWhereUniqueInput
+    where: ApplicationConnectionWhereUniqueInput
     /**
-     * In case the UserAppConnection found by the `where` argument doesn't exist, create a new UserAppConnection with this data.
+     * In case the ApplicationConnection found by the `where` argument doesn't exist, create a new ApplicationConnection with this data.
      */
-    create: XOR<UserAppConnectionCreateInput, UserAppConnectionUncheckedCreateInput>
+    create: XOR<ApplicationConnectionCreateInput, ApplicationConnectionUncheckedCreateInput>
     /**
-     * In case the UserAppConnection was found with the provided `where` argument, update it with this data.
+     * In case the ApplicationConnection was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<UserAppConnectionUpdateInput, UserAppConnectionUncheckedUpdateInput>
+    update: XOR<ApplicationConnectionUpdateInput, ApplicationConnectionUncheckedUpdateInput>
   }
 
   /**
-   * UserAppConnection delete
+   * ApplicationConnection delete
    */
-  export type UserAppConnectionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ApplicationConnectionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserAppConnection
+     * Select specific fields to fetch from the ApplicationConnection
      */
-    select?: UserAppConnectionSelect<ExtArgs> | null
+    select?: ApplicationConnectionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserAppConnection
+     * Omit specific fields from the ApplicationConnection
      */
-    omit?: UserAppConnectionOmit<ExtArgs> | null
+    omit?: ApplicationConnectionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserAppConnectionInclude<ExtArgs> | null
+    include?: ApplicationConnectionInclude<ExtArgs> | null
     /**
-     * Filter which UserAppConnection to delete.
+     * Filter which ApplicationConnection to delete.
      */
-    where: UserAppConnectionWhereUniqueInput
+    where: ApplicationConnectionWhereUniqueInput
   }
 
   /**
-   * UserAppConnection deleteMany
+   * ApplicationConnection deleteMany
    */
-  export type UserAppConnectionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ApplicationConnectionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which UserAppConnections to delete
+     * Filter which ApplicationConnections to delete
      */
-    where?: UserAppConnectionWhereInput
+    where?: ApplicationConnectionWhereInput
     /**
-     * Limit how many UserAppConnections to delete.
+     * Limit how many ApplicationConnections to delete.
      */
     limit?: number
   }
 
   /**
-   * UserAppConnection without action
+   * ApplicationConnection without action
    */
-  export type UserAppConnectionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ApplicationConnectionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserAppConnection
+     * Select specific fields to fetch from the ApplicationConnection
      */
-    select?: UserAppConnectionSelect<ExtArgs> | null
+    select?: ApplicationConnectionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the UserAppConnection
+     * Omit specific fields from the ApplicationConnection
      */
-    omit?: UserAppConnectionOmit<ExtArgs> | null
+    omit?: ApplicationConnectionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserAppConnectionInclude<ExtArgs> | null
+    include?: ApplicationConnectionInclude<ExtArgs> | null
   }
 
 
@@ -29068,7 +29068,7 @@ export namespace Prisma {
   export type PermitScalarFieldEnum = (typeof PermitScalarFieldEnum)[keyof typeof PermitScalarFieldEnum]
 
 
-  export const SessionScalarFieldEnum: {
+  export const AuthSessionScalarFieldEnum: {
     id: 'id',
     accountId: 'accountId',
     application: 'application',
@@ -29087,7 +29087,7 @@ export namespace Prisma {
     permissions: 'permissions'
   };
 
-  export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+  export type AuthSessionScalarFieldEnum = (typeof AuthSessionScalarFieldEnum)[keyof typeof AuthSessionScalarFieldEnum]
 
 
   export const SystemErrorScalarFieldEnum: {
@@ -29171,14 +29171,14 @@ export namespace Prisma {
   export type PortfolioRoleScalarFieldEnum = (typeof PortfolioRoleScalarFieldEnum)[keyof typeof PortfolioRoleScalarFieldEnum]
 
 
-  export const UserAppConnectionScalarFieldEnum: {
+  export const ApplicationConnectionScalarFieldEnum: {
     id: 'id',
     accountId: 'accountId',
     appId: 'appId',
     connectedAt: 'connectedAt'
   };
 
-  export type UserAppConnectionScalarFieldEnum = (typeof UserAppConnectionScalarFieldEnum)[keyof typeof UserAppConnectionScalarFieldEnum]
+  export type ApplicationConnectionScalarFieldEnum = (typeof ApplicationConnectionScalarFieldEnum)[keyof typeof ApplicationConnectionScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -29358,9 +29358,9 @@ export namespace Prisma {
     neupIds?: NeupIdListRelationFilter
     permits?: PermitListRelationFilter
     targetPermits?: PermitListRelationFilter
-    sessions?: SessionListRelationFilter
+    sessions?: AuthSessionListRelationFilter
     errorLogs?: SystemErrorListRelationFilter
-    appConnections?: UserAppConnectionListRelationFilter
+    appConnections?: ApplicationConnectionListRelationFilter
     ownedApplications?: ApplicationListRelationFilter
     notifications?: NotificationListRelationFilter
     verifications?: VerificationListRelationFilter
@@ -29387,9 +29387,9 @@ export namespace Prisma {
     neupIds?: NeupIdOrderByRelationAggregateInput
     permits?: PermitOrderByRelationAggregateInput
     targetPermits?: PermitOrderByRelationAggregateInput
-    sessions?: SessionOrderByRelationAggregateInput
+    sessions?: AuthSessionOrderByRelationAggregateInput
     errorLogs?: SystemErrorOrderByRelationAggregateInput
-    appConnections?: UserAppConnectionOrderByRelationAggregateInput
+    appConnections?: ApplicationConnectionOrderByRelationAggregateInput
     ownedApplications?: ApplicationOrderByRelationAggregateInput
     notifications?: NotificationOrderByRelationAggregateInput
     verifications?: VerificationOrderByRelationAggregateInput
@@ -29419,9 +29419,9 @@ export namespace Prisma {
     neupIds?: NeupIdListRelationFilter
     permits?: PermitListRelationFilter
     targetPermits?: PermitListRelationFilter
-    sessions?: SessionListRelationFilter
+    sessions?: AuthSessionListRelationFilter
     errorLogs?: SystemErrorListRelationFilter
-    appConnections?: UserAppConnectionListRelationFilter
+    appConnections?: ApplicationConnectionListRelationFilter
     ownedApplications?: ApplicationListRelationFilter
     notifications?: NotificationListRelationFilter
     verifications?: VerificationListRelationFilter
@@ -30426,30 +30426,30 @@ export namespace Prisma {
     managedBy?: StringNullableWithAggregatesFilter<"Permit"> | string | null
   }
 
-  export type SessionWhereInput = {
-    AND?: SessionWhereInput | SessionWhereInput[]
-    OR?: SessionWhereInput[]
-    NOT?: SessionWhereInput | SessionWhereInput[]
-    id?: StringFilter<"Session"> | string
-    accountId?: StringFilter<"Session"> | string
-    application?: StringNullableFilter<"Session"> | string | null
-    applicationType?: StringFilter<"Session"> | string
-    applicationDomain?: StringNullableFilter<"Session"> | string | null
-    ipAddress?: StringFilter<"Session"> | string
-    userAgent?: StringFilter<"Session"> | string
-    lastLoggedIn?: DateTimeFilter<"Session"> | Date | string
-    loginType?: StringFilter<"Session"> | string
-    geolocation?: StringNullableFilter<"Session"> | string | null
-    deviceType?: StringNullableFilter<"Session"> | string | null
-    expiresOn?: DateTimeNullableFilter<"Session"> | Date | string | null
-    isExpired?: BoolFilter<"Session"> | boolean
-    authSessionKey?: StringNullableFilter<"Session"> | string | null
-    dependentKeys?: JsonNullableFilter<"Session">
-    permissions?: JsonNullableFilter<"Session">
+  export type AuthSessionWhereInput = {
+    AND?: AuthSessionWhereInput | AuthSessionWhereInput[]
+    OR?: AuthSessionWhereInput[]
+    NOT?: AuthSessionWhereInput | AuthSessionWhereInput[]
+    id?: StringFilter<"AuthSession"> | string
+    accountId?: StringFilter<"AuthSession"> | string
+    application?: StringNullableFilter<"AuthSession"> | string | null
+    applicationType?: StringFilter<"AuthSession"> | string
+    applicationDomain?: StringNullableFilter<"AuthSession"> | string | null
+    ipAddress?: StringFilter<"AuthSession"> | string
+    userAgent?: StringFilter<"AuthSession"> | string
+    lastLoggedIn?: DateTimeFilter<"AuthSession"> | Date | string
+    loginType?: StringFilter<"AuthSession"> | string
+    geolocation?: StringNullableFilter<"AuthSession"> | string | null
+    deviceType?: StringNullableFilter<"AuthSession"> | string | null
+    expiresOn?: DateTimeNullableFilter<"AuthSession"> | Date | string | null
+    isExpired?: BoolFilter<"AuthSession"> | boolean
+    authSessionKey?: StringNullableFilter<"AuthSession"> | string | null
+    dependentKeys?: JsonNullableFilter<"AuthSession">
+    permissions?: JsonNullableFilter<"AuthSession">
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
   }
 
-  export type SessionOrderByWithRelationInput = {
+  export type AuthSessionOrderByWithRelationInput = {
     id?: SortOrder
     accountId?: SortOrder
     application?: SortOrderInput | SortOrder
@@ -30469,30 +30469,30 @@ export namespace Prisma {
     account?: AccountOrderByWithRelationInput
   }
 
-  export type SessionWhereUniqueInput = Prisma.AtLeast<{
+  export type AuthSessionWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: SessionWhereInput | SessionWhereInput[]
-    OR?: SessionWhereInput[]
-    NOT?: SessionWhereInput | SessionWhereInput[]
-    accountId?: StringFilter<"Session"> | string
-    application?: StringNullableFilter<"Session"> | string | null
-    applicationType?: StringFilter<"Session"> | string
-    applicationDomain?: StringNullableFilter<"Session"> | string | null
-    ipAddress?: StringFilter<"Session"> | string
-    userAgent?: StringFilter<"Session"> | string
-    lastLoggedIn?: DateTimeFilter<"Session"> | Date | string
-    loginType?: StringFilter<"Session"> | string
-    geolocation?: StringNullableFilter<"Session"> | string | null
-    deviceType?: StringNullableFilter<"Session"> | string | null
-    expiresOn?: DateTimeNullableFilter<"Session"> | Date | string | null
-    isExpired?: BoolFilter<"Session"> | boolean
-    authSessionKey?: StringNullableFilter<"Session"> | string | null
-    dependentKeys?: JsonNullableFilter<"Session">
-    permissions?: JsonNullableFilter<"Session">
+    AND?: AuthSessionWhereInput | AuthSessionWhereInput[]
+    OR?: AuthSessionWhereInput[]
+    NOT?: AuthSessionWhereInput | AuthSessionWhereInput[]
+    accountId?: StringFilter<"AuthSession"> | string
+    application?: StringNullableFilter<"AuthSession"> | string | null
+    applicationType?: StringFilter<"AuthSession"> | string
+    applicationDomain?: StringNullableFilter<"AuthSession"> | string | null
+    ipAddress?: StringFilter<"AuthSession"> | string
+    userAgent?: StringFilter<"AuthSession"> | string
+    lastLoggedIn?: DateTimeFilter<"AuthSession"> | Date | string
+    loginType?: StringFilter<"AuthSession"> | string
+    geolocation?: StringNullableFilter<"AuthSession"> | string | null
+    deviceType?: StringNullableFilter<"AuthSession"> | string | null
+    expiresOn?: DateTimeNullableFilter<"AuthSession"> | Date | string | null
+    isExpired?: BoolFilter<"AuthSession"> | boolean
+    authSessionKey?: StringNullableFilter<"AuthSession"> | string | null
+    dependentKeys?: JsonNullableFilter<"AuthSession">
+    permissions?: JsonNullableFilter<"AuthSession">
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
   }, "id">
 
-  export type SessionOrderByWithAggregationInput = {
+  export type AuthSessionOrderByWithAggregationInput = {
     id?: SortOrder
     accountId?: SortOrder
     application?: SortOrderInput | SortOrder
@@ -30509,31 +30509,31 @@ export namespace Prisma {
     authSessionKey?: SortOrderInput | SortOrder
     dependentKeys?: SortOrderInput | SortOrder
     permissions?: SortOrderInput | SortOrder
-    _count?: SessionCountOrderByAggregateInput
-    _max?: SessionMaxOrderByAggregateInput
-    _min?: SessionMinOrderByAggregateInput
+    _count?: AuthSessionCountOrderByAggregateInput
+    _max?: AuthSessionMaxOrderByAggregateInput
+    _min?: AuthSessionMinOrderByAggregateInput
   }
 
-  export type SessionScalarWhereWithAggregatesInput = {
-    AND?: SessionScalarWhereWithAggregatesInput | SessionScalarWhereWithAggregatesInput[]
-    OR?: SessionScalarWhereWithAggregatesInput[]
-    NOT?: SessionScalarWhereWithAggregatesInput | SessionScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Session"> | string
-    accountId?: StringWithAggregatesFilter<"Session"> | string
-    application?: StringNullableWithAggregatesFilter<"Session"> | string | null
-    applicationType?: StringWithAggregatesFilter<"Session"> | string
-    applicationDomain?: StringNullableWithAggregatesFilter<"Session"> | string | null
-    ipAddress?: StringWithAggregatesFilter<"Session"> | string
-    userAgent?: StringWithAggregatesFilter<"Session"> | string
-    lastLoggedIn?: DateTimeWithAggregatesFilter<"Session"> | Date | string
-    loginType?: StringWithAggregatesFilter<"Session"> | string
-    geolocation?: StringNullableWithAggregatesFilter<"Session"> | string | null
-    deviceType?: StringNullableWithAggregatesFilter<"Session"> | string | null
-    expiresOn?: DateTimeNullableWithAggregatesFilter<"Session"> | Date | string | null
-    isExpired?: BoolWithAggregatesFilter<"Session"> | boolean
-    authSessionKey?: StringNullableWithAggregatesFilter<"Session"> | string | null
-    dependentKeys?: JsonNullableWithAggregatesFilter<"Session">
-    permissions?: JsonNullableWithAggregatesFilter<"Session">
+  export type AuthSessionScalarWhereWithAggregatesInput = {
+    AND?: AuthSessionScalarWhereWithAggregatesInput | AuthSessionScalarWhereWithAggregatesInput[]
+    OR?: AuthSessionScalarWhereWithAggregatesInput[]
+    NOT?: AuthSessionScalarWhereWithAggregatesInput | AuthSessionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AuthSession"> | string
+    accountId?: StringWithAggregatesFilter<"AuthSession"> | string
+    application?: StringNullableWithAggregatesFilter<"AuthSession"> | string | null
+    applicationType?: StringWithAggregatesFilter<"AuthSession"> | string
+    applicationDomain?: StringNullableWithAggregatesFilter<"AuthSession"> | string | null
+    ipAddress?: StringWithAggregatesFilter<"AuthSession"> | string
+    userAgent?: StringWithAggregatesFilter<"AuthSession"> | string
+    lastLoggedIn?: DateTimeWithAggregatesFilter<"AuthSession"> | Date | string
+    loginType?: StringWithAggregatesFilter<"AuthSession"> | string
+    geolocation?: StringNullableWithAggregatesFilter<"AuthSession"> | string | null
+    deviceType?: StringNullableWithAggregatesFilter<"AuthSession"> | string | null
+    expiresOn?: DateTimeNullableWithAggregatesFilter<"AuthSession"> | Date | string | null
+    isExpired?: BoolWithAggregatesFilter<"AuthSession"> | boolean
+    authSessionKey?: StringNullableWithAggregatesFilter<"AuthSession"> | string | null
+    dependentKeys?: JsonNullableWithAggregatesFilter<"AuthSession">
+    permissions?: JsonNullableWithAggregatesFilter<"AuthSession">
   }
 
   export type SystemErrorWhereInput = {
@@ -30650,7 +30650,7 @@ export namespace Prisma {
     ownerAccountId?: StringNullableFilter<"Application"> | string | null
     createdAt?: DateTimeFilter<"Application"> | Date | string
     owner?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
-    connections?: UserAppConnectionListRelationFilter
+    connections?: ApplicationConnectionListRelationFilter
   }
 
   export type ApplicationOrderByWithRelationInput = {
@@ -30669,7 +30669,7 @@ export namespace Prisma {
     ownerAccountId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     owner?: AccountOrderByWithRelationInput
-    connections?: UserAppConnectionOrderByRelationAggregateInput
+    connections?: ApplicationConnectionOrderByRelationAggregateInput
   }
 
   export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
@@ -30691,7 +30691,7 @@ export namespace Prisma {
     ownerAccountId?: StringNullableFilter<"Application"> | string | null
     createdAt?: DateTimeFilter<"Application"> | Date | string
     owner?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
-    connections?: UserAppConnectionListRelationFilter
+    connections?: ApplicationConnectionListRelationFilter
   }, "id">
 
   export type ApplicationOrderByWithAggregationInput = {
@@ -30958,19 +30958,19 @@ export namespace Prisma {
     details?: JsonNullableWithAggregatesFilter<"PortfolioRole">
   }
 
-  export type UserAppConnectionWhereInput = {
-    AND?: UserAppConnectionWhereInput | UserAppConnectionWhereInput[]
-    OR?: UserAppConnectionWhereInput[]
-    NOT?: UserAppConnectionWhereInput | UserAppConnectionWhereInput[]
-    id?: StringFilter<"UserAppConnection"> | string
-    accountId?: StringFilter<"UserAppConnection"> | string
-    appId?: StringFilter<"UserAppConnection"> | string
-    connectedAt?: DateTimeFilter<"UserAppConnection"> | Date | string
+  export type ApplicationConnectionWhereInput = {
+    AND?: ApplicationConnectionWhereInput | ApplicationConnectionWhereInput[]
+    OR?: ApplicationConnectionWhereInput[]
+    NOT?: ApplicationConnectionWhereInput | ApplicationConnectionWhereInput[]
+    id?: StringFilter<"ApplicationConnection"> | string
+    accountId?: StringFilter<"ApplicationConnection"> | string
+    appId?: StringFilter<"ApplicationConnection"> | string
+    connectedAt?: DateTimeFilter<"ApplicationConnection"> | Date | string
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
     application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
   }
 
-  export type UserAppConnectionOrderByWithRelationInput = {
+  export type ApplicationConnectionOrderByWithRelationInput = {
     id?: SortOrder
     accountId?: SortOrder
     appId?: SortOrder
@@ -30979,37 +30979,37 @@ export namespace Prisma {
     application?: ApplicationOrderByWithRelationInput
   }
 
-  export type UserAppConnectionWhereUniqueInput = Prisma.AtLeast<{
+  export type ApplicationConnectionWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    accountId_appId?: UserAppConnectionAccountIdAppIdCompoundUniqueInput
-    AND?: UserAppConnectionWhereInput | UserAppConnectionWhereInput[]
-    OR?: UserAppConnectionWhereInput[]
-    NOT?: UserAppConnectionWhereInput | UserAppConnectionWhereInput[]
-    accountId?: StringFilter<"UserAppConnection"> | string
-    appId?: StringFilter<"UserAppConnection"> | string
-    connectedAt?: DateTimeFilter<"UserAppConnection"> | Date | string
+    accountId_appId?: ApplicationConnectionAccountIdAppIdCompoundUniqueInput
+    AND?: ApplicationConnectionWhereInput | ApplicationConnectionWhereInput[]
+    OR?: ApplicationConnectionWhereInput[]
+    NOT?: ApplicationConnectionWhereInput | ApplicationConnectionWhereInput[]
+    accountId?: StringFilter<"ApplicationConnection"> | string
+    appId?: StringFilter<"ApplicationConnection"> | string
+    connectedAt?: DateTimeFilter<"ApplicationConnection"> | Date | string
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
     application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
   }, "id" | "accountId_appId">
 
-  export type UserAppConnectionOrderByWithAggregationInput = {
+  export type ApplicationConnectionOrderByWithAggregationInput = {
     id?: SortOrder
     accountId?: SortOrder
     appId?: SortOrder
     connectedAt?: SortOrder
-    _count?: UserAppConnectionCountOrderByAggregateInput
-    _max?: UserAppConnectionMaxOrderByAggregateInput
-    _min?: UserAppConnectionMinOrderByAggregateInput
+    _count?: ApplicationConnectionCountOrderByAggregateInput
+    _max?: ApplicationConnectionMaxOrderByAggregateInput
+    _min?: ApplicationConnectionMinOrderByAggregateInput
   }
 
-  export type UserAppConnectionScalarWhereWithAggregatesInput = {
-    AND?: UserAppConnectionScalarWhereWithAggregatesInput | UserAppConnectionScalarWhereWithAggregatesInput[]
-    OR?: UserAppConnectionScalarWhereWithAggregatesInput[]
-    NOT?: UserAppConnectionScalarWhereWithAggregatesInput | UserAppConnectionScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"UserAppConnection"> | string
-    accountId?: StringWithAggregatesFilter<"UserAppConnection"> | string
-    appId?: StringWithAggregatesFilter<"UserAppConnection"> | string
-    connectedAt?: DateTimeWithAggregatesFilter<"UserAppConnection"> | Date | string
+  export type ApplicationConnectionScalarWhereWithAggregatesInput = {
+    AND?: ApplicationConnectionScalarWhereWithAggregatesInput | ApplicationConnectionScalarWhereWithAggregatesInput[]
+    OR?: ApplicationConnectionScalarWhereWithAggregatesInput[]
+    NOT?: ApplicationConnectionScalarWhereWithAggregatesInput | ApplicationConnectionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ApplicationConnection"> | string
+    accountId?: StringWithAggregatesFilter<"ApplicationConnection"> | string
+    appId?: StringWithAggregatesFilter<"ApplicationConnection"> | string
+    connectedAt?: DateTimeWithAggregatesFilter<"ApplicationConnection"> | Date | string
   }
 
   export type AccountCreateInput = {
@@ -31025,9 +31025,9 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -31054,9 +31054,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -31083,9 +31083,9 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -31112,9 +31112,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -32198,7 +32198,7 @@ export namespace Prisma {
     managedBy?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type SessionCreateInput = {
+  export type AuthSessionCreateInput = {
     id?: string
     application?: string | null
     applicationType?: string
@@ -32217,7 +32217,7 @@ export namespace Prisma {
     account: AccountCreateNestedOneWithoutSessionsInput
   }
 
-  export type SessionUncheckedCreateInput = {
+  export type AuthSessionUncheckedCreateInput = {
     id?: string
     accountId: string
     application?: string | null
@@ -32236,7 +32236,7 @@ export namespace Prisma {
     permissions?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type SessionUpdateInput = {
+  export type AuthSessionUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     application?: NullableStringFieldUpdateOperationsInput | string | null
     applicationType?: StringFieldUpdateOperationsInput | string
@@ -32255,7 +32255,7 @@ export namespace Prisma {
     account?: AccountUpdateOneRequiredWithoutSessionsNestedInput
   }
 
-  export type SessionUncheckedUpdateInput = {
+  export type AuthSessionUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
     application?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32274,7 +32274,7 @@ export namespace Prisma {
     permissions?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type SessionCreateManyInput = {
+  export type AuthSessionCreateManyInput = {
     id?: string
     accountId: string
     application?: string | null
@@ -32293,7 +32293,7 @@ export namespace Prisma {
     permissions?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type SessionUpdateManyMutationInput = {
+  export type AuthSessionUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     application?: NullableStringFieldUpdateOperationsInput | string | null
     applicationType?: StringFieldUpdateOperationsInput | string
@@ -32311,7 +32311,7 @@ export namespace Prisma {
     permissions?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type SessionUncheckedUpdateManyInput = {
+  export type AuthSessionUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
     application?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32456,7 +32456,7 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
-    connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
+    connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateInput = {
@@ -32474,7 +32474,7 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     ownerAccountId?: string | null
     createdAt?: Date | string
-    connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
+    connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUpdateInput = {
@@ -32492,7 +32492,7 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
-    connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
+    connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateInput = {
@@ -32510,7 +32510,7 @@ export namespace Prisma {
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
+    connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationCreateManyInput = {
@@ -32780,47 +32780,47 @@ export namespace Prisma {
     details?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type UserAppConnectionCreateInput = {
+  export type ApplicationConnectionCreateInput = {
     id?: string
     connectedAt?: Date | string
     account: AccountCreateNestedOneWithoutAppConnectionsInput
     application: ApplicationCreateNestedOneWithoutConnectionsInput
   }
 
-  export type UserAppConnectionUncheckedCreateInput = {
+  export type ApplicationConnectionUncheckedCreateInput = {
     id?: string
     accountId: string
     appId: string
     connectedAt?: Date | string
   }
 
-  export type UserAppConnectionUpdateInput = {
+  export type ApplicationConnectionUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     account?: AccountUpdateOneRequiredWithoutAppConnectionsNestedInput
     application?: ApplicationUpdateOneRequiredWithoutConnectionsNestedInput
   }
 
-  export type UserAppConnectionUncheckedUpdateInput = {
+  export type ApplicationConnectionUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserAppConnectionCreateManyInput = {
+  export type ApplicationConnectionCreateManyInput = {
     id?: string
     accountId: string
     appId: string
     connectedAt?: Date | string
   }
 
-  export type UserAppConnectionUpdateManyMutationInput = {
+  export type ApplicationConnectionUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserAppConnectionUncheckedUpdateManyInput = {
+  export type ApplicationConnectionUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
@@ -32914,10 +32914,10 @@ export namespace Prisma {
     none?: PermitWhereInput
   }
 
-  export type SessionListRelationFilter = {
-    every?: SessionWhereInput
-    some?: SessionWhereInput
-    none?: SessionWhereInput
+  export type AuthSessionListRelationFilter = {
+    every?: AuthSessionWhereInput
+    some?: AuthSessionWhereInput
+    none?: AuthSessionWhereInput
   }
 
   export type SystemErrorListRelationFilter = {
@@ -32926,10 +32926,10 @@ export namespace Prisma {
     none?: SystemErrorWhereInput
   }
 
-  export type UserAppConnectionListRelationFilter = {
-    every?: UserAppConnectionWhereInput
-    some?: UserAppConnectionWhereInput
-    none?: UserAppConnectionWhereInput
+  export type ApplicationConnectionListRelationFilter = {
+    every?: ApplicationConnectionWhereInput
+    some?: ApplicationConnectionWhereInput
+    none?: ApplicationConnectionWhereInput
   }
 
   export type ApplicationListRelationFilter = {
@@ -33001,7 +33001,7 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type SessionOrderByRelationAggregateInput = {
+  export type AuthSessionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -33009,7 +33009,7 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type UserAppConnectionOrderByRelationAggregateInput = {
+  export type ApplicationConnectionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -33762,7 +33762,7 @@ export namespace Prisma {
     managedBy?: SortOrder
   }
 
-  export type SessionCountOrderByAggregateInput = {
+  export type AuthSessionCountOrderByAggregateInput = {
     id?: SortOrder
     accountId?: SortOrder
     application?: SortOrder
@@ -33781,7 +33781,7 @@ export namespace Prisma {
     permissions?: SortOrder
   }
 
-  export type SessionMaxOrderByAggregateInput = {
+  export type AuthSessionMaxOrderByAggregateInput = {
     id?: SortOrder
     accountId?: SortOrder
     application?: SortOrder
@@ -33798,7 +33798,7 @@ export namespace Prisma {
     authSessionKey?: SortOrder
   }
 
-  export type SessionMinOrderByAggregateInput = {
+  export type AuthSessionMinOrderByAggregateInput = {
     id?: SortOrder
     accountId?: SortOrder
     application?: SortOrder
@@ -34023,26 +34023,26 @@ export namespace Prisma {
     isNot?: ApplicationWhereInput
   }
 
-  export type UserAppConnectionAccountIdAppIdCompoundUniqueInput = {
+  export type ApplicationConnectionAccountIdAppIdCompoundUniqueInput = {
     accountId: string
     appId: string
   }
 
-  export type UserAppConnectionCountOrderByAggregateInput = {
+  export type ApplicationConnectionCountOrderByAggregateInput = {
     id?: SortOrder
     accountId?: SortOrder
     appId?: SortOrder
     connectedAt?: SortOrder
   }
 
-  export type UserAppConnectionMaxOrderByAggregateInput = {
+  export type ApplicationConnectionMaxOrderByAggregateInput = {
     id?: SortOrder
     accountId?: SortOrder
     appId?: SortOrder
     connectedAt?: SortOrder
   }
 
-  export type UserAppConnectionMinOrderByAggregateInput = {
+  export type ApplicationConnectionMinOrderByAggregateInput = {
     id?: SortOrder
     accountId?: SortOrder
     appId?: SortOrder
@@ -34077,11 +34077,11 @@ export namespace Prisma {
     connect?: PermitWhereUniqueInput | PermitWhereUniqueInput[]
   }
 
-  export type SessionCreateNestedManyWithoutAccountInput = {
-    create?: XOR<SessionCreateWithoutAccountInput, SessionUncheckedCreateWithoutAccountInput> | SessionCreateWithoutAccountInput[] | SessionUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: SessionCreateOrConnectWithoutAccountInput | SessionCreateOrConnectWithoutAccountInput[]
-    createMany?: SessionCreateManyAccountInputEnvelope
-    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+  export type AuthSessionCreateNestedManyWithoutAccountInput = {
+    create?: XOR<AuthSessionCreateWithoutAccountInput, AuthSessionUncheckedCreateWithoutAccountInput> | AuthSessionCreateWithoutAccountInput[] | AuthSessionUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: AuthSessionCreateOrConnectWithoutAccountInput | AuthSessionCreateOrConnectWithoutAccountInput[]
+    createMany?: AuthSessionCreateManyAccountInputEnvelope
+    connect?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
   }
 
   export type SystemErrorCreateNestedManyWithoutAccountInput = {
@@ -34091,11 +34091,11 @@ export namespace Prisma {
     connect?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
   }
 
-  export type UserAppConnectionCreateNestedManyWithoutAccountInput = {
-    create?: XOR<UserAppConnectionCreateWithoutAccountInput, UserAppConnectionUncheckedCreateWithoutAccountInput> | UserAppConnectionCreateWithoutAccountInput[] | UserAppConnectionUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: UserAppConnectionCreateOrConnectWithoutAccountInput | UserAppConnectionCreateOrConnectWithoutAccountInput[]
-    createMany?: UserAppConnectionCreateManyAccountInputEnvelope
-    connect?: UserAppConnectionWhereUniqueInput | UserAppConnectionWhereUniqueInput[]
+  export type ApplicationConnectionCreateNestedManyWithoutAccountInput = {
+    create?: XOR<ApplicationConnectionCreateWithoutAccountInput, ApplicationConnectionUncheckedCreateWithoutAccountInput> | ApplicationConnectionCreateWithoutAccountInput[] | ApplicationConnectionUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: ApplicationConnectionCreateOrConnectWithoutAccountInput | ApplicationConnectionCreateOrConnectWithoutAccountInput[]
+    createMany?: ApplicationConnectionCreateManyAccountInputEnvelope
+    connect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
   }
 
   export type ApplicationCreateNestedManyWithoutOwnerInput = {
@@ -34201,11 +34201,11 @@ export namespace Prisma {
     connect?: PermitWhereUniqueInput | PermitWhereUniqueInput[]
   }
 
-  export type SessionUncheckedCreateNestedManyWithoutAccountInput = {
-    create?: XOR<SessionCreateWithoutAccountInput, SessionUncheckedCreateWithoutAccountInput> | SessionCreateWithoutAccountInput[] | SessionUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: SessionCreateOrConnectWithoutAccountInput | SessionCreateOrConnectWithoutAccountInput[]
-    createMany?: SessionCreateManyAccountInputEnvelope
-    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+  export type AuthSessionUncheckedCreateNestedManyWithoutAccountInput = {
+    create?: XOR<AuthSessionCreateWithoutAccountInput, AuthSessionUncheckedCreateWithoutAccountInput> | AuthSessionCreateWithoutAccountInput[] | AuthSessionUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: AuthSessionCreateOrConnectWithoutAccountInput | AuthSessionCreateOrConnectWithoutAccountInput[]
+    createMany?: AuthSessionCreateManyAccountInputEnvelope
+    connect?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
   }
 
   export type SystemErrorUncheckedCreateNestedManyWithoutAccountInput = {
@@ -34215,11 +34215,11 @@ export namespace Prisma {
     connect?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
   }
 
-  export type UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput = {
-    create?: XOR<UserAppConnectionCreateWithoutAccountInput, UserAppConnectionUncheckedCreateWithoutAccountInput> | UserAppConnectionCreateWithoutAccountInput[] | UserAppConnectionUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: UserAppConnectionCreateOrConnectWithoutAccountInput | UserAppConnectionCreateOrConnectWithoutAccountInput[]
-    createMany?: UserAppConnectionCreateManyAccountInputEnvelope
-    connect?: UserAppConnectionWhereUniqueInput | UserAppConnectionWhereUniqueInput[]
+  export type ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput = {
+    create?: XOR<ApplicationConnectionCreateWithoutAccountInput, ApplicationConnectionUncheckedCreateWithoutAccountInput> | ApplicationConnectionCreateWithoutAccountInput[] | ApplicationConnectionUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: ApplicationConnectionCreateOrConnectWithoutAccountInput | ApplicationConnectionCreateOrConnectWithoutAccountInput[]
+    createMany?: ApplicationConnectionCreateManyAccountInputEnvelope
+    connect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
   }
 
   export type ApplicationUncheckedCreateNestedManyWithoutOwnerInput = {
@@ -34369,18 +34369,18 @@ export namespace Prisma {
     deleteMany?: PermitScalarWhereInput | PermitScalarWhereInput[]
   }
 
-  export type SessionUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<SessionCreateWithoutAccountInput, SessionUncheckedCreateWithoutAccountInput> | SessionCreateWithoutAccountInput[] | SessionUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: SessionCreateOrConnectWithoutAccountInput | SessionCreateOrConnectWithoutAccountInput[]
-    upsert?: SessionUpsertWithWhereUniqueWithoutAccountInput | SessionUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: SessionCreateManyAccountInputEnvelope
-    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    update?: SessionUpdateWithWhereUniqueWithoutAccountInput | SessionUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: SessionUpdateManyWithWhereWithoutAccountInput | SessionUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
+  export type AuthSessionUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<AuthSessionCreateWithoutAccountInput, AuthSessionUncheckedCreateWithoutAccountInput> | AuthSessionCreateWithoutAccountInput[] | AuthSessionUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: AuthSessionCreateOrConnectWithoutAccountInput | AuthSessionCreateOrConnectWithoutAccountInput[]
+    upsert?: AuthSessionUpsertWithWhereUniqueWithoutAccountInput | AuthSessionUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: AuthSessionCreateManyAccountInputEnvelope
+    set?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
+    disconnect?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
+    delete?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
+    connect?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
+    update?: AuthSessionUpdateWithWhereUniqueWithoutAccountInput | AuthSessionUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: AuthSessionUpdateManyWithWhereWithoutAccountInput | AuthSessionUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: AuthSessionScalarWhereInput | AuthSessionScalarWhereInput[]
   }
 
   export type SystemErrorUpdateManyWithoutAccountNestedInput = {
@@ -34397,18 +34397,18 @@ export namespace Prisma {
     deleteMany?: SystemErrorScalarWhereInput | SystemErrorScalarWhereInput[]
   }
 
-  export type UserAppConnectionUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<UserAppConnectionCreateWithoutAccountInput, UserAppConnectionUncheckedCreateWithoutAccountInput> | UserAppConnectionCreateWithoutAccountInput[] | UserAppConnectionUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: UserAppConnectionCreateOrConnectWithoutAccountInput | UserAppConnectionCreateOrConnectWithoutAccountInput[]
-    upsert?: UserAppConnectionUpsertWithWhereUniqueWithoutAccountInput | UserAppConnectionUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: UserAppConnectionCreateManyAccountInputEnvelope
-    set?: UserAppConnectionWhereUniqueInput | UserAppConnectionWhereUniqueInput[]
-    disconnect?: UserAppConnectionWhereUniqueInput | UserAppConnectionWhereUniqueInput[]
-    delete?: UserAppConnectionWhereUniqueInput | UserAppConnectionWhereUniqueInput[]
-    connect?: UserAppConnectionWhereUniqueInput | UserAppConnectionWhereUniqueInput[]
-    update?: UserAppConnectionUpdateWithWhereUniqueWithoutAccountInput | UserAppConnectionUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: UserAppConnectionUpdateManyWithWhereWithoutAccountInput | UserAppConnectionUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: UserAppConnectionScalarWhereInput | UserAppConnectionScalarWhereInput[]
+  export type ApplicationConnectionUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<ApplicationConnectionCreateWithoutAccountInput, ApplicationConnectionUncheckedCreateWithoutAccountInput> | ApplicationConnectionCreateWithoutAccountInput[] | ApplicationConnectionUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: ApplicationConnectionCreateOrConnectWithoutAccountInput | ApplicationConnectionCreateOrConnectWithoutAccountInput[]
+    upsert?: ApplicationConnectionUpsertWithWhereUniqueWithoutAccountInput | ApplicationConnectionUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: ApplicationConnectionCreateManyAccountInputEnvelope
+    set?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    disconnect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    delete?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    connect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    update?: ApplicationConnectionUpdateWithWhereUniqueWithoutAccountInput | ApplicationConnectionUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: ApplicationConnectionUpdateManyWithWhereWithoutAccountInput | ApplicationConnectionUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: ApplicationConnectionScalarWhereInput | ApplicationConnectionScalarWhereInput[]
   }
 
   export type ApplicationUpdateManyWithoutOwnerNestedInput = {
@@ -34613,18 +34613,18 @@ export namespace Prisma {
     deleteMany?: PermitScalarWhereInput | PermitScalarWhereInput[]
   }
 
-  export type SessionUncheckedUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<SessionCreateWithoutAccountInput, SessionUncheckedCreateWithoutAccountInput> | SessionCreateWithoutAccountInput[] | SessionUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: SessionCreateOrConnectWithoutAccountInput | SessionCreateOrConnectWithoutAccountInput[]
-    upsert?: SessionUpsertWithWhereUniqueWithoutAccountInput | SessionUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: SessionCreateManyAccountInputEnvelope
-    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    update?: SessionUpdateWithWhereUniqueWithoutAccountInput | SessionUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: SessionUpdateManyWithWhereWithoutAccountInput | SessionUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
+  export type AuthSessionUncheckedUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<AuthSessionCreateWithoutAccountInput, AuthSessionUncheckedCreateWithoutAccountInput> | AuthSessionCreateWithoutAccountInput[] | AuthSessionUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: AuthSessionCreateOrConnectWithoutAccountInput | AuthSessionCreateOrConnectWithoutAccountInput[]
+    upsert?: AuthSessionUpsertWithWhereUniqueWithoutAccountInput | AuthSessionUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: AuthSessionCreateManyAccountInputEnvelope
+    set?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
+    disconnect?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
+    delete?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
+    connect?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
+    update?: AuthSessionUpdateWithWhereUniqueWithoutAccountInput | AuthSessionUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: AuthSessionUpdateManyWithWhereWithoutAccountInput | AuthSessionUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: AuthSessionScalarWhereInput | AuthSessionScalarWhereInput[]
   }
 
   export type SystemErrorUncheckedUpdateManyWithoutAccountNestedInput = {
@@ -34641,18 +34641,18 @@ export namespace Prisma {
     deleteMany?: SystemErrorScalarWhereInput | SystemErrorScalarWhereInput[]
   }
 
-  export type UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<UserAppConnectionCreateWithoutAccountInput, UserAppConnectionUncheckedCreateWithoutAccountInput> | UserAppConnectionCreateWithoutAccountInput[] | UserAppConnectionUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: UserAppConnectionCreateOrConnectWithoutAccountInput | UserAppConnectionCreateOrConnectWithoutAccountInput[]
-    upsert?: UserAppConnectionUpsertWithWhereUniqueWithoutAccountInput | UserAppConnectionUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: UserAppConnectionCreateManyAccountInputEnvelope
-    set?: UserAppConnectionWhereUniqueInput | UserAppConnectionWhereUniqueInput[]
-    disconnect?: UserAppConnectionWhereUniqueInput | UserAppConnectionWhereUniqueInput[]
-    delete?: UserAppConnectionWhereUniqueInput | UserAppConnectionWhereUniqueInput[]
-    connect?: UserAppConnectionWhereUniqueInput | UserAppConnectionWhereUniqueInput[]
-    update?: UserAppConnectionUpdateWithWhereUniqueWithoutAccountInput | UserAppConnectionUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: UserAppConnectionUpdateManyWithWhereWithoutAccountInput | UserAppConnectionUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: UserAppConnectionScalarWhereInput | UserAppConnectionScalarWhereInput[]
+  export type ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<ApplicationConnectionCreateWithoutAccountInput, ApplicationConnectionUncheckedCreateWithoutAccountInput> | ApplicationConnectionCreateWithoutAccountInput[] | ApplicationConnectionUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: ApplicationConnectionCreateOrConnectWithoutAccountInput | ApplicationConnectionCreateOrConnectWithoutAccountInput[]
+    upsert?: ApplicationConnectionUpsertWithWhereUniqueWithoutAccountInput | ApplicationConnectionUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: ApplicationConnectionCreateManyAccountInputEnvelope
+    set?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    disconnect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    delete?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    connect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    update?: ApplicationConnectionUpdateWithWhereUniqueWithoutAccountInput | ApplicationConnectionUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: ApplicationConnectionUpdateManyWithWhereWithoutAccountInput | ApplicationConnectionUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: ApplicationConnectionScalarWhereInput | ApplicationConnectionScalarWhereInput[]
   }
 
   export type ApplicationUncheckedUpdateManyWithoutOwnerNestedInput = {
@@ -35164,18 +35164,18 @@ export namespace Prisma {
     connect?: AccountWhereUniqueInput
   }
 
-  export type UserAppConnectionCreateNestedManyWithoutApplicationInput = {
-    create?: XOR<UserAppConnectionCreateWithoutApplicationInput, UserAppConnectionUncheckedCreateWithoutApplicationInput> | UserAppConnectionCreateWithoutApplicationInput[] | UserAppConnectionUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: UserAppConnectionCreateOrConnectWithoutApplicationInput | UserAppConnectionCreateOrConnectWithoutApplicationInput[]
-    createMany?: UserAppConnectionCreateManyApplicationInputEnvelope
-    connect?: UserAppConnectionWhereUniqueInput | UserAppConnectionWhereUniqueInput[]
+  export type ApplicationConnectionCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ApplicationConnectionCreateWithoutApplicationInput, ApplicationConnectionUncheckedCreateWithoutApplicationInput> | ApplicationConnectionCreateWithoutApplicationInput[] | ApplicationConnectionUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationConnectionCreateOrConnectWithoutApplicationInput | ApplicationConnectionCreateOrConnectWithoutApplicationInput[]
+    createMany?: ApplicationConnectionCreateManyApplicationInputEnvelope
+    connect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
   }
 
-  export type UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput = {
-    create?: XOR<UserAppConnectionCreateWithoutApplicationInput, UserAppConnectionUncheckedCreateWithoutApplicationInput> | UserAppConnectionCreateWithoutApplicationInput[] | UserAppConnectionUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: UserAppConnectionCreateOrConnectWithoutApplicationInput | UserAppConnectionCreateOrConnectWithoutApplicationInput[]
-    createMany?: UserAppConnectionCreateManyApplicationInputEnvelope
-    connect?: UserAppConnectionWhereUniqueInput | UserAppConnectionWhereUniqueInput[]
+  export type ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ApplicationConnectionCreateWithoutApplicationInput, ApplicationConnectionUncheckedCreateWithoutApplicationInput> | ApplicationConnectionCreateWithoutApplicationInput[] | ApplicationConnectionUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationConnectionCreateOrConnectWithoutApplicationInput | ApplicationConnectionCreateOrConnectWithoutApplicationInput[]
+    createMany?: ApplicationConnectionCreateManyApplicationInputEnvelope
+    connect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
   }
 
   export type AccountUpdateOneWithoutOwnedApplicationsNestedInput = {
@@ -35188,32 +35188,32 @@ export namespace Prisma {
     update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutOwnedApplicationsInput, AccountUpdateWithoutOwnedApplicationsInput>, AccountUncheckedUpdateWithoutOwnedApplicationsInput>
   }
 
-  export type UserAppConnectionUpdateManyWithoutApplicationNestedInput = {
-    create?: XOR<UserAppConnectionCreateWithoutApplicationInput, UserAppConnectionUncheckedCreateWithoutApplicationInput> | UserAppConnectionCreateWithoutApplicationInput[] | UserAppConnectionUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: UserAppConnectionCreateOrConnectWithoutApplicationInput | UserAppConnectionCreateOrConnectWithoutApplicationInput[]
-    upsert?: UserAppConnectionUpsertWithWhereUniqueWithoutApplicationInput | UserAppConnectionUpsertWithWhereUniqueWithoutApplicationInput[]
-    createMany?: UserAppConnectionCreateManyApplicationInputEnvelope
-    set?: UserAppConnectionWhereUniqueInput | UserAppConnectionWhereUniqueInput[]
-    disconnect?: UserAppConnectionWhereUniqueInput | UserAppConnectionWhereUniqueInput[]
-    delete?: UserAppConnectionWhereUniqueInput | UserAppConnectionWhereUniqueInput[]
-    connect?: UserAppConnectionWhereUniqueInput | UserAppConnectionWhereUniqueInput[]
-    update?: UserAppConnectionUpdateWithWhereUniqueWithoutApplicationInput | UserAppConnectionUpdateWithWhereUniqueWithoutApplicationInput[]
-    updateMany?: UserAppConnectionUpdateManyWithWhereWithoutApplicationInput | UserAppConnectionUpdateManyWithWhereWithoutApplicationInput[]
-    deleteMany?: UserAppConnectionScalarWhereInput | UserAppConnectionScalarWhereInput[]
+  export type ApplicationConnectionUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ApplicationConnectionCreateWithoutApplicationInput, ApplicationConnectionUncheckedCreateWithoutApplicationInput> | ApplicationConnectionCreateWithoutApplicationInput[] | ApplicationConnectionUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationConnectionCreateOrConnectWithoutApplicationInput | ApplicationConnectionCreateOrConnectWithoutApplicationInput[]
+    upsert?: ApplicationConnectionUpsertWithWhereUniqueWithoutApplicationInput | ApplicationConnectionUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ApplicationConnectionCreateManyApplicationInputEnvelope
+    set?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    disconnect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    delete?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    connect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    update?: ApplicationConnectionUpdateWithWhereUniqueWithoutApplicationInput | ApplicationConnectionUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ApplicationConnectionUpdateManyWithWhereWithoutApplicationInput | ApplicationConnectionUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ApplicationConnectionScalarWhereInput | ApplicationConnectionScalarWhereInput[]
   }
 
-  export type UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput = {
-    create?: XOR<UserAppConnectionCreateWithoutApplicationInput, UserAppConnectionUncheckedCreateWithoutApplicationInput> | UserAppConnectionCreateWithoutApplicationInput[] | UserAppConnectionUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: UserAppConnectionCreateOrConnectWithoutApplicationInput | UserAppConnectionCreateOrConnectWithoutApplicationInput[]
-    upsert?: UserAppConnectionUpsertWithWhereUniqueWithoutApplicationInput | UserAppConnectionUpsertWithWhereUniqueWithoutApplicationInput[]
-    createMany?: UserAppConnectionCreateManyApplicationInputEnvelope
-    set?: UserAppConnectionWhereUniqueInput | UserAppConnectionWhereUniqueInput[]
-    disconnect?: UserAppConnectionWhereUniqueInput | UserAppConnectionWhereUniqueInput[]
-    delete?: UserAppConnectionWhereUniqueInput | UserAppConnectionWhereUniqueInput[]
-    connect?: UserAppConnectionWhereUniqueInput | UserAppConnectionWhereUniqueInput[]
-    update?: UserAppConnectionUpdateWithWhereUniqueWithoutApplicationInput | UserAppConnectionUpdateWithWhereUniqueWithoutApplicationInput[]
-    updateMany?: UserAppConnectionUpdateManyWithWhereWithoutApplicationInput | UserAppConnectionUpdateManyWithWhereWithoutApplicationInput[]
-    deleteMany?: UserAppConnectionScalarWhereInput | UserAppConnectionScalarWhereInput[]
+  export type ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ApplicationConnectionCreateWithoutApplicationInput, ApplicationConnectionUncheckedCreateWithoutApplicationInput> | ApplicationConnectionCreateWithoutApplicationInput[] | ApplicationConnectionUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationConnectionCreateOrConnectWithoutApplicationInput | ApplicationConnectionCreateOrConnectWithoutApplicationInput[]
+    upsert?: ApplicationConnectionUpsertWithWhereUniqueWithoutApplicationInput | ApplicationConnectionUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ApplicationConnectionCreateManyApplicationInputEnvelope
+    set?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    disconnect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    delete?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    connect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    update?: ApplicationConnectionUpdateWithWhereUniqueWithoutApplicationInput | ApplicationConnectionUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ApplicationConnectionUpdateManyWithWhereWithoutApplicationInput | ApplicationConnectionUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ApplicationConnectionScalarWhereInput | ApplicationConnectionScalarWhereInput[]
   }
 
   export type PortfolioAssetCreateNestedManyWithoutPortfolioInput = {
@@ -35824,7 +35824,7 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type SessionCreateWithoutAccountInput = {
+  export type AuthSessionCreateWithoutAccountInput = {
     id?: string
     application?: string | null
     applicationType?: string
@@ -35842,7 +35842,7 @@ export namespace Prisma {
     permissions?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type SessionUncheckedCreateWithoutAccountInput = {
+  export type AuthSessionUncheckedCreateWithoutAccountInput = {
     id?: string
     application?: string | null
     applicationType?: string
@@ -35860,13 +35860,13 @@ export namespace Prisma {
     permissions?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type SessionCreateOrConnectWithoutAccountInput = {
-    where: SessionWhereUniqueInput
-    create: XOR<SessionCreateWithoutAccountInput, SessionUncheckedCreateWithoutAccountInput>
+  export type AuthSessionCreateOrConnectWithoutAccountInput = {
+    where: AuthSessionWhereUniqueInput
+    create: XOR<AuthSessionCreateWithoutAccountInput, AuthSessionUncheckedCreateWithoutAccountInput>
   }
 
-  export type SessionCreateManyAccountInputEnvelope = {
-    data: SessionCreateManyAccountInput | SessionCreateManyAccountInput[]
+  export type AuthSessionCreateManyAccountInputEnvelope = {
+    data: AuthSessionCreateManyAccountInput | AuthSessionCreateManyAccountInput[]
     skipDuplicates?: boolean
   }
 
@@ -35910,25 +35910,25 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type UserAppConnectionCreateWithoutAccountInput = {
+  export type ApplicationConnectionCreateWithoutAccountInput = {
     id?: string
     connectedAt?: Date | string
     application: ApplicationCreateNestedOneWithoutConnectionsInput
   }
 
-  export type UserAppConnectionUncheckedCreateWithoutAccountInput = {
+  export type ApplicationConnectionUncheckedCreateWithoutAccountInput = {
     id?: string
     appId: string
     connectedAt?: Date | string
   }
 
-  export type UserAppConnectionCreateOrConnectWithoutAccountInput = {
-    where: UserAppConnectionWhereUniqueInput
-    create: XOR<UserAppConnectionCreateWithoutAccountInput, UserAppConnectionUncheckedCreateWithoutAccountInput>
+  export type ApplicationConnectionCreateOrConnectWithoutAccountInput = {
+    where: ApplicationConnectionWhereUniqueInput
+    create: XOR<ApplicationConnectionCreateWithoutAccountInput, ApplicationConnectionUncheckedCreateWithoutAccountInput>
   }
 
-  export type UserAppConnectionCreateManyAccountInputEnvelope = {
-    data: UserAppConnectionCreateManyAccountInput | UserAppConnectionCreateManyAccountInput[]
+  export type ApplicationConnectionCreateManyAccountInputEnvelope = {
+    data: ApplicationConnectionCreateManyAccountInput | ApplicationConnectionCreateManyAccountInput[]
     skipDuplicates?: boolean
   }
 
@@ -35946,7 +35946,7 @@ export namespace Prisma {
     policies?: NullableJsonNullValueInput | InputJsonValue
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
-    connections?: UserAppConnectionCreateNestedManyWithoutApplicationInput
+    connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutOwnerInput = {
@@ -35963,7 +35963,7 @@ export namespace Prisma {
     policies?: NullableJsonNullValueInput | InputJsonValue
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
-    connections?: UserAppConnectionUncheckedCreateNestedManyWithoutApplicationInput
+    connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutOwnerInput = {
@@ -36365,42 +36365,42 @@ export namespace Prisma {
     data: XOR<PermitUpdateManyMutationInput, PermitUncheckedUpdateManyWithoutTargetAccountInput>
   }
 
-  export type SessionUpsertWithWhereUniqueWithoutAccountInput = {
-    where: SessionWhereUniqueInput
-    update: XOR<SessionUpdateWithoutAccountInput, SessionUncheckedUpdateWithoutAccountInput>
-    create: XOR<SessionCreateWithoutAccountInput, SessionUncheckedCreateWithoutAccountInput>
+  export type AuthSessionUpsertWithWhereUniqueWithoutAccountInput = {
+    where: AuthSessionWhereUniqueInput
+    update: XOR<AuthSessionUpdateWithoutAccountInput, AuthSessionUncheckedUpdateWithoutAccountInput>
+    create: XOR<AuthSessionCreateWithoutAccountInput, AuthSessionUncheckedCreateWithoutAccountInput>
   }
 
-  export type SessionUpdateWithWhereUniqueWithoutAccountInput = {
-    where: SessionWhereUniqueInput
-    data: XOR<SessionUpdateWithoutAccountInput, SessionUncheckedUpdateWithoutAccountInput>
+  export type AuthSessionUpdateWithWhereUniqueWithoutAccountInput = {
+    where: AuthSessionWhereUniqueInput
+    data: XOR<AuthSessionUpdateWithoutAccountInput, AuthSessionUncheckedUpdateWithoutAccountInput>
   }
 
-  export type SessionUpdateManyWithWhereWithoutAccountInput = {
-    where: SessionScalarWhereInput
-    data: XOR<SessionUpdateManyMutationInput, SessionUncheckedUpdateManyWithoutAccountInput>
+  export type AuthSessionUpdateManyWithWhereWithoutAccountInput = {
+    where: AuthSessionScalarWhereInput
+    data: XOR<AuthSessionUpdateManyMutationInput, AuthSessionUncheckedUpdateManyWithoutAccountInput>
   }
 
-  export type SessionScalarWhereInput = {
-    AND?: SessionScalarWhereInput | SessionScalarWhereInput[]
-    OR?: SessionScalarWhereInput[]
-    NOT?: SessionScalarWhereInput | SessionScalarWhereInput[]
-    id?: StringFilter<"Session"> | string
-    accountId?: StringFilter<"Session"> | string
-    application?: StringNullableFilter<"Session"> | string | null
-    applicationType?: StringFilter<"Session"> | string
-    applicationDomain?: StringNullableFilter<"Session"> | string | null
-    ipAddress?: StringFilter<"Session"> | string
-    userAgent?: StringFilter<"Session"> | string
-    lastLoggedIn?: DateTimeFilter<"Session"> | Date | string
-    loginType?: StringFilter<"Session"> | string
-    geolocation?: StringNullableFilter<"Session"> | string | null
-    deviceType?: StringNullableFilter<"Session"> | string | null
-    expiresOn?: DateTimeNullableFilter<"Session"> | Date | string | null
-    isExpired?: BoolFilter<"Session"> | boolean
-    authSessionKey?: StringNullableFilter<"Session"> | string | null
-    dependentKeys?: JsonNullableFilter<"Session">
-    permissions?: JsonNullableFilter<"Session">
+  export type AuthSessionScalarWhereInput = {
+    AND?: AuthSessionScalarWhereInput | AuthSessionScalarWhereInput[]
+    OR?: AuthSessionScalarWhereInput[]
+    NOT?: AuthSessionScalarWhereInput | AuthSessionScalarWhereInput[]
+    id?: StringFilter<"AuthSession"> | string
+    accountId?: StringFilter<"AuthSession"> | string
+    application?: StringNullableFilter<"AuthSession"> | string | null
+    applicationType?: StringFilter<"AuthSession"> | string
+    applicationDomain?: StringNullableFilter<"AuthSession"> | string | null
+    ipAddress?: StringFilter<"AuthSession"> | string
+    userAgent?: StringFilter<"AuthSession"> | string
+    lastLoggedIn?: DateTimeFilter<"AuthSession"> | Date | string
+    loginType?: StringFilter<"AuthSession"> | string
+    geolocation?: StringNullableFilter<"AuthSession"> | string | null
+    deviceType?: StringNullableFilter<"AuthSession"> | string | null
+    expiresOn?: DateTimeNullableFilter<"AuthSession"> | Date | string | null
+    isExpired?: BoolFilter<"AuthSession"> | boolean
+    authSessionKey?: StringNullableFilter<"AuthSession"> | string | null
+    dependentKeys?: JsonNullableFilter<"AuthSession">
+    permissions?: JsonNullableFilter<"AuthSession">
   }
 
   export type SystemErrorUpsertWithWhereUniqueWithoutAccountInput = {
@@ -36438,30 +36438,30 @@ export namespace Prisma {
     timestamp?: DateTimeFilter<"SystemError"> | Date | string
   }
 
-  export type UserAppConnectionUpsertWithWhereUniqueWithoutAccountInput = {
-    where: UserAppConnectionWhereUniqueInput
-    update: XOR<UserAppConnectionUpdateWithoutAccountInput, UserAppConnectionUncheckedUpdateWithoutAccountInput>
-    create: XOR<UserAppConnectionCreateWithoutAccountInput, UserAppConnectionUncheckedCreateWithoutAccountInput>
+  export type ApplicationConnectionUpsertWithWhereUniqueWithoutAccountInput = {
+    where: ApplicationConnectionWhereUniqueInput
+    update: XOR<ApplicationConnectionUpdateWithoutAccountInput, ApplicationConnectionUncheckedUpdateWithoutAccountInput>
+    create: XOR<ApplicationConnectionCreateWithoutAccountInput, ApplicationConnectionUncheckedCreateWithoutAccountInput>
   }
 
-  export type UserAppConnectionUpdateWithWhereUniqueWithoutAccountInput = {
-    where: UserAppConnectionWhereUniqueInput
-    data: XOR<UserAppConnectionUpdateWithoutAccountInput, UserAppConnectionUncheckedUpdateWithoutAccountInput>
+  export type ApplicationConnectionUpdateWithWhereUniqueWithoutAccountInput = {
+    where: ApplicationConnectionWhereUniqueInput
+    data: XOR<ApplicationConnectionUpdateWithoutAccountInput, ApplicationConnectionUncheckedUpdateWithoutAccountInput>
   }
 
-  export type UserAppConnectionUpdateManyWithWhereWithoutAccountInput = {
-    where: UserAppConnectionScalarWhereInput
-    data: XOR<UserAppConnectionUpdateManyMutationInput, UserAppConnectionUncheckedUpdateManyWithoutAccountInput>
+  export type ApplicationConnectionUpdateManyWithWhereWithoutAccountInput = {
+    where: ApplicationConnectionScalarWhereInput
+    data: XOR<ApplicationConnectionUpdateManyMutationInput, ApplicationConnectionUncheckedUpdateManyWithoutAccountInput>
   }
 
-  export type UserAppConnectionScalarWhereInput = {
-    AND?: UserAppConnectionScalarWhereInput | UserAppConnectionScalarWhereInput[]
-    OR?: UserAppConnectionScalarWhereInput[]
-    NOT?: UserAppConnectionScalarWhereInput | UserAppConnectionScalarWhereInput[]
-    id?: StringFilter<"UserAppConnection"> | string
-    accountId?: StringFilter<"UserAppConnection"> | string
-    appId?: StringFilter<"UserAppConnection"> | string
-    connectedAt?: DateTimeFilter<"UserAppConnection"> | Date | string
+  export type ApplicationConnectionScalarWhereInput = {
+    AND?: ApplicationConnectionScalarWhereInput | ApplicationConnectionScalarWhereInput[]
+    OR?: ApplicationConnectionScalarWhereInput[]
+    NOT?: ApplicationConnectionScalarWhereInput | ApplicationConnectionScalarWhereInput[]
+    id?: StringFilter<"ApplicationConnection"> | string
+    accountId?: StringFilter<"ApplicationConnection"> | string
+    appId?: StringFilter<"ApplicationConnection"> | string
+    connectedAt?: DateTimeFilter<"ApplicationConnection"> | Date | string
   }
 
   export type ApplicationUpsertWithWhereUniqueWithoutOwnerInput = {
@@ -36782,9 +36782,9 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -36810,9 +36810,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -36882,9 +36882,9 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -36910,9 +36910,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -36967,9 +36967,9 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -36995,9 +36995,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -37039,9 +37039,9 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -37067,9 +37067,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -37095,9 +37095,9 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -37123,9 +37123,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -37156,9 +37156,9 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -37184,9 +37184,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -37228,9 +37228,9 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -37256,9 +37256,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -37295,9 +37295,9 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -37323,9 +37323,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -37351,9 +37351,9 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
@@ -37379,9 +37379,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
@@ -37452,9 +37452,9 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
@@ -37480,9 +37480,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
@@ -37543,9 +37543,9 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -37571,9 +37571,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -37604,9 +37604,9 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -37632,9 +37632,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -37712,9 +37712,9 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -37740,9 +37740,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -37779,9 +37779,9 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -37807,9 +37807,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -37851,9 +37851,9 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
@@ -37879,9 +37879,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
@@ -37923,9 +37923,9 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
@@ -37951,9 +37951,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
@@ -37978,9 +37978,9 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -38006,9 +38006,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -38050,9 +38050,9 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -38078,9 +38078,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -38106,9 +38106,9 @@ export namespace Prisma {
     contacts?: ContactCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -38134,9 +38134,9 @@ export namespace Prisma {
     contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -38178,9 +38178,9 @@ export namespace Prisma {
     contacts?: ContactUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -38206,9 +38206,9 @@ export namespace Prisma {
     contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -38290,9 +38290,9 @@ export namespace Prisma {
     contacts?: ContactCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -38318,9 +38318,9 @@ export namespace Prisma {
     contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -38351,9 +38351,9 @@ export namespace Prisma {
     contacts?: ContactCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -38379,9 +38379,9 @@ export namespace Prisma {
     contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -38423,9 +38423,9 @@ export namespace Prisma {
     contacts?: ContactUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -38451,9 +38451,9 @@ export namespace Prisma {
     contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -38490,9 +38490,9 @@ export namespace Prisma {
     contacts?: ContactUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -38518,9 +38518,9 @@ export namespace Prisma {
     contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -38548,7 +38548,7 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -38576,7 +38576,7 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -38620,7 +38620,7 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -38648,7 +38648,7 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -38675,8 +38675,8 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -38703,8 +38703,8 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -38747,8 +38747,8 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -38775,8 +38775,8 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -38803,9 +38803,9 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
@@ -38831,9 +38831,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
@@ -38851,25 +38851,25 @@ export namespace Prisma {
     create: XOR<AccountCreateWithoutOwnedApplicationsInput, AccountUncheckedCreateWithoutOwnedApplicationsInput>
   }
 
-  export type UserAppConnectionCreateWithoutApplicationInput = {
+  export type ApplicationConnectionCreateWithoutApplicationInput = {
     id?: string
     connectedAt?: Date | string
     account: AccountCreateNestedOneWithoutAppConnectionsInput
   }
 
-  export type UserAppConnectionUncheckedCreateWithoutApplicationInput = {
+  export type ApplicationConnectionUncheckedCreateWithoutApplicationInput = {
     id?: string
     accountId: string
     connectedAt?: Date | string
   }
 
-  export type UserAppConnectionCreateOrConnectWithoutApplicationInput = {
-    where: UserAppConnectionWhereUniqueInput
-    create: XOR<UserAppConnectionCreateWithoutApplicationInput, UserAppConnectionUncheckedCreateWithoutApplicationInput>
+  export type ApplicationConnectionCreateOrConnectWithoutApplicationInput = {
+    where: ApplicationConnectionWhereUniqueInput
+    create: XOR<ApplicationConnectionCreateWithoutApplicationInput, ApplicationConnectionUncheckedCreateWithoutApplicationInput>
   }
 
-  export type UserAppConnectionCreateManyApplicationInputEnvelope = {
-    data: UserAppConnectionCreateManyApplicationInput | UserAppConnectionCreateManyApplicationInput[]
+  export type ApplicationConnectionCreateManyApplicationInputEnvelope = {
+    data: ApplicationConnectionCreateManyApplicationInput | ApplicationConnectionCreateManyApplicationInput[]
     skipDuplicates?: boolean
   }
 
@@ -38897,9 +38897,9 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
@@ -38925,9 +38925,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
@@ -38940,20 +38940,20 @@ export namespace Prisma {
     portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
-  export type UserAppConnectionUpsertWithWhereUniqueWithoutApplicationInput = {
-    where: UserAppConnectionWhereUniqueInput
-    update: XOR<UserAppConnectionUpdateWithoutApplicationInput, UserAppConnectionUncheckedUpdateWithoutApplicationInput>
-    create: XOR<UserAppConnectionCreateWithoutApplicationInput, UserAppConnectionUncheckedCreateWithoutApplicationInput>
+  export type ApplicationConnectionUpsertWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationConnectionWhereUniqueInput
+    update: XOR<ApplicationConnectionUpdateWithoutApplicationInput, ApplicationConnectionUncheckedUpdateWithoutApplicationInput>
+    create: XOR<ApplicationConnectionCreateWithoutApplicationInput, ApplicationConnectionUncheckedCreateWithoutApplicationInput>
   }
 
-  export type UserAppConnectionUpdateWithWhereUniqueWithoutApplicationInput = {
-    where: UserAppConnectionWhereUniqueInput
-    data: XOR<UserAppConnectionUpdateWithoutApplicationInput, UserAppConnectionUncheckedUpdateWithoutApplicationInput>
+  export type ApplicationConnectionUpdateWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationConnectionWhereUniqueInput
+    data: XOR<ApplicationConnectionUpdateWithoutApplicationInput, ApplicationConnectionUncheckedUpdateWithoutApplicationInput>
   }
 
-  export type UserAppConnectionUpdateManyWithWhereWithoutApplicationInput = {
-    where: UserAppConnectionScalarWhereInput
-    data: XOR<UserAppConnectionUpdateManyMutationInput, UserAppConnectionUncheckedUpdateManyWithoutApplicationInput>
+  export type ApplicationConnectionUpdateManyWithWhereWithoutApplicationInput = {
+    where: ApplicationConnectionScalarWhereInput
+    data: XOR<ApplicationConnectionUpdateManyMutationInput, ApplicationConnectionUncheckedUpdateManyWithoutApplicationInput>
   }
 
   export type PortfolioAssetCreateWithoutPortfolioInput = {
@@ -39173,9 +39173,9 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -39201,9 +39201,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -39274,9 +39274,9 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -39302,9 +39302,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -39330,9 +39330,9 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
@@ -39358,9 +39358,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: UserAppConnectionUncheckedCreateNestedManyWithoutAccountInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
@@ -39425,9 +39425,9 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
@@ -39453,9 +39453,9 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: UserAppConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -39510,7 +39510,7 @@ export namespace Prisma {
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
@@ -39538,7 +39538,7 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
@@ -39621,7 +39621,7 @@ export namespace Prisma {
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
@@ -39649,7 +39649,7 @@ export namespace Prisma {
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
@@ -39759,7 +39759,7 @@ export namespace Prisma {
     managedBy?: string | null
   }
 
-  export type SessionCreateManyAccountInput = {
+  export type AuthSessionCreateManyAccountInput = {
     id?: string
     application?: string | null
     applicationType?: string
@@ -39792,7 +39792,7 @@ export namespace Prisma {
     timestamp?: Date | string
   }
 
-  export type UserAppConnectionCreateManyAccountInput = {
+  export type ApplicationConnectionCreateManyAccountInput = {
     id?: string
     appId: string
     connectedAt?: Date | string
@@ -40040,7 +40040,7 @@ export namespace Prisma {
     managedBy?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type SessionUpdateWithoutAccountInput = {
+  export type AuthSessionUpdateWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
     application?: NullableStringFieldUpdateOperationsInput | string | null
     applicationType?: StringFieldUpdateOperationsInput | string
@@ -40058,7 +40058,7 @@ export namespace Prisma {
     permissions?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type SessionUncheckedUpdateWithoutAccountInput = {
+  export type AuthSessionUncheckedUpdateWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
     application?: NullableStringFieldUpdateOperationsInput | string | null
     applicationType?: StringFieldUpdateOperationsInput | string
@@ -40076,7 +40076,7 @@ export namespace Prisma {
     permissions?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type SessionUncheckedUpdateManyWithoutAccountInput = {
+  export type AuthSessionUncheckedUpdateManyWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
     application?: NullableStringFieldUpdateOperationsInput | string | null
     applicationType?: StringFieldUpdateOperationsInput | string
@@ -40139,19 +40139,19 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserAppConnectionUpdateWithoutAccountInput = {
+  export type ApplicationConnectionUpdateWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     application?: ApplicationUpdateOneRequiredWithoutConnectionsNestedInput
   }
 
-  export type UserAppConnectionUncheckedUpdateWithoutAccountInput = {
+  export type ApplicationConnectionUncheckedUpdateWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserAppConnectionUncheckedUpdateManyWithoutAccountInput = {
+  export type ApplicationConnectionUncheckedUpdateManyWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40171,7 +40171,7 @@ export namespace Prisma {
     policies?: NullableJsonNullValueInput | InputJsonValue
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    connections?: UserAppConnectionUpdateManyWithoutApplicationNestedInput
+    connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutOwnerInput = {
@@ -40188,7 +40188,7 @@ export namespace Prisma {
     policies?: NullableJsonNullValueInput | InputJsonValue
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    connections?: UserAppConnectionUncheckedUpdateManyWithoutApplicationNestedInput
+    connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateManyWithoutOwnerInput = {
@@ -40527,25 +40527,25 @@ export namespace Prisma {
     persistence?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type UserAppConnectionCreateManyApplicationInput = {
+  export type ApplicationConnectionCreateManyApplicationInput = {
     id?: string
     accountId: string
     connectedAt?: Date | string
   }
 
-  export type UserAppConnectionUpdateWithoutApplicationInput = {
+  export type ApplicationConnectionUpdateWithoutApplicationInput = {
     id?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     account?: AccountUpdateOneRequiredWithoutAppConnectionsNestedInput
   }
 
-  export type UserAppConnectionUncheckedUpdateWithoutApplicationInput = {
+  export type ApplicationConnectionUncheckedUpdateWithoutApplicationInput = {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserAppConnectionUncheckedUpdateManyWithoutApplicationInput = {
+  export type ApplicationConnectionUncheckedUpdateManyWithoutApplicationInput = {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string

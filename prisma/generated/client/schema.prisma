@@ -24,15 +24,15 @@ model Account {
   contacts          Contact[]
   neupIds           NeupId[]
   permits           Permit[]
-  targetPermits     Permit[]            @relation("TargetAccount")
-  sessions          Session[]
+  targetPermits     Permit[]                @relation("TargetAccount")
+  sessions          AuthSession[]
   errorLogs         SystemError[]
-  appConnections    UserAppConnection[]
+  appConnections    ApplicationConnection[]
   ownedApplications Application[]
   notifications     Notification[]
   verifications     Verification[]
-  sentRequests      Request[]           @relation("SentRequests")
-  receivedRequests  Request[]           @relation("ReceivedRequests")
+  sentRequests      Request[]               @relation("SentRequests")
+  receivedRequests  Request[]               @relation("ReceivedRequests")
 
   individualProfile AccountTypeIndividual?
   brandProfile      AccountTypeBrand?
@@ -104,7 +104,7 @@ model AuthRequest {
   createdAt DateTime @default(now())
   expiresAt DateTime
 
-  @@map("auth_requests")
+  @@map("auth_request")
 }
 
 model Activity {
@@ -136,7 +136,7 @@ model Notification {
   account Account  @relation(fields: [accountId], references: [id])
   request Request? @relation(fields: [requestId], references: [id])
 
-  @@map("notifications")
+  @@map("notification")
 }
 
 model Request {
@@ -154,7 +154,7 @@ model Request {
   recipient     Account        @relation("ReceivedRequests", fields: [recipientId], references: [id])
   notifications Notification[]
 
-  @@map("requests")
+  @@map("request")
 }
 
 model Family {
@@ -186,7 +186,7 @@ model Verification {
 
   account Account @relation(fields: [accountId], references: [id])
 
-  @@map("verifications")
+  @@map("verification")
 }
 
 model Contact {
@@ -197,7 +197,7 @@ model Contact {
 
   account Account @relation(fields: [accountId], references: [id])
 
-  @@map("contacts")
+  @@map("contact")
 }
 
 model NeupId {
@@ -274,10 +274,10 @@ model Permit {
   account       Account  @relation(fields: [accountId], references: [id])
   targetAccount Account? @relation("TargetAccount", fields: [targetAccountId], references: [id])
 
-  @@map("permits")
+  @@map("permit")
 }
 
-model Session {
+model AuthSession {
   id                String    @id @default(uuid())
   accountId         String
   application       String? // neup.account for internal apps, or external application id/name
@@ -297,7 +297,7 @@ model Session {
 
   account Account @relation(fields: [accountId], references: [id])
 
-  @@map("sessions")
+  @@map("auth_session")
 }
 
 // New models for error tracking and bug reports
@@ -318,7 +318,7 @@ model SystemError {
 
   account Account? @relation(fields: [accountId], references: [id])
 
-  @@map("system_errors")
+  @@map("system_error")
 }
 
 model Application {
@@ -337,8 +337,8 @@ model Application {
   ownerAccountId String?
   createdAt      DateTime @default(now())
 
-  owner       Account?            @relation(fields: [ownerAccountId], references: [id])
-  connections UserAppConnection[]
+  owner       Account?                @relation(fields: [ownerAccountId], references: [id])
+  connections ApplicationConnection[]
 
   @@map("application")
 }
@@ -367,7 +367,7 @@ model PortfolioAsset {
 
   @@index([portfolioId])
   @@index([assetType, assetId])
-  @@map("portfolio_assets")
+  @@map("portfolio_asset")
 }
 
 model PortfolioMember {
@@ -382,7 +382,7 @@ model PortfolioMember {
   @@unique([portfolioId, accountId])
   @@index([portfolioId])
   @@index([accountId])
-  @@map("portfolio_members")
+  @@map("portfolio_member")
 }
 
 model PortfolioRole {
@@ -402,7 +402,7 @@ model PortfolioRole {
   @@map("portfolio_role")
 }
 
-model UserAppConnection {
+model ApplicationConnection {
   id          String   @id @default(uuid())
   accountId   String
   appId       String

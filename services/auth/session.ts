@@ -122,7 +122,7 @@ export async function validateAuthSession(input: ValidateAuthSessionInput): Prom
 		};
 	}
 
-	const session = await prisma.session.findUnique({
+	const session = await prisma.authSession.findUnique({
 		where: { id: auth_sid },
 		select: {
 			accountId: true,
@@ -213,7 +213,7 @@ export async function expireSession(input: ExpireSessionInput): Promise<ExpireSe
 	}
 
 	try {
-		const session = await prisma.session.findUnique({
+		const session = await prisma.authSession.findUnique({
 			where: { id: sid },
 			select: {
 				accountId: true,
@@ -229,7 +229,7 @@ export async function expireSession(input: ExpireSessionInput): Promise<ExpireSe
 			return { success: false, error: 'Invalid session.' };
 		}
 
-		await prisma.session.update({
+		await prisma.authSession.update({
 			where: { id: sid },
 			data: {
 				isExpired: true,
@@ -312,7 +312,7 @@ export async function bridgeValidateAndRefreshSession(input: {
 	}
 
 	try {
-		const session = await prisma.session.findUnique({
+		const session = await prisma.authSession.findUnique({
 			where: { id: sid },
 			include: { account: true },
 		});
@@ -334,7 +334,7 @@ export async function bridgeValidateAndRefreshSession(input: {
 		const newExpiry = new Date();
 		newExpiry.setDate(newExpiry.getDate() + 30);
 
-		const updatedSession = await prisma.session.update({
+		const updatedSession = await prisma.authSession.update({
 			where: { id: sid },
 			data: {
 				expiresOn: newExpiry,
@@ -378,7 +378,7 @@ export async function bridgeInvalidateSession(input: {
 	}
 
 	try {
-		const session = await prisma.session.updateMany({
+		const session = await prisma.authSession.updateMany({
 			where: {
 				id: sid,
 				accountId: aid,
@@ -418,7 +418,7 @@ export async function bridgeRefreshSessionExpiry(): Promise<{ status: number; bo
 		const newExpiresOn = new Date();
 		newExpiresOn.setDate(newExpiresOn.getDate() + 30);
 
-		await prisma.session.update({
+		await prisma.authSession.update({
 			where: { id: session.sessionId },
 			data: { expiresOn: newExpiresOn },
 		});

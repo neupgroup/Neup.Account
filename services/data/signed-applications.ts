@@ -46,7 +46,7 @@ export async function getSignedApplications(): Promise<SignedApplicationsResult>
   }
 
   try {
-    const appSessions = await prisma.session.findMany({
+    const appSessions = await prisma.authSession.findMany({
       where: {
         accountId,
         application: { not: null },

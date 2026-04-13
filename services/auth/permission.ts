@@ -160,7 +160,7 @@ function hasPermission(granted: Set<string>, required: string): boolean {
 async function resolveAuthenticatedAccount(input: { app: string; sid: string; skey: string }): Promise<ResolvedAuth | null> {
 	const now = new Date();
 
-	const externalSession = await prisma.session.findFirst({
+	const externalSession = await prisma.authSession.findFirst({
 		where: {
 			id: input.sid,
 			applicationType: 'external',
@@ -189,7 +189,7 @@ async function resolveAuthenticatedAccount(input: { app: string; sid: string; sk
 		};
 	}
 
-	const internalSession = await prisma.session.findUnique({
+	const internalSession = await prisma.authSession.findUnique({
 		where: { id: input.sid },
 		select: {
 			accountId: true,

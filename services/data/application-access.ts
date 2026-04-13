@@ -31,7 +31,7 @@ export async function getUserApplicationAccess(appId: string): Promise<UserAppli
   try {
     const [application, sessions] = await Promise.all([
       prisma.application.findUnique({ where: { id: appId } }),
-      prisma.session.findMany({
+      prisma.authSession.findMany({
         where: {
           accountId,
           application: appId,
@@ -102,7 +102,7 @@ export async function addUserApplicationAccess(input: { appId: string; permissio
       return { success: false, error: 'Application not found.' };
     }
 
-    const existing = await prisma.session.findFirst({
+    const existing = await prisma.authSession.findFirst({
       where: {
         accountId,
         application: appId,
@@ -112,7 +112,7 @@ export async function addUserApplicationAccess(input: { appId: string; permissio
     });
 
     if (existing) {
-      await prisma.session.update({
+      await prisma.authSession.update({
         where: { id: existing.id },
         data: {
           permissions,
@@ -120,7 +120,7 @@ export async function addUserApplicationAccess(input: { appId: string; permissio
         },
       });
     } else {
-      await prisma.session.create({
+      await prisma.authSession.create({
         data: {
           accountId,
           application: appId,
@@ -160,7 +160,7 @@ export async function updateUserApplicationPermissions(input: { appId: string; p
   const { appId, permissions } = parsed.data;
 
   try {
-    const existing = await prisma.session.findFirst({
+    const existing = await prisma.authSession.findFirst({
       where: {
         accountId,
         application: appId,
@@ -172,7 +172,7 @@ export async function updateUserApplicationPermissions(input: { appId: string; p
       return { success: false, error: 'Application access not found for edit.' };
     }
 
-    await prisma.session.updateMany({
+    await prisma.authSession.updateMany({
       where: {
         accountId,
         application: appId,

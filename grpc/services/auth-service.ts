@@ -38,7 +38,7 @@ async function validateInternalSession(data: {
     }
 
     // 2. Session Validation
-    const session = await prisma.session.findUnique({
+    const session = await prisma.authSession.findUnique({
         where: { id: auth_session_id },
     });
 
