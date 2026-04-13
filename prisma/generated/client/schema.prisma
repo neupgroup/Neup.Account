@@ -278,22 +278,21 @@ model Permit {
 }
 
 model AuthSession {
-  id                String    @id @default(uuid())
-  accountId         String
-  application       String? // neup.account for internal apps, or external application id/name
-  applicationType   String    @default("internal") // internal | external
-  applicationDomain String?
-  ipAddress         String
-  userAgent         String
-  lastLoggedIn      DateTime
-  loginType         String
-  geolocation       String?
-  deviceType        String? // 'android' | 'ios' | 'web' | etc.
-  expiresOn         DateTime?
-  isExpired         Boolean   @default(false)
-  authSessionKey    String?
-  dependentKeys     Json?
-  permissions       Json?     @default("[]")
+  id             String    @id @default(uuid())
+  accountId      String
+  application    String? // neup.account for internal apps, or external application id/name
+  // ...existing code...
+  ipAddress      String
+  userAgent      String
+  lastLoggedIn   DateTime
+  loginType      String
+  geolocation    String?
+  deviceType     String? // 'android' | 'ios' | 'web' | etc.
+  expiresOn      DateTime?
+  isExpired      Boolean   @default(false)
+  authSessionKey String?
+  dependentKeys  Json?
+  // ...existing code...
 
   account Account @relation(fields: [accountId], references: [id])
 

@@ -19946,8 +19946,6 @@ export namespace Prisma {
     id: string | null
     accountId: string | null
     application: string | null
-    applicationType: string | null
-    applicationDomain: string | null
     ipAddress: string | null
     userAgent: string | null
     lastLoggedIn: Date | null
@@ -19963,8 +19961,6 @@ export namespace Prisma {
     id: string | null
     accountId: string | null
     application: string | null
-    applicationType: string | null
-    applicationDomain: string | null
     ipAddress: string | null
     userAgent: string | null
     lastLoggedIn: Date | null
@@ -19980,8 +19976,6 @@ export namespace Prisma {
     id: number
     accountId: number
     application: number
-    applicationType: number
-    applicationDomain: number
     ipAddress: number
     userAgent: number
     lastLoggedIn: number
@@ -19992,7 +19986,6 @@ export namespace Prisma {
     isExpired: number
     authSessionKey: number
     dependentKeys: number
-    permissions: number
     _all: number
   }
 
@@ -20001,8 +19994,6 @@ export namespace Prisma {
     id?: true
     accountId?: true
     application?: true
-    applicationType?: true
-    applicationDomain?: true
     ipAddress?: true
     userAgent?: true
     lastLoggedIn?: true
@@ -20018,8 +20009,6 @@ export namespace Prisma {
     id?: true
     accountId?: true
     application?: true
-    applicationType?: true
-    applicationDomain?: true
     ipAddress?: true
     userAgent?: true
     lastLoggedIn?: true
@@ -20035,8 +20024,6 @@ export namespace Prisma {
     id?: true
     accountId?: true
     application?: true
-    applicationType?: true
-    applicationDomain?: true
     ipAddress?: true
     userAgent?: true
     lastLoggedIn?: true
@@ -20047,7 +20034,6 @@ export namespace Prisma {
     isExpired?: true
     authSessionKey?: true
     dependentKeys?: true
-    permissions?: true
     _all?: true
   }
 
@@ -20127,8 +20113,6 @@ export namespace Prisma {
     id: string
     accountId: string
     application: string | null
-    applicationType: string
-    applicationDomain: string | null
     ipAddress: string
     userAgent: string
     lastLoggedIn: Date
@@ -20139,7 +20123,6 @@ export namespace Prisma {
     isExpired: boolean
     authSessionKey: string | null
     dependentKeys: JsonValue | null
-    permissions: JsonValue | null
     _count: AuthSessionCountAggregateOutputType | null
     _min: AuthSessionMinAggregateOutputType | null
     _max: AuthSessionMaxAggregateOutputType | null
@@ -20163,8 +20146,6 @@ export namespace Prisma {
     id?: boolean
     accountId?: boolean
     application?: boolean
-    applicationType?: boolean
-    applicationDomain?: boolean
     ipAddress?: boolean
     userAgent?: boolean
     lastLoggedIn?: boolean
@@ -20175,7 +20156,6 @@ export namespace Prisma {
     isExpired?: boolean
     authSessionKey?: boolean
     dependentKeys?: boolean
-    permissions?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["authSession"]>
 
@@ -20183,8 +20163,6 @@ export namespace Prisma {
     id?: boolean
     accountId?: boolean
     application?: boolean
-    applicationType?: boolean
-    applicationDomain?: boolean
     ipAddress?: boolean
     userAgent?: boolean
     lastLoggedIn?: boolean
@@ -20195,7 +20173,6 @@ export namespace Prisma {
     isExpired?: boolean
     authSessionKey?: boolean
     dependentKeys?: boolean
-    permissions?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["authSession"]>
 
@@ -20203,8 +20180,6 @@ export namespace Prisma {
     id?: boolean
     accountId?: boolean
     application?: boolean
-    applicationType?: boolean
-    applicationDomain?: boolean
     ipAddress?: boolean
     userAgent?: boolean
     lastLoggedIn?: boolean
@@ -20215,7 +20190,6 @@ export namespace Prisma {
     isExpired?: boolean
     authSessionKey?: boolean
     dependentKeys?: boolean
-    permissions?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["authSession"]>
 
@@ -20223,8 +20197,6 @@ export namespace Prisma {
     id?: boolean
     accountId?: boolean
     application?: boolean
-    applicationType?: boolean
-    applicationDomain?: boolean
     ipAddress?: boolean
     userAgent?: boolean
     lastLoggedIn?: boolean
@@ -20235,10 +20207,9 @@ export namespace Prisma {
     isExpired?: boolean
     authSessionKey?: boolean
     dependentKeys?: boolean
-    permissions?: boolean
   }
 
-  export type AuthSessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "application" | "applicationType" | "applicationDomain" | "ipAddress" | "userAgent" | "lastLoggedIn" | "loginType" | "geolocation" | "deviceType" | "expiresOn" | "isExpired" | "authSessionKey" | "dependentKeys" | "permissions", ExtArgs["result"]["authSession"]>
+  export type AuthSessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "application" | "ipAddress" | "userAgent" | "lastLoggedIn" | "loginType" | "geolocation" | "deviceType" | "expiresOn" | "isExpired" | "authSessionKey" | "dependentKeys", ExtArgs["result"]["authSession"]>
   export type AuthSessionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }
@@ -20258,8 +20229,6 @@ export namespace Prisma {
       id: string
       accountId: string
       application: string | null
-      applicationType: string
-      applicationDomain: string | null
       ipAddress: string
       userAgent: string
       lastLoggedIn: Date
@@ -20270,7 +20239,6 @@ export namespace Prisma {
       isExpired: boolean
       authSessionKey: string | null
       dependentKeys: Prisma.JsonValue | null
-      permissions: Prisma.JsonValue | null
     }, ExtArgs["result"]["authSession"]>
     composites: {}
   }
@@ -20698,8 +20666,6 @@ export namespace Prisma {
     readonly id: FieldRef<"AuthSession", 'String'>
     readonly accountId: FieldRef<"AuthSession", 'String'>
     readonly application: FieldRef<"AuthSession", 'String'>
-    readonly applicationType: FieldRef<"AuthSession", 'String'>
-    readonly applicationDomain: FieldRef<"AuthSession", 'String'>
     readonly ipAddress: FieldRef<"AuthSession", 'String'>
     readonly userAgent: FieldRef<"AuthSession", 'String'>
     readonly lastLoggedIn: FieldRef<"AuthSession", 'DateTime'>
@@ -20710,7 +20676,6 @@ export namespace Prisma {
     readonly isExpired: FieldRef<"AuthSession", 'Boolean'>
     readonly authSessionKey: FieldRef<"AuthSession", 'String'>
     readonly dependentKeys: FieldRef<"AuthSession", 'Json'>
-    readonly permissions: FieldRef<"AuthSession", 'Json'>
   }
     
 
@@ -29072,8 +29037,6 @@ export namespace Prisma {
     id: 'id',
     accountId: 'accountId',
     application: 'application',
-    applicationType: 'applicationType',
-    applicationDomain: 'applicationDomain',
     ipAddress: 'ipAddress',
     userAgent: 'userAgent',
     lastLoggedIn: 'lastLoggedIn',
@@ -29083,8 +29046,7 @@ export namespace Prisma {
     expiresOn: 'expiresOn',
     isExpired: 'isExpired',
     authSessionKey: 'authSessionKey',
-    dependentKeys: 'dependentKeys',
-    permissions: 'permissions'
+    dependentKeys: 'dependentKeys'
   };
 
   export type AuthSessionScalarFieldEnum = (typeof AuthSessionScalarFieldEnum)[keyof typeof AuthSessionScalarFieldEnum]
@@ -30433,8 +30395,6 @@ export namespace Prisma {
     id?: StringFilter<"AuthSession"> | string
     accountId?: StringFilter<"AuthSession"> | string
     application?: StringNullableFilter<"AuthSession"> | string | null
-    applicationType?: StringFilter<"AuthSession"> | string
-    applicationDomain?: StringNullableFilter<"AuthSession"> | string | null
     ipAddress?: StringFilter<"AuthSession"> | string
     userAgent?: StringFilter<"AuthSession"> | string
     lastLoggedIn?: DateTimeFilter<"AuthSession"> | Date | string
@@ -30445,7 +30405,6 @@ export namespace Prisma {
     isExpired?: BoolFilter<"AuthSession"> | boolean
     authSessionKey?: StringNullableFilter<"AuthSession"> | string | null
     dependentKeys?: JsonNullableFilter<"AuthSession">
-    permissions?: JsonNullableFilter<"AuthSession">
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
   }
 
@@ -30453,8 +30412,6 @@ export namespace Prisma {
     id?: SortOrder
     accountId?: SortOrder
     application?: SortOrderInput | SortOrder
-    applicationType?: SortOrder
-    applicationDomain?: SortOrderInput | SortOrder
     ipAddress?: SortOrder
     userAgent?: SortOrder
     lastLoggedIn?: SortOrder
@@ -30465,7 +30422,6 @@ export namespace Prisma {
     isExpired?: SortOrder
     authSessionKey?: SortOrderInput | SortOrder
     dependentKeys?: SortOrderInput | SortOrder
-    permissions?: SortOrderInput | SortOrder
     account?: AccountOrderByWithRelationInput
   }
 
@@ -30476,8 +30432,6 @@ export namespace Prisma {
     NOT?: AuthSessionWhereInput | AuthSessionWhereInput[]
     accountId?: StringFilter<"AuthSession"> | string
     application?: StringNullableFilter<"AuthSession"> | string | null
-    applicationType?: StringFilter<"AuthSession"> | string
-    applicationDomain?: StringNullableFilter<"AuthSession"> | string | null
     ipAddress?: StringFilter<"AuthSession"> | string
     userAgent?: StringFilter<"AuthSession"> | string
     lastLoggedIn?: DateTimeFilter<"AuthSession"> | Date | string
@@ -30488,7 +30442,6 @@ export namespace Prisma {
     isExpired?: BoolFilter<"AuthSession"> | boolean
     authSessionKey?: StringNullableFilter<"AuthSession"> | string | null
     dependentKeys?: JsonNullableFilter<"AuthSession">
-    permissions?: JsonNullableFilter<"AuthSession">
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
   }, "id">
 
@@ -30496,8 +30449,6 @@ export namespace Prisma {
     id?: SortOrder
     accountId?: SortOrder
     application?: SortOrderInput | SortOrder
-    applicationType?: SortOrder
-    applicationDomain?: SortOrderInput | SortOrder
     ipAddress?: SortOrder
     userAgent?: SortOrder
     lastLoggedIn?: SortOrder
@@ -30508,7 +30459,6 @@ export namespace Prisma {
     isExpired?: SortOrder
     authSessionKey?: SortOrderInput | SortOrder
     dependentKeys?: SortOrderInput | SortOrder
-    permissions?: SortOrderInput | SortOrder
     _count?: AuthSessionCountOrderByAggregateInput
     _max?: AuthSessionMaxOrderByAggregateInput
     _min?: AuthSessionMinOrderByAggregateInput
@@ -30521,8 +30471,6 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"AuthSession"> | string
     accountId?: StringWithAggregatesFilter<"AuthSession"> | string
     application?: StringNullableWithAggregatesFilter<"AuthSession"> | string | null
-    applicationType?: StringWithAggregatesFilter<"AuthSession"> | string
-    applicationDomain?: StringNullableWithAggregatesFilter<"AuthSession"> | string | null
     ipAddress?: StringWithAggregatesFilter<"AuthSession"> | string
     userAgent?: StringWithAggregatesFilter<"AuthSession"> | string
     lastLoggedIn?: DateTimeWithAggregatesFilter<"AuthSession"> | Date | string
@@ -30533,7 +30481,6 @@ export namespace Prisma {
     isExpired?: BoolWithAggregatesFilter<"AuthSession"> | boolean
     authSessionKey?: StringNullableWithAggregatesFilter<"AuthSession"> | string | null
     dependentKeys?: JsonNullableWithAggregatesFilter<"AuthSession">
-    permissions?: JsonNullableWithAggregatesFilter<"AuthSession">
   }
 
   export type SystemErrorWhereInput = {
@@ -32201,8 +32148,6 @@ export namespace Prisma {
   export type AuthSessionCreateInput = {
     id?: string
     application?: string | null
-    applicationType?: string
-    applicationDomain?: string | null
     ipAddress: string
     userAgent: string
     lastLoggedIn: Date | string
@@ -32213,7 +32158,6 @@ export namespace Prisma {
     isExpired?: boolean
     authSessionKey?: string | null
     dependentKeys?: NullableJsonNullValueInput | InputJsonValue
-    permissions?: NullableJsonNullValueInput | InputJsonValue
     account: AccountCreateNestedOneWithoutSessionsInput
   }
 
@@ -32221,8 +32165,6 @@ export namespace Prisma {
     id?: string
     accountId: string
     application?: string | null
-    applicationType?: string
-    applicationDomain?: string | null
     ipAddress: string
     userAgent: string
     lastLoggedIn: Date | string
@@ -32233,14 +32175,11 @@ export namespace Prisma {
     isExpired?: boolean
     authSessionKey?: string | null
     dependentKeys?: NullableJsonNullValueInput | InputJsonValue
-    permissions?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type AuthSessionUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     application?: NullableStringFieldUpdateOperationsInput | string | null
-    applicationType?: StringFieldUpdateOperationsInput | string
-    applicationDomain?: NullableStringFieldUpdateOperationsInput | string | null
     ipAddress?: StringFieldUpdateOperationsInput | string
     userAgent?: StringFieldUpdateOperationsInput | string
     lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32251,7 +32190,6 @@ export namespace Prisma {
     isExpired?: BoolFieldUpdateOperationsInput | boolean
     authSessionKey?: NullableStringFieldUpdateOperationsInput | string | null
     dependentKeys?: NullableJsonNullValueInput | InputJsonValue
-    permissions?: NullableJsonNullValueInput | InputJsonValue
     account?: AccountUpdateOneRequiredWithoutSessionsNestedInput
   }
 
@@ -32259,8 +32197,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
     application?: NullableStringFieldUpdateOperationsInput | string | null
-    applicationType?: StringFieldUpdateOperationsInput | string
-    applicationDomain?: NullableStringFieldUpdateOperationsInput | string | null
     ipAddress?: StringFieldUpdateOperationsInput | string
     userAgent?: StringFieldUpdateOperationsInput | string
     lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32271,15 +32207,12 @@ export namespace Prisma {
     isExpired?: BoolFieldUpdateOperationsInput | boolean
     authSessionKey?: NullableStringFieldUpdateOperationsInput | string | null
     dependentKeys?: NullableJsonNullValueInput | InputJsonValue
-    permissions?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type AuthSessionCreateManyInput = {
     id?: string
     accountId: string
     application?: string | null
-    applicationType?: string
-    applicationDomain?: string | null
     ipAddress: string
     userAgent: string
     lastLoggedIn: Date | string
@@ -32290,14 +32223,11 @@ export namespace Prisma {
     isExpired?: boolean
     authSessionKey?: string | null
     dependentKeys?: NullableJsonNullValueInput | InputJsonValue
-    permissions?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type AuthSessionUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     application?: NullableStringFieldUpdateOperationsInput | string | null
-    applicationType?: StringFieldUpdateOperationsInput | string
-    applicationDomain?: NullableStringFieldUpdateOperationsInput | string | null
     ipAddress?: StringFieldUpdateOperationsInput | string
     userAgent?: StringFieldUpdateOperationsInput | string
     lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32308,15 +32238,12 @@ export namespace Prisma {
     isExpired?: BoolFieldUpdateOperationsInput | boolean
     authSessionKey?: NullableStringFieldUpdateOperationsInput | string | null
     dependentKeys?: NullableJsonNullValueInput | InputJsonValue
-    permissions?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type AuthSessionUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
     application?: NullableStringFieldUpdateOperationsInput | string | null
-    applicationType?: StringFieldUpdateOperationsInput | string
-    applicationDomain?: NullableStringFieldUpdateOperationsInput | string | null
     ipAddress?: StringFieldUpdateOperationsInput | string
     userAgent?: StringFieldUpdateOperationsInput | string
     lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32327,7 +32254,6 @@ export namespace Prisma {
     isExpired?: BoolFieldUpdateOperationsInput | boolean
     authSessionKey?: NullableStringFieldUpdateOperationsInput | string | null
     dependentKeys?: NullableJsonNullValueInput | InputJsonValue
-    permissions?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type SystemErrorCreateInput = {
@@ -33766,8 +33692,6 @@ export namespace Prisma {
     id?: SortOrder
     accountId?: SortOrder
     application?: SortOrder
-    applicationType?: SortOrder
-    applicationDomain?: SortOrder
     ipAddress?: SortOrder
     userAgent?: SortOrder
     lastLoggedIn?: SortOrder
@@ -33778,15 +33702,12 @@ export namespace Prisma {
     isExpired?: SortOrder
     authSessionKey?: SortOrder
     dependentKeys?: SortOrder
-    permissions?: SortOrder
   }
 
   export type AuthSessionMaxOrderByAggregateInput = {
     id?: SortOrder
     accountId?: SortOrder
     application?: SortOrder
-    applicationType?: SortOrder
-    applicationDomain?: SortOrder
     ipAddress?: SortOrder
     userAgent?: SortOrder
     lastLoggedIn?: SortOrder
@@ -33802,8 +33723,6 @@ export namespace Prisma {
     id?: SortOrder
     accountId?: SortOrder
     application?: SortOrder
-    applicationType?: SortOrder
-    applicationDomain?: SortOrder
     ipAddress?: SortOrder
     userAgent?: SortOrder
     lastLoggedIn?: SortOrder
@@ -35827,8 +35746,6 @@ export namespace Prisma {
   export type AuthSessionCreateWithoutAccountInput = {
     id?: string
     application?: string | null
-    applicationType?: string
-    applicationDomain?: string | null
     ipAddress: string
     userAgent: string
     lastLoggedIn: Date | string
@@ -35839,14 +35756,11 @@ export namespace Prisma {
     isExpired?: boolean
     authSessionKey?: string | null
     dependentKeys?: NullableJsonNullValueInput | InputJsonValue
-    permissions?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type AuthSessionUncheckedCreateWithoutAccountInput = {
     id?: string
     application?: string | null
-    applicationType?: string
-    applicationDomain?: string | null
     ipAddress: string
     userAgent: string
     lastLoggedIn: Date | string
@@ -35857,7 +35771,6 @@ export namespace Prisma {
     isExpired?: boolean
     authSessionKey?: string | null
     dependentKeys?: NullableJsonNullValueInput | InputJsonValue
-    permissions?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type AuthSessionCreateOrConnectWithoutAccountInput = {
@@ -36388,8 +36301,6 @@ export namespace Prisma {
     id?: StringFilter<"AuthSession"> | string
     accountId?: StringFilter<"AuthSession"> | string
     application?: StringNullableFilter<"AuthSession"> | string | null
-    applicationType?: StringFilter<"AuthSession"> | string
-    applicationDomain?: StringNullableFilter<"AuthSession"> | string | null
     ipAddress?: StringFilter<"AuthSession"> | string
     userAgent?: StringFilter<"AuthSession"> | string
     lastLoggedIn?: DateTimeFilter<"AuthSession"> | Date | string
@@ -36400,7 +36311,6 @@ export namespace Prisma {
     isExpired?: BoolFilter<"AuthSession"> | boolean
     authSessionKey?: StringNullableFilter<"AuthSession"> | string | null
     dependentKeys?: JsonNullableFilter<"AuthSession">
-    permissions?: JsonNullableFilter<"AuthSession">
   }
 
   export type SystemErrorUpsertWithWhereUniqueWithoutAccountInput = {
@@ -39762,8 +39672,6 @@ export namespace Prisma {
   export type AuthSessionCreateManyAccountInput = {
     id?: string
     application?: string | null
-    applicationType?: string
-    applicationDomain?: string | null
     ipAddress: string
     userAgent: string
     lastLoggedIn: Date | string
@@ -39774,7 +39682,6 @@ export namespace Prisma {
     isExpired?: boolean
     authSessionKey?: string | null
     dependentKeys?: NullableJsonNullValueInput | InputJsonValue
-    permissions?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type SystemErrorCreateManyAccountInput = {
@@ -40043,8 +39950,6 @@ export namespace Prisma {
   export type AuthSessionUpdateWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
     application?: NullableStringFieldUpdateOperationsInput | string | null
-    applicationType?: StringFieldUpdateOperationsInput | string
-    applicationDomain?: NullableStringFieldUpdateOperationsInput | string | null
     ipAddress?: StringFieldUpdateOperationsInput | string
     userAgent?: StringFieldUpdateOperationsInput | string
     lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40055,14 +39960,11 @@ export namespace Prisma {
     isExpired?: BoolFieldUpdateOperationsInput | boolean
     authSessionKey?: NullableStringFieldUpdateOperationsInput | string | null
     dependentKeys?: NullableJsonNullValueInput | InputJsonValue
-    permissions?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type AuthSessionUncheckedUpdateWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
     application?: NullableStringFieldUpdateOperationsInput | string | null
-    applicationType?: StringFieldUpdateOperationsInput | string
-    applicationDomain?: NullableStringFieldUpdateOperationsInput | string | null
     ipAddress?: StringFieldUpdateOperationsInput | string
     userAgent?: StringFieldUpdateOperationsInput | string
     lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40073,14 +39975,11 @@ export namespace Prisma {
     isExpired?: BoolFieldUpdateOperationsInput | boolean
     authSessionKey?: NullableStringFieldUpdateOperationsInput | string | null
     dependentKeys?: NullableJsonNullValueInput | InputJsonValue
-    permissions?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type AuthSessionUncheckedUpdateManyWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
     application?: NullableStringFieldUpdateOperationsInput | string | null
-    applicationType?: StringFieldUpdateOperationsInput | string
-    applicationDomain?: NullableStringFieldUpdateOperationsInput | string | null
     ipAddress?: StringFieldUpdateOperationsInput | string
     userAgent?: StringFieldUpdateOperationsInput | string
     lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40091,7 +39990,6 @@ export namespace Prisma {
     isExpired?: BoolFieldUpdateOperationsInput | boolean
     authSessionKey?: NullableStringFieldUpdateOperationsInput | string | null
     dependentKeys?: NullableJsonNullValueInput | InputJsonValue
-    permissions?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type SystemErrorUpdateWithoutAccountInput = {

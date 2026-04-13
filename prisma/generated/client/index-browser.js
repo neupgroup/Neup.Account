@@ -284,8 +284,6 @@ exports.Prisma.AuthSessionScalarFieldEnum = {
   id: 'id',
   accountId: 'accountId',
   application: 'application',
-  applicationType: 'applicationType',
-  applicationDomain: 'applicationDomain',
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
   lastLoggedIn: 'lastLoggedIn',
@@ -295,8 +293,7 @@ exports.Prisma.AuthSessionScalarFieldEnum = {
   expiresOn: 'expiresOn',
   isExpired: 'isExpired',
   authSessionKey: 'authSessionKey',
-  dependentKeys: 'dependentKeys',
-  permissions: 'permissions'
+  dependentKeys: 'dependentKeys'
 };
 
 exports.Prisma.SystemErrorScalarFieldEnum = {
