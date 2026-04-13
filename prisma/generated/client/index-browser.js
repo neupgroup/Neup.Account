@@ -122,13 +122,13 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.AccountScalarFieldEnum = {
   id: 'id',
+  displayName: 'displayName',
   accountType: 'accountType',
   displayImage: 'displayImage',
-  displayName: 'displayName',
   status: 'status',
   isVerified: 'isVerified',
-  createdAt: 'createdAt',
-  details: 'details'
+  details: 'details',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.AccountTypeIndividualScalarFieldEnum = {
@@ -246,15 +246,15 @@ exports.Prisma.ContactScalarFieldEnum = {
 exports.Prisma.NeupIdScalarFieldEnum = {
   id: 'id',
   accountId: 'accountId',
-  dateAdded: 'dateAdded',
-  isPrimary: 'isPrimary'
+  isPrimary: 'isPrimary',
+  dateAdded: 'dateAdded'
 };
 
 exports.Prisma.AuthMethodScalarFieldEnum = {
-  id: 'id',
   accountId: 'accountId',
-  type: 'type',
   value: 'value',
+  id: 'id',
+  type: 'type',
   order: 'order',
   status: 'status',
   detail: 'detail'
@@ -262,71 +262,70 @@ exports.Prisma.AuthMethodScalarFieldEnum = {
 
 exports.Prisma.PermitScalarFieldEnum = {
   id: 'id',
-  permitType: 'permitType',
-  permitSubType: 'permitSubType',
-  permitNumber: 'permitNumber',
-  issuingAuthority: 'issuingAuthority',
-  issueDate: 'issueDate',
-  expiryDate: 'expiryDate',
-  status: 'status',
   accountId: 'accountId',
   targetAccountId: 'targetAccountId',
   forSelf: 'forSelf',
   isRoot: 'isRoot',
-  fullAccess: 'fullAccess',
   permissions: 'permissions',
   restrictions: 'restrictions',
   createdOn: 'createdOn',
-  managedBy: 'managedBy'
+  expiryDate: 'expiryDate',
+  fullAccess: 'fullAccess',
+  issueDate: 'issueDate',
+  issuingAuthority: 'issuingAuthority',
+  managedBy: 'managedBy',
+  permitNumber: 'permitNumber',
+  permitSubType: 'permitSubType',
+  permitType: 'permitType',
+  status: 'status'
 };
 
 exports.Prisma.AuthSessionScalarFieldEnum = {
   id: 'id',
   accountId: 'accountId',
-  application: 'application',
+  key: 'key',
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
+  isExpired: 'isExpired',
+  expiresOn: 'expiresOn',
   lastLoggedIn: 'lastLoggedIn',
   loginType: 'loginType',
   geolocation: 'geolocation',
   deviceType: 'deviceType',
-  expiresOn: 'expiresOn',
-  isExpired: 'isExpired',
-  authSessionKey: 'authSessionKey',
-  dependentKeys: 'dependentKeys'
+  application: 'application'
 };
 
 exports.Prisma.SystemErrorScalarFieldEnum = {
   id: 'id',
-  type: 'type',
-  context: 'context',
   message: 'message',
-  status: 'status',
+  context: 'context',
+  timestamp: 'timestamp',
   accountId: 'accountId',
-  ipAddress: 'ipAddress',
   geolocation: 'geolocation',
+  ipAddress: 'ipAddress',
+  problemLevel: 'problemLevel',
   reproSteps: 'reproSteps',
   solution: 'solution',
   solvedBy: 'solvedBy',
-  problemLevel: 'problemLevel',
-  timestamp: 'timestamp'
+  status: 'status',
+  type: 'type'
 };
 
 exports.Prisma.ApplicationScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  status: 'status',
   party: 'party',
   description: 'description',
   icon: 'icon',
   website: 'website',
   developer: 'developer',
   appSecret: 'appSecret',
+  createdAt: 'createdAt',
   access: 'access',
-  policies: 'policies',
   endpoints: 'endpoints',
   ownerAccountId: 'ownerAccountId',
-  createdAt: 'createdAt'
+  policies: 'policies',
+  status: 'status'
 };
 
 exports.Prisma.PortfolioScalarFieldEnum = {
@@ -395,30 +394,7 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-exports.AuthMethodType = exports.$Enums.AuthMethodType = {
-  totpToken: 'totpToken',
-  otpSms: 'otpSms',
-  otpEmail: 'otpEmail',
-  password: 'password',
-  phonePrompt: 'phonePrompt',
-  qrScan: 'qrScan',
-  keychain: 'keychain',
-  faceRecognition: 'faceRecognition',
-  securityKey: 'securityKey',
-  backupCodes: 'backupCodes'
-};
 
-exports.AuthMethodOrder = exports.$Enums.AuthMethodOrder = {
-  primary: 'primary',
-  secondary: 'secondary',
-  tertiary: 'tertiary',
-  backup: 'backup'
-};
-
-exports.AuthMethodStatus = exports.$Enums.AuthMethodStatus = {
-  expired: 'expired',
-  active: 'active'
-};
 
 exports.Prisma.ModelName = {
   Account: 'Account',

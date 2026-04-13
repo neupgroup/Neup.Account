@@ -237,22 +237,18 @@ model Permit {
 }
 
 model AuthSession {
-  id                String    @id(map: "sessions_pkey") @default(uuid())
-  accountId         String
-  authSessionKey    String?
-  ipAddress         String
-  userAgent         String
-  isExpired         Boolean   @default(false)
-  expiresOn         DateTime?
-  lastLoggedIn      DateTime
-  loginType         String
-  geolocation       String?
-  dependentKeys     Json?
-  deviceType        String?
-  application       String?
-  applicationDomain String?
-  applicationType   String    @default("internal")
-  account           Account   @relation(fields: [accountId], references: [id], map: "sessions_accountId_fkey")
+  id           String    @id(map: "sessions_pkey") @default(uuid())
+  accountId    String
+  key          String?
+  ipAddress    String
+  userAgent    String
+  validTill    DateTime? @db.Timestamp(6)
+  lastLoggedIn DateTime
+  loginType    String
+  geolocation  String?
+  deviceType   String?
+  application  String?
+  account      Account   @relation(fields: [accountId], references: [id], map: "sessions_accountId_fkey")
 
   @@map("auth_session")
 }

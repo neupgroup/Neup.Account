@@ -268,28 +268,35 @@ export async function impersonateUser(userId: string, neupId: string): Promise<{
     const canImpersonate = await checkPermissions(['root.account.impersonate']);
     if (!canImpersonate) return { success: false, error: 'Permission denied.' };
 
+    // --- Device type detection ---
+    const allowedDeviceTypes = ['web', 'api', 'android', 'ios', 'windowsapp'];
+    const headersList = await headers();
+    const deviceTypeHeader = headersList.get('x-device-type');
+    if (!deviceTypeHeader || !allowedDeviceTypes.includes(deviceTypeHeader)) {
+        return { success: false, error: 'Invalid or missing device type.' };
+    }
+
     const adminId = await getPersonalAccountId();
     if (!adminId) return { success: false, error: 'Administrator not authenticated.' };
 
     try {
-        const headersList = await headers();
         const ipAddress = headersList.get('x-forwarded-for') || 'Unknown IP';
         const userAgent = headersList.get('user-agent') || 'Unknown User-Agent';
 
-        const expiresOn = new Date();
-        expiresOn.setHours(expiresOn.getHours() + 1); // 1 hour impersonation
+        const validTill = new Date();
+        validTill.setDate(validTill.getDate() + 7); // 7 days expiry
         const sessionKey = crypto.randomUUID();
 
         const newSession = await prisma.authSession.create({
             data: {
                 accountId: userId,
-                authSessionKey: sessionKey,
+                key: sessionKey,
                 ipAddress: ipAddress,
                 userAgent: userAgent,
-                isExpired: false,
-                expiresOn: expiresOn,
+                validTill: validTill,
                 lastLoggedIn: new Date(),
                 loginType: 'Impersonation',
+                deviceType: deviceTypeHeader,
             }
         });
 
@@ -300,7 +307,7 @@ export async function impersonateUser(userId: string, neupId: string): Promise<{
             accountId: userId,
             sessionId: newSession.id,
             sessionKey,
-        }, expiresOn);
+        }, validTill);
 
         await logActivity(userId, `Admin impersonation started by ${adminId}`, 'Alert', undefined, adminId);
 

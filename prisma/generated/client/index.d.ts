@@ -130,57 +130,6 @@ export type PortfolioRole = $Result.DefaultSelection<Prisma.$PortfolioRolePayloa
 export type ApplicationConnection = $Result.DefaultSelection<Prisma.$ApplicationConnectionPayload>
 
 /**
- * Enums
- */
-export namespace $Enums {
-  export const AuthMethodOrder: {
-  primary: 'primary',
-  secondary: 'secondary',
-  tertiary: 'tertiary',
-  backup: 'backup'
-};
-
-export type AuthMethodOrder = (typeof AuthMethodOrder)[keyof typeof AuthMethodOrder]
-
-
-export const AuthMethodStatus: {
-  expired: 'expired',
-  active: 'active'
-};
-
-export type AuthMethodStatus = (typeof AuthMethodStatus)[keyof typeof AuthMethodStatus]
-
-
-export const AuthMethodType: {
-  totpToken: 'totpToken',
-  otpSms: 'otpSms',
-  otpEmail: 'otpEmail',
-  password: 'password',
-  phonePrompt: 'phonePrompt',
-  qrScan: 'qrScan',
-  keychain: 'keychain',
-  faceRecognition: 'faceRecognition',
-  securityKey: 'securityKey',
-  backupCodes: 'backupCodes'
-};
-
-export type AuthMethodType = (typeof AuthMethodType)[keyof typeof AuthMethodType]
-
-}
-
-export type AuthMethodOrder = $Enums.AuthMethodOrder
-
-export const AuthMethodOrder: typeof $Enums.AuthMethodOrder
-
-export type AuthMethodStatus = $Enums.AuthMethodStatus
-
-export const AuthMethodStatus: typeof $Enums.AuthMethodStatus
-
-export type AuthMethodType = $Enums.AuthMethodType
-
-export const AuthMethodType: typeof $Enums.AuthMethodType
-
-/**
  * ##  Prisma Client ʲˢ
  *
  * Type-safe database client for TypeScript & Node.js
@@ -2915,41 +2864,43 @@ export namespace Prisma {
    */
 
   export type AccountCountOutputType = {
+    childOwnerships: number
+    parentOwnerships: number
+    ownedApplications: number
+    appConnections: number
+    authMethods: number
+    sessions: number
     contacts: number
     neupIds: number
+    notifications: number
     permits: number
     targetPermits: number
-    sessions: number
-    errorLogs: number
-    appConnections: number
-    ownedApplications: number
-    notifications: number
-    verifications: number
-    sentRequests: number
-    receivedRequests: number
-    parentOwnerships: number
-    childOwnerships: number
     portfolioMembers: number
     portfolioRoles: number
+    receivedRequests: number
+    sentRequests: number
+    errorLogs: number
+    verifications: number
   }
 
   export type AccountCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    childOwnerships?: boolean | AccountCountOutputTypeCountChildOwnershipsArgs
+    parentOwnerships?: boolean | AccountCountOutputTypeCountParentOwnershipsArgs
+    ownedApplications?: boolean | AccountCountOutputTypeCountOwnedApplicationsArgs
+    appConnections?: boolean | AccountCountOutputTypeCountAppConnectionsArgs
+    authMethods?: boolean | AccountCountOutputTypeCountAuthMethodsArgs
+    sessions?: boolean | AccountCountOutputTypeCountSessionsArgs
     contacts?: boolean | AccountCountOutputTypeCountContactsArgs
     neupIds?: boolean | AccountCountOutputTypeCountNeupIdsArgs
+    notifications?: boolean | AccountCountOutputTypeCountNotificationsArgs
     permits?: boolean | AccountCountOutputTypeCountPermitsArgs
     targetPermits?: boolean | AccountCountOutputTypeCountTargetPermitsArgs
-    sessions?: boolean | AccountCountOutputTypeCountSessionsArgs
-    errorLogs?: boolean | AccountCountOutputTypeCountErrorLogsArgs
-    appConnections?: boolean | AccountCountOutputTypeCountAppConnectionsArgs
-    ownedApplications?: boolean | AccountCountOutputTypeCountOwnedApplicationsArgs
-    notifications?: boolean | AccountCountOutputTypeCountNotificationsArgs
-    verifications?: boolean | AccountCountOutputTypeCountVerificationsArgs
-    sentRequests?: boolean | AccountCountOutputTypeCountSentRequestsArgs
-    receivedRequests?: boolean | AccountCountOutputTypeCountReceivedRequestsArgs
-    parentOwnerships?: boolean | AccountCountOutputTypeCountParentOwnershipsArgs
-    childOwnerships?: boolean | AccountCountOutputTypeCountChildOwnershipsArgs
     portfolioMembers?: boolean | AccountCountOutputTypeCountPortfolioMembersArgs
     portfolioRoles?: boolean | AccountCountOutputTypeCountPortfolioRolesArgs
+    receivedRequests?: boolean | AccountCountOutputTypeCountReceivedRequestsArgs
+    sentRequests?: boolean | AccountCountOutputTypeCountSentRequestsArgs
+    errorLogs?: boolean | AccountCountOutputTypeCountErrorLogsArgs
+    verifications?: boolean | AccountCountOutputTypeCountVerificationsArgs
   }
 
   // Custom InputTypes
@@ -2961,6 +2912,48 @@ export namespace Prisma {
      * Select specific fields to fetch from the AccountCountOutputType
      */
     select?: AccountCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AccountCountOutputType without action
+   */
+  export type AccountCountOutputTypeCountChildOwnershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AccountOwnershipWhereInput
+  }
+
+  /**
+   * AccountCountOutputType without action
+   */
+  export type AccountCountOutputTypeCountParentOwnershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AccountOwnershipWhereInput
+  }
+
+  /**
+   * AccountCountOutputType without action
+   */
+  export type AccountCountOutputTypeCountOwnedApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationWhereInput
+  }
+
+  /**
+   * AccountCountOutputType without action
+   */
+  export type AccountCountOutputTypeCountAppConnectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationConnectionWhereInput
+  }
+
+  /**
+   * AccountCountOutputType without action
+   */
+  export type AccountCountOutputTypeCountAuthMethodsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AuthMethodWhereInput
+  }
+
+  /**
+   * AccountCountOutputType without action
+   */
+  export type AccountCountOutputTypeCountSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AuthSessionWhereInput
   }
 
   /**
@@ -2980,6 +2973,13 @@ export namespace Prisma {
   /**
    * AccountCountOutputType without action
    */
+  export type AccountCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
+  }
+
+  /**
+   * AccountCountOutputType without action
+   */
   export type AccountCountOutputTypeCountPermitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PermitWhereInput
   }
@@ -2989,76 +2989,6 @@ export namespace Prisma {
    */
   export type AccountCountOutputTypeCountTargetPermitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PermitWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
-  export type AccountCountOutputTypeCountSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthSessionWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
-  export type AccountCountOutputTypeCountErrorLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SystemErrorWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
-  export type AccountCountOutputTypeCountAppConnectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ApplicationConnectionWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
-  export type AccountCountOutputTypeCountOwnedApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ApplicationWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
-  export type AccountCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: NotificationWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
-  export type AccountCountOutputTypeCountVerificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: VerificationWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
-  export type AccountCountOutputTypeCountSentRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RequestWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
-  export type AccountCountOutputTypeCountReceivedRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RequestWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
-  export type AccountCountOutputTypeCountParentOwnershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AccountOwnershipWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
-  export type AccountCountOutputTypeCountChildOwnershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AccountOwnershipWhereInput
   }
 
   /**
@@ -3075,35 +3005,32 @@ export namespace Prisma {
     where?: PortfolioRoleWhereInput
   }
 
-
   /**
-   * Count Type AccountTypeIndividualCountOutputType
+   * AccountCountOutputType without action
    */
-
-  export type AccountTypeIndividualCountOutputType = {
-    authMethods: number
-  }
-
-  export type AccountTypeIndividualCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    authMethods?: boolean | AccountTypeIndividualCountOutputTypeCountAuthMethodsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * AccountTypeIndividualCountOutputType without action
-   */
-  export type AccountTypeIndividualCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AccountTypeIndividualCountOutputType
-     */
-    select?: AccountTypeIndividualCountOutputTypeSelect<ExtArgs> | null
+  export type AccountCountOutputTypeCountReceivedRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RequestWhereInput
   }
 
   /**
-   * AccountTypeIndividualCountOutputType without action
+   * AccountCountOutputType without action
    */
-  export type AccountTypeIndividualCountOutputTypeCountAuthMethodsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthMethodWhereInput
+  export type AccountCountOutputTypeCountSentRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RequestWhereInput
+  }
+
+  /**
+   * AccountCountOutputType without action
+   */
+  export type AccountCountOutputTypeCountErrorLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SystemErrorWhereInput
+  }
+
+  /**
+   * AccountCountOutputType without action
+   */
+  export type AccountCountOutputTypeCountVerificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VerificationWhereInput
   }
 
 
@@ -3234,9 +3161,9 @@ export namespace Prisma {
 
   export type AccountMinAggregateOutputType = {
     id: string | null
+    displayName: string | null
     accountType: string | null
     displayImage: string | null
-    displayName: string | null
     status: string | null
     isVerified: boolean | null
     createdAt: Date | null
@@ -3244,9 +3171,9 @@ export namespace Prisma {
 
   export type AccountMaxAggregateOutputType = {
     id: string | null
+    displayName: string | null
     accountType: string | null
     displayImage: string | null
-    displayName: string | null
     status: string | null
     isVerified: boolean | null
     createdAt: Date | null
@@ -3254,22 +3181,22 @@ export namespace Prisma {
 
   export type AccountCountAggregateOutputType = {
     id: number
+    displayName: number
     accountType: number
     displayImage: number
-    displayName: number
     status: number
     isVerified: number
-    createdAt: number
     details: number
+    createdAt: number
     _all: number
   }
 
 
   export type AccountMinAggregateInputType = {
     id?: true
+    displayName?: true
     accountType?: true
     displayImage?: true
-    displayName?: true
     status?: true
     isVerified?: true
     createdAt?: true
@@ -3277,9 +3204,9 @@ export namespace Prisma {
 
   export type AccountMaxAggregateInputType = {
     id?: true
+    displayName?: true
     accountType?: true
     displayImage?: true
-    displayName?: true
     status?: true
     isVerified?: true
     createdAt?: true
@@ -3287,13 +3214,13 @@ export namespace Prisma {
 
   export type AccountCountAggregateInputType = {
     id?: true
+    displayName?: true
     accountType?: true
     displayImage?: true
-    displayName?: true
     status?: true
     isVerified?: true
-    createdAt?: true
     details?: true
+    createdAt?: true
     _all?: true
   }
 
@@ -3371,13 +3298,13 @@ export namespace Prisma {
 
   export type AccountGroupByOutputType = {
     id: string
+    displayName: string | null
     accountType: string
     displayImage: string | null
-    displayName: string | null
     status: string | null
     isVerified: boolean
-    createdAt: Date
     details: JsonValue | null
+    createdAt: Date
     _count: AccountCountAggregateOutputType | null
     _min: AccountMinAggregateOutputType | null
     _max: AccountMaxAggregateOutputType | null
@@ -3399,87 +3326,89 @@ export namespace Prisma {
 
   export type AccountSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    displayName?: boolean
     accountType?: boolean
     displayImage?: boolean
-    displayName?: boolean
     status?: boolean
     isVerified?: boolean
-    createdAt?: boolean
     details?: boolean
+    createdAt?: boolean
+    brandProfile?: boolean | Account$brandProfileArgs<ExtArgs>
+    individualProfile?: boolean | Account$individualProfileArgs<ExtArgs>
+    childOwnerships?: boolean | Account$childOwnershipsArgs<ExtArgs>
+    parentOwnerships?: boolean | Account$parentOwnershipsArgs<ExtArgs>
+    ownedApplications?: boolean | Account$ownedApplicationsArgs<ExtArgs>
+    appConnections?: boolean | Account$appConnectionsArgs<ExtArgs>
+    authMethods?: boolean | Account$authMethodsArgs<ExtArgs>
+    sessions?: boolean | Account$sessionsArgs<ExtArgs>
     contacts?: boolean | Account$contactsArgs<ExtArgs>
     neupIds?: boolean | Account$neupIdsArgs<ExtArgs>
+    notifications?: boolean | Account$notificationsArgs<ExtArgs>
     permits?: boolean | Account$permitsArgs<ExtArgs>
     targetPermits?: boolean | Account$targetPermitsArgs<ExtArgs>
-    sessions?: boolean | Account$sessionsArgs<ExtArgs>
-    errorLogs?: boolean | Account$errorLogsArgs<ExtArgs>
-    appConnections?: boolean | Account$appConnectionsArgs<ExtArgs>
-    ownedApplications?: boolean | Account$ownedApplicationsArgs<ExtArgs>
-    notifications?: boolean | Account$notificationsArgs<ExtArgs>
-    verifications?: boolean | Account$verificationsArgs<ExtArgs>
-    sentRequests?: boolean | Account$sentRequestsArgs<ExtArgs>
-    receivedRequests?: boolean | Account$receivedRequestsArgs<ExtArgs>
-    individualProfile?: boolean | Account$individualProfileArgs<ExtArgs>
-    brandProfile?: boolean | Account$brandProfileArgs<ExtArgs>
-    parentOwnerships?: boolean | Account$parentOwnershipsArgs<ExtArgs>
-    childOwnerships?: boolean | Account$childOwnershipsArgs<ExtArgs>
     portfolioMembers?: boolean | Account$portfolioMembersArgs<ExtArgs>
     portfolioRoles?: boolean | Account$portfolioRolesArgs<ExtArgs>
+    receivedRequests?: boolean | Account$receivedRequestsArgs<ExtArgs>
+    sentRequests?: boolean | Account$sentRequestsArgs<ExtArgs>
+    errorLogs?: boolean | Account$errorLogsArgs<ExtArgs>
+    verifications?: boolean | Account$verificationsArgs<ExtArgs>
     _count?: boolean | AccountCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["account"]>
 
   export type AccountSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    displayName?: boolean
     accountType?: boolean
     displayImage?: boolean
-    displayName?: boolean
     status?: boolean
     isVerified?: boolean
-    createdAt?: boolean
     details?: boolean
+    createdAt?: boolean
   }, ExtArgs["result"]["account"]>
 
   export type AccountSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    displayName?: boolean
     accountType?: boolean
     displayImage?: boolean
-    displayName?: boolean
     status?: boolean
     isVerified?: boolean
-    createdAt?: boolean
     details?: boolean
+    createdAt?: boolean
   }, ExtArgs["result"]["account"]>
 
   export type AccountSelectScalar = {
     id?: boolean
+    displayName?: boolean
     accountType?: boolean
     displayImage?: boolean
-    displayName?: boolean
     status?: boolean
     isVerified?: boolean
-    createdAt?: boolean
     details?: boolean
+    createdAt?: boolean
   }
 
-  export type AccountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountType" | "displayImage" | "displayName" | "status" | "isVerified" | "createdAt" | "details", ExtArgs["result"]["account"]>
+  export type AccountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "displayName" | "accountType" | "displayImage" | "status" | "isVerified" | "details" | "createdAt", ExtArgs["result"]["account"]>
   export type AccountInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    brandProfile?: boolean | Account$brandProfileArgs<ExtArgs>
+    individualProfile?: boolean | Account$individualProfileArgs<ExtArgs>
+    childOwnerships?: boolean | Account$childOwnershipsArgs<ExtArgs>
+    parentOwnerships?: boolean | Account$parentOwnershipsArgs<ExtArgs>
+    ownedApplications?: boolean | Account$ownedApplicationsArgs<ExtArgs>
+    appConnections?: boolean | Account$appConnectionsArgs<ExtArgs>
+    authMethods?: boolean | Account$authMethodsArgs<ExtArgs>
+    sessions?: boolean | Account$sessionsArgs<ExtArgs>
     contacts?: boolean | Account$contactsArgs<ExtArgs>
     neupIds?: boolean | Account$neupIdsArgs<ExtArgs>
+    notifications?: boolean | Account$notificationsArgs<ExtArgs>
     permits?: boolean | Account$permitsArgs<ExtArgs>
     targetPermits?: boolean | Account$targetPermitsArgs<ExtArgs>
-    sessions?: boolean | Account$sessionsArgs<ExtArgs>
-    errorLogs?: boolean | Account$errorLogsArgs<ExtArgs>
-    appConnections?: boolean | Account$appConnectionsArgs<ExtArgs>
-    ownedApplications?: boolean | Account$ownedApplicationsArgs<ExtArgs>
-    notifications?: boolean | Account$notificationsArgs<ExtArgs>
-    verifications?: boolean | Account$verificationsArgs<ExtArgs>
-    sentRequests?: boolean | Account$sentRequestsArgs<ExtArgs>
-    receivedRequests?: boolean | Account$receivedRequestsArgs<ExtArgs>
-    individualProfile?: boolean | Account$individualProfileArgs<ExtArgs>
-    brandProfile?: boolean | Account$brandProfileArgs<ExtArgs>
-    parentOwnerships?: boolean | Account$parentOwnershipsArgs<ExtArgs>
-    childOwnerships?: boolean | Account$childOwnershipsArgs<ExtArgs>
     portfolioMembers?: boolean | Account$portfolioMembersArgs<ExtArgs>
     portfolioRoles?: boolean | Account$portfolioRolesArgs<ExtArgs>
+    receivedRequests?: boolean | Account$receivedRequestsArgs<ExtArgs>
+    sentRequests?: boolean | Account$sentRequestsArgs<ExtArgs>
+    errorLogs?: boolean | Account$errorLogsArgs<ExtArgs>
+    verifications?: boolean | Account$verificationsArgs<ExtArgs>
     _count?: boolean | AccountCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AccountIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -3488,34 +3417,35 @@ export namespace Prisma {
   export type $AccountPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Account"
     objects: {
+      brandProfile: Prisma.$AccountTypeBrandPayload<ExtArgs> | null
+      individualProfile: Prisma.$AccountTypeIndividualPayload<ExtArgs> | null
+      childOwnerships: Prisma.$AccountOwnershipPayload<ExtArgs>[]
+      parentOwnerships: Prisma.$AccountOwnershipPayload<ExtArgs>[]
+      ownedApplications: Prisma.$ApplicationPayload<ExtArgs>[]
+      appConnections: Prisma.$ApplicationConnectionPayload<ExtArgs>[]
+      authMethods: Prisma.$AuthMethodPayload<ExtArgs>[]
+      sessions: Prisma.$AuthSessionPayload<ExtArgs>[]
       contacts: Prisma.$ContactPayload<ExtArgs>[]
       neupIds: Prisma.$NeupIdPayload<ExtArgs>[]
+      notifications: Prisma.$NotificationPayload<ExtArgs>[]
       permits: Prisma.$PermitPayload<ExtArgs>[]
       targetPermits: Prisma.$PermitPayload<ExtArgs>[]
-      sessions: Prisma.$AuthSessionPayload<ExtArgs>[]
-      errorLogs: Prisma.$SystemErrorPayload<ExtArgs>[]
-      appConnections: Prisma.$ApplicationConnectionPayload<ExtArgs>[]
-      ownedApplications: Prisma.$ApplicationPayload<ExtArgs>[]
-      notifications: Prisma.$NotificationPayload<ExtArgs>[]
-      verifications: Prisma.$VerificationPayload<ExtArgs>[]
-      sentRequests: Prisma.$RequestPayload<ExtArgs>[]
-      receivedRequests: Prisma.$RequestPayload<ExtArgs>[]
-      individualProfile: Prisma.$AccountTypeIndividualPayload<ExtArgs> | null
-      brandProfile: Prisma.$AccountTypeBrandPayload<ExtArgs> | null
-      parentOwnerships: Prisma.$AccountOwnershipPayload<ExtArgs>[]
-      childOwnerships: Prisma.$AccountOwnershipPayload<ExtArgs>[]
       portfolioMembers: Prisma.$PortfolioMemberPayload<ExtArgs>[]
       portfolioRoles: Prisma.$PortfolioRolePayload<ExtArgs>[]
+      receivedRequests: Prisma.$RequestPayload<ExtArgs>[]
+      sentRequests: Prisma.$RequestPayload<ExtArgs>[]
+      errorLogs: Prisma.$SystemErrorPayload<ExtArgs>[]
+      verifications: Prisma.$VerificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      displayName: string | null
       accountType: string
       displayImage: string | null
-      displayName: string | null
       status: string | null
       isVerified: boolean
-      createdAt: Date
       details: Prisma.JsonValue | null
+      createdAt: Date
     }, ExtArgs["result"]["account"]>
     composites: {}
   }
@@ -3910,24 +3840,25 @@ export namespace Prisma {
    */
   export interface Prisma__AccountClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    brandProfile<T extends Account$brandProfileArgs<ExtArgs> = {}>(args?: Subset<T, Account$brandProfileArgs<ExtArgs>>): Prisma__AccountTypeBrandClient<$Result.GetResult<Prisma.$AccountTypeBrandPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    individualProfile<T extends Account$individualProfileArgs<ExtArgs> = {}>(args?: Subset<T, Account$individualProfileArgs<ExtArgs>>): Prisma__AccountTypeIndividualClient<$Result.GetResult<Prisma.$AccountTypeIndividualPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    childOwnerships<T extends Account$childOwnershipsArgs<ExtArgs> = {}>(args?: Subset<T, Account$childOwnershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountOwnershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    parentOwnerships<T extends Account$parentOwnershipsArgs<ExtArgs> = {}>(args?: Subset<T, Account$parentOwnershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountOwnershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ownedApplications<T extends Account$ownedApplicationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$ownedApplicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    appConnections<T extends Account$appConnectionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$appConnectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    authMethods<T extends Account$authMethodsArgs<ExtArgs> = {}>(args?: Subset<T, Account$authMethodsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthMethodPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sessions<T extends Account$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     contacts<T extends Account$contactsArgs<ExtArgs> = {}>(args?: Subset<T, Account$contactsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     neupIds<T extends Account$neupIdsArgs<ExtArgs> = {}>(args?: Subset<T, Account$neupIdsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NeupIdPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    notifications<T extends Account$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     permits<T extends Account$permitsArgs<ExtArgs> = {}>(args?: Subset<T, Account$permitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PermitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     targetPermits<T extends Account$targetPermitsArgs<ExtArgs> = {}>(args?: Subset<T, Account$targetPermitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PermitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    sessions<T extends Account$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    errorLogs<T extends Account$errorLogsArgs<ExtArgs> = {}>(args?: Subset<T, Account$errorLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemErrorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    appConnections<T extends Account$appConnectionsArgs<ExtArgs> = {}>(args?: Subset<T, Account$appConnectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    ownedApplications<T extends Account$ownedApplicationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$ownedApplicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    notifications<T extends Account$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    verifications<T extends Account$verificationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$verificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VerificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    sentRequests<T extends Account$sentRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Account$sentRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    receivedRequests<T extends Account$receivedRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Account$receivedRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    individualProfile<T extends Account$individualProfileArgs<ExtArgs> = {}>(args?: Subset<T, Account$individualProfileArgs<ExtArgs>>): Prisma__AccountTypeIndividualClient<$Result.GetResult<Prisma.$AccountTypeIndividualPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    brandProfile<T extends Account$brandProfileArgs<ExtArgs> = {}>(args?: Subset<T, Account$brandProfileArgs<ExtArgs>>): Prisma__AccountTypeBrandClient<$Result.GetResult<Prisma.$AccountTypeBrandPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    parentOwnerships<T extends Account$parentOwnershipsArgs<ExtArgs> = {}>(args?: Subset<T, Account$parentOwnershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountOwnershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    childOwnerships<T extends Account$childOwnershipsArgs<ExtArgs> = {}>(args?: Subset<T, Account$childOwnershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountOwnershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     portfolioMembers<T extends Account$portfolioMembersArgs<ExtArgs> = {}>(args?: Subset<T, Account$portfolioMembersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PortfolioMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     portfolioRoles<T extends Account$portfolioRolesArgs<ExtArgs> = {}>(args?: Subset<T, Account$portfolioRolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PortfolioRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    receivedRequests<T extends Account$receivedRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Account$receivedRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sentRequests<T extends Account$sentRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Account$sentRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    errorLogs<T extends Account$errorLogsArgs<ExtArgs> = {}>(args?: Subset<T, Account$errorLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemErrorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    verifications<T extends Account$verificationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$verificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VerificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3958,13 +3889,13 @@ export namespace Prisma {
    */
   interface AccountFieldRefs {
     readonly id: FieldRef<"Account", 'String'>
+    readonly displayName: FieldRef<"Account", 'String'>
     readonly accountType: FieldRef<"Account", 'String'>
     readonly displayImage: FieldRef<"Account", 'String'>
-    readonly displayName: FieldRef<"Account", 'String'>
     readonly status: FieldRef<"Account", 'String'>
     readonly isVerified: FieldRef<"Account", 'Boolean'>
-    readonly createdAt: FieldRef<"Account", 'DateTime'>
     readonly details: FieldRef<"Account", 'Json'>
+    readonly createdAt: FieldRef<"Account", 'DateTime'>
   }
     
 
@@ -4353,6 +4284,188 @@ export namespace Prisma {
   }
 
   /**
+   * Account.brandProfile
+   */
+  export type Account$brandProfileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountTypeBrand
+     */
+    select?: AccountTypeBrandSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountTypeBrand
+     */
+    omit?: AccountTypeBrandOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountTypeBrandInclude<ExtArgs> | null
+    where?: AccountTypeBrandWhereInput
+  }
+
+  /**
+   * Account.individualProfile
+   */
+  export type Account$individualProfileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountTypeIndividual
+     */
+    select?: AccountTypeIndividualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountTypeIndividual
+     */
+    omit?: AccountTypeIndividualOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountTypeIndividualInclude<ExtArgs> | null
+    where?: AccountTypeIndividualWhereInput
+  }
+
+  /**
+   * Account.childOwnerships
+   */
+  export type Account$childOwnershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountOwnership
+     */
+    select?: AccountOwnershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountOwnership
+     */
+    omit?: AccountOwnershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountOwnershipInclude<ExtArgs> | null
+    where?: AccountOwnershipWhereInput
+    orderBy?: AccountOwnershipOrderByWithRelationInput | AccountOwnershipOrderByWithRelationInput[]
+    cursor?: AccountOwnershipWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AccountOwnershipScalarFieldEnum | AccountOwnershipScalarFieldEnum[]
+  }
+
+  /**
+   * Account.parentOwnerships
+   */
+  export type Account$parentOwnershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountOwnership
+     */
+    select?: AccountOwnershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountOwnership
+     */
+    omit?: AccountOwnershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountOwnershipInclude<ExtArgs> | null
+    where?: AccountOwnershipWhereInput
+    orderBy?: AccountOwnershipOrderByWithRelationInput | AccountOwnershipOrderByWithRelationInput[]
+    cursor?: AccountOwnershipWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AccountOwnershipScalarFieldEnum | AccountOwnershipScalarFieldEnum[]
+  }
+
+  /**
+   * Account.ownedApplications
+   */
+  export type Account$ownedApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Application
+     */
+    select?: ApplicationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Application
+     */
+    omit?: ApplicationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationInclude<ExtArgs> | null
+    where?: ApplicationWhereInput
+    orderBy?: ApplicationOrderByWithRelationInput | ApplicationOrderByWithRelationInput[]
+    cursor?: ApplicationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApplicationScalarFieldEnum | ApplicationScalarFieldEnum[]
+  }
+
+  /**
+   * Account.appConnections
+   */
+  export type Account$appConnectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationConnection
+     */
+    select?: ApplicationConnectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationConnection
+     */
+    omit?: ApplicationConnectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationConnectionInclude<ExtArgs> | null
+    where?: ApplicationConnectionWhereInput
+    orderBy?: ApplicationConnectionOrderByWithRelationInput | ApplicationConnectionOrderByWithRelationInput[]
+    cursor?: ApplicationConnectionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApplicationConnectionScalarFieldEnum | ApplicationConnectionScalarFieldEnum[]
+  }
+
+  /**
+   * Account.authMethods
+   */
+  export type Account$authMethodsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuthMethod
+     */
+    select?: AuthMethodSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuthMethod
+     */
+    omit?: AuthMethodOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuthMethodInclude<ExtArgs> | null
+    where?: AuthMethodWhereInput
+    orderBy?: AuthMethodOrderByWithRelationInput | AuthMethodOrderByWithRelationInput[]
+    cursor?: AuthMethodWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AuthMethodScalarFieldEnum | AuthMethodScalarFieldEnum[]
+  }
+
+  /**
+   * Account.sessions
+   */
+  export type Account$sessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuthSession
+     */
+    select?: AuthSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuthSession
+     */
+    omit?: AuthSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuthSessionInclude<ExtArgs> | null
+    where?: AuthSessionWhereInput
+    orderBy?: AuthSessionOrderByWithRelationInput | AuthSessionOrderByWithRelationInput[]
+    cursor?: AuthSessionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AuthSessionScalarFieldEnum | AuthSessionScalarFieldEnum[]
+  }
+
+  /**
    * Account.contacts
    */
   export type Account$contactsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4398,6 +4511,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: NeupIdScalarFieldEnum | NeupIdScalarFieldEnum[]
+  }
+
+  /**
+   * Account.notifications
+   */
+  export type Account$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
   }
 
   /**
@@ -4449,284 +4586,6 @@ export namespace Prisma {
   }
 
   /**
-   * Account.sessions
-   */
-  export type Account$sessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthSession
-     */
-    select?: AuthSessionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthSession
-     */
-    omit?: AuthSessionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthSessionInclude<ExtArgs> | null
-    where?: AuthSessionWhereInput
-    orderBy?: AuthSessionOrderByWithRelationInput | AuthSessionOrderByWithRelationInput[]
-    cursor?: AuthSessionWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AuthSessionScalarFieldEnum | AuthSessionScalarFieldEnum[]
-  }
-
-  /**
-   * Account.errorLogs
-   */
-  export type Account$errorLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SystemError
-     */
-    select?: SystemErrorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SystemError
-     */
-    omit?: SystemErrorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SystemErrorInclude<ExtArgs> | null
-    where?: SystemErrorWhereInput
-    orderBy?: SystemErrorOrderByWithRelationInput | SystemErrorOrderByWithRelationInput[]
-    cursor?: SystemErrorWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: SystemErrorScalarFieldEnum | SystemErrorScalarFieldEnum[]
-  }
-
-  /**
-   * Account.appConnections
-   */
-  export type Account$appConnectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ApplicationConnection
-     */
-    select?: ApplicationConnectionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ApplicationConnection
-     */
-    omit?: ApplicationConnectionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ApplicationConnectionInclude<ExtArgs> | null
-    where?: ApplicationConnectionWhereInput
-    orderBy?: ApplicationConnectionOrderByWithRelationInput | ApplicationConnectionOrderByWithRelationInput[]
-    cursor?: ApplicationConnectionWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ApplicationConnectionScalarFieldEnum | ApplicationConnectionScalarFieldEnum[]
-  }
-
-  /**
-   * Account.ownedApplications
-   */
-  export type Account$ownedApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Application
-     */
-    select?: ApplicationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Application
-     */
-    omit?: ApplicationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ApplicationInclude<ExtArgs> | null
-    where?: ApplicationWhereInput
-    orderBy?: ApplicationOrderByWithRelationInput | ApplicationOrderByWithRelationInput[]
-    cursor?: ApplicationWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ApplicationScalarFieldEnum | ApplicationScalarFieldEnum[]
-  }
-
-  /**
-   * Account.notifications
-   */
-  export type Account$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Notification
-     */
-    select?: NotificationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Notification
-     */
-    omit?: NotificationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NotificationInclude<ExtArgs> | null
-    where?: NotificationWhereInput
-    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
-    cursor?: NotificationWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
-  }
-
-  /**
-   * Account.verifications
-   */
-  export type Account$verificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Verification
-     */
-    select?: VerificationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Verification
-     */
-    omit?: VerificationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VerificationInclude<ExtArgs> | null
-    where?: VerificationWhereInput
-    orderBy?: VerificationOrderByWithRelationInput | VerificationOrderByWithRelationInput[]
-    cursor?: VerificationWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: VerificationScalarFieldEnum | VerificationScalarFieldEnum[]
-  }
-
-  /**
-   * Account.sentRequests
-   */
-  export type Account$sentRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Request
-     */
-    select?: RequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Request
-     */
-    omit?: RequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RequestInclude<ExtArgs> | null
-    where?: RequestWhereInput
-    orderBy?: RequestOrderByWithRelationInput | RequestOrderByWithRelationInput[]
-    cursor?: RequestWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: RequestScalarFieldEnum | RequestScalarFieldEnum[]
-  }
-
-  /**
-   * Account.receivedRequests
-   */
-  export type Account$receivedRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Request
-     */
-    select?: RequestSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Request
-     */
-    omit?: RequestOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RequestInclude<ExtArgs> | null
-    where?: RequestWhereInput
-    orderBy?: RequestOrderByWithRelationInput | RequestOrderByWithRelationInput[]
-    cursor?: RequestWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: RequestScalarFieldEnum | RequestScalarFieldEnum[]
-  }
-
-  /**
-   * Account.individualProfile
-   */
-  export type Account$individualProfileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AccountTypeIndividual
-     */
-    select?: AccountTypeIndividualSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AccountTypeIndividual
-     */
-    omit?: AccountTypeIndividualOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountTypeIndividualInclude<ExtArgs> | null
-    where?: AccountTypeIndividualWhereInput
-  }
-
-  /**
-   * Account.brandProfile
-   */
-  export type Account$brandProfileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AccountTypeBrand
-     */
-    select?: AccountTypeBrandSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AccountTypeBrand
-     */
-    omit?: AccountTypeBrandOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountTypeBrandInclude<ExtArgs> | null
-    where?: AccountTypeBrandWhereInput
-  }
-
-  /**
-   * Account.parentOwnerships
-   */
-  export type Account$parentOwnershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AccountOwnership
-     */
-    select?: AccountOwnershipSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AccountOwnership
-     */
-    omit?: AccountOwnershipOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountOwnershipInclude<ExtArgs> | null
-    where?: AccountOwnershipWhereInput
-    orderBy?: AccountOwnershipOrderByWithRelationInput | AccountOwnershipOrderByWithRelationInput[]
-    cursor?: AccountOwnershipWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AccountOwnershipScalarFieldEnum | AccountOwnershipScalarFieldEnum[]
-  }
-
-  /**
-   * Account.childOwnerships
-   */
-  export type Account$childOwnershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AccountOwnership
-     */
-    select?: AccountOwnershipSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AccountOwnership
-     */
-    omit?: AccountOwnershipOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountOwnershipInclude<ExtArgs> | null
-    where?: AccountOwnershipWhereInput
-    orderBy?: AccountOwnershipOrderByWithRelationInput | AccountOwnershipOrderByWithRelationInput[]
-    cursor?: AccountOwnershipWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AccountOwnershipScalarFieldEnum | AccountOwnershipScalarFieldEnum[]
-  }
-
-  /**
    * Account.portfolioMembers
    */
   export type Account$portfolioMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4772,6 +4631,102 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PortfolioRoleScalarFieldEnum | PortfolioRoleScalarFieldEnum[]
+  }
+
+  /**
+   * Account.receivedRequests
+   */
+  export type Account$receivedRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Request
+     */
+    select?: RequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Request
+     */
+    omit?: RequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RequestInclude<ExtArgs> | null
+    where?: RequestWhereInput
+    orderBy?: RequestOrderByWithRelationInput | RequestOrderByWithRelationInput[]
+    cursor?: RequestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RequestScalarFieldEnum | RequestScalarFieldEnum[]
+  }
+
+  /**
+   * Account.sentRequests
+   */
+  export type Account$sentRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Request
+     */
+    select?: RequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Request
+     */
+    omit?: RequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RequestInclude<ExtArgs> | null
+    where?: RequestWhereInput
+    orderBy?: RequestOrderByWithRelationInput | RequestOrderByWithRelationInput[]
+    cursor?: RequestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RequestScalarFieldEnum | RequestScalarFieldEnum[]
+  }
+
+  /**
+   * Account.errorLogs
+   */
+  export type Account$errorLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemError
+     */
+    select?: SystemErrorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemError
+     */
+    omit?: SystemErrorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SystemErrorInclude<ExtArgs> | null
+    where?: SystemErrorWhereInput
+    orderBy?: SystemErrorOrderByWithRelationInput | SystemErrorOrderByWithRelationInput[]
+    cursor?: SystemErrorWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SystemErrorScalarFieldEnum | SystemErrorScalarFieldEnum[]
+  }
+
+  /**
+   * Account.verifications
+   */
+  export type Account$verificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Verification
+     */
+    select?: VerificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Verification
+     */
+    omit?: VerificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VerificationInclude<ExtArgs> | null
+    where?: VerificationWhereInput
+    orderBy?: VerificationOrderByWithRelationInput | VerificationOrderByWithRelationInput[]
+    cursor?: VerificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VerificationScalarFieldEnum | VerificationScalarFieldEnum[]
   }
 
   /**
@@ -4974,8 +4929,6 @@ export namespace Prisma {
     dateOfBirth?: boolean
     countryOfResidence?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
-    authMethods?: boolean | AccountTypeIndividual$authMethodsArgs<ExtArgs>
-    _count?: boolean | AccountTypeIndividualCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["accountTypeIndividual"]>
 
   export type AccountTypeIndividualSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5013,8 +4966,6 @@ export namespace Prisma {
   export type AccountTypeIndividualOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "firstName" | "middleName" | "lastName" | "dateOfBirth" | "countryOfResidence", ExtArgs["result"]["accountTypeIndividual"]>
   export type AccountTypeIndividualInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
-    authMethods?: boolean | AccountTypeIndividual$authMethodsArgs<ExtArgs>
-    _count?: boolean | AccountTypeIndividualCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AccountTypeIndividualIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
@@ -5027,7 +4978,6 @@ export namespace Prisma {
     name: "AccountTypeIndividual"
     objects: {
       account: Prisma.$AccountPayload<ExtArgs>
-      authMethods: Prisma.$AuthMethodPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5432,7 +5382,6 @@ export namespace Prisma {
   export interface Prisma__AccountTypeIndividualClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     account<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    authMethods<T extends AccountTypeIndividual$authMethodsArgs<ExtArgs> = {}>(args?: Subset<T, AccountTypeIndividual$authMethodsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthMethodPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5862,30 +5811,6 @@ export namespace Prisma {
      * Limit how many AccountTypeIndividuals to delete.
      */
     limit?: number
-  }
-
-  /**
-   * AccountTypeIndividual.authMethods
-   */
-  export type AccountTypeIndividual$authMethodsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthMethod
-     */
-    select?: AuthMethodSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthMethod
-     */
-    omit?: AuthMethodOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthMethodInclude<ExtArgs> | null
-    where?: AuthMethodWhereInput
-    orderBy?: AuthMethodOrderByWithRelationInput | AuthMethodOrderByWithRelationInput[]
-    cursor?: AuthMethodWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AuthMethodScalarFieldEnum | AuthMethodScalarFieldEnum[]
   }
 
   /**
@@ -7134,8 +7059,8 @@ export namespace Prisma {
     parentId?: boolean
     childrenId?: boolean
     type?: boolean
-    parent?: boolean | AccountDefaultArgs<ExtArgs>
     child?: boolean | AccountDefaultArgs<ExtArgs>
+    parent?: boolean | AccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["accountOwnership"]>
 
   export type AccountOwnershipSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7143,8 +7068,8 @@ export namespace Prisma {
     parentId?: boolean
     childrenId?: boolean
     type?: boolean
-    parent?: boolean | AccountDefaultArgs<ExtArgs>
     child?: boolean | AccountDefaultArgs<ExtArgs>
+    parent?: boolean | AccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["accountOwnership"]>
 
   export type AccountOwnershipSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7152,8 +7077,8 @@ export namespace Prisma {
     parentId?: boolean
     childrenId?: boolean
     type?: boolean
-    parent?: boolean | AccountDefaultArgs<ExtArgs>
     child?: boolean | AccountDefaultArgs<ExtArgs>
+    parent?: boolean | AccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["accountOwnership"]>
 
   export type AccountOwnershipSelectScalar = {
@@ -7165,23 +7090,23 @@ export namespace Prisma {
 
   export type AccountOwnershipOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "parentId" | "childrenId" | "type", ExtArgs["result"]["accountOwnership"]>
   export type AccountOwnershipInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    parent?: boolean | AccountDefaultArgs<ExtArgs>
     child?: boolean | AccountDefaultArgs<ExtArgs>
+    parent?: boolean | AccountDefaultArgs<ExtArgs>
   }
   export type AccountOwnershipIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    parent?: boolean | AccountDefaultArgs<ExtArgs>
     child?: boolean | AccountDefaultArgs<ExtArgs>
+    parent?: boolean | AccountDefaultArgs<ExtArgs>
   }
   export type AccountOwnershipIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    parent?: boolean | AccountDefaultArgs<ExtArgs>
     child?: boolean | AccountDefaultArgs<ExtArgs>
+    parent?: boolean | AccountDefaultArgs<ExtArgs>
   }
 
   export type $AccountOwnershipPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "AccountOwnership"
     objects: {
-      parent: Prisma.$AccountPayload<ExtArgs>
       child: Prisma.$AccountPayload<ExtArgs>
+      parent: Prisma.$AccountPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7582,8 +7507,8 @@ export namespace Prisma {
    */
   export interface Prisma__AccountOwnershipClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    parent<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     child<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    parent<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12402,9 +12327,9 @@ export namespace Prisma {
     data?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    sender?: boolean | AccountDefaultArgs<ExtArgs>
-    recipient?: boolean | AccountDefaultArgs<ExtArgs>
     notifications?: boolean | Request$notificationsArgs<ExtArgs>
+    recipient?: boolean | AccountDefaultArgs<ExtArgs>
+    sender?: boolean | AccountDefaultArgs<ExtArgs>
     _count?: boolean | RequestCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["request"]>
 
@@ -12418,8 +12343,8 @@ export namespace Prisma {
     data?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    sender?: boolean | AccountDefaultArgs<ExtArgs>
     recipient?: boolean | AccountDefaultArgs<ExtArgs>
+    sender?: boolean | AccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["request"]>
 
   export type RequestSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -12432,8 +12357,8 @@ export namespace Prisma {
     data?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    sender?: boolean | AccountDefaultArgs<ExtArgs>
     recipient?: boolean | AccountDefaultArgs<ExtArgs>
+    sender?: boolean | AccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["request"]>
 
   export type RequestSelectScalar = {
@@ -12450,26 +12375,26 @@ export namespace Prisma {
 
   export type RequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "senderId" | "recipientId" | "status" | "action" | "type" | "data" | "createdAt" | "updatedAt", ExtArgs["result"]["request"]>
   export type RequestInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    sender?: boolean | AccountDefaultArgs<ExtArgs>
-    recipient?: boolean | AccountDefaultArgs<ExtArgs>
     notifications?: boolean | Request$notificationsArgs<ExtArgs>
+    recipient?: boolean | AccountDefaultArgs<ExtArgs>
+    sender?: boolean | AccountDefaultArgs<ExtArgs>
     _count?: boolean | RequestCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type RequestIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    sender?: boolean | AccountDefaultArgs<ExtArgs>
     recipient?: boolean | AccountDefaultArgs<ExtArgs>
+    sender?: boolean | AccountDefaultArgs<ExtArgs>
   }
   export type RequestIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    sender?: boolean | AccountDefaultArgs<ExtArgs>
     recipient?: boolean | AccountDefaultArgs<ExtArgs>
+    sender?: boolean | AccountDefaultArgs<ExtArgs>
   }
 
   export type $RequestPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Request"
     objects: {
-      sender: Prisma.$AccountPayload<ExtArgs>
-      recipient: Prisma.$AccountPayload<ExtArgs>
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
+      recipient: Prisma.$AccountPayload<ExtArgs>
+      sender: Prisma.$AccountPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -12875,9 +12800,9 @@ export namespace Prisma {
    */
   export interface Prisma__RequestClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    sender<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    recipient<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     notifications<T extends Request$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Request$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    recipient<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    sender<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -16587,22 +16512,22 @@ export namespace Prisma {
   export type NeupIdMinAggregateOutputType = {
     id: string | null
     accountId: string | null
-    dateAdded: Date | null
     isPrimary: boolean | null
+    dateAdded: Date | null
   }
 
   export type NeupIdMaxAggregateOutputType = {
     id: string | null
     accountId: string | null
-    dateAdded: Date | null
     isPrimary: boolean | null
+    dateAdded: Date | null
   }
 
   export type NeupIdCountAggregateOutputType = {
     id: number
     accountId: number
-    dateAdded: number
     isPrimary: number
+    dateAdded: number
     _all: number
   }
 
@@ -16610,22 +16535,22 @@ export namespace Prisma {
   export type NeupIdMinAggregateInputType = {
     id?: true
     accountId?: true
-    dateAdded?: true
     isPrimary?: true
+    dateAdded?: true
   }
 
   export type NeupIdMaxAggregateInputType = {
     id?: true
     accountId?: true
-    dateAdded?: true
     isPrimary?: true
+    dateAdded?: true
   }
 
   export type NeupIdCountAggregateInputType = {
     id?: true
     accountId?: true
-    dateAdded?: true
     isPrimary?: true
+    dateAdded?: true
     _all?: true
   }
 
@@ -16704,8 +16629,8 @@ export namespace Prisma {
   export type NeupIdGroupByOutputType = {
     id: string
     accountId: string
-    dateAdded: Date
     isPrimary: boolean
+    dateAdded: Date
     _count: NeupIdCountAggregateOutputType | null
     _min: NeupIdMinAggregateOutputType | null
     _max: NeupIdMaxAggregateOutputType | null
@@ -16728,35 +16653,35 @@ export namespace Prisma {
   export type NeupIdSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     accountId?: boolean
-    dateAdded?: boolean
     isPrimary?: boolean
+    dateAdded?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["neupId"]>
 
   export type NeupIdSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     accountId?: boolean
-    dateAdded?: boolean
     isPrimary?: boolean
+    dateAdded?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["neupId"]>
 
   export type NeupIdSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     accountId?: boolean
-    dateAdded?: boolean
     isPrimary?: boolean
+    dateAdded?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["neupId"]>
 
   export type NeupIdSelectScalar = {
     id?: boolean
     accountId?: boolean
-    dateAdded?: boolean
     isPrimary?: boolean
+    dateAdded?: boolean
   }
 
-  export type NeupIdOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "dateAdded" | "isPrimary", ExtArgs["result"]["neupId"]>
+  export type NeupIdOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "isPrimary" | "dateAdded", ExtArgs["result"]["neupId"]>
   export type NeupIdInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }
@@ -16775,8 +16700,8 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       accountId: string
-      dateAdded: Date
       isPrimary: boolean
+      dateAdded: Date
     }, ExtArgs["result"]["neupId"]>
     composites: {}
   }
@@ -17203,8 +17128,8 @@ export namespace Prisma {
   interface NeupIdFieldRefs {
     readonly id: FieldRef<"NeupId", 'String'>
     readonly accountId: FieldRef<"NeupId", 'String'>
-    readonly dateAdded: FieldRef<"NeupId", 'DateTime'>
     readonly isPrimary: FieldRef<"NeupId", 'Boolean'>
+    readonly dateAdded: FieldRef<"NeupId", 'DateTime'>
   }
     
 
@@ -17630,28 +17555,28 @@ export namespace Prisma {
   }
 
   export type AuthMethodMinAggregateOutputType = {
-    id: string | null
     accountId: string | null
-    type: $Enums.AuthMethodType | null
     value: string | null
-    order: $Enums.AuthMethodOrder | null
-    status: $Enums.AuthMethodStatus | null
+    id: string | null
+    type: string | null
+    order: string | null
+    status: string | null
   }
 
   export type AuthMethodMaxAggregateOutputType = {
-    id: string | null
     accountId: string | null
-    type: $Enums.AuthMethodType | null
     value: string | null
-    order: $Enums.AuthMethodOrder | null
-    status: $Enums.AuthMethodStatus | null
+    id: string | null
+    type: string | null
+    order: string | null
+    status: string | null
   }
 
   export type AuthMethodCountAggregateOutputType = {
-    id: number
     accountId: number
-    type: number
     value: number
+    id: number
+    type: number
     order: number
     status: number
     detail: number
@@ -17660,28 +17585,28 @@ export namespace Prisma {
 
 
   export type AuthMethodMinAggregateInputType = {
-    id?: true
     accountId?: true
-    type?: true
     value?: true
+    id?: true
+    type?: true
     order?: true
     status?: true
   }
 
   export type AuthMethodMaxAggregateInputType = {
-    id?: true
     accountId?: true
-    type?: true
     value?: true
+    id?: true
+    type?: true
     order?: true
     status?: true
   }
 
   export type AuthMethodCountAggregateInputType = {
-    id?: true
     accountId?: true
-    type?: true
     value?: true
+    id?: true
+    type?: true
     order?: true
     status?: true
     detail?: true
@@ -17761,12 +17686,12 @@ export namespace Prisma {
   }
 
   export type AuthMethodGroupByOutputType = {
-    id: string
     accountId: string
-    type: $Enums.AuthMethodType
     value: string
-    order: $Enums.AuthMethodOrder
-    status: $Enums.AuthMethodStatus
+    id: string
+    type: string
+    order: string
+    status: string
     detail: JsonValue | null
     _count: AuthMethodCountAggregateOutputType | null
     _min: AuthMethodMinAggregateOutputType | null
@@ -17788,71 +17713,71 @@ export namespace Prisma {
 
 
   export type AuthMethodSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
     accountId?: boolean
-    type?: boolean
     value?: boolean
+    id?: boolean
+    type?: boolean
     order?: boolean
     status?: boolean
     detail?: boolean
-    individualProfile?: boolean | AccountTypeIndividualDefaultArgs<ExtArgs>
+    individualProfile?: boolean | AccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["authMethod"]>
 
   export type AuthMethodSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
     accountId?: boolean
-    type?: boolean
     value?: boolean
+    id?: boolean
+    type?: boolean
     order?: boolean
     status?: boolean
     detail?: boolean
-    individualProfile?: boolean | AccountTypeIndividualDefaultArgs<ExtArgs>
+    individualProfile?: boolean | AccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["authMethod"]>
 
   export type AuthMethodSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
     accountId?: boolean
-    type?: boolean
     value?: boolean
+    id?: boolean
+    type?: boolean
     order?: boolean
     status?: boolean
     detail?: boolean
-    individualProfile?: boolean | AccountTypeIndividualDefaultArgs<ExtArgs>
+    individualProfile?: boolean | AccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["authMethod"]>
 
   export type AuthMethodSelectScalar = {
-    id?: boolean
     accountId?: boolean
-    type?: boolean
     value?: boolean
+    id?: boolean
+    type?: boolean
     order?: boolean
     status?: boolean
     detail?: boolean
   }
 
-  export type AuthMethodOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "type" | "value" | "order" | "status" | "detail", ExtArgs["result"]["authMethod"]>
+  export type AuthMethodOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"accountId" | "value" | "id" | "type" | "order" | "status" | "detail", ExtArgs["result"]["authMethod"]>
   export type AuthMethodInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    individualProfile?: boolean | AccountTypeIndividualDefaultArgs<ExtArgs>
+    individualProfile?: boolean | AccountDefaultArgs<ExtArgs>
   }
   export type AuthMethodIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    individualProfile?: boolean | AccountTypeIndividualDefaultArgs<ExtArgs>
+    individualProfile?: boolean | AccountDefaultArgs<ExtArgs>
   }
   export type AuthMethodIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    individualProfile?: boolean | AccountTypeIndividualDefaultArgs<ExtArgs>
+    individualProfile?: boolean | AccountDefaultArgs<ExtArgs>
   }
 
   export type $AuthMethodPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "AuthMethod"
     objects: {
-      individualProfile: Prisma.$AccountTypeIndividualPayload<ExtArgs>
+      individualProfile: Prisma.$AccountPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: string
       accountId: string
-      type: $Enums.AuthMethodType
       value: string
-      order: $Enums.AuthMethodOrder
-      status: $Enums.AuthMethodStatus
+      id: string
+      type: string
+      order: string
+      status: string
       detail: Prisma.JsonValue | null
     }, ExtArgs["result"]["authMethod"]>
     composites: {}
@@ -17937,8 +17862,8 @@ export namespace Prisma {
      * // Get first 10 AuthMethods
      * const authMethods = await prisma.authMethod.findMany({ take: 10 })
      * 
-     * // Only select the `id`
-     * const authMethodWithIdOnly = await prisma.authMethod.findMany({ select: { id: true } })
+     * // Only select the `accountId`
+     * const authMethodWithAccountIdOnly = await prisma.authMethod.findMany({ select: { accountId: true } })
      * 
      */
     findMany<T extends AuthMethodFindManyArgs>(args?: SelectSubset<T, AuthMethodFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthMethodPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -17982,9 +17907,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many AuthMethods and only return the `id`
-     * const authMethodWithIdOnly = await prisma.authMethod.createManyAndReturn({
-     *   select: { id: true },
+     * // Create many AuthMethods and only return the `accountId`
+     * const authMethodWithAccountIdOnly = await prisma.authMethod.createManyAndReturn({
+     *   select: { accountId: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -18073,9 +17998,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more AuthMethods and only return the `id`
-     * const authMethodWithIdOnly = await prisma.authMethod.updateManyAndReturn({
-     *   select: { id: true },
+     * // Update zero or more AuthMethods and only return the `accountId`
+     * const authMethodWithAccountIdOnly = await prisma.authMethod.updateManyAndReturn({
+     *   select: { accountId: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -18248,7 +18173,7 @@ export namespace Prisma {
    */
   export interface Prisma__AuthMethodClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    individualProfile<T extends AccountTypeIndividualDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountTypeIndividualDefaultArgs<ExtArgs>>): Prisma__AccountTypeIndividualClient<$Result.GetResult<Prisma.$AccountTypeIndividualPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    individualProfile<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -18278,12 +18203,12 @@ export namespace Prisma {
    * Fields of the AuthMethod model
    */
   interface AuthMethodFieldRefs {
-    readonly id: FieldRef<"AuthMethod", 'String'>
     readonly accountId: FieldRef<"AuthMethod", 'String'>
-    readonly type: FieldRef<"AuthMethod", 'AuthMethodType'>
     readonly value: FieldRef<"AuthMethod", 'String'>
-    readonly order: FieldRef<"AuthMethod", 'AuthMethodOrder'>
-    readonly status: FieldRef<"AuthMethod", 'AuthMethodStatus'>
+    readonly id: FieldRef<"AuthMethod", 'String'>
+    readonly type: FieldRef<"AuthMethod", 'String'>
+    readonly order: FieldRef<"AuthMethod", 'String'>
+    readonly status: FieldRef<"AuthMethod", 'String'>
     readonly detail: FieldRef<"AuthMethod", 'Json'>
   }
     
@@ -18711,116 +18636,116 @@ export namespace Prisma {
 
   export type PermitMinAggregateOutputType = {
     id: string | null
-    permitType: string | null
-    permitSubType: string | null
-    permitNumber: string | null
-    issuingAuthority: string | null
-    issueDate: Date | null
-    expiryDate: Date | null
-    status: string | null
     accountId: string | null
     targetAccountId: string | null
     forSelf: boolean | null
     isRoot: boolean | null
-    fullAccess: boolean | null
     createdOn: Date | null
+    expiryDate: Date | null
+    fullAccess: boolean | null
+    issueDate: Date | null
+    issuingAuthority: string | null
     managedBy: string | null
+    permitNumber: string | null
+    permitSubType: string | null
+    permitType: string | null
+    status: string | null
   }
 
   export type PermitMaxAggregateOutputType = {
     id: string | null
-    permitType: string | null
-    permitSubType: string | null
-    permitNumber: string | null
-    issuingAuthority: string | null
-    issueDate: Date | null
-    expiryDate: Date | null
-    status: string | null
     accountId: string | null
     targetAccountId: string | null
     forSelf: boolean | null
     isRoot: boolean | null
-    fullAccess: boolean | null
     createdOn: Date | null
+    expiryDate: Date | null
+    fullAccess: boolean | null
+    issueDate: Date | null
+    issuingAuthority: string | null
     managedBy: string | null
+    permitNumber: string | null
+    permitSubType: string | null
+    permitType: string | null
+    status: string | null
   }
 
   export type PermitCountAggregateOutputType = {
     id: number
-    permitType: number
-    permitSubType: number
-    permitNumber: number
-    issuingAuthority: number
-    issueDate: number
-    expiryDate: number
-    status: number
     accountId: number
     targetAccountId: number
     forSelf: number
     isRoot: number
-    fullAccess: number
     permissions: number
     restrictions: number
     createdOn: number
+    expiryDate: number
+    fullAccess: number
+    issueDate: number
+    issuingAuthority: number
     managedBy: number
+    permitNumber: number
+    permitSubType: number
+    permitType: number
+    status: number
     _all: number
   }
 
 
   export type PermitMinAggregateInputType = {
     id?: true
-    permitType?: true
-    permitSubType?: true
-    permitNumber?: true
-    issuingAuthority?: true
-    issueDate?: true
-    expiryDate?: true
-    status?: true
     accountId?: true
     targetAccountId?: true
     forSelf?: true
     isRoot?: true
-    fullAccess?: true
     createdOn?: true
+    expiryDate?: true
+    fullAccess?: true
+    issueDate?: true
+    issuingAuthority?: true
     managedBy?: true
+    permitNumber?: true
+    permitSubType?: true
+    permitType?: true
+    status?: true
   }
 
   export type PermitMaxAggregateInputType = {
     id?: true
-    permitType?: true
-    permitSubType?: true
-    permitNumber?: true
-    issuingAuthority?: true
-    issueDate?: true
-    expiryDate?: true
-    status?: true
     accountId?: true
     targetAccountId?: true
     forSelf?: true
     isRoot?: true
-    fullAccess?: true
     createdOn?: true
+    expiryDate?: true
+    fullAccess?: true
+    issueDate?: true
+    issuingAuthority?: true
     managedBy?: true
+    permitNumber?: true
+    permitSubType?: true
+    permitType?: true
+    status?: true
   }
 
   export type PermitCountAggregateInputType = {
     id?: true
-    permitType?: true
-    permitSubType?: true
-    permitNumber?: true
-    issuingAuthority?: true
-    issueDate?: true
-    expiryDate?: true
-    status?: true
     accountId?: true
     targetAccountId?: true
     forSelf?: true
     isRoot?: true
-    fullAccess?: true
     permissions?: true
     restrictions?: true
     createdOn?: true
+    expiryDate?: true
+    fullAccess?: true
+    issueDate?: true
+    issuingAuthority?: true
     managedBy?: true
+    permitNumber?: true
+    permitSubType?: true
+    permitType?: true
+    status?: true
     _all?: true
   }
 
@@ -18898,22 +18823,22 @@ export namespace Prisma {
 
   export type PermitGroupByOutputType = {
     id: string
-    permitType: string | null
-    permitSubType: string | null
-    permitNumber: string | null
-    issuingAuthority: string | null
-    issueDate: Date | null
-    expiryDate: Date | null
-    status: string
     accountId: string
     targetAccountId: string | null
     forSelf: boolean
     isRoot: boolean
-    fullAccess: boolean
     permissions: string[]
     restrictions: string[]
     createdOn: Date
+    expiryDate: Date | null
+    fullAccess: boolean
+    issueDate: Date | null
+    issuingAuthority: string | null
     managedBy: string | null
+    permitNumber: string | null
+    permitSubType: string | null
+    permitType: string | null
+    status: string
     _count: PermitCountAggregateOutputType | null
     _min: PermitMinAggregateOutputType | null
     _max: PermitMaxAggregateOutputType | null
@@ -18935,91 +18860,91 @@ export namespace Prisma {
 
   export type PermitSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    permitType?: boolean
-    permitSubType?: boolean
-    permitNumber?: boolean
-    issuingAuthority?: boolean
-    issueDate?: boolean
-    expiryDate?: boolean
-    status?: boolean
     accountId?: boolean
     targetAccountId?: boolean
     forSelf?: boolean
     isRoot?: boolean
-    fullAccess?: boolean
     permissions?: boolean
     restrictions?: boolean
     createdOn?: boolean
+    expiryDate?: boolean
+    fullAccess?: boolean
+    issueDate?: boolean
+    issuingAuthority?: boolean
     managedBy?: boolean
+    permitNumber?: boolean
+    permitSubType?: boolean
+    permitType?: boolean
+    status?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
     targetAccount?: boolean | Permit$targetAccountArgs<ExtArgs>
   }, ExtArgs["result"]["permit"]>
 
   export type PermitSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    permitType?: boolean
-    permitSubType?: boolean
-    permitNumber?: boolean
-    issuingAuthority?: boolean
-    issueDate?: boolean
-    expiryDate?: boolean
-    status?: boolean
     accountId?: boolean
     targetAccountId?: boolean
     forSelf?: boolean
     isRoot?: boolean
-    fullAccess?: boolean
     permissions?: boolean
     restrictions?: boolean
     createdOn?: boolean
+    expiryDate?: boolean
+    fullAccess?: boolean
+    issueDate?: boolean
+    issuingAuthority?: boolean
     managedBy?: boolean
+    permitNumber?: boolean
+    permitSubType?: boolean
+    permitType?: boolean
+    status?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
     targetAccount?: boolean | Permit$targetAccountArgs<ExtArgs>
   }, ExtArgs["result"]["permit"]>
 
   export type PermitSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    permitType?: boolean
-    permitSubType?: boolean
-    permitNumber?: boolean
-    issuingAuthority?: boolean
-    issueDate?: boolean
-    expiryDate?: boolean
-    status?: boolean
     accountId?: boolean
     targetAccountId?: boolean
     forSelf?: boolean
     isRoot?: boolean
-    fullAccess?: boolean
     permissions?: boolean
     restrictions?: boolean
     createdOn?: boolean
+    expiryDate?: boolean
+    fullAccess?: boolean
+    issueDate?: boolean
+    issuingAuthority?: boolean
     managedBy?: boolean
+    permitNumber?: boolean
+    permitSubType?: boolean
+    permitType?: boolean
+    status?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
     targetAccount?: boolean | Permit$targetAccountArgs<ExtArgs>
   }, ExtArgs["result"]["permit"]>
 
   export type PermitSelectScalar = {
     id?: boolean
-    permitType?: boolean
-    permitSubType?: boolean
-    permitNumber?: boolean
-    issuingAuthority?: boolean
-    issueDate?: boolean
-    expiryDate?: boolean
-    status?: boolean
     accountId?: boolean
     targetAccountId?: boolean
     forSelf?: boolean
     isRoot?: boolean
-    fullAccess?: boolean
     permissions?: boolean
     restrictions?: boolean
     createdOn?: boolean
+    expiryDate?: boolean
+    fullAccess?: boolean
+    issueDate?: boolean
+    issuingAuthority?: boolean
     managedBy?: boolean
+    permitNumber?: boolean
+    permitSubType?: boolean
+    permitType?: boolean
+    status?: boolean
   }
 
-  export type PermitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "permitType" | "permitSubType" | "permitNumber" | "issuingAuthority" | "issueDate" | "expiryDate" | "status" | "accountId" | "targetAccountId" | "forSelf" | "isRoot" | "fullAccess" | "permissions" | "restrictions" | "createdOn" | "managedBy", ExtArgs["result"]["permit"]>
+  export type PermitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "targetAccountId" | "forSelf" | "isRoot" | "permissions" | "restrictions" | "createdOn" | "expiryDate" | "fullAccess" | "issueDate" | "issuingAuthority" | "managedBy" | "permitNumber" | "permitSubType" | "permitType" | "status", ExtArgs["result"]["permit"]>
   export type PermitInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
     targetAccount?: boolean | Permit$targetAccountArgs<ExtArgs>
@@ -19041,22 +18966,22 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      permitType: string | null
-      permitSubType: string | null
-      permitNumber: string | null
-      issuingAuthority: string | null
-      issueDate: Date | null
-      expiryDate: Date | null
-      status: string
       accountId: string
       targetAccountId: string | null
       forSelf: boolean
       isRoot: boolean
-      fullAccess: boolean
       permissions: string[]
       restrictions: string[]
       createdOn: Date
+      expiryDate: Date | null
+      fullAccess: boolean
+      issueDate: Date | null
+      issuingAuthority: string | null
       managedBy: string | null
+      permitNumber: string | null
+      permitSubType: string | null
+      permitType: string | null
+      status: string
     }, ExtArgs["result"]["permit"]>
     composites: {}
   }
@@ -19483,22 +19408,22 @@ export namespace Prisma {
    */
   interface PermitFieldRefs {
     readonly id: FieldRef<"Permit", 'String'>
-    readonly permitType: FieldRef<"Permit", 'String'>
-    readonly permitSubType: FieldRef<"Permit", 'String'>
-    readonly permitNumber: FieldRef<"Permit", 'String'>
-    readonly issuingAuthority: FieldRef<"Permit", 'String'>
-    readonly issueDate: FieldRef<"Permit", 'DateTime'>
-    readonly expiryDate: FieldRef<"Permit", 'DateTime'>
-    readonly status: FieldRef<"Permit", 'String'>
     readonly accountId: FieldRef<"Permit", 'String'>
     readonly targetAccountId: FieldRef<"Permit", 'String'>
     readonly forSelf: FieldRef<"Permit", 'Boolean'>
     readonly isRoot: FieldRef<"Permit", 'Boolean'>
-    readonly fullAccess: FieldRef<"Permit", 'Boolean'>
     readonly permissions: FieldRef<"Permit", 'String[]'>
     readonly restrictions: FieldRef<"Permit", 'String[]'>
     readonly createdOn: FieldRef<"Permit", 'DateTime'>
+    readonly expiryDate: FieldRef<"Permit", 'DateTime'>
+    readonly fullAccess: FieldRef<"Permit", 'Boolean'>
+    readonly issueDate: FieldRef<"Permit", 'DateTime'>
+    readonly issuingAuthority: FieldRef<"Permit", 'String'>
     readonly managedBy: FieldRef<"Permit", 'String'>
+    readonly permitNumber: FieldRef<"Permit", 'String'>
+    readonly permitSubType: FieldRef<"Permit", 'String'>
+    readonly permitType: FieldRef<"Permit", 'String'>
+    readonly status: FieldRef<"Permit", 'String'>
   }
     
 
@@ -19945,47 +19870,46 @@ export namespace Prisma {
   export type AuthSessionMinAggregateOutputType = {
     id: string | null
     accountId: string | null
-    application: string | null
+    key: string | null
     ipAddress: string | null
     userAgent: string | null
+    isExpired: boolean | null
+    expiresOn: Date | null
     lastLoggedIn: Date | null
     loginType: string | null
     geolocation: string | null
     deviceType: string | null
-    expiresOn: Date | null
-    isExpired: boolean | null
-    authSessionKey: string | null
+    application: string | null
   }
 
   export type AuthSessionMaxAggregateOutputType = {
     id: string | null
     accountId: string | null
-    application: string | null
+    key: string | null
     ipAddress: string | null
     userAgent: string | null
+    isExpired: boolean | null
+    expiresOn: Date | null
     lastLoggedIn: Date | null
     loginType: string | null
     geolocation: string | null
     deviceType: string | null
-    expiresOn: Date | null
-    isExpired: boolean | null
-    authSessionKey: string | null
+    application: string | null
   }
 
   export type AuthSessionCountAggregateOutputType = {
     id: number
     accountId: number
-    application: number
+    key: number
     ipAddress: number
     userAgent: number
+    isExpired: number
+    expiresOn: number
     lastLoggedIn: number
     loginType: number
     geolocation: number
     deviceType: number
-    expiresOn: number
-    isExpired: number
-    authSessionKey: number
-    dependentKeys: number
+    application: number
     _all: number
   }
 
@@ -19993,47 +19917,46 @@ export namespace Prisma {
   export type AuthSessionMinAggregateInputType = {
     id?: true
     accountId?: true
-    application?: true
+    key?: true
     ipAddress?: true
     userAgent?: true
+    isExpired?: true
+    expiresOn?: true
     lastLoggedIn?: true
     loginType?: true
     geolocation?: true
     deviceType?: true
-    expiresOn?: true
-    isExpired?: true
-    authSessionKey?: true
+    application?: true
   }
 
   export type AuthSessionMaxAggregateInputType = {
     id?: true
     accountId?: true
-    application?: true
+    key?: true
     ipAddress?: true
     userAgent?: true
+    isExpired?: true
+    expiresOn?: true
     lastLoggedIn?: true
     loginType?: true
     geolocation?: true
     deviceType?: true
-    expiresOn?: true
-    isExpired?: true
-    authSessionKey?: true
+    application?: true
   }
 
   export type AuthSessionCountAggregateInputType = {
     id?: true
     accountId?: true
-    application?: true
+    key?: true
     ipAddress?: true
     userAgent?: true
+    isExpired?: true
+    expiresOn?: true
     lastLoggedIn?: true
     loginType?: true
     geolocation?: true
     deviceType?: true
-    expiresOn?: true
-    isExpired?: true
-    authSessionKey?: true
-    dependentKeys?: true
+    application?: true
     _all?: true
   }
 
@@ -20112,17 +20035,16 @@ export namespace Prisma {
   export type AuthSessionGroupByOutputType = {
     id: string
     accountId: string
-    application: string | null
+    key: string | null
     ipAddress: string
     userAgent: string
+    isExpired: boolean
+    expiresOn: Date | null
     lastLoggedIn: Date
     loginType: string
     geolocation: string | null
     deviceType: string | null
-    expiresOn: Date | null
-    isExpired: boolean
-    authSessionKey: string | null
-    dependentKeys: JsonValue | null
+    application: string | null
     _count: AuthSessionCountAggregateOutputType | null
     _min: AuthSessionMinAggregateOutputType | null
     _max: AuthSessionMaxAggregateOutputType | null
@@ -20145,71 +20067,67 @@ export namespace Prisma {
   export type AuthSessionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     accountId?: boolean
-    application?: boolean
+    key?: boolean
     ipAddress?: boolean
     userAgent?: boolean
+    isExpired?: boolean
+    expiresOn?: boolean
     lastLoggedIn?: boolean
     loginType?: boolean
     geolocation?: boolean
     deviceType?: boolean
-    expiresOn?: boolean
-    isExpired?: boolean
-    authSessionKey?: boolean
-    dependentKeys?: boolean
+    application?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["authSession"]>
 
   export type AuthSessionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     accountId?: boolean
-    application?: boolean
+    key?: boolean
     ipAddress?: boolean
     userAgent?: boolean
+    isExpired?: boolean
+    expiresOn?: boolean
     lastLoggedIn?: boolean
     loginType?: boolean
     geolocation?: boolean
     deviceType?: boolean
-    expiresOn?: boolean
-    isExpired?: boolean
-    authSessionKey?: boolean
-    dependentKeys?: boolean
+    application?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["authSession"]>
 
   export type AuthSessionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     accountId?: boolean
-    application?: boolean
+    key?: boolean
     ipAddress?: boolean
     userAgent?: boolean
+    isExpired?: boolean
+    expiresOn?: boolean
     lastLoggedIn?: boolean
     loginType?: boolean
     geolocation?: boolean
     deviceType?: boolean
-    expiresOn?: boolean
-    isExpired?: boolean
-    authSessionKey?: boolean
-    dependentKeys?: boolean
+    application?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["authSession"]>
 
   export type AuthSessionSelectScalar = {
     id?: boolean
     accountId?: boolean
-    application?: boolean
+    key?: boolean
     ipAddress?: boolean
     userAgent?: boolean
+    isExpired?: boolean
+    expiresOn?: boolean
     lastLoggedIn?: boolean
     loginType?: boolean
     geolocation?: boolean
     deviceType?: boolean
-    expiresOn?: boolean
-    isExpired?: boolean
-    authSessionKey?: boolean
-    dependentKeys?: boolean
+    application?: boolean
   }
 
-  export type AuthSessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "application" | "ipAddress" | "userAgent" | "lastLoggedIn" | "loginType" | "geolocation" | "deviceType" | "expiresOn" | "isExpired" | "authSessionKey" | "dependentKeys", ExtArgs["result"]["authSession"]>
+  export type AuthSessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "key" | "ipAddress" | "userAgent" | "isExpired" | "expiresOn" | "lastLoggedIn" | "loginType" | "geolocation" | "deviceType" | "application", ExtArgs["result"]["authSession"]>
   export type AuthSessionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }
@@ -20228,17 +20146,16 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       accountId: string
-      application: string | null
+      key: string | null
       ipAddress: string
       userAgent: string
+      isExpired: boolean
+      expiresOn: Date | null
       lastLoggedIn: Date
       loginType: string
       geolocation: string | null
       deviceType: string | null
-      expiresOn: Date | null
-      isExpired: boolean
-      authSessionKey: string | null
-      dependentKeys: Prisma.JsonValue | null
+      application: string | null
     }, ExtArgs["result"]["authSession"]>
     composites: {}
   }
@@ -20665,17 +20582,16 @@ export namespace Prisma {
   interface AuthSessionFieldRefs {
     readonly id: FieldRef<"AuthSession", 'String'>
     readonly accountId: FieldRef<"AuthSession", 'String'>
-    readonly application: FieldRef<"AuthSession", 'String'>
+    readonly key: FieldRef<"AuthSession", 'String'>
     readonly ipAddress: FieldRef<"AuthSession", 'String'>
     readonly userAgent: FieldRef<"AuthSession", 'String'>
+    readonly isExpired: FieldRef<"AuthSession", 'Boolean'>
+    readonly expiresOn: FieldRef<"AuthSession", 'DateTime'>
     readonly lastLoggedIn: FieldRef<"AuthSession", 'DateTime'>
     readonly loginType: FieldRef<"AuthSession", 'String'>
     readonly geolocation: FieldRef<"AuthSession", 'String'>
     readonly deviceType: FieldRef<"AuthSession", 'String'>
-    readonly expiresOn: FieldRef<"AuthSession", 'DateTime'>
-    readonly isExpired: FieldRef<"AuthSession", 'Boolean'>
-    readonly authSessionKey: FieldRef<"AuthSession", 'String'>
-    readonly dependentKeys: FieldRef<"AuthSession", 'Json'>
+    readonly application: FieldRef<"AuthSession", 'String'>
   }
     
 
@@ -21102,100 +21018,100 @@ export namespace Prisma {
 
   export type SystemErrorMinAggregateOutputType = {
     id: string | null
-    type: string | null
-    context: string | null
     message: string | null
-    status: string | null
+    context: string | null
+    timestamp: Date | null
     accountId: string | null
-    ipAddress: string | null
     geolocation: string | null
+    ipAddress: string | null
+    problemLevel: string | null
     reproSteps: string | null
     solution: string | null
     solvedBy: string | null
-    problemLevel: string | null
-    timestamp: Date | null
+    status: string | null
+    type: string | null
   }
 
   export type SystemErrorMaxAggregateOutputType = {
     id: string | null
-    type: string | null
-    context: string | null
     message: string | null
-    status: string | null
+    context: string | null
+    timestamp: Date | null
     accountId: string | null
-    ipAddress: string | null
     geolocation: string | null
+    ipAddress: string | null
+    problemLevel: string | null
     reproSteps: string | null
     solution: string | null
     solvedBy: string | null
-    problemLevel: string | null
-    timestamp: Date | null
+    status: string | null
+    type: string | null
   }
 
   export type SystemErrorCountAggregateOutputType = {
     id: number
-    type: number
-    context: number
     message: number
-    status: number
+    context: number
+    timestamp: number
     accountId: number
-    ipAddress: number
     geolocation: number
+    ipAddress: number
+    problemLevel: number
     reproSteps: number
     solution: number
     solvedBy: number
-    problemLevel: number
-    timestamp: number
+    status: number
+    type: number
     _all: number
   }
 
 
   export type SystemErrorMinAggregateInputType = {
     id?: true
-    type?: true
-    context?: true
     message?: true
-    status?: true
+    context?: true
+    timestamp?: true
     accountId?: true
-    ipAddress?: true
     geolocation?: true
+    ipAddress?: true
+    problemLevel?: true
     reproSteps?: true
     solution?: true
     solvedBy?: true
-    problemLevel?: true
-    timestamp?: true
+    status?: true
+    type?: true
   }
 
   export type SystemErrorMaxAggregateInputType = {
     id?: true
-    type?: true
-    context?: true
     message?: true
-    status?: true
+    context?: true
+    timestamp?: true
     accountId?: true
-    ipAddress?: true
     geolocation?: true
+    ipAddress?: true
+    problemLevel?: true
     reproSteps?: true
     solution?: true
     solvedBy?: true
-    problemLevel?: true
-    timestamp?: true
+    status?: true
+    type?: true
   }
 
   export type SystemErrorCountAggregateInputType = {
     id?: true
-    type?: true
-    context?: true
     message?: true
-    status?: true
+    context?: true
+    timestamp?: true
     accountId?: true
-    ipAddress?: true
     geolocation?: true
+    ipAddress?: true
+    problemLevel?: true
     reproSteps?: true
     solution?: true
     solvedBy?: true
-    problemLevel?: true
-    timestamp?: true
+    status?: true
+    type?: true
     _all?: true
   }
 
@@ -21273,18 +21189,18 @@ export namespace Prisma {
 
   export type SystemErrorGroupByOutputType = {
     id: string
-    type: string
-    context: string
     message: string
-    status: string
+    context: string
+    timestamp: Date
     accountId: string | null
-    ipAddress: string | null
     geolocation: string | null
+    ipAddress: string | null
+    problemLevel: string | null
     reproSteps: string | null
     solution: string | null
     solvedBy: string | null
-    problemLevel: string | null
-    timestamp: Date
+    status: string
+    type: string
     _count: SystemErrorCountAggregateOutputType | null
     _min: SystemErrorMinAggregateOutputType | null
     _max: SystemErrorMaxAggregateOutputType | null
@@ -21306,72 +21222,72 @@ export namespace Prisma {
 
   export type SystemErrorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    type?: boolean
-    context?: boolean
     message?: boolean
-    status?: boolean
+    context?: boolean
+    timestamp?: boolean
     accountId?: boolean
-    ipAddress?: boolean
     geolocation?: boolean
+    ipAddress?: boolean
+    problemLevel?: boolean
     reproSteps?: boolean
     solution?: boolean
     solvedBy?: boolean
-    problemLevel?: boolean
-    timestamp?: boolean
+    status?: boolean
+    type?: boolean
     account?: boolean | SystemError$accountArgs<ExtArgs>
   }, ExtArgs["result"]["systemError"]>
 
   export type SystemErrorSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    type?: boolean
-    context?: boolean
     message?: boolean
-    status?: boolean
+    context?: boolean
+    timestamp?: boolean
     accountId?: boolean
-    ipAddress?: boolean
     geolocation?: boolean
+    ipAddress?: boolean
+    problemLevel?: boolean
     reproSteps?: boolean
     solution?: boolean
     solvedBy?: boolean
-    problemLevel?: boolean
-    timestamp?: boolean
+    status?: boolean
+    type?: boolean
     account?: boolean | SystemError$accountArgs<ExtArgs>
   }, ExtArgs["result"]["systemError"]>
 
   export type SystemErrorSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    type?: boolean
-    context?: boolean
     message?: boolean
-    status?: boolean
+    context?: boolean
+    timestamp?: boolean
     accountId?: boolean
-    ipAddress?: boolean
     geolocation?: boolean
+    ipAddress?: boolean
+    problemLevel?: boolean
     reproSteps?: boolean
     solution?: boolean
     solvedBy?: boolean
-    problemLevel?: boolean
-    timestamp?: boolean
+    status?: boolean
+    type?: boolean
     account?: boolean | SystemError$accountArgs<ExtArgs>
   }, ExtArgs["result"]["systemError"]>
 
   export type SystemErrorSelectScalar = {
     id?: boolean
-    type?: boolean
-    context?: boolean
     message?: boolean
-    status?: boolean
+    context?: boolean
+    timestamp?: boolean
     accountId?: boolean
-    ipAddress?: boolean
     geolocation?: boolean
+    ipAddress?: boolean
+    problemLevel?: boolean
     reproSteps?: boolean
     solution?: boolean
     solvedBy?: boolean
-    problemLevel?: boolean
-    timestamp?: boolean
+    status?: boolean
+    type?: boolean
   }
 
-  export type SystemErrorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "context" | "message" | "status" | "accountId" | "ipAddress" | "geolocation" | "reproSteps" | "solution" | "solvedBy" | "problemLevel" | "timestamp", ExtArgs["result"]["systemError"]>
+  export type SystemErrorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "message" | "context" | "timestamp" | "accountId" | "geolocation" | "ipAddress" | "problemLevel" | "reproSteps" | "solution" | "solvedBy" | "status" | "type", ExtArgs["result"]["systemError"]>
   export type SystemErrorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | SystemError$accountArgs<ExtArgs>
   }
@@ -21389,18 +21305,18 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      type: string
-      context: string
       message: string
-      status: string
+      context: string
+      timestamp: Date
       accountId: string | null
-      ipAddress: string | null
       geolocation: string | null
+      ipAddress: string | null
+      problemLevel: string | null
       reproSteps: string | null
       solution: string | null
       solvedBy: string | null
-      problemLevel: string | null
-      timestamp: Date
+      status: string
+      type: string
     }, ExtArgs["result"]["systemError"]>
     composites: {}
   }
@@ -21826,18 +21742,18 @@ export namespace Prisma {
    */
   interface SystemErrorFieldRefs {
     readonly id: FieldRef<"SystemError", 'String'>
-    readonly type: FieldRef<"SystemError", 'String'>
-    readonly context: FieldRef<"SystemError", 'String'>
     readonly message: FieldRef<"SystemError", 'String'>
-    readonly status: FieldRef<"SystemError", 'String'>
+    readonly context: FieldRef<"SystemError", 'String'>
+    readonly timestamp: FieldRef<"SystemError", 'DateTime'>
     readonly accountId: FieldRef<"SystemError", 'String'>
-    readonly ipAddress: FieldRef<"SystemError", 'String'>
     readonly geolocation: FieldRef<"SystemError", 'String'>
+    readonly ipAddress: FieldRef<"SystemError", 'String'>
+    readonly problemLevel: FieldRef<"SystemError", 'String'>
     readonly reproSteps: FieldRef<"SystemError", 'String'>
     readonly solution: FieldRef<"SystemError", 'String'>
     readonly solvedBy: FieldRef<"SystemError", 'String'>
-    readonly problemLevel: FieldRef<"SystemError", 'String'>
-    readonly timestamp: FieldRef<"SystemError", 'DateTime'>
+    readonly status: FieldRef<"SystemError", 'String'>
+    readonly type: FieldRef<"SystemError", 'String'>
   }
     
 
@@ -22284,46 +22200,46 @@ export namespace Prisma {
   export type ApplicationMinAggregateOutputType = {
     id: string | null
     name: string | null
-    status: string | null
     party: string | null
     description: string | null
     icon: string | null
     website: string | null
     developer: string | null
     appSecret: string | null
-    ownerAccountId: string | null
     createdAt: Date | null
+    ownerAccountId: string | null
+    status: string | null
   }
 
   export type ApplicationMaxAggregateOutputType = {
     id: string | null
     name: string | null
-    status: string | null
     party: string | null
     description: string | null
     icon: string | null
     website: string | null
     developer: string | null
     appSecret: string | null
-    ownerAccountId: string | null
     createdAt: Date | null
+    ownerAccountId: string | null
+    status: string | null
   }
 
   export type ApplicationCountAggregateOutputType = {
     id: number
     name: number
-    status: number
     party: number
     description: number
     icon: number
     website: number
     developer: number
     appSecret: number
+    createdAt: number
     access: number
-    policies: number
     endpoints: number
     ownerAccountId: number
-    createdAt: number
+    policies: number
+    status: number
     _all: number
   }
 
@@ -22331,46 +22247,46 @@ export namespace Prisma {
   export type ApplicationMinAggregateInputType = {
     id?: true
     name?: true
-    status?: true
     party?: true
     description?: true
     icon?: true
     website?: true
     developer?: true
     appSecret?: true
-    ownerAccountId?: true
     createdAt?: true
+    ownerAccountId?: true
+    status?: true
   }
 
   export type ApplicationMaxAggregateInputType = {
     id?: true
     name?: true
-    status?: true
     party?: true
     description?: true
     icon?: true
     website?: true
     developer?: true
     appSecret?: true
-    ownerAccountId?: true
     createdAt?: true
+    ownerAccountId?: true
+    status?: true
   }
 
   export type ApplicationCountAggregateInputType = {
     id?: true
     name?: true
-    status?: true
     party?: true
     description?: true
     icon?: true
     website?: true
     developer?: true
     appSecret?: true
+    createdAt?: true
     access?: true
-    policies?: true
     endpoints?: true
     ownerAccountId?: true
-    createdAt?: true
+    policies?: true
+    status?: true
     _all?: true
   }
 
@@ -22449,18 +22365,18 @@ export namespace Prisma {
   export type ApplicationGroupByOutputType = {
     id: string
     name: string
-    status: string
     party: string
     description: string | null
     icon: string | null
     website: string | null
     developer: string | null
     appSecret: string | null
+    createdAt: Date
     access: JsonValue | null
-    policies: JsonValue | null
     endpoints: JsonValue | null
     ownerAccountId: string | null
-    createdAt: Date
+    policies: JsonValue | null
+    status: string
     _count: ApplicationCountAggregateOutputType | null
     _min: ApplicationMinAggregateOutputType | null
     _max: ApplicationMaxAggregateOutputType | null
@@ -22483,18 +22399,18 @@ export namespace Prisma {
   export type ApplicationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    status?: boolean
     party?: boolean
     description?: boolean
     icon?: boolean
     website?: boolean
     developer?: boolean
     appSecret?: boolean
+    createdAt?: boolean
     access?: boolean
-    policies?: boolean
     endpoints?: boolean
     ownerAccountId?: boolean
-    createdAt?: boolean
+    policies?: boolean
+    status?: boolean
     owner?: boolean | Application$ownerArgs<ExtArgs>
     connections?: boolean | Application$connectionsArgs<ExtArgs>
     _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
@@ -22503,57 +22419,57 @@ export namespace Prisma {
   export type ApplicationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    status?: boolean
     party?: boolean
     description?: boolean
     icon?: boolean
     website?: boolean
     developer?: boolean
     appSecret?: boolean
+    createdAt?: boolean
     access?: boolean
-    policies?: boolean
     endpoints?: boolean
     ownerAccountId?: boolean
-    createdAt?: boolean
+    policies?: boolean
+    status?: boolean
     owner?: boolean | Application$ownerArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
 
   export type ApplicationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    status?: boolean
     party?: boolean
     description?: boolean
     icon?: boolean
     website?: boolean
     developer?: boolean
     appSecret?: boolean
+    createdAt?: boolean
     access?: boolean
-    policies?: boolean
     endpoints?: boolean
     ownerAccountId?: boolean
-    createdAt?: boolean
+    policies?: boolean
+    status?: boolean
     owner?: boolean | Application$ownerArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
 
   export type ApplicationSelectScalar = {
     id?: boolean
     name?: boolean
-    status?: boolean
     party?: boolean
     description?: boolean
     icon?: boolean
     website?: boolean
     developer?: boolean
     appSecret?: boolean
+    createdAt?: boolean
     access?: boolean
-    policies?: boolean
     endpoints?: boolean
     ownerAccountId?: boolean
-    createdAt?: boolean
+    policies?: boolean
+    status?: boolean
   }
 
-  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "status" | "party" | "description" | "icon" | "website" | "developer" | "appSecret" | "access" | "policies" | "endpoints" | "ownerAccountId" | "createdAt", ExtArgs["result"]["application"]>
+  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "party" | "description" | "icon" | "website" | "developer" | "appSecret" | "createdAt" | "access" | "endpoints" | "ownerAccountId" | "policies" | "status", ExtArgs["result"]["application"]>
   export type ApplicationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     owner?: boolean | Application$ownerArgs<ExtArgs>
     connections?: boolean | Application$connectionsArgs<ExtArgs>
@@ -22575,18 +22491,18 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
-      status: string
       party: string
       description: string | null
       icon: string | null
       website: string | null
       developer: string | null
       appSecret: string | null
+      createdAt: Date
       access: Prisma.JsonValue | null
-      policies: Prisma.JsonValue | null
       endpoints: Prisma.JsonValue | null
       ownerAccountId: string | null
-      createdAt: Date
+      policies: Prisma.JsonValue | null
+      status: string
     }, ExtArgs["result"]["application"]>
     composites: {}
   }
@@ -23014,18 +22930,18 @@ export namespace Prisma {
   interface ApplicationFieldRefs {
     readonly id: FieldRef<"Application", 'String'>
     readonly name: FieldRef<"Application", 'String'>
-    readonly status: FieldRef<"Application", 'String'>
     readonly party: FieldRef<"Application", 'String'>
     readonly description: FieldRef<"Application", 'String'>
     readonly icon: FieldRef<"Application", 'String'>
     readonly website: FieldRef<"Application", 'String'>
     readonly developer: FieldRef<"Application", 'String'>
     readonly appSecret: FieldRef<"Application", 'String'>
+    readonly createdAt: FieldRef<"Application", 'DateTime'>
     readonly access: FieldRef<"Application", 'Json'>
-    readonly policies: FieldRef<"Application", 'Json'>
     readonly endpoints: FieldRef<"Application", 'Json'>
     readonly ownerAccountId: FieldRef<"Application", 'String'>
-    readonly createdAt: FieldRef<"Application", 'DateTime'>
+    readonly policies: FieldRef<"Application", 'Json'>
+    readonly status: FieldRef<"Application", 'String'>
   }
     
 
@@ -25802,8 +25718,8 @@ export namespace Prisma {
     portfolioId?: boolean
     accountId?: boolean
     details?: boolean
-    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
     account?: boolean | AccountDefaultArgs<ExtArgs>
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["portfolioMember"]>
 
   export type PortfolioMemberSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -25811,8 +25727,8 @@ export namespace Prisma {
     portfolioId?: boolean
     accountId?: boolean
     details?: boolean
-    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
     account?: boolean | AccountDefaultArgs<ExtArgs>
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["portfolioMember"]>
 
   export type PortfolioMemberSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -25820,8 +25736,8 @@ export namespace Prisma {
     portfolioId?: boolean
     accountId?: boolean
     details?: boolean
-    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
     account?: boolean | AccountDefaultArgs<ExtArgs>
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["portfolioMember"]>
 
   export type PortfolioMemberSelectScalar = {
@@ -25833,23 +25749,23 @@ export namespace Prisma {
 
   export type PortfolioMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "portfolioId" | "accountId" | "details", ExtArgs["result"]["portfolioMember"]>
   export type PortfolioMemberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
     account?: boolean | AccountDefaultArgs<ExtArgs>
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
   }
   export type PortfolioMemberIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
     account?: boolean | AccountDefaultArgs<ExtArgs>
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
   }
   export type PortfolioMemberIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
     account?: boolean | AccountDefaultArgs<ExtArgs>
+    portfolio?: boolean | PortfolioDefaultArgs<ExtArgs>
   }
 
   export type $PortfolioMemberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "PortfolioMember"
     objects: {
-      portfolio: Prisma.$PortfolioPayload<ExtArgs>
       account: Prisma.$AccountPayload<ExtArgs>
+      portfolio: Prisma.$PortfolioPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -26250,8 +26166,8 @@ export namespace Prisma {
    */
   export interface Prisma__PortfolioMemberClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    portfolio<T extends PortfolioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PortfolioDefaultArgs<ExtArgs>>): Prisma__PortfolioClient<$Result.GetResult<Prisma.$PortfolioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     account<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    portfolio<T extends PortfolioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PortfolioDefaultArgs<ExtArgs>>): Prisma__PortfolioClient<$Result.GetResult<Prisma.$PortfolioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -28830,13 +28746,13 @@ export namespace Prisma {
 
   export const AccountScalarFieldEnum: {
     id: 'id',
+    displayName: 'displayName',
     accountType: 'accountType',
     displayImage: 'displayImage',
-    displayName: 'displayName',
     status: 'status',
     isVerified: 'isVerified',
-    createdAt: 'createdAt',
-    details: 'details'
+    details: 'details',
+    createdAt: 'createdAt'
   };
 
   export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
@@ -28990,18 +28906,18 @@ export namespace Prisma {
   export const NeupIdScalarFieldEnum: {
     id: 'id',
     accountId: 'accountId',
-    dateAdded: 'dateAdded',
-    isPrimary: 'isPrimary'
+    isPrimary: 'isPrimary',
+    dateAdded: 'dateAdded'
   };
 
   export type NeupIdScalarFieldEnum = (typeof NeupIdScalarFieldEnum)[keyof typeof NeupIdScalarFieldEnum]
 
 
   export const AuthMethodScalarFieldEnum: {
-    id: 'id',
     accountId: 'accountId',
-    type: 'type',
     value: 'value',
+    id: 'id',
+    type: 'type',
     order: 'order',
     status: 'status',
     detail: 'detail'
@@ -29012,22 +28928,22 @@ export namespace Prisma {
 
   export const PermitScalarFieldEnum: {
     id: 'id',
-    permitType: 'permitType',
-    permitSubType: 'permitSubType',
-    permitNumber: 'permitNumber',
-    issuingAuthority: 'issuingAuthority',
-    issueDate: 'issueDate',
-    expiryDate: 'expiryDate',
-    status: 'status',
     accountId: 'accountId',
     targetAccountId: 'targetAccountId',
     forSelf: 'forSelf',
     isRoot: 'isRoot',
-    fullAccess: 'fullAccess',
     permissions: 'permissions',
     restrictions: 'restrictions',
     createdOn: 'createdOn',
-    managedBy: 'managedBy'
+    expiryDate: 'expiryDate',
+    fullAccess: 'fullAccess',
+    issueDate: 'issueDate',
+    issuingAuthority: 'issuingAuthority',
+    managedBy: 'managedBy',
+    permitNumber: 'permitNumber',
+    permitSubType: 'permitSubType',
+    permitType: 'permitType',
+    status: 'status'
   };
 
   export type PermitScalarFieldEnum = (typeof PermitScalarFieldEnum)[keyof typeof PermitScalarFieldEnum]
@@ -29036,17 +28952,16 @@ export namespace Prisma {
   export const AuthSessionScalarFieldEnum: {
     id: 'id',
     accountId: 'accountId',
-    application: 'application',
+    key: 'key',
     ipAddress: 'ipAddress',
     userAgent: 'userAgent',
+    isExpired: 'isExpired',
+    expiresOn: 'expiresOn',
     lastLoggedIn: 'lastLoggedIn',
     loginType: 'loginType',
     geolocation: 'geolocation',
     deviceType: 'deviceType',
-    expiresOn: 'expiresOn',
-    isExpired: 'isExpired',
-    authSessionKey: 'authSessionKey',
-    dependentKeys: 'dependentKeys'
+    application: 'application'
   };
 
   export type AuthSessionScalarFieldEnum = (typeof AuthSessionScalarFieldEnum)[keyof typeof AuthSessionScalarFieldEnum]
@@ -29054,18 +28969,18 @@ export namespace Prisma {
 
   export const SystemErrorScalarFieldEnum: {
     id: 'id',
-    type: 'type',
-    context: 'context',
     message: 'message',
-    status: 'status',
+    context: 'context',
+    timestamp: 'timestamp',
     accountId: 'accountId',
-    ipAddress: 'ipAddress',
     geolocation: 'geolocation',
+    ipAddress: 'ipAddress',
+    problemLevel: 'problemLevel',
     reproSteps: 'reproSteps',
     solution: 'solution',
     solvedBy: 'solvedBy',
-    problemLevel: 'problemLevel',
-    timestamp: 'timestamp'
+    status: 'status',
+    type: 'type'
   };
 
   export type SystemErrorScalarFieldEnum = (typeof SystemErrorScalarFieldEnum)[keyof typeof SystemErrorScalarFieldEnum]
@@ -29074,18 +28989,18 @@ export namespace Prisma {
   export const ApplicationScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    status: 'status',
     party: 'party',
     description: 'description',
     icon: 'icon',
     website: 'website',
     developer: 'developer',
     appSecret: 'appSecret',
+    createdAt: 'createdAt',
     access: 'access',
-    policies: 'policies',
     endpoints: 'endpoints',
     ownerAccountId: 'ownerAccountId',
-    createdAt: 'createdAt'
+    policies: 'policies',
+    status: 'status'
   };
 
   export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
@@ -29218,20 +29133,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'DateTime'
-   */
-  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime[]'
-   */
-  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Json'
    */
   export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
@@ -29246,44 +29147,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'AuthMethodType'
+   * Reference to a field of type 'DateTime'
    */
-  export type EnumAuthMethodTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthMethodType'>
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
     
 
 
   /**
-   * Reference to a field of type 'AuthMethodType[]'
+   * Reference to a field of type 'DateTime[]'
    */
-  export type ListEnumAuthMethodTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthMethodType[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'AuthMethodOrder'
-   */
-  export type EnumAuthMethodOrderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthMethodOrder'>
-    
-
-
-  /**
-   * Reference to a field of type 'AuthMethodOrder[]'
-   */
-  export type ListEnumAuthMethodOrderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthMethodOrder[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'AuthMethodStatus'
-   */
-  export type EnumAuthMethodStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthMethodStatus'>
-    
-
-
-  /**
-   * Reference to a field of type 'AuthMethodStatus[]'
-   */
-  export type ListEnumAuthMethodStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthMethodStatus[]'>
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 
@@ -29309,60 +29182,62 @@ export namespace Prisma {
     OR?: AccountWhereInput[]
     NOT?: AccountWhereInput | AccountWhereInput[]
     id?: StringFilter<"Account"> | string
+    displayName?: StringNullableFilter<"Account"> | string | null
     accountType?: StringFilter<"Account"> | string
     displayImage?: StringNullableFilter<"Account"> | string | null
-    displayName?: StringNullableFilter<"Account"> | string | null
     status?: StringNullableFilter<"Account"> | string | null
     isVerified?: BoolFilter<"Account"> | boolean
-    createdAt?: DateTimeFilter<"Account"> | Date | string
     details?: JsonNullableFilter<"Account">
+    createdAt?: DateTimeFilter<"Account"> | Date | string
+    brandProfile?: XOR<AccountTypeBrandNullableScalarRelationFilter, AccountTypeBrandWhereInput> | null
+    individualProfile?: XOR<AccountTypeIndividualNullableScalarRelationFilter, AccountTypeIndividualWhereInput> | null
+    childOwnerships?: AccountOwnershipListRelationFilter
+    parentOwnerships?: AccountOwnershipListRelationFilter
+    ownedApplications?: ApplicationListRelationFilter
+    appConnections?: ApplicationConnectionListRelationFilter
+    authMethods?: AuthMethodListRelationFilter
+    sessions?: AuthSessionListRelationFilter
     contacts?: ContactListRelationFilter
     neupIds?: NeupIdListRelationFilter
+    notifications?: NotificationListRelationFilter
     permits?: PermitListRelationFilter
     targetPermits?: PermitListRelationFilter
-    sessions?: AuthSessionListRelationFilter
-    errorLogs?: SystemErrorListRelationFilter
-    appConnections?: ApplicationConnectionListRelationFilter
-    ownedApplications?: ApplicationListRelationFilter
-    notifications?: NotificationListRelationFilter
-    verifications?: VerificationListRelationFilter
-    sentRequests?: RequestListRelationFilter
-    receivedRequests?: RequestListRelationFilter
-    individualProfile?: XOR<AccountTypeIndividualNullableScalarRelationFilter, AccountTypeIndividualWhereInput> | null
-    brandProfile?: XOR<AccountTypeBrandNullableScalarRelationFilter, AccountTypeBrandWhereInput> | null
-    parentOwnerships?: AccountOwnershipListRelationFilter
-    childOwnerships?: AccountOwnershipListRelationFilter
     portfolioMembers?: PortfolioMemberListRelationFilter
     portfolioRoles?: PortfolioRoleListRelationFilter
+    receivedRequests?: RequestListRelationFilter
+    sentRequests?: RequestListRelationFilter
+    errorLogs?: SystemErrorListRelationFilter
+    verifications?: VerificationListRelationFilter
   }
 
   export type AccountOrderByWithRelationInput = {
     id?: SortOrder
+    displayName?: SortOrderInput | SortOrder
     accountType?: SortOrder
     displayImage?: SortOrderInput | SortOrder
-    displayName?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
     isVerified?: SortOrder
-    createdAt?: SortOrder
     details?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    brandProfile?: AccountTypeBrandOrderByWithRelationInput
+    individualProfile?: AccountTypeIndividualOrderByWithRelationInput
+    childOwnerships?: AccountOwnershipOrderByRelationAggregateInput
+    parentOwnerships?: AccountOwnershipOrderByRelationAggregateInput
+    ownedApplications?: ApplicationOrderByRelationAggregateInput
+    appConnections?: ApplicationConnectionOrderByRelationAggregateInput
+    authMethods?: AuthMethodOrderByRelationAggregateInput
+    sessions?: AuthSessionOrderByRelationAggregateInput
     contacts?: ContactOrderByRelationAggregateInput
     neupIds?: NeupIdOrderByRelationAggregateInput
+    notifications?: NotificationOrderByRelationAggregateInput
     permits?: PermitOrderByRelationAggregateInput
     targetPermits?: PermitOrderByRelationAggregateInput
-    sessions?: AuthSessionOrderByRelationAggregateInput
-    errorLogs?: SystemErrorOrderByRelationAggregateInput
-    appConnections?: ApplicationConnectionOrderByRelationAggregateInput
-    ownedApplications?: ApplicationOrderByRelationAggregateInput
-    notifications?: NotificationOrderByRelationAggregateInput
-    verifications?: VerificationOrderByRelationAggregateInput
-    sentRequests?: RequestOrderByRelationAggregateInput
-    receivedRequests?: RequestOrderByRelationAggregateInput
-    individualProfile?: AccountTypeIndividualOrderByWithRelationInput
-    brandProfile?: AccountTypeBrandOrderByWithRelationInput
-    parentOwnerships?: AccountOwnershipOrderByRelationAggregateInput
-    childOwnerships?: AccountOwnershipOrderByRelationAggregateInput
     portfolioMembers?: PortfolioMemberOrderByRelationAggregateInput
     portfolioRoles?: PortfolioRoleOrderByRelationAggregateInput
+    receivedRequests?: RequestOrderByRelationAggregateInput
+    sentRequests?: RequestOrderByRelationAggregateInput
+    errorLogs?: SystemErrorOrderByRelationAggregateInput
+    verifications?: VerificationOrderByRelationAggregateInput
   }
 
   export type AccountWhereUniqueInput = Prisma.AtLeast<{
@@ -29370,42 +29245,43 @@ export namespace Prisma {
     AND?: AccountWhereInput | AccountWhereInput[]
     OR?: AccountWhereInput[]
     NOT?: AccountWhereInput | AccountWhereInput[]
+    displayName?: StringNullableFilter<"Account"> | string | null
     accountType?: StringFilter<"Account"> | string
     displayImage?: StringNullableFilter<"Account"> | string | null
-    displayName?: StringNullableFilter<"Account"> | string | null
     status?: StringNullableFilter<"Account"> | string | null
     isVerified?: BoolFilter<"Account"> | boolean
-    createdAt?: DateTimeFilter<"Account"> | Date | string
     details?: JsonNullableFilter<"Account">
+    createdAt?: DateTimeFilter<"Account"> | Date | string
+    brandProfile?: XOR<AccountTypeBrandNullableScalarRelationFilter, AccountTypeBrandWhereInput> | null
+    individualProfile?: XOR<AccountTypeIndividualNullableScalarRelationFilter, AccountTypeIndividualWhereInput> | null
+    childOwnerships?: AccountOwnershipListRelationFilter
+    parentOwnerships?: AccountOwnershipListRelationFilter
+    ownedApplications?: ApplicationListRelationFilter
+    appConnections?: ApplicationConnectionListRelationFilter
+    authMethods?: AuthMethodListRelationFilter
+    sessions?: AuthSessionListRelationFilter
     contacts?: ContactListRelationFilter
     neupIds?: NeupIdListRelationFilter
+    notifications?: NotificationListRelationFilter
     permits?: PermitListRelationFilter
     targetPermits?: PermitListRelationFilter
-    sessions?: AuthSessionListRelationFilter
-    errorLogs?: SystemErrorListRelationFilter
-    appConnections?: ApplicationConnectionListRelationFilter
-    ownedApplications?: ApplicationListRelationFilter
-    notifications?: NotificationListRelationFilter
-    verifications?: VerificationListRelationFilter
-    sentRequests?: RequestListRelationFilter
-    receivedRequests?: RequestListRelationFilter
-    individualProfile?: XOR<AccountTypeIndividualNullableScalarRelationFilter, AccountTypeIndividualWhereInput> | null
-    brandProfile?: XOR<AccountTypeBrandNullableScalarRelationFilter, AccountTypeBrandWhereInput> | null
-    parentOwnerships?: AccountOwnershipListRelationFilter
-    childOwnerships?: AccountOwnershipListRelationFilter
     portfolioMembers?: PortfolioMemberListRelationFilter
     portfolioRoles?: PortfolioRoleListRelationFilter
+    receivedRequests?: RequestListRelationFilter
+    sentRequests?: RequestListRelationFilter
+    errorLogs?: SystemErrorListRelationFilter
+    verifications?: VerificationListRelationFilter
   }, "id">
 
   export type AccountOrderByWithAggregationInput = {
     id?: SortOrder
+    displayName?: SortOrderInput | SortOrder
     accountType?: SortOrder
     displayImage?: SortOrderInput | SortOrder
-    displayName?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
     isVerified?: SortOrder
-    createdAt?: SortOrder
     details?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     _count?: AccountCountOrderByAggregateInput
     _max?: AccountMaxOrderByAggregateInput
     _min?: AccountMinOrderByAggregateInput
@@ -29416,13 +29292,13 @@ export namespace Prisma {
     OR?: AccountScalarWhereWithAggregatesInput[]
     NOT?: AccountScalarWhereWithAggregatesInput | AccountScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Account"> | string
+    displayName?: StringNullableWithAggregatesFilter<"Account"> | string | null
     accountType?: StringWithAggregatesFilter<"Account"> | string
     displayImage?: StringNullableWithAggregatesFilter<"Account"> | string | null
-    displayName?: StringNullableWithAggregatesFilter<"Account"> | string | null
     status?: StringNullableWithAggregatesFilter<"Account"> | string | null
     isVerified?: BoolWithAggregatesFilter<"Account"> | boolean
-    createdAt?: DateTimeWithAggregatesFilter<"Account"> | Date | string
     details?: JsonNullableWithAggregatesFilter<"Account">
+    createdAt?: DateTimeWithAggregatesFilter<"Account"> | Date | string
   }
 
   export type AccountTypeIndividualWhereInput = {
@@ -29437,7 +29313,6 @@ export namespace Prisma {
     dateOfBirth?: DateTimeNullableFilter<"AccountTypeIndividual"> | Date | string | null
     countryOfResidence?: StringNullableFilter<"AccountTypeIndividual"> | string | null
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-    authMethods?: AuthMethodListRelationFilter
   }
 
   export type AccountTypeIndividualOrderByWithRelationInput = {
@@ -29449,7 +29324,6 @@ export namespace Prisma {
     dateOfBirth?: SortOrderInput | SortOrder
     countryOfResidence?: SortOrderInput | SortOrder
     account?: AccountOrderByWithRelationInput
-    authMethods?: AuthMethodOrderByRelationAggregateInput
   }
 
   export type AccountTypeIndividualWhereUniqueInput = Prisma.AtLeast<{
@@ -29464,7 +29338,6 @@ export namespace Prisma {
     dateOfBirth?: DateTimeNullableFilter<"AccountTypeIndividual"> | Date | string | null
     countryOfResidence?: StringNullableFilter<"AccountTypeIndividual"> | string | null
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-    authMethods?: AuthMethodListRelationFilter
   }, "id" | "accountId">
 
   export type AccountTypeIndividualOrderByWithAggregationInput = {
@@ -29561,8 +29434,8 @@ export namespace Prisma {
     parentId?: StringFilter<"AccountOwnership"> | string
     childrenId?: StringFilter<"AccountOwnership"> | string
     type?: StringFilter<"AccountOwnership"> | string
-    parent?: XOR<AccountScalarRelationFilter, AccountWhereInput>
     child?: XOR<AccountScalarRelationFilter, AccountWhereInput>
+    parent?: XOR<AccountScalarRelationFilter, AccountWhereInput>
   }
 
   export type AccountOwnershipOrderByWithRelationInput = {
@@ -29570,8 +29443,8 @@ export namespace Prisma {
     parentId?: SortOrder
     childrenId?: SortOrder
     type?: SortOrder
-    parent?: AccountOrderByWithRelationInput
     child?: AccountOrderByWithRelationInput
+    parent?: AccountOrderByWithRelationInput
   }
 
   export type AccountOwnershipWhereUniqueInput = Prisma.AtLeast<{
@@ -29583,8 +29456,8 @@ export namespace Prisma {
     parentId?: StringFilter<"AccountOwnership"> | string
     childrenId?: StringFilter<"AccountOwnership"> | string
     type?: StringFilter<"AccountOwnership"> | string
-    parent?: XOR<AccountScalarRelationFilter, AccountWhereInput>
     child?: XOR<AccountScalarRelationFilter, AccountWhereInput>
+    parent?: XOR<AccountScalarRelationFilter, AccountWhereInput>
   }, "id" | "parentId_childrenId_type">
 
   export type AccountOwnershipOrderByWithAggregationInput = {
@@ -29879,9 +29752,9 @@ export namespace Prisma {
     data?: JsonNullableFilter<"Request">
     createdAt?: DateTimeFilter<"Request"> | Date | string
     updatedAt?: DateTimeFilter<"Request"> | Date | string
-    sender?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-    recipient?: XOR<AccountScalarRelationFilter, AccountWhereInput>
     notifications?: NotificationListRelationFilter
+    recipient?: XOR<AccountScalarRelationFilter, AccountWhereInput>
+    sender?: XOR<AccountScalarRelationFilter, AccountWhereInput>
   }
 
   export type RequestOrderByWithRelationInput = {
@@ -29894,9 +29767,9 @@ export namespace Prisma {
     data?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    sender?: AccountOrderByWithRelationInput
-    recipient?: AccountOrderByWithRelationInput
     notifications?: NotificationOrderByRelationAggregateInput
+    recipient?: AccountOrderByWithRelationInput
+    sender?: AccountOrderByWithRelationInput
   }
 
   export type RequestWhereUniqueInput = Prisma.AtLeast<{
@@ -29912,9 +29785,9 @@ export namespace Prisma {
     data?: JsonNullableFilter<"Request">
     createdAt?: DateTimeFilter<"Request"> | Date | string
     updatedAt?: DateTimeFilter<"Request"> | Date | string
-    sender?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-    recipient?: XOR<AccountScalarRelationFilter, AccountWhereInput>
     notifications?: NotificationListRelationFilter
+    recipient?: XOR<AccountScalarRelationFilter, AccountWhereInput>
+    sender?: XOR<AccountScalarRelationFilter, AccountWhereInput>
   }, "id">
 
   export type RequestOrderByWithAggregationInput = {
@@ -30160,16 +30033,16 @@ export namespace Prisma {
     NOT?: NeupIdWhereInput | NeupIdWhereInput[]
     id?: StringFilter<"NeupId"> | string
     accountId?: StringFilter<"NeupId"> | string
-    dateAdded?: DateTimeFilter<"NeupId"> | Date | string
     isPrimary?: BoolFilter<"NeupId"> | boolean
+    dateAdded?: DateTimeFilter<"NeupId"> | Date | string
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
   }
 
   export type NeupIdOrderByWithRelationInput = {
     id?: SortOrder
     accountId?: SortOrder
-    dateAdded?: SortOrder
     isPrimary?: SortOrder
+    dateAdded?: SortOrder
     account?: AccountOrderByWithRelationInput
   }
 
@@ -30179,16 +30052,16 @@ export namespace Prisma {
     OR?: NeupIdWhereInput[]
     NOT?: NeupIdWhereInput | NeupIdWhereInput[]
     accountId?: StringFilter<"NeupId"> | string
-    dateAdded?: DateTimeFilter<"NeupId"> | Date | string
     isPrimary?: BoolFilter<"NeupId"> | boolean
+    dateAdded?: DateTimeFilter<"NeupId"> | Date | string
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
   }, "id">
 
   export type NeupIdOrderByWithAggregationInput = {
     id?: SortOrder
     accountId?: SortOrder
-    dateAdded?: SortOrder
     isPrimary?: SortOrder
+    dateAdded?: SortOrder
     _count?: NeupIdCountOrderByAggregateInput
     _max?: NeupIdMaxOrderByAggregateInput
     _min?: NeupIdMinOrderByAggregateInput
@@ -30200,33 +30073,33 @@ export namespace Prisma {
     NOT?: NeupIdScalarWhereWithAggregatesInput | NeupIdScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"NeupId"> | string
     accountId?: StringWithAggregatesFilter<"NeupId"> | string
-    dateAdded?: DateTimeWithAggregatesFilter<"NeupId"> | Date | string
     isPrimary?: BoolWithAggregatesFilter<"NeupId"> | boolean
+    dateAdded?: DateTimeWithAggregatesFilter<"NeupId"> | Date | string
   }
 
   export type AuthMethodWhereInput = {
     AND?: AuthMethodWhereInput | AuthMethodWhereInput[]
     OR?: AuthMethodWhereInput[]
     NOT?: AuthMethodWhereInput | AuthMethodWhereInput[]
-    id?: StringFilter<"AuthMethod"> | string
     accountId?: StringFilter<"AuthMethod"> | string
-    type?: EnumAuthMethodTypeFilter<"AuthMethod"> | $Enums.AuthMethodType
     value?: StringFilter<"AuthMethod"> | string
-    order?: EnumAuthMethodOrderFilter<"AuthMethod"> | $Enums.AuthMethodOrder
-    status?: EnumAuthMethodStatusFilter<"AuthMethod"> | $Enums.AuthMethodStatus
+    id?: StringFilter<"AuthMethod"> | string
+    type?: StringFilter<"AuthMethod"> | string
+    order?: StringFilter<"AuthMethod"> | string
+    status?: StringFilter<"AuthMethod"> | string
     detail?: JsonNullableFilter<"AuthMethod">
-    individualProfile?: XOR<AccountTypeIndividualScalarRelationFilter, AccountTypeIndividualWhereInput>
+    individualProfile?: XOR<AccountScalarRelationFilter, AccountWhereInput>
   }
 
   export type AuthMethodOrderByWithRelationInput = {
-    id?: SortOrder
     accountId?: SortOrder
-    type?: SortOrder
     value?: SortOrder
+    id?: SortOrder
+    type?: SortOrder
     order?: SortOrder
     status?: SortOrder
     detail?: SortOrderInput | SortOrder
-    individualProfile?: AccountTypeIndividualOrderByWithRelationInput
+    individualProfile?: AccountOrderByWithRelationInput
   }
 
   export type AuthMethodWhereUniqueInput = Prisma.AtLeast<{
@@ -30236,19 +30109,19 @@ export namespace Prisma {
     OR?: AuthMethodWhereInput[]
     NOT?: AuthMethodWhereInput | AuthMethodWhereInput[]
     accountId?: StringFilter<"AuthMethod"> | string
-    type?: EnumAuthMethodTypeFilter<"AuthMethod"> | $Enums.AuthMethodType
     value?: StringFilter<"AuthMethod"> | string
-    order?: EnumAuthMethodOrderFilter<"AuthMethod"> | $Enums.AuthMethodOrder
-    status?: EnumAuthMethodStatusFilter<"AuthMethod"> | $Enums.AuthMethodStatus
+    type?: StringFilter<"AuthMethod"> | string
+    order?: StringFilter<"AuthMethod"> | string
+    status?: StringFilter<"AuthMethod"> | string
     detail?: JsonNullableFilter<"AuthMethod">
-    individualProfile?: XOR<AccountTypeIndividualScalarRelationFilter, AccountTypeIndividualWhereInput>
+    individualProfile?: XOR<AccountScalarRelationFilter, AccountWhereInput>
   }, "id" | "accountId_type_order">
 
   export type AuthMethodOrderByWithAggregationInput = {
-    id?: SortOrder
     accountId?: SortOrder
-    type?: SortOrder
     value?: SortOrder
+    id?: SortOrder
+    type?: SortOrder
     order?: SortOrder
     status?: SortOrder
     detail?: SortOrderInput | SortOrder
@@ -30261,12 +30134,12 @@ export namespace Prisma {
     AND?: AuthMethodScalarWhereWithAggregatesInput | AuthMethodScalarWhereWithAggregatesInput[]
     OR?: AuthMethodScalarWhereWithAggregatesInput[]
     NOT?: AuthMethodScalarWhereWithAggregatesInput | AuthMethodScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"AuthMethod"> | string
     accountId?: StringWithAggregatesFilter<"AuthMethod"> | string
-    type?: EnumAuthMethodTypeWithAggregatesFilter<"AuthMethod"> | $Enums.AuthMethodType
     value?: StringWithAggregatesFilter<"AuthMethod"> | string
-    order?: EnumAuthMethodOrderWithAggregatesFilter<"AuthMethod"> | $Enums.AuthMethodOrder
-    status?: EnumAuthMethodStatusWithAggregatesFilter<"AuthMethod"> | $Enums.AuthMethodStatus
+    id?: StringWithAggregatesFilter<"AuthMethod"> | string
+    type?: StringWithAggregatesFilter<"AuthMethod"> | string
+    order?: StringWithAggregatesFilter<"AuthMethod"> | string
+    status?: StringWithAggregatesFilter<"AuthMethod"> | string
     detail?: JsonNullableWithAggregatesFilter<"AuthMethod">
   }
 
@@ -30275,44 +30148,44 @@ export namespace Prisma {
     OR?: PermitWhereInput[]
     NOT?: PermitWhereInput | PermitWhereInput[]
     id?: StringFilter<"Permit"> | string
-    permitType?: StringNullableFilter<"Permit"> | string | null
-    permitSubType?: StringNullableFilter<"Permit"> | string | null
-    permitNumber?: StringNullableFilter<"Permit"> | string | null
-    issuingAuthority?: StringNullableFilter<"Permit"> | string | null
-    issueDate?: DateTimeNullableFilter<"Permit"> | Date | string | null
-    expiryDate?: DateTimeNullableFilter<"Permit"> | Date | string | null
-    status?: StringFilter<"Permit"> | string
     accountId?: StringFilter<"Permit"> | string
     targetAccountId?: StringNullableFilter<"Permit"> | string | null
     forSelf?: BoolFilter<"Permit"> | boolean
     isRoot?: BoolFilter<"Permit"> | boolean
-    fullAccess?: BoolFilter<"Permit"> | boolean
     permissions?: StringNullableListFilter<"Permit">
     restrictions?: StringNullableListFilter<"Permit">
     createdOn?: DateTimeFilter<"Permit"> | Date | string
+    expiryDate?: DateTimeNullableFilter<"Permit"> | Date | string | null
+    fullAccess?: BoolFilter<"Permit"> | boolean
+    issueDate?: DateTimeNullableFilter<"Permit"> | Date | string | null
+    issuingAuthority?: StringNullableFilter<"Permit"> | string | null
     managedBy?: StringNullableFilter<"Permit"> | string | null
+    permitNumber?: StringNullableFilter<"Permit"> | string | null
+    permitSubType?: StringNullableFilter<"Permit"> | string | null
+    permitType?: StringNullableFilter<"Permit"> | string | null
+    status?: StringFilter<"Permit"> | string
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
     targetAccount?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
   }
 
   export type PermitOrderByWithRelationInput = {
     id?: SortOrder
-    permitType?: SortOrderInput | SortOrder
-    permitSubType?: SortOrderInput | SortOrder
-    permitNumber?: SortOrderInput | SortOrder
-    issuingAuthority?: SortOrderInput | SortOrder
-    issueDate?: SortOrderInput | SortOrder
-    expiryDate?: SortOrderInput | SortOrder
-    status?: SortOrder
     accountId?: SortOrder
     targetAccountId?: SortOrderInput | SortOrder
     forSelf?: SortOrder
     isRoot?: SortOrder
-    fullAccess?: SortOrder
     permissions?: SortOrder
     restrictions?: SortOrder
     createdOn?: SortOrder
+    expiryDate?: SortOrderInput | SortOrder
+    fullAccess?: SortOrder
+    issueDate?: SortOrderInput | SortOrder
+    issuingAuthority?: SortOrderInput | SortOrder
     managedBy?: SortOrderInput | SortOrder
+    permitNumber?: SortOrderInput | SortOrder
+    permitSubType?: SortOrderInput | SortOrder
+    permitType?: SortOrderInput | SortOrder
+    status?: SortOrder
     account?: AccountOrderByWithRelationInput
     targetAccount?: AccountOrderByWithRelationInput
   }
@@ -30322,44 +30195,44 @@ export namespace Prisma {
     AND?: PermitWhereInput | PermitWhereInput[]
     OR?: PermitWhereInput[]
     NOT?: PermitWhereInput | PermitWhereInput[]
-    permitType?: StringNullableFilter<"Permit"> | string | null
-    permitSubType?: StringNullableFilter<"Permit"> | string | null
-    permitNumber?: StringNullableFilter<"Permit"> | string | null
-    issuingAuthority?: StringNullableFilter<"Permit"> | string | null
-    issueDate?: DateTimeNullableFilter<"Permit"> | Date | string | null
-    expiryDate?: DateTimeNullableFilter<"Permit"> | Date | string | null
-    status?: StringFilter<"Permit"> | string
     accountId?: StringFilter<"Permit"> | string
     targetAccountId?: StringNullableFilter<"Permit"> | string | null
     forSelf?: BoolFilter<"Permit"> | boolean
     isRoot?: BoolFilter<"Permit"> | boolean
-    fullAccess?: BoolFilter<"Permit"> | boolean
     permissions?: StringNullableListFilter<"Permit">
     restrictions?: StringNullableListFilter<"Permit">
     createdOn?: DateTimeFilter<"Permit"> | Date | string
+    expiryDate?: DateTimeNullableFilter<"Permit"> | Date | string | null
+    fullAccess?: BoolFilter<"Permit"> | boolean
+    issueDate?: DateTimeNullableFilter<"Permit"> | Date | string | null
+    issuingAuthority?: StringNullableFilter<"Permit"> | string | null
     managedBy?: StringNullableFilter<"Permit"> | string | null
+    permitNumber?: StringNullableFilter<"Permit"> | string | null
+    permitSubType?: StringNullableFilter<"Permit"> | string | null
+    permitType?: StringNullableFilter<"Permit"> | string | null
+    status?: StringFilter<"Permit"> | string
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
     targetAccount?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
   }, "id">
 
   export type PermitOrderByWithAggregationInput = {
     id?: SortOrder
-    permitType?: SortOrderInput | SortOrder
-    permitSubType?: SortOrderInput | SortOrder
-    permitNumber?: SortOrderInput | SortOrder
-    issuingAuthority?: SortOrderInput | SortOrder
-    issueDate?: SortOrderInput | SortOrder
-    expiryDate?: SortOrderInput | SortOrder
-    status?: SortOrder
     accountId?: SortOrder
     targetAccountId?: SortOrderInput | SortOrder
     forSelf?: SortOrder
     isRoot?: SortOrder
-    fullAccess?: SortOrder
     permissions?: SortOrder
     restrictions?: SortOrder
     createdOn?: SortOrder
+    expiryDate?: SortOrderInput | SortOrder
+    fullAccess?: SortOrder
+    issueDate?: SortOrderInput | SortOrder
+    issuingAuthority?: SortOrderInput | SortOrder
     managedBy?: SortOrderInput | SortOrder
+    permitNumber?: SortOrderInput | SortOrder
+    permitSubType?: SortOrderInput | SortOrder
+    permitType?: SortOrderInput | SortOrder
+    status?: SortOrder
     _count?: PermitCountOrderByAggregateInput
     _max?: PermitMaxOrderByAggregateInput
     _min?: PermitMinOrderByAggregateInput
@@ -30370,22 +30243,22 @@ export namespace Prisma {
     OR?: PermitScalarWhereWithAggregatesInput[]
     NOT?: PermitScalarWhereWithAggregatesInput | PermitScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Permit"> | string
-    permitType?: StringNullableWithAggregatesFilter<"Permit"> | string | null
-    permitSubType?: StringNullableWithAggregatesFilter<"Permit"> | string | null
-    permitNumber?: StringNullableWithAggregatesFilter<"Permit"> | string | null
-    issuingAuthority?: StringNullableWithAggregatesFilter<"Permit"> | string | null
-    issueDate?: DateTimeNullableWithAggregatesFilter<"Permit"> | Date | string | null
-    expiryDate?: DateTimeNullableWithAggregatesFilter<"Permit"> | Date | string | null
-    status?: StringWithAggregatesFilter<"Permit"> | string
     accountId?: StringWithAggregatesFilter<"Permit"> | string
     targetAccountId?: StringNullableWithAggregatesFilter<"Permit"> | string | null
     forSelf?: BoolWithAggregatesFilter<"Permit"> | boolean
     isRoot?: BoolWithAggregatesFilter<"Permit"> | boolean
-    fullAccess?: BoolWithAggregatesFilter<"Permit"> | boolean
     permissions?: StringNullableListFilter<"Permit">
     restrictions?: StringNullableListFilter<"Permit">
     createdOn?: DateTimeWithAggregatesFilter<"Permit"> | Date | string
+    expiryDate?: DateTimeNullableWithAggregatesFilter<"Permit"> | Date | string | null
+    fullAccess?: BoolWithAggregatesFilter<"Permit"> | boolean
+    issueDate?: DateTimeNullableWithAggregatesFilter<"Permit"> | Date | string | null
+    issuingAuthority?: StringNullableWithAggregatesFilter<"Permit"> | string | null
     managedBy?: StringNullableWithAggregatesFilter<"Permit"> | string | null
+    permitNumber?: StringNullableWithAggregatesFilter<"Permit"> | string | null
+    permitSubType?: StringNullableWithAggregatesFilter<"Permit"> | string | null
+    permitType?: StringNullableWithAggregatesFilter<"Permit"> | string | null
+    status?: StringWithAggregatesFilter<"Permit"> | string
   }
 
   export type AuthSessionWhereInput = {
@@ -30394,34 +30267,32 @@ export namespace Prisma {
     NOT?: AuthSessionWhereInput | AuthSessionWhereInput[]
     id?: StringFilter<"AuthSession"> | string
     accountId?: StringFilter<"AuthSession"> | string
-    application?: StringNullableFilter<"AuthSession"> | string | null
+    key?: StringNullableFilter<"AuthSession"> | string | null
     ipAddress?: StringFilter<"AuthSession"> | string
     userAgent?: StringFilter<"AuthSession"> | string
+    isExpired?: BoolFilter<"AuthSession"> | boolean
+    expiresOn?: DateTimeNullableFilter<"AuthSession"> | Date | string | null
     lastLoggedIn?: DateTimeFilter<"AuthSession"> | Date | string
     loginType?: StringFilter<"AuthSession"> | string
     geolocation?: StringNullableFilter<"AuthSession"> | string | null
     deviceType?: StringNullableFilter<"AuthSession"> | string | null
-    expiresOn?: DateTimeNullableFilter<"AuthSession"> | Date | string | null
-    isExpired?: BoolFilter<"AuthSession"> | boolean
-    authSessionKey?: StringNullableFilter<"AuthSession"> | string | null
-    dependentKeys?: JsonNullableFilter<"AuthSession">
+    application?: StringNullableFilter<"AuthSession"> | string | null
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
   }
 
   export type AuthSessionOrderByWithRelationInput = {
     id?: SortOrder
     accountId?: SortOrder
-    application?: SortOrderInput | SortOrder
+    key?: SortOrderInput | SortOrder
     ipAddress?: SortOrder
     userAgent?: SortOrder
+    isExpired?: SortOrder
+    expiresOn?: SortOrderInput | SortOrder
     lastLoggedIn?: SortOrder
     loginType?: SortOrder
     geolocation?: SortOrderInput | SortOrder
     deviceType?: SortOrderInput | SortOrder
-    expiresOn?: SortOrderInput | SortOrder
-    isExpired?: SortOrder
-    authSessionKey?: SortOrderInput | SortOrder
-    dependentKeys?: SortOrderInput | SortOrder
+    application?: SortOrderInput | SortOrder
     account?: AccountOrderByWithRelationInput
   }
 
@@ -30431,34 +30302,32 @@ export namespace Prisma {
     OR?: AuthSessionWhereInput[]
     NOT?: AuthSessionWhereInput | AuthSessionWhereInput[]
     accountId?: StringFilter<"AuthSession"> | string
-    application?: StringNullableFilter<"AuthSession"> | string | null
+    key?: StringNullableFilter<"AuthSession"> | string | null
     ipAddress?: StringFilter<"AuthSession"> | string
     userAgent?: StringFilter<"AuthSession"> | string
+    isExpired?: BoolFilter<"AuthSession"> | boolean
+    expiresOn?: DateTimeNullableFilter<"AuthSession"> | Date | string | null
     lastLoggedIn?: DateTimeFilter<"AuthSession"> | Date | string
     loginType?: StringFilter<"AuthSession"> | string
     geolocation?: StringNullableFilter<"AuthSession"> | string | null
     deviceType?: StringNullableFilter<"AuthSession"> | string | null
-    expiresOn?: DateTimeNullableFilter<"AuthSession"> | Date | string | null
-    isExpired?: BoolFilter<"AuthSession"> | boolean
-    authSessionKey?: StringNullableFilter<"AuthSession"> | string | null
-    dependentKeys?: JsonNullableFilter<"AuthSession">
+    application?: StringNullableFilter<"AuthSession"> | string | null
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
   }, "id">
 
   export type AuthSessionOrderByWithAggregationInput = {
     id?: SortOrder
     accountId?: SortOrder
-    application?: SortOrderInput | SortOrder
+    key?: SortOrderInput | SortOrder
     ipAddress?: SortOrder
     userAgent?: SortOrder
+    isExpired?: SortOrder
+    expiresOn?: SortOrderInput | SortOrder
     lastLoggedIn?: SortOrder
     loginType?: SortOrder
     geolocation?: SortOrderInput | SortOrder
     deviceType?: SortOrderInput | SortOrder
-    expiresOn?: SortOrderInput | SortOrder
-    isExpired?: SortOrder
-    authSessionKey?: SortOrderInput | SortOrder
-    dependentKeys?: SortOrderInput | SortOrder
+    application?: SortOrderInput | SortOrder
     _count?: AuthSessionCountOrderByAggregateInput
     _max?: AuthSessionMaxOrderByAggregateInput
     _min?: AuthSessionMinOrderByAggregateInput
@@ -30470,17 +30339,16 @@ export namespace Prisma {
     NOT?: AuthSessionScalarWhereWithAggregatesInput | AuthSessionScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"AuthSession"> | string
     accountId?: StringWithAggregatesFilter<"AuthSession"> | string
-    application?: StringNullableWithAggregatesFilter<"AuthSession"> | string | null
+    key?: StringNullableWithAggregatesFilter<"AuthSession"> | string | null
     ipAddress?: StringWithAggregatesFilter<"AuthSession"> | string
     userAgent?: StringWithAggregatesFilter<"AuthSession"> | string
+    isExpired?: BoolWithAggregatesFilter<"AuthSession"> | boolean
+    expiresOn?: DateTimeNullableWithAggregatesFilter<"AuthSession"> | Date | string | null
     lastLoggedIn?: DateTimeWithAggregatesFilter<"AuthSession"> | Date | string
     loginType?: StringWithAggregatesFilter<"AuthSession"> | string
     geolocation?: StringNullableWithAggregatesFilter<"AuthSession"> | string | null
     deviceType?: StringNullableWithAggregatesFilter<"AuthSession"> | string | null
-    expiresOn?: DateTimeNullableWithAggregatesFilter<"AuthSession"> | Date | string | null
-    isExpired?: BoolWithAggregatesFilter<"AuthSession"> | boolean
-    authSessionKey?: StringNullableWithAggregatesFilter<"AuthSession"> | string | null
-    dependentKeys?: JsonNullableWithAggregatesFilter<"AuthSession">
+    application?: StringNullableWithAggregatesFilter<"AuthSession"> | string | null
   }
 
   export type SystemErrorWhereInput = {
@@ -30488,35 +30356,35 @@ export namespace Prisma {
     OR?: SystemErrorWhereInput[]
     NOT?: SystemErrorWhereInput | SystemErrorWhereInput[]
     id?: StringFilter<"SystemError"> | string
-    type?: StringFilter<"SystemError"> | string
-    context?: StringFilter<"SystemError"> | string
     message?: StringFilter<"SystemError"> | string
-    status?: StringFilter<"SystemError"> | string
+    context?: StringFilter<"SystemError"> | string
+    timestamp?: DateTimeFilter<"SystemError"> | Date | string
     accountId?: StringNullableFilter<"SystemError"> | string | null
-    ipAddress?: StringNullableFilter<"SystemError"> | string | null
     geolocation?: StringNullableFilter<"SystemError"> | string | null
+    ipAddress?: StringNullableFilter<"SystemError"> | string | null
+    problemLevel?: StringNullableFilter<"SystemError"> | string | null
     reproSteps?: StringNullableFilter<"SystemError"> | string | null
     solution?: StringNullableFilter<"SystemError"> | string | null
     solvedBy?: StringNullableFilter<"SystemError"> | string | null
-    problemLevel?: StringNullableFilter<"SystemError"> | string | null
-    timestamp?: DateTimeFilter<"SystemError"> | Date | string
+    status?: StringFilter<"SystemError"> | string
+    type?: StringFilter<"SystemError"> | string
     account?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
   }
 
   export type SystemErrorOrderByWithRelationInput = {
     id?: SortOrder
-    type?: SortOrder
-    context?: SortOrder
     message?: SortOrder
-    status?: SortOrder
+    context?: SortOrder
+    timestamp?: SortOrder
     accountId?: SortOrderInput | SortOrder
-    ipAddress?: SortOrderInput | SortOrder
     geolocation?: SortOrderInput | SortOrder
+    ipAddress?: SortOrderInput | SortOrder
+    problemLevel?: SortOrderInput | SortOrder
     reproSteps?: SortOrderInput | SortOrder
     solution?: SortOrderInput | SortOrder
     solvedBy?: SortOrderInput | SortOrder
-    problemLevel?: SortOrderInput | SortOrder
-    timestamp?: SortOrder
+    status?: SortOrder
+    type?: SortOrder
     account?: AccountOrderByWithRelationInput
   }
 
@@ -30525,35 +30393,35 @@ export namespace Prisma {
     AND?: SystemErrorWhereInput | SystemErrorWhereInput[]
     OR?: SystemErrorWhereInput[]
     NOT?: SystemErrorWhereInput | SystemErrorWhereInput[]
-    type?: StringFilter<"SystemError"> | string
-    context?: StringFilter<"SystemError"> | string
     message?: StringFilter<"SystemError"> | string
-    status?: StringFilter<"SystemError"> | string
+    context?: StringFilter<"SystemError"> | string
+    timestamp?: DateTimeFilter<"SystemError"> | Date | string
     accountId?: StringNullableFilter<"SystemError"> | string | null
-    ipAddress?: StringNullableFilter<"SystemError"> | string | null
     geolocation?: StringNullableFilter<"SystemError"> | string | null
+    ipAddress?: StringNullableFilter<"SystemError"> | string | null
+    problemLevel?: StringNullableFilter<"SystemError"> | string | null
     reproSteps?: StringNullableFilter<"SystemError"> | string | null
     solution?: StringNullableFilter<"SystemError"> | string | null
     solvedBy?: StringNullableFilter<"SystemError"> | string | null
-    problemLevel?: StringNullableFilter<"SystemError"> | string | null
-    timestamp?: DateTimeFilter<"SystemError"> | Date | string
+    status?: StringFilter<"SystemError"> | string
+    type?: StringFilter<"SystemError"> | string
     account?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
   }, "id">
 
   export type SystemErrorOrderByWithAggregationInput = {
     id?: SortOrder
-    type?: SortOrder
-    context?: SortOrder
     message?: SortOrder
-    status?: SortOrder
+    context?: SortOrder
+    timestamp?: SortOrder
     accountId?: SortOrderInput | SortOrder
-    ipAddress?: SortOrderInput | SortOrder
     geolocation?: SortOrderInput | SortOrder
+    ipAddress?: SortOrderInput | SortOrder
+    problemLevel?: SortOrderInput | SortOrder
     reproSteps?: SortOrderInput | SortOrder
     solution?: SortOrderInput | SortOrder
     solvedBy?: SortOrderInput | SortOrder
-    problemLevel?: SortOrderInput | SortOrder
-    timestamp?: SortOrder
+    status?: SortOrder
+    type?: SortOrder
     _count?: SystemErrorCountOrderByAggregateInput
     _max?: SystemErrorMaxOrderByAggregateInput
     _min?: SystemErrorMinOrderByAggregateInput
@@ -30564,18 +30432,18 @@ export namespace Prisma {
     OR?: SystemErrorScalarWhereWithAggregatesInput[]
     NOT?: SystemErrorScalarWhereWithAggregatesInput | SystemErrorScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"SystemError"> | string
-    type?: StringWithAggregatesFilter<"SystemError"> | string
-    context?: StringWithAggregatesFilter<"SystemError"> | string
     message?: StringWithAggregatesFilter<"SystemError"> | string
-    status?: StringWithAggregatesFilter<"SystemError"> | string
+    context?: StringWithAggregatesFilter<"SystemError"> | string
+    timestamp?: DateTimeWithAggregatesFilter<"SystemError"> | Date | string
     accountId?: StringNullableWithAggregatesFilter<"SystemError"> | string | null
-    ipAddress?: StringNullableWithAggregatesFilter<"SystemError"> | string | null
     geolocation?: StringNullableWithAggregatesFilter<"SystemError"> | string | null
+    ipAddress?: StringNullableWithAggregatesFilter<"SystemError"> | string | null
+    problemLevel?: StringNullableWithAggregatesFilter<"SystemError"> | string | null
     reproSteps?: StringNullableWithAggregatesFilter<"SystemError"> | string | null
     solution?: StringNullableWithAggregatesFilter<"SystemError"> | string | null
     solvedBy?: StringNullableWithAggregatesFilter<"SystemError"> | string | null
-    problemLevel?: StringNullableWithAggregatesFilter<"SystemError"> | string | null
-    timestamp?: DateTimeWithAggregatesFilter<"SystemError"> | Date | string
+    status?: StringWithAggregatesFilter<"SystemError"> | string
+    type?: StringWithAggregatesFilter<"SystemError"> | string
   }
 
   export type ApplicationWhereInput = {
@@ -30584,18 +30452,18 @@ export namespace Prisma {
     NOT?: ApplicationWhereInput | ApplicationWhereInput[]
     id?: StringFilter<"Application"> | string
     name?: StringFilter<"Application"> | string
-    status?: StringFilter<"Application"> | string
     party?: StringFilter<"Application"> | string
     description?: StringNullableFilter<"Application"> | string | null
     icon?: StringNullableFilter<"Application"> | string | null
     website?: StringNullableFilter<"Application"> | string | null
     developer?: StringNullableFilter<"Application"> | string | null
     appSecret?: StringNullableFilter<"Application"> | string | null
+    createdAt?: DateTimeFilter<"Application"> | Date | string
     access?: JsonNullableFilter<"Application">
-    policies?: JsonNullableFilter<"Application">
     endpoints?: JsonNullableFilter<"Application">
     ownerAccountId?: StringNullableFilter<"Application"> | string | null
-    createdAt?: DateTimeFilter<"Application"> | Date | string
+    policies?: JsonNullableFilter<"Application">
+    status?: StringFilter<"Application"> | string
     owner?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
     connections?: ApplicationConnectionListRelationFilter
   }
@@ -30603,18 +30471,18 @@ export namespace Prisma {
   export type ApplicationOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    status?: SortOrder
     party?: SortOrder
     description?: SortOrderInput | SortOrder
     icon?: SortOrderInput | SortOrder
     website?: SortOrderInput | SortOrder
     developer?: SortOrderInput | SortOrder
     appSecret?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     access?: SortOrderInput | SortOrder
-    policies?: SortOrderInput | SortOrder
     endpoints?: SortOrderInput | SortOrder
     ownerAccountId?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
+    policies?: SortOrderInput | SortOrder
+    status?: SortOrder
     owner?: AccountOrderByWithRelationInput
     connections?: ApplicationConnectionOrderByRelationAggregateInput
   }
@@ -30625,18 +30493,18 @@ export namespace Prisma {
     OR?: ApplicationWhereInput[]
     NOT?: ApplicationWhereInput | ApplicationWhereInput[]
     name?: StringFilter<"Application"> | string
-    status?: StringFilter<"Application"> | string
     party?: StringFilter<"Application"> | string
     description?: StringNullableFilter<"Application"> | string | null
     icon?: StringNullableFilter<"Application"> | string | null
     website?: StringNullableFilter<"Application"> | string | null
     developer?: StringNullableFilter<"Application"> | string | null
     appSecret?: StringNullableFilter<"Application"> | string | null
+    createdAt?: DateTimeFilter<"Application"> | Date | string
     access?: JsonNullableFilter<"Application">
-    policies?: JsonNullableFilter<"Application">
     endpoints?: JsonNullableFilter<"Application">
     ownerAccountId?: StringNullableFilter<"Application"> | string | null
-    createdAt?: DateTimeFilter<"Application"> | Date | string
+    policies?: JsonNullableFilter<"Application">
+    status?: StringFilter<"Application"> | string
     owner?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
     connections?: ApplicationConnectionListRelationFilter
   }, "id">
@@ -30644,18 +30512,18 @@ export namespace Prisma {
   export type ApplicationOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    status?: SortOrder
     party?: SortOrder
     description?: SortOrderInput | SortOrder
     icon?: SortOrderInput | SortOrder
     website?: SortOrderInput | SortOrder
     developer?: SortOrderInput | SortOrder
     appSecret?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     access?: SortOrderInput | SortOrder
-    policies?: SortOrderInput | SortOrder
     endpoints?: SortOrderInput | SortOrder
     ownerAccountId?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
+    policies?: SortOrderInput | SortOrder
+    status?: SortOrder
     _count?: ApplicationCountOrderByAggregateInput
     _max?: ApplicationMaxOrderByAggregateInput
     _min?: ApplicationMinOrderByAggregateInput
@@ -30667,18 +30535,18 @@ export namespace Prisma {
     NOT?: ApplicationScalarWhereWithAggregatesInput | ApplicationScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Application"> | string
     name?: StringWithAggregatesFilter<"Application"> | string
-    status?: StringWithAggregatesFilter<"Application"> | string
     party?: StringWithAggregatesFilter<"Application"> | string
     description?: StringNullableWithAggregatesFilter<"Application"> | string | null
     icon?: StringNullableWithAggregatesFilter<"Application"> | string | null
     website?: StringNullableWithAggregatesFilter<"Application"> | string | null
     developer?: StringNullableWithAggregatesFilter<"Application"> | string | null
     appSecret?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Application"> | Date | string
     access?: JsonNullableWithAggregatesFilter<"Application">
-    policies?: JsonNullableWithAggregatesFilter<"Application">
     endpoints?: JsonNullableWithAggregatesFilter<"Application">
     ownerAccountId?: StringNullableWithAggregatesFilter<"Application"> | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"Application"> | Date | string
+    policies?: JsonNullableWithAggregatesFilter<"Application">
+    status?: StringWithAggregatesFilter<"Application"> | string
   }
 
   export type PortfolioWhereInput = {
@@ -30800,8 +30668,8 @@ export namespace Prisma {
     portfolioId?: StringFilter<"PortfolioMember"> | string
     accountId?: StringFilter<"PortfolioMember"> | string
     details?: JsonNullableFilter<"PortfolioMember">
-    portfolio?: XOR<PortfolioScalarRelationFilter, PortfolioWhereInput>
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
+    portfolio?: XOR<PortfolioScalarRelationFilter, PortfolioWhereInput>
   }
 
   export type PortfolioMemberOrderByWithRelationInput = {
@@ -30809,8 +30677,8 @@ export namespace Prisma {
     portfolioId?: SortOrder
     accountId?: SortOrder
     details?: SortOrderInput | SortOrder
-    portfolio?: PortfolioOrderByWithRelationInput
     account?: AccountOrderByWithRelationInput
+    portfolio?: PortfolioOrderByWithRelationInput
   }
 
   export type PortfolioMemberWhereUniqueInput = Prisma.AtLeast<{
@@ -30822,8 +30690,8 @@ export namespace Prisma {
     portfolioId?: StringFilter<"PortfolioMember"> | string
     accountId?: StringFilter<"PortfolioMember"> | string
     details?: JsonNullableFilter<"PortfolioMember">
-    portfolio?: XOR<PortfolioScalarRelationFilter, PortfolioWhereInput>
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
+    portfolio?: XOR<PortfolioScalarRelationFilter, PortfolioWhereInput>
   }, "id" | "portfolioId_accountId">
 
   export type PortfolioMemberOrderByWithAggregationInput = {
@@ -30961,151 +30829,155 @@ export namespace Prisma {
 
   export type AccountCreateInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     contacts?: ContactCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     contacts?: ContactUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateManyInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
   }
 
   export type AccountUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AccountUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AccountTypeIndividualCreateInput = {
@@ -31116,7 +30988,6 @@ export namespace Prisma {
     dateOfBirth?: Date | string | null
     countryOfResidence?: string | null
     account: AccountCreateNestedOneWithoutIndividualProfileInput
-    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
   }
 
   export type AccountTypeIndividualUncheckedCreateInput = {
@@ -31127,7 +30998,6 @@ export namespace Prisma {
     lastName?: string | null
     dateOfBirth?: Date | string | null
     countryOfResidence?: string | null
-    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
   }
 
   export type AccountTypeIndividualUpdateInput = {
@@ -31138,7 +31008,6 @@ export namespace Prisma {
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     countryOfResidence?: NullableStringFieldUpdateOperationsInput | string | null
     account?: AccountUpdateOneRequiredWithoutIndividualProfileNestedInput
-    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
   }
 
   export type AccountTypeIndividualUncheckedUpdateInput = {
@@ -31149,7 +31018,6 @@ export namespace Prisma {
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     countryOfResidence?: NullableStringFieldUpdateOperationsInput | string | null
-    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
   }
 
   export type AccountTypeIndividualCreateManyInput = {
@@ -31246,8 +31114,8 @@ export namespace Prisma {
   export type AccountOwnershipCreateInput = {
     id?: string
     type: string
-    parent: AccountCreateNestedOneWithoutParentOwnershipsInput
     child: AccountCreateNestedOneWithoutChildOwnershipsInput
+    parent: AccountCreateNestedOneWithoutParentOwnershipsInput
   }
 
   export type AccountOwnershipUncheckedCreateInput = {
@@ -31260,8 +31128,8 @@ export namespace Prisma {
   export type AccountOwnershipUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
-    parent?: AccountUpdateOneRequiredWithoutParentOwnershipsNestedInput
     child?: AccountUpdateOneRequiredWithoutChildOwnershipsNestedInput
+    parent?: AccountUpdateOneRequiredWithoutParentOwnershipsNestedInput
   }
 
   export type AccountOwnershipUncheckedUpdateInput = {
@@ -31583,9 +31451,9 @@ export namespace Prisma {
     data?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
-    sender: AccountCreateNestedOneWithoutSentRequestsInput
-    recipient: AccountCreateNestedOneWithoutReceivedRequestsInput
     notifications?: NotificationCreateNestedManyWithoutRequestInput
+    recipient: AccountCreateNestedOneWithoutReceivedRequestsInput
+    sender: AccountCreateNestedOneWithoutSentRequestsInput
   }
 
   export type RequestUncheckedCreateInput = {
@@ -31609,9 +31477,9 @@ export namespace Prisma {
     data?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sender?: AccountUpdateOneRequiredWithoutSentRequestsNestedInput
-    recipient?: AccountUpdateOneRequiredWithoutReceivedRequestsNestedInput
     notifications?: NotificationUpdateManyWithoutRequestNestedInput
+    recipient?: AccountUpdateOneRequiredWithoutReceivedRequestsNestedInput
+    sender?: AccountUpdateOneRequiredWithoutSentRequestsNestedInput
   }
 
   export type RequestUncheckedUpdateInput = {
@@ -31892,495 +31760,488 @@ export namespace Prisma {
 
   export type NeupIdCreateInput = {
     id: string
-    dateAdded?: Date | string
     isPrimary?: boolean
+    dateAdded?: Date | string
     account: AccountCreateNestedOneWithoutNeupIdsInput
   }
 
   export type NeupIdUncheckedCreateInput = {
     id: string
     accountId: string
-    dateAdded?: Date | string
     isPrimary?: boolean
+    dateAdded?: Date | string
   }
 
   export type NeupIdUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    dateAdded?: DateTimeFieldUpdateOperationsInput | Date | string
     isPrimary?: BoolFieldUpdateOperationsInput | boolean
+    dateAdded?: DateTimeFieldUpdateOperationsInput | Date | string
     account?: AccountUpdateOneRequiredWithoutNeupIdsNestedInput
   }
 
   export type NeupIdUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
-    dateAdded?: DateTimeFieldUpdateOperationsInput | Date | string
     isPrimary?: BoolFieldUpdateOperationsInput | boolean
+    dateAdded?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type NeupIdCreateManyInput = {
     id: string
     accountId: string
-    dateAdded?: Date | string
     isPrimary?: boolean
+    dateAdded?: Date | string
   }
 
   export type NeupIdUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    dateAdded?: DateTimeFieldUpdateOperationsInput | Date | string
     isPrimary?: BoolFieldUpdateOperationsInput | boolean
+    dateAdded?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type NeupIdUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
-    dateAdded?: DateTimeFieldUpdateOperationsInput | Date | string
     isPrimary?: BoolFieldUpdateOperationsInput | boolean
+    dateAdded?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AuthMethodCreateInput = {
-    id?: string
-    type: $Enums.AuthMethodType
     value: string
-    order: $Enums.AuthMethodOrder
-    status?: $Enums.AuthMethodStatus
+    id?: string
+    type: string
+    order: string
+    status: string
     detail?: NullableJsonNullValueInput | InputJsonValue
-    individualProfile: AccountTypeIndividualCreateNestedOneWithoutAuthMethodsInput
+    individualProfile: AccountCreateNestedOneWithoutAuthMethodsInput
   }
 
   export type AuthMethodUncheckedCreateInput = {
-    id?: string
     accountId: string
-    type: $Enums.AuthMethodType
     value: string
-    order: $Enums.AuthMethodOrder
-    status?: $Enums.AuthMethodStatus
+    id?: string
+    type: string
+    order: string
+    status: string
     detail?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type AuthMethodUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: EnumAuthMethodTypeFieldUpdateOperationsInput | $Enums.AuthMethodType
     value?: StringFieldUpdateOperationsInput | string
-    order?: EnumAuthMethodOrderFieldUpdateOperationsInput | $Enums.AuthMethodOrder
-    status?: EnumAuthMethodStatusFieldUpdateOperationsInput | $Enums.AuthMethodStatus
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    order?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     detail?: NullableJsonNullValueInput | InputJsonValue
-    individualProfile?: AccountTypeIndividualUpdateOneRequiredWithoutAuthMethodsNestedInput
+    individualProfile?: AccountUpdateOneRequiredWithoutAuthMethodsNestedInput
   }
 
   export type AuthMethodUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
-    type?: EnumAuthMethodTypeFieldUpdateOperationsInput | $Enums.AuthMethodType
     value?: StringFieldUpdateOperationsInput | string
-    order?: EnumAuthMethodOrderFieldUpdateOperationsInput | $Enums.AuthMethodOrder
-    status?: EnumAuthMethodStatusFieldUpdateOperationsInput | $Enums.AuthMethodStatus
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    order?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     detail?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type AuthMethodCreateManyInput = {
-    id?: string
     accountId: string
-    type: $Enums.AuthMethodType
     value: string
-    order: $Enums.AuthMethodOrder
-    status?: $Enums.AuthMethodStatus
+    id?: string
+    type: string
+    order: string
+    status: string
     detail?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type AuthMethodUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: EnumAuthMethodTypeFieldUpdateOperationsInput | $Enums.AuthMethodType
     value?: StringFieldUpdateOperationsInput | string
-    order?: EnumAuthMethodOrderFieldUpdateOperationsInput | $Enums.AuthMethodOrder
-    status?: EnumAuthMethodStatusFieldUpdateOperationsInput | $Enums.AuthMethodStatus
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    order?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     detail?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type AuthMethodUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
-    type?: EnumAuthMethodTypeFieldUpdateOperationsInput | $Enums.AuthMethodType
     value?: StringFieldUpdateOperationsInput | string
-    order?: EnumAuthMethodOrderFieldUpdateOperationsInput | $Enums.AuthMethodOrder
-    status?: EnumAuthMethodStatusFieldUpdateOperationsInput | $Enums.AuthMethodStatus
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    order?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     detail?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type PermitCreateInput = {
     id?: string
-    permitType?: string | null
-    permitSubType?: string | null
-    permitNumber?: string | null
-    issuingAuthority?: string | null
-    issueDate?: Date | string | null
-    expiryDate?: Date | string | null
-    status?: string
     forSelf?: boolean
     isRoot?: boolean
-    fullAccess?: boolean
     permissions?: PermitCreatepermissionsInput | string[]
     restrictions?: PermitCreaterestrictionsInput | string[]
     createdOn?: Date | string
+    expiryDate?: Date | string | null
+    fullAccess?: boolean
+    issueDate?: Date | string | null
+    issuingAuthority?: string | null
     managedBy?: string | null
+    permitNumber?: string | null
+    permitSubType?: string | null
+    permitType?: string | null
+    status?: string
     account: AccountCreateNestedOneWithoutPermitsInput
     targetAccount?: AccountCreateNestedOneWithoutTargetPermitsInput
   }
 
   export type PermitUncheckedCreateInput = {
     id?: string
-    permitType?: string | null
-    permitSubType?: string | null
-    permitNumber?: string | null
-    issuingAuthority?: string | null
-    issueDate?: Date | string | null
-    expiryDate?: Date | string | null
-    status?: string
     accountId: string
     targetAccountId?: string | null
     forSelf?: boolean
     isRoot?: boolean
-    fullAccess?: boolean
     permissions?: PermitCreatepermissionsInput | string[]
     restrictions?: PermitCreaterestrictionsInput | string[]
     createdOn?: Date | string
+    expiryDate?: Date | string | null
+    fullAccess?: boolean
+    issueDate?: Date | string | null
+    issuingAuthority?: string | null
     managedBy?: string | null
+    permitNumber?: string | null
+    permitSubType?: string | null
+    permitType?: string | null
+    status?: string
   }
 
   export type PermitUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    permitType?: NullableStringFieldUpdateOperationsInput | string | null
-    permitSubType?: NullableStringFieldUpdateOperationsInput | string | null
-    permitNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    issuingAuthority?: NullableStringFieldUpdateOperationsInput | string | null
-    issueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: StringFieldUpdateOperationsInput | string
     forSelf?: BoolFieldUpdateOperationsInput | boolean
     isRoot?: BoolFieldUpdateOperationsInput | boolean
-    fullAccess?: BoolFieldUpdateOperationsInput | boolean
     permissions?: PermitUpdatepermissionsInput | string[]
     restrictions?: PermitUpdaterestrictionsInput | string[]
     createdOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fullAccess?: BoolFieldUpdateOperationsInput | boolean
+    issueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    issuingAuthority?: NullableStringFieldUpdateOperationsInput | string | null
     managedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    permitNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    permitSubType?: NullableStringFieldUpdateOperationsInput | string | null
+    permitType?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
     account?: AccountUpdateOneRequiredWithoutPermitsNestedInput
     targetAccount?: AccountUpdateOneWithoutTargetPermitsNestedInput
   }
 
   export type PermitUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    permitType?: NullableStringFieldUpdateOperationsInput | string | null
-    permitSubType?: NullableStringFieldUpdateOperationsInput | string | null
-    permitNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    issuingAuthority?: NullableStringFieldUpdateOperationsInput | string | null
-    issueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
     targetAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     forSelf?: BoolFieldUpdateOperationsInput | boolean
     isRoot?: BoolFieldUpdateOperationsInput | boolean
-    fullAccess?: BoolFieldUpdateOperationsInput | boolean
     permissions?: PermitUpdatepermissionsInput | string[]
     restrictions?: PermitUpdaterestrictionsInput | string[]
     createdOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fullAccess?: BoolFieldUpdateOperationsInput | boolean
+    issueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    issuingAuthority?: NullableStringFieldUpdateOperationsInput | string | null
     managedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    permitNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    permitSubType?: NullableStringFieldUpdateOperationsInput | string | null
+    permitType?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type PermitCreateManyInput = {
     id?: string
-    permitType?: string | null
-    permitSubType?: string | null
-    permitNumber?: string | null
-    issuingAuthority?: string | null
-    issueDate?: Date | string | null
-    expiryDate?: Date | string | null
-    status?: string
     accountId: string
     targetAccountId?: string | null
     forSelf?: boolean
     isRoot?: boolean
-    fullAccess?: boolean
     permissions?: PermitCreatepermissionsInput | string[]
     restrictions?: PermitCreaterestrictionsInput | string[]
     createdOn?: Date | string
+    expiryDate?: Date | string | null
+    fullAccess?: boolean
+    issueDate?: Date | string | null
+    issuingAuthority?: string | null
     managedBy?: string | null
+    permitNumber?: string | null
+    permitSubType?: string | null
+    permitType?: string | null
+    status?: string
   }
 
   export type PermitUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    permitType?: NullableStringFieldUpdateOperationsInput | string | null
-    permitSubType?: NullableStringFieldUpdateOperationsInput | string | null
-    permitNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    issuingAuthority?: NullableStringFieldUpdateOperationsInput | string | null
-    issueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: StringFieldUpdateOperationsInput | string
     forSelf?: BoolFieldUpdateOperationsInput | boolean
     isRoot?: BoolFieldUpdateOperationsInput | boolean
-    fullAccess?: BoolFieldUpdateOperationsInput | boolean
     permissions?: PermitUpdatepermissionsInput | string[]
     restrictions?: PermitUpdaterestrictionsInput | string[]
     createdOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fullAccess?: BoolFieldUpdateOperationsInput | boolean
+    issueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    issuingAuthority?: NullableStringFieldUpdateOperationsInput | string | null
     managedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    permitNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    permitSubType?: NullableStringFieldUpdateOperationsInput | string | null
+    permitType?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type PermitUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    permitType?: NullableStringFieldUpdateOperationsInput | string | null
-    permitSubType?: NullableStringFieldUpdateOperationsInput | string | null
-    permitNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    issuingAuthority?: NullableStringFieldUpdateOperationsInput | string | null
-    issueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
     targetAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     forSelf?: BoolFieldUpdateOperationsInput | boolean
     isRoot?: BoolFieldUpdateOperationsInput | boolean
-    fullAccess?: BoolFieldUpdateOperationsInput | boolean
     permissions?: PermitUpdatepermissionsInput | string[]
     restrictions?: PermitUpdaterestrictionsInput | string[]
     createdOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fullAccess?: BoolFieldUpdateOperationsInput | boolean
+    issueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    issuingAuthority?: NullableStringFieldUpdateOperationsInput | string | null
     managedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    permitNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    permitSubType?: NullableStringFieldUpdateOperationsInput | string | null
+    permitType?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type AuthSessionCreateInput = {
     id?: string
-    application?: string | null
+    key?: string | null
     ipAddress: string
     userAgent: string
+    isExpired?: boolean
+    expiresOn?: Date | string | null
     lastLoggedIn: Date | string
     loginType: string
     geolocation?: string | null
     deviceType?: string | null
-    expiresOn?: Date | string | null
-    isExpired?: boolean
-    authSessionKey?: string | null
-    dependentKeys?: NullableJsonNullValueInput | InputJsonValue
+    application?: string | null
     account: AccountCreateNestedOneWithoutSessionsInput
   }
 
   export type AuthSessionUncheckedCreateInput = {
     id?: string
     accountId: string
-    application?: string | null
+    key?: string | null
     ipAddress: string
     userAgent: string
+    isExpired?: boolean
+    expiresOn?: Date | string | null
     lastLoggedIn: Date | string
     loginType: string
     geolocation?: string | null
     deviceType?: string | null
-    expiresOn?: Date | string | null
-    isExpired?: boolean
-    authSessionKey?: string | null
-    dependentKeys?: NullableJsonNullValueInput | InputJsonValue
+    application?: string | null
   }
 
   export type AuthSessionUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    application?: NullableStringFieldUpdateOperationsInput | string | null
+    key?: NullableStringFieldUpdateOperationsInput | string | null
     ipAddress?: StringFieldUpdateOperationsInput | string
     userAgent?: StringFieldUpdateOperationsInput | string
+    isExpired?: BoolFieldUpdateOperationsInput | boolean
+    expiresOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
     loginType?: StringFieldUpdateOperationsInput | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
     deviceType?: NullableStringFieldUpdateOperationsInput | string | null
-    expiresOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isExpired?: BoolFieldUpdateOperationsInput | boolean
-    authSessionKey?: NullableStringFieldUpdateOperationsInput | string | null
-    dependentKeys?: NullableJsonNullValueInput | InputJsonValue
+    application?: NullableStringFieldUpdateOperationsInput | string | null
     account?: AccountUpdateOneRequiredWithoutSessionsNestedInput
   }
 
   export type AuthSessionUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
-    application?: NullableStringFieldUpdateOperationsInput | string | null
+    key?: NullableStringFieldUpdateOperationsInput | string | null
     ipAddress?: StringFieldUpdateOperationsInput | string
     userAgent?: StringFieldUpdateOperationsInput | string
+    isExpired?: BoolFieldUpdateOperationsInput | boolean
+    expiresOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
     loginType?: StringFieldUpdateOperationsInput | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
     deviceType?: NullableStringFieldUpdateOperationsInput | string | null
-    expiresOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isExpired?: BoolFieldUpdateOperationsInput | boolean
-    authSessionKey?: NullableStringFieldUpdateOperationsInput | string | null
-    dependentKeys?: NullableJsonNullValueInput | InputJsonValue
+    application?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthSessionCreateManyInput = {
     id?: string
     accountId: string
-    application?: string | null
+    key?: string | null
     ipAddress: string
     userAgent: string
+    isExpired?: boolean
+    expiresOn?: Date | string | null
     lastLoggedIn: Date | string
     loginType: string
     geolocation?: string | null
     deviceType?: string | null
-    expiresOn?: Date | string | null
-    isExpired?: boolean
-    authSessionKey?: string | null
-    dependentKeys?: NullableJsonNullValueInput | InputJsonValue
+    application?: string | null
   }
 
   export type AuthSessionUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    application?: NullableStringFieldUpdateOperationsInput | string | null
+    key?: NullableStringFieldUpdateOperationsInput | string | null
     ipAddress?: StringFieldUpdateOperationsInput | string
     userAgent?: StringFieldUpdateOperationsInput | string
+    isExpired?: BoolFieldUpdateOperationsInput | boolean
+    expiresOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
     loginType?: StringFieldUpdateOperationsInput | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
     deviceType?: NullableStringFieldUpdateOperationsInput | string | null
-    expiresOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isExpired?: BoolFieldUpdateOperationsInput | boolean
-    authSessionKey?: NullableStringFieldUpdateOperationsInput | string | null
-    dependentKeys?: NullableJsonNullValueInput | InputJsonValue
+    application?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthSessionUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
-    application?: NullableStringFieldUpdateOperationsInput | string | null
+    key?: NullableStringFieldUpdateOperationsInput | string | null
     ipAddress?: StringFieldUpdateOperationsInput | string
     userAgent?: StringFieldUpdateOperationsInput | string
+    isExpired?: BoolFieldUpdateOperationsInput | boolean
+    expiresOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
     loginType?: StringFieldUpdateOperationsInput | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
     deviceType?: NullableStringFieldUpdateOperationsInput | string | null
-    expiresOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isExpired?: BoolFieldUpdateOperationsInput | boolean
-    authSessionKey?: NullableStringFieldUpdateOperationsInput | string | null
-    dependentKeys?: NullableJsonNullValueInput | InputJsonValue
+    application?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SystemErrorCreateInput = {
     id?: string
-    type: string
-    context: string
     message: string
-    status?: string
-    ipAddress?: string | null
+    context: string
+    timestamp?: Date | string
     geolocation?: string | null
+    ipAddress?: string | null
+    problemLevel?: string | null
     reproSteps?: string | null
     solution?: string | null
     solvedBy?: string | null
-    problemLevel?: string | null
-    timestamp?: Date | string
+    status?: string
+    type: string
     account?: AccountCreateNestedOneWithoutErrorLogsInput
   }
 
   export type SystemErrorUncheckedCreateInput = {
     id?: string
-    type: string
-    context: string
     message: string
-    status?: string
+    context: string
+    timestamp?: Date | string
     accountId?: string | null
-    ipAddress?: string | null
     geolocation?: string | null
+    ipAddress?: string | null
+    problemLevel?: string | null
     reproSteps?: string | null
     solution?: string | null
     solvedBy?: string | null
-    problemLevel?: string | null
-    timestamp?: Date | string
+    status?: string
+    type: string
   }
 
   export type SystemErrorUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    context?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    context?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    problemLevel?: NullableStringFieldUpdateOperationsInput | string | null
     reproSteps?: NullableStringFieldUpdateOperationsInput | string | null
     solution?: NullableStringFieldUpdateOperationsInput | string | null
     solvedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    problemLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
     account?: AccountUpdateOneWithoutErrorLogsNestedInput
   }
 
   export type SystemErrorUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    context?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     accountId?: NullableStringFieldUpdateOperationsInput | string | null
-    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    problemLevel?: NullableStringFieldUpdateOperationsInput | string | null
     reproSteps?: NullableStringFieldUpdateOperationsInput | string | null
     solution?: NullableStringFieldUpdateOperationsInput | string | null
     solvedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    problemLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
   }
 
   export type SystemErrorCreateManyInput = {
     id?: string
-    type: string
-    context: string
     message: string
-    status?: string
+    context: string
+    timestamp?: Date | string
     accountId?: string | null
-    ipAddress?: string | null
     geolocation?: string | null
+    ipAddress?: string | null
+    problemLevel?: string | null
     reproSteps?: string | null
     solution?: string | null
     solvedBy?: string | null
-    problemLevel?: string | null
-    timestamp?: Date | string
+    status?: string
+    type: string
   }
 
   export type SystemErrorUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    context?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    context?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    problemLevel?: NullableStringFieldUpdateOperationsInput | string | null
     reproSteps?: NullableStringFieldUpdateOperationsInput | string | null
     solution?: NullableStringFieldUpdateOperationsInput | string | null
     solvedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    problemLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
   }
 
   export type SystemErrorUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    context?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     accountId?: NullableStringFieldUpdateOperationsInput | string | null
-    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    problemLevel?: NullableStringFieldUpdateOperationsInput | string | null
     reproSteps?: NullableStringFieldUpdateOperationsInput | string | null
     solution?: NullableStringFieldUpdateOperationsInput | string | null
     solvedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    problemLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
   }
 
   export type ApplicationCreateInput = {
     id: string
     name: string
-    status?: string
     party?: string
     description?: string | null
     icon?: string | null
     website?: string | null
     developer?: string | null
     appSecret?: string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    access?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
     owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
   }
@@ -32388,35 +32249,35 @@ export namespace Prisma {
   export type ApplicationUncheckedCreateInput = {
     id: string
     name: string
-    status?: string
     party?: string
     description?: string | null
     icon?: string | null
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    createdAt?: Date | string
     access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     ownerAccountId?: string | null
-    createdAt?: Date | string
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    access?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
     owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
   }
@@ -32424,69 +32285,69 @@ export namespace Prisma {
   export type ApplicationUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationCreateManyInput = {
     id: string
     name: string
-    status?: string
     party?: string
     description?: string | null
     icon?: string | null
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    createdAt?: Date | string
     access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     ownerAccountId?: string | null
-    createdAt?: Date | string
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
   }
 
   export type ApplicationUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    access?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type ApplicationUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type PortfolioCreateInput = {
@@ -32608,8 +32469,8 @@ export namespace Prisma {
   export type PortfolioMemberCreateInput = {
     id?: string
     details?: NullableJsonNullValueInput | InputJsonValue
-    portfolio: PortfolioCreateNestedOneWithoutMembersInput
     account: AccountCreateNestedOneWithoutPortfolioMembersInput
+    portfolio: PortfolioCreateNestedOneWithoutMembersInput
   }
 
   export type PortfolioMemberUncheckedCreateInput = {
@@ -32622,8 +32483,8 @@ export namespace Prisma {
   export type PortfolioMemberUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     details?: NullableJsonNullValueInput | InputJsonValue
-    portfolio?: PortfolioUpdateOneRequiredWithoutMembersNestedInput
     account?: AccountUpdateOneRequiredWithoutPortfolioMembersNestedInput
+    portfolio?: PortfolioUpdateOneRequiredWithoutMembersNestedInput
   }
 
   export type PortfolioMemberUncheckedUpdateInput = {
@@ -32787,17 +32648,6 @@ export namespace Prisma {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
-
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
   export type JsonNullableFilter<$PrismaModel = never> =
     | PatchUndefined<
         Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
@@ -32822,6 +32672,57 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type AccountTypeBrandNullableScalarRelationFilter = {
+    is?: AccountTypeBrandWhereInput | null
+    isNot?: AccountTypeBrandWhereInput | null
+  }
+
+  export type AccountTypeIndividualNullableScalarRelationFilter = {
+    is?: AccountTypeIndividualWhereInput | null
+    isNot?: AccountTypeIndividualWhereInput | null
+  }
+
+  export type AccountOwnershipListRelationFilter = {
+    every?: AccountOwnershipWhereInput
+    some?: AccountOwnershipWhereInput
+    none?: AccountOwnershipWhereInput
+  }
+
+  export type ApplicationListRelationFilter = {
+    every?: ApplicationWhereInput
+    some?: ApplicationWhereInput
+    none?: ApplicationWhereInput
+  }
+
+  export type ApplicationConnectionListRelationFilter = {
+    every?: ApplicationConnectionWhereInput
+    some?: ApplicationConnectionWhereInput
+    none?: ApplicationConnectionWhereInput
+  }
+
+  export type AuthMethodListRelationFilter = {
+    every?: AuthMethodWhereInput
+    some?: AuthMethodWhereInput
+    none?: AuthMethodWhereInput
+  }
+
+  export type AuthSessionListRelationFilter = {
+    every?: AuthSessionWhereInput
+    some?: AuthSessionWhereInput
+    none?: AuthSessionWhereInput
+  }
+
   export type ContactListRelationFilter = {
     every?: ContactWhereInput
     some?: ContactWhereInput
@@ -32834,68 +32735,16 @@ export namespace Prisma {
     none?: NeupIdWhereInput
   }
 
-  export type PermitListRelationFilter = {
-    every?: PermitWhereInput
-    some?: PermitWhereInput
-    none?: PermitWhereInput
-  }
-
-  export type AuthSessionListRelationFilter = {
-    every?: AuthSessionWhereInput
-    some?: AuthSessionWhereInput
-    none?: AuthSessionWhereInput
-  }
-
-  export type SystemErrorListRelationFilter = {
-    every?: SystemErrorWhereInput
-    some?: SystemErrorWhereInput
-    none?: SystemErrorWhereInput
-  }
-
-  export type ApplicationConnectionListRelationFilter = {
-    every?: ApplicationConnectionWhereInput
-    some?: ApplicationConnectionWhereInput
-    none?: ApplicationConnectionWhereInput
-  }
-
-  export type ApplicationListRelationFilter = {
-    every?: ApplicationWhereInput
-    some?: ApplicationWhereInput
-    none?: ApplicationWhereInput
-  }
-
   export type NotificationListRelationFilter = {
     every?: NotificationWhereInput
     some?: NotificationWhereInput
     none?: NotificationWhereInput
   }
 
-  export type VerificationListRelationFilter = {
-    every?: VerificationWhereInput
-    some?: VerificationWhereInput
-    none?: VerificationWhereInput
-  }
-
-  export type RequestListRelationFilter = {
-    every?: RequestWhereInput
-    some?: RequestWhereInput
-    none?: RequestWhereInput
-  }
-
-  export type AccountTypeIndividualNullableScalarRelationFilter = {
-    is?: AccountTypeIndividualWhereInput | null
-    isNot?: AccountTypeIndividualWhereInput | null
-  }
-
-  export type AccountTypeBrandNullableScalarRelationFilter = {
-    is?: AccountTypeBrandWhereInput | null
-    isNot?: AccountTypeBrandWhereInput | null
-  }
-
-  export type AccountOwnershipListRelationFilter = {
-    every?: AccountOwnershipWhereInput
-    some?: AccountOwnershipWhereInput
-    none?: AccountOwnershipWhereInput
+  export type PermitListRelationFilter = {
+    every?: PermitWhereInput
+    some?: PermitWhereInput
+    none?: PermitWhereInput
   }
 
   export type PortfolioMemberListRelationFilter = {
@@ -32910,9 +32759,47 @@ export namespace Prisma {
     none?: PortfolioRoleWhereInput
   }
 
+  export type RequestListRelationFilter = {
+    every?: RequestWhereInput
+    some?: RequestWhereInput
+    none?: RequestWhereInput
+  }
+
+  export type SystemErrorListRelationFilter = {
+    every?: SystemErrorWhereInput
+    some?: SystemErrorWhereInput
+    none?: SystemErrorWhereInput
+  }
+
+  export type VerificationListRelationFilter = {
+    every?: VerificationWhereInput
+    some?: VerificationWhereInput
+    none?: VerificationWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
+  }
+
+  export type AccountOwnershipOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ApplicationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ApplicationConnectionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AuthMethodOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AuthSessionOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type ContactOrderByRelationAggregateInput = {
@@ -32923,39 +32810,11 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type PermitOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type AuthSessionOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type SystemErrorOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type ApplicationConnectionOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type ApplicationOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type NotificationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type VerificationOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type RequestOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type AccountOwnershipOrderByRelationAggregateInput = {
+  export type PermitOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -32967,22 +32826,34 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type RequestOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SystemErrorOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type VerificationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type AccountCountOrderByAggregateInput = {
     id?: SortOrder
+    displayName?: SortOrder
     accountType?: SortOrder
     displayImage?: SortOrder
-    displayName?: SortOrder
     status?: SortOrder
     isVerified?: SortOrder
-    createdAt?: SortOrder
     details?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type AccountMaxOrderByAggregateInput = {
     id?: SortOrder
+    displayName?: SortOrder
     accountType?: SortOrder
     displayImage?: SortOrder
-    displayName?: SortOrder
     status?: SortOrder
     isVerified?: SortOrder
     createdAt?: SortOrder
@@ -32990,9 +32861,9 @@ export namespace Prisma {
 
   export type AccountMinOrderByAggregateInput = {
     id?: SortOrder
+    displayName?: SortOrder
     accountType?: SortOrder
     displayImage?: SortOrder
-    displayName?: SortOrder
     status?: SortOrder
     isVerified?: SortOrder
     createdAt?: SortOrder
@@ -33041,20 +32912,6 @@ export namespace Prisma {
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
   }
-
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
   export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
     | PatchUndefined<
         Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
@@ -33082,6 +32939,20 @@ export namespace Prisma {
     _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type DateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -33096,16 +32967,6 @@ export namespace Prisma {
   export type AccountScalarRelationFilter = {
     is?: AccountWhereInput
     isNot?: AccountWhereInput
-  }
-
-  export type AuthMethodListRelationFilter = {
-    every?: AuthMethodWhereInput
-    some?: AuthMethodWhereInput
-    none?: AuthMethodWhereInput
-  }
-
-  export type AuthMethodOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type AccountTypeIndividualCountOrderByAggregateInput = {
@@ -33519,112 +33380,56 @@ export namespace Prisma {
   export type NeupIdCountOrderByAggregateInput = {
     id?: SortOrder
     accountId?: SortOrder
-    dateAdded?: SortOrder
     isPrimary?: SortOrder
+    dateAdded?: SortOrder
   }
 
   export type NeupIdMaxOrderByAggregateInput = {
     id?: SortOrder
     accountId?: SortOrder
-    dateAdded?: SortOrder
     isPrimary?: SortOrder
+    dateAdded?: SortOrder
   }
 
   export type NeupIdMinOrderByAggregateInput = {
     id?: SortOrder
     accountId?: SortOrder
-    dateAdded?: SortOrder
     isPrimary?: SortOrder
-  }
-
-  export type EnumAuthMethodTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.AuthMethodType | EnumAuthMethodTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.AuthMethodType[] | ListEnumAuthMethodTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.AuthMethodType[] | ListEnumAuthMethodTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumAuthMethodTypeFilter<$PrismaModel> | $Enums.AuthMethodType
-  }
-
-  export type EnumAuthMethodOrderFilter<$PrismaModel = never> = {
-    equals?: $Enums.AuthMethodOrder | EnumAuthMethodOrderFieldRefInput<$PrismaModel>
-    in?: $Enums.AuthMethodOrder[] | ListEnumAuthMethodOrderFieldRefInput<$PrismaModel>
-    notIn?: $Enums.AuthMethodOrder[] | ListEnumAuthMethodOrderFieldRefInput<$PrismaModel>
-    not?: NestedEnumAuthMethodOrderFilter<$PrismaModel> | $Enums.AuthMethodOrder
-  }
-
-  export type EnumAuthMethodStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.AuthMethodStatus | EnumAuthMethodStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.AuthMethodStatus[] | ListEnumAuthMethodStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.AuthMethodStatus[] | ListEnumAuthMethodStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumAuthMethodStatusFilter<$PrismaModel> | $Enums.AuthMethodStatus
-  }
-
-  export type AccountTypeIndividualScalarRelationFilter = {
-    is?: AccountTypeIndividualWhereInput
-    isNot?: AccountTypeIndividualWhereInput
+    dateAdded?: SortOrder
   }
 
   export type AuthMethodAccountIdTypeOrderCompoundUniqueInput = {
     accountId: string
-    type: $Enums.AuthMethodType
-    order: $Enums.AuthMethodOrder
+    type: string
+    order: string
   }
 
   export type AuthMethodCountOrderByAggregateInput = {
-    id?: SortOrder
     accountId?: SortOrder
-    type?: SortOrder
     value?: SortOrder
+    id?: SortOrder
+    type?: SortOrder
     order?: SortOrder
     status?: SortOrder
     detail?: SortOrder
   }
 
   export type AuthMethodMaxOrderByAggregateInput = {
-    id?: SortOrder
     accountId?: SortOrder
-    type?: SortOrder
     value?: SortOrder
+    id?: SortOrder
+    type?: SortOrder
     order?: SortOrder
     status?: SortOrder
   }
 
   export type AuthMethodMinOrderByAggregateInput = {
-    id?: SortOrder
     accountId?: SortOrder
-    type?: SortOrder
     value?: SortOrder
+    id?: SortOrder
+    type?: SortOrder
     order?: SortOrder
     status?: SortOrder
-  }
-
-  export type EnumAuthMethodTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.AuthMethodType | EnumAuthMethodTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.AuthMethodType[] | ListEnumAuthMethodTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.AuthMethodType[] | ListEnumAuthMethodTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumAuthMethodTypeWithAggregatesFilter<$PrismaModel> | $Enums.AuthMethodType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumAuthMethodTypeFilter<$PrismaModel>
-    _max?: NestedEnumAuthMethodTypeFilter<$PrismaModel>
-  }
-
-  export type EnumAuthMethodOrderWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.AuthMethodOrder | EnumAuthMethodOrderFieldRefInput<$PrismaModel>
-    in?: $Enums.AuthMethodOrder[] | ListEnumAuthMethodOrderFieldRefInput<$PrismaModel>
-    notIn?: $Enums.AuthMethodOrder[] | ListEnumAuthMethodOrderFieldRefInput<$PrismaModel>
-    not?: NestedEnumAuthMethodOrderWithAggregatesFilter<$PrismaModel> | $Enums.AuthMethodOrder
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumAuthMethodOrderFilter<$PrismaModel>
-    _max?: NestedEnumAuthMethodOrderFilter<$PrismaModel>
-  }
-
-  export type EnumAuthMethodStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.AuthMethodStatus | EnumAuthMethodStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.AuthMethodStatus[] | ListEnumAuthMethodStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.AuthMethodStatus[] | ListEnumAuthMethodStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumAuthMethodStatusWithAggregatesFilter<$PrismaModel> | $Enums.AuthMethodStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumAuthMethodStatusFilter<$PrismaModel>
-    _max?: NestedEnumAuthMethodStatusFilter<$PrismaModel>
   }
 
   export type AccountNullableScalarRelationFilter = {
@@ -33634,197 +33439,196 @@ export namespace Prisma {
 
   export type PermitCountOrderByAggregateInput = {
     id?: SortOrder
-    permitType?: SortOrder
-    permitSubType?: SortOrder
-    permitNumber?: SortOrder
-    issuingAuthority?: SortOrder
-    issueDate?: SortOrder
-    expiryDate?: SortOrder
-    status?: SortOrder
     accountId?: SortOrder
     targetAccountId?: SortOrder
     forSelf?: SortOrder
     isRoot?: SortOrder
-    fullAccess?: SortOrder
     permissions?: SortOrder
     restrictions?: SortOrder
     createdOn?: SortOrder
+    expiryDate?: SortOrder
+    fullAccess?: SortOrder
+    issueDate?: SortOrder
+    issuingAuthority?: SortOrder
     managedBy?: SortOrder
+    permitNumber?: SortOrder
+    permitSubType?: SortOrder
+    permitType?: SortOrder
+    status?: SortOrder
   }
 
   export type PermitMaxOrderByAggregateInput = {
     id?: SortOrder
-    permitType?: SortOrder
-    permitSubType?: SortOrder
-    permitNumber?: SortOrder
-    issuingAuthority?: SortOrder
-    issueDate?: SortOrder
-    expiryDate?: SortOrder
-    status?: SortOrder
     accountId?: SortOrder
     targetAccountId?: SortOrder
     forSelf?: SortOrder
     isRoot?: SortOrder
-    fullAccess?: SortOrder
     createdOn?: SortOrder
+    expiryDate?: SortOrder
+    fullAccess?: SortOrder
+    issueDate?: SortOrder
+    issuingAuthority?: SortOrder
     managedBy?: SortOrder
+    permitNumber?: SortOrder
+    permitSubType?: SortOrder
+    permitType?: SortOrder
+    status?: SortOrder
   }
 
   export type PermitMinOrderByAggregateInput = {
     id?: SortOrder
-    permitType?: SortOrder
-    permitSubType?: SortOrder
-    permitNumber?: SortOrder
-    issuingAuthority?: SortOrder
-    issueDate?: SortOrder
-    expiryDate?: SortOrder
-    status?: SortOrder
     accountId?: SortOrder
     targetAccountId?: SortOrder
     forSelf?: SortOrder
     isRoot?: SortOrder
-    fullAccess?: SortOrder
     createdOn?: SortOrder
+    expiryDate?: SortOrder
+    fullAccess?: SortOrder
+    issueDate?: SortOrder
+    issuingAuthority?: SortOrder
     managedBy?: SortOrder
+    permitNumber?: SortOrder
+    permitSubType?: SortOrder
+    permitType?: SortOrder
+    status?: SortOrder
   }
 
   export type AuthSessionCountOrderByAggregateInput = {
     id?: SortOrder
     accountId?: SortOrder
-    application?: SortOrder
+    key?: SortOrder
     ipAddress?: SortOrder
     userAgent?: SortOrder
+    isExpired?: SortOrder
+    expiresOn?: SortOrder
     lastLoggedIn?: SortOrder
     loginType?: SortOrder
     geolocation?: SortOrder
     deviceType?: SortOrder
-    expiresOn?: SortOrder
-    isExpired?: SortOrder
-    authSessionKey?: SortOrder
-    dependentKeys?: SortOrder
+    application?: SortOrder
   }
 
   export type AuthSessionMaxOrderByAggregateInput = {
     id?: SortOrder
     accountId?: SortOrder
-    application?: SortOrder
+    key?: SortOrder
     ipAddress?: SortOrder
     userAgent?: SortOrder
+    isExpired?: SortOrder
+    expiresOn?: SortOrder
     lastLoggedIn?: SortOrder
     loginType?: SortOrder
     geolocation?: SortOrder
     deviceType?: SortOrder
-    expiresOn?: SortOrder
-    isExpired?: SortOrder
-    authSessionKey?: SortOrder
+    application?: SortOrder
   }
 
   export type AuthSessionMinOrderByAggregateInput = {
     id?: SortOrder
     accountId?: SortOrder
-    application?: SortOrder
+    key?: SortOrder
     ipAddress?: SortOrder
     userAgent?: SortOrder
+    isExpired?: SortOrder
+    expiresOn?: SortOrder
     lastLoggedIn?: SortOrder
     loginType?: SortOrder
     geolocation?: SortOrder
     deviceType?: SortOrder
-    expiresOn?: SortOrder
-    isExpired?: SortOrder
-    authSessionKey?: SortOrder
+    application?: SortOrder
   }
 
   export type SystemErrorCountOrderByAggregateInput = {
     id?: SortOrder
-    type?: SortOrder
-    context?: SortOrder
     message?: SortOrder
-    status?: SortOrder
+    context?: SortOrder
+    timestamp?: SortOrder
     accountId?: SortOrder
-    ipAddress?: SortOrder
     geolocation?: SortOrder
+    ipAddress?: SortOrder
+    problemLevel?: SortOrder
     reproSteps?: SortOrder
     solution?: SortOrder
     solvedBy?: SortOrder
-    problemLevel?: SortOrder
-    timestamp?: SortOrder
+    status?: SortOrder
+    type?: SortOrder
   }
 
   export type SystemErrorMaxOrderByAggregateInput = {
     id?: SortOrder
-    type?: SortOrder
-    context?: SortOrder
     message?: SortOrder
-    status?: SortOrder
+    context?: SortOrder
+    timestamp?: SortOrder
     accountId?: SortOrder
-    ipAddress?: SortOrder
     geolocation?: SortOrder
+    ipAddress?: SortOrder
+    problemLevel?: SortOrder
     reproSteps?: SortOrder
     solution?: SortOrder
     solvedBy?: SortOrder
-    problemLevel?: SortOrder
-    timestamp?: SortOrder
+    status?: SortOrder
+    type?: SortOrder
   }
 
   export type SystemErrorMinOrderByAggregateInput = {
     id?: SortOrder
-    type?: SortOrder
-    context?: SortOrder
     message?: SortOrder
-    status?: SortOrder
+    context?: SortOrder
+    timestamp?: SortOrder
     accountId?: SortOrder
-    ipAddress?: SortOrder
     geolocation?: SortOrder
+    ipAddress?: SortOrder
+    problemLevel?: SortOrder
     reproSteps?: SortOrder
     solution?: SortOrder
     solvedBy?: SortOrder
-    problemLevel?: SortOrder
-    timestamp?: SortOrder
+    status?: SortOrder
+    type?: SortOrder
   }
 
   export type ApplicationCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    status?: SortOrder
     party?: SortOrder
     description?: SortOrder
     icon?: SortOrder
     website?: SortOrder
     developer?: SortOrder
     appSecret?: SortOrder
+    createdAt?: SortOrder
     access?: SortOrder
-    policies?: SortOrder
     endpoints?: SortOrder
     ownerAccountId?: SortOrder
-    createdAt?: SortOrder
+    policies?: SortOrder
+    status?: SortOrder
   }
 
   export type ApplicationMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    status?: SortOrder
     party?: SortOrder
     description?: SortOrder
     icon?: SortOrder
     website?: SortOrder
     developer?: SortOrder
     appSecret?: SortOrder
-    ownerAccountId?: SortOrder
     createdAt?: SortOrder
+    ownerAccountId?: SortOrder
+    status?: SortOrder
   }
 
   export type ApplicationMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    status?: SortOrder
     party?: SortOrder
     description?: SortOrder
     icon?: SortOrder
     website?: SortOrder
     developer?: SortOrder
     appSecret?: SortOrder
-    ownerAccountId?: SortOrder
     createdAt?: SortOrder
+    ownerAccountId?: SortOrder
+    status?: SortOrder
   }
 
   export type PortfolioAssetListRelationFilter = {
@@ -33968,6 +33772,60 @@ export namespace Prisma {
     connectedAt?: SortOrder
   }
 
+  export type AccountTypeBrandCreateNestedOneWithoutAccountInput = {
+    create?: XOR<AccountTypeBrandCreateWithoutAccountInput, AccountTypeBrandUncheckedCreateWithoutAccountInput>
+    connectOrCreate?: AccountTypeBrandCreateOrConnectWithoutAccountInput
+    connect?: AccountTypeBrandWhereUniqueInput
+  }
+
+  export type AccountTypeIndividualCreateNestedOneWithoutAccountInput = {
+    create?: XOR<AccountTypeIndividualCreateWithoutAccountInput, AccountTypeIndividualUncheckedCreateWithoutAccountInput>
+    connectOrCreate?: AccountTypeIndividualCreateOrConnectWithoutAccountInput
+    connect?: AccountTypeIndividualWhereUniqueInput
+  }
+
+  export type AccountOwnershipCreateNestedManyWithoutChildInput = {
+    create?: XOR<AccountOwnershipCreateWithoutChildInput, AccountOwnershipUncheckedCreateWithoutChildInput> | AccountOwnershipCreateWithoutChildInput[] | AccountOwnershipUncheckedCreateWithoutChildInput[]
+    connectOrCreate?: AccountOwnershipCreateOrConnectWithoutChildInput | AccountOwnershipCreateOrConnectWithoutChildInput[]
+    createMany?: AccountOwnershipCreateManyChildInputEnvelope
+    connect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+  }
+
+  export type AccountOwnershipCreateNestedManyWithoutParentInput = {
+    create?: XOR<AccountOwnershipCreateWithoutParentInput, AccountOwnershipUncheckedCreateWithoutParentInput> | AccountOwnershipCreateWithoutParentInput[] | AccountOwnershipUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: AccountOwnershipCreateOrConnectWithoutParentInput | AccountOwnershipCreateOrConnectWithoutParentInput[]
+    createMany?: AccountOwnershipCreateManyParentInputEnvelope
+    connect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+  }
+
+  export type ApplicationCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<ApplicationCreateWithoutOwnerInput, ApplicationUncheckedCreateWithoutOwnerInput> | ApplicationCreateWithoutOwnerInput[] | ApplicationUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: ApplicationCreateOrConnectWithoutOwnerInput | ApplicationCreateOrConnectWithoutOwnerInput[]
+    createMany?: ApplicationCreateManyOwnerInputEnvelope
+    connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+  }
+
+  export type ApplicationConnectionCreateNestedManyWithoutAccountInput = {
+    create?: XOR<ApplicationConnectionCreateWithoutAccountInput, ApplicationConnectionUncheckedCreateWithoutAccountInput> | ApplicationConnectionCreateWithoutAccountInput[] | ApplicationConnectionUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: ApplicationConnectionCreateOrConnectWithoutAccountInput | ApplicationConnectionCreateOrConnectWithoutAccountInput[]
+    createMany?: ApplicationConnectionCreateManyAccountInputEnvelope
+    connect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+  }
+
+  export type AuthMethodCreateNestedManyWithoutIndividualProfileInput = {
+    create?: XOR<AuthMethodCreateWithoutIndividualProfileInput, AuthMethodUncheckedCreateWithoutIndividualProfileInput> | AuthMethodCreateWithoutIndividualProfileInput[] | AuthMethodUncheckedCreateWithoutIndividualProfileInput[]
+    connectOrCreate?: AuthMethodCreateOrConnectWithoutIndividualProfileInput | AuthMethodCreateOrConnectWithoutIndividualProfileInput[]
+    createMany?: AuthMethodCreateManyIndividualProfileInputEnvelope
+    connect?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
+  }
+
+  export type AuthSessionCreateNestedManyWithoutAccountInput = {
+    create?: XOR<AuthSessionCreateWithoutAccountInput, AuthSessionUncheckedCreateWithoutAccountInput> | AuthSessionCreateWithoutAccountInput[] | AuthSessionUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: AuthSessionCreateOrConnectWithoutAccountInput | AuthSessionCreateOrConnectWithoutAccountInput[]
+    createMany?: AuthSessionCreateManyAccountInputEnvelope
+    connect?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
+  }
+
   export type ContactCreateNestedManyWithoutAccountInput = {
     create?: XOR<ContactCreateWithoutAccountInput, ContactUncheckedCreateWithoutAccountInput> | ContactCreateWithoutAccountInput[] | ContactUncheckedCreateWithoutAccountInput[]
     connectOrCreate?: ContactCreateOrConnectWithoutAccountInput | ContactCreateOrConnectWithoutAccountInput[]
@@ -33980,6 +33838,13 @@ export namespace Prisma {
     connectOrCreate?: NeupIdCreateOrConnectWithoutAccountInput | NeupIdCreateOrConnectWithoutAccountInput[]
     createMany?: NeupIdCreateManyAccountInputEnvelope
     connect?: NeupIdWhereUniqueInput | NeupIdWhereUniqueInput[]
+  }
+
+  export type NotificationCreateNestedManyWithoutAccountInput = {
+    create?: XOR<NotificationCreateWithoutAccountInput, NotificationUncheckedCreateWithoutAccountInput> | NotificationCreateWithoutAccountInput[] | NotificationUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutAccountInput | NotificationCreateOrConnectWithoutAccountInput[]
+    createMany?: NotificationCreateManyAccountInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
   export type PermitCreateNestedManyWithoutAccountInput = {
@@ -33996,88 +33861,6 @@ export namespace Prisma {
     connect?: PermitWhereUniqueInput | PermitWhereUniqueInput[]
   }
 
-  export type AuthSessionCreateNestedManyWithoutAccountInput = {
-    create?: XOR<AuthSessionCreateWithoutAccountInput, AuthSessionUncheckedCreateWithoutAccountInput> | AuthSessionCreateWithoutAccountInput[] | AuthSessionUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthSessionCreateOrConnectWithoutAccountInput | AuthSessionCreateOrConnectWithoutAccountInput[]
-    createMany?: AuthSessionCreateManyAccountInputEnvelope
-    connect?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
-  }
-
-  export type SystemErrorCreateNestedManyWithoutAccountInput = {
-    create?: XOR<SystemErrorCreateWithoutAccountInput, SystemErrorUncheckedCreateWithoutAccountInput> | SystemErrorCreateWithoutAccountInput[] | SystemErrorUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: SystemErrorCreateOrConnectWithoutAccountInput | SystemErrorCreateOrConnectWithoutAccountInput[]
-    createMany?: SystemErrorCreateManyAccountInputEnvelope
-    connect?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
-  }
-
-  export type ApplicationConnectionCreateNestedManyWithoutAccountInput = {
-    create?: XOR<ApplicationConnectionCreateWithoutAccountInput, ApplicationConnectionUncheckedCreateWithoutAccountInput> | ApplicationConnectionCreateWithoutAccountInput[] | ApplicationConnectionUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: ApplicationConnectionCreateOrConnectWithoutAccountInput | ApplicationConnectionCreateOrConnectWithoutAccountInput[]
-    createMany?: ApplicationConnectionCreateManyAccountInputEnvelope
-    connect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
-  }
-
-  export type ApplicationCreateNestedManyWithoutOwnerInput = {
-    create?: XOR<ApplicationCreateWithoutOwnerInput, ApplicationUncheckedCreateWithoutOwnerInput> | ApplicationCreateWithoutOwnerInput[] | ApplicationUncheckedCreateWithoutOwnerInput[]
-    connectOrCreate?: ApplicationCreateOrConnectWithoutOwnerInput | ApplicationCreateOrConnectWithoutOwnerInput[]
-    createMany?: ApplicationCreateManyOwnerInputEnvelope
-    connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
-  }
-
-  export type NotificationCreateNestedManyWithoutAccountInput = {
-    create?: XOR<NotificationCreateWithoutAccountInput, NotificationUncheckedCreateWithoutAccountInput> | NotificationCreateWithoutAccountInput[] | NotificationUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutAccountInput | NotificationCreateOrConnectWithoutAccountInput[]
-    createMany?: NotificationCreateManyAccountInputEnvelope
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-  }
-
-  export type VerificationCreateNestedManyWithoutAccountInput = {
-    create?: XOR<VerificationCreateWithoutAccountInput, VerificationUncheckedCreateWithoutAccountInput> | VerificationCreateWithoutAccountInput[] | VerificationUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: VerificationCreateOrConnectWithoutAccountInput | VerificationCreateOrConnectWithoutAccountInput[]
-    createMany?: VerificationCreateManyAccountInputEnvelope
-    connect?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
-  }
-
-  export type RequestCreateNestedManyWithoutSenderInput = {
-    create?: XOR<RequestCreateWithoutSenderInput, RequestUncheckedCreateWithoutSenderInput> | RequestCreateWithoutSenderInput[] | RequestUncheckedCreateWithoutSenderInput[]
-    connectOrCreate?: RequestCreateOrConnectWithoutSenderInput | RequestCreateOrConnectWithoutSenderInput[]
-    createMany?: RequestCreateManySenderInputEnvelope
-    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
-  }
-
-  export type RequestCreateNestedManyWithoutRecipientInput = {
-    create?: XOR<RequestCreateWithoutRecipientInput, RequestUncheckedCreateWithoutRecipientInput> | RequestCreateWithoutRecipientInput[] | RequestUncheckedCreateWithoutRecipientInput[]
-    connectOrCreate?: RequestCreateOrConnectWithoutRecipientInput | RequestCreateOrConnectWithoutRecipientInput[]
-    createMany?: RequestCreateManyRecipientInputEnvelope
-    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
-  }
-
-  export type AccountTypeIndividualCreateNestedOneWithoutAccountInput = {
-    create?: XOR<AccountTypeIndividualCreateWithoutAccountInput, AccountTypeIndividualUncheckedCreateWithoutAccountInput>
-    connectOrCreate?: AccountTypeIndividualCreateOrConnectWithoutAccountInput
-    connect?: AccountTypeIndividualWhereUniqueInput
-  }
-
-  export type AccountTypeBrandCreateNestedOneWithoutAccountInput = {
-    create?: XOR<AccountTypeBrandCreateWithoutAccountInput, AccountTypeBrandUncheckedCreateWithoutAccountInput>
-    connectOrCreate?: AccountTypeBrandCreateOrConnectWithoutAccountInput
-    connect?: AccountTypeBrandWhereUniqueInput
-  }
-
-  export type AccountOwnershipCreateNestedManyWithoutParentInput = {
-    create?: XOR<AccountOwnershipCreateWithoutParentInput, AccountOwnershipUncheckedCreateWithoutParentInput> | AccountOwnershipCreateWithoutParentInput[] | AccountOwnershipUncheckedCreateWithoutParentInput[]
-    connectOrCreate?: AccountOwnershipCreateOrConnectWithoutParentInput | AccountOwnershipCreateOrConnectWithoutParentInput[]
-    createMany?: AccountOwnershipCreateManyParentInputEnvelope
-    connect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
-  }
-
-  export type AccountOwnershipCreateNestedManyWithoutChildInput = {
-    create?: XOR<AccountOwnershipCreateWithoutChildInput, AccountOwnershipUncheckedCreateWithoutChildInput> | AccountOwnershipCreateWithoutChildInput[] | AccountOwnershipUncheckedCreateWithoutChildInput[]
-    connectOrCreate?: AccountOwnershipCreateOrConnectWithoutChildInput | AccountOwnershipCreateOrConnectWithoutChildInput[]
-    createMany?: AccountOwnershipCreateManyChildInputEnvelope
-    connect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
-  }
-
   export type PortfolioMemberCreateNestedManyWithoutAccountInput = {
     create?: XOR<PortfolioMemberCreateWithoutAccountInput, PortfolioMemberUncheckedCreateWithoutAccountInput> | PortfolioMemberCreateWithoutAccountInput[] | PortfolioMemberUncheckedCreateWithoutAccountInput[]
     connectOrCreate?: PortfolioMemberCreateOrConnectWithoutAccountInput | PortfolioMemberCreateOrConnectWithoutAccountInput[]
@@ -34090,6 +33873,88 @@ export namespace Prisma {
     connectOrCreate?: PortfolioRoleCreateOrConnectWithoutAccountInput | PortfolioRoleCreateOrConnectWithoutAccountInput[]
     createMany?: PortfolioRoleCreateManyAccountInputEnvelope
     connect?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
+  }
+
+  export type RequestCreateNestedManyWithoutRecipientInput = {
+    create?: XOR<RequestCreateWithoutRecipientInput, RequestUncheckedCreateWithoutRecipientInput> | RequestCreateWithoutRecipientInput[] | RequestUncheckedCreateWithoutRecipientInput[]
+    connectOrCreate?: RequestCreateOrConnectWithoutRecipientInput | RequestCreateOrConnectWithoutRecipientInput[]
+    createMany?: RequestCreateManyRecipientInputEnvelope
+    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+  }
+
+  export type RequestCreateNestedManyWithoutSenderInput = {
+    create?: XOR<RequestCreateWithoutSenderInput, RequestUncheckedCreateWithoutSenderInput> | RequestCreateWithoutSenderInput[] | RequestUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: RequestCreateOrConnectWithoutSenderInput | RequestCreateOrConnectWithoutSenderInput[]
+    createMany?: RequestCreateManySenderInputEnvelope
+    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+  }
+
+  export type SystemErrorCreateNestedManyWithoutAccountInput = {
+    create?: XOR<SystemErrorCreateWithoutAccountInput, SystemErrorUncheckedCreateWithoutAccountInput> | SystemErrorCreateWithoutAccountInput[] | SystemErrorUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: SystemErrorCreateOrConnectWithoutAccountInput | SystemErrorCreateOrConnectWithoutAccountInput[]
+    createMany?: SystemErrorCreateManyAccountInputEnvelope
+    connect?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
+  }
+
+  export type VerificationCreateNestedManyWithoutAccountInput = {
+    create?: XOR<VerificationCreateWithoutAccountInput, VerificationUncheckedCreateWithoutAccountInput> | VerificationCreateWithoutAccountInput[] | VerificationUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: VerificationCreateOrConnectWithoutAccountInput | VerificationCreateOrConnectWithoutAccountInput[]
+    createMany?: VerificationCreateManyAccountInputEnvelope
+    connect?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
+  }
+
+  export type AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput = {
+    create?: XOR<AccountTypeBrandCreateWithoutAccountInput, AccountTypeBrandUncheckedCreateWithoutAccountInput>
+    connectOrCreate?: AccountTypeBrandCreateOrConnectWithoutAccountInput
+    connect?: AccountTypeBrandWhereUniqueInput
+  }
+
+  export type AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput = {
+    create?: XOR<AccountTypeIndividualCreateWithoutAccountInput, AccountTypeIndividualUncheckedCreateWithoutAccountInput>
+    connectOrCreate?: AccountTypeIndividualCreateOrConnectWithoutAccountInput
+    connect?: AccountTypeIndividualWhereUniqueInput
+  }
+
+  export type AccountOwnershipUncheckedCreateNestedManyWithoutChildInput = {
+    create?: XOR<AccountOwnershipCreateWithoutChildInput, AccountOwnershipUncheckedCreateWithoutChildInput> | AccountOwnershipCreateWithoutChildInput[] | AccountOwnershipUncheckedCreateWithoutChildInput[]
+    connectOrCreate?: AccountOwnershipCreateOrConnectWithoutChildInput | AccountOwnershipCreateOrConnectWithoutChildInput[]
+    createMany?: AccountOwnershipCreateManyChildInputEnvelope
+    connect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+  }
+
+  export type AccountOwnershipUncheckedCreateNestedManyWithoutParentInput = {
+    create?: XOR<AccountOwnershipCreateWithoutParentInput, AccountOwnershipUncheckedCreateWithoutParentInput> | AccountOwnershipCreateWithoutParentInput[] | AccountOwnershipUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: AccountOwnershipCreateOrConnectWithoutParentInput | AccountOwnershipCreateOrConnectWithoutParentInput[]
+    createMany?: AccountOwnershipCreateManyParentInputEnvelope
+    connect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+  }
+
+  export type ApplicationUncheckedCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<ApplicationCreateWithoutOwnerInput, ApplicationUncheckedCreateWithoutOwnerInput> | ApplicationCreateWithoutOwnerInput[] | ApplicationUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: ApplicationCreateOrConnectWithoutOwnerInput | ApplicationCreateOrConnectWithoutOwnerInput[]
+    createMany?: ApplicationCreateManyOwnerInputEnvelope
+    connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+  }
+
+  export type ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput = {
+    create?: XOR<ApplicationConnectionCreateWithoutAccountInput, ApplicationConnectionUncheckedCreateWithoutAccountInput> | ApplicationConnectionCreateWithoutAccountInput[] | ApplicationConnectionUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: ApplicationConnectionCreateOrConnectWithoutAccountInput | ApplicationConnectionCreateOrConnectWithoutAccountInput[]
+    createMany?: ApplicationConnectionCreateManyAccountInputEnvelope
+    connect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+  }
+
+  export type AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput = {
+    create?: XOR<AuthMethodCreateWithoutIndividualProfileInput, AuthMethodUncheckedCreateWithoutIndividualProfileInput> | AuthMethodCreateWithoutIndividualProfileInput[] | AuthMethodUncheckedCreateWithoutIndividualProfileInput[]
+    connectOrCreate?: AuthMethodCreateOrConnectWithoutIndividualProfileInput | AuthMethodCreateOrConnectWithoutIndividualProfileInput[]
+    createMany?: AuthMethodCreateManyIndividualProfileInputEnvelope
+    connect?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
+  }
+
+  export type AuthSessionUncheckedCreateNestedManyWithoutAccountInput = {
+    create?: XOR<AuthSessionCreateWithoutAccountInput, AuthSessionUncheckedCreateWithoutAccountInput> | AuthSessionCreateWithoutAccountInput[] | AuthSessionUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: AuthSessionCreateOrConnectWithoutAccountInput | AuthSessionCreateOrConnectWithoutAccountInput[]
+    createMany?: AuthSessionCreateManyAccountInputEnvelope
+    connect?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
   }
 
   export type ContactUncheckedCreateNestedManyWithoutAccountInput = {
@@ -34106,6 +33971,13 @@ export namespace Prisma {
     connect?: NeupIdWhereUniqueInput | NeupIdWhereUniqueInput[]
   }
 
+  export type NotificationUncheckedCreateNestedManyWithoutAccountInput = {
+    create?: XOR<NotificationCreateWithoutAccountInput, NotificationUncheckedCreateWithoutAccountInput> | NotificationCreateWithoutAccountInput[] | NotificationUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutAccountInput | NotificationCreateOrConnectWithoutAccountInput[]
+    createMany?: NotificationCreateManyAccountInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
   export type PermitUncheckedCreateNestedManyWithoutAccountInput = {
     create?: XOR<PermitCreateWithoutAccountInput, PermitUncheckedCreateWithoutAccountInput> | PermitCreateWithoutAccountInput[] | PermitUncheckedCreateWithoutAccountInput[]
     connectOrCreate?: PermitCreateOrConnectWithoutAccountInput | PermitCreateOrConnectWithoutAccountInput[]
@@ -34118,88 +33990,6 @@ export namespace Prisma {
     connectOrCreate?: PermitCreateOrConnectWithoutTargetAccountInput | PermitCreateOrConnectWithoutTargetAccountInput[]
     createMany?: PermitCreateManyTargetAccountInputEnvelope
     connect?: PermitWhereUniqueInput | PermitWhereUniqueInput[]
-  }
-
-  export type AuthSessionUncheckedCreateNestedManyWithoutAccountInput = {
-    create?: XOR<AuthSessionCreateWithoutAccountInput, AuthSessionUncheckedCreateWithoutAccountInput> | AuthSessionCreateWithoutAccountInput[] | AuthSessionUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthSessionCreateOrConnectWithoutAccountInput | AuthSessionCreateOrConnectWithoutAccountInput[]
-    createMany?: AuthSessionCreateManyAccountInputEnvelope
-    connect?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
-  }
-
-  export type SystemErrorUncheckedCreateNestedManyWithoutAccountInput = {
-    create?: XOR<SystemErrorCreateWithoutAccountInput, SystemErrorUncheckedCreateWithoutAccountInput> | SystemErrorCreateWithoutAccountInput[] | SystemErrorUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: SystemErrorCreateOrConnectWithoutAccountInput | SystemErrorCreateOrConnectWithoutAccountInput[]
-    createMany?: SystemErrorCreateManyAccountInputEnvelope
-    connect?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
-  }
-
-  export type ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput = {
-    create?: XOR<ApplicationConnectionCreateWithoutAccountInput, ApplicationConnectionUncheckedCreateWithoutAccountInput> | ApplicationConnectionCreateWithoutAccountInput[] | ApplicationConnectionUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: ApplicationConnectionCreateOrConnectWithoutAccountInput | ApplicationConnectionCreateOrConnectWithoutAccountInput[]
-    createMany?: ApplicationConnectionCreateManyAccountInputEnvelope
-    connect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
-  }
-
-  export type ApplicationUncheckedCreateNestedManyWithoutOwnerInput = {
-    create?: XOR<ApplicationCreateWithoutOwnerInput, ApplicationUncheckedCreateWithoutOwnerInput> | ApplicationCreateWithoutOwnerInput[] | ApplicationUncheckedCreateWithoutOwnerInput[]
-    connectOrCreate?: ApplicationCreateOrConnectWithoutOwnerInput | ApplicationCreateOrConnectWithoutOwnerInput[]
-    createMany?: ApplicationCreateManyOwnerInputEnvelope
-    connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
-  }
-
-  export type NotificationUncheckedCreateNestedManyWithoutAccountInput = {
-    create?: XOR<NotificationCreateWithoutAccountInput, NotificationUncheckedCreateWithoutAccountInput> | NotificationCreateWithoutAccountInput[] | NotificationUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutAccountInput | NotificationCreateOrConnectWithoutAccountInput[]
-    createMany?: NotificationCreateManyAccountInputEnvelope
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-  }
-
-  export type VerificationUncheckedCreateNestedManyWithoutAccountInput = {
-    create?: XOR<VerificationCreateWithoutAccountInput, VerificationUncheckedCreateWithoutAccountInput> | VerificationCreateWithoutAccountInput[] | VerificationUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: VerificationCreateOrConnectWithoutAccountInput | VerificationCreateOrConnectWithoutAccountInput[]
-    createMany?: VerificationCreateManyAccountInputEnvelope
-    connect?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
-  }
-
-  export type RequestUncheckedCreateNestedManyWithoutSenderInput = {
-    create?: XOR<RequestCreateWithoutSenderInput, RequestUncheckedCreateWithoutSenderInput> | RequestCreateWithoutSenderInput[] | RequestUncheckedCreateWithoutSenderInput[]
-    connectOrCreate?: RequestCreateOrConnectWithoutSenderInput | RequestCreateOrConnectWithoutSenderInput[]
-    createMany?: RequestCreateManySenderInputEnvelope
-    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
-  }
-
-  export type RequestUncheckedCreateNestedManyWithoutRecipientInput = {
-    create?: XOR<RequestCreateWithoutRecipientInput, RequestUncheckedCreateWithoutRecipientInput> | RequestCreateWithoutRecipientInput[] | RequestUncheckedCreateWithoutRecipientInput[]
-    connectOrCreate?: RequestCreateOrConnectWithoutRecipientInput | RequestCreateOrConnectWithoutRecipientInput[]
-    createMany?: RequestCreateManyRecipientInputEnvelope
-    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
-  }
-
-  export type AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput = {
-    create?: XOR<AccountTypeIndividualCreateWithoutAccountInput, AccountTypeIndividualUncheckedCreateWithoutAccountInput>
-    connectOrCreate?: AccountTypeIndividualCreateOrConnectWithoutAccountInput
-    connect?: AccountTypeIndividualWhereUniqueInput
-  }
-
-  export type AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput = {
-    create?: XOR<AccountTypeBrandCreateWithoutAccountInput, AccountTypeBrandUncheckedCreateWithoutAccountInput>
-    connectOrCreate?: AccountTypeBrandCreateOrConnectWithoutAccountInput
-    connect?: AccountTypeBrandWhereUniqueInput
-  }
-
-  export type AccountOwnershipUncheckedCreateNestedManyWithoutParentInput = {
-    create?: XOR<AccountOwnershipCreateWithoutParentInput, AccountOwnershipUncheckedCreateWithoutParentInput> | AccountOwnershipCreateWithoutParentInput[] | AccountOwnershipUncheckedCreateWithoutParentInput[]
-    connectOrCreate?: AccountOwnershipCreateOrConnectWithoutParentInput | AccountOwnershipCreateOrConnectWithoutParentInput[]
-    createMany?: AccountOwnershipCreateManyParentInputEnvelope
-    connect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
-  }
-
-  export type AccountOwnershipUncheckedCreateNestedManyWithoutChildInput = {
-    create?: XOR<AccountOwnershipCreateWithoutChildInput, AccountOwnershipUncheckedCreateWithoutChildInput> | AccountOwnershipCreateWithoutChildInput[] | AccountOwnershipUncheckedCreateWithoutChildInput[]
-    connectOrCreate?: AccountOwnershipCreateOrConnectWithoutChildInput | AccountOwnershipCreateOrConnectWithoutChildInput[]
-    createMany?: AccountOwnershipCreateManyChildInputEnvelope
-    connect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
   }
 
   export type PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput = {
@@ -34216,6 +34006,34 @@ export namespace Prisma {
     connect?: PortfolioRoleWhereUniqueInput | PortfolioRoleWhereUniqueInput[]
   }
 
+  export type RequestUncheckedCreateNestedManyWithoutRecipientInput = {
+    create?: XOR<RequestCreateWithoutRecipientInput, RequestUncheckedCreateWithoutRecipientInput> | RequestCreateWithoutRecipientInput[] | RequestUncheckedCreateWithoutRecipientInput[]
+    connectOrCreate?: RequestCreateOrConnectWithoutRecipientInput | RequestCreateOrConnectWithoutRecipientInput[]
+    createMany?: RequestCreateManyRecipientInputEnvelope
+    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+  }
+
+  export type RequestUncheckedCreateNestedManyWithoutSenderInput = {
+    create?: XOR<RequestCreateWithoutSenderInput, RequestUncheckedCreateWithoutSenderInput> | RequestCreateWithoutSenderInput[] | RequestUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: RequestCreateOrConnectWithoutSenderInput | RequestCreateOrConnectWithoutSenderInput[]
+    createMany?: RequestCreateManySenderInputEnvelope
+    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+  }
+
+  export type SystemErrorUncheckedCreateNestedManyWithoutAccountInput = {
+    create?: XOR<SystemErrorCreateWithoutAccountInput, SystemErrorUncheckedCreateWithoutAccountInput> | SystemErrorCreateWithoutAccountInput[] | SystemErrorUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: SystemErrorCreateOrConnectWithoutAccountInput | SystemErrorCreateOrConnectWithoutAccountInput[]
+    createMany?: SystemErrorCreateManyAccountInputEnvelope
+    connect?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
+  }
+
+  export type VerificationUncheckedCreateNestedManyWithoutAccountInput = {
+    create?: XOR<VerificationCreateWithoutAccountInput, VerificationUncheckedCreateWithoutAccountInput> | VerificationCreateWithoutAccountInput[] | VerificationUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: VerificationCreateOrConnectWithoutAccountInput | VerificationCreateOrConnectWithoutAccountInput[]
+    createMany?: VerificationCreateManyAccountInputEnvelope
+    connect?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -34230,6 +34048,110 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type AccountTypeBrandUpdateOneWithoutAccountNestedInput = {
+    create?: XOR<AccountTypeBrandCreateWithoutAccountInput, AccountTypeBrandUncheckedCreateWithoutAccountInput>
+    connectOrCreate?: AccountTypeBrandCreateOrConnectWithoutAccountInput
+    upsert?: AccountTypeBrandUpsertWithoutAccountInput
+    disconnect?: AccountTypeBrandWhereInput | boolean
+    delete?: AccountTypeBrandWhereInput | boolean
+    connect?: AccountTypeBrandWhereUniqueInput
+    update?: XOR<XOR<AccountTypeBrandUpdateToOneWithWhereWithoutAccountInput, AccountTypeBrandUpdateWithoutAccountInput>, AccountTypeBrandUncheckedUpdateWithoutAccountInput>
+  }
+
+  export type AccountTypeIndividualUpdateOneWithoutAccountNestedInput = {
+    create?: XOR<AccountTypeIndividualCreateWithoutAccountInput, AccountTypeIndividualUncheckedCreateWithoutAccountInput>
+    connectOrCreate?: AccountTypeIndividualCreateOrConnectWithoutAccountInput
+    upsert?: AccountTypeIndividualUpsertWithoutAccountInput
+    disconnect?: AccountTypeIndividualWhereInput | boolean
+    delete?: AccountTypeIndividualWhereInput | boolean
+    connect?: AccountTypeIndividualWhereUniqueInput
+    update?: XOR<XOR<AccountTypeIndividualUpdateToOneWithWhereWithoutAccountInput, AccountTypeIndividualUpdateWithoutAccountInput>, AccountTypeIndividualUncheckedUpdateWithoutAccountInput>
+  }
+
+  export type AccountOwnershipUpdateManyWithoutChildNestedInput = {
+    create?: XOR<AccountOwnershipCreateWithoutChildInput, AccountOwnershipUncheckedCreateWithoutChildInput> | AccountOwnershipCreateWithoutChildInput[] | AccountOwnershipUncheckedCreateWithoutChildInput[]
+    connectOrCreate?: AccountOwnershipCreateOrConnectWithoutChildInput | AccountOwnershipCreateOrConnectWithoutChildInput[]
+    upsert?: AccountOwnershipUpsertWithWhereUniqueWithoutChildInput | AccountOwnershipUpsertWithWhereUniqueWithoutChildInput[]
+    createMany?: AccountOwnershipCreateManyChildInputEnvelope
+    set?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+    disconnect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+    delete?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+    connect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+    update?: AccountOwnershipUpdateWithWhereUniqueWithoutChildInput | AccountOwnershipUpdateWithWhereUniqueWithoutChildInput[]
+    updateMany?: AccountOwnershipUpdateManyWithWhereWithoutChildInput | AccountOwnershipUpdateManyWithWhereWithoutChildInput[]
+    deleteMany?: AccountOwnershipScalarWhereInput | AccountOwnershipScalarWhereInput[]
+  }
+
+  export type AccountOwnershipUpdateManyWithoutParentNestedInput = {
+    create?: XOR<AccountOwnershipCreateWithoutParentInput, AccountOwnershipUncheckedCreateWithoutParentInput> | AccountOwnershipCreateWithoutParentInput[] | AccountOwnershipUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: AccountOwnershipCreateOrConnectWithoutParentInput | AccountOwnershipCreateOrConnectWithoutParentInput[]
+    upsert?: AccountOwnershipUpsertWithWhereUniqueWithoutParentInput | AccountOwnershipUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: AccountOwnershipCreateManyParentInputEnvelope
+    set?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+    disconnect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+    delete?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+    connect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+    update?: AccountOwnershipUpdateWithWhereUniqueWithoutParentInput | AccountOwnershipUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: AccountOwnershipUpdateManyWithWhereWithoutParentInput | AccountOwnershipUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: AccountOwnershipScalarWhereInput | AccountOwnershipScalarWhereInput[]
+  }
+
+  export type ApplicationUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<ApplicationCreateWithoutOwnerInput, ApplicationUncheckedCreateWithoutOwnerInput> | ApplicationCreateWithoutOwnerInput[] | ApplicationUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: ApplicationCreateOrConnectWithoutOwnerInput | ApplicationCreateOrConnectWithoutOwnerInput[]
+    upsert?: ApplicationUpsertWithWhereUniqueWithoutOwnerInput | ApplicationUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: ApplicationCreateManyOwnerInputEnvelope
+    set?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    disconnect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    delete?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    update?: ApplicationUpdateWithWhereUniqueWithoutOwnerInput | ApplicationUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: ApplicationUpdateManyWithWhereWithoutOwnerInput | ApplicationUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
+  }
+
+  export type ApplicationConnectionUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<ApplicationConnectionCreateWithoutAccountInput, ApplicationConnectionUncheckedCreateWithoutAccountInput> | ApplicationConnectionCreateWithoutAccountInput[] | ApplicationConnectionUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: ApplicationConnectionCreateOrConnectWithoutAccountInput | ApplicationConnectionCreateOrConnectWithoutAccountInput[]
+    upsert?: ApplicationConnectionUpsertWithWhereUniqueWithoutAccountInput | ApplicationConnectionUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: ApplicationConnectionCreateManyAccountInputEnvelope
+    set?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    disconnect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    delete?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    connect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    update?: ApplicationConnectionUpdateWithWhereUniqueWithoutAccountInput | ApplicationConnectionUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: ApplicationConnectionUpdateManyWithWhereWithoutAccountInput | ApplicationConnectionUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: ApplicationConnectionScalarWhereInput | ApplicationConnectionScalarWhereInput[]
+  }
+
+  export type AuthMethodUpdateManyWithoutIndividualProfileNestedInput = {
+    create?: XOR<AuthMethodCreateWithoutIndividualProfileInput, AuthMethodUncheckedCreateWithoutIndividualProfileInput> | AuthMethodCreateWithoutIndividualProfileInput[] | AuthMethodUncheckedCreateWithoutIndividualProfileInput[]
+    connectOrCreate?: AuthMethodCreateOrConnectWithoutIndividualProfileInput | AuthMethodCreateOrConnectWithoutIndividualProfileInput[]
+    upsert?: AuthMethodUpsertWithWhereUniqueWithoutIndividualProfileInput | AuthMethodUpsertWithWhereUniqueWithoutIndividualProfileInput[]
+    createMany?: AuthMethodCreateManyIndividualProfileInputEnvelope
+    set?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
+    disconnect?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
+    delete?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
+    connect?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
+    update?: AuthMethodUpdateWithWhereUniqueWithoutIndividualProfileInput | AuthMethodUpdateWithWhereUniqueWithoutIndividualProfileInput[]
+    updateMany?: AuthMethodUpdateManyWithWhereWithoutIndividualProfileInput | AuthMethodUpdateManyWithWhereWithoutIndividualProfileInput[]
+    deleteMany?: AuthMethodScalarWhereInput | AuthMethodScalarWhereInput[]
+  }
+
+  export type AuthSessionUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<AuthSessionCreateWithoutAccountInput, AuthSessionUncheckedCreateWithoutAccountInput> | AuthSessionCreateWithoutAccountInput[] | AuthSessionUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: AuthSessionCreateOrConnectWithoutAccountInput | AuthSessionCreateOrConnectWithoutAccountInput[]
+    upsert?: AuthSessionUpsertWithWhereUniqueWithoutAccountInput | AuthSessionUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: AuthSessionCreateManyAccountInputEnvelope
+    set?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
+    disconnect?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
+    delete?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
+    connect?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
+    update?: AuthSessionUpdateWithWhereUniqueWithoutAccountInput | AuthSessionUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: AuthSessionUpdateManyWithWhereWithoutAccountInput | AuthSessionUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: AuthSessionScalarWhereInput | AuthSessionScalarWhereInput[]
   }
 
   export type ContactUpdateManyWithoutAccountNestedInput = {
@@ -34260,6 +34182,20 @@ export namespace Prisma {
     deleteMany?: NeupIdScalarWhereInput | NeupIdScalarWhereInput[]
   }
 
+  export type NotificationUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<NotificationCreateWithoutAccountInput, NotificationUncheckedCreateWithoutAccountInput> | NotificationCreateWithoutAccountInput[] | NotificationUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutAccountInput | NotificationCreateOrConnectWithoutAccountInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutAccountInput | NotificationUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: NotificationCreateManyAccountInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutAccountInput | NotificationUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutAccountInput | NotificationUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
   export type PermitUpdateManyWithoutAccountNestedInput = {
     create?: XOR<PermitCreateWithoutAccountInput, PermitUncheckedCreateWithoutAccountInput> | PermitCreateWithoutAccountInput[] | PermitUncheckedCreateWithoutAccountInput[]
     connectOrCreate?: PermitCreateOrConnectWithoutAccountInput | PermitCreateOrConnectWithoutAccountInput[]
@@ -34286,166 +34222,6 @@ export namespace Prisma {
     update?: PermitUpdateWithWhereUniqueWithoutTargetAccountInput | PermitUpdateWithWhereUniqueWithoutTargetAccountInput[]
     updateMany?: PermitUpdateManyWithWhereWithoutTargetAccountInput | PermitUpdateManyWithWhereWithoutTargetAccountInput[]
     deleteMany?: PermitScalarWhereInput | PermitScalarWhereInput[]
-  }
-
-  export type AuthSessionUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<AuthSessionCreateWithoutAccountInput, AuthSessionUncheckedCreateWithoutAccountInput> | AuthSessionCreateWithoutAccountInput[] | AuthSessionUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthSessionCreateOrConnectWithoutAccountInput | AuthSessionCreateOrConnectWithoutAccountInput[]
-    upsert?: AuthSessionUpsertWithWhereUniqueWithoutAccountInput | AuthSessionUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: AuthSessionCreateManyAccountInputEnvelope
-    set?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
-    disconnect?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
-    delete?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
-    connect?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
-    update?: AuthSessionUpdateWithWhereUniqueWithoutAccountInput | AuthSessionUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: AuthSessionUpdateManyWithWhereWithoutAccountInput | AuthSessionUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: AuthSessionScalarWhereInput | AuthSessionScalarWhereInput[]
-  }
-
-  export type SystemErrorUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<SystemErrorCreateWithoutAccountInput, SystemErrorUncheckedCreateWithoutAccountInput> | SystemErrorCreateWithoutAccountInput[] | SystemErrorUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: SystemErrorCreateOrConnectWithoutAccountInput | SystemErrorCreateOrConnectWithoutAccountInput[]
-    upsert?: SystemErrorUpsertWithWhereUniqueWithoutAccountInput | SystemErrorUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: SystemErrorCreateManyAccountInputEnvelope
-    set?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
-    disconnect?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
-    delete?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
-    connect?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
-    update?: SystemErrorUpdateWithWhereUniqueWithoutAccountInput | SystemErrorUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: SystemErrorUpdateManyWithWhereWithoutAccountInput | SystemErrorUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: SystemErrorScalarWhereInput | SystemErrorScalarWhereInput[]
-  }
-
-  export type ApplicationConnectionUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<ApplicationConnectionCreateWithoutAccountInput, ApplicationConnectionUncheckedCreateWithoutAccountInput> | ApplicationConnectionCreateWithoutAccountInput[] | ApplicationConnectionUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: ApplicationConnectionCreateOrConnectWithoutAccountInput | ApplicationConnectionCreateOrConnectWithoutAccountInput[]
-    upsert?: ApplicationConnectionUpsertWithWhereUniqueWithoutAccountInput | ApplicationConnectionUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: ApplicationConnectionCreateManyAccountInputEnvelope
-    set?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
-    disconnect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
-    delete?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
-    connect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
-    update?: ApplicationConnectionUpdateWithWhereUniqueWithoutAccountInput | ApplicationConnectionUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: ApplicationConnectionUpdateManyWithWhereWithoutAccountInput | ApplicationConnectionUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: ApplicationConnectionScalarWhereInput | ApplicationConnectionScalarWhereInput[]
-  }
-
-  export type ApplicationUpdateManyWithoutOwnerNestedInput = {
-    create?: XOR<ApplicationCreateWithoutOwnerInput, ApplicationUncheckedCreateWithoutOwnerInput> | ApplicationCreateWithoutOwnerInput[] | ApplicationUncheckedCreateWithoutOwnerInput[]
-    connectOrCreate?: ApplicationCreateOrConnectWithoutOwnerInput | ApplicationCreateOrConnectWithoutOwnerInput[]
-    upsert?: ApplicationUpsertWithWhereUniqueWithoutOwnerInput | ApplicationUpsertWithWhereUniqueWithoutOwnerInput[]
-    createMany?: ApplicationCreateManyOwnerInputEnvelope
-    set?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
-    disconnect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
-    delete?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
-    connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
-    update?: ApplicationUpdateWithWhereUniqueWithoutOwnerInput | ApplicationUpdateWithWhereUniqueWithoutOwnerInput[]
-    updateMany?: ApplicationUpdateManyWithWhereWithoutOwnerInput | ApplicationUpdateManyWithWhereWithoutOwnerInput[]
-    deleteMany?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
-  }
-
-  export type NotificationUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<NotificationCreateWithoutAccountInput, NotificationUncheckedCreateWithoutAccountInput> | NotificationCreateWithoutAccountInput[] | NotificationUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutAccountInput | NotificationCreateOrConnectWithoutAccountInput[]
-    upsert?: NotificationUpsertWithWhereUniqueWithoutAccountInput | NotificationUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: NotificationCreateManyAccountInputEnvelope
-    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    update?: NotificationUpdateWithWhereUniqueWithoutAccountInput | NotificationUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: NotificationUpdateManyWithWhereWithoutAccountInput | NotificationUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-  }
-
-  export type VerificationUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<VerificationCreateWithoutAccountInput, VerificationUncheckedCreateWithoutAccountInput> | VerificationCreateWithoutAccountInput[] | VerificationUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: VerificationCreateOrConnectWithoutAccountInput | VerificationCreateOrConnectWithoutAccountInput[]
-    upsert?: VerificationUpsertWithWhereUniqueWithoutAccountInput | VerificationUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: VerificationCreateManyAccountInputEnvelope
-    set?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
-    disconnect?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
-    delete?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
-    connect?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
-    update?: VerificationUpdateWithWhereUniqueWithoutAccountInput | VerificationUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: VerificationUpdateManyWithWhereWithoutAccountInput | VerificationUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: VerificationScalarWhereInput | VerificationScalarWhereInput[]
-  }
-
-  export type RequestUpdateManyWithoutSenderNestedInput = {
-    create?: XOR<RequestCreateWithoutSenderInput, RequestUncheckedCreateWithoutSenderInput> | RequestCreateWithoutSenderInput[] | RequestUncheckedCreateWithoutSenderInput[]
-    connectOrCreate?: RequestCreateOrConnectWithoutSenderInput | RequestCreateOrConnectWithoutSenderInput[]
-    upsert?: RequestUpsertWithWhereUniqueWithoutSenderInput | RequestUpsertWithWhereUniqueWithoutSenderInput[]
-    createMany?: RequestCreateManySenderInputEnvelope
-    set?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
-    disconnect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
-    delete?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
-    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
-    update?: RequestUpdateWithWhereUniqueWithoutSenderInput | RequestUpdateWithWhereUniqueWithoutSenderInput[]
-    updateMany?: RequestUpdateManyWithWhereWithoutSenderInput | RequestUpdateManyWithWhereWithoutSenderInput[]
-    deleteMany?: RequestScalarWhereInput | RequestScalarWhereInput[]
-  }
-
-  export type RequestUpdateManyWithoutRecipientNestedInput = {
-    create?: XOR<RequestCreateWithoutRecipientInput, RequestUncheckedCreateWithoutRecipientInput> | RequestCreateWithoutRecipientInput[] | RequestUncheckedCreateWithoutRecipientInput[]
-    connectOrCreate?: RequestCreateOrConnectWithoutRecipientInput | RequestCreateOrConnectWithoutRecipientInput[]
-    upsert?: RequestUpsertWithWhereUniqueWithoutRecipientInput | RequestUpsertWithWhereUniqueWithoutRecipientInput[]
-    createMany?: RequestCreateManyRecipientInputEnvelope
-    set?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
-    disconnect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
-    delete?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
-    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
-    update?: RequestUpdateWithWhereUniqueWithoutRecipientInput | RequestUpdateWithWhereUniqueWithoutRecipientInput[]
-    updateMany?: RequestUpdateManyWithWhereWithoutRecipientInput | RequestUpdateManyWithWhereWithoutRecipientInput[]
-    deleteMany?: RequestScalarWhereInput | RequestScalarWhereInput[]
-  }
-
-  export type AccountTypeIndividualUpdateOneWithoutAccountNestedInput = {
-    create?: XOR<AccountTypeIndividualCreateWithoutAccountInput, AccountTypeIndividualUncheckedCreateWithoutAccountInput>
-    connectOrCreate?: AccountTypeIndividualCreateOrConnectWithoutAccountInput
-    upsert?: AccountTypeIndividualUpsertWithoutAccountInput
-    disconnect?: AccountTypeIndividualWhereInput | boolean
-    delete?: AccountTypeIndividualWhereInput | boolean
-    connect?: AccountTypeIndividualWhereUniqueInput
-    update?: XOR<XOR<AccountTypeIndividualUpdateToOneWithWhereWithoutAccountInput, AccountTypeIndividualUpdateWithoutAccountInput>, AccountTypeIndividualUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type AccountTypeBrandUpdateOneWithoutAccountNestedInput = {
-    create?: XOR<AccountTypeBrandCreateWithoutAccountInput, AccountTypeBrandUncheckedCreateWithoutAccountInput>
-    connectOrCreate?: AccountTypeBrandCreateOrConnectWithoutAccountInput
-    upsert?: AccountTypeBrandUpsertWithoutAccountInput
-    disconnect?: AccountTypeBrandWhereInput | boolean
-    delete?: AccountTypeBrandWhereInput | boolean
-    connect?: AccountTypeBrandWhereUniqueInput
-    update?: XOR<XOR<AccountTypeBrandUpdateToOneWithWhereWithoutAccountInput, AccountTypeBrandUpdateWithoutAccountInput>, AccountTypeBrandUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type AccountOwnershipUpdateManyWithoutParentNestedInput = {
-    create?: XOR<AccountOwnershipCreateWithoutParentInput, AccountOwnershipUncheckedCreateWithoutParentInput> | AccountOwnershipCreateWithoutParentInput[] | AccountOwnershipUncheckedCreateWithoutParentInput[]
-    connectOrCreate?: AccountOwnershipCreateOrConnectWithoutParentInput | AccountOwnershipCreateOrConnectWithoutParentInput[]
-    upsert?: AccountOwnershipUpsertWithWhereUniqueWithoutParentInput | AccountOwnershipUpsertWithWhereUniqueWithoutParentInput[]
-    createMany?: AccountOwnershipCreateManyParentInputEnvelope
-    set?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
-    disconnect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
-    delete?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
-    connect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
-    update?: AccountOwnershipUpdateWithWhereUniqueWithoutParentInput | AccountOwnershipUpdateWithWhereUniqueWithoutParentInput[]
-    updateMany?: AccountOwnershipUpdateManyWithWhereWithoutParentInput | AccountOwnershipUpdateManyWithWhereWithoutParentInput[]
-    deleteMany?: AccountOwnershipScalarWhereInput | AccountOwnershipScalarWhereInput[]
-  }
-
-  export type AccountOwnershipUpdateManyWithoutChildNestedInput = {
-    create?: XOR<AccountOwnershipCreateWithoutChildInput, AccountOwnershipUncheckedCreateWithoutChildInput> | AccountOwnershipCreateWithoutChildInput[] | AccountOwnershipUncheckedCreateWithoutChildInput[]
-    connectOrCreate?: AccountOwnershipCreateOrConnectWithoutChildInput | AccountOwnershipCreateOrConnectWithoutChildInput[]
-    upsert?: AccountOwnershipUpsertWithWhereUniqueWithoutChildInput | AccountOwnershipUpsertWithWhereUniqueWithoutChildInput[]
-    createMany?: AccountOwnershipCreateManyChildInputEnvelope
-    set?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
-    disconnect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
-    delete?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
-    connect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
-    update?: AccountOwnershipUpdateWithWhereUniqueWithoutChildInput | AccountOwnershipUpdateWithWhereUniqueWithoutChildInput[]
-    updateMany?: AccountOwnershipUpdateManyWithWhereWithoutChildInput | AccountOwnershipUpdateManyWithWhereWithoutChildInput[]
-    deleteMany?: AccountOwnershipScalarWhereInput | AccountOwnershipScalarWhereInput[]
   }
 
   export type PortfolioMemberUpdateManyWithoutAccountNestedInput = {
@@ -34476,6 +34252,166 @@ export namespace Prisma {
     deleteMany?: PortfolioRoleScalarWhereInput | PortfolioRoleScalarWhereInput[]
   }
 
+  export type RequestUpdateManyWithoutRecipientNestedInput = {
+    create?: XOR<RequestCreateWithoutRecipientInput, RequestUncheckedCreateWithoutRecipientInput> | RequestCreateWithoutRecipientInput[] | RequestUncheckedCreateWithoutRecipientInput[]
+    connectOrCreate?: RequestCreateOrConnectWithoutRecipientInput | RequestCreateOrConnectWithoutRecipientInput[]
+    upsert?: RequestUpsertWithWhereUniqueWithoutRecipientInput | RequestUpsertWithWhereUniqueWithoutRecipientInput[]
+    createMany?: RequestCreateManyRecipientInputEnvelope
+    set?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    disconnect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    delete?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    update?: RequestUpdateWithWhereUniqueWithoutRecipientInput | RequestUpdateWithWhereUniqueWithoutRecipientInput[]
+    updateMany?: RequestUpdateManyWithWhereWithoutRecipientInput | RequestUpdateManyWithWhereWithoutRecipientInput[]
+    deleteMany?: RequestScalarWhereInput | RequestScalarWhereInput[]
+  }
+
+  export type RequestUpdateManyWithoutSenderNestedInput = {
+    create?: XOR<RequestCreateWithoutSenderInput, RequestUncheckedCreateWithoutSenderInput> | RequestCreateWithoutSenderInput[] | RequestUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: RequestCreateOrConnectWithoutSenderInput | RequestCreateOrConnectWithoutSenderInput[]
+    upsert?: RequestUpsertWithWhereUniqueWithoutSenderInput | RequestUpsertWithWhereUniqueWithoutSenderInput[]
+    createMany?: RequestCreateManySenderInputEnvelope
+    set?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    disconnect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    delete?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    update?: RequestUpdateWithWhereUniqueWithoutSenderInput | RequestUpdateWithWhereUniqueWithoutSenderInput[]
+    updateMany?: RequestUpdateManyWithWhereWithoutSenderInput | RequestUpdateManyWithWhereWithoutSenderInput[]
+    deleteMany?: RequestScalarWhereInput | RequestScalarWhereInput[]
+  }
+
+  export type SystemErrorUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<SystemErrorCreateWithoutAccountInput, SystemErrorUncheckedCreateWithoutAccountInput> | SystemErrorCreateWithoutAccountInput[] | SystemErrorUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: SystemErrorCreateOrConnectWithoutAccountInput | SystemErrorCreateOrConnectWithoutAccountInput[]
+    upsert?: SystemErrorUpsertWithWhereUniqueWithoutAccountInput | SystemErrorUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: SystemErrorCreateManyAccountInputEnvelope
+    set?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
+    disconnect?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
+    delete?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
+    connect?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
+    update?: SystemErrorUpdateWithWhereUniqueWithoutAccountInput | SystemErrorUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: SystemErrorUpdateManyWithWhereWithoutAccountInput | SystemErrorUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: SystemErrorScalarWhereInput | SystemErrorScalarWhereInput[]
+  }
+
+  export type VerificationUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<VerificationCreateWithoutAccountInput, VerificationUncheckedCreateWithoutAccountInput> | VerificationCreateWithoutAccountInput[] | VerificationUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: VerificationCreateOrConnectWithoutAccountInput | VerificationCreateOrConnectWithoutAccountInput[]
+    upsert?: VerificationUpsertWithWhereUniqueWithoutAccountInput | VerificationUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: VerificationCreateManyAccountInputEnvelope
+    set?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
+    disconnect?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
+    delete?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
+    connect?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
+    update?: VerificationUpdateWithWhereUniqueWithoutAccountInput | VerificationUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: VerificationUpdateManyWithWhereWithoutAccountInput | VerificationUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: VerificationScalarWhereInput | VerificationScalarWhereInput[]
+  }
+
+  export type AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput = {
+    create?: XOR<AccountTypeBrandCreateWithoutAccountInput, AccountTypeBrandUncheckedCreateWithoutAccountInput>
+    connectOrCreate?: AccountTypeBrandCreateOrConnectWithoutAccountInput
+    upsert?: AccountTypeBrandUpsertWithoutAccountInput
+    disconnect?: AccountTypeBrandWhereInput | boolean
+    delete?: AccountTypeBrandWhereInput | boolean
+    connect?: AccountTypeBrandWhereUniqueInput
+    update?: XOR<XOR<AccountTypeBrandUpdateToOneWithWhereWithoutAccountInput, AccountTypeBrandUpdateWithoutAccountInput>, AccountTypeBrandUncheckedUpdateWithoutAccountInput>
+  }
+
+  export type AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput = {
+    create?: XOR<AccountTypeIndividualCreateWithoutAccountInput, AccountTypeIndividualUncheckedCreateWithoutAccountInput>
+    connectOrCreate?: AccountTypeIndividualCreateOrConnectWithoutAccountInput
+    upsert?: AccountTypeIndividualUpsertWithoutAccountInput
+    disconnect?: AccountTypeIndividualWhereInput | boolean
+    delete?: AccountTypeIndividualWhereInput | boolean
+    connect?: AccountTypeIndividualWhereUniqueInput
+    update?: XOR<XOR<AccountTypeIndividualUpdateToOneWithWhereWithoutAccountInput, AccountTypeIndividualUpdateWithoutAccountInput>, AccountTypeIndividualUncheckedUpdateWithoutAccountInput>
+  }
+
+  export type AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput = {
+    create?: XOR<AccountOwnershipCreateWithoutChildInput, AccountOwnershipUncheckedCreateWithoutChildInput> | AccountOwnershipCreateWithoutChildInput[] | AccountOwnershipUncheckedCreateWithoutChildInput[]
+    connectOrCreate?: AccountOwnershipCreateOrConnectWithoutChildInput | AccountOwnershipCreateOrConnectWithoutChildInput[]
+    upsert?: AccountOwnershipUpsertWithWhereUniqueWithoutChildInput | AccountOwnershipUpsertWithWhereUniqueWithoutChildInput[]
+    createMany?: AccountOwnershipCreateManyChildInputEnvelope
+    set?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+    disconnect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+    delete?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+    connect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+    update?: AccountOwnershipUpdateWithWhereUniqueWithoutChildInput | AccountOwnershipUpdateWithWhereUniqueWithoutChildInput[]
+    updateMany?: AccountOwnershipUpdateManyWithWhereWithoutChildInput | AccountOwnershipUpdateManyWithWhereWithoutChildInput[]
+    deleteMany?: AccountOwnershipScalarWhereInput | AccountOwnershipScalarWhereInput[]
+  }
+
+  export type AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput = {
+    create?: XOR<AccountOwnershipCreateWithoutParentInput, AccountOwnershipUncheckedCreateWithoutParentInput> | AccountOwnershipCreateWithoutParentInput[] | AccountOwnershipUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: AccountOwnershipCreateOrConnectWithoutParentInput | AccountOwnershipCreateOrConnectWithoutParentInput[]
+    upsert?: AccountOwnershipUpsertWithWhereUniqueWithoutParentInput | AccountOwnershipUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: AccountOwnershipCreateManyParentInputEnvelope
+    set?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+    disconnect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+    delete?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+    connect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
+    update?: AccountOwnershipUpdateWithWhereUniqueWithoutParentInput | AccountOwnershipUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: AccountOwnershipUpdateManyWithWhereWithoutParentInput | AccountOwnershipUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: AccountOwnershipScalarWhereInput | AccountOwnershipScalarWhereInput[]
+  }
+
+  export type ApplicationUncheckedUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<ApplicationCreateWithoutOwnerInput, ApplicationUncheckedCreateWithoutOwnerInput> | ApplicationCreateWithoutOwnerInput[] | ApplicationUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: ApplicationCreateOrConnectWithoutOwnerInput | ApplicationCreateOrConnectWithoutOwnerInput[]
+    upsert?: ApplicationUpsertWithWhereUniqueWithoutOwnerInput | ApplicationUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: ApplicationCreateManyOwnerInputEnvelope
+    set?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    disconnect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    delete?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+    update?: ApplicationUpdateWithWhereUniqueWithoutOwnerInput | ApplicationUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: ApplicationUpdateManyWithWhereWithoutOwnerInput | ApplicationUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
+  }
+
+  export type ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<ApplicationConnectionCreateWithoutAccountInput, ApplicationConnectionUncheckedCreateWithoutAccountInput> | ApplicationConnectionCreateWithoutAccountInput[] | ApplicationConnectionUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: ApplicationConnectionCreateOrConnectWithoutAccountInput | ApplicationConnectionCreateOrConnectWithoutAccountInput[]
+    upsert?: ApplicationConnectionUpsertWithWhereUniqueWithoutAccountInput | ApplicationConnectionUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: ApplicationConnectionCreateManyAccountInputEnvelope
+    set?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    disconnect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    delete?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    connect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+    update?: ApplicationConnectionUpdateWithWhereUniqueWithoutAccountInput | ApplicationConnectionUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: ApplicationConnectionUpdateManyWithWhereWithoutAccountInput | ApplicationConnectionUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: ApplicationConnectionScalarWhereInput | ApplicationConnectionScalarWhereInput[]
+  }
+
+  export type AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput = {
+    create?: XOR<AuthMethodCreateWithoutIndividualProfileInput, AuthMethodUncheckedCreateWithoutIndividualProfileInput> | AuthMethodCreateWithoutIndividualProfileInput[] | AuthMethodUncheckedCreateWithoutIndividualProfileInput[]
+    connectOrCreate?: AuthMethodCreateOrConnectWithoutIndividualProfileInput | AuthMethodCreateOrConnectWithoutIndividualProfileInput[]
+    upsert?: AuthMethodUpsertWithWhereUniqueWithoutIndividualProfileInput | AuthMethodUpsertWithWhereUniqueWithoutIndividualProfileInput[]
+    createMany?: AuthMethodCreateManyIndividualProfileInputEnvelope
+    set?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
+    disconnect?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
+    delete?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
+    connect?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
+    update?: AuthMethodUpdateWithWhereUniqueWithoutIndividualProfileInput | AuthMethodUpdateWithWhereUniqueWithoutIndividualProfileInput[]
+    updateMany?: AuthMethodUpdateManyWithWhereWithoutIndividualProfileInput | AuthMethodUpdateManyWithWhereWithoutIndividualProfileInput[]
+    deleteMany?: AuthMethodScalarWhereInput | AuthMethodScalarWhereInput[]
+  }
+
+  export type AuthSessionUncheckedUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<AuthSessionCreateWithoutAccountInput, AuthSessionUncheckedCreateWithoutAccountInput> | AuthSessionCreateWithoutAccountInput[] | AuthSessionUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: AuthSessionCreateOrConnectWithoutAccountInput | AuthSessionCreateOrConnectWithoutAccountInput[]
+    upsert?: AuthSessionUpsertWithWhereUniqueWithoutAccountInput | AuthSessionUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: AuthSessionCreateManyAccountInputEnvelope
+    set?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
+    disconnect?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
+    delete?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
+    connect?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
+    update?: AuthSessionUpdateWithWhereUniqueWithoutAccountInput | AuthSessionUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: AuthSessionUpdateManyWithWhereWithoutAccountInput | AuthSessionUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: AuthSessionScalarWhereInput | AuthSessionScalarWhereInput[]
+  }
+
   export type ContactUncheckedUpdateManyWithoutAccountNestedInput = {
     create?: XOR<ContactCreateWithoutAccountInput, ContactUncheckedCreateWithoutAccountInput> | ContactCreateWithoutAccountInput[] | ContactUncheckedCreateWithoutAccountInput[]
     connectOrCreate?: ContactCreateOrConnectWithoutAccountInput | ContactCreateOrConnectWithoutAccountInput[]
@@ -34502,6 +34438,20 @@ export namespace Prisma {
     update?: NeupIdUpdateWithWhereUniqueWithoutAccountInput | NeupIdUpdateWithWhereUniqueWithoutAccountInput[]
     updateMany?: NeupIdUpdateManyWithWhereWithoutAccountInput | NeupIdUpdateManyWithWhereWithoutAccountInput[]
     deleteMany?: NeupIdScalarWhereInput | NeupIdScalarWhereInput[]
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<NotificationCreateWithoutAccountInput, NotificationUncheckedCreateWithoutAccountInput> | NotificationCreateWithoutAccountInput[] | NotificationUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutAccountInput | NotificationCreateOrConnectWithoutAccountInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutAccountInput | NotificationUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: NotificationCreateManyAccountInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutAccountInput | NotificationUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutAccountInput | NotificationUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
   export type PermitUncheckedUpdateManyWithoutAccountNestedInput = {
@@ -34532,166 +34482,6 @@ export namespace Prisma {
     deleteMany?: PermitScalarWhereInput | PermitScalarWhereInput[]
   }
 
-  export type AuthSessionUncheckedUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<AuthSessionCreateWithoutAccountInput, AuthSessionUncheckedCreateWithoutAccountInput> | AuthSessionCreateWithoutAccountInput[] | AuthSessionUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: AuthSessionCreateOrConnectWithoutAccountInput | AuthSessionCreateOrConnectWithoutAccountInput[]
-    upsert?: AuthSessionUpsertWithWhereUniqueWithoutAccountInput | AuthSessionUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: AuthSessionCreateManyAccountInputEnvelope
-    set?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
-    disconnect?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
-    delete?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
-    connect?: AuthSessionWhereUniqueInput | AuthSessionWhereUniqueInput[]
-    update?: AuthSessionUpdateWithWhereUniqueWithoutAccountInput | AuthSessionUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: AuthSessionUpdateManyWithWhereWithoutAccountInput | AuthSessionUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: AuthSessionScalarWhereInput | AuthSessionScalarWhereInput[]
-  }
-
-  export type SystemErrorUncheckedUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<SystemErrorCreateWithoutAccountInput, SystemErrorUncheckedCreateWithoutAccountInput> | SystemErrorCreateWithoutAccountInput[] | SystemErrorUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: SystemErrorCreateOrConnectWithoutAccountInput | SystemErrorCreateOrConnectWithoutAccountInput[]
-    upsert?: SystemErrorUpsertWithWhereUniqueWithoutAccountInput | SystemErrorUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: SystemErrorCreateManyAccountInputEnvelope
-    set?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
-    disconnect?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
-    delete?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
-    connect?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
-    update?: SystemErrorUpdateWithWhereUniqueWithoutAccountInput | SystemErrorUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: SystemErrorUpdateManyWithWhereWithoutAccountInput | SystemErrorUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: SystemErrorScalarWhereInput | SystemErrorScalarWhereInput[]
-  }
-
-  export type ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<ApplicationConnectionCreateWithoutAccountInput, ApplicationConnectionUncheckedCreateWithoutAccountInput> | ApplicationConnectionCreateWithoutAccountInput[] | ApplicationConnectionUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: ApplicationConnectionCreateOrConnectWithoutAccountInput | ApplicationConnectionCreateOrConnectWithoutAccountInput[]
-    upsert?: ApplicationConnectionUpsertWithWhereUniqueWithoutAccountInput | ApplicationConnectionUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: ApplicationConnectionCreateManyAccountInputEnvelope
-    set?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
-    disconnect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
-    delete?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
-    connect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
-    update?: ApplicationConnectionUpdateWithWhereUniqueWithoutAccountInput | ApplicationConnectionUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: ApplicationConnectionUpdateManyWithWhereWithoutAccountInput | ApplicationConnectionUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: ApplicationConnectionScalarWhereInput | ApplicationConnectionScalarWhereInput[]
-  }
-
-  export type ApplicationUncheckedUpdateManyWithoutOwnerNestedInput = {
-    create?: XOR<ApplicationCreateWithoutOwnerInput, ApplicationUncheckedCreateWithoutOwnerInput> | ApplicationCreateWithoutOwnerInput[] | ApplicationUncheckedCreateWithoutOwnerInput[]
-    connectOrCreate?: ApplicationCreateOrConnectWithoutOwnerInput | ApplicationCreateOrConnectWithoutOwnerInput[]
-    upsert?: ApplicationUpsertWithWhereUniqueWithoutOwnerInput | ApplicationUpsertWithWhereUniqueWithoutOwnerInput[]
-    createMany?: ApplicationCreateManyOwnerInputEnvelope
-    set?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
-    disconnect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
-    delete?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
-    connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
-    update?: ApplicationUpdateWithWhereUniqueWithoutOwnerInput | ApplicationUpdateWithWhereUniqueWithoutOwnerInput[]
-    updateMany?: ApplicationUpdateManyWithWhereWithoutOwnerInput | ApplicationUpdateManyWithWhereWithoutOwnerInput[]
-    deleteMany?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
-  }
-
-  export type NotificationUncheckedUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<NotificationCreateWithoutAccountInput, NotificationUncheckedCreateWithoutAccountInput> | NotificationCreateWithoutAccountInput[] | NotificationUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutAccountInput | NotificationCreateOrConnectWithoutAccountInput[]
-    upsert?: NotificationUpsertWithWhereUniqueWithoutAccountInput | NotificationUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: NotificationCreateManyAccountInputEnvelope
-    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    update?: NotificationUpdateWithWhereUniqueWithoutAccountInput | NotificationUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: NotificationUpdateManyWithWhereWithoutAccountInput | NotificationUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-  }
-
-  export type VerificationUncheckedUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<VerificationCreateWithoutAccountInput, VerificationUncheckedCreateWithoutAccountInput> | VerificationCreateWithoutAccountInput[] | VerificationUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: VerificationCreateOrConnectWithoutAccountInput | VerificationCreateOrConnectWithoutAccountInput[]
-    upsert?: VerificationUpsertWithWhereUniqueWithoutAccountInput | VerificationUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: VerificationCreateManyAccountInputEnvelope
-    set?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
-    disconnect?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
-    delete?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
-    connect?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
-    update?: VerificationUpdateWithWhereUniqueWithoutAccountInput | VerificationUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: VerificationUpdateManyWithWhereWithoutAccountInput | VerificationUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: VerificationScalarWhereInput | VerificationScalarWhereInput[]
-  }
-
-  export type RequestUncheckedUpdateManyWithoutSenderNestedInput = {
-    create?: XOR<RequestCreateWithoutSenderInput, RequestUncheckedCreateWithoutSenderInput> | RequestCreateWithoutSenderInput[] | RequestUncheckedCreateWithoutSenderInput[]
-    connectOrCreate?: RequestCreateOrConnectWithoutSenderInput | RequestCreateOrConnectWithoutSenderInput[]
-    upsert?: RequestUpsertWithWhereUniqueWithoutSenderInput | RequestUpsertWithWhereUniqueWithoutSenderInput[]
-    createMany?: RequestCreateManySenderInputEnvelope
-    set?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
-    disconnect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
-    delete?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
-    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
-    update?: RequestUpdateWithWhereUniqueWithoutSenderInput | RequestUpdateWithWhereUniqueWithoutSenderInput[]
-    updateMany?: RequestUpdateManyWithWhereWithoutSenderInput | RequestUpdateManyWithWhereWithoutSenderInput[]
-    deleteMany?: RequestScalarWhereInput | RequestScalarWhereInput[]
-  }
-
-  export type RequestUncheckedUpdateManyWithoutRecipientNestedInput = {
-    create?: XOR<RequestCreateWithoutRecipientInput, RequestUncheckedCreateWithoutRecipientInput> | RequestCreateWithoutRecipientInput[] | RequestUncheckedCreateWithoutRecipientInput[]
-    connectOrCreate?: RequestCreateOrConnectWithoutRecipientInput | RequestCreateOrConnectWithoutRecipientInput[]
-    upsert?: RequestUpsertWithWhereUniqueWithoutRecipientInput | RequestUpsertWithWhereUniqueWithoutRecipientInput[]
-    createMany?: RequestCreateManyRecipientInputEnvelope
-    set?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
-    disconnect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
-    delete?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
-    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
-    update?: RequestUpdateWithWhereUniqueWithoutRecipientInput | RequestUpdateWithWhereUniqueWithoutRecipientInput[]
-    updateMany?: RequestUpdateManyWithWhereWithoutRecipientInput | RequestUpdateManyWithWhereWithoutRecipientInput[]
-    deleteMany?: RequestScalarWhereInput | RequestScalarWhereInput[]
-  }
-
-  export type AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput = {
-    create?: XOR<AccountTypeIndividualCreateWithoutAccountInput, AccountTypeIndividualUncheckedCreateWithoutAccountInput>
-    connectOrCreate?: AccountTypeIndividualCreateOrConnectWithoutAccountInput
-    upsert?: AccountTypeIndividualUpsertWithoutAccountInput
-    disconnect?: AccountTypeIndividualWhereInput | boolean
-    delete?: AccountTypeIndividualWhereInput | boolean
-    connect?: AccountTypeIndividualWhereUniqueInput
-    update?: XOR<XOR<AccountTypeIndividualUpdateToOneWithWhereWithoutAccountInput, AccountTypeIndividualUpdateWithoutAccountInput>, AccountTypeIndividualUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput = {
-    create?: XOR<AccountTypeBrandCreateWithoutAccountInput, AccountTypeBrandUncheckedCreateWithoutAccountInput>
-    connectOrCreate?: AccountTypeBrandCreateOrConnectWithoutAccountInput
-    upsert?: AccountTypeBrandUpsertWithoutAccountInput
-    disconnect?: AccountTypeBrandWhereInput | boolean
-    delete?: AccountTypeBrandWhereInput | boolean
-    connect?: AccountTypeBrandWhereUniqueInput
-    update?: XOR<XOR<AccountTypeBrandUpdateToOneWithWhereWithoutAccountInput, AccountTypeBrandUpdateWithoutAccountInput>, AccountTypeBrandUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput = {
-    create?: XOR<AccountOwnershipCreateWithoutParentInput, AccountOwnershipUncheckedCreateWithoutParentInput> | AccountOwnershipCreateWithoutParentInput[] | AccountOwnershipUncheckedCreateWithoutParentInput[]
-    connectOrCreate?: AccountOwnershipCreateOrConnectWithoutParentInput | AccountOwnershipCreateOrConnectWithoutParentInput[]
-    upsert?: AccountOwnershipUpsertWithWhereUniqueWithoutParentInput | AccountOwnershipUpsertWithWhereUniqueWithoutParentInput[]
-    createMany?: AccountOwnershipCreateManyParentInputEnvelope
-    set?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
-    disconnect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
-    delete?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
-    connect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
-    update?: AccountOwnershipUpdateWithWhereUniqueWithoutParentInput | AccountOwnershipUpdateWithWhereUniqueWithoutParentInput[]
-    updateMany?: AccountOwnershipUpdateManyWithWhereWithoutParentInput | AccountOwnershipUpdateManyWithWhereWithoutParentInput[]
-    deleteMany?: AccountOwnershipScalarWhereInput | AccountOwnershipScalarWhereInput[]
-  }
-
-  export type AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput = {
-    create?: XOR<AccountOwnershipCreateWithoutChildInput, AccountOwnershipUncheckedCreateWithoutChildInput> | AccountOwnershipCreateWithoutChildInput[] | AccountOwnershipUncheckedCreateWithoutChildInput[]
-    connectOrCreate?: AccountOwnershipCreateOrConnectWithoutChildInput | AccountOwnershipCreateOrConnectWithoutChildInput[]
-    upsert?: AccountOwnershipUpsertWithWhereUniqueWithoutChildInput | AccountOwnershipUpsertWithWhereUniqueWithoutChildInput[]
-    createMany?: AccountOwnershipCreateManyChildInputEnvelope
-    set?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
-    disconnect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
-    delete?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
-    connect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
-    update?: AccountOwnershipUpdateWithWhereUniqueWithoutChildInput | AccountOwnershipUpdateWithWhereUniqueWithoutChildInput[]
-    updateMany?: AccountOwnershipUpdateManyWithWhereWithoutChildInput | AccountOwnershipUpdateManyWithWhereWithoutChildInput[]
-    deleteMany?: AccountOwnershipScalarWhereInput | AccountOwnershipScalarWhereInput[]
-  }
-
   export type PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput = {
     create?: XOR<PortfolioMemberCreateWithoutAccountInput, PortfolioMemberUncheckedCreateWithoutAccountInput> | PortfolioMemberCreateWithoutAccountInput[] | PortfolioMemberUncheckedCreateWithoutAccountInput[]
     connectOrCreate?: PortfolioMemberCreateOrConnectWithoutAccountInput | PortfolioMemberCreateOrConnectWithoutAccountInput[]
@@ -34720,24 +34510,66 @@ export namespace Prisma {
     deleteMany?: PortfolioRoleScalarWhereInput | PortfolioRoleScalarWhereInput[]
   }
 
+  export type RequestUncheckedUpdateManyWithoutRecipientNestedInput = {
+    create?: XOR<RequestCreateWithoutRecipientInput, RequestUncheckedCreateWithoutRecipientInput> | RequestCreateWithoutRecipientInput[] | RequestUncheckedCreateWithoutRecipientInput[]
+    connectOrCreate?: RequestCreateOrConnectWithoutRecipientInput | RequestCreateOrConnectWithoutRecipientInput[]
+    upsert?: RequestUpsertWithWhereUniqueWithoutRecipientInput | RequestUpsertWithWhereUniqueWithoutRecipientInput[]
+    createMany?: RequestCreateManyRecipientInputEnvelope
+    set?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    disconnect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    delete?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    update?: RequestUpdateWithWhereUniqueWithoutRecipientInput | RequestUpdateWithWhereUniqueWithoutRecipientInput[]
+    updateMany?: RequestUpdateManyWithWhereWithoutRecipientInput | RequestUpdateManyWithWhereWithoutRecipientInput[]
+    deleteMany?: RequestScalarWhereInput | RequestScalarWhereInput[]
+  }
+
+  export type RequestUncheckedUpdateManyWithoutSenderNestedInput = {
+    create?: XOR<RequestCreateWithoutSenderInput, RequestUncheckedCreateWithoutSenderInput> | RequestCreateWithoutSenderInput[] | RequestUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: RequestCreateOrConnectWithoutSenderInput | RequestCreateOrConnectWithoutSenderInput[]
+    upsert?: RequestUpsertWithWhereUniqueWithoutSenderInput | RequestUpsertWithWhereUniqueWithoutSenderInput[]
+    createMany?: RequestCreateManySenderInputEnvelope
+    set?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    disconnect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    delete?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    connect?: RequestWhereUniqueInput | RequestWhereUniqueInput[]
+    update?: RequestUpdateWithWhereUniqueWithoutSenderInput | RequestUpdateWithWhereUniqueWithoutSenderInput[]
+    updateMany?: RequestUpdateManyWithWhereWithoutSenderInput | RequestUpdateManyWithWhereWithoutSenderInput[]
+    deleteMany?: RequestScalarWhereInput | RequestScalarWhereInput[]
+  }
+
+  export type SystemErrorUncheckedUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<SystemErrorCreateWithoutAccountInput, SystemErrorUncheckedCreateWithoutAccountInput> | SystemErrorCreateWithoutAccountInput[] | SystemErrorUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: SystemErrorCreateOrConnectWithoutAccountInput | SystemErrorCreateOrConnectWithoutAccountInput[]
+    upsert?: SystemErrorUpsertWithWhereUniqueWithoutAccountInput | SystemErrorUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: SystemErrorCreateManyAccountInputEnvelope
+    set?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
+    disconnect?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
+    delete?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
+    connect?: SystemErrorWhereUniqueInput | SystemErrorWhereUniqueInput[]
+    update?: SystemErrorUpdateWithWhereUniqueWithoutAccountInput | SystemErrorUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: SystemErrorUpdateManyWithWhereWithoutAccountInput | SystemErrorUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: SystemErrorScalarWhereInput | SystemErrorScalarWhereInput[]
+  }
+
+  export type VerificationUncheckedUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<VerificationCreateWithoutAccountInput, VerificationUncheckedCreateWithoutAccountInput> | VerificationCreateWithoutAccountInput[] | VerificationUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: VerificationCreateOrConnectWithoutAccountInput | VerificationCreateOrConnectWithoutAccountInput[]
+    upsert?: VerificationUpsertWithWhereUniqueWithoutAccountInput | VerificationUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: VerificationCreateManyAccountInputEnvelope
+    set?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
+    disconnect?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
+    delete?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
+    connect?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
+    update?: VerificationUpdateWithWhereUniqueWithoutAccountInput | VerificationUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: VerificationUpdateManyWithWhereWithoutAccountInput | VerificationUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: VerificationScalarWhereInput | VerificationScalarWhereInput[]
+  }
+
   export type AccountCreateNestedOneWithoutIndividualProfileInput = {
     create?: XOR<AccountCreateWithoutIndividualProfileInput, AccountUncheckedCreateWithoutIndividualProfileInput>
     connectOrCreate?: AccountCreateOrConnectWithoutIndividualProfileInput
     connect?: AccountWhereUniqueInput
-  }
-
-  export type AuthMethodCreateNestedManyWithoutIndividualProfileInput = {
-    create?: XOR<AuthMethodCreateWithoutIndividualProfileInput, AuthMethodUncheckedCreateWithoutIndividualProfileInput> | AuthMethodCreateWithoutIndividualProfileInput[] | AuthMethodUncheckedCreateWithoutIndividualProfileInput[]
-    connectOrCreate?: AuthMethodCreateOrConnectWithoutIndividualProfileInput | AuthMethodCreateOrConnectWithoutIndividualProfileInput[]
-    createMany?: AuthMethodCreateManyIndividualProfileInputEnvelope
-    connect?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
-  }
-
-  export type AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput = {
-    create?: XOR<AuthMethodCreateWithoutIndividualProfileInput, AuthMethodUncheckedCreateWithoutIndividualProfileInput> | AuthMethodCreateWithoutIndividualProfileInput[] | AuthMethodUncheckedCreateWithoutIndividualProfileInput[]
-    connectOrCreate?: AuthMethodCreateOrConnectWithoutIndividualProfileInput | AuthMethodCreateOrConnectWithoutIndividualProfileInput[]
-    createMany?: AuthMethodCreateManyIndividualProfileInputEnvelope
-    connect?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -34750,34 +34582,6 @@ export namespace Prisma {
     upsert?: AccountUpsertWithoutIndividualProfileInput
     connect?: AccountWhereUniqueInput
     update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutIndividualProfileInput, AccountUpdateWithoutIndividualProfileInput>, AccountUncheckedUpdateWithoutIndividualProfileInput>
-  }
-
-  export type AuthMethodUpdateManyWithoutIndividualProfileNestedInput = {
-    create?: XOR<AuthMethodCreateWithoutIndividualProfileInput, AuthMethodUncheckedCreateWithoutIndividualProfileInput> | AuthMethodCreateWithoutIndividualProfileInput[] | AuthMethodUncheckedCreateWithoutIndividualProfileInput[]
-    connectOrCreate?: AuthMethodCreateOrConnectWithoutIndividualProfileInput | AuthMethodCreateOrConnectWithoutIndividualProfileInput[]
-    upsert?: AuthMethodUpsertWithWhereUniqueWithoutIndividualProfileInput | AuthMethodUpsertWithWhereUniqueWithoutIndividualProfileInput[]
-    createMany?: AuthMethodCreateManyIndividualProfileInputEnvelope
-    set?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
-    disconnect?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
-    delete?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
-    connect?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
-    update?: AuthMethodUpdateWithWhereUniqueWithoutIndividualProfileInput | AuthMethodUpdateWithWhereUniqueWithoutIndividualProfileInput[]
-    updateMany?: AuthMethodUpdateManyWithWhereWithoutIndividualProfileInput | AuthMethodUpdateManyWithWhereWithoutIndividualProfileInput[]
-    deleteMany?: AuthMethodScalarWhereInput | AuthMethodScalarWhereInput[]
-  }
-
-  export type AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput = {
-    create?: XOR<AuthMethodCreateWithoutIndividualProfileInput, AuthMethodUncheckedCreateWithoutIndividualProfileInput> | AuthMethodCreateWithoutIndividualProfileInput[] | AuthMethodUncheckedCreateWithoutIndividualProfileInput[]
-    connectOrCreate?: AuthMethodCreateOrConnectWithoutIndividualProfileInput | AuthMethodCreateOrConnectWithoutIndividualProfileInput[]
-    upsert?: AuthMethodUpsertWithWhereUniqueWithoutIndividualProfileInput | AuthMethodUpsertWithWhereUniqueWithoutIndividualProfileInput[]
-    createMany?: AuthMethodCreateManyIndividualProfileInputEnvelope
-    set?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
-    disconnect?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
-    delete?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
-    connect?: AuthMethodWhereUniqueInput | AuthMethodWhereUniqueInput[]
-    update?: AuthMethodUpdateWithWhereUniqueWithoutIndividualProfileInput | AuthMethodUpdateWithWhereUniqueWithoutIndividualProfileInput[]
-    updateMany?: AuthMethodUpdateManyWithWhereWithoutIndividualProfileInput | AuthMethodUpdateManyWithWhereWithoutIndividualProfileInput[]
-    deleteMany?: AuthMethodScalarWhereInput | AuthMethodScalarWhereInput[]
   }
 
   export type AccountCreateNestedOneWithoutBrandProfileInput = {
@@ -34794,24 +34598,16 @@ export namespace Prisma {
     update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutBrandProfileInput, AccountUpdateWithoutBrandProfileInput>, AccountUncheckedUpdateWithoutBrandProfileInput>
   }
 
-  export type AccountCreateNestedOneWithoutParentOwnershipsInput = {
-    create?: XOR<AccountCreateWithoutParentOwnershipsInput, AccountUncheckedCreateWithoutParentOwnershipsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutParentOwnershipsInput
-    connect?: AccountWhereUniqueInput
-  }
-
   export type AccountCreateNestedOneWithoutChildOwnershipsInput = {
     create?: XOR<AccountCreateWithoutChildOwnershipsInput, AccountUncheckedCreateWithoutChildOwnershipsInput>
     connectOrCreate?: AccountCreateOrConnectWithoutChildOwnershipsInput
     connect?: AccountWhereUniqueInput
   }
 
-  export type AccountUpdateOneRequiredWithoutParentOwnershipsNestedInput = {
+  export type AccountCreateNestedOneWithoutParentOwnershipsInput = {
     create?: XOR<AccountCreateWithoutParentOwnershipsInput, AccountUncheckedCreateWithoutParentOwnershipsInput>
     connectOrCreate?: AccountCreateOrConnectWithoutParentOwnershipsInput
-    upsert?: AccountUpsertWithoutParentOwnershipsInput
     connect?: AccountWhereUniqueInput
-    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutParentOwnershipsInput, AccountUpdateWithoutParentOwnershipsInput>, AccountUncheckedUpdateWithoutParentOwnershipsInput>
   }
 
   export type AccountUpdateOneRequiredWithoutChildOwnershipsNestedInput = {
@@ -34820,6 +34616,14 @@ export namespace Prisma {
     upsert?: AccountUpsertWithoutChildOwnershipsInput
     connect?: AccountWhereUniqueInput
     update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutChildOwnershipsInput, AccountUpdateWithoutChildOwnershipsInput>, AccountUncheckedUpdateWithoutChildOwnershipsInput>
+  }
+
+  export type AccountUpdateOneRequiredWithoutParentOwnershipsNestedInput = {
+    create?: XOR<AccountCreateWithoutParentOwnershipsInput, AccountUncheckedCreateWithoutParentOwnershipsInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutParentOwnershipsInput
+    upsert?: AccountUpsertWithoutParentOwnershipsInput
+    connect?: AccountWhereUniqueInput
+    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutParentOwnershipsInput, AccountUpdateWithoutParentOwnershipsInput>, AccountUncheckedUpdateWithoutParentOwnershipsInput>
   }
 
   export type AccountCreateNestedOneWithoutNotificationsInput = {
@@ -34852,10 +34656,11 @@ export namespace Prisma {
     update?: XOR<XOR<RequestUpdateToOneWithWhereWithoutNotificationsInput, RequestUpdateWithoutNotificationsInput>, RequestUncheckedUpdateWithoutNotificationsInput>
   }
 
-  export type AccountCreateNestedOneWithoutSentRequestsInput = {
-    create?: XOR<AccountCreateWithoutSentRequestsInput, AccountUncheckedCreateWithoutSentRequestsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutSentRequestsInput
-    connect?: AccountWhereUniqueInput
+  export type NotificationCreateNestedManyWithoutRequestInput = {
+    create?: XOR<NotificationCreateWithoutRequestInput, NotificationUncheckedCreateWithoutRequestInput> | NotificationCreateWithoutRequestInput[] | NotificationUncheckedCreateWithoutRequestInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutRequestInput | NotificationCreateOrConnectWithoutRequestInput[]
+    createMany?: NotificationCreateManyRequestInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
   export type AccountCreateNestedOneWithoutReceivedRequestsInput = {
@@ -34864,11 +34669,10 @@ export namespace Prisma {
     connect?: AccountWhereUniqueInput
   }
 
-  export type NotificationCreateNestedManyWithoutRequestInput = {
-    create?: XOR<NotificationCreateWithoutRequestInput, NotificationUncheckedCreateWithoutRequestInput> | NotificationCreateWithoutRequestInput[] | NotificationUncheckedCreateWithoutRequestInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutRequestInput | NotificationCreateOrConnectWithoutRequestInput[]
-    createMany?: NotificationCreateManyRequestInputEnvelope
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  export type AccountCreateNestedOneWithoutSentRequestsInput = {
+    create?: XOR<AccountCreateWithoutSentRequestsInput, AccountUncheckedCreateWithoutSentRequestsInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutSentRequestsInput
+    connect?: AccountWhereUniqueInput
   }
 
   export type NotificationUncheckedCreateNestedManyWithoutRequestInput = {
@@ -34876,22 +34680,6 @@ export namespace Prisma {
     connectOrCreate?: NotificationCreateOrConnectWithoutRequestInput | NotificationCreateOrConnectWithoutRequestInput[]
     createMany?: NotificationCreateManyRequestInputEnvelope
     connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-  }
-
-  export type AccountUpdateOneRequiredWithoutSentRequestsNestedInput = {
-    create?: XOR<AccountCreateWithoutSentRequestsInput, AccountUncheckedCreateWithoutSentRequestsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutSentRequestsInput
-    upsert?: AccountUpsertWithoutSentRequestsInput
-    connect?: AccountWhereUniqueInput
-    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutSentRequestsInput, AccountUpdateWithoutSentRequestsInput>, AccountUncheckedUpdateWithoutSentRequestsInput>
-  }
-
-  export type AccountUpdateOneRequiredWithoutReceivedRequestsNestedInput = {
-    create?: XOR<AccountCreateWithoutReceivedRequestsInput, AccountUncheckedCreateWithoutReceivedRequestsInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutReceivedRequestsInput
-    upsert?: AccountUpsertWithoutReceivedRequestsInput
-    connect?: AccountWhereUniqueInput
-    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutReceivedRequestsInput, AccountUpdateWithoutReceivedRequestsInput>, AccountUncheckedUpdateWithoutReceivedRequestsInput>
   }
 
   export type NotificationUpdateManyWithoutRequestNestedInput = {
@@ -34906,6 +34694,22 @@ export namespace Prisma {
     update?: NotificationUpdateWithWhereUniqueWithoutRequestInput | NotificationUpdateWithWhereUniqueWithoutRequestInput[]
     updateMany?: NotificationUpdateManyWithWhereWithoutRequestInput | NotificationUpdateManyWithWhereWithoutRequestInput[]
     deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
+  export type AccountUpdateOneRequiredWithoutReceivedRequestsNestedInput = {
+    create?: XOR<AccountCreateWithoutReceivedRequestsInput, AccountUncheckedCreateWithoutReceivedRequestsInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutReceivedRequestsInput
+    upsert?: AccountUpsertWithoutReceivedRequestsInput
+    connect?: AccountWhereUniqueInput
+    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutReceivedRequestsInput, AccountUpdateWithoutReceivedRequestsInput>, AccountUncheckedUpdateWithoutReceivedRequestsInput>
+  }
+
+  export type AccountUpdateOneRequiredWithoutSentRequestsNestedInput = {
+    create?: XOR<AccountCreateWithoutSentRequestsInput, AccountUncheckedCreateWithoutSentRequestsInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutSentRequestsInput
+    upsert?: AccountUpsertWithoutSentRequestsInput
+    connect?: AccountWhereUniqueInput
+    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutSentRequestsInput, AccountUpdateWithoutSentRequestsInput>, AccountUncheckedUpdateWithoutSentRequestsInput>
   }
 
   export type NotificationUncheckedUpdateManyWithoutRequestNestedInput = {
@@ -34973,30 +34777,18 @@ export namespace Prisma {
     update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutNeupIdsInput, AccountUpdateWithoutNeupIdsInput>, AccountUncheckedUpdateWithoutNeupIdsInput>
   }
 
-  export type AccountTypeIndividualCreateNestedOneWithoutAuthMethodsInput = {
-    create?: XOR<AccountTypeIndividualCreateWithoutAuthMethodsInput, AccountTypeIndividualUncheckedCreateWithoutAuthMethodsInput>
-    connectOrCreate?: AccountTypeIndividualCreateOrConnectWithoutAuthMethodsInput
-    connect?: AccountTypeIndividualWhereUniqueInput
+  export type AccountCreateNestedOneWithoutAuthMethodsInput = {
+    create?: XOR<AccountCreateWithoutAuthMethodsInput, AccountUncheckedCreateWithoutAuthMethodsInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutAuthMethodsInput
+    connect?: AccountWhereUniqueInput
   }
 
-  export type EnumAuthMethodTypeFieldUpdateOperationsInput = {
-    set?: $Enums.AuthMethodType
-  }
-
-  export type EnumAuthMethodOrderFieldUpdateOperationsInput = {
-    set?: $Enums.AuthMethodOrder
-  }
-
-  export type EnumAuthMethodStatusFieldUpdateOperationsInput = {
-    set?: $Enums.AuthMethodStatus
-  }
-
-  export type AccountTypeIndividualUpdateOneRequiredWithoutAuthMethodsNestedInput = {
-    create?: XOR<AccountTypeIndividualCreateWithoutAuthMethodsInput, AccountTypeIndividualUncheckedCreateWithoutAuthMethodsInput>
-    connectOrCreate?: AccountTypeIndividualCreateOrConnectWithoutAuthMethodsInput
-    upsert?: AccountTypeIndividualUpsertWithoutAuthMethodsInput
-    connect?: AccountTypeIndividualWhereUniqueInput
-    update?: XOR<XOR<AccountTypeIndividualUpdateToOneWithWhereWithoutAuthMethodsInput, AccountTypeIndividualUpdateWithoutAuthMethodsInput>, AccountTypeIndividualUncheckedUpdateWithoutAuthMethodsInput>
+  export type AccountUpdateOneRequiredWithoutAuthMethodsNestedInput = {
+    create?: XOR<AccountCreateWithoutAuthMethodsInput, AccountUncheckedCreateWithoutAuthMethodsInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutAuthMethodsInput
+    upsert?: AccountUpsertWithoutAuthMethodsInput
+    connect?: AccountWhereUniqueInput
+    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutAuthMethodsInput, AccountUpdateWithoutAuthMethodsInput>, AccountUncheckedUpdateWithoutAuthMethodsInput>
   }
 
   export type PermitCreatepermissionsInput = {
@@ -35275,24 +35067,16 @@ export namespace Prisma {
     update?: XOR<XOR<PortfolioUpdateToOneWithWhereWithoutAssetsInput, PortfolioUpdateWithoutAssetsInput>, PortfolioUncheckedUpdateWithoutAssetsInput>
   }
 
-  export type PortfolioCreateNestedOneWithoutMembersInput = {
-    create?: XOR<PortfolioCreateWithoutMembersInput, PortfolioUncheckedCreateWithoutMembersInput>
-    connectOrCreate?: PortfolioCreateOrConnectWithoutMembersInput
-    connect?: PortfolioWhereUniqueInput
-  }
-
   export type AccountCreateNestedOneWithoutPortfolioMembersInput = {
     create?: XOR<AccountCreateWithoutPortfolioMembersInput, AccountUncheckedCreateWithoutPortfolioMembersInput>
     connectOrCreate?: AccountCreateOrConnectWithoutPortfolioMembersInput
     connect?: AccountWhereUniqueInput
   }
 
-  export type PortfolioUpdateOneRequiredWithoutMembersNestedInput = {
+  export type PortfolioCreateNestedOneWithoutMembersInput = {
     create?: XOR<PortfolioCreateWithoutMembersInput, PortfolioUncheckedCreateWithoutMembersInput>
     connectOrCreate?: PortfolioCreateOrConnectWithoutMembersInput
-    upsert?: PortfolioUpsertWithoutMembersInput
     connect?: PortfolioWhereUniqueInput
-    update?: XOR<XOR<PortfolioUpdateToOneWithWhereWithoutMembersInput, PortfolioUpdateWithoutMembersInput>, PortfolioUncheckedUpdateWithoutMembersInput>
   }
 
   export type AccountUpdateOneRequiredWithoutPortfolioMembersNestedInput = {
@@ -35301,6 +35085,14 @@ export namespace Prisma {
     upsert?: AccountUpsertWithoutPortfolioMembersInput
     connect?: AccountWhereUniqueInput
     update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutPortfolioMembersInput, AccountUpdateWithoutPortfolioMembersInput>, AccountUncheckedUpdateWithoutPortfolioMembersInput>
+  }
+
+  export type PortfolioUpdateOneRequiredWithoutMembersNestedInput = {
+    create?: XOR<PortfolioCreateWithoutMembersInput, PortfolioUncheckedCreateWithoutMembersInput>
+    connectOrCreate?: PortfolioCreateOrConnectWithoutMembersInput
+    upsert?: PortfolioUpsertWithoutMembersInput
+    connect?: PortfolioWhereUniqueInput
+    update?: XOR<XOR<PortfolioUpdateToOneWithWhereWithoutMembersInput, PortfolioUpdateWithoutMembersInput>, PortfolioUncheckedUpdateWithoutMembersInput>
   }
 
   export type AccountCreateNestedOneWithoutPortfolioRolesInput = {
@@ -35466,20 +35258,6 @@ export namespace Prisma {
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
   }
-
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
   export type NestedJsonNullableFilter<$PrismaModel = never> =
     | PatchUndefined<
         Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
@@ -35502,6 +35280,20 @@ export namespace Prisma {
     gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -35552,55 +35344,224 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type NestedEnumAuthMethodTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.AuthMethodType | EnumAuthMethodTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.AuthMethodType[] | ListEnumAuthMethodTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.AuthMethodType[] | ListEnumAuthMethodTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumAuthMethodTypeFilter<$PrismaModel> | $Enums.AuthMethodType
+  export type AccountTypeBrandCreateWithoutAccountInput = {
+    id?: string
+    brandName?: string | null
+    dateCreated?: Date | string
+    isLegalEntity?: boolean
+    originCountry?: string | null
   }
 
-  export type NestedEnumAuthMethodOrderFilter<$PrismaModel = never> = {
-    equals?: $Enums.AuthMethodOrder | EnumAuthMethodOrderFieldRefInput<$PrismaModel>
-    in?: $Enums.AuthMethodOrder[] | ListEnumAuthMethodOrderFieldRefInput<$PrismaModel>
-    notIn?: $Enums.AuthMethodOrder[] | ListEnumAuthMethodOrderFieldRefInput<$PrismaModel>
-    not?: NestedEnumAuthMethodOrderFilter<$PrismaModel> | $Enums.AuthMethodOrder
+  export type AccountTypeBrandUncheckedCreateWithoutAccountInput = {
+    id?: string
+    brandName?: string | null
+    dateCreated?: Date | string
+    isLegalEntity?: boolean
+    originCountry?: string | null
   }
 
-  export type NestedEnumAuthMethodStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.AuthMethodStatus | EnumAuthMethodStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.AuthMethodStatus[] | ListEnumAuthMethodStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.AuthMethodStatus[] | ListEnumAuthMethodStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumAuthMethodStatusFilter<$PrismaModel> | $Enums.AuthMethodStatus
+  export type AccountTypeBrandCreateOrConnectWithoutAccountInput = {
+    where: AccountTypeBrandWhereUniqueInput
+    create: XOR<AccountTypeBrandCreateWithoutAccountInput, AccountTypeBrandUncheckedCreateWithoutAccountInput>
   }
 
-  export type NestedEnumAuthMethodTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.AuthMethodType | EnumAuthMethodTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.AuthMethodType[] | ListEnumAuthMethodTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.AuthMethodType[] | ListEnumAuthMethodTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumAuthMethodTypeWithAggregatesFilter<$PrismaModel> | $Enums.AuthMethodType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumAuthMethodTypeFilter<$PrismaModel>
-    _max?: NestedEnumAuthMethodTypeFilter<$PrismaModel>
+  export type AccountTypeIndividualCreateWithoutAccountInput = {
+    id?: string
+    firstName?: string | null
+    middleName?: string | null
+    lastName?: string | null
+    dateOfBirth?: Date | string | null
+    countryOfResidence?: string | null
   }
 
-  export type NestedEnumAuthMethodOrderWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.AuthMethodOrder | EnumAuthMethodOrderFieldRefInput<$PrismaModel>
-    in?: $Enums.AuthMethodOrder[] | ListEnumAuthMethodOrderFieldRefInput<$PrismaModel>
-    notIn?: $Enums.AuthMethodOrder[] | ListEnumAuthMethodOrderFieldRefInput<$PrismaModel>
-    not?: NestedEnumAuthMethodOrderWithAggregatesFilter<$PrismaModel> | $Enums.AuthMethodOrder
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumAuthMethodOrderFilter<$PrismaModel>
-    _max?: NestedEnumAuthMethodOrderFilter<$PrismaModel>
+  export type AccountTypeIndividualUncheckedCreateWithoutAccountInput = {
+    id?: string
+    firstName?: string | null
+    middleName?: string | null
+    lastName?: string | null
+    dateOfBirth?: Date | string | null
+    countryOfResidence?: string | null
   }
 
-  export type NestedEnumAuthMethodStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.AuthMethodStatus | EnumAuthMethodStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.AuthMethodStatus[] | ListEnumAuthMethodStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.AuthMethodStatus[] | ListEnumAuthMethodStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumAuthMethodStatusWithAggregatesFilter<$PrismaModel> | $Enums.AuthMethodStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumAuthMethodStatusFilter<$PrismaModel>
-    _max?: NestedEnumAuthMethodStatusFilter<$PrismaModel>
+  export type AccountTypeIndividualCreateOrConnectWithoutAccountInput = {
+    where: AccountTypeIndividualWhereUniqueInput
+    create: XOR<AccountTypeIndividualCreateWithoutAccountInput, AccountTypeIndividualUncheckedCreateWithoutAccountInput>
+  }
+
+  export type AccountOwnershipCreateWithoutChildInput = {
+    id?: string
+    type: string
+    parent: AccountCreateNestedOneWithoutParentOwnershipsInput
+  }
+
+  export type AccountOwnershipUncheckedCreateWithoutChildInput = {
+    id?: string
+    parentId: string
+    type: string
+  }
+
+  export type AccountOwnershipCreateOrConnectWithoutChildInput = {
+    where: AccountOwnershipWhereUniqueInput
+    create: XOR<AccountOwnershipCreateWithoutChildInput, AccountOwnershipUncheckedCreateWithoutChildInput>
+  }
+
+  export type AccountOwnershipCreateManyChildInputEnvelope = {
+    data: AccountOwnershipCreateManyChildInput | AccountOwnershipCreateManyChildInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AccountOwnershipCreateWithoutParentInput = {
+    id?: string
+    type: string
+    child: AccountCreateNestedOneWithoutChildOwnershipsInput
+  }
+
+  export type AccountOwnershipUncheckedCreateWithoutParentInput = {
+    id?: string
+    childrenId: string
+    type: string
+  }
+
+  export type AccountOwnershipCreateOrConnectWithoutParentInput = {
+    where: AccountOwnershipWhereUniqueInput
+    create: XOR<AccountOwnershipCreateWithoutParentInput, AccountOwnershipUncheckedCreateWithoutParentInput>
+  }
+
+  export type AccountOwnershipCreateManyParentInputEnvelope = {
+    data: AccountOwnershipCreateManyParentInput | AccountOwnershipCreateManyParentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ApplicationCreateWithoutOwnerInput = {
+    id: string
+    name: string
+    party?: string
+    description?: string | null
+    icon?: string | null
+    website?: string | null
+    developer?: string | null
+    appSecret?: string | null
+    createdAt?: Date | string
+    access?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationUncheckedCreateWithoutOwnerInput = {
+    id: string
+    name: string
+    party?: string
+    description?: string | null
+    icon?: string | null
+    website?: string | null
+    developer?: string | null
+    appSecret?: string | null
+    createdAt?: Date | string
+    access?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationCreateOrConnectWithoutOwnerInput = {
+    where: ApplicationWhereUniqueInput
+    create: XOR<ApplicationCreateWithoutOwnerInput, ApplicationUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type ApplicationCreateManyOwnerInputEnvelope = {
+    data: ApplicationCreateManyOwnerInput | ApplicationCreateManyOwnerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ApplicationConnectionCreateWithoutAccountInput = {
+    id?: string
+    connectedAt?: Date | string
+    application: ApplicationCreateNestedOneWithoutConnectionsInput
+  }
+
+  export type ApplicationConnectionUncheckedCreateWithoutAccountInput = {
+    id?: string
+    appId: string
+    connectedAt?: Date | string
+  }
+
+  export type ApplicationConnectionCreateOrConnectWithoutAccountInput = {
+    where: ApplicationConnectionWhereUniqueInput
+    create: XOR<ApplicationConnectionCreateWithoutAccountInput, ApplicationConnectionUncheckedCreateWithoutAccountInput>
+  }
+
+  export type ApplicationConnectionCreateManyAccountInputEnvelope = {
+    data: ApplicationConnectionCreateManyAccountInput | ApplicationConnectionCreateManyAccountInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AuthMethodCreateWithoutIndividualProfileInput = {
+    value: string
+    id?: string
+    type: string
+    order: string
+    status: string
+    detail?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AuthMethodUncheckedCreateWithoutIndividualProfileInput = {
+    value: string
+    id?: string
+    type: string
+    order: string
+    status: string
+    detail?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AuthMethodCreateOrConnectWithoutIndividualProfileInput = {
+    where: AuthMethodWhereUniqueInput
+    create: XOR<AuthMethodCreateWithoutIndividualProfileInput, AuthMethodUncheckedCreateWithoutIndividualProfileInput>
+  }
+
+  export type AuthMethodCreateManyIndividualProfileInputEnvelope = {
+    data: AuthMethodCreateManyIndividualProfileInput | AuthMethodCreateManyIndividualProfileInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AuthSessionCreateWithoutAccountInput = {
+    id?: string
+    key?: string | null
+    ipAddress: string
+    userAgent: string
+    isExpired?: boolean
+    expiresOn?: Date | string | null
+    lastLoggedIn: Date | string
+    loginType: string
+    geolocation?: string | null
+    deviceType?: string | null
+    application?: string | null
+  }
+
+  export type AuthSessionUncheckedCreateWithoutAccountInput = {
+    id?: string
+    key?: string | null
+    ipAddress: string
+    userAgent: string
+    isExpired?: boolean
+    expiresOn?: Date | string | null
+    lastLoggedIn: Date | string
+    loginType: string
+    geolocation?: string | null
+    deviceType?: string | null
+    application?: string | null
+  }
+
+  export type AuthSessionCreateOrConnectWithoutAccountInput = {
+    where: AuthSessionWhereUniqueInput
+    create: XOR<AuthSessionCreateWithoutAccountInput, AuthSessionUncheckedCreateWithoutAccountInput>
+  }
+
+  export type AuthSessionCreateManyAccountInputEnvelope = {
+    data: AuthSessionCreateManyAccountInput | AuthSessionCreateManyAccountInput[]
+    skipDuplicates?: boolean
   }
 
   export type ContactCreateWithoutAccountInput = {
@@ -35627,14 +35588,14 @@ export namespace Prisma {
 
   export type NeupIdCreateWithoutAccountInput = {
     id: string
-    dateAdded?: Date | string
     isPrimary?: boolean
+    dateAdded?: Date | string
   }
 
   export type NeupIdUncheckedCreateWithoutAccountInput = {
     id: string
-    dateAdded?: Date | string
     isPrimary?: boolean
+    dateAdded?: Date | string
   }
 
   export type NeupIdCreateOrConnectWithoutAccountInput = {
@@ -35644,248 +35605,6 @@ export namespace Prisma {
 
   export type NeupIdCreateManyAccountInputEnvelope = {
     data: NeupIdCreateManyAccountInput | NeupIdCreateManyAccountInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type PermitCreateWithoutAccountInput = {
-    id?: string
-    permitType?: string | null
-    permitSubType?: string | null
-    permitNumber?: string | null
-    issuingAuthority?: string | null
-    issueDate?: Date | string | null
-    expiryDate?: Date | string | null
-    status?: string
-    forSelf?: boolean
-    isRoot?: boolean
-    fullAccess?: boolean
-    permissions?: PermitCreatepermissionsInput | string[]
-    restrictions?: PermitCreaterestrictionsInput | string[]
-    createdOn?: Date | string
-    managedBy?: string | null
-    targetAccount?: AccountCreateNestedOneWithoutTargetPermitsInput
-  }
-
-  export type PermitUncheckedCreateWithoutAccountInput = {
-    id?: string
-    permitType?: string | null
-    permitSubType?: string | null
-    permitNumber?: string | null
-    issuingAuthority?: string | null
-    issueDate?: Date | string | null
-    expiryDate?: Date | string | null
-    status?: string
-    targetAccountId?: string | null
-    forSelf?: boolean
-    isRoot?: boolean
-    fullAccess?: boolean
-    permissions?: PermitCreatepermissionsInput | string[]
-    restrictions?: PermitCreaterestrictionsInput | string[]
-    createdOn?: Date | string
-    managedBy?: string | null
-  }
-
-  export type PermitCreateOrConnectWithoutAccountInput = {
-    where: PermitWhereUniqueInput
-    create: XOR<PermitCreateWithoutAccountInput, PermitUncheckedCreateWithoutAccountInput>
-  }
-
-  export type PermitCreateManyAccountInputEnvelope = {
-    data: PermitCreateManyAccountInput | PermitCreateManyAccountInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type PermitCreateWithoutTargetAccountInput = {
-    id?: string
-    permitType?: string | null
-    permitSubType?: string | null
-    permitNumber?: string | null
-    issuingAuthority?: string | null
-    issueDate?: Date | string | null
-    expiryDate?: Date | string | null
-    status?: string
-    forSelf?: boolean
-    isRoot?: boolean
-    fullAccess?: boolean
-    permissions?: PermitCreatepermissionsInput | string[]
-    restrictions?: PermitCreaterestrictionsInput | string[]
-    createdOn?: Date | string
-    managedBy?: string | null
-    account: AccountCreateNestedOneWithoutPermitsInput
-  }
-
-  export type PermitUncheckedCreateWithoutTargetAccountInput = {
-    id?: string
-    permitType?: string | null
-    permitSubType?: string | null
-    permitNumber?: string | null
-    issuingAuthority?: string | null
-    issueDate?: Date | string | null
-    expiryDate?: Date | string | null
-    status?: string
-    accountId: string
-    forSelf?: boolean
-    isRoot?: boolean
-    fullAccess?: boolean
-    permissions?: PermitCreatepermissionsInput | string[]
-    restrictions?: PermitCreaterestrictionsInput | string[]
-    createdOn?: Date | string
-    managedBy?: string | null
-  }
-
-  export type PermitCreateOrConnectWithoutTargetAccountInput = {
-    where: PermitWhereUniqueInput
-    create: XOR<PermitCreateWithoutTargetAccountInput, PermitUncheckedCreateWithoutTargetAccountInput>
-  }
-
-  export type PermitCreateManyTargetAccountInputEnvelope = {
-    data: PermitCreateManyTargetAccountInput | PermitCreateManyTargetAccountInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type AuthSessionCreateWithoutAccountInput = {
-    id?: string
-    application?: string | null
-    ipAddress: string
-    userAgent: string
-    lastLoggedIn: Date | string
-    loginType: string
-    geolocation?: string | null
-    deviceType?: string | null
-    expiresOn?: Date | string | null
-    isExpired?: boolean
-    authSessionKey?: string | null
-    dependentKeys?: NullableJsonNullValueInput | InputJsonValue
-  }
-
-  export type AuthSessionUncheckedCreateWithoutAccountInput = {
-    id?: string
-    application?: string | null
-    ipAddress: string
-    userAgent: string
-    lastLoggedIn: Date | string
-    loginType: string
-    geolocation?: string | null
-    deviceType?: string | null
-    expiresOn?: Date | string | null
-    isExpired?: boolean
-    authSessionKey?: string | null
-    dependentKeys?: NullableJsonNullValueInput | InputJsonValue
-  }
-
-  export type AuthSessionCreateOrConnectWithoutAccountInput = {
-    where: AuthSessionWhereUniqueInput
-    create: XOR<AuthSessionCreateWithoutAccountInput, AuthSessionUncheckedCreateWithoutAccountInput>
-  }
-
-  export type AuthSessionCreateManyAccountInputEnvelope = {
-    data: AuthSessionCreateManyAccountInput | AuthSessionCreateManyAccountInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type SystemErrorCreateWithoutAccountInput = {
-    id?: string
-    type: string
-    context: string
-    message: string
-    status?: string
-    ipAddress?: string | null
-    geolocation?: string | null
-    reproSteps?: string | null
-    solution?: string | null
-    solvedBy?: string | null
-    problemLevel?: string | null
-    timestamp?: Date | string
-  }
-
-  export type SystemErrorUncheckedCreateWithoutAccountInput = {
-    id?: string
-    type: string
-    context: string
-    message: string
-    status?: string
-    ipAddress?: string | null
-    geolocation?: string | null
-    reproSteps?: string | null
-    solution?: string | null
-    solvedBy?: string | null
-    problemLevel?: string | null
-    timestamp?: Date | string
-  }
-
-  export type SystemErrorCreateOrConnectWithoutAccountInput = {
-    where: SystemErrorWhereUniqueInput
-    create: XOR<SystemErrorCreateWithoutAccountInput, SystemErrorUncheckedCreateWithoutAccountInput>
-  }
-
-  export type SystemErrorCreateManyAccountInputEnvelope = {
-    data: SystemErrorCreateManyAccountInput | SystemErrorCreateManyAccountInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ApplicationConnectionCreateWithoutAccountInput = {
-    id?: string
-    connectedAt?: Date | string
-    application: ApplicationCreateNestedOneWithoutConnectionsInput
-  }
-
-  export type ApplicationConnectionUncheckedCreateWithoutAccountInput = {
-    id?: string
-    appId: string
-    connectedAt?: Date | string
-  }
-
-  export type ApplicationConnectionCreateOrConnectWithoutAccountInput = {
-    where: ApplicationConnectionWhereUniqueInput
-    create: XOR<ApplicationConnectionCreateWithoutAccountInput, ApplicationConnectionUncheckedCreateWithoutAccountInput>
-  }
-
-  export type ApplicationConnectionCreateManyAccountInputEnvelope = {
-    data: ApplicationConnectionCreateManyAccountInput | ApplicationConnectionCreateManyAccountInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ApplicationCreateWithoutOwnerInput = {
-    id: string
-    name: string
-    status?: string
-    party?: string
-    description?: string | null
-    icon?: string | null
-    website?: string | null
-    developer?: string | null
-    appSecret?: string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
-  }
-
-  export type ApplicationUncheckedCreateWithoutOwnerInput = {
-    id: string
-    name: string
-    status?: string
-    party?: string
-    description?: string | null
-    icon?: string | null
-    website?: string | null
-    developer?: string | null
-    appSecret?: string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
-  }
-
-  export type ApplicationCreateOrConnectWithoutOwnerInput = {
-    where: ApplicationWhereUniqueInput
-    create: XOR<ApplicationCreateWithoutOwnerInput, ApplicationUncheckedCreateWithoutOwnerInput>
-  }
-
-  export type ApplicationCreateManyOwnerInputEnvelope = {
-    data: ApplicationCreateManyOwnerInput | ApplicationCreateManyOwnerInput[]
     skipDuplicates?: boolean
   }
 
@@ -35925,203 +35644,99 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type VerificationCreateWithoutAccountInput = {
+  export type PermitCreateWithoutAccountInput = {
     id?: string
-    type: string
-    token?: string | null
-    code?: string | null
+    forSelf?: boolean
+    isRoot?: boolean
+    permissions?: PermitCreatepermissionsInput | string[]
+    restrictions?: PermitCreaterestrictionsInput | string[]
+    createdOn?: Date | string
+    expiryDate?: Date | string | null
+    fullAccess?: boolean
+    issueDate?: Date | string | null
+    issuingAuthority?: string | null
+    managedBy?: string | null
+    permitNumber?: string | null
+    permitSubType?: string | null
+    permitType?: string | null
     status?: string
-    reason?: string | null
-    category?: string | null
-    verifiedBy?: string | null
-    revokedBy?: string | null
-    revocationReason?: string | null
-    createdAt?: Date | string
-    verifiedAt?: Date | string | null
-    revokedAt?: Date | string | null
+    targetAccount?: AccountCreateNestedOneWithoutTargetPermitsInput
   }
 
-  export type VerificationUncheckedCreateWithoutAccountInput = {
+  export type PermitUncheckedCreateWithoutAccountInput = {
     id?: string
-    type: string
-    token?: string | null
-    code?: string | null
+    targetAccountId?: string | null
+    forSelf?: boolean
+    isRoot?: boolean
+    permissions?: PermitCreatepermissionsInput | string[]
+    restrictions?: PermitCreaterestrictionsInput | string[]
+    createdOn?: Date | string
+    expiryDate?: Date | string | null
+    fullAccess?: boolean
+    issueDate?: Date | string | null
+    issuingAuthority?: string | null
+    managedBy?: string | null
+    permitNumber?: string | null
+    permitSubType?: string | null
+    permitType?: string | null
     status?: string
-    reason?: string | null
-    category?: string | null
-    verifiedBy?: string | null
-    revokedBy?: string | null
-    revocationReason?: string | null
-    createdAt?: Date | string
-    verifiedAt?: Date | string | null
-    revokedAt?: Date | string | null
   }
 
-  export type VerificationCreateOrConnectWithoutAccountInput = {
-    where: VerificationWhereUniqueInput
-    create: XOR<VerificationCreateWithoutAccountInput, VerificationUncheckedCreateWithoutAccountInput>
+  export type PermitCreateOrConnectWithoutAccountInput = {
+    where: PermitWhereUniqueInput
+    create: XOR<PermitCreateWithoutAccountInput, PermitUncheckedCreateWithoutAccountInput>
   }
 
-  export type VerificationCreateManyAccountInputEnvelope = {
-    data: VerificationCreateManyAccountInput | VerificationCreateManyAccountInput[]
+  export type PermitCreateManyAccountInputEnvelope = {
+    data: PermitCreateManyAccountInput | PermitCreateManyAccountInput[]
     skipDuplicates?: boolean
   }
 
-  export type RequestCreateWithoutSenderInput = {
+  export type PermitCreateWithoutTargetAccountInput = {
     id?: string
+    forSelf?: boolean
+    isRoot?: boolean
+    permissions?: PermitCreatepermissionsInput | string[]
+    restrictions?: PermitCreaterestrictionsInput | string[]
+    createdOn?: Date | string
+    expiryDate?: Date | string | null
+    fullAccess?: boolean
+    issueDate?: Date | string | null
+    issuingAuthority?: string | null
+    managedBy?: string | null
+    permitNumber?: string | null
+    permitSubType?: string | null
+    permitType?: string | null
     status?: string
-    action: string
-    type?: string | null
-    data?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    recipient: AccountCreateNestedOneWithoutReceivedRequestsInput
-    notifications?: NotificationCreateNestedManyWithoutRequestInput
+    account: AccountCreateNestedOneWithoutPermitsInput
   }
 
-  export type RequestUncheckedCreateWithoutSenderInput = {
+  export type PermitUncheckedCreateWithoutTargetAccountInput = {
     id?: string
-    recipientId: string
+    accountId: string
+    forSelf?: boolean
+    isRoot?: boolean
+    permissions?: PermitCreatepermissionsInput | string[]
+    restrictions?: PermitCreaterestrictionsInput | string[]
+    createdOn?: Date | string
+    expiryDate?: Date | string | null
+    fullAccess?: boolean
+    issueDate?: Date | string | null
+    issuingAuthority?: string | null
+    managedBy?: string | null
+    permitNumber?: string | null
+    permitSubType?: string | null
+    permitType?: string | null
     status?: string
-    action: string
-    type?: string | null
-    data?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    notifications?: NotificationUncheckedCreateNestedManyWithoutRequestInput
   }
 
-  export type RequestCreateOrConnectWithoutSenderInput = {
-    where: RequestWhereUniqueInput
-    create: XOR<RequestCreateWithoutSenderInput, RequestUncheckedCreateWithoutSenderInput>
+  export type PermitCreateOrConnectWithoutTargetAccountInput = {
+    where: PermitWhereUniqueInput
+    create: XOR<PermitCreateWithoutTargetAccountInput, PermitUncheckedCreateWithoutTargetAccountInput>
   }
 
-  export type RequestCreateManySenderInputEnvelope = {
-    data: RequestCreateManySenderInput | RequestCreateManySenderInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type RequestCreateWithoutRecipientInput = {
-    id?: string
-    status?: string
-    action: string
-    type?: string | null
-    data?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    sender: AccountCreateNestedOneWithoutSentRequestsInput
-    notifications?: NotificationCreateNestedManyWithoutRequestInput
-  }
-
-  export type RequestUncheckedCreateWithoutRecipientInput = {
-    id?: string
-    senderId: string
-    status?: string
-    action: string
-    type?: string | null
-    data?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    notifications?: NotificationUncheckedCreateNestedManyWithoutRequestInput
-  }
-
-  export type RequestCreateOrConnectWithoutRecipientInput = {
-    where: RequestWhereUniqueInput
-    create: XOR<RequestCreateWithoutRecipientInput, RequestUncheckedCreateWithoutRecipientInput>
-  }
-
-  export type RequestCreateManyRecipientInputEnvelope = {
-    data: RequestCreateManyRecipientInput | RequestCreateManyRecipientInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type AccountTypeIndividualCreateWithoutAccountInput = {
-    id?: string
-    firstName?: string | null
-    middleName?: string | null
-    lastName?: string | null
-    dateOfBirth?: Date | string | null
-    countryOfResidence?: string | null
-    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
-  }
-
-  export type AccountTypeIndividualUncheckedCreateWithoutAccountInput = {
-    id?: string
-    firstName?: string | null
-    middleName?: string | null
-    lastName?: string | null
-    dateOfBirth?: Date | string | null
-    countryOfResidence?: string | null
-    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
-  }
-
-  export type AccountTypeIndividualCreateOrConnectWithoutAccountInput = {
-    where: AccountTypeIndividualWhereUniqueInput
-    create: XOR<AccountTypeIndividualCreateWithoutAccountInput, AccountTypeIndividualUncheckedCreateWithoutAccountInput>
-  }
-
-  export type AccountTypeBrandCreateWithoutAccountInput = {
-    id?: string
-    brandName?: string | null
-    dateCreated?: Date | string
-    isLegalEntity?: boolean
-    originCountry?: string | null
-  }
-
-  export type AccountTypeBrandUncheckedCreateWithoutAccountInput = {
-    id?: string
-    brandName?: string | null
-    dateCreated?: Date | string
-    isLegalEntity?: boolean
-    originCountry?: string | null
-  }
-
-  export type AccountTypeBrandCreateOrConnectWithoutAccountInput = {
-    where: AccountTypeBrandWhereUniqueInput
-    create: XOR<AccountTypeBrandCreateWithoutAccountInput, AccountTypeBrandUncheckedCreateWithoutAccountInput>
-  }
-
-  export type AccountOwnershipCreateWithoutParentInput = {
-    id?: string
-    type: string
-    child: AccountCreateNestedOneWithoutChildOwnershipsInput
-  }
-
-  export type AccountOwnershipUncheckedCreateWithoutParentInput = {
-    id?: string
-    childrenId: string
-    type: string
-  }
-
-  export type AccountOwnershipCreateOrConnectWithoutParentInput = {
-    where: AccountOwnershipWhereUniqueInput
-    create: XOR<AccountOwnershipCreateWithoutParentInput, AccountOwnershipUncheckedCreateWithoutParentInput>
-  }
-
-  export type AccountOwnershipCreateManyParentInputEnvelope = {
-    data: AccountOwnershipCreateManyParentInput | AccountOwnershipCreateManyParentInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type AccountOwnershipCreateWithoutChildInput = {
-    id?: string
-    type: string
-    parent: AccountCreateNestedOneWithoutParentOwnershipsInput
-  }
-
-  export type AccountOwnershipUncheckedCreateWithoutChildInput = {
-    id?: string
-    parentId: string
-    type: string
-  }
-
-  export type AccountOwnershipCreateOrConnectWithoutChildInput = {
-    where: AccountOwnershipWhereUniqueInput
-    create: XOR<AccountOwnershipCreateWithoutChildInput, AccountOwnershipUncheckedCreateWithoutChildInput>
-  }
-
-  export type AccountOwnershipCreateManyChildInputEnvelope = {
-    data: AccountOwnershipCreateManyChildInput | AccountOwnershipCreateManyChildInput[]
+  export type PermitCreateManyTargetAccountInputEnvelope = {
+    data: PermitCreateManyTargetAccountInput | PermitCreateManyTargetAccountInput[]
     skipDuplicates?: boolean
   }
 
@@ -36169,6 +35784,379 @@ export namespace Prisma {
   export type PortfolioRoleCreateManyAccountInputEnvelope = {
     data: PortfolioRoleCreateManyAccountInput | PortfolioRoleCreateManyAccountInput[]
     skipDuplicates?: boolean
+  }
+
+  export type RequestCreateWithoutRecipientInput = {
+    id?: string
+    status?: string
+    action: string
+    type?: string | null
+    data?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    notifications?: NotificationCreateNestedManyWithoutRequestInput
+    sender: AccountCreateNestedOneWithoutSentRequestsInput
+  }
+
+  export type RequestUncheckedCreateWithoutRecipientInput = {
+    id?: string
+    senderId: string
+    status?: string
+    action: string
+    type?: string | null
+    data?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    notifications?: NotificationUncheckedCreateNestedManyWithoutRequestInput
+  }
+
+  export type RequestCreateOrConnectWithoutRecipientInput = {
+    where: RequestWhereUniqueInput
+    create: XOR<RequestCreateWithoutRecipientInput, RequestUncheckedCreateWithoutRecipientInput>
+  }
+
+  export type RequestCreateManyRecipientInputEnvelope = {
+    data: RequestCreateManyRecipientInput | RequestCreateManyRecipientInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RequestCreateWithoutSenderInput = {
+    id?: string
+    status?: string
+    action: string
+    type?: string | null
+    data?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    notifications?: NotificationCreateNestedManyWithoutRequestInput
+    recipient: AccountCreateNestedOneWithoutReceivedRequestsInput
+  }
+
+  export type RequestUncheckedCreateWithoutSenderInput = {
+    id?: string
+    recipientId: string
+    status?: string
+    action: string
+    type?: string | null
+    data?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    notifications?: NotificationUncheckedCreateNestedManyWithoutRequestInput
+  }
+
+  export type RequestCreateOrConnectWithoutSenderInput = {
+    where: RequestWhereUniqueInput
+    create: XOR<RequestCreateWithoutSenderInput, RequestUncheckedCreateWithoutSenderInput>
+  }
+
+  export type RequestCreateManySenderInputEnvelope = {
+    data: RequestCreateManySenderInput | RequestCreateManySenderInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SystemErrorCreateWithoutAccountInput = {
+    id?: string
+    message: string
+    context: string
+    timestamp?: Date | string
+    geolocation?: string | null
+    ipAddress?: string | null
+    problemLevel?: string | null
+    reproSteps?: string | null
+    solution?: string | null
+    solvedBy?: string | null
+    status?: string
+    type: string
+  }
+
+  export type SystemErrorUncheckedCreateWithoutAccountInput = {
+    id?: string
+    message: string
+    context: string
+    timestamp?: Date | string
+    geolocation?: string | null
+    ipAddress?: string | null
+    problemLevel?: string | null
+    reproSteps?: string | null
+    solution?: string | null
+    solvedBy?: string | null
+    status?: string
+    type: string
+  }
+
+  export type SystemErrorCreateOrConnectWithoutAccountInput = {
+    where: SystemErrorWhereUniqueInput
+    create: XOR<SystemErrorCreateWithoutAccountInput, SystemErrorUncheckedCreateWithoutAccountInput>
+  }
+
+  export type SystemErrorCreateManyAccountInputEnvelope = {
+    data: SystemErrorCreateManyAccountInput | SystemErrorCreateManyAccountInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type VerificationCreateWithoutAccountInput = {
+    id?: string
+    type: string
+    token?: string | null
+    code?: string | null
+    status?: string
+    reason?: string | null
+    category?: string | null
+    verifiedBy?: string | null
+    revokedBy?: string | null
+    revocationReason?: string | null
+    createdAt?: Date | string
+    verifiedAt?: Date | string | null
+    revokedAt?: Date | string | null
+  }
+
+  export type VerificationUncheckedCreateWithoutAccountInput = {
+    id?: string
+    type: string
+    token?: string | null
+    code?: string | null
+    status?: string
+    reason?: string | null
+    category?: string | null
+    verifiedBy?: string | null
+    revokedBy?: string | null
+    revocationReason?: string | null
+    createdAt?: Date | string
+    verifiedAt?: Date | string | null
+    revokedAt?: Date | string | null
+  }
+
+  export type VerificationCreateOrConnectWithoutAccountInput = {
+    where: VerificationWhereUniqueInput
+    create: XOR<VerificationCreateWithoutAccountInput, VerificationUncheckedCreateWithoutAccountInput>
+  }
+
+  export type VerificationCreateManyAccountInputEnvelope = {
+    data: VerificationCreateManyAccountInput | VerificationCreateManyAccountInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AccountTypeBrandUpsertWithoutAccountInput = {
+    update: XOR<AccountTypeBrandUpdateWithoutAccountInput, AccountTypeBrandUncheckedUpdateWithoutAccountInput>
+    create: XOR<AccountTypeBrandCreateWithoutAccountInput, AccountTypeBrandUncheckedCreateWithoutAccountInput>
+    where?: AccountTypeBrandWhereInput
+  }
+
+  export type AccountTypeBrandUpdateToOneWithWhereWithoutAccountInput = {
+    where?: AccountTypeBrandWhereInput
+    data: XOR<AccountTypeBrandUpdateWithoutAccountInput, AccountTypeBrandUncheckedUpdateWithoutAccountInput>
+  }
+
+  export type AccountTypeBrandUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    brandName?: NullableStringFieldUpdateOperationsInput | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
+    originCountry?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AccountTypeBrandUncheckedUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    brandName?: NullableStringFieldUpdateOperationsInput | string | null
+    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
+    originCountry?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AccountTypeIndividualUpsertWithoutAccountInput = {
+    update: XOR<AccountTypeIndividualUpdateWithoutAccountInput, AccountTypeIndividualUncheckedUpdateWithoutAccountInput>
+    create: XOR<AccountTypeIndividualCreateWithoutAccountInput, AccountTypeIndividualUncheckedCreateWithoutAccountInput>
+    where?: AccountTypeIndividualWhereInput
+  }
+
+  export type AccountTypeIndividualUpdateToOneWithWhereWithoutAccountInput = {
+    where?: AccountTypeIndividualWhereInput
+    data: XOR<AccountTypeIndividualUpdateWithoutAccountInput, AccountTypeIndividualUncheckedUpdateWithoutAccountInput>
+  }
+
+  export type AccountTypeIndividualUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    countryOfResidence?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AccountTypeIndividualUncheckedUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    countryOfResidence?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AccountOwnershipUpsertWithWhereUniqueWithoutChildInput = {
+    where: AccountOwnershipWhereUniqueInput
+    update: XOR<AccountOwnershipUpdateWithoutChildInput, AccountOwnershipUncheckedUpdateWithoutChildInput>
+    create: XOR<AccountOwnershipCreateWithoutChildInput, AccountOwnershipUncheckedCreateWithoutChildInput>
+  }
+
+  export type AccountOwnershipUpdateWithWhereUniqueWithoutChildInput = {
+    where: AccountOwnershipWhereUniqueInput
+    data: XOR<AccountOwnershipUpdateWithoutChildInput, AccountOwnershipUncheckedUpdateWithoutChildInput>
+  }
+
+  export type AccountOwnershipUpdateManyWithWhereWithoutChildInput = {
+    where: AccountOwnershipScalarWhereInput
+    data: XOR<AccountOwnershipUpdateManyMutationInput, AccountOwnershipUncheckedUpdateManyWithoutChildInput>
+  }
+
+  export type AccountOwnershipScalarWhereInput = {
+    AND?: AccountOwnershipScalarWhereInput | AccountOwnershipScalarWhereInput[]
+    OR?: AccountOwnershipScalarWhereInput[]
+    NOT?: AccountOwnershipScalarWhereInput | AccountOwnershipScalarWhereInput[]
+    id?: StringFilter<"AccountOwnership"> | string
+    parentId?: StringFilter<"AccountOwnership"> | string
+    childrenId?: StringFilter<"AccountOwnership"> | string
+    type?: StringFilter<"AccountOwnership"> | string
+  }
+
+  export type AccountOwnershipUpsertWithWhereUniqueWithoutParentInput = {
+    where: AccountOwnershipWhereUniqueInput
+    update: XOR<AccountOwnershipUpdateWithoutParentInput, AccountOwnershipUncheckedUpdateWithoutParentInput>
+    create: XOR<AccountOwnershipCreateWithoutParentInput, AccountOwnershipUncheckedCreateWithoutParentInput>
+  }
+
+  export type AccountOwnershipUpdateWithWhereUniqueWithoutParentInput = {
+    where: AccountOwnershipWhereUniqueInput
+    data: XOR<AccountOwnershipUpdateWithoutParentInput, AccountOwnershipUncheckedUpdateWithoutParentInput>
+  }
+
+  export type AccountOwnershipUpdateManyWithWhereWithoutParentInput = {
+    where: AccountOwnershipScalarWhereInput
+    data: XOR<AccountOwnershipUpdateManyMutationInput, AccountOwnershipUncheckedUpdateManyWithoutParentInput>
+  }
+
+  export type ApplicationUpsertWithWhereUniqueWithoutOwnerInput = {
+    where: ApplicationWhereUniqueInput
+    update: XOR<ApplicationUpdateWithoutOwnerInput, ApplicationUncheckedUpdateWithoutOwnerInput>
+    create: XOR<ApplicationCreateWithoutOwnerInput, ApplicationUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type ApplicationUpdateWithWhereUniqueWithoutOwnerInput = {
+    where: ApplicationWhereUniqueInput
+    data: XOR<ApplicationUpdateWithoutOwnerInput, ApplicationUncheckedUpdateWithoutOwnerInput>
+  }
+
+  export type ApplicationUpdateManyWithWhereWithoutOwnerInput = {
+    where: ApplicationScalarWhereInput
+    data: XOR<ApplicationUpdateManyMutationInput, ApplicationUncheckedUpdateManyWithoutOwnerInput>
+  }
+
+  export type ApplicationScalarWhereInput = {
+    AND?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
+    OR?: ApplicationScalarWhereInput[]
+    NOT?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
+    id?: StringFilter<"Application"> | string
+    name?: StringFilter<"Application"> | string
+    party?: StringFilter<"Application"> | string
+    description?: StringNullableFilter<"Application"> | string | null
+    icon?: StringNullableFilter<"Application"> | string | null
+    website?: StringNullableFilter<"Application"> | string | null
+    developer?: StringNullableFilter<"Application"> | string | null
+    appSecret?: StringNullableFilter<"Application"> | string | null
+    createdAt?: DateTimeFilter<"Application"> | Date | string
+    access?: JsonNullableFilter<"Application">
+    endpoints?: JsonNullableFilter<"Application">
+    ownerAccountId?: StringNullableFilter<"Application"> | string | null
+    policies?: JsonNullableFilter<"Application">
+    status?: StringFilter<"Application"> | string
+  }
+
+  export type ApplicationConnectionUpsertWithWhereUniqueWithoutAccountInput = {
+    where: ApplicationConnectionWhereUniqueInput
+    update: XOR<ApplicationConnectionUpdateWithoutAccountInput, ApplicationConnectionUncheckedUpdateWithoutAccountInput>
+    create: XOR<ApplicationConnectionCreateWithoutAccountInput, ApplicationConnectionUncheckedCreateWithoutAccountInput>
+  }
+
+  export type ApplicationConnectionUpdateWithWhereUniqueWithoutAccountInput = {
+    where: ApplicationConnectionWhereUniqueInput
+    data: XOR<ApplicationConnectionUpdateWithoutAccountInput, ApplicationConnectionUncheckedUpdateWithoutAccountInput>
+  }
+
+  export type ApplicationConnectionUpdateManyWithWhereWithoutAccountInput = {
+    where: ApplicationConnectionScalarWhereInput
+    data: XOR<ApplicationConnectionUpdateManyMutationInput, ApplicationConnectionUncheckedUpdateManyWithoutAccountInput>
+  }
+
+  export type ApplicationConnectionScalarWhereInput = {
+    AND?: ApplicationConnectionScalarWhereInput | ApplicationConnectionScalarWhereInput[]
+    OR?: ApplicationConnectionScalarWhereInput[]
+    NOT?: ApplicationConnectionScalarWhereInput | ApplicationConnectionScalarWhereInput[]
+    id?: StringFilter<"ApplicationConnection"> | string
+    accountId?: StringFilter<"ApplicationConnection"> | string
+    appId?: StringFilter<"ApplicationConnection"> | string
+    connectedAt?: DateTimeFilter<"ApplicationConnection"> | Date | string
+  }
+
+  export type AuthMethodUpsertWithWhereUniqueWithoutIndividualProfileInput = {
+    where: AuthMethodWhereUniqueInput
+    update: XOR<AuthMethodUpdateWithoutIndividualProfileInput, AuthMethodUncheckedUpdateWithoutIndividualProfileInput>
+    create: XOR<AuthMethodCreateWithoutIndividualProfileInput, AuthMethodUncheckedCreateWithoutIndividualProfileInput>
+  }
+
+  export type AuthMethodUpdateWithWhereUniqueWithoutIndividualProfileInput = {
+    where: AuthMethodWhereUniqueInput
+    data: XOR<AuthMethodUpdateWithoutIndividualProfileInput, AuthMethodUncheckedUpdateWithoutIndividualProfileInput>
+  }
+
+  export type AuthMethodUpdateManyWithWhereWithoutIndividualProfileInput = {
+    where: AuthMethodScalarWhereInput
+    data: XOR<AuthMethodUpdateManyMutationInput, AuthMethodUncheckedUpdateManyWithoutIndividualProfileInput>
+  }
+
+  export type AuthMethodScalarWhereInput = {
+    AND?: AuthMethodScalarWhereInput | AuthMethodScalarWhereInput[]
+    OR?: AuthMethodScalarWhereInput[]
+    NOT?: AuthMethodScalarWhereInput | AuthMethodScalarWhereInput[]
+    accountId?: StringFilter<"AuthMethod"> | string
+    value?: StringFilter<"AuthMethod"> | string
+    id?: StringFilter<"AuthMethod"> | string
+    type?: StringFilter<"AuthMethod"> | string
+    order?: StringFilter<"AuthMethod"> | string
+    status?: StringFilter<"AuthMethod"> | string
+    detail?: JsonNullableFilter<"AuthMethod">
+  }
+
+  export type AuthSessionUpsertWithWhereUniqueWithoutAccountInput = {
+    where: AuthSessionWhereUniqueInput
+    update: XOR<AuthSessionUpdateWithoutAccountInput, AuthSessionUncheckedUpdateWithoutAccountInput>
+    create: XOR<AuthSessionCreateWithoutAccountInput, AuthSessionUncheckedCreateWithoutAccountInput>
+  }
+
+  export type AuthSessionUpdateWithWhereUniqueWithoutAccountInput = {
+    where: AuthSessionWhereUniqueInput
+    data: XOR<AuthSessionUpdateWithoutAccountInput, AuthSessionUncheckedUpdateWithoutAccountInput>
+  }
+
+  export type AuthSessionUpdateManyWithWhereWithoutAccountInput = {
+    where: AuthSessionScalarWhereInput
+    data: XOR<AuthSessionUpdateManyMutationInput, AuthSessionUncheckedUpdateManyWithoutAccountInput>
+  }
+
+  export type AuthSessionScalarWhereInput = {
+    AND?: AuthSessionScalarWhereInput | AuthSessionScalarWhereInput[]
+    OR?: AuthSessionScalarWhereInput[]
+    NOT?: AuthSessionScalarWhereInput | AuthSessionScalarWhereInput[]
+    id?: StringFilter<"AuthSession"> | string
+    accountId?: StringFilter<"AuthSession"> | string
+    key?: StringNullableFilter<"AuthSession"> | string | null
+    ipAddress?: StringFilter<"AuthSession"> | string
+    userAgent?: StringFilter<"AuthSession"> | string
+    isExpired?: BoolFilter<"AuthSession"> | boolean
+    expiresOn?: DateTimeNullableFilter<"AuthSession"> | Date | string | null
+    lastLoggedIn?: DateTimeFilter<"AuthSession"> | Date | string
+    loginType?: StringFilter<"AuthSession"> | string
+    geolocation?: StringNullableFilter<"AuthSession"> | string | null
+    deviceType?: StringNullableFilter<"AuthSession"> | string | null
+    application?: StringNullableFilter<"AuthSession"> | string | null
   }
 
   export type ContactUpsertWithWhereUniqueWithoutAccountInput = {
@@ -36219,195 +36207,8 @@ export namespace Prisma {
     NOT?: NeupIdScalarWhereInput | NeupIdScalarWhereInput[]
     id?: StringFilter<"NeupId"> | string
     accountId?: StringFilter<"NeupId"> | string
-    dateAdded?: DateTimeFilter<"NeupId"> | Date | string
     isPrimary?: BoolFilter<"NeupId"> | boolean
-  }
-
-  export type PermitUpsertWithWhereUniqueWithoutAccountInput = {
-    where: PermitWhereUniqueInput
-    update: XOR<PermitUpdateWithoutAccountInput, PermitUncheckedUpdateWithoutAccountInput>
-    create: XOR<PermitCreateWithoutAccountInput, PermitUncheckedCreateWithoutAccountInput>
-  }
-
-  export type PermitUpdateWithWhereUniqueWithoutAccountInput = {
-    where: PermitWhereUniqueInput
-    data: XOR<PermitUpdateWithoutAccountInput, PermitUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type PermitUpdateManyWithWhereWithoutAccountInput = {
-    where: PermitScalarWhereInput
-    data: XOR<PermitUpdateManyMutationInput, PermitUncheckedUpdateManyWithoutAccountInput>
-  }
-
-  export type PermitScalarWhereInput = {
-    AND?: PermitScalarWhereInput | PermitScalarWhereInput[]
-    OR?: PermitScalarWhereInput[]
-    NOT?: PermitScalarWhereInput | PermitScalarWhereInput[]
-    id?: StringFilter<"Permit"> | string
-    permitType?: StringNullableFilter<"Permit"> | string | null
-    permitSubType?: StringNullableFilter<"Permit"> | string | null
-    permitNumber?: StringNullableFilter<"Permit"> | string | null
-    issuingAuthority?: StringNullableFilter<"Permit"> | string | null
-    issueDate?: DateTimeNullableFilter<"Permit"> | Date | string | null
-    expiryDate?: DateTimeNullableFilter<"Permit"> | Date | string | null
-    status?: StringFilter<"Permit"> | string
-    accountId?: StringFilter<"Permit"> | string
-    targetAccountId?: StringNullableFilter<"Permit"> | string | null
-    forSelf?: BoolFilter<"Permit"> | boolean
-    isRoot?: BoolFilter<"Permit"> | boolean
-    fullAccess?: BoolFilter<"Permit"> | boolean
-    permissions?: StringNullableListFilter<"Permit">
-    restrictions?: StringNullableListFilter<"Permit">
-    createdOn?: DateTimeFilter<"Permit"> | Date | string
-    managedBy?: StringNullableFilter<"Permit"> | string | null
-  }
-
-  export type PermitUpsertWithWhereUniqueWithoutTargetAccountInput = {
-    where: PermitWhereUniqueInput
-    update: XOR<PermitUpdateWithoutTargetAccountInput, PermitUncheckedUpdateWithoutTargetAccountInput>
-    create: XOR<PermitCreateWithoutTargetAccountInput, PermitUncheckedCreateWithoutTargetAccountInput>
-  }
-
-  export type PermitUpdateWithWhereUniqueWithoutTargetAccountInput = {
-    where: PermitWhereUniqueInput
-    data: XOR<PermitUpdateWithoutTargetAccountInput, PermitUncheckedUpdateWithoutTargetAccountInput>
-  }
-
-  export type PermitUpdateManyWithWhereWithoutTargetAccountInput = {
-    where: PermitScalarWhereInput
-    data: XOR<PermitUpdateManyMutationInput, PermitUncheckedUpdateManyWithoutTargetAccountInput>
-  }
-
-  export type AuthSessionUpsertWithWhereUniqueWithoutAccountInput = {
-    where: AuthSessionWhereUniqueInput
-    update: XOR<AuthSessionUpdateWithoutAccountInput, AuthSessionUncheckedUpdateWithoutAccountInput>
-    create: XOR<AuthSessionCreateWithoutAccountInput, AuthSessionUncheckedCreateWithoutAccountInput>
-  }
-
-  export type AuthSessionUpdateWithWhereUniqueWithoutAccountInput = {
-    where: AuthSessionWhereUniqueInput
-    data: XOR<AuthSessionUpdateWithoutAccountInput, AuthSessionUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type AuthSessionUpdateManyWithWhereWithoutAccountInput = {
-    where: AuthSessionScalarWhereInput
-    data: XOR<AuthSessionUpdateManyMutationInput, AuthSessionUncheckedUpdateManyWithoutAccountInput>
-  }
-
-  export type AuthSessionScalarWhereInput = {
-    AND?: AuthSessionScalarWhereInput | AuthSessionScalarWhereInput[]
-    OR?: AuthSessionScalarWhereInput[]
-    NOT?: AuthSessionScalarWhereInput | AuthSessionScalarWhereInput[]
-    id?: StringFilter<"AuthSession"> | string
-    accountId?: StringFilter<"AuthSession"> | string
-    application?: StringNullableFilter<"AuthSession"> | string | null
-    ipAddress?: StringFilter<"AuthSession"> | string
-    userAgent?: StringFilter<"AuthSession"> | string
-    lastLoggedIn?: DateTimeFilter<"AuthSession"> | Date | string
-    loginType?: StringFilter<"AuthSession"> | string
-    geolocation?: StringNullableFilter<"AuthSession"> | string | null
-    deviceType?: StringNullableFilter<"AuthSession"> | string | null
-    expiresOn?: DateTimeNullableFilter<"AuthSession"> | Date | string | null
-    isExpired?: BoolFilter<"AuthSession"> | boolean
-    authSessionKey?: StringNullableFilter<"AuthSession"> | string | null
-    dependentKeys?: JsonNullableFilter<"AuthSession">
-  }
-
-  export type SystemErrorUpsertWithWhereUniqueWithoutAccountInput = {
-    where: SystemErrorWhereUniqueInput
-    update: XOR<SystemErrorUpdateWithoutAccountInput, SystemErrorUncheckedUpdateWithoutAccountInput>
-    create: XOR<SystemErrorCreateWithoutAccountInput, SystemErrorUncheckedCreateWithoutAccountInput>
-  }
-
-  export type SystemErrorUpdateWithWhereUniqueWithoutAccountInput = {
-    where: SystemErrorWhereUniqueInput
-    data: XOR<SystemErrorUpdateWithoutAccountInput, SystemErrorUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type SystemErrorUpdateManyWithWhereWithoutAccountInput = {
-    where: SystemErrorScalarWhereInput
-    data: XOR<SystemErrorUpdateManyMutationInput, SystemErrorUncheckedUpdateManyWithoutAccountInput>
-  }
-
-  export type SystemErrorScalarWhereInput = {
-    AND?: SystemErrorScalarWhereInput | SystemErrorScalarWhereInput[]
-    OR?: SystemErrorScalarWhereInput[]
-    NOT?: SystemErrorScalarWhereInput | SystemErrorScalarWhereInput[]
-    id?: StringFilter<"SystemError"> | string
-    type?: StringFilter<"SystemError"> | string
-    context?: StringFilter<"SystemError"> | string
-    message?: StringFilter<"SystemError"> | string
-    status?: StringFilter<"SystemError"> | string
-    accountId?: StringNullableFilter<"SystemError"> | string | null
-    ipAddress?: StringNullableFilter<"SystemError"> | string | null
-    geolocation?: StringNullableFilter<"SystemError"> | string | null
-    reproSteps?: StringNullableFilter<"SystemError"> | string | null
-    solution?: StringNullableFilter<"SystemError"> | string | null
-    solvedBy?: StringNullableFilter<"SystemError"> | string | null
-    problemLevel?: StringNullableFilter<"SystemError"> | string | null
-    timestamp?: DateTimeFilter<"SystemError"> | Date | string
-  }
-
-  export type ApplicationConnectionUpsertWithWhereUniqueWithoutAccountInput = {
-    where: ApplicationConnectionWhereUniqueInput
-    update: XOR<ApplicationConnectionUpdateWithoutAccountInput, ApplicationConnectionUncheckedUpdateWithoutAccountInput>
-    create: XOR<ApplicationConnectionCreateWithoutAccountInput, ApplicationConnectionUncheckedCreateWithoutAccountInput>
-  }
-
-  export type ApplicationConnectionUpdateWithWhereUniqueWithoutAccountInput = {
-    where: ApplicationConnectionWhereUniqueInput
-    data: XOR<ApplicationConnectionUpdateWithoutAccountInput, ApplicationConnectionUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type ApplicationConnectionUpdateManyWithWhereWithoutAccountInput = {
-    where: ApplicationConnectionScalarWhereInput
-    data: XOR<ApplicationConnectionUpdateManyMutationInput, ApplicationConnectionUncheckedUpdateManyWithoutAccountInput>
-  }
-
-  export type ApplicationConnectionScalarWhereInput = {
-    AND?: ApplicationConnectionScalarWhereInput | ApplicationConnectionScalarWhereInput[]
-    OR?: ApplicationConnectionScalarWhereInput[]
-    NOT?: ApplicationConnectionScalarWhereInput | ApplicationConnectionScalarWhereInput[]
-    id?: StringFilter<"ApplicationConnection"> | string
-    accountId?: StringFilter<"ApplicationConnection"> | string
-    appId?: StringFilter<"ApplicationConnection"> | string
-    connectedAt?: DateTimeFilter<"ApplicationConnection"> | Date | string
-  }
-
-  export type ApplicationUpsertWithWhereUniqueWithoutOwnerInput = {
-    where: ApplicationWhereUniqueInput
-    update: XOR<ApplicationUpdateWithoutOwnerInput, ApplicationUncheckedUpdateWithoutOwnerInput>
-    create: XOR<ApplicationCreateWithoutOwnerInput, ApplicationUncheckedCreateWithoutOwnerInput>
-  }
-
-  export type ApplicationUpdateWithWhereUniqueWithoutOwnerInput = {
-    where: ApplicationWhereUniqueInput
-    data: XOR<ApplicationUpdateWithoutOwnerInput, ApplicationUncheckedUpdateWithoutOwnerInput>
-  }
-
-  export type ApplicationUpdateManyWithWhereWithoutOwnerInput = {
-    where: ApplicationScalarWhereInput
-    data: XOR<ApplicationUpdateManyMutationInput, ApplicationUncheckedUpdateManyWithoutOwnerInput>
-  }
-
-  export type ApplicationScalarWhereInput = {
-    AND?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
-    OR?: ApplicationScalarWhereInput[]
-    NOT?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
-    id?: StringFilter<"Application"> | string
-    name?: StringFilter<"Application"> | string
-    status?: StringFilter<"Application"> | string
-    party?: StringFilter<"Application"> | string
-    description?: StringNullableFilter<"Application"> | string | null
-    icon?: StringNullableFilter<"Application"> | string | null
-    website?: StringNullableFilter<"Application"> | string | null
-    developer?: StringNullableFilter<"Application"> | string | null
-    appSecret?: StringNullableFilter<"Application"> | string | null
-    access?: JsonNullableFilter<"Application">
-    policies?: JsonNullableFilter<"Application">
-    endpoints?: JsonNullableFilter<"Application">
-    ownerAccountId?: StringNullableFilter<"Application"> | string | null
-    createdAt?: DateTimeFilter<"Application"> | Date | string
+    dateAdded?: DateTimeFilter<"NeupId"> | Date | string
   }
 
   export type NotificationUpsertWithWhereUniqueWithoutAccountInput = {
@@ -36443,187 +36244,59 @@ export namespace Prisma {
     requestId?: StringNullableFilter<"Notification"> | string | null
   }
 
-  export type VerificationUpsertWithWhereUniqueWithoutAccountInput = {
-    where: VerificationWhereUniqueInput
-    update: XOR<VerificationUpdateWithoutAccountInput, VerificationUncheckedUpdateWithoutAccountInput>
-    create: XOR<VerificationCreateWithoutAccountInput, VerificationUncheckedCreateWithoutAccountInput>
+  export type PermitUpsertWithWhereUniqueWithoutAccountInput = {
+    where: PermitWhereUniqueInput
+    update: XOR<PermitUpdateWithoutAccountInput, PermitUncheckedUpdateWithoutAccountInput>
+    create: XOR<PermitCreateWithoutAccountInput, PermitUncheckedCreateWithoutAccountInput>
   }
 
-  export type VerificationUpdateWithWhereUniqueWithoutAccountInput = {
-    where: VerificationWhereUniqueInput
-    data: XOR<VerificationUpdateWithoutAccountInput, VerificationUncheckedUpdateWithoutAccountInput>
+  export type PermitUpdateWithWhereUniqueWithoutAccountInput = {
+    where: PermitWhereUniqueInput
+    data: XOR<PermitUpdateWithoutAccountInput, PermitUncheckedUpdateWithoutAccountInput>
   }
 
-  export type VerificationUpdateManyWithWhereWithoutAccountInput = {
-    where: VerificationScalarWhereInput
-    data: XOR<VerificationUpdateManyMutationInput, VerificationUncheckedUpdateManyWithoutAccountInput>
+  export type PermitUpdateManyWithWhereWithoutAccountInput = {
+    where: PermitScalarWhereInput
+    data: XOR<PermitUpdateManyMutationInput, PermitUncheckedUpdateManyWithoutAccountInput>
   }
 
-  export type VerificationScalarWhereInput = {
-    AND?: VerificationScalarWhereInput | VerificationScalarWhereInput[]
-    OR?: VerificationScalarWhereInput[]
-    NOT?: VerificationScalarWhereInput | VerificationScalarWhereInput[]
-    id?: StringFilter<"Verification"> | string
-    accountId?: StringFilter<"Verification"> | string
-    type?: StringFilter<"Verification"> | string
-    token?: StringNullableFilter<"Verification"> | string | null
-    code?: StringNullableFilter<"Verification"> | string | null
-    status?: StringFilter<"Verification"> | string
-    reason?: StringNullableFilter<"Verification"> | string | null
-    category?: StringNullableFilter<"Verification"> | string | null
-    verifiedBy?: StringNullableFilter<"Verification"> | string | null
-    revokedBy?: StringNullableFilter<"Verification"> | string | null
-    revocationReason?: StringNullableFilter<"Verification"> | string | null
-    createdAt?: DateTimeFilter<"Verification"> | Date | string
-    verifiedAt?: DateTimeNullableFilter<"Verification"> | Date | string | null
-    revokedAt?: DateTimeNullableFilter<"Verification"> | Date | string | null
+  export type PermitScalarWhereInput = {
+    AND?: PermitScalarWhereInput | PermitScalarWhereInput[]
+    OR?: PermitScalarWhereInput[]
+    NOT?: PermitScalarWhereInput | PermitScalarWhereInput[]
+    id?: StringFilter<"Permit"> | string
+    accountId?: StringFilter<"Permit"> | string
+    targetAccountId?: StringNullableFilter<"Permit"> | string | null
+    forSelf?: BoolFilter<"Permit"> | boolean
+    isRoot?: BoolFilter<"Permit"> | boolean
+    permissions?: StringNullableListFilter<"Permit">
+    restrictions?: StringNullableListFilter<"Permit">
+    createdOn?: DateTimeFilter<"Permit"> | Date | string
+    expiryDate?: DateTimeNullableFilter<"Permit"> | Date | string | null
+    fullAccess?: BoolFilter<"Permit"> | boolean
+    issueDate?: DateTimeNullableFilter<"Permit"> | Date | string | null
+    issuingAuthority?: StringNullableFilter<"Permit"> | string | null
+    managedBy?: StringNullableFilter<"Permit"> | string | null
+    permitNumber?: StringNullableFilter<"Permit"> | string | null
+    permitSubType?: StringNullableFilter<"Permit"> | string | null
+    permitType?: StringNullableFilter<"Permit"> | string | null
+    status?: StringFilter<"Permit"> | string
   }
 
-  export type RequestUpsertWithWhereUniqueWithoutSenderInput = {
-    where: RequestWhereUniqueInput
-    update: XOR<RequestUpdateWithoutSenderInput, RequestUncheckedUpdateWithoutSenderInput>
-    create: XOR<RequestCreateWithoutSenderInput, RequestUncheckedCreateWithoutSenderInput>
+  export type PermitUpsertWithWhereUniqueWithoutTargetAccountInput = {
+    where: PermitWhereUniqueInput
+    update: XOR<PermitUpdateWithoutTargetAccountInput, PermitUncheckedUpdateWithoutTargetAccountInput>
+    create: XOR<PermitCreateWithoutTargetAccountInput, PermitUncheckedCreateWithoutTargetAccountInput>
   }
 
-  export type RequestUpdateWithWhereUniqueWithoutSenderInput = {
-    where: RequestWhereUniqueInput
-    data: XOR<RequestUpdateWithoutSenderInput, RequestUncheckedUpdateWithoutSenderInput>
+  export type PermitUpdateWithWhereUniqueWithoutTargetAccountInput = {
+    where: PermitWhereUniqueInput
+    data: XOR<PermitUpdateWithoutTargetAccountInput, PermitUncheckedUpdateWithoutTargetAccountInput>
   }
 
-  export type RequestUpdateManyWithWhereWithoutSenderInput = {
-    where: RequestScalarWhereInput
-    data: XOR<RequestUpdateManyMutationInput, RequestUncheckedUpdateManyWithoutSenderInput>
-  }
-
-  export type RequestScalarWhereInput = {
-    AND?: RequestScalarWhereInput | RequestScalarWhereInput[]
-    OR?: RequestScalarWhereInput[]
-    NOT?: RequestScalarWhereInput | RequestScalarWhereInput[]
-    id?: StringFilter<"Request"> | string
-    senderId?: StringFilter<"Request"> | string
-    recipientId?: StringFilter<"Request"> | string
-    status?: StringFilter<"Request"> | string
-    action?: StringFilter<"Request"> | string
-    type?: StringNullableFilter<"Request"> | string | null
-    data?: JsonNullableFilter<"Request">
-    createdAt?: DateTimeFilter<"Request"> | Date | string
-    updatedAt?: DateTimeFilter<"Request"> | Date | string
-  }
-
-  export type RequestUpsertWithWhereUniqueWithoutRecipientInput = {
-    where: RequestWhereUniqueInput
-    update: XOR<RequestUpdateWithoutRecipientInput, RequestUncheckedUpdateWithoutRecipientInput>
-    create: XOR<RequestCreateWithoutRecipientInput, RequestUncheckedCreateWithoutRecipientInput>
-  }
-
-  export type RequestUpdateWithWhereUniqueWithoutRecipientInput = {
-    where: RequestWhereUniqueInput
-    data: XOR<RequestUpdateWithoutRecipientInput, RequestUncheckedUpdateWithoutRecipientInput>
-  }
-
-  export type RequestUpdateManyWithWhereWithoutRecipientInput = {
-    where: RequestScalarWhereInput
-    data: XOR<RequestUpdateManyMutationInput, RequestUncheckedUpdateManyWithoutRecipientInput>
-  }
-
-  export type AccountTypeIndividualUpsertWithoutAccountInput = {
-    update: XOR<AccountTypeIndividualUpdateWithoutAccountInput, AccountTypeIndividualUncheckedUpdateWithoutAccountInput>
-    create: XOR<AccountTypeIndividualCreateWithoutAccountInput, AccountTypeIndividualUncheckedCreateWithoutAccountInput>
-    where?: AccountTypeIndividualWhereInput
-  }
-
-  export type AccountTypeIndividualUpdateToOneWithWhereWithoutAccountInput = {
-    where?: AccountTypeIndividualWhereInput
-    data: XOR<AccountTypeIndividualUpdateWithoutAccountInput, AccountTypeIndividualUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type AccountTypeIndividualUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    firstName?: NullableStringFieldUpdateOperationsInput | string | null
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    countryOfResidence?: NullableStringFieldUpdateOperationsInput | string | null
-    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
-  }
-
-  export type AccountTypeIndividualUncheckedUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    firstName?: NullableStringFieldUpdateOperationsInput | string | null
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    countryOfResidence?: NullableStringFieldUpdateOperationsInput | string | null
-    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
-  }
-
-  export type AccountTypeBrandUpsertWithoutAccountInput = {
-    update: XOR<AccountTypeBrandUpdateWithoutAccountInput, AccountTypeBrandUncheckedUpdateWithoutAccountInput>
-    create: XOR<AccountTypeBrandCreateWithoutAccountInput, AccountTypeBrandUncheckedCreateWithoutAccountInput>
-    where?: AccountTypeBrandWhereInput
-  }
-
-  export type AccountTypeBrandUpdateToOneWithWhereWithoutAccountInput = {
-    where?: AccountTypeBrandWhereInput
-    data: XOR<AccountTypeBrandUpdateWithoutAccountInput, AccountTypeBrandUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type AccountTypeBrandUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    brandName?: NullableStringFieldUpdateOperationsInput | string | null
-    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
-    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
-    originCountry?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type AccountTypeBrandUncheckedUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    brandName?: NullableStringFieldUpdateOperationsInput | string | null
-    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
-    isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
-    originCountry?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type AccountOwnershipUpsertWithWhereUniqueWithoutParentInput = {
-    where: AccountOwnershipWhereUniqueInput
-    update: XOR<AccountOwnershipUpdateWithoutParentInput, AccountOwnershipUncheckedUpdateWithoutParentInput>
-    create: XOR<AccountOwnershipCreateWithoutParentInput, AccountOwnershipUncheckedCreateWithoutParentInput>
-  }
-
-  export type AccountOwnershipUpdateWithWhereUniqueWithoutParentInput = {
-    where: AccountOwnershipWhereUniqueInput
-    data: XOR<AccountOwnershipUpdateWithoutParentInput, AccountOwnershipUncheckedUpdateWithoutParentInput>
-  }
-
-  export type AccountOwnershipUpdateManyWithWhereWithoutParentInput = {
-    where: AccountOwnershipScalarWhereInput
-    data: XOR<AccountOwnershipUpdateManyMutationInput, AccountOwnershipUncheckedUpdateManyWithoutParentInput>
-  }
-
-  export type AccountOwnershipScalarWhereInput = {
-    AND?: AccountOwnershipScalarWhereInput | AccountOwnershipScalarWhereInput[]
-    OR?: AccountOwnershipScalarWhereInput[]
-    NOT?: AccountOwnershipScalarWhereInput | AccountOwnershipScalarWhereInput[]
-    id?: StringFilter<"AccountOwnership"> | string
-    parentId?: StringFilter<"AccountOwnership"> | string
-    childrenId?: StringFilter<"AccountOwnership"> | string
-    type?: StringFilter<"AccountOwnership"> | string
-  }
-
-  export type AccountOwnershipUpsertWithWhereUniqueWithoutChildInput = {
-    where: AccountOwnershipWhereUniqueInput
-    update: XOR<AccountOwnershipUpdateWithoutChildInput, AccountOwnershipUncheckedUpdateWithoutChildInput>
-    create: XOR<AccountOwnershipCreateWithoutChildInput, AccountOwnershipUncheckedCreateWithoutChildInput>
-  }
-
-  export type AccountOwnershipUpdateWithWhereUniqueWithoutChildInput = {
-    where: AccountOwnershipWhereUniqueInput
-    data: XOR<AccountOwnershipUpdateWithoutChildInput, AccountOwnershipUncheckedUpdateWithoutChildInput>
-  }
-
-  export type AccountOwnershipUpdateManyWithWhereWithoutChildInput = {
-    where: AccountOwnershipScalarWhereInput
-    data: XOR<AccountOwnershipUpdateManyMutationInput, AccountOwnershipUncheckedUpdateManyWithoutChildInput>
+  export type PermitUpdateManyWithWhereWithoutTargetAccountInput = {
+    where: PermitScalarWhereInput
+    data: XOR<PermitUpdateManyMutationInput, PermitUncheckedUpdateManyWithoutTargetAccountInput>
   }
 
   export type PortfolioMemberUpsertWithWhereUniqueWithoutAccountInput = {
@@ -36679,93 +36352,185 @@ export namespace Prisma {
     details?: JsonNullableFilter<"PortfolioRole">
   }
 
+  export type RequestUpsertWithWhereUniqueWithoutRecipientInput = {
+    where: RequestWhereUniqueInput
+    update: XOR<RequestUpdateWithoutRecipientInput, RequestUncheckedUpdateWithoutRecipientInput>
+    create: XOR<RequestCreateWithoutRecipientInput, RequestUncheckedCreateWithoutRecipientInput>
+  }
+
+  export type RequestUpdateWithWhereUniqueWithoutRecipientInput = {
+    where: RequestWhereUniqueInput
+    data: XOR<RequestUpdateWithoutRecipientInput, RequestUncheckedUpdateWithoutRecipientInput>
+  }
+
+  export type RequestUpdateManyWithWhereWithoutRecipientInput = {
+    where: RequestScalarWhereInput
+    data: XOR<RequestUpdateManyMutationInput, RequestUncheckedUpdateManyWithoutRecipientInput>
+  }
+
+  export type RequestScalarWhereInput = {
+    AND?: RequestScalarWhereInput | RequestScalarWhereInput[]
+    OR?: RequestScalarWhereInput[]
+    NOT?: RequestScalarWhereInput | RequestScalarWhereInput[]
+    id?: StringFilter<"Request"> | string
+    senderId?: StringFilter<"Request"> | string
+    recipientId?: StringFilter<"Request"> | string
+    status?: StringFilter<"Request"> | string
+    action?: StringFilter<"Request"> | string
+    type?: StringNullableFilter<"Request"> | string | null
+    data?: JsonNullableFilter<"Request">
+    createdAt?: DateTimeFilter<"Request"> | Date | string
+    updatedAt?: DateTimeFilter<"Request"> | Date | string
+  }
+
+  export type RequestUpsertWithWhereUniqueWithoutSenderInput = {
+    where: RequestWhereUniqueInput
+    update: XOR<RequestUpdateWithoutSenderInput, RequestUncheckedUpdateWithoutSenderInput>
+    create: XOR<RequestCreateWithoutSenderInput, RequestUncheckedCreateWithoutSenderInput>
+  }
+
+  export type RequestUpdateWithWhereUniqueWithoutSenderInput = {
+    where: RequestWhereUniqueInput
+    data: XOR<RequestUpdateWithoutSenderInput, RequestUncheckedUpdateWithoutSenderInput>
+  }
+
+  export type RequestUpdateManyWithWhereWithoutSenderInput = {
+    where: RequestScalarWhereInput
+    data: XOR<RequestUpdateManyMutationInput, RequestUncheckedUpdateManyWithoutSenderInput>
+  }
+
+  export type SystemErrorUpsertWithWhereUniqueWithoutAccountInput = {
+    where: SystemErrorWhereUniqueInput
+    update: XOR<SystemErrorUpdateWithoutAccountInput, SystemErrorUncheckedUpdateWithoutAccountInput>
+    create: XOR<SystemErrorCreateWithoutAccountInput, SystemErrorUncheckedCreateWithoutAccountInput>
+  }
+
+  export type SystemErrorUpdateWithWhereUniqueWithoutAccountInput = {
+    where: SystemErrorWhereUniqueInput
+    data: XOR<SystemErrorUpdateWithoutAccountInput, SystemErrorUncheckedUpdateWithoutAccountInput>
+  }
+
+  export type SystemErrorUpdateManyWithWhereWithoutAccountInput = {
+    where: SystemErrorScalarWhereInput
+    data: XOR<SystemErrorUpdateManyMutationInput, SystemErrorUncheckedUpdateManyWithoutAccountInput>
+  }
+
+  export type SystemErrorScalarWhereInput = {
+    AND?: SystemErrorScalarWhereInput | SystemErrorScalarWhereInput[]
+    OR?: SystemErrorScalarWhereInput[]
+    NOT?: SystemErrorScalarWhereInput | SystemErrorScalarWhereInput[]
+    id?: StringFilter<"SystemError"> | string
+    message?: StringFilter<"SystemError"> | string
+    context?: StringFilter<"SystemError"> | string
+    timestamp?: DateTimeFilter<"SystemError"> | Date | string
+    accountId?: StringNullableFilter<"SystemError"> | string | null
+    geolocation?: StringNullableFilter<"SystemError"> | string | null
+    ipAddress?: StringNullableFilter<"SystemError"> | string | null
+    problemLevel?: StringNullableFilter<"SystemError"> | string | null
+    reproSteps?: StringNullableFilter<"SystemError"> | string | null
+    solution?: StringNullableFilter<"SystemError"> | string | null
+    solvedBy?: StringNullableFilter<"SystemError"> | string | null
+    status?: StringFilter<"SystemError"> | string
+    type?: StringFilter<"SystemError"> | string
+  }
+
+  export type VerificationUpsertWithWhereUniqueWithoutAccountInput = {
+    where: VerificationWhereUniqueInput
+    update: XOR<VerificationUpdateWithoutAccountInput, VerificationUncheckedUpdateWithoutAccountInput>
+    create: XOR<VerificationCreateWithoutAccountInput, VerificationUncheckedCreateWithoutAccountInput>
+  }
+
+  export type VerificationUpdateWithWhereUniqueWithoutAccountInput = {
+    where: VerificationWhereUniqueInput
+    data: XOR<VerificationUpdateWithoutAccountInput, VerificationUncheckedUpdateWithoutAccountInput>
+  }
+
+  export type VerificationUpdateManyWithWhereWithoutAccountInput = {
+    where: VerificationScalarWhereInput
+    data: XOR<VerificationUpdateManyMutationInput, VerificationUncheckedUpdateManyWithoutAccountInput>
+  }
+
+  export type VerificationScalarWhereInput = {
+    AND?: VerificationScalarWhereInput | VerificationScalarWhereInput[]
+    OR?: VerificationScalarWhereInput[]
+    NOT?: VerificationScalarWhereInput | VerificationScalarWhereInput[]
+    id?: StringFilter<"Verification"> | string
+    accountId?: StringFilter<"Verification"> | string
+    type?: StringFilter<"Verification"> | string
+    token?: StringNullableFilter<"Verification"> | string | null
+    code?: StringNullableFilter<"Verification"> | string | null
+    status?: StringFilter<"Verification"> | string
+    reason?: StringNullableFilter<"Verification"> | string | null
+    category?: StringNullableFilter<"Verification"> | string | null
+    verifiedBy?: StringNullableFilter<"Verification"> | string | null
+    revokedBy?: StringNullableFilter<"Verification"> | string | null
+    revocationReason?: StringNullableFilter<"Verification"> | string | null
+    createdAt?: DateTimeFilter<"Verification"> | Date | string
+    verifiedAt?: DateTimeNullableFilter<"Verification"> | Date | string | null
+    revokedAt?: DateTimeNullableFilter<"Verification"> | Date | string | null
+  }
+
   export type AccountCreateWithoutIndividualProfileInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     contacts?: ContactCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutIndividualProfileInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutIndividualProfileInput = {
     where: AccountWhereUniqueInput
     create: XOR<AccountCreateWithoutIndividualProfileInput, AccountUncheckedCreateWithoutIndividualProfileInput>
-  }
-
-  export type AuthMethodCreateWithoutIndividualProfileInput = {
-    id?: string
-    type: $Enums.AuthMethodType
-    value: string
-    order: $Enums.AuthMethodOrder
-    status?: $Enums.AuthMethodStatus
-    detail?: NullableJsonNullValueInput | InputJsonValue
-  }
-
-  export type AuthMethodUncheckedCreateWithoutIndividualProfileInput = {
-    id?: string
-    type: $Enums.AuthMethodType
-    value: string
-    order: $Enums.AuthMethodOrder
-    status?: $Enums.AuthMethodStatus
-    detail?: NullableJsonNullValueInput | InputJsonValue
-  }
-
-  export type AuthMethodCreateOrConnectWithoutIndividualProfileInput = {
-    where: AuthMethodWhereUniqueInput
-    create: XOR<AuthMethodCreateWithoutIndividualProfileInput, AuthMethodUncheckedCreateWithoutIndividualProfileInput>
-  }
-
-  export type AuthMethodCreateManyIndividualProfileInputEnvelope = {
-    data: AuthMethodCreateManyIndividualProfileInput | AuthMethodCreateManyIndividualProfileInput[]
-    skipDuplicates?: boolean
   }
 
   export type AccountUpsertWithoutIndividualProfileInput = {
@@ -36781,143 +36546,118 @@ export namespace Prisma {
 
   export type AccountUpdateWithoutIndividualProfileInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     contacts?: ContactUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutIndividualProfileInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
-  }
-
-  export type AuthMethodUpsertWithWhereUniqueWithoutIndividualProfileInput = {
-    where: AuthMethodWhereUniqueInput
-    update: XOR<AuthMethodUpdateWithoutIndividualProfileInput, AuthMethodUncheckedUpdateWithoutIndividualProfileInput>
-    create: XOR<AuthMethodCreateWithoutIndividualProfileInput, AuthMethodUncheckedCreateWithoutIndividualProfileInput>
-  }
-
-  export type AuthMethodUpdateWithWhereUniqueWithoutIndividualProfileInput = {
-    where: AuthMethodWhereUniqueInput
-    data: XOR<AuthMethodUpdateWithoutIndividualProfileInput, AuthMethodUncheckedUpdateWithoutIndividualProfileInput>
-  }
-
-  export type AuthMethodUpdateManyWithWhereWithoutIndividualProfileInput = {
-    where: AuthMethodScalarWhereInput
-    data: XOR<AuthMethodUpdateManyMutationInput, AuthMethodUncheckedUpdateManyWithoutIndividualProfileInput>
-  }
-
-  export type AuthMethodScalarWhereInput = {
-    AND?: AuthMethodScalarWhereInput | AuthMethodScalarWhereInput[]
-    OR?: AuthMethodScalarWhereInput[]
-    NOT?: AuthMethodScalarWhereInput | AuthMethodScalarWhereInput[]
-    id?: StringFilter<"AuthMethod"> | string
-    accountId?: StringFilter<"AuthMethod"> | string
-    type?: EnumAuthMethodTypeFilter<"AuthMethod"> | $Enums.AuthMethodType
-    value?: StringFilter<"AuthMethod"> | string
-    order?: EnumAuthMethodOrderFilter<"AuthMethod"> | $Enums.AuthMethodOrder
-    status?: EnumAuthMethodStatusFilter<"AuthMethod"> | $Enums.AuthMethodStatus
-    detail?: JsonNullableFilter<"AuthMethod">
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutBrandProfileInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     contacts?: ContactCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutBrandProfileInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutBrandProfileInput = {
@@ -36938,175 +36678,118 @@ export namespace Prisma {
 
   export type AccountUpdateWithoutBrandProfileInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     contacts?: ContactUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutBrandProfileInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
-  }
-
-  export type AccountCreateWithoutParentOwnershipsInput = {
-    id?: string
-    accountType?: string
-    displayImage?: string | null
-    displayName?: string | null
-    status?: string | null
-    isVerified?: boolean
-    createdAt?: Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
-    permits?: PermitCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
-    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
-    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
-  }
-
-  export type AccountUncheckedCreateWithoutParentOwnershipsInput = {
-    id?: string
-    accountType?: string
-    displayImage?: string | null
-    displayName?: string | null
-    status?: string | null
-    isVerified?: boolean
-    createdAt?: Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
-    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
-    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
-    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
-  }
-
-  export type AccountCreateOrConnectWithoutParentOwnershipsInput = {
-    where: AccountWhereUniqueInput
-    create: XOR<AccountCreateWithoutParentOwnershipsInput, AccountUncheckedCreateWithoutParentOwnershipsInput>
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutChildOwnershipsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     contacts?: ContactCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
     portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutChildOwnershipsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
     portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutChildOwnershipsInput = {
@@ -37114,71 +36797,67 @@ export namespace Prisma {
     create: XOR<AccountCreateWithoutChildOwnershipsInput, AccountUncheckedCreateWithoutChildOwnershipsInput>
   }
 
-  export type AccountUpsertWithoutParentOwnershipsInput = {
-    update: XOR<AccountUpdateWithoutParentOwnershipsInput, AccountUncheckedUpdateWithoutParentOwnershipsInput>
+  export type AccountCreateWithoutParentOwnershipsInput = {
+    id?: string
+    displayName?: string | null
+    accountType?: string
+    displayImage?: string | null
+    status?: string | null
+    isVerified?: boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
+    contacts?: ContactCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
+    permits?: PermitCreateNestedManyWithoutAccountInput
+    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
+  }
+
+  export type AccountUncheckedCreateWithoutParentOwnershipsInput = {
+    id?: string
+    displayName?: string | null
+    accountType?: string
+    displayImage?: string | null
+    status?: string | null
+    isVerified?: boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
+    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
+    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
+    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+  }
+
+  export type AccountCreateOrConnectWithoutParentOwnershipsInput = {
+    where: AccountWhereUniqueInput
     create: XOR<AccountCreateWithoutParentOwnershipsInput, AccountUncheckedCreateWithoutParentOwnershipsInput>
-    where?: AccountWhereInput
-  }
-
-  export type AccountUpdateToOneWithWhereWithoutParentOwnershipsInput = {
-    where?: AccountWhereInput
-    data: XOR<AccountUpdateWithoutParentOwnershipsInput, AccountUncheckedUpdateWithoutParentOwnershipsInput>
-  }
-
-  export type AccountUpdateWithoutParentOwnershipsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
-    permits?: PermitUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
-    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
-    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
-  }
-
-  export type AccountUncheckedUpdateWithoutParentOwnershipsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
-    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
-    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
-    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUpsertWithoutChildOwnershipsInput = {
@@ -37194,114 +36873,187 @@ export namespace Prisma {
 
   export type AccountUpdateWithoutChildOwnershipsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     contacts?: ContactUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
     portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutChildOwnershipsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
     portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  }
+
+  export type AccountUpsertWithoutParentOwnershipsInput = {
+    update: XOR<AccountUpdateWithoutParentOwnershipsInput, AccountUncheckedUpdateWithoutParentOwnershipsInput>
+    create: XOR<AccountCreateWithoutParentOwnershipsInput, AccountUncheckedCreateWithoutParentOwnershipsInput>
+    where?: AccountWhereInput
+  }
+
+  export type AccountUpdateToOneWithWhereWithoutParentOwnershipsInput = {
+    where?: AccountWhereInput
+    data: XOR<AccountUpdateWithoutParentOwnershipsInput, AccountUncheckedUpdateWithoutParentOwnershipsInput>
+  }
+
+  export type AccountUpdateWithoutParentOwnershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountType?: StringFieldUpdateOperationsInput | string
+    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
+    contacts?: ContactUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
+    permits?: PermitUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
+  }
+
+  export type AccountUncheckedUpdateWithoutParentOwnershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountType?: StringFieldUpdateOperationsInput | string
+    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
+    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
+    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutNotificationsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     contacts?: ContactCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutNotificationsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutNotificationsInput = {
@@ -37317,8 +37069,8 @@ export namespace Prisma {
     data?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
-    sender: AccountCreateNestedOneWithoutSentRequestsInput
     recipient: AccountCreateNestedOneWithoutReceivedRequestsInput
+    sender: AccountCreateNestedOneWithoutSentRequestsInput
   }
 
   export type RequestUncheckedCreateWithoutNotificationsInput = {
@@ -37351,58 +37103,60 @@ export namespace Prisma {
 
   export type AccountUpdateWithoutNotificationsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     contacts?: ContactUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutNotificationsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type RequestUpsertWithoutNotificationsInput = {
@@ -37424,8 +37178,8 @@ export namespace Prisma {
     data?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sender?: AccountUpdateOneRequiredWithoutSentRequestsNestedInput
     recipient?: AccountUpdateOneRequiredWithoutReceivedRequestsNestedInput
+    sender?: AccountUpdateOneRequiredWithoutSentRequestsNestedInput
   }
 
   export type RequestUncheckedUpdateWithoutNotificationsInput = {
@@ -37438,128 +37192,6 @@ export namespace Prisma {
     data?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AccountCreateWithoutSentRequestsInput = {
-    id?: string
-    accountType?: string
-    displayImage?: string | null
-    displayName?: string | null
-    status?: string | null
-    isVerified?: boolean
-    createdAt?: Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
-    permits?: PermitCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
-    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
-    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
-  }
-
-  export type AccountUncheckedCreateWithoutSentRequestsInput = {
-    id?: string
-    accountType?: string
-    displayImage?: string | null
-    displayName?: string | null
-    status?: string | null
-    isVerified?: boolean
-    createdAt?: Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
-    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
-    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
-    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
-  }
-
-  export type AccountCreateOrConnectWithoutSentRequestsInput = {
-    where: AccountWhereUniqueInput
-    create: XOR<AccountCreateWithoutSentRequestsInput, AccountUncheckedCreateWithoutSentRequestsInput>
-  }
-
-  export type AccountCreateWithoutReceivedRequestsInput = {
-    id?: string
-    accountType?: string
-    displayImage?: string | null
-    displayName?: string | null
-    status?: string | null
-    isVerified?: boolean
-    createdAt?: Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
-    permits?: PermitCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
-    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
-    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
-  }
-
-  export type AccountUncheckedCreateWithoutReceivedRequestsInput = {
-    id?: string
-    accountType?: string
-    displayImage?: string | null
-    displayName?: string | null
-    status?: string | null
-    isVerified?: boolean
-    createdAt?: Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
-    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
-    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
-    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
-  }
-
-  export type AccountCreateOrConnectWithoutReceivedRequestsInput = {
-    where: AccountWhereUniqueInput
-    create: XOR<AccountCreateWithoutReceivedRequestsInput, AccountUncheckedCreateWithoutReceivedRequestsInput>
   }
 
   export type NotificationCreateWithoutRequestInput = {
@@ -37598,138 +37230,130 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type AccountUpsertWithoutSentRequestsInput = {
-    update: XOR<AccountUpdateWithoutSentRequestsInput, AccountUncheckedUpdateWithoutSentRequestsInput>
-    create: XOR<AccountCreateWithoutSentRequestsInput, AccountUncheckedCreateWithoutSentRequestsInput>
-    where?: AccountWhereInput
-  }
-
-  export type AccountUpdateToOneWithWhereWithoutSentRequestsInput = {
-    where?: AccountWhereInput
-    data: XOR<AccountUpdateWithoutSentRequestsInput, AccountUncheckedUpdateWithoutSentRequestsInput>
-  }
-
-  export type AccountUpdateWithoutSentRequestsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type AccountCreateWithoutReceivedRequestsInput = {
+    id?: string
+    displayName?: string | null
+    accountType?: string
+    displayImage?: string | null
+    status?: string | null
+    isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
-    permits?: PermitUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
-    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
-    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
+    contacts?: ContactCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
+    permits?: PermitCreateNestedManyWithoutAccountInput
+    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
   }
 
-  export type AccountUncheckedUpdateWithoutSentRequestsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type AccountUncheckedCreateWithoutReceivedRequestsInput = {
+    id?: string
+    displayName?: string | null
+    accountType?: string
+    displayImage?: string | null
+    status?: string | null
+    isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
-    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
-    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
-    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
+    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
+    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
+    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
   }
 
-  export type AccountUpsertWithoutReceivedRequestsInput = {
-    update: XOR<AccountUpdateWithoutReceivedRequestsInput, AccountUncheckedUpdateWithoutReceivedRequestsInput>
+  export type AccountCreateOrConnectWithoutReceivedRequestsInput = {
+    where: AccountWhereUniqueInput
     create: XOR<AccountCreateWithoutReceivedRequestsInput, AccountUncheckedCreateWithoutReceivedRequestsInput>
-    where?: AccountWhereInput
   }
 
-  export type AccountUpdateToOneWithWhereWithoutReceivedRequestsInput = {
-    where?: AccountWhereInput
-    data: XOR<AccountUpdateWithoutReceivedRequestsInput, AccountUncheckedUpdateWithoutReceivedRequestsInput>
-  }
-
-  export type AccountUpdateWithoutReceivedRequestsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type AccountCreateWithoutSentRequestsInput = {
+    id?: string
+    displayName?: string | null
+    accountType?: string
+    displayImage?: string | null
+    status?: string | null
+    isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
-    permits?: PermitUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
-    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
-    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
+    contacts?: ContactCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
+    permits?: PermitCreateNestedManyWithoutAccountInput
+    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
   }
 
-  export type AccountUncheckedUpdateWithoutReceivedRequestsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type AccountUncheckedCreateWithoutSentRequestsInput = {
+    id?: string
+    displayName?: string | null
+    accountType?: string
+    displayImage?: string | null
+    status?: string | null
+    isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
-    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
-    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
-    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
+    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
+    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
+    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+  }
+
+  export type AccountCreateOrConnectWithoutSentRequestsInput = {
+    where: AccountWhereUniqueInput
+    create: XOR<AccountCreateWithoutSentRequestsInput, AccountUncheckedCreateWithoutSentRequestsInput>
   }
 
   export type NotificationUpsertWithWhereUniqueWithoutRequestInput = {
@@ -37748,60 +37372,200 @@ export namespace Prisma {
     data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutRequestInput>
   }
 
+  export type AccountUpsertWithoutReceivedRequestsInput = {
+    update: XOR<AccountUpdateWithoutReceivedRequestsInput, AccountUncheckedUpdateWithoutReceivedRequestsInput>
+    create: XOR<AccountCreateWithoutReceivedRequestsInput, AccountUncheckedCreateWithoutReceivedRequestsInput>
+    where?: AccountWhereInput
+  }
+
+  export type AccountUpdateToOneWithWhereWithoutReceivedRequestsInput = {
+    where?: AccountWhereInput
+    data: XOR<AccountUpdateWithoutReceivedRequestsInput, AccountUncheckedUpdateWithoutReceivedRequestsInput>
+  }
+
+  export type AccountUpdateWithoutReceivedRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountType?: StringFieldUpdateOperationsInput | string
+    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
+    contacts?: ContactUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
+    permits?: PermitUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
+  }
+
+  export type AccountUncheckedUpdateWithoutReceivedRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountType?: StringFieldUpdateOperationsInput | string
+    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
+    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
+    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  }
+
+  export type AccountUpsertWithoutSentRequestsInput = {
+    update: XOR<AccountUpdateWithoutSentRequestsInput, AccountUncheckedUpdateWithoutSentRequestsInput>
+    create: XOR<AccountCreateWithoutSentRequestsInput, AccountUncheckedCreateWithoutSentRequestsInput>
+    where?: AccountWhereInput
+  }
+
+  export type AccountUpdateToOneWithWhereWithoutSentRequestsInput = {
+    where?: AccountWhereInput
+    data: XOR<AccountUpdateWithoutSentRequestsInput, AccountUncheckedUpdateWithoutSentRequestsInput>
+  }
+
+  export type AccountUpdateWithoutSentRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountType?: StringFieldUpdateOperationsInput | string
+    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
+    contacts?: ContactUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
+    permits?: PermitUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
+  }
+
+  export type AccountUncheckedUpdateWithoutSentRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountType?: StringFieldUpdateOperationsInput | string
+    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
+    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
+    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  }
+
   export type AccountCreateWithoutVerificationsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     contacts?: ContactCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutVerificationsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutVerificationsInput = {
@@ -37822,114 +37586,118 @@ export namespace Prisma {
 
   export type AccountUpdateWithoutVerificationsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     contacts?: ContactUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutVerificationsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutContactsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutContactsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutContactsInput = {
@@ -37950,114 +37718,118 @@ export namespace Prisma {
 
   export type AccountUpdateWithoutContactsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutContactsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutNeupIdsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     contacts?: ContactCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutNeupIdsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutNeupIdsInput = {
@@ -38078,170 +37850,250 @@ export namespace Prisma {
 
   export type AccountUpdateWithoutNeupIdsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     contacts?: ContactUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutNeupIdsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
   }
 
-  export type AccountTypeIndividualCreateWithoutAuthMethodsInput = {
+  export type AccountCreateWithoutAuthMethodsInput = {
     id?: string
-    firstName?: string | null
-    middleName?: string | null
-    lastName?: string | null
-    dateOfBirth?: Date | string | null
-    countryOfResidence?: string | null
-    account: AccountCreateNestedOneWithoutIndividualProfileInput
+    displayName?: string | null
+    accountType?: string
+    displayImage?: string | null
+    status?: string | null
+    isVerified?: boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
+    contacts?: ContactCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
+    permits?: PermitCreateNestedManyWithoutAccountInput
+    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
   }
 
-  export type AccountTypeIndividualUncheckedCreateWithoutAuthMethodsInput = {
+  export type AccountUncheckedCreateWithoutAuthMethodsInput = {
     id?: string
-    accountId: string
-    firstName?: string | null
-    middleName?: string | null
-    lastName?: string | null
-    dateOfBirth?: Date | string | null
-    countryOfResidence?: string | null
+    displayName?: string | null
+    accountType?: string
+    displayImage?: string | null
+    status?: string | null
+    isVerified?: boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
+    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
+    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
+    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
   }
 
-  export type AccountTypeIndividualCreateOrConnectWithoutAuthMethodsInput = {
-    where: AccountTypeIndividualWhereUniqueInput
-    create: XOR<AccountTypeIndividualCreateWithoutAuthMethodsInput, AccountTypeIndividualUncheckedCreateWithoutAuthMethodsInput>
+  export type AccountCreateOrConnectWithoutAuthMethodsInput = {
+    where: AccountWhereUniqueInput
+    create: XOR<AccountCreateWithoutAuthMethodsInput, AccountUncheckedCreateWithoutAuthMethodsInput>
   }
 
-  export type AccountTypeIndividualUpsertWithoutAuthMethodsInput = {
-    update: XOR<AccountTypeIndividualUpdateWithoutAuthMethodsInput, AccountTypeIndividualUncheckedUpdateWithoutAuthMethodsInput>
-    create: XOR<AccountTypeIndividualCreateWithoutAuthMethodsInput, AccountTypeIndividualUncheckedCreateWithoutAuthMethodsInput>
-    where?: AccountTypeIndividualWhereInput
+  export type AccountUpsertWithoutAuthMethodsInput = {
+    update: XOR<AccountUpdateWithoutAuthMethodsInput, AccountUncheckedUpdateWithoutAuthMethodsInput>
+    create: XOR<AccountCreateWithoutAuthMethodsInput, AccountUncheckedCreateWithoutAuthMethodsInput>
+    where?: AccountWhereInput
   }
 
-  export type AccountTypeIndividualUpdateToOneWithWhereWithoutAuthMethodsInput = {
-    where?: AccountTypeIndividualWhereInput
-    data: XOR<AccountTypeIndividualUpdateWithoutAuthMethodsInput, AccountTypeIndividualUncheckedUpdateWithoutAuthMethodsInput>
+  export type AccountUpdateToOneWithWhereWithoutAuthMethodsInput = {
+    where?: AccountWhereInput
+    data: XOR<AccountUpdateWithoutAuthMethodsInput, AccountUncheckedUpdateWithoutAuthMethodsInput>
   }
 
-  export type AccountTypeIndividualUpdateWithoutAuthMethodsInput = {
+  export type AccountUpdateWithoutAuthMethodsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    firstName?: NullableStringFieldUpdateOperationsInput | string | null
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    countryOfResidence?: NullableStringFieldUpdateOperationsInput | string | null
-    account?: AccountUpdateOneRequiredWithoutIndividualProfileNestedInput
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountType?: StringFieldUpdateOperationsInput | string
+    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
+    contacts?: ContactUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
+    permits?: PermitUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
   }
 
-  export type AccountTypeIndividualUncheckedUpdateWithoutAuthMethodsInput = {
+  export type AccountUncheckedUpdateWithoutAuthMethodsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    firstName?: NullableStringFieldUpdateOperationsInput | string | null
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    countryOfResidence?: NullableStringFieldUpdateOperationsInput | string | null
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountType?: StringFieldUpdateOperationsInput | string
+    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
+    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
+    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutPermitsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     contacts?: ContactCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
     portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutPermitsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutPermitsInput = {
@@ -38251,58 +38103,60 @@ export namespace Prisma {
 
   export type AccountCreateWithoutTargetPermitsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     contacts?: ContactCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
-    permits?: PermitCreateNestedManyWithoutAccountInput
-    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    permits?: PermitCreateNestedManyWithoutAccountInput
     portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutTargetPermitsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
-    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
-    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutTargetPermitsInput = {
@@ -38323,58 +38177,60 @@ export namespace Prisma {
 
   export type AccountUpdateWithoutPermitsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     contacts?: ContactUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
     portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutPermitsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUpsertWithoutTargetPermitsInput = {
@@ -38390,114 +38246,118 @@ export namespace Prisma {
 
   export type AccountUpdateWithoutTargetPermitsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     contacts?: ContactUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
-    permits?: PermitUpdateManyWithoutAccountNestedInput
-    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    permits?: PermitUpdateManyWithoutAccountNestedInput
     portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutTargetPermitsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
-    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
-    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutSessionsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
     contacts?: ContactCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutSessionsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
     contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutSessionsInput = {
@@ -38518,114 +38378,118 @@ export namespace Prisma {
 
   export type AccountUpdateWithoutSessionsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
     contacts?: ContactUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutSessionsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
     contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutErrorLogsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     contacts?: ContactCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutErrorLogsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutErrorLogsInput = {
@@ -38646,114 +38510,118 @@ export namespace Prisma {
 
   export type AccountUpdateWithoutErrorLogsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     contacts?: ContactUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutErrorLogsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutOwnedApplicationsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     contacts?: ContactCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutOwnedApplicationsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutOwnedApplicationsInput = {
@@ -38796,58 +38664,60 @@ export namespace Prisma {
 
   export type AccountUpdateWithoutOwnedApplicationsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     contacts?: ContactUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutOwnedApplicationsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type ApplicationConnectionUpsertWithWhereUniqueWithoutApplicationInput = {
@@ -39047,6 +38917,69 @@ export namespace Prisma {
     roles?: PortfolioRoleUncheckedUpdateManyWithoutPortfolioNestedInput
   }
 
+  export type AccountCreateWithoutPortfolioMembersInput = {
+    id?: string
+    displayName?: string | null
+    accountType?: string
+    displayImage?: string | null
+    status?: string | null
+    isVerified?: boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
+    contacts?: ContactCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
+    permits?: PermitCreateNestedManyWithoutAccountInput
+    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
+    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
+  }
+
+  export type AccountUncheckedCreateWithoutPortfolioMembersInput = {
+    id?: string
+    displayName?: string | null
+    accountType?: string
+    displayImage?: string | null
+    status?: string | null
+    isVerified?: boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
+    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
+    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
+    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+  }
+
+  export type AccountCreateOrConnectWithoutPortfolioMembersInput = {
+    where: AccountWhereUniqueInput
+    create: XOR<AccountCreateWithoutPortfolioMembersInput, AccountUncheckedCreateWithoutPortfolioMembersInput>
+  }
+
   export type PortfolioCreateWithoutMembersInput = {
     id?: string
     name: string
@@ -39070,65 +39003,73 @@ export namespace Prisma {
     create: XOR<PortfolioCreateWithoutMembersInput, PortfolioUncheckedCreateWithoutMembersInput>
   }
 
-  export type AccountCreateWithoutPortfolioMembersInput = {
-    id?: string
-    accountType?: string
-    displayImage?: string | null
-    displayName?: string | null
-    status?: string | null
-    isVerified?: boolean
-    createdAt?: Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
-    permits?: PermitCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
-    portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
-  }
-
-  export type AccountUncheckedCreateWithoutPortfolioMembersInput = {
-    id?: string
-    accountType?: string
-    displayImage?: string | null
-    displayName?: string | null
-    status?: string | null
-    isVerified?: boolean
-    createdAt?: Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
-    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
-    targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
-    portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
-  }
-
-  export type AccountCreateOrConnectWithoutPortfolioMembersInput = {
-    where: AccountWhereUniqueInput
+  export type AccountUpsertWithoutPortfolioMembersInput = {
+    update: XOR<AccountUpdateWithoutPortfolioMembersInput, AccountUncheckedUpdateWithoutPortfolioMembersInput>
     create: XOR<AccountCreateWithoutPortfolioMembersInput, AccountUncheckedCreateWithoutPortfolioMembersInput>
+    where?: AccountWhereInput
+  }
+
+  export type AccountUpdateToOneWithWhereWithoutPortfolioMembersInput = {
+    where?: AccountWhereInput
+    data: XOR<AccountUpdateWithoutPortfolioMembersInput, AccountUncheckedUpdateWithoutPortfolioMembersInput>
+  }
+
+  export type AccountUpdateWithoutPortfolioMembersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountType?: StringFieldUpdateOperationsInput | string
+    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
+    contacts?: ContactUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
+    permits?: PermitUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
+    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
+  }
+
+  export type AccountUncheckedUpdateWithoutPortfolioMembersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountType?: StringFieldUpdateOperationsInput | string
+    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
+    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
+    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
+    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type PortfolioUpsertWithoutMembersInput = {
@@ -39160,127 +39101,62 @@ export namespace Prisma {
     roles?: PortfolioRoleUncheckedUpdateManyWithoutPortfolioNestedInput
   }
 
-  export type AccountUpsertWithoutPortfolioMembersInput = {
-    update: XOR<AccountUpdateWithoutPortfolioMembersInput, AccountUncheckedUpdateWithoutPortfolioMembersInput>
-    create: XOR<AccountCreateWithoutPortfolioMembersInput, AccountUncheckedCreateWithoutPortfolioMembersInput>
-    where?: AccountWhereInput
-  }
-
-  export type AccountUpdateToOneWithWhereWithoutPortfolioMembersInput = {
-    where?: AccountWhereInput
-    data: XOR<AccountUpdateWithoutPortfolioMembersInput, AccountUncheckedUpdateWithoutPortfolioMembersInput>
-  }
-
-  export type AccountUpdateWithoutPortfolioMembersInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
-    permits?: PermitUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
-    portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
-  }
-
-  export type AccountUncheckedUpdateWithoutPortfolioMembersInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
-    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
-    targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
-    portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
-  }
-
   export type AccountCreateWithoutPortfolioRolesInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     contacts?: ContactCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutPortfolioRolesInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutPortfolioRolesInput = {
@@ -39324,58 +39200,60 @@ export namespace Prisma {
 
   export type AccountUpdateWithoutPortfolioRolesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     contacts?: ContactUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutPortfolioRolesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type PortfolioUpsertWithoutRolesInput = {
@@ -39409,58 +39287,60 @@ export namespace Prisma {
 
   export type AccountCreateWithoutAppConnectionsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
+    authMethods?: AuthMethodCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
     contacts?: ContactCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
     permits?: PermitCreateNestedManyWithoutAccountInput
     targetPermits?: PermitCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutAppConnectionsInput = {
     id?: string
+    displayName?: string | null
     accountType?: string
     displayImage?: string | null
-    displayName?: string | null
     status?: string | null
     isVerified?: boolean
-    createdAt?: Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
+    authMethods?: AuthMethodUncheckedCreateNestedManyWithoutIndividualProfileInput
+    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
     contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
     neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     targetPermits?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    sessions?: AuthSessionUncheckedCreateNestedManyWithoutAccountInput
-    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    ownedApplications?: ApplicationUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildInput
     portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
     portfolioRoles?: PortfolioRoleUncheckedCreateNestedManyWithoutAccountInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutAppConnectionsInput = {
@@ -39471,35 +39351,35 @@ export namespace Prisma {
   export type ApplicationCreateWithoutConnectionsInput = {
     id: string
     name: string
-    status?: string
     party?: string
     description?: string | null
     icon?: string | null
     website?: string | null
     developer?: string | null
     appSecret?: string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    access?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
     owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
   }
 
   export type ApplicationUncheckedCreateWithoutConnectionsInput = {
     id: string
     name: string
-    status?: string
     party?: string
     description?: string | null
     icon?: string | null
     website?: string | null
     developer?: string | null
     appSecret?: string | null
+    createdAt?: Date | string
     access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     ownerAccountId?: string | null
-    createdAt?: Date | string
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
   }
 
   export type ApplicationCreateOrConnectWithoutConnectionsInput = {
@@ -39520,58 +39400,60 @@ export namespace Prisma {
 
   export type AccountUpdateWithoutAppConnectionsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
+    authMethods?: AuthMethodUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
     contacts?: ContactUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
     permits?: PermitUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutAppConnectionsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     accountType?: StringFieldUpdateOperationsInput | string
     displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
+    authMethods?: AuthMethodUncheckedUpdateManyWithoutIndividualProfileNestedInput
+    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
     contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
     neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     targetPermits?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    sessions?: AuthSessionUncheckedUpdateManyWithoutAccountNestedInput
-    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    ownedApplications?: ApplicationUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildNestedInput
     portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
     portfolioRoles?: PortfolioRoleUncheckedUpdateManyWithoutAccountNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type ApplicationUpsertWithoutConnectionsInput = {
@@ -39588,35 +39470,92 @@ export namespace Prisma {
   export type ApplicationUpdateWithoutConnectionsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    access?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
     owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutConnectionsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
     party?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
     endpoints?: NullableJsonNullValueInput | InputJsonValue
     ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AccountOwnershipCreateManyChildInput = {
+    id?: string
+    parentId: string
+    type: string
+  }
+
+  export type AccountOwnershipCreateManyParentInput = {
+    id?: string
+    childrenId: string
+    type: string
+  }
+
+  export type ApplicationCreateManyOwnerInput = {
+    id: string
+    name: string
+    party?: string
+    description?: string | null
+    icon?: string | null
+    website?: string | null
+    developer?: string | null
+    appSecret?: string | null
+    createdAt?: Date | string
+    access?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+  }
+
+  export type ApplicationConnectionCreateManyAccountInput = {
+    id?: string
+    appId: string
+    connectedAt?: Date | string
+  }
+
+  export type AuthMethodCreateManyIndividualProfileInput = {
+    value: string
+    id?: string
+    type: string
+    order: string
+    status: string
+    detail?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AuthSessionCreateManyAccountInput = {
+    id?: string
+    key?: string | null
+    ipAddress: string
+    userAgent: string
+    isExpired?: boolean
+    expiresOn?: Date | string | null
+    lastLoggedIn: Date | string
+    loginType: string
+    geolocation?: string | null
+    deviceType?: string | null
+    application?: string | null
   }
 
   export type ContactCreateManyAccountInput = {
@@ -39627,98 +39566,8 @@ export namespace Prisma {
 
   export type NeupIdCreateManyAccountInput = {
     id: string
-    dateAdded?: Date | string
     isPrimary?: boolean
-  }
-
-  export type PermitCreateManyAccountInput = {
-    id?: string
-    permitType?: string | null
-    permitSubType?: string | null
-    permitNumber?: string | null
-    issuingAuthority?: string | null
-    issueDate?: Date | string | null
-    expiryDate?: Date | string | null
-    status?: string
-    targetAccountId?: string | null
-    forSelf?: boolean
-    isRoot?: boolean
-    fullAccess?: boolean
-    permissions?: PermitCreatepermissionsInput | string[]
-    restrictions?: PermitCreaterestrictionsInput | string[]
-    createdOn?: Date | string
-    managedBy?: string | null
-  }
-
-  export type PermitCreateManyTargetAccountInput = {
-    id?: string
-    permitType?: string | null
-    permitSubType?: string | null
-    permitNumber?: string | null
-    issuingAuthority?: string | null
-    issueDate?: Date | string | null
-    expiryDate?: Date | string | null
-    status?: string
-    accountId: string
-    forSelf?: boolean
-    isRoot?: boolean
-    fullAccess?: boolean
-    permissions?: PermitCreatepermissionsInput | string[]
-    restrictions?: PermitCreaterestrictionsInput | string[]
-    createdOn?: Date | string
-    managedBy?: string | null
-  }
-
-  export type AuthSessionCreateManyAccountInput = {
-    id?: string
-    application?: string | null
-    ipAddress: string
-    userAgent: string
-    lastLoggedIn: Date | string
-    loginType: string
-    geolocation?: string | null
-    deviceType?: string | null
-    expiresOn?: Date | string | null
-    isExpired?: boolean
-    authSessionKey?: string | null
-    dependentKeys?: NullableJsonNullValueInput | InputJsonValue
-  }
-
-  export type SystemErrorCreateManyAccountInput = {
-    id?: string
-    type: string
-    context: string
-    message: string
-    status?: string
-    ipAddress?: string | null
-    geolocation?: string | null
-    reproSteps?: string | null
-    solution?: string | null
-    solvedBy?: string | null
-    problemLevel?: string | null
-    timestamp?: Date | string
-  }
-
-  export type ApplicationConnectionCreateManyAccountInput = {
-    id?: string
-    appId: string
-    connectedAt?: Date | string
-  }
-
-  export type ApplicationCreateManyOwnerInput = {
-    id: string
-    name: string
-    status?: string
-    party?: string
-    description?: string | null
-    icon?: string | null
-    website?: string | null
-    developer?: string | null
-    appSecret?: string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
+    dateAdded?: Date | string
   }
 
   export type NotificationCreateManyAccountInput = {
@@ -39732,6 +39581,94 @@ export namespace Prisma {
     deletableOn?: Date | string | null
     persistence?: string | null
     requestId?: string | null
+  }
+
+  export type PermitCreateManyAccountInput = {
+    id?: string
+    targetAccountId?: string | null
+    forSelf?: boolean
+    isRoot?: boolean
+    permissions?: PermitCreatepermissionsInput | string[]
+    restrictions?: PermitCreaterestrictionsInput | string[]
+    createdOn?: Date | string
+    expiryDate?: Date | string | null
+    fullAccess?: boolean
+    issueDate?: Date | string | null
+    issuingAuthority?: string | null
+    managedBy?: string | null
+    permitNumber?: string | null
+    permitSubType?: string | null
+    permitType?: string | null
+    status?: string
+  }
+
+  export type PermitCreateManyTargetAccountInput = {
+    id?: string
+    accountId: string
+    forSelf?: boolean
+    isRoot?: boolean
+    permissions?: PermitCreatepermissionsInput | string[]
+    restrictions?: PermitCreaterestrictionsInput | string[]
+    createdOn?: Date | string
+    expiryDate?: Date | string | null
+    fullAccess?: boolean
+    issueDate?: Date | string | null
+    issuingAuthority?: string | null
+    managedBy?: string | null
+    permitNumber?: string | null
+    permitSubType?: string | null
+    permitType?: string | null
+    status?: string
+  }
+
+  export type PortfolioMemberCreateManyAccountInput = {
+    id?: string
+    portfolioId: string
+    details?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type PortfolioRoleCreateManyAccountInput = {
+    id?: string
+    portfolioId: string
+    roleId: string
+    details?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type RequestCreateManyRecipientInput = {
+    id?: string
+    senderId: string
+    status?: string
+    action: string
+    type?: string | null
+    data?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RequestCreateManySenderInput = {
+    id?: string
+    recipientId: string
+    status?: string
+    action: string
+    type?: string | null
+    data?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SystemErrorCreateManyAccountInput = {
+    id?: string
+    message: string
+    context: string
+    timestamp?: Date | string
+    geolocation?: string | null
+    ipAddress?: string | null
+    problemLevel?: string | null
+    reproSteps?: string | null
+    solution?: string | null
+    solvedBy?: string | null
+    status?: string
+    type: string
   }
 
   export type VerificationCreateManyAccountInput = {
@@ -39750,51 +39687,177 @@ export namespace Prisma {
     revokedAt?: Date | string | null
   }
 
-  export type RequestCreateManySenderInput = {
-    id?: string
-    recipientId: string
-    status?: string
-    action: string
-    type?: string | null
-    data?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type AccountOwnershipUpdateWithoutChildInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    parent?: AccountUpdateOneRequiredWithoutParentOwnershipsNestedInput
   }
 
-  export type RequestCreateManyRecipientInput = {
-    id?: string
-    senderId: string
-    status?: string
-    action: string
-    type?: string | null
-    data?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type AccountOwnershipUncheckedUpdateWithoutChildInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    parentId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
   }
 
-  export type AccountOwnershipCreateManyParentInput = {
-    id?: string
-    childrenId: string
-    type: string
+  export type AccountOwnershipUncheckedUpdateManyWithoutChildInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    parentId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
   }
 
-  export type AccountOwnershipCreateManyChildInput = {
-    id?: string
-    parentId: string
-    type: string
+  export type AccountOwnershipUpdateWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    child?: AccountUpdateOneRequiredWithoutChildOwnershipsNestedInput
   }
 
-  export type PortfolioMemberCreateManyAccountInput = {
-    id?: string
-    portfolioId: string
-    details?: NullableJsonNullValueInput | InputJsonValue
+  export type AccountOwnershipUncheckedUpdateWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    childrenId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
   }
 
-  export type PortfolioRoleCreateManyAccountInput = {
-    id?: string
-    portfolioId: string
-    roleId: string
-    details?: NullableJsonNullValueInput | InputJsonValue
+  export type AccountOwnershipUncheckedUpdateManyWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    childrenId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ApplicationUpdateWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    party?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    developer?: NullableStringFieldUpdateOperationsInput | string | null
+    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    access?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationUncheckedUpdateWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    party?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    developer?: NullableStringFieldUpdateOperationsInput | string | null
+    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    access?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationUncheckedUpdateManyWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    party?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    developer?: NullableStringFieldUpdateOperationsInput | string | null
+    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    access?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ApplicationConnectionUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    application?: ApplicationUpdateOneRequiredWithoutConnectionsNestedInput
+  }
+
+  export type ApplicationConnectionUncheckedUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    appId?: StringFieldUpdateOperationsInput | string
+    connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationConnectionUncheckedUpdateManyWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    appId?: StringFieldUpdateOperationsInput | string
+    connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuthMethodUpdateWithoutIndividualProfileInput = {
+    value?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    order?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    detail?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AuthMethodUncheckedUpdateWithoutIndividualProfileInput = {
+    value?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    order?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    detail?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AuthMethodUncheckedUpdateManyWithoutIndividualProfileInput = {
+    value?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    order?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    detail?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AuthSessionUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: NullableStringFieldUpdateOperationsInput | string | null
+    ipAddress?: StringFieldUpdateOperationsInput | string
+    userAgent?: StringFieldUpdateOperationsInput | string
+    isExpired?: BoolFieldUpdateOperationsInput | boolean
+    expiresOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
+    loginType?: StringFieldUpdateOperationsInput | string
+    geolocation?: NullableStringFieldUpdateOperationsInput | string | null
+    deviceType?: NullableStringFieldUpdateOperationsInput | string | null
+    application?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AuthSessionUncheckedUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: NullableStringFieldUpdateOperationsInput | string | null
+    ipAddress?: StringFieldUpdateOperationsInput | string
+    userAgent?: StringFieldUpdateOperationsInput | string
+    isExpired?: BoolFieldUpdateOperationsInput | boolean
+    expiresOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
+    loginType?: StringFieldUpdateOperationsInput | string
+    geolocation?: NullableStringFieldUpdateOperationsInput | string | null
+    deviceType?: NullableStringFieldUpdateOperationsInput | string | null
+    application?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AuthSessionUncheckedUpdateManyWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: NullableStringFieldUpdateOperationsInput | string | null
+    ipAddress?: StringFieldUpdateOperationsInput | string
+    userAgent?: StringFieldUpdateOperationsInput | string
+    isExpired?: BoolFieldUpdateOperationsInput | boolean
+    expiresOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
+    loginType?: StringFieldUpdateOperationsInput | string
+    geolocation?: NullableStringFieldUpdateOperationsInput | string | null
+    deviceType?: NullableStringFieldUpdateOperationsInput | string | null
+    application?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ContactUpdateWithoutAccountInput = {
@@ -39817,292 +39880,20 @@ export namespace Prisma {
 
   export type NeupIdUpdateWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
-    dateAdded?: DateTimeFieldUpdateOperationsInput | Date | string
     isPrimary?: BoolFieldUpdateOperationsInput | boolean
+    dateAdded?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type NeupIdUncheckedUpdateWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
-    dateAdded?: DateTimeFieldUpdateOperationsInput | Date | string
     isPrimary?: BoolFieldUpdateOperationsInput | boolean
+    dateAdded?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type NeupIdUncheckedUpdateManyWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
-    dateAdded?: DateTimeFieldUpdateOperationsInput | Date | string
     isPrimary?: BoolFieldUpdateOperationsInput | boolean
-  }
-
-  export type PermitUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    permitType?: NullableStringFieldUpdateOperationsInput | string | null
-    permitSubType?: NullableStringFieldUpdateOperationsInput | string | null
-    permitNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    issuingAuthority?: NullableStringFieldUpdateOperationsInput | string | null
-    issueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    forSelf?: BoolFieldUpdateOperationsInput | boolean
-    isRoot?: BoolFieldUpdateOperationsInput | boolean
-    fullAccess?: BoolFieldUpdateOperationsInput | boolean
-    permissions?: PermitUpdatepermissionsInput | string[]
-    restrictions?: PermitUpdaterestrictionsInput | string[]
-    createdOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    managedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    targetAccount?: AccountUpdateOneWithoutTargetPermitsNestedInput
-  }
-
-  export type PermitUncheckedUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    permitType?: NullableStringFieldUpdateOperationsInput | string | null
-    permitSubType?: NullableStringFieldUpdateOperationsInput | string | null
-    permitNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    issuingAuthority?: NullableStringFieldUpdateOperationsInput | string | null
-    issueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    targetAccountId?: NullableStringFieldUpdateOperationsInput | string | null
-    forSelf?: BoolFieldUpdateOperationsInput | boolean
-    isRoot?: BoolFieldUpdateOperationsInput | boolean
-    fullAccess?: BoolFieldUpdateOperationsInput | boolean
-    permissions?: PermitUpdatepermissionsInput | string[]
-    restrictions?: PermitUpdaterestrictionsInput | string[]
-    createdOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    managedBy?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type PermitUncheckedUpdateManyWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    permitType?: NullableStringFieldUpdateOperationsInput | string | null
-    permitSubType?: NullableStringFieldUpdateOperationsInput | string | null
-    permitNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    issuingAuthority?: NullableStringFieldUpdateOperationsInput | string | null
-    issueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    targetAccountId?: NullableStringFieldUpdateOperationsInput | string | null
-    forSelf?: BoolFieldUpdateOperationsInput | boolean
-    isRoot?: BoolFieldUpdateOperationsInput | boolean
-    fullAccess?: BoolFieldUpdateOperationsInput | boolean
-    permissions?: PermitUpdatepermissionsInput | string[]
-    restrictions?: PermitUpdaterestrictionsInput | string[]
-    createdOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    managedBy?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type PermitUpdateWithoutTargetAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    permitType?: NullableStringFieldUpdateOperationsInput | string | null
-    permitSubType?: NullableStringFieldUpdateOperationsInput | string | null
-    permitNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    issuingAuthority?: NullableStringFieldUpdateOperationsInput | string | null
-    issueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    forSelf?: BoolFieldUpdateOperationsInput | boolean
-    isRoot?: BoolFieldUpdateOperationsInput | boolean
-    fullAccess?: BoolFieldUpdateOperationsInput | boolean
-    permissions?: PermitUpdatepermissionsInput | string[]
-    restrictions?: PermitUpdaterestrictionsInput | string[]
-    createdOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    managedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    account?: AccountUpdateOneRequiredWithoutPermitsNestedInput
-  }
-
-  export type PermitUncheckedUpdateWithoutTargetAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    permitType?: NullableStringFieldUpdateOperationsInput | string | null
-    permitSubType?: NullableStringFieldUpdateOperationsInput | string | null
-    permitNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    issuingAuthority?: NullableStringFieldUpdateOperationsInput | string | null
-    issueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    forSelf?: BoolFieldUpdateOperationsInput | boolean
-    isRoot?: BoolFieldUpdateOperationsInput | boolean
-    fullAccess?: BoolFieldUpdateOperationsInput | boolean
-    permissions?: PermitUpdatepermissionsInput | string[]
-    restrictions?: PermitUpdaterestrictionsInput | string[]
-    createdOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    managedBy?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type PermitUncheckedUpdateManyWithoutTargetAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    permitType?: NullableStringFieldUpdateOperationsInput | string | null
-    permitSubType?: NullableStringFieldUpdateOperationsInput | string | null
-    permitNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    issuingAuthority?: NullableStringFieldUpdateOperationsInput | string | null
-    issueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    accountId?: StringFieldUpdateOperationsInput | string
-    forSelf?: BoolFieldUpdateOperationsInput | boolean
-    isRoot?: BoolFieldUpdateOperationsInput | boolean
-    fullAccess?: BoolFieldUpdateOperationsInput | boolean
-    permissions?: PermitUpdatepermissionsInput | string[]
-    restrictions?: PermitUpdaterestrictionsInput | string[]
-    createdOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    managedBy?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type AuthSessionUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    application?: NullableStringFieldUpdateOperationsInput | string | null
-    ipAddress?: StringFieldUpdateOperationsInput | string
-    userAgent?: StringFieldUpdateOperationsInput | string
-    lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
-    loginType?: StringFieldUpdateOperationsInput | string
-    geolocation?: NullableStringFieldUpdateOperationsInput | string | null
-    deviceType?: NullableStringFieldUpdateOperationsInput | string | null
-    expiresOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isExpired?: BoolFieldUpdateOperationsInput | boolean
-    authSessionKey?: NullableStringFieldUpdateOperationsInput | string | null
-    dependentKeys?: NullableJsonNullValueInput | InputJsonValue
-  }
-
-  export type AuthSessionUncheckedUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    application?: NullableStringFieldUpdateOperationsInput | string | null
-    ipAddress?: StringFieldUpdateOperationsInput | string
-    userAgent?: StringFieldUpdateOperationsInput | string
-    lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
-    loginType?: StringFieldUpdateOperationsInput | string
-    geolocation?: NullableStringFieldUpdateOperationsInput | string | null
-    deviceType?: NullableStringFieldUpdateOperationsInput | string | null
-    expiresOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isExpired?: BoolFieldUpdateOperationsInput | boolean
-    authSessionKey?: NullableStringFieldUpdateOperationsInput | string | null
-    dependentKeys?: NullableJsonNullValueInput | InputJsonValue
-  }
-
-  export type AuthSessionUncheckedUpdateManyWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    application?: NullableStringFieldUpdateOperationsInput | string | null
-    ipAddress?: StringFieldUpdateOperationsInput | string
-    userAgent?: StringFieldUpdateOperationsInput | string
-    lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
-    loginType?: StringFieldUpdateOperationsInput | string
-    geolocation?: NullableStringFieldUpdateOperationsInput | string | null
-    deviceType?: NullableStringFieldUpdateOperationsInput | string | null
-    expiresOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isExpired?: BoolFieldUpdateOperationsInput | boolean
-    authSessionKey?: NullableStringFieldUpdateOperationsInput | string | null
-    dependentKeys?: NullableJsonNullValueInput | InputJsonValue
-  }
-
-  export type SystemErrorUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    context?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    geolocation?: NullableStringFieldUpdateOperationsInput | string | null
-    reproSteps?: NullableStringFieldUpdateOperationsInput | string | null
-    solution?: NullableStringFieldUpdateOperationsInput | string | null
-    solvedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    problemLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type SystemErrorUncheckedUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    context?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    geolocation?: NullableStringFieldUpdateOperationsInput | string | null
-    reproSteps?: NullableStringFieldUpdateOperationsInput | string | null
-    solution?: NullableStringFieldUpdateOperationsInput | string | null
-    solvedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    problemLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type SystemErrorUncheckedUpdateManyWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    context?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    geolocation?: NullableStringFieldUpdateOperationsInput | string | null
-    reproSteps?: NullableStringFieldUpdateOperationsInput | string | null
-    solution?: NullableStringFieldUpdateOperationsInput | string | null
-    solvedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    problemLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ApplicationConnectionUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    application?: ApplicationUpdateOneRequiredWithoutConnectionsNestedInput
-  }
-
-  export type ApplicationConnectionUncheckedUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
-    connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ApplicationConnectionUncheckedUpdateManyWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
-    connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ApplicationUpdateWithoutOwnerInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    party?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
-    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
-  }
-
-  export type ApplicationUncheckedUpdateWithoutOwnerInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    party?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
-    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
-  }
-
-  export type ApplicationUncheckedUpdateManyWithoutOwnerInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    party?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
-    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
-    access?: NullableJsonNullValueInput | InputJsonValue
-    policies?: NullableJsonNullValueInput | InputJsonValue
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dateAdded?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type NotificationUpdateWithoutAccountInput = {
@@ -40142,6 +39933,274 @@ export namespace Prisma {
     deletableOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     persistence?: NullableStringFieldUpdateOperationsInput | string | null
     requestId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type PermitUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    forSelf?: BoolFieldUpdateOperationsInput | boolean
+    isRoot?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: PermitUpdatepermissionsInput | string[]
+    restrictions?: PermitUpdaterestrictionsInput | string[]
+    createdOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fullAccess?: BoolFieldUpdateOperationsInput | boolean
+    issueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    issuingAuthority?: NullableStringFieldUpdateOperationsInput | string | null
+    managedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    permitNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    permitSubType?: NullableStringFieldUpdateOperationsInput | string | null
+    permitType?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    targetAccount?: AccountUpdateOneWithoutTargetPermitsNestedInput
+  }
+
+  export type PermitUncheckedUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    targetAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    forSelf?: BoolFieldUpdateOperationsInput | boolean
+    isRoot?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: PermitUpdatepermissionsInput | string[]
+    restrictions?: PermitUpdaterestrictionsInput | string[]
+    createdOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fullAccess?: BoolFieldUpdateOperationsInput | boolean
+    issueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    issuingAuthority?: NullableStringFieldUpdateOperationsInput | string | null
+    managedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    permitNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    permitSubType?: NullableStringFieldUpdateOperationsInput | string | null
+    permitType?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PermitUncheckedUpdateManyWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    targetAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    forSelf?: BoolFieldUpdateOperationsInput | boolean
+    isRoot?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: PermitUpdatepermissionsInput | string[]
+    restrictions?: PermitUpdaterestrictionsInput | string[]
+    createdOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fullAccess?: BoolFieldUpdateOperationsInput | boolean
+    issueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    issuingAuthority?: NullableStringFieldUpdateOperationsInput | string | null
+    managedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    permitNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    permitSubType?: NullableStringFieldUpdateOperationsInput | string | null
+    permitType?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PermitUpdateWithoutTargetAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    forSelf?: BoolFieldUpdateOperationsInput | boolean
+    isRoot?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: PermitUpdatepermissionsInput | string[]
+    restrictions?: PermitUpdaterestrictionsInput | string[]
+    createdOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fullAccess?: BoolFieldUpdateOperationsInput | boolean
+    issueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    issuingAuthority?: NullableStringFieldUpdateOperationsInput | string | null
+    managedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    permitNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    permitSubType?: NullableStringFieldUpdateOperationsInput | string | null
+    permitType?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    account?: AccountUpdateOneRequiredWithoutPermitsNestedInput
+  }
+
+  export type PermitUncheckedUpdateWithoutTargetAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    forSelf?: BoolFieldUpdateOperationsInput | boolean
+    isRoot?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: PermitUpdatepermissionsInput | string[]
+    restrictions?: PermitUpdaterestrictionsInput | string[]
+    createdOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fullAccess?: BoolFieldUpdateOperationsInput | boolean
+    issueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    issuingAuthority?: NullableStringFieldUpdateOperationsInput | string | null
+    managedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    permitNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    permitSubType?: NullableStringFieldUpdateOperationsInput | string | null
+    permitType?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PermitUncheckedUpdateManyWithoutTargetAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    forSelf?: BoolFieldUpdateOperationsInput | boolean
+    isRoot?: BoolFieldUpdateOperationsInput | boolean
+    permissions?: PermitUpdatepermissionsInput | string[]
+    restrictions?: PermitUpdaterestrictionsInput | string[]
+    createdOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiryDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fullAccess?: BoolFieldUpdateOperationsInput | boolean
+    issueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    issuingAuthority?: NullableStringFieldUpdateOperationsInput | string | null
+    managedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    permitNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    permitSubType?: NullableStringFieldUpdateOperationsInput | string | null
+    permitType?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PortfolioMemberUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    portfolio?: PortfolioUpdateOneRequiredWithoutMembersNestedInput
+  }
+
+  export type PortfolioMemberUncheckedUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    portfolioId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type PortfolioMemberUncheckedUpdateManyWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    portfolioId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type PortfolioRoleUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roleId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    portfolio?: PortfolioUpdateOneRequiredWithoutRolesNestedInput
+  }
+
+  export type PortfolioRoleUncheckedUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    portfolioId?: StringFieldUpdateOperationsInput | string
+    roleId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type PortfolioRoleUncheckedUpdateManyWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    portfolioId?: StringFieldUpdateOperationsInput | string
+    roleId?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type RequestUpdateWithoutRecipientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NotificationUpdateManyWithoutRequestNestedInput
+    sender?: AccountUpdateOneRequiredWithoutSentRequestsNestedInput
+  }
+
+  export type RequestUncheckedUpdateWithoutRecipientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    senderId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NotificationUncheckedUpdateManyWithoutRequestNestedInput
+  }
+
+  export type RequestUncheckedUpdateManyWithoutRecipientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    senderId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RequestUpdateWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NotificationUpdateManyWithoutRequestNestedInput
+    recipient?: AccountUpdateOneRequiredWithoutReceivedRequestsNestedInput
+  }
+
+  export type RequestUncheckedUpdateWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    recipientId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NotificationUncheckedUpdateManyWithoutRequestNestedInput
+  }
+
+  export type RequestUncheckedUpdateManyWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    recipientId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    data?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SystemErrorUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    geolocation?: NullableStringFieldUpdateOperationsInput | string | null
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    problemLevel?: NullableStringFieldUpdateOperationsInput | string | null
+    reproSteps?: NullableStringFieldUpdateOperationsInput | string | null
+    solution?: NullableStringFieldUpdateOperationsInput | string | null
+    solvedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SystemErrorUncheckedUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    geolocation?: NullableStringFieldUpdateOperationsInput | string | null
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    problemLevel?: NullableStringFieldUpdateOperationsInput | string | null
+    reproSteps?: NullableStringFieldUpdateOperationsInput | string | null
+    solution?: NullableStringFieldUpdateOperationsInput | string | null
+    solvedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SystemErrorUncheckedUpdateManyWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    context?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    geolocation?: NullableStringFieldUpdateOperationsInput | string | null
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    problemLevel?: NullableStringFieldUpdateOperationsInput | string | null
+    reproSteps?: NullableStringFieldUpdateOperationsInput | string | null
+    solution?: NullableStringFieldUpdateOperationsInput | string | null
+    solvedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
   }
 
   export type VerificationUpdateWithoutAccountInput = {
@@ -40190,187 +40249,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type RequestUpdateWithoutSenderInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    action?: StringFieldUpdateOperationsInput | string
-    type?: NullableStringFieldUpdateOperationsInput | string | null
-    data?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    recipient?: AccountUpdateOneRequiredWithoutReceivedRequestsNestedInput
-    notifications?: NotificationUpdateManyWithoutRequestNestedInput
-  }
-
-  export type RequestUncheckedUpdateWithoutSenderInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    recipientId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    action?: StringFieldUpdateOperationsInput | string
-    type?: NullableStringFieldUpdateOperationsInput | string | null
-    data?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    notifications?: NotificationUncheckedUpdateManyWithoutRequestNestedInput
-  }
-
-  export type RequestUncheckedUpdateManyWithoutSenderInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    recipientId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    action?: StringFieldUpdateOperationsInput | string
-    type?: NullableStringFieldUpdateOperationsInput | string | null
-    data?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RequestUpdateWithoutRecipientInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    action?: StringFieldUpdateOperationsInput | string
-    type?: NullableStringFieldUpdateOperationsInput | string | null
-    data?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sender?: AccountUpdateOneRequiredWithoutSentRequestsNestedInput
-    notifications?: NotificationUpdateManyWithoutRequestNestedInput
-  }
-
-  export type RequestUncheckedUpdateWithoutRecipientInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    senderId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    action?: StringFieldUpdateOperationsInput | string
-    type?: NullableStringFieldUpdateOperationsInput | string | null
-    data?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    notifications?: NotificationUncheckedUpdateManyWithoutRequestNestedInput
-  }
-
-  export type RequestUncheckedUpdateManyWithoutRecipientInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    senderId?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    action?: StringFieldUpdateOperationsInput | string
-    type?: NullableStringFieldUpdateOperationsInput | string | null
-    data?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AccountOwnershipUpdateWithoutParentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    child?: AccountUpdateOneRequiredWithoutChildOwnershipsNestedInput
-  }
-
-  export type AccountOwnershipUncheckedUpdateWithoutParentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    childrenId?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type AccountOwnershipUncheckedUpdateManyWithoutParentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    childrenId?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type AccountOwnershipUpdateWithoutChildInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    parent?: AccountUpdateOneRequiredWithoutParentOwnershipsNestedInput
-  }
-
-  export type AccountOwnershipUncheckedUpdateWithoutChildInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    parentId?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type AccountOwnershipUncheckedUpdateManyWithoutChildInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    parentId?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type PortfolioMemberUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    portfolio?: PortfolioUpdateOneRequiredWithoutMembersNestedInput
-  }
-
-  export type PortfolioMemberUncheckedUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    portfolioId?: StringFieldUpdateOperationsInput | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-  }
-
-  export type PortfolioMemberUncheckedUpdateManyWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    portfolioId?: StringFieldUpdateOperationsInput | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-  }
-
-  export type PortfolioRoleUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    roleId?: StringFieldUpdateOperationsInput | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-    portfolio?: PortfolioUpdateOneRequiredWithoutRolesNestedInput
-  }
-
-  export type PortfolioRoleUncheckedUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    portfolioId?: StringFieldUpdateOperationsInput | string
-    roleId?: StringFieldUpdateOperationsInput | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-  }
-
-  export type PortfolioRoleUncheckedUpdateManyWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    portfolioId?: StringFieldUpdateOperationsInput | string
-    roleId?: StringFieldUpdateOperationsInput | string
-    details?: NullableJsonNullValueInput | InputJsonValue
-  }
-
-  export type AuthMethodCreateManyIndividualProfileInput = {
-    id?: string
-    type: $Enums.AuthMethodType
-    value: string
-    order: $Enums.AuthMethodOrder
-    status?: $Enums.AuthMethodStatus
-    detail?: NullableJsonNullValueInput | InputJsonValue
-  }
-
-  export type AuthMethodUpdateWithoutIndividualProfileInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: EnumAuthMethodTypeFieldUpdateOperationsInput | $Enums.AuthMethodType
-    value?: StringFieldUpdateOperationsInput | string
-    order?: EnumAuthMethodOrderFieldUpdateOperationsInput | $Enums.AuthMethodOrder
-    status?: EnumAuthMethodStatusFieldUpdateOperationsInput | $Enums.AuthMethodStatus
-    detail?: NullableJsonNullValueInput | InputJsonValue
-  }
-
-  export type AuthMethodUncheckedUpdateWithoutIndividualProfileInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: EnumAuthMethodTypeFieldUpdateOperationsInput | $Enums.AuthMethodType
-    value?: StringFieldUpdateOperationsInput | string
-    order?: EnumAuthMethodOrderFieldUpdateOperationsInput | $Enums.AuthMethodOrder
-    status?: EnumAuthMethodStatusFieldUpdateOperationsInput | $Enums.AuthMethodStatus
-    detail?: NullableJsonNullValueInput | InputJsonValue
-  }
-
-  export type AuthMethodUncheckedUpdateManyWithoutIndividualProfileInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: EnumAuthMethodTypeFieldUpdateOperationsInput | $Enums.AuthMethodType
-    value?: StringFieldUpdateOperationsInput | string
-    order?: EnumAuthMethodOrderFieldUpdateOperationsInput | $Enums.AuthMethodOrder
-    status?: EnumAuthMethodStatusFieldUpdateOperationsInput | $Enums.AuthMethodStatus
-    detail?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type NotificationCreateManyRequestInput = {
