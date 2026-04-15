@@ -10,8 +10,6 @@ message VerifyRequest {
   string sessionId = 1;
   string sessionKey = 2;
   string accountId = 3;
-  string appId = 4;
-  string privateKey = 5;
 }
 
 message VerifyResponse {

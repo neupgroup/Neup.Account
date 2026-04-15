@@ -247,7 +247,6 @@ model AuthSession {
   loginType    String
   geolocation  String?
   deviceType   String?
-  application  String?
   account      Account   @relation(fields: [accountId], references: [id], map: "sessions_accountId_fkey")
 
   @@map("auth_session")

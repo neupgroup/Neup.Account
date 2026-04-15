@@ -290,8 +290,7 @@ exports.Prisma.AuthSessionScalarFieldEnum = {
   lastLoggedIn: 'lastLoggedIn',
   loginType: 'loginType',
   geolocation: 'geolocation',
-  deviceType: 'deviceType',
-  application: 'application'
+  deviceType: 'deviceType'
 };
 
 exports.Prisma.SystemErrorScalarFieldEnum = {

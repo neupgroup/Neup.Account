@@ -64,7 +64,6 @@ export async function createAndSetSession(
         lastLoggedIn: new Date(),
         loginType: loginType,
         geolocation: geolocation,
-        application: 'neup.account',
       },
     });
 

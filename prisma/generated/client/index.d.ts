@@ -19878,7 +19878,6 @@ export namespace Prisma {
     loginType: string | null
     geolocation: string | null
     deviceType: string | null
-    application: string | null
   }
 
   export type AuthSessionMaxAggregateOutputType = {
@@ -19892,7 +19891,6 @@ export namespace Prisma {
     loginType: string | null
     geolocation: string | null
     deviceType: string | null
-    application: string | null
   }
 
   export type AuthSessionCountAggregateOutputType = {
@@ -19906,7 +19904,6 @@ export namespace Prisma {
     loginType: number
     geolocation: number
     deviceType: number
-    application: number
     _all: number
   }
 
@@ -19922,7 +19919,6 @@ export namespace Prisma {
     loginType?: true
     geolocation?: true
     deviceType?: true
-    application?: true
   }
 
   export type AuthSessionMaxAggregateInputType = {
@@ -19936,7 +19932,6 @@ export namespace Prisma {
     loginType?: true
     geolocation?: true
     deviceType?: true
-    application?: true
   }
 
   export type AuthSessionCountAggregateInputType = {
@@ -19950,7 +19945,6 @@ export namespace Prisma {
     loginType?: true
     geolocation?: true
     deviceType?: true
-    application?: true
     _all?: true
   }
 
@@ -20037,7 +20031,6 @@ export namespace Prisma {
     loginType: string
     geolocation: string | null
     deviceType: string | null
-    application: string | null
     _count: AuthSessionCountAggregateOutputType | null
     _min: AuthSessionMinAggregateOutputType | null
     _max: AuthSessionMaxAggregateOutputType | null
@@ -20068,7 +20061,6 @@ export namespace Prisma {
     loginType?: boolean
     geolocation?: boolean
     deviceType?: boolean
-    application?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["authSession"]>
 
@@ -20083,7 +20075,6 @@ export namespace Prisma {
     loginType?: boolean
     geolocation?: boolean
     deviceType?: boolean
-    application?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["authSession"]>
 
@@ -20098,7 +20089,6 @@ export namespace Prisma {
     loginType?: boolean
     geolocation?: boolean
     deviceType?: boolean
-    application?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["authSession"]>
 
@@ -20113,10 +20103,9 @@ export namespace Prisma {
     loginType?: boolean
     geolocation?: boolean
     deviceType?: boolean
-    application?: boolean
   }
 
-  export type AuthSessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "key" | "ipAddress" | "userAgent" | "validTill" | "lastLoggedIn" | "loginType" | "geolocation" | "deviceType" | "application", ExtArgs["result"]["authSession"]>
+  export type AuthSessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "key" | "ipAddress" | "userAgent" | "validTill" | "lastLoggedIn" | "loginType" | "geolocation" | "deviceType", ExtArgs["result"]["authSession"]>
   export type AuthSessionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }
@@ -20143,7 +20132,6 @@ export namespace Prisma {
       loginType: string
       geolocation: string | null
       deviceType: string | null
-      application: string | null
     }, ExtArgs["result"]["authSession"]>
     composites: {}
   }
@@ -20578,7 +20566,6 @@ export namespace Prisma {
     readonly loginType: FieldRef<"AuthSession", 'String'>
     readonly geolocation: FieldRef<"AuthSession", 'String'>
     readonly deviceType: FieldRef<"AuthSession", 'String'>
-    readonly application: FieldRef<"AuthSession", 'String'>
   }
     
 
@@ -28946,8 +28933,7 @@ export namespace Prisma {
     lastLoggedIn: 'lastLoggedIn',
     loginType: 'loginType',
     geolocation: 'geolocation',
-    deviceType: 'deviceType',
-    application: 'application'
+    deviceType: 'deviceType'
   };
 
   export type AuthSessionScalarFieldEnum = (typeof AuthSessionScalarFieldEnum)[keyof typeof AuthSessionScalarFieldEnum]
@@ -30261,7 +30247,6 @@ export namespace Prisma {
     loginType?: StringFilter<"AuthSession"> | string
     geolocation?: StringNullableFilter<"AuthSession"> | string | null
     deviceType?: StringNullableFilter<"AuthSession"> | string | null
-    application?: StringNullableFilter<"AuthSession"> | string | null
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
   }
 
@@ -30276,7 +30261,6 @@ export namespace Prisma {
     loginType?: SortOrder
     geolocation?: SortOrderInput | SortOrder
     deviceType?: SortOrderInput | SortOrder
-    application?: SortOrderInput | SortOrder
     account?: AccountOrderByWithRelationInput
   }
 
@@ -30294,7 +30278,6 @@ export namespace Prisma {
     loginType?: StringFilter<"AuthSession"> | string
     geolocation?: StringNullableFilter<"AuthSession"> | string | null
     deviceType?: StringNullableFilter<"AuthSession"> | string | null
-    application?: StringNullableFilter<"AuthSession"> | string | null
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
   }, "id">
 
@@ -30309,7 +30292,6 @@ export namespace Prisma {
     loginType?: SortOrder
     geolocation?: SortOrderInput | SortOrder
     deviceType?: SortOrderInput | SortOrder
-    application?: SortOrderInput | SortOrder
     _count?: AuthSessionCountOrderByAggregateInput
     _max?: AuthSessionMaxOrderByAggregateInput
     _min?: AuthSessionMinOrderByAggregateInput
@@ -30329,7 +30311,6 @@ export namespace Prisma {
     loginType?: StringWithAggregatesFilter<"AuthSession"> | string
     geolocation?: StringNullableWithAggregatesFilter<"AuthSession"> | string | null
     deviceType?: StringNullableWithAggregatesFilter<"AuthSession"> | string | null
-    application?: StringNullableWithAggregatesFilter<"AuthSession"> | string | null
   }
 
   export type SystemErrorWhereInput = {
@@ -32004,7 +31985,6 @@ export namespace Prisma {
     loginType: string
     geolocation?: string | null
     deviceType?: string | null
-    application?: string | null
     account: AccountCreateNestedOneWithoutSessionsInput
   }
 
@@ -32019,7 +31999,6 @@ export namespace Prisma {
     loginType: string
     geolocation?: string | null
     deviceType?: string | null
-    application?: string | null
   }
 
   export type AuthSessionUpdateInput = {
@@ -32032,7 +32011,6 @@ export namespace Prisma {
     loginType?: StringFieldUpdateOperationsInput | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
     deviceType?: NullableStringFieldUpdateOperationsInput | string | null
-    application?: NullableStringFieldUpdateOperationsInput | string | null
     account?: AccountUpdateOneRequiredWithoutSessionsNestedInput
   }
 
@@ -32047,7 +32025,6 @@ export namespace Prisma {
     loginType?: StringFieldUpdateOperationsInput | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
     deviceType?: NullableStringFieldUpdateOperationsInput | string | null
-    application?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthSessionCreateManyInput = {
@@ -32061,7 +32038,6 @@ export namespace Prisma {
     loginType: string
     geolocation?: string | null
     deviceType?: string | null
-    application?: string | null
   }
 
   export type AuthSessionUpdateManyMutationInput = {
@@ -32074,7 +32050,6 @@ export namespace Prisma {
     loginType?: StringFieldUpdateOperationsInput | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
     deviceType?: NullableStringFieldUpdateOperationsInput | string | null
-    application?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthSessionUncheckedUpdateManyInput = {
@@ -32088,7 +32063,6 @@ export namespace Prisma {
     loginType?: StringFieldUpdateOperationsInput | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
     deviceType?: NullableStringFieldUpdateOperationsInput | string | null
-    application?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SystemErrorCreateInput = {
@@ -33478,7 +33452,6 @@ export namespace Prisma {
     loginType?: SortOrder
     geolocation?: SortOrder
     deviceType?: SortOrder
-    application?: SortOrder
   }
 
   export type AuthSessionMaxOrderByAggregateInput = {
@@ -33492,7 +33465,6 @@ export namespace Prisma {
     loginType?: SortOrder
     geolocation?: SortOrder
     deviceType?: SortOrder
-    application?: SortOrder
   }
 
   export type AuthSessionMinOrderByAggregateInput = {
@@ -33506,7 +33478,6 @@ export namespace Prisma {
     loginType?: SortOrder
     geolocation?: SortOrder
     deviceType?: SortOrder
-    application?: SortOrder
   }
 
   export type SystemErrorCountOrderByAggregateInput = {
@@ -35507,7 +35478,6 @@ export namespace Prisma {
     loginType: string
     geolocation?: string | null
     deviceType?: string | null
-    application?: string | null
   }
 
   export type AuthSessionUncheckedCreateWithoutAccountInput = {
@@ -35520,7 +35490,6 @@ export namespace Prisma {
     loginType: string
     geolocation?: string | null
     deviceType?: string | null
-    application?: string | null
   }
 
   export type AuthSessionCreateOrConnectWithoutAccountInput = {
@@ -36124,7 +36093,6 @@ export namespace Prisma {
     loginType?: StringFilter<"AuthSession"> | string
     geolocation?: StringNullableFilter<"AuthSession"> | string | null
     deviceType?: StringNullableFilter<"AuthSession"> | string | null
-    application?: StringNullableFilter<"AuthSession"> | string | null
   }
 
   export type ContactUpsertWithWhereUniqueWithoutAccountInput = {
@@ -39522,7 +39490,6 @@ export namespace Prisma {
     loginType: string
     geolocation?: string | null
     deviceType?: string | null
-    application?: string | null
   }
 
   export type ContactCreateManyAccountInput = {
@@ -39795,7 +39762,6 @@ export namespace Prisma {
     loginType?: StringFieldUpdateOperationsInput | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
     deviceType?: NullableStringFieldUpdateOperationsInput | string | null
-    application?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthSessionUncheckedUpdateWithoutAccountInput = {
@@ -39808,7 +39774,6 @@ export namespace Prisma {
     loginType?: StringFieldUpdateOperationsInput | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
     deviceType?: NullableStringFieldUpdateOperationsInput | string | null
-    application?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthSessionUncheckedUpdateManyWithoutAccountInput = {
@@ -39821,7 +39786,6 @@ export namespace Prisma {
     loginType?: StringFieldUpdateOperationsInput | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
     deviceType?: NullableStringFieldUpdateOperationsInput | string | null
-    application?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ContactUpdateWithoutAccountInput = {

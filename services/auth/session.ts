@@ -84,14 +84,12 @@ export type BridgeAuthSessionError = {
 };
 
 /**
- * Input required to validate a session with app ID and private key.
+ * Input required to validate a session.
  */
 export type ValidateSessionInput = {
 	sessionId: string;
 	sessionKey: string;
 	accountId: string;
-	appId: string;
-	privateKey: string;
 };
 
 /**
@@ -445,41 +443,26 @@ export async function bridgeRefreshSessionExpiry(): Promise<{ status: number; bo
 }
 
 /**
- * Validates a session against the database with app ID verification.
- * @param input - Contains sessionId, sessionKey, accountId, appId, and privateKey
- * @returns { valid: true } if session and app are valid, { valid: false } otherwise
+ * Validates a session against the database.
+ * @param input - Contains sessionId, sessionKey, and accountId
+ * @returns { valid: true } if session is valid, { valid: false } otherwise
  */
 export async function validateSession(input: ValidateSessionInput): Promise<ValidateSessionResponse> {
-	const { sessionId, sessionKey, accountId, appId, privateKey } = input;
+	const { sessionId, sessionKey, accountId } = input;
 
 	// Validate all required inputs
-	if (!sessionId || !sessionKey || !accountId || !appId || !privateKey) {
+	if (!sessionId || !sessionKey || !accountId) {
 		return { valid: false };
 	}
 
 	try {
-		// 1. Verify the application exists and validate private key
-		const app = await prisma.application.findUnique({
-			where: { id: appId },
-			select: {
-				id: true,
-				appSecret: true,
-				status: true,
-			},
-		});
-
-		if (!app || app.appSecret !== privateKey || app.status !== 'active') {
-			return { valid: false };
-		}
-
-		// 2. Verify the session exists and matches the provided values
+		// 1. Verify the session exists and matches the provided values
 		const session = await prisma.authSession.findUnique({
 			where: { id: sessionId },
 			select: {
 				accountId: true,
 				key: true,
 				validTill: true,
-				application: true,
 			},
 		});
 
@@ -487,23 +470,18 @@ export async function validateSession(input: ValidateSessionInput): Promise<Vali
 			return { valid: false };
 		}
 
-		// 3. Verify session credentials match
+		// 2. Verify session credentials match
 		if (session.accountId !== accountId || session.key !== sessionKey) {
 			return { valid: false };
 		}
 
-		// 4. Check if session is expired
+		// 3. Check if session is expired
 		const now = new Date();
 		if (!session.validTill || session.validTill <= now) {
 			return { valid: false };
 		}
 
-		// 5. Check if session is valid for the provided app ID
-		if (session.application && session.application !== appId) {
-			return { valid: false };
-		}
-
-		// 6. Verify the account is not blocked
+		// 4. Verify the account is not blocked
 		const account = await prisma.account.findUnique({
 			where: { id: accountId },
 			select: {

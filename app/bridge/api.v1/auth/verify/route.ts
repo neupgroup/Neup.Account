@@ -5,8 +5,8 @@ export const dynamic = 'force-dynamic';
 
 /**
  * POST /api.v1/auth/verify
- * Validates a session against session ID, session key, account ID, app ID, and private key.
- * Returns { valid: true } if the session is valid for the app, { valid: false } otherwise.
+ * Validates a session against session ID, session key, and account ID.
+ * Returns { valid: true } if the session is valid, { valid: false } otherwise.
  */
 export async function POST(req: NextRequest) {
   try {
@@ -15,8 +15,6 @@ export async function POST(req: NextRequest) {
       sessionId: body.sessionId,
       sessionKey: body.sessionKey,
       accountId: body.accountId,
-      appId: body.appId,
-      privateKey: body.privateKey,
     });
     return NextResponse.json(result, { status: 200 });
   } catch (error) {

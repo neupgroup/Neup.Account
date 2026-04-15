@@ -16,15 +16,13 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 const authProto = (grpc.loadPackageDefinition(packageDefinition) as any).auth;
 
 async function verify(call: any, callback: any) {
-    const { sessionId, sessionKey, accountId, appId, privateKey } = call.request;
+    const { sessionId, sessionKey, accountId } = call.request;
 
     try {
         const result = await validateSession({
             sessionId,
             sessionKey,
             accountId,
-            appId,
-            privateKey,
         });
 
         callback(null, {
