@@ -83,6 +83,24 @@ export type BridgeAuthSessionError = {
 	error_description?: string;
 };
 
+/**
+ * Input required to validate a session with app ID and private key.
+ */
+export type ValidateSessionInput = {
+	sessionId: string;
+	sessionKey: string;
+	accountId: string;
+	appId: string;
+	privateKey: string;
+};
+
+/**
+ * Simple response for session validation.
+ */
+export type ValidateSessionResponse = {
+	valid: boolean;
+};
+
 
 /**
  * Minimal block metadata used to determine whether an account is blocked.
@@ -426,5 +444,93 @@ export async function bridgeRefreshSessionExpiry(): Promise<{ status: number; bo
 		return { status: 200, body: { success: true, newExpiresOn: newExpiresOn.toISOString() } };
 	} catch {
 		return { status: 500, body: { success: false, error: 'Internal server error.' } };
+	}
+}
+
+/**
+ * Validates a session against the database with app ID verification.
+ * @param input - Contains sessionId, sessionKey, accountId, appId, and privateKey
+ * @returns { valid: true } if session and app are valid, { valid: false } otherwise
+ */
+export async function validateSession(input: ValidateSessionInput): Promise<ValidateSessionResponse> {
+	const { sessionId, sessionKey, accountId, appId, privateKey } = input;
+
+	// Validate all required inputs
+	if (!sessionId || !sessionKey || !accountId || !appId || !privateKey) {
+		return { valid: false };
+	}
+
+	try {
+		// 1. Verify the application exists and validate private key
+		const app = await prisma.application.findUnique({
+			where: { id: appId },
+			select: {
+				id: true,
+				appSecret: true,
+				status: true,
+			},
+		});
+
+		if (!app || app.appSecret !== privateKey || app.status !== 'active') {
+			return { valid: false };
+		}
+
+		// 2. Verify the session exists and matches the provided values
+		const session = await prisma.authSession.findUnique({
+			where: { id: sessionId },
+			select: {
+				accountId: true,
+				authSessionKey: true,
+				expiresOn: true,
+				isExpired: true,
+				application: true,
+			},
+		});
+
+		if (!session) {
+			return { valid: false };
+		}
+
+		// 3. Verify session credentials match
+		if (session.accountId !== accountId || session.authSessionKey !== sessionKey) {
+			return { valid: false };
+		}
+
+		// 4. Check if session is expired
+		const now = new Date();
+		if (session.isExpired || !session.expiresOn || session.expiresOn <= now) {
+			return { valid: false };
+		}
+
+		// 5. Check if session is valid for the provided app ID
+		if (session.application && session.application !== appId) {
+			return { valid: false };
+		}
+
+		// 6. Verify the account is not blocked
+		const account = await prisma.account.findUnique({
+			where: { id: accountId },
+			select: {
+				id: true,
+				status: true,
+				details: true,
+			},
+		});
+
+		if (!account) {
+			return { valid: false };
+		}
+
+		const details = account.details as Record<string, unknown> | null;
+		const block = (details?.block as BlockInfo) || null;
+
+		if (account.status === 'blocked' && hasActiveBlock(block, now)) {
+			return { valid: false };
+		}
+
+		// All checks passed
+		return { valid: true };
+	} catch {
+		return { valid: false };
 	}
 }

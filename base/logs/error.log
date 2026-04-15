@@ -1348,3 +1348,114 @@ The table `public.system_config` does not exist in the current database.
     at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1542:22)
     at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_0bf66ba2._.js:1650:21)
 --------------------------------------------------------------------------------
+[2026-04-15T17:12:25.156Z] [auth] [auto] [logoutActiveSession:expireSession] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: 84c3dd124827d24f52ac15bdb308effd]
+Message: Failed to expire session.
+--------------------------------------------------------------------------------
+[2026-04-15T17:12:43.453Z] [auth] [auto] [createAndSetSession for 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [IP: ::1] [Account: null] [Signature: 2e3f118473a582a55237ac42ae81a6eb]
+Message: PrismaClientValidationError: 
+Invalid `prisma.authSession.create()` invocation:
+
+{
+  data: {
+    accountId: "63b6151e-2fa0-482d-8b63-4c5293b8bed0",
+    authSessionKey: "3d9406af-5f23-4c4c-88bc-469256d52498",
+    ~~~~~~~~~~~~~~
+    ipAddress: "::1",
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3.1 Safari/605.1.15",
+    isExpired: false,
+    expiresOn: new Date("2026-05-15T17:12:43.446Z"),
+    lastLoggedIn: new Date("2026-04-15T17:12:43.446Z"),
+    loginType: "Password",
+    geolocation: undefined,
+?   id?: String,
+?   key?: String | Null,
+?   deviceType?: String | Null,
+?   application?: String | Null
+  }
+}
+
+Unknown argument `authSessionKey`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async createAndSetSession (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_38432509._.js:66:25)
+    at async makeSession (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_fd8e0fad._.js:908:9)
+    at async submitPassword (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__f2be1a8b._.js:1780:31)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_b467fee1._.js:2979:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_b467fee1._.js:3185:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_b467fee1._.js:3556:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-04-15T17:13:52.376Z] [auth] [auto] [createAndSetSession for 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [IP: ::1] [Account: null] [Signature: 2e3f118473a582a55237ac42ae81a6eb]
+Message: PrismaClientValidationError: 
+Invalid `prisma.authSession.create()` invocation:
+
+{
+  data: {
+    accountId: "63b6151e-2fa0-482d-8b63-4c5293b8bed0",
+    authSessionKey: "c72d48c4-6d33-45a5-94d1-6c33ca284c1e",
+    ~~~~~~~~~~~~~~
+    ipAddress: "::1",
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3.1 Safari/605.1.15",
+    isExpired: false,
+    expiresOn: new Date("2026-05-15T17:13:52.371Z"),
+    lastLoggedIn: new Date("2026-04-15T17:13:52.371Z"),
+    loginType: "Password",
+    geolocation: undefined,
+?   id?: String,
+?   key?: String | Null,
+?   deviceType?: String | Null,
+?   application?: String | Null
+  }
+}
+
+Unknown argument `authSessionKey`. Available options are marked with ?.
+    at ar (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:2115:11)
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7311:13)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async createAndSetSession (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_38432509._.js:66:25)
+    at async makeSession (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_fd8e0fad._.js:908:9)
+    at async submitPassword (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__f2be1a8b._.js:1780:31)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_b467fee1._.js:2979:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_b467fee1._.js:3185:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_b467fee1._.js:3556:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
