@@ -23,8 +23,7 @@ export async function bridgeIssueGrant(input: {
   try {
     const sessions = await prisma.authSession.findMany({
       where: {
-        isExpired: false,
-        expiresOn: { gt: new Date() },
+        validTill: { gt: new Date() },
       },
       include: {
         account: true,
@@ -109,21 +108,13 @@ export async function bridgeIssueGrant(input: {
       data: {
         accountId: sessionWithToken.accountId,
         application: appId,
-        applicationType: 'external',
-        applicationDomain: application.website || null,
         ipAddress: sessionWithToken.ipAddress,
         userAgent: sessionWithToken.userAgent,
         geolocation: sessionWithToken.geolocation,
         lastLoggedIn: new Date(),
         loginType: 'external_app',
-        expiresOn: sessionExpiresOn,
-        isExpired: false,
-        authSessionKey: skey,
-        dependentKeys: {
-          parentSessionId: sessionWithToken.id,
-          appId,
-        },
-        permissions,
+        validTill: sessionExpiresOn,
+        key: skey,
       },
     });
 
@@ -230,7 +221,7 @@ export async function bridgeRefreshGrant(input: {
     await prisma.authSession.update({
       where: { id: sid },
       data: {
-        expiresOn: newSessionExpiresOn,
+        validTill: newSessionExpiresOn,
         lastLoggedIn: new Date(),
       },
     });
@@ -300,7 +291,7 @@ export async function bridgeCheckGrant(input: {
         success: true,
         aid: appSession.accountId,
         appId: appSession.application,
-        expiresOn: appSession.expiresOn,
+        validTill: appSession.validTill,
         lastLoggedIn: appSession.lastLoggedIn,
       },
     };

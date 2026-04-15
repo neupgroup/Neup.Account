@@ -35,7 +35,7 @@ export async function bridgeGetProfile(input: {
         where: {
           id: headerSid,
           accountId: headerAid,
-          authSessionKey: headerSkey,
+          key: headerSkey,
           applicationType: 'external',
           isExpired: false,
           expiresOn: { gt: new Date() },

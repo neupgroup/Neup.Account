@@ -70,8 +70,7 @@ export async function bridgeSignoutExternalSession(input: {
     try {
         const appSession = await prisma.authSession.findFirst({
             where: {
-                authSessionKey: sessionValue,
-                applicationType: 'external',
+                key: sessionValue,
             },
         });
 
@@ -83,8 +82,7 @@ export async function bridgeSignoutExternalSession(input: {
             await prisma.authSession.update({
                 where: { id: appSession.id },
                 data: {
-                    isExpired: true,
-                    expiresOn: new Date(),
+                    validTill: new Date(),
                 },
             });
         }

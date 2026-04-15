@@ -37,7 +37,6 @@ async function verify(call: any, callback: any) {
         });
     }
 }
-}
 
 export function startGrpcServer() {
     const server = new grpc.Server();

@@ -163,29 +163,27 @@ async function resolveAuthenticatedAccount(input: { app: string; sid: string; sk
 	const externalSession = await prisma.authSession.findFirst({
 		where: {
 			id: input.sid,
-			applicationType: 'external',
 			application: input.app,
 		},
 		select: {
 			accountId: true,
-			authSessionKey: true,
-			expiresOn: true,
-			isExpired: true,
+			key: true,
+			validTill: true,
 		},
 	});
 
 	if (externalSession) {
-		if (externalSession.authSessionKey !== input.skey) {
+		if (externalSession.key !== input.skey) {
 			return null;
 		}
 
-		if (!externalSession.expiresOn || externalSession.isExpired || externalSession.expiresOn <= now) {
+		if (!externalSession.validTill || externalSession.validTill <= now) {
 			return null;
 		}
 
 		return {
 			accountId: externalSession.accountId,
-			validTill: externalSession.expiresOn,
+			validTill: externalSession.validTill,
 		};
 	}
 
@@ -193,9 +191,8 @@ async function resolveAuthenticatedAccount(input: { app: string; sid: string; sk
 		where: { id: input.sid },
 		select: {
 			accountId: true,
-			authSessionKey: true,
-			expiresOn: true,
-			isExpired: true,
+			key: true,
+			validTill: true,
 		},
 	});
 
@@ -203,17 +200,17 @@ async function resolveAuthenticatedAccount(input: { app: string; sid: string; sk
 		return null;
 	}
 
-	if (internalSession.authSessionKey !== input.skey) {
+	if (internalSession.key !== input.skey) {
 		return null;
 	}
 
-	if (!internalSession.expiresOn || internalSession.isExpired || internalSession.expiresOn <= now) {
+	if (!internalSession.validTill || internalSession.validTill <= now) {
 		return null;
 	}
 
 	return {
 		accountId: internalSession.accountId,
-		validTill: internalSession.expiresOn,
+		validTill: internalSession.validTill,
 	};
 }
 

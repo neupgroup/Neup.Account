@@ -62,33 +62,10 @@ export async function bridgeBuildGrantRedirect(input: {
     const expiresOn = new Date();
     expiresOn.setMinutes(expiresOn.getMinutes() + 5);
 
-    const currentSession = await prisma.authSession.findUnique({
-      where: { id: session.sessionId },
-      select: { dependentKeys: true },
-    });
-
-    const existingKeys = Array.isArray(currentSession?.dependentKeys) ? currentSession.dependentKeys : [];
-
-    const newKeyEntry = {
-      app: appId,
-      key: tempToken,
-      expiresOn,
-      isUsed: false,
-    };
-
-    await prisma.authSession.update({
-      where: { id: session.sessionId },
-      data: {
-        dependentKeys: [...existingKeys, newKeyEntry],
-      },
-    });
-
     const existingExternalSession = await prisma.authSession.findFirst({
       where: {
         accountId: session.accountId,
         application: appId,
-        applicationType: 'external',
-        isExpired: false,
       },
       select: { id: true },
     });

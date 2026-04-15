@@ -15,15 +15,11 @@ async function resolveSession(input: { aid?: string | null; sid?: string | null;
     where: {
       id: sid,
       accountId: aid,
-      authSessionKey: skey,
-      isExpired: false,
-      expiresOn: { gt: new Date() },
+      key: skey,
+      validTill: { gt: new Date() },
       ...(appId
         ? {
-            OR: [
-              { applicationType: 'internal' },
-              { applicationType: 'external', application: appId },
-            ],
+            application: appId,
           }
         : {}),
     },

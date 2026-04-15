@@ -297,6 +297,7 @@ export async function impersonateUser(userId: string, neupId: string): Promise<{
                 lastLoggedIn: new Date(),
                 loginType: 'Impersonation',
                 deviceType: deviceTypeHeader,
+                application: 'neup.account',
             }
         });
 

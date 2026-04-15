@@ -124,13 +124,11 @@ export async function addUserApplicationAccess(input: { appId: string; permissio
         data: {
           accountId,
           application: appId,
-          applicationType: 'internal',
           ipAddress: 'Unknown IP',
           userAgent: 'Internal Application Access',
           lastLoggedIn: new Date(),
           loginType: 'internal_app_access',
-          isExpired: false,
-          permissions,
+          validTill: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
         },
       });
     }

@@ -242,8 +242,7 @@ model AuthSession {
   key          String?
   ipAddress    String
   userAgent    String
-  isExpired    Boolean   @default(false)
-  expiresOn    DateTime?
+  validTill    DateTime? @db.Timestamp(6)
   lastLoggedIn DateTime
   loginType    String
   geolocation  String?

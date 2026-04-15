@@ -19873,8 +19873,7 @@ export namespace Prisma {
     key: string | null
     ipAddress: string | null
     userAgent: string | null
-    isExpired: boolean | null
-    expiresOn: Date | null
+    validTill: Date | null
     lastLoggedIn: Date | null
     loginType: string | null
     geolocation: string | null
@@ -19888,8 +19887,7 @@ export namespace Prisma {
     key: string | null
     ipAddress: string | null
     userAgent: string | null
-    isExpired: boolean | null
-    expiresOn: Date | null
+    validTill: Date | null
     lastLoggedIn: Date | null
     loginType: string | null
     geolocation: string | null
@@ -19903,8 +19901,7 @@ export namespace Prisma {
     key: number
     ipAddress: number
     userAgent: number
-    isExpired: number
-    expiresOn: number
+    validTill: number
     lastLoggedIn: number
     loginType: number
     geolocation: number
@@ -19920,8 +19917,7 @@ export namespace Prisma {
     key?: true
     ipAddress?: true
     userAgent?: true
-    isExpired?: true
-    expiresOn?: true
+    validTill?: true
     lastLoggedIn?: true
     loginType?: true
     geolocation?: true
@@ -19935,8 +19931,7 @@ export namespace Prisma {
     key?: true
     ipAddress?: true
     userAgent?: true
-    isExpired?: true
-    expiresOn?: true
+    validTill?: true
     lastLoggedIn?: true
     loginType?: true
     geolocation?: true
@@ -19950,8 +19945,7 @@ export namespace Prisma {
     key?: true
     ipAddress?: true
     userAgent?: true
-    isExpired?: true
-    expiresOn?: true
+    validTill?: true
     lastLoggedIn?: true
     loginType?: true
     geolocation?: true
@@ -20038,8 +20032,7 @@ export namespace Prisma {
     key: string | null
     ipAddress: string
     userAgent: string
-    isExpired: boolean
-    expiresOn: Date | null
+    validTill: Date | null
     lastLoggedIn: Date
     loginType: string
     geolocation: string | null
@@ -20070,8 +20063,7 @@ export namespace Prisma {
     key?: boolean
     ipAddress?: boolean
     userAgent?: boolean
-    isExpired?: boolean
-    expiresOn?: boolean
+    validTill?: boolean
     lastLoggedIn?: boolean
     loginType?: boolean
     geolocation?: boolean
@@ -20086,8 +20078,7 @@ export namespace Prisma {
     key?: boolean
     ipAddress?: boolean
     userAgent?: boolean
-    isExpired?: boolean
-    expiresOn?: boolean
+    validTill?: boolean
     lastLoggedIn?: boolean
     loginType?: boolean
     geolocation?: boolean
@@ -20102,8 +20093,7 @@ export namespace Prisma {
     key?: boolean
     ipAddress?: boolean
     userAgent?: boolean
-    isExpired?: boolean
-    expiresOn?: boolean
+    validTill?: boolean
     lastLoggedIn?: boolean
     loginType?: boolean
     geolocation?: boolean
@@ -20118,8 +20108,7 @@ export namespace Prisma {
     key?: boolean
     ipAddress?: boolean
     userAgent?: boolean
-    isExpired?: boolean
-    expiresOn?: boolean
+    validTill?: boolean
     lastLoggedIn?: boolean
     loginType?: boolean
     geolocation?: boolean
@@ -20127,7 +20116,7 @@ export namespace Prisma {
     application?: boolean
   }
 
-  export type AuthSessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "key" | "ipAddress" | "userAgent" | "isExpired" | "expiresOn" | "lastLoggedIn" | "loginType" | "geolocation" | "deviceType" | "application", ExtArgs["result"]["authSession"]>
+  export type AuthSessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "key" | "ipAddress" | "userAgent" | "validTill" | "lastLoggedIn" | "loginType" | "geolocation" | "deviceType" | "application", ExtArgs["result"]["authSession"]>
   export type AuthSessionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }
@@ -20149,8 +20138,7 @@ export namespace Prisma {
       key: string | null
       ipAddress: string
       userAgent: string
-      isExpired: boolean
-      expiresOn: Date | null
+      validTill: Date | null
       lastLoggedIn: Date
       loginType: string
       geolocation: string | null
@@ -20585,8 +20573,7 @@ export namespace Prisma {
     readonly key: FieldRef<"AuthSession", 'String'>
     readonly ipAddress: FieldRef<"AuthSession", 'String'>
     readonly userAgent: FieldRef<"AuthSession", 'String'>
-    readonly isExpired: FieldRef<"AuthSession", 'Boolean'>
-    readonly expiresOn: FieldRef<"AuthSession", 'DateTime'>
+    readonly validTill: FieldRef<"AuthSession", 'DateTime'>
     readonly lastLoggedIn: FieldRef<"AuthSession", 'DateTime'>
     readonly loginType: FieldRef<"AuthSession", 'String'>
     readonly geolocation: FieldRef<"AuthSession", 'String'>
@@ -28955,8 +28942,7 @@ export namespace Prisma {
     key: 'key',
     ipAddress: 'ipAddress',
     userAgent: 'userAgent',
-    isExpired: 'isExpired',
-    expiresOn: 'expiresOn',
+    validTill: 'validTill',
     lastLoggedIn: 'lastLoggedIn',
     loginType: 'loginType',
     geolocation: 'geolocation',
@@ -30270,8 +30256,7 @@ export namespace Prisma {
     key?: StringNullableFilter<"AuthSession"> | string | null
     ipAddress?: StringFilter<"AuthSession"> | string
     userAgent?: StringFilter<"AuthSession"> | string
-    isExpired?: BoolFilter<"AuthSession"> | boolean
-    expiresOn?: DateTimeNullableFilter<"AuthSession"> | Date | string | null
+    validTill?: DateTimeNullableFilter<"AuthSession"> | Date | string | null
     lastLoggedIn?: DateTimeFilter<"AuthSession"> | Date | string
     loginType?: StringFilter<"AuthSession"> | string
     geolocation?: StringNullableFilter<"AuthSession"> | string | null
@@ -30286,8 +30271,7 @@ export namespace Prisma {
     key?: SortOrderInput | SortOrder
     ipAddress?: SortOrder
     userAgent?: SortOrder
-    isExpired?: SortOrder
-    expiresOn?: SortOrderInput | SortOrder
+    validTill?: SortOrderInput | SortOrder
     lastLoggedIn?: SortOrder
     loginType?: SortOrder
     geolocation?: SortOrderInput | SortOrder
@@ -30305,8 +30289,7 @@ export namespace Prisma {
     key?: StringNullableFilter<"AuthSession"> | string | null
     ipAddress?: StringFilter<"AuthSession"> | string
     userAgent?: StringFilter<"AuthSession"> | string
-    isExpired?: BoolFilter<"AuthSession"> | boolean
-    expiresOn?: DateTimeNullableFilter<"AuthSession"> | Date | string | null
+    validTill?: DateTimeNullableFilter<"AuthSession"> | Date | string | null
     lastLoggedIn?: DateTimeFilter<"AuthSession"> | Date | string
     loginType?: StringFilter<"AuthSession"> | string
     geolocation?: StringNullableFilter<"AuthSession"> | string | null
@@ -30321,8 +30304,7 @@ export namespace Prisma {
     key?: SortOrderInput | SortOrder
     ipAddress?: SortOrder
     userAgent?: SortOrder
-    isExpired?: SortOrder
-    expiresOn?: SortOrderInput | SortOrder
+    validTill?: SortOrderInput | SortOrder
     lastLoggedIn?: SortOrder
     loginType?: SortOrder
     geolocation?: SortOrderInput | SortOrder
@@ -30342,8 +30324,7 @@ export namespace Prisma {
     key?: StringNullableWithAggregatesFilter<"AuthSession"> | string | null
     ipAddress?: StringWithAggregatesFilter<"AuthSession"> | string
     userAgent?: StringWithAggregatesFilter<"AuthSession"> | string
-    isExpired?: BoolWithAggregatesFilter<"AuthSession"> | boolean
-    expiresOn?: DateTimeNullableWithAggregatesFilter<"AuthSession"> | Date | string | null
+    validTill?: DateTimeNullableWithAggregatesFilter<"AuthSession"> | Date | string | null
     lastLoggedIn?: DateTimeWithAggregatesFilter<"AuthSession"> | Date | string
     loginType?: StringWithAggregatesFilter<"AuthSession"> | string
     geolocation?: StringNullableWithAggregatesFilter<"AuthSession"> | string | null
@@ -32018,8 +31999,7 @@ export namespace Prisma {
     key?: string | null
     ipAddress: string
     userAgent: string
-    isExpired?: boolean
-    expiresOn?: Date | string | null
+    validTill?: Date | string | null
     lastLoggedIn: Date | string
     loginType: string
     geolocation?: string | null
@@ -32034,8 +32014,7 @@ export namespace Prisma {
     key?: string | null
     ipAddress: string
     userAgent: string
-    isExpired?: boolean
-    expiresOn?: Date | string | null
+    validTill?: Date | string | null
     lastLoggedIn: Date | string
     loginType: string
     geolocation?: string | null
@@ -32048,8 +32027,7 @@ export namespace Prisma {
     key?: NullableStringFieldUpdateOperationsInput | string | null
     ipAddress?: StringFieldUpdateOperationsInput | string
     userAgent?: StringFieldUpdateOperationsInput | string
-    isExpired?: BoolFieldUpdateOperationsInput | boolean
-    expiresOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
     loginType?: StringFieldUpdateOperationsInput | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32064,8 +32042,7 @@ export namespace Prisma {
     key?: NullableStringFieldUpdateOperationsInput | string | null
     ipAddress?: StringFieldUpdateOperationsInput | string
     userAgent?: StringFieldUpdateOperationsInput | string
-    isExpired?: BoolFieldUpdateOperationsInput | boolean
-    expiresOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
     loginType?: StringFieldUpdateOperationsInput | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32079,8 +32056,7 @@ export namespace Prisma {
     key?: string | null
     ipAddress: string
     userAgent: string
-    isExpired?: boolean
-    expiresOn?: Date | string | null
+    validTill?: Date | string | null
     lastLoggedIn: Date | string
     loginType: string
     geolocation?: string | null
@@ -32093,8 +32069,7 @@ export namespace Prisma {
     key?: NullableStringFieldUpdateOperationsInput | string | null
     ipAddress?: StringFieldUpdateOperationsInput | string
     userAgent?: StringFieldUpdateOperationsInput | string
-    isExpired?: BoolFieldUpdateOperationsInput | boolean
-    expiresOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
     loginType?: StringFieldUpdateOperationsInput | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32108,8 +32083,7 @@ export namespace Prisma {
     key?: NullableStringFieldUpdateOperationsInput | string | null
     ipAddress?: StringFieldUpdateOperationsInput | string
     userAgent?: StringFieldUpdateOperationsInput | string
-    isExpired?: BoolFieldUpdateOperationsInput | boolean
-    expiresOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
     loginType?: StringFieldUpdateOperationsInput | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
@@ -33499,8 +33473,7 @@ export namespace Prisma {
     key?: SortOrder
     ipAddress?: SortOrder
     userAgent?: SortOrder
-    isExpired?: SortOrder
-    expiresOn?: SortOrder
+    validTill?: SortOrder
     lastLoggedIn?: SortOrder
     loginType?: SortOrder
     geolocation?: SortOrder
@@ -33514,8 +33487,7 @@ export namespace Prisma {
     key?: SortOrder
     ipAddress?: SortOrder
     userAgent?: SortOrder
-    isExpired?: SortOrder
-    expiresOn?: SortOrder
+    validTill?: SortOrder
     lastLoggedIn?: SortOrder
     loginType?: SortOrder
     geolocation?: SortOrder
@@ -33529,8 +33501,7 @@ export namespace Prisma {
     key?: SortOrder
     ipAddress?: SortOrder
     userAgent?: SortOrder
-    isExpired?: SortOrder
-    expiresOn?: SortOrder
+    validTill?: SortOrder
     lastLoggedIn?: SortOrder
     loginType?: SortOrder
     geolocation?: SortOrder
@@ -35531,8 +35502,7 @@ export namespace Prisma {
     key?: string | null
     ipAddress: string
     userAgent: string
-    isExpired?: boolean
-    expiresOn?: Date | string | null
+    validTill?: Date | string | null
     lastLoggedIn: Date | string
     loginType: string
     geolocation?: string | null
@@ -35545,8 +35515,7 @@ export namespace Prisma {
     key?: string | null
     ipAddress: string
     userAgent: string
-    isExpired?: boolean
-    expiresOn?: Date | string | null
+    validTill?: Date | string | null
     lastLoggedIn: Date | string
     loginType: string
     geolocation?: string | null
@@ -36150,8 +36119,7 @@ export namespace Prisma {
     key?: StringNullableFilter<"AuthSession"> | string | null
     ipAddress?: StringFilter<"AuthSession"> | string
     userAgent?: StringFilter<"AuthSession"> | string
-    isExpired?: BoolFilter<"AuthSession"> | boolean
-    expiresOn?: DateTimeNullableFilter<"AuthSession"> | Date | string | null
+    validTill?: DateTimeNullableFilter<"AuthSession"> | Date | string | null
     lastLoggedIn?: DateTimeFilter<"AuthSession"> | Date | string
     loginType?: StringFilter<"AuthSession"> | string
     geolocation?: StringNullableFilter<"AuthSession"> | string | null
@@ -39549,8 +39517,7 @@ export namespace Prisma {
     key?: string | null
     ipAddress: string
     userAgent: string
-    isExpired?: boolean
-    expiresOn?: Date | string | null
+    validTill?: Date | string | null
     lastLoggedIn: Date | string
     loginType: string
     geolocation?: string | null
@@ -39823,8 +39790,7 @@ export namespace Prisma {
     key?: NullableStringFieldUpdateOperationsInput | string | null
     ipAddress?: StringFieldUpdateOperationsInput | string
     userAgent?: StringFieldUpdateOperationsInput | string
-    isExpired?: BoolFieldUpdateOperationsInput | boolean
-    expiresOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
     loginType?: StringFieldUpdateOperationsInput | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39837,8 +39803,7 @@ export namespace Prisma {
     key?: NullableStringFieldUpdateOperationsInput | string | null
     ipAddress?: StringFieldUpdateOperationsInput | string
     userAgent?: StringFieldUpdateOperationsInput | string
-    isExpired?: BoolFieldUpdateOperationsInput | boolean
-    expiresOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
     loginType?: StringFieldUpdateOperationsInput | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39851,8 +39816,7 @@ export namespace Prisma {
     key?: NullableStringFieldUpdateOperationsInput | string | null
     ipAddress?: StringFieldUpdateOperationsInput | string
     userAgent?: StringFieldUpdateOperationsInput | string
-    isExpired?: BoolFieldUpdateOperationsInput | boolean
-    expiresOn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
     loginType?: StringFieldUpdateOperationsInput | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null

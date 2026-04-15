@@ -96,10 +96,9 @@ export async function validateExternalRequest(input: ValidateInput): Promise<Val
     if (
       !session ||
       session.accountId !== internalAid ||
-      session.authSessionKey !== internalSkey ||
-      session.isExpired ||
-      !session.expiresOn ||
-      session.expiresOn < new Date()
+      session.key !== internalSkey ||
+      !session.validTill ||
+      session.validTill < new Date()
     ) {
       return { success: false, error: 'Invalid or expired session.', status: 401 };
     }

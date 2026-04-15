@@ -319,8 +319,6 @@ export async function bridgeSignIntoApplication(input: { appId?: string; appType
 			where: {
 				accountId,
 				application: appId,
-				applicationType: 'external',
-				isExpired: false,
 			},
 			select: { id: true },
 		});
@@ -337,7 +335,6 @@ export async function bridgeSignIntoApplication(input: { appId?: string; appType
 			accountId,
 			displayName: profile.nameDisplay || `${profile.nameFirst || ''} ${profile.nameLast || ''}`.trim(),
 			displayImage: profile.accountPhoto || '',
-			permissions: [],
 			isNewSignup,
 		};
 
@@ -355,19 +352,12 @@ export async function bridgeSignIntoApplication(input: { appId?: string; appType
 				data: {
 					accountId,
 					application: appId,
-					applicationType: 'external',
 					ipAddress: 'Unknown IP',
 					userAgent: 'External Application',
 					lastLoggedIn: new Date(),
 					loginType: 'external_app',
-					expiresOn: activeTill,
-					isExpired: false,
-					authSessionKey: sessionValue,
-					dependentKeys: {
-						parentSessionId: authSid,
-						appId,
-					},
-					permissions: [],
+					validTill: activeTill,
+					key: sessionValue,
 				},
 			});
 

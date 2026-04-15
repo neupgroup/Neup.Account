@@ -144,9 +144,8 @@ export async function validateAuthSession(input: ValidateAuthSessionInput): Prom
 		where: { id: auth_sid },
 		select: {
 			accountId: true,
-			authSessionKey: true,
-			expiresOn: true,
-			isExpired: true,
+			key: true,
+			validTill: true,
 		},
 	});
 
@@ -157,7 +156,7 @@ export async function validateAuthSession(input: ValidateAuthSessionInput): Prom
 		};
 	}
 
-	if (session.accountId !== auth_aid || session.authSessionKey !== auth_skey) {
+	if (session.accountId !== auth_aid || session.key !== auth_skey) {
 		return {
 			status: 'invalid',
 			reason: 'invalidSource',
@@ -165,9 +164,9 @@ export async function validateAuthSession(input: ValidateAuthSessionInput): Prom
 	}
 
 	const now = new Date();
-	const expiresOn = session.expiresOn;
+	const validTill = session.validTill;
 
-	if (session.isExpired || !expiresOn || expiresOn <= now) {
+	if (!validTill || validTill <= now) {
 		return {
 			status: 'expired',
 		};
@@ -201,7 +200,7 @@ export async function validateAuthSession(input: ValidateAuthSessionInput): Prom
 
 	return {
 		status: 'valid',
-		validTill: expiresOn.toISOString(),
+		validTill: validTill.toISOString(),
 	};
 }
 
@@ -235,7 +234,7 @@ export async function expireSession(input: ExpireSessionInput): Promise<ExpireSe
 			where: { id: sid },
 			select: {
 				accountId: true,
-				authSessionKey: true,
+				key: true,
 			},
 		});
 
@@ -243,15 +242,14 @@ export async function expireSession(input: ExpireSessionInput): Promise<ExpireSe
 			return { success: false, error: 'Session not found.' };
 		}
 
-		if (session.accountId !== aid || session.authSessionKey !== skey) {
+		if (session.accountId !== aid || session.key !== skey) {
 			return { success: false, error: 'Invalid session.' };
 		}
 
 		await prisma.authSession.update({
 			where: { id: sid },
 			data: {
-				isExpired: true,
-				expiresOn: new Date(),
+				validTill: new Date(),
 			},
 		});
 
@@ -335,14 +333,14 @@ export async function bridgeValidateAndRefreshSession(input: {
 			include: { account: true },
 		});
 
-		if (!session || session.accountId !== aid || session.authSessionKey !== skey || session.isExpired) {
+		if (!session || session.accountId !== aid || session.key !== skey) {
 			return {
 				status: 401,
 				body: { error: 'invalid_session', error_description: 'Session not found or invalid' },
 			};
 		}
 
-		if (session.expiresOn && session.expiresOn < new Date()) {
+		if (session.validTill && session.validTill < new Date()) {
 			return {
 				status: 401,
 				body: { error: 'session_expired', error_description: 'Session has expired' },
@@ -355,7 +353,7 @@ export async function bridgeValidateAndRefreshSession(input: {
 		const updatedSession = await prisma.authSession.update({
 			where: { id: sid },
 			data: {
-				expiresOn: newExpiry,
+				validTill: newExpiry,
 				...(deviceType ? { deviceType } : {}),
 			},
 		});
@@ -367,7 +365,7 @@ export async function bridgeValidateAndRefreshSession(input: {
 				session: {
 					aid: updatedSession.accountId,
 					sid: updatedSession.id,
-					expiresOn: updatedSession.expiresOn,
+					validTill: updatedSession.validTill,
 					deviceType: updatedSession.deviceType,
 				},
 			},
@@ -400,11 +398,10 @@ export async function bridgeInvalidateSession(input: {
 			where: {
 				id: sid,
 				accountId: aid,
-				authSessionKey: skey,
+				key: skey,
 			},
 			data: {
-				isExpired: true,
-				expiresOn: new Date(),
+				validTill: new Date(),
 			},
 		});
 
@@ -480,9 +477,8 @@ export async function validateSession(input: ValidateSessionInput): Promise<Vali
 			where: { id: sessionId },
 			select: {
 				accountId: true,
-				authSessionKey: true,
-				expiresOn: true,
-				isExpired: true,
+				key: true,
+				validTill: true,
 				application: true,
 			},
 		});
@@ -492,13 +488,13 @@ export async function validateSession(input: ValidateSessionInput): Promise<Vali
 		}
 
 		// 3. Verify session credentials match
-		if (session.accountId !== accountId || session.authSessionKey !== sessionKey) {
+		if (session.accountId !== accountId || session.key !== sessionKey) {
 			return { valid: false };
 		}
 
 		// 4. Check if session is expired
 		const now = new Date();
-		if (session.isExpired || !session.expiresOn || session.expiresOn <= now) {
+		if (!session.validTill || session.validTill <= now) {
 			return { valid: false };
 		}
 

@@ -57,14 +57,14 @@ export async function createAndSetSession(
     const session = await prisma.authSession.create({
       data: {
         accountId: accountId,
-        authSessionKey: sessionKey,
+        key: sessionKey,
         ipAddress: ipAddress,
         userAgent: userAgent,
-        isExpired: false,
-        expiresOn: expiresOn,
+        validTill: expiresOn,
         lastLoggedIn: new Date(),
         loginType: loginType,
         geolocation: geolocation,
+        application: 'neup.account',
       },
     });
 
