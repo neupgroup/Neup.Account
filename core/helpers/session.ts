@@ -42,6 +42,22 @@ const SESSION_DURATION_DAYS = 30;
 
 // --- Session Logic ---
 
+function normalizeStoredAccount(account: StoredAccount): StoredAccount {
+  const sid = account.sid ?? account.sessionId;
+  const skey = account.skey ?? account.sessionKey;
+  const aid = account.aid ?? account.accountId ?? '';
+
+  return {
+    ...account,
+    aid,
+    sid,
+    skey,
+    accountId: account.accountId ?? aid,
+    sessionId: account.sessionId ?? sid,
+    sessionKey: account.sessionKey ?? skey,
+  };
+}
+
 export async function createAndSetSession(
   accountId: string,
   loginType: string,
@@ -90,6 +106,9 @@ export async function createAndSetSession(
       aid: accountId,
       sid: session.id,
       skey: sessionKey,
+      accountId,
+      sessionId: session.id,
+      sessionKey,
       expired: false,
       neupId: primaryNeupId,
       active: true, // This new session is the active one
@@ -112,7 +131,7 @@ export async function createAndSetSession(
 // --- Stored Account Management ---
 export async function getStoredAccounts(): Promise<StoredAccount[]> {
   const { allAccounts } = await getSessionCookies();
-  return allAccounts;
+  return allAccounts.map(normalizeStoredAccount);
 }
 
 export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
@@ -124,7 +143,9 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
   const { accountId: activeAccountId } = await getSessionCookies();
 
   const validatedAccounts = await Promise.all(
-    allAccounts.map(async (account) => {
+    allAccounts.map(async (rawAccount) => {
+      const account = normalizeStoredAccount(rawAccount);
+
       if (account.expired) return account;
       if (!account.sid || !account.skey) return { ...account, expired: true };
 
@@ -169,20 +190,42 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
 export async function cleanupExpiredStoredSessions(): Promise<StoredAccount[]> {
   const validatedAccounts = await getValidatedStoredAccounts();
 
-  const cleanedAccounts = validatedAccounts.map((account) => {
-    if (!account.expired) {
-      return account;
+  const cleanedAccounts = validatedAccounts
+    .map((rawAccount) => {
+      const account = normalizeStoredAccount(rawAccount);
+      if (!account.expired) {
+        return account;
+      }
+
+      const {
+        sid: _sid,
+        skey: _skey,
+        sessionId: _sessionId,
+        sessionKey: _sessionKey,
+        ...rest
+      } = account;
+
+      return { ...rest, expired: true } as StoredAccount;
+    })
+    .filter((account) => Boolean(account?.aid));
+
+  let prunedAccounts = cleanedAccounts;
+  try {
+    const uniqueIds = Array.from(new Set(prunedAccounts.map((account) => account.aid).filter(Boolean)));
+    if (uniqueIds.length > 0) {
+      const existing = await prisma.account.findMany({
+        where: { id: { in: uniqueIds } },
+        select: { id: true },
+      });
+      const existingIds = new Set(existing.map((entry) => entry.id));
+      prunedAccounts = prunedAccounts.filter((account) => existingIds.has(account.aid));
     }
+  } catch (error) {
+    await logError('database', error, 'cleanupExpiredStoredSessions');
+  }
 
-    const { sid: _sid, skey: _skey, ...rest } = account;
-    return {
-      ...rest,
-      expired: true,
-    };
-  });
-
-  await setStoredAccountsCookie(cleanedAccounts);
-  return cleanedAccounts;
+  await setStoredAccountsCookie(prunedAccounts);
+  return prunedAccounts;
 }
 
 // --- Account Switching ---

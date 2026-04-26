@@ -18,9 +18,23 @@ function getFirstValue(value: string | string[] | undefined) {
  * Function getAuthStartPageData.
  */
 export async function getAuthStartPageData(searchParams: Record<string, string | string[] | undefined>) {
-  const accounts = await getValidatedStoredAccounts();
+  let accounts = await getValidatedStoredAccounts();
   const activeSession = await getActiveSession();
   const appId = getFirstValue(searchParams.appId) || getFirstValue(searchParams.appid);
+
+  try {
+    const uniqueIds = Array.from(new Set(accounts.map((account) => account.aid).filter(Boolean)));
+    if (uniqueIds.length > 0) {
+      const existing = await prisma.account.findMany({
+        where: { id: { in: uniqueIds } },
+        select: { id: true },
+      });
+      const existingIds = new Set(existing.map((entry) => entry.id));
+      accounts = accounts.filter((account) => existingIds.has(account.aid));
+    }
+  } catch {
+    // If the database is unavailable, fall back to showing the stored accounts.
+  }
 
   const application = appId
     ? await prisma.application.findUnique({

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChevronRight, AlertTriangle } from '@/components/icons';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import React from 'react';
 import { useToast } from '@/core/hooks/use-toast';
@@ -22,6 +22,12 @@ interface StartPageComponentProps {
   appName?: string | null;
 }
 
+function isSafeRedirectTarget(target: string) {
+  if (!target) return false;
+  if (/^[a-zA-Z][a-zA-Z\d+.-]*:/.test(target) || target.startsWith('//')) return false;
+  return target.startsWith('/') || target.startsWith('?');
+}
+
 export function StartPageComponent({ accounts, hasActiveSession, appName }: StartPageComponentProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -30,6 +36,8 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
   const error = searchParams.get('error');
   const errorDescription = searchParams.get('error_description');
   const redirects = searchParams.get('redirects');
+  const didRedirectRef = useRef(false);
+  const visibleAccounts = accounts.filter((account) => Boolean(account.accountId) && !account.isUnknown);
 
   useEffect(() => {
     void cleanupExpiredStoredSessions();
@@ -53,13 +61,28 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
       });
     }
 
-    if (hasActiveSession && shouldReturnToAuthStartForExternalAuthentication(searchParams) && !error && isSecure) {
-      redirectInApp(router, appendAuthCallbackContext('/auth/sign', searchParams), { replace: true });
+    if (didRedirectRef.current) {
       return;
     }
 
-    if (hasActiveSession && redirects && !error && isSecure) {
-      redirectInApp(router, redirects, { replace: true });
+    if (hasActiveSession && !error && isSecure) {
+      const preferredTarget =
+        redirects && isSafeRedirectTarget(redirects)
+          ? redirects
+          : shouldReturnToAuthStartForExternalAuthentication(searchParams)
+            ? appendAuthCallbackContext('/auth/sign', searchParams)
+            : null;
+
+      if (preferredTarget && typeof window !== 'undefined') {
+        const current = window.location.pathname + window.location.search + window.location.hash;
+        const desiredUrl = new URL(preferredTarget, window.location.href);
+        const desired = desiredUrl.pathname + desiredUrl.search + desiredUrl.hash;
+
+        if (desired !== current) {
+          didRedirectRef.current = true;
+          redirectInApp(router, preferredTarget, { replace: true });
+        }
+      }
     }
   }, [error, toast, isSecure, hasActiveSession, redirects, router, searchParams]);
 
@@ -107,11 +130,11 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
               </Link>
             )}
 
-            {accounts.length > 0 && (
+            {visibleAccounts.length > 0 && (
               <div className="space-y-2">
-                 {accounts.map((acc) => (
+                 {visibleAccounts.map((acc) => (
                     <AccountListItem 
-                        key={acc.accountId || `unknown-${Math.random()}`} 
+                        key={acc.accountId!}
                         account={acc}
                     />
                 ))}

@@ -96,10 +96,16 @@ export class AuthCookiesHelper extends Singleton {
                     const normalizedAid = account?.aid || account?.accountId;
                     if (!normalizedAid) return null;
 
+                    const normalizedSid = account?.sid || account?.sessionId;
+                    const normalizedSkey = account?.skey || account?.sessionKey;
+
                     return {
                         aid: normalizedAid,
-                        sid: account?.sid || account?.sessionId,
-                        skey: account?.skey || account?.sessionKey,
+                        sid: normalizedSid,
+                        skey: normalizedSkey,
+                        accountId: normalizedAid,
+                        sessionId: normalizedSid,
+                        sessionKey: normalizedSkey,
                         neupId: account?.neupId || '',
                         expired: Boolean(account?.expired),
                         active: Boolean(account?.active),
