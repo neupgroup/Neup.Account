@@ -49,14 +49,15 @@ export async function getActiveSession(): Promise<Session | null> {
       return null;
     }
 
-    const dbExpiresOn = session.expiresOn;
+    const dbValidTill = session.validTill;
+    const dbKey = session.key;
 
     const isInvalid =
-      !dbExpiresOn ||
-      dbExpiresOn < new Date() ||
-      session.isExpired ||
+      !dbValidTill ||
+      dbValidTill < new Date() ||
       session.accountId !== accountId ||
-      session.authSessionKey !== sessionKey;
+      !dbKey ||
+      dbKey !== sessionKey;
 
     if (isInvalid) {
       return null;
@@ -65,10 +66,10 @@ export async function getActiveSession(): Promise<Session | null> {
     return {
       aid: session.accountId,
       sid: sessionId,
-      skey: session.authSessionKey || '',
+      skey: dbKey,
       accountId: session.accountId,
       sessionId: sessionId,
-      sessionKey: session.authSessionKey || '',
+      sessionKey: dbKey,
     };
   } catch (error) {
     await logError('database', error, 'getActiveSession');

@@ -93,6 +93,11 @@ type ResolvedAuth = {
 	validTill: Date;
 };
 
+const EXTERNAL_LOGIN_PREFIX = 'external_app:';
+function externalLoginType(appId: string) {
+	return `${EXTERNAL_LOGIN_PREFIX}${appId}`;
+}
+
 
 /**
  * Returns true when a block is currently active.
@@ -163,7 +168,7 @@ async function resolveAuthenticatedAccount(input: { app: string; sid: string; sk
 	const externalSession = await prisma.authSession.findFirst({
 		where: {
 			id: input.sid,
-			application: input.app,
+			loginType: externalLoginType(input.app),
 		},
 		select: {
 			accountId: true,

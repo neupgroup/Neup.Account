@@ -4,6 +4,11 @@ import jwt from 'jsonwebtoken';
 import { logError } from '@/core/helpers/logger';
 import { makeNotification } from '@/services/notifications';
 
+const EXTERNAL_LOGIN_PREFIX = 'external_app:';
+function externalLoginType(appId: string) {
+  return `${EXTERNAL_LOGIN_PREFIX}${appId}`;
+}
+
 /**
  * Function bridgeIssueGrant.
  */
@@ -21,55 +26,43 @@ export async function bridgeIssueGrant(input: {
   }
 
   try {
-    const sessions = await prisma.authSession.findMany({
-      where: {
-        validTill: { gt: new Date() },
-      },
-      include: {
-        account: true,
-      },
+    const now = new Date();
+    const request = await prisma.authRequest.findUnique({
+      where: { id: tempToken },
+      select: { id: true, type: true, status: true, data: true, accountId: true, expiresAt: true },
     });
 
-    const sessionWithToken = sessions.find((s) => {
-      if (!Array.isArray(s.dependentKeys)) return false;
-      return (s.dependentKeys as any[]).some((k: any) => k.app === appId && k.key === tempToken && !k.isUsed);
-    });
+    const requestData = (request?.data as Record<string, any> | null) || {};
+    const requestAppId = typeof requestData.appId === 'string' ? requestData.appId : null;
 
-    if (!sessionWithToken) {
+    if (
+      !request ||
+      request.type !== 'bridge_grant' ||
+      request.status !== 'pending' ||
+      !request.accountId ||
+      request.expiresAt <= now ||
+      requestAppId !== appId
+    ) {
       return {
         status: 401,
         body: { error: 'invalid_token', error_description: 'Token not found, expired, or already used' },
       };
     }
 
-    const dependentKeys = sessionWithToken.dependentKeys as any[];
-    const tokenIndex = dependentKeys.findIndex((k: any) => k.app === appId && k.key === tempToken && !k.isUsed);
-
-    if (tokenIndex === -1) {
-      return {
-        status: 401,
-        body: { error: 'invalid_token', error_description: 'Token validation failed' },
-      };
-    }
-
-    const tokenData = dependentKeys[tokenIndex];
-    if (new Date(tokenData.expiresOn) < new Date()) {
-      return {
-        status: 401,
-        body: { error: 'token_expired', error_description: 'Token has expired' },
-      };
-    }
-
-    dependentKeys[tokenIndex].isUsed = true;
-    await prisma.authSession.update({
-      where: { id: sessionWithToken.id },
-      data: { dependentKeys },
+    const consumed = await prisma.authRequest.updateMany({
+      where: { id: tempToken, type: 'bridge_grant', status: 'pending' },
+      data: { status: 'used' },
     });
+    if (consumed.count === 0) {
+      return {
+        status: 401,
+        body: { error: 'invalid_token', error_description: 'Token already used' },
+      };
+    }
 
     const roleName = 'user';
     const permissions: string[] = [];
 
-    const sid = crypto.randomUUID();
     const skey = crypto.randomBytes(32).toString('hex');
 
     const sessionExpSeconds = 60 * 60 * 24 * 7;
@@ -81,7 +74,7 @@ export async function bridgeIssueGrant(input: {
     const jwtExp = iat + jwtExpSeconds;
 
     const payload: any = {
-      aid: sessionWithToken.accountId,
+      aid: request.accountId,
       role: roleName,
       iat,
       exp: jwtExp,
@@ -102,24 +95,38 @@ export async function bridgeIssueGrant(input: {
       };
     }
 
-    const token = jwt.sign(payload, application.appSecret);
+    await prisma.applicationConnection.upsert({
+      where: {
+        accountId_appId: {
+          accountId: request.accountId,
+          appId,
+        },
+      },
+      update: {},
+      create: {
+        accountId: request.accountId,
+        appId,
+      },
+    });
 
     const externalSession = await prisma.authSession.create({
       data: {
-        accountId: sessionWithToken.accountId,
-        application: appId,
-        ipAddress: sessionWithToken.ipAddress,
-        userAgent: sessionWithToken.userAgent,
-        geolocation: sessionWithToken.geolocation,
+        accountId: request.accountId,
+        ipAddress: 'bridge',
+        userAgent: 'External Application',
         lastLoggedIn: new Date(),
-        loginType: 'external_app',
+        loginType: externalLoginType(appId),
         validTill: sessionExpiresOn,
         key: skey,
       },
     });
 
+    payload.sid = externalSession.id;
+    payload.appId = appId;
+    const signed = jwt.sign(payload, application.appSecret);
+
     await makeNotification({
-      recipient_id: sessionWithToken.accountId,
+      recipient_id: request.accountId,
       action: 'informative.application_authorized',
       message: `Application ${application.name} was authorized.`,
     });
@@ -127,10 +134,10 @@ export async function bridgeIssueGrant(input: {
     return {
       status: 200,
       body: {
-        aid: sessionWithToken.accountId,
+        aid: request.accountId,
         sid: externalSession.id,
         skey,
-        jwt: token,
+        jwt: signed,
         exp: jwtExp,
         role: roleName,
         ...(permissions.length > 0 ? { per: permissions } : {}),
@@ -169,12 +176,11 @@ export async function bridgeRefreshGrant(input: {
       where: {
         id: sid,
         accountId: aid,
-        authSessionKey: skey,
-        application: appId,
-        applicationType: 'external',
-        isExpired: false,
-        expiresOn: { gt: new Date() },
+        key: skey,
+        loginType: externalLoginType(appId),
+        validTill: { gt: new Date() },
       },
+      select: { id: true, accountId: true, validTill: true, lastLoggedIn: true },
     });
 
     if (!appSession) {
@@ -185,9 +191,7 @@ export async function bridgeRefreshGrant(input: {
     }
 
     const roleName = 'user';
-    const permissions = Array.isArray(appSession.permissions)
-      ? (appSession.permissions as string[])
-      : [];
+    const permissions: string[] = [];
 
     const sessionExpSeconds = 60 * 60 * 24 * 7;
     const newSessionExpiresOn = new Date();
@@ -199,6 +203,8 @@ export async function bridgeRefreshGrant(input: {
 
     const payload: any = {
       aid,
+      sid,
+      appId,
       role: roleName,
       iat,
       exp: jwtExp,
@@ -270,12 +276,11 @@ export async function bridgeCheckGrant(input: {
       where: {
         id: sid,
         accountId: aid,
-        authSessionKey: skey,
-        application: appId,
-        applicationType: 'external',
-        isExpired: false,
-        expiresOn: { gt: new Date() },
+        key: skey,
+        loginType: externalLoginType(appId),
+        validTill: { gt: new Date() },
       },
+      select: { accountId: true, validTill: true, lastLoggedIn: true },
     });
 
     if (!appSession) {
@@ -290,7 +295,7 @@ export async function bridgeCheckGrant(input: {
       body: {
         success: true,
         aid: appSession.accountId,
-        appId: appSession.application,
+        appId,
         validTill: appSession.validTill,
         lastLoggedIn: appSession.lastLoggedIn,
       },

@@ -33,14 +33,14 @@ async function main() {
             lastName,
             dateOfBirth: dob,
             countryOfResidence: nationality,
-            authMethods: {
-              create: {
-                type: 'password',
-                value: hashed,
-                order: 'primary',
-                status: 'active',
-              },
-            },
+          },
+        },
+        authMethods: {
+          create: {
+            type: 'password',
+            value: hashed,
+            order: 'primary',
+            status: 'active',
           },
         },
         neupIds: {

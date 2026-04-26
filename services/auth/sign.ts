@@ -11,6 +11,11 @@ import { randomBytes } from 'crypto';
 import { getUserProfile } from '@/core/helpers/user';
 import { validateExternalRequest } from '@/services/auth/validate';
 
+const EXTERNAL_LOGIN_PREFIX = 'external_app:';
+function externalLoginType(appId: string) {
+	return `${EXTERNAL_LOGIN_PREFIX}${appId}`;
+}
+
 /**
  * Type AuthSignStep.
  */
@@ -315,10 +320,12 @@ export async function bridgeSignIntoApplication(input: { appId?: string; appType
 
 		const { accountId } = validation.user;
 
-		const existingExternal = await prisma.authSession.findFirst({
+		const existingExternal = await prisma.applicationConnection.findUnique({
 			where: {
-				accountId,
-				application: appId,
+				accountId_appId: {
+					accountId,
+					appId,
+				},
 			},
 			select: { id: true },
 		});
@@ -348,14 +355,24 @@ export async function bridgeSignIntoApplication(input: { appId?: string; appType
 			const activeTill = new Date();
 			activeTill.setDate(activeTill.getDate() + 30);
 
+			await prisma.applicationConnection.upsert({
+				where: {
+					accountId_appId: {
+						accountId,
+						appId,
+					},
+				},
+				update: {},
+				create: { accountId, appId },
+			});
+
 			await prisma.authSession.create({
 				data: {
 					accountId,
-					application: appId,
 					ipAddress: 'Unknown IP',
 					userAgent: 'External Application',
 					lastLoggedIn: new Date(),
-					loginType: 'external_app',
+					loginType: externalLoginType(appId),
 					validTill: activeTill,
 					key: sessionValue,
 				},

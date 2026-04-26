@@ -145,52 +145,27 @@ export async function validateExternalRequest(input: ValidateInput): Promise<Val
     return { success: false, error: 'Invalid application secret.', status: 401 };
   }
 
-  const sessions = await prisma.authSession.findMany({
-    where: {
-      accountId,
-      isExpired: false,
-    },
+  const request = await prisma.authRequest.findUnique({
+    where: { id: key },
+    select: { id: true, type: true, status: true, data: true, accountId: true, expiresAt: true },
   });
-  if (sessions.length === 0) {
-    return { success: false, error: 'No active session found for user.', status: 403 };
-  }
+  const requestData = (request?.data as Record<string, any> | null) || {};
+  const requestAppId = typeof requestData.appId === 'string' ? requestData.appId : null;
 
-  let validKeyFound = false;
-  let sessionIdToUpdate: string | null = null;
-  let keyIndexToUpdate = -1;
-  type DependentKey = {
-    expiresOn: string | Date;
-    key: string;
-    app: string;
-    isUsed?: boolean;
-  };
-  let dependentKeysToUpdate: DependentKey[] = [];
-
-  for (const session of sessions) {
-    const dependentKeys = Array.isArray(session.dependentKeys)
-      ? (session.dependentKeys as DependentKey[])
-      : [];
-    const keyIndex = dependentKeys.findIndex((k) => {
-      const expiresOn = new Date(k.expiresOn);
-      return k.key === key && k.app === appId && !k.isUsed && expiresOn > new Date();
-    });
-    if (keyIndex !== -1) {
-      validKeyFound = true;
-      sessionIdToUpdate = session.id;
-      keyIndexToUpdate = keyIndex;
-      dependentKeysToUpdate = dependentKeys;
-      break;
-    }
-  }
-
-  if (!validKeyFound || !sessionIdToUpdate) {
+  if (
+    !request ||
+    request.type !== 'bridge_grant' ||
+    request.status !== 'pending' ||
+    request.expiresAt <= new Date() ||
+    request.accountId !== accountId ||
+    requestAppId !== appId
+  ) {
     return { success: false, error: 'Invalid or expired key.', status: 403 };
   }
 
-  dependentKeysToUpdate[keyIndexToUpdate].isUsed = true;
-  await prisma.authSession.update({
-    where: { id: sessionIdToUpdate },
-    data: { dependentKeys: dependentKeysToUpdate },
+  await prisma.authRequest.update({
+    where: { id: key },
+    data: { status: 'used' },
   });
 
   const [userProfile, userNeupIds] = await Promise.all([getUserProfile(accountId), getUserNeupIds(accountId)]);
@@ -208,4 +183,3 @@ export async function validateExternalRequest(input: ValidateInput): Promise<Val
     signup,
   };
 }
-

@@ -134,22 +134,22 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
           select: {
             id: true,
             accountId: true,
-            authSessionKey: true,
-            expiresOn: true,
-            isExpired: true,
+            key: true,
+            validTill: true,
           },
         });
 
         if (!session) return { ...account, expired: true };
 
-        const dbExpiresOn = session.expiresOn;
+        const dbValidTill = session.validTill;
+        const dbKey = session.key;
 
         const isInvalid =
-          !dbExpiresOn ||
-          dbExpiresOn < new Date() ||
-          session.isExpired ||
+          !dbValidTill ||
+          dbValidTill < new Date() ||
           session.accountId !== account.aid ||
-          session.authSessionKey !== account.skey;
+          !dbKey ||
+          dbKey !== account.skey;
 
         if (isInvalid) {
             return { ...account, expired: true };
@@ -204,15 +204,19 @@ export async function switchToAccount(account: StoredAccount) {
           select: {
             id: true,
             accountId: true,
-            authSessionKey: true,
-            isExpired: true,
+            key: true,
+            validTill: true,
           },
         });
 
-        if (!session || 
+        if (
+          !session ||
           session.accountId !== account.aid ||
-          session.authSessionKey !== account.skey ||
-            session.isExpired) {
+          !session.key ||
+          session.key !== account.skey ||
+          !session.validTill ||
+          session.validTill < new Date()
+        ) {
             return { success: false, error: 'Invalid or expired session.' };
         }
 

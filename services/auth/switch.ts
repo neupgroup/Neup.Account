@@ -88,7 +88,7 @@ export async function logoutStoredSession(sessionId: string): Promise<{ success:
         await prisma.$transaction([
             prisma.authSession.update({
                 where: { id: sessionId },
-                data: { isExpired: true }
+                data: { validTill: new Date() }
             })
         ]);
 
@@ -298,14 +298,15 @@ async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
 
         if (!session) return { ...account, expired: true };
 
-        const dbExpiresOn = session.expiresOn;
+        const dbValidTill = session.validTill;
+        const dbKey = session.key;
 
         const isInvalid =
-          !dbExpiresOn ||
-          dbExpiresOn < new Date() ||
-          session.isExpired ||
+          !dbValidTill ||
+          dbValidTill < new Date() ||
           session.accountId !== account.aid ||
-          session.authSessionKey !== account.skey;
+          !dbKey ||
+          dbKey !== account.skey;
 
         if (isInvalid) {
             return { ...account, expired: true };

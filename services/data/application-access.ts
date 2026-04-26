@@ -22,6 +22,11 @@ export type UserApplicationAccess = {
   connectedOn: Date;
 };
 
+const INTERNAL_APP_PREFIX = 'neup.';
+function isInternalApp(appId: string) {
+  return appId.startsWith(INTERNAL_APP_PREFIX);
+}
+
 export async function getUserApplicationAccess(appId: string): Promise<UserApplicationAccess | null> {
   const accountId = await getPersonalAccountId();
   if (!accountId) {
@@ -29,39 +34,37 @@ export async function getUserApplicationAccess(appId: string): Promise<UserAppli
   }
 
   try {
-    const [application, sessions] = await Promise.all([
+    const [application, connection, roleRows] = await Promise.all([
       prisma.application.findUnique({ where: { id: appId } }),
-      prisma.authSession.findMany({
+      prisma.applicationConnection.findUnique({
+        where: {
+          accountId_appId: { accountId, appId },
+        },
+        select: { connectedAt: true },
+      }),
+      prisma.portfolioRole.findMany({
         where: {
           accountId,
-          application: appId,
+          portfolio: {
+            assets: {
+              some: {
+                assetId: appId,
+                assetType: { in: ['application', 'app'] },
+              },
+            },
+          },
         },
-        orderBy: {
-          lastLoggedIn: 'asc',
-        },
+        select: { roleId: true },
       }),
     ]);
 
-    if (!application || sessions.length === 0) {
+    if (!application || !connection) {
       return null;
     }
 
-    const hasInternal = sessions.some((row) => row.applicationType === 'internal');
-    const hasExternal = sessions.some((row) => row.applicationType === 'external');
-
-    const connectionType: UserApplicationAccess['connectionType'] = hasInternal && hasExternal
-      ? 'both'
-      : hasInternal
-        ? 'internal'
-        : 'external';
-
-    const permissions = Array.from(
-      new Set(
-        sessions.flatMap((row) => (Array.isArray(row.permissions) ? (row.permissions as string[]) : []))
-      )
-    );
-
-    const connectedOn = sessions[0]?.lastLoggedIn || new Date();
+    const connectionType: UserApplicationAccess['connectionType'] = isInternalApp(appId) ? 'internal' : 'external';
+    const permissions = Array.from(new Set(roleRows.map((r) => r.roleId)));
+    const connectedOn = connection.connectedAt;
 
     return {
       id: application.id,
@@ -93,45 +96,56 @@ export async function addUserApplicationAccess(input: { appId: string; permissio
   const { appId, permissions } = parsed.data;
 
   try {
-    const application = await prisma.application.findUnique({
-      where: { id: appId },
-      select: { id: true },
-    });
+    const application = await prisma.application.findUnique({ where: { id: appId }, select: { id: true } });
+    if (!application) return { success: false, error: 'Application not found.' };
 
-    if (!application) {
-      return { success: false, error: 'Application not found.' };
-    }
-
-    const existing = await prisma.authSession.findFirst({
-      where: {
-        accountId,
-        application: appId,
-        applicationType: 'internal',
-      },
-      select: { id: true },
-    });
-
-    if (existing) {
-      await prisma.authSession.update({
-        where: { id: existing.id },
-        data: {
-          permissions,
-          lastLoggedIn: new Date(),
-        },
+    await prisma.$transaction(async (tx) => {
+      await tx.applicationConnection.upsert({
+        where: { accountId_appId: { accountId, appId } },
+        update: {},
+        create: { accountId, appId },
       });
-    } else {
-      await prisma.authSession.create({
-        data: {
-          accountId,
-          application: appId,
-          ipAddress: 'Unknown IP',
-          userAgent: 'Internal Application Access',
-          lastLoggedIn: new Date(),
-          loginType: 'internal_app_access',
-          validTill: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+
+      let portfolio = await tx.portfolio.findFirst({
+        where: {
+          assets: {
+            some: {
+              assetId: appId,
+              assetType: { in: ['application', 'app'] },
+            },
+          },
         },
+        select: { id: true },
       });
-    }
+
+      if (!portfolio) {
+        portfolio = await tx.portfolio.create({
+          data: {
+            name: `App Portfolio ${appId}`,
+            description: 'Auto-generated app portfolio for access management.',
+            assets: {
+              create: {
+                assetId: appId,
+                assetType: 'application',
+                details: { primaryPortfolio: true },
+              },
+            },
+          },
+          select: { id: true },
+        });
+      }
+
+      await tx.portfolioRole.deleteMany({
+        where: { accountId, portfolioId: portfolio.id },
+      });
+
+      if (permissions.length > 0) {
+        await tx.portfolioRole.createMany({
+          data: permissions.map((roleId) => ({ accountId, portfolioId: portfolio.id, roleId })),
+          skipDuplicates: true,
+        });
+      }
+    });
 
     revalidatePath('/data/applications');
     revalidatePath(`/data/applications/${appId}`);
@@ -158,26 +172,46 @@ export async function updateUserApplicationPermissions(input: { appId: string; p
   const { appId, permissions } = parsed.data;
 
   try {
-    const existing = await prisma.authSession.findFirst({
-      where: {
-        accountId,
-        application: appId,
-      },
-      select: { id: true },
-    });
+    await prisma.$transaction(async (tx) => {
+      let portfolio = await tx.portfolio.findFirst({
+        where: {
+          assets: {
+            some: {
+              assetId: appId,
+              assetType: { in: ['application', 'app'] },
+            },
+          },
+        },
+        select: { id: true },
+      });
 
-    if (!existing) {
-      return { success: false, error: 'Application access not found for edit.' };
-    }
+      if (!portfolio) {
+        portfolio = await tx.portfolio.create({
+          data: {
+            name: `App Portfolio ${appId}`,
+            description: 'Auto-generated app portfolio for access management.',
+            assets: {
+              create: {
+                assetId: appId,
+                assetType: 'application',
+                details: { primaryPortfolio: true },
+              },
+            },
+          },
+          select: { id: true },
+        });
+      }
 
-    await prisma.authSession.updateMany({
-      where: {
-        accountId,
-        application: appId,
-      },
-      data: {
-        permissions,
-      },
+      await tx.portfolioRole.deleteMany({
+        where: { accountId, portfolioId: portfolio.id },
+      });
+
+      if (permissions.length > 0) {
+        await tx.portfolioRole.createMany({
+          data: permissions.map((roleId) => ({ accountId, portfolioId: portfolio.id, roleId })),
+          skipDuplicates: true,
+        });
+      }
     });
 
     revalidatePath('/data/applications');

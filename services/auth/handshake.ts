@@ -59,18 +59,31 @@ export async function bridgeBuildGrantRedirect(input: {
     }
 
     const tempToken = crypto.randomBytes(32).toString('hex');
-    const expiresOn = new Date();
-    expiresOn.setMinutes(expiresOn.getMinutes() + 5);
+    const expiresAt = new Date();
+    expiresAt.setMinutes(expiresAt.getMinutes() + 5);
 
-    const existingExternalSession = await prisma.authSession.findFirst({
-      where: {
+    await prisma.authRequest.create({
+      data: {
+        id: tempToken,
+        type: 'bridge_grant',
+        status: 'pending',
+        data: { appId },
         accountId: session.accountId,
-        application: appId,
+        expiresAt,
+      },
+    });
+
+    const existingConnection = await prisma.applicationConnection.findUnique({
+      where: {
+        accountId_appId: {
+          accountId: session.accountId,
+          appId,
+        },
       },
       select: { id: true },
     });
 
-    const authType = existingExternalSession ? 'signin' : 'signup';
+    const authType = existingConnection ? 'signin' : 'signup';
 
     finalRedirectUrl.searchParams.set('tempToken', tempToken);
     finalRedirectUrl.searchParams.set('authType', authType);

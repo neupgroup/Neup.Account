@@ -46,56 +46,23 @@ export async function getSignedApplications(): Promise<SignedApplicationsResult>
   }
 
   try {
-    const appSessions = await prisma.authSession.findMany({
-      where: {
-        accountId,
-        application: { not: null },
-      },
-      distinct: ['application'],
-      orderBy: {
-        lastLoggedIn: 'asc',
-      },
+    const connections = await prisma.applicationConnection.findMany({
+      where: { accountId },
+      include: { application: true },
+      orderBy: { connectedAt: 'desc' },
     });
 
-    const appIds = Array.from(
-      new Set(appSessions.map((row) => row.application).filter((id): id is string => Boolean(id)))
-    );
-    const appRows = await prisma.application.findMany({
-      where: { id: { in: appIds } },
-    });
-
-    const appById = new Map(appRows.map((app) => [app.id, app]));
-    const byAppId = new Map<string, SignedApplication>();
-
-    for (const row of appSessions) {
-      if (!row.application) continue;
-      const application = appById.get(row.application);
-      if (!application) continue;
-
-      const existing = byAppId.get(row.application);
-
-      if (!existing) {
-        byAppId.set(row.application, {
-          id: row.application,
-          name: application.name,
-          icon: application.icon || undefined,
-          description: application.description || '',
-          website: application.website || undefined,
-          developer: application.developer || undefined,
-          signedAt: row.lastLoggedIn,
-        });
-        continue;
-      }
-
-      if (row.lastLoggedIn < existing.signedAt) {
-        byAppId.set(row.application, {
-          ...existing,
-          signedAt: row.lastLoggedIn,
-        });
-      }
-    }
-
-    const resolvedApplications = Array.from(byAppId.values()).sort((a, b) => b.signedAt.getTime() - a.signedAt.getTime());
+    const resolvedApplications = connections
+      .map((conn) => ({
+        id: conn.application.id,
+        name: conn.application.name,
+        icon: conn.application.icon || undefined,
+        description: conn.application.description || '',
+        website: conn.application.website || undefined,
+        developer: conn.application.developer || undefined,
+        signedAt: conn.connectedAt,
+      }))
+      .sort((a, b) => b.signedAt.getTime() - a.signedAt.getTime());
 
     return {
       internal: resolvedApplications.filter((app) => isInternalApp(app.id)),

@@ -315,7 +315,7 @@ export async function bridgeValidateAndRefreshSession(input: {
 	skey?: string;
 	deviceType?: string;
 	activity?: string;
-}): Promise<{ status: number; body: BridgeAuthSessionError | { success: true; session: { aid: string; sid: string; expiresOn: Date | null; deviceType: string | null } } }> {
+}): Promise<{ status: number; body: BridgeAuthSessionError | { success: true; session: { aid: string; sid: string; validTill: Date | null; deviceType: string | null } } }> {
 	const { aid, sid, skey, deviceType } = input;
 
 	if (!aid || !sid || !skey) {
@@ -433,7 +433,7 @@ export async function bridgeRefreshSessionExpiry(): Promise<{ status: number; bo
 
 		await prisma.authSession.update({
 			where: { id: session.sessionId },
-			data: { expiresOn: newExpiresOn },
+			data: { validTill: newExpiresOn },
 		});
 
 		return { status: 200, body: { success: true, newExpiresOn: newExpiresOn.toISOString() } };

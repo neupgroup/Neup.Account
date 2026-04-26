@@ -307,15 +307,19 @@ export async function getApplicationDetailsForViewer(appId: string): Promise<App
         },
       }),
       personalAccountId
-        ? prisma.authSession.findMany({
+        ? prisma.portfolioRole.findMany({
             where: {
               accountId: personalAccountId,
-              application: appId,
+              portfolio: {
+                assets: {
+                  some: {
+                    assetId: appId,
+                    assetType: { in: ['application', 'app'] },
+                  },
+                },
+              },
             },
-            select: {
-              id: true,
-              permissions: true,
-            },
+            select: { roleId: true },
           })
         : [],
       isApplicationOwnerForAccount(activeAccountId, appId),
@@ -329,9 +333,7 @@ export async function getApplicationDetailsForViewer(appId: string): Promise<App
 
     const accessedData = Array.from(
       new Set(
-        appSessions.flatMap((session) =>
-          Array.isArray(session.permissions) ? (session.permissions as string[]) : []
-        )
+        appSessions.map((row) => row.roleId)
       )
     );
 

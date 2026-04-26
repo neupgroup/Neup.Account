@@ -31,41 +31,38 @@ export async function bridgeGetProfile(input: {
     let isTempTokenAuth = false;
 
     if (headerAid && headerSid && headerSkey) {
-      const appSession = await prisma.authSession.findFirst({
-        where: {
-          id: headerSid,
-          accountId: headerAid,
-          key: headerSkey,
-          applicationType: 'external',
-          isExpired: false,
-          expiresOn: { gt: new Date() },
-        },
+      const appSession = await prisma.authSession.findUnique({
+        where: { id: headerSid },
+        select: { accountId: true, key: true, validTill: true },
       });
 
-      if (appSession) {
+      if (
+        appSession &&
+        appSession.accountId === headerAid &&
+        appSession.key === headerSkey &&
+        appSession.validTill &&
+        appSession.validTill > new Date()
+      ) {
         authenticatedAccountId = headerAid;
       }
     } else if (tempToken && appId) {
-      const sessions = await prisma.authSession.findMany({
-        where: {
-          isExpired: false,
-          expiresOn: { gt: new Date() },
-        },
+      const request = await prisma.authRequest.findUnique({
+        where: { id: tempToken },
+        select: { type: true, status: true, data: true, accountId: true, expiresAt: true },
       });
+      const requestData = (request?.data as Record<string, any> | null) || {};
+      const requestAppId = typeof requestData.appId === 'string' ? requestData.appId : null;
 
-      const sessionWithToken = sessions.find((s) => {
-        if (!Array.isArray(s.dependentKeys)) return false;
-        return (s.dependentKeys as any[]).some((k: any) => k.app === appId && k.key === tempToken && !k.isUsed);
-      });
-
-      if (sessionWithToken) {
-        const dependentKeys = sessionWithToken.dependentKeys as any[];
-        const tokenData = dependentKeys.find((k: any) => k.app === appId && k.key === tempToken && !k.isUsed);
-
-        if (tokenData && new Date(tokenData.expiresOn) > new Date()) {
-          authenticatedAccountId = sessionWithToken.accountId;
-          isTempTokenAuth = true;
-        }
+      if (
+        request &&
+        request.type === 'bridge_grant' &&
+        request.status === 'pending' &&
+        request.expiresAt > new Date() &&
+        request.accountId &&
+        requestAppId === appId
+      ) {
+        authenticatedAccountId = request.accountId;
+        isTempTokenAuth = true;
       }
     }
 

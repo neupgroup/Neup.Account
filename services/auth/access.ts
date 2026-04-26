@@ -8,7 +8,7 @@ function isInternalApp(appId: string) {
 }
 
 async function resolveSession(input: { aid?: string | null; sid?: string | null; skey?: string | null; appId?: string | null }) {
-  const { aid, sid, skey, appId } = input;
+  const { aid, sid, skey } = input;
   if (!aid || !sid || !skey) return null;
 
   return prisma.authSession.findFirst({
@@ -17,11 +17,6 @@ async function resolveSession(input: { aid?: string | null; sid?: string | null;
       accountId: aid,
       key: skey,
       validTill: { gt: new Date() },
-      ...(appId
-        ? {
-            application: appId,
-          }
-        : {}),
     },
   });
 }
@@ -50,7 +45,7 @@ export async function bridgeGetAuthAccess(input: {
       };
     }
 
-    const resolvedAppId = appId || session.application || 'neup.account';
+    const resolvedAppId = appId || 'neup.account';
 
     const [teamInfo, roleRows] = await Promise.all([
       prisma.portfolioMember.findMany({
@@ -123,7 +118,7 @@ export async function bridgeCreateAuthAccess(input: Record<string, any>): Promis
     const session = await resolveSession({ aid, sid, skey, appId: appIdOverride || null });
     if (!session) return { status: 401, body: { error: 'unauthorized' } };
 
-    const appId = appIdOverride || session.application || 'neup.account';
+    const appId = appIdOverride || 'neup.account';
 
     await prisma.$transaction(async (tx) => {
       let portfolio = await tx.portfolio.findFirst({
@@ -191,7 +186,7 @@ export async function bridgeUpdateAuthAccess(input: Record<string, any>): Promis
     const session = await resolveSession({ aid, sid, skey, appId: appIdOverride || null });
     if (!session || !aid) return { status: 401, body: { error: 'unauthorized' } };
 
-    const appId = appIdOverride || session.application || 'neup.account';
+    const appId = appIdOverride || 'neup.account';
     const recipientId = targetId || aid;
 
     const portfolio = await prisma.portfolio.findFirst({

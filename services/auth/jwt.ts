@@ -41,37 +41,40 @@ export async function validateJwt(input: ValidateJwtInput): Promise<JwtValidatio
 		return { status: 'unauthorized' };
 	}
 
-	const appSession = await prisma.authSession.findFirst({
-		where: {
-			id: sid,
-			accountId: aid,
-			authSessionKey: skey,
-			applicationType: 'external',
-			isExpired: false,
-		},
-		select: {
-			accountId: true,
-			expiresOn: true,
-			application: true,
-		},
+	const session = await prisma.authSession.findUnique({
+		where: { id: sid },
+		select: { accountId: true, key: true, validTill: true },
 	});
 
-	if (!appSession) {
+	if (!session || session.accountId !== aid || session.key !== skey) {
 		return { status: 'unauthorized' };
 	}
 
-	if (!appSession.expiresOn || appSession.expiresOn <= new Date()) {
+	if (!session.validTill || session.validTill <= new Date()) {
 		return { status: 'expired' };
 	}
 
-	const application = appSession.application
-		? await prisma.application.findUnique({
-				where: { id: appSession.application },
-				select: { appSecret: true },
-		  })
-		: null;
+	const decoded = jwt.decode(token) as null | { [key: string]: any };
+	const decodedAppId = decoded && typeof decoded === 'object' ? (decoded.appId as string | undefined) : undefined;
+	if (!decodedAppId) return { status: 'unauthorized' };
+
+	const [application, connection] = await Promise.all([
+		prisma.application.findUnique({
+			where: { id: decodedAppId },
+			select: { appSecret: true },
+		}),
+		prisma.applicationConnection.findUnique({
+			where: {
+				accountId_appId: {
+					accountId: aid,
+					appId: decodedAppId,
+				},
+			},
+			select: { id: true },
+		}),
+	]);
 	const appSecret = application?.appSecret;
-	if (!appSecret) {
+	if (!appSecret || !connection) {
 		return { status: 'unauthorized' };
 	}
 
@@ -86,7 +89,7 @@ export async function validateJwt(input: ValidateJwtInput): Promise<JwtValidatio
 			return { status: 'invalid' };
 		}
 
-		if (payload?.appId && payload.appId !== appSession.application) {
+		if (payload?.appId && payload.appId !== decodedAppId) {
 			return { status: 'invalid' };
 		}
 

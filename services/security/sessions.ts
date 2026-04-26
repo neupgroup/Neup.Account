@@ -27,7 +27,7 @@ export async function getUserSessions(): Promise<ManagedSession[]> {
         const sessions = await prisma.authSession.findMany({
             where: {
                 accountId: accountId,
-                isExpired: false
+                validTill: { gt: new Date() }
             },
             orderBy: {
                 lastLoggedIn: 'desc'
@@ -65,7 +65,7 @@ export async function logoutSessionById(sessionId: string): Promise<{ success: b
         await prisma.$transaction([
             prisma.authSession.update({
                 where: { id: sessionId },
-                data: { isExpired: true }
+                data: { validTill: new Date() }
             })
         ]);
         
@@ -98,7 +98,7 @@ export async function logoutAllOtherSessions(): Promise<{ success: boolean, erro
             const otherSessions = await tx.authSession.findMany({
                 where: {
                     accountId: accountId,
-                    isExpired: false,
+                    validTill: { gt: new Date() },
                     id: { not: currentSessionId }
                 },
                 select: { id: true }
@@ -110,7 +110,7 @@ export async function logoutAllOtherSessions(): Promise<{ success: boolean, erro
                 where: {
                     id: { in: otherSessionIds }
                 },
-                data: { isExpired: true }
+                data: { validTill: new Date() }
             });
 
             return updateResult;

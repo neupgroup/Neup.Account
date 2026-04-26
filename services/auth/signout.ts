@@ -7,6 +7,11 @@ import { logError } from '@/core/helpers/logger';
 import { getSessionCookies, clearSessionCookies, setStoredAccountsCookie } from '@/core/helpers/cookies';
 import { expireSession } from './session';
 
+const EXTERNAL_LOGIN_PREFIX = 'external_app:';
+function externalLoginType(appId: string) {
+    return `${EXTERNAL_LOGIN_PREFIX}${appId}`;
+}
+
 /**
  * Function logoutActiveSession.
  */
@@ -75,7 +80,7 @@ export async function bridgeSignoutExternalSession(input: {
         });
 
         if (appSession) {
-            if (appId && appSession.application !== appId) {
+            if (appId && appSession.loginType !== externalLoginType(appId)) {
                 return { status: 403, body: { success: false, error: 'Unauthorized session.' } };
             }
 
