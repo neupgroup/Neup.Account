@@ -47,7 +47,8 @@ export function AccountListItem({ account, isActive }: { account: CombinedAccoun
     useEffect(() => {
         let isMounted = true;
         async function fetchAccountDetails() {
-            if (!account.accountId || account.isUnknown) {
+            const accountId = account.accountId || account.aid;
+            if (!accountId || account.isUnknown) {
                 if (isMounted) {
                     setDetails({ isUnknown: true, displayName: 'Unknown Account', neupId: 'unknown', displayPhoto: 'https://neupgroup.com/assets/user.png' });
                     setLoading(false);
@@ -55,20 +56,17 @@ export function AccountListItem({ account, isActive }: { account: CombinedAccoun
                 return;
             }
 
-            // If we already have details passed in (e.g. from getAccessibleAccounts), use them and skip fetch
             if (account.displayName && account.displayPhoto && !account.isUnknown) {
-                 if (isMounted) {
-                    setLoading(false);
-                }
+                if (isMounted) setLoading(false);
                 return;
             }
 
             try {
-                const profile = await getUserProfile(account.accountId);
+                const profile = await getUserProfile(accountId);
                 if (isMounted) {
                     setDetails({
-                        displayName: profile?.nameDisplay || `Account ${account.accountId.substring(0,6)}`,
-                        neupId: account.neupId || profile?.neupIdPrimary || 'N/A',
+                        displayName: profile?.nameDisplay || `Account ${accountId.substring(0, 6)}`,
+                        neupId: account.nid || account.neupId || profile?.neupIdPrimary || 'N/A',
                         displayPhoto: profile?.accountPhoto || (profile?.accountType === 'brand' ? 'https://neupgroup.com/assets/brand.png' : 'https://neupgroup.com/assets/user.png'),
                     });
                 }
@@ -77,17 +75,13 @@ export function AccountListItem({ account, isActive }: { account: CombinedAccoun
                     setDetails({ isUnknown: true, displayName: 'Error Loading', neupId: 'error', displayPhoto: 'https://neupgroup.com/assets/user.png' });
                 }
             } finally {
-                if (isMounted) {
-                    setLoading(false);
-                }
+                if (isMounted) setLoading(false);
             }
         }
 
         fetchAccountDetails();
-        return () => {
-            isMounted = false;
-        };
-    }, [account.accountId, account.isUnknown, account.neupId, account.isBrand, account.displayName, account.displayPhoto]);
+        return () => { isMounted = false; };
+    }, [account.accountId, account.aid, account.isUnknown, account.nid, account.neupId, account.isBrand, account.displayName, account.displayPhoto]);
 
     const finalAccount = { ...account, ...details };
 
@@ -98,7 +92,7 @@ export function AccountListItem({ account, isActive }: { account: CombinedAccoun
         }
 
         startSwitchTransition(async () => {
-            const targetAccountId = finalAccount.accountId || finalAccount.aid;
+            const targetAccountId = finalAccount.aid || finalAccount.accountId;
 
             if (finalAccount.isBrand) {
                  const res = await switchToBrand(targetAccountId);
