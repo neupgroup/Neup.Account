@@ -18,19 +18,8 @@ export type Session = {
 const SESSION_DURATION_DAYS = 30;
 
 export async function hasActiveSessionCookies(): Promise<boolean> {
-  const hasNewKeys = (
-    Boolean(await authCookies.get('auth_aid')) &&
-    Boolean(await authCookies.get('auth_sid')) &&
-    Boolean(await authCookies.get('auth_skey'))
-  );
-
-  const hasLegacyKeys = (
-    Boolean(await authCookies.get('auth_account_id')) &&
-    Boolean(await authCookies.get('auth_session_id')) &&
-    Boolean(await authCookies.get('auth_session_key'))
-  );
-
-  return hasNewKeys || hasLegacyKeys;
+  const { accountId, sessionId, sessionKey } = await getSessionCookies();
+  return Boolean(accountId && sessionId && sessionKey);
 }
 
 export async function getActiveSession(): Promise<Session | null> {

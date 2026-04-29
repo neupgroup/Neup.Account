@@ -41,11 +41,19 @@ export function proxy(request: NextRequest) {
   }
 
   // 5. Auth Check (existence)
-  // For all other routes, check for is the auth creds exists or not.
-  const hasSession = request.cookies.has('auth_sid') && request.cookies.has('auth_skey');
-  const hasAccount = request.cookies.has('auth_aid');
+  // Parse auth_accounts and look for an entry with def === 1 that has sid and skey.
+  const authAccountsRaw = request.cookies.get('auth_accounts')?.value;
+  let hasActiveSession = false;
+  if (authAccountsRaw) {
+    try {
+      const accounts = JSON.parse(authAccountsRaw);
+      hasActiveSession = Array.isArray(accounts) && accounts.some(
+        (a: any) => a?.def === 1 && a?.aid && a?.sid && a?.skey
+      );
+    } catch { /* invalid cookie, treat as no session */ }
+  }
 
-  if (!hasSession || !hasAccount) {
+  if (!hasActiveSession) {
     const url = request.nextUrl.clone();
     url.pathname = '/auth/start';
     if (pathname !== '/') {

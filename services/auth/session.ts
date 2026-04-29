@@ -207,10 +207,11 @@ export async function validateAuthSession(input: ValidateAuthSessionInput): Prom
  * Reads auth cookies and validates them using validateAuthSession().
  */
 export async function validateAuthSessionFromCookies(): Promise<AuthValidationResult> {
+	const { accountId, sessionId, sessionKey } = await authCookies.getSessionCookies();
 	return validateAuthSession({
-		auth_aid: (await authCookies.get('auth_aid')) || '',
-		auth_sid: (await authCookies.get('auth_sid')) || '',
-		auth_skey: (await authCookies.get('auth_skey')) || '',
+		auth_aid: accountId || '',
+		auth_sid: sessionId || '',
+		auth_skey: sessionKey || '',
 	});
 }
 
@@ -268,10 +269,11 @@ export async function expireSession(input: ExpireSessionInput): Promise<ExpireSe
  * Reads the active auth cookies and expires the matching session.
  */
 export async function expireSessionFromCookies(): Promise<ExpireSessionResult> {
+	const { accountId, sessionId, sessionKey } = await authCookies.getSessionCookies();
 	return expireSession({
-		aid: (await authCookies.get('auth_aid')) || (await authCookies.get('aid')) || '',
-		sid: (await authCookies.get('auth_sid')) || (await authCookies.get('sid')) || '',
-		skey: (await authCookies.get('auth_skey')) || (await authCookies.get('skey')) || '',
+		aid: accountId || '',
+		sid: sessionId || '',
+		skey: sessionKey || '',
 	});
 }
 

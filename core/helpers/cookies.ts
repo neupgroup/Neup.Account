@@ -83,37 +83,30 @@ export class AuthCookiesHelper extends Singleton {
     }
 
     public async getSessionCookies() {
-        const aid = (await this.get('auth_aid')) || (await this.get('auth_account_id'));
-        const sid = (await this.get('auth_sid')) || (await this.get('auth_session_id'));
-        const skey = (await this.get('auth_skey')) || (await this.get('auth_session_key'));
-        const jwt = await this.get('auth_jwt');
-        const managingCookie = await this.get('auth_managing');
-
         const parsedAccounts = await this.getJson<unknown[]>('auth_accounts', []);
         const allAccounts = Array.isArray(parsedAccounts)
             ? parsedAccounts
                 .map((account: any) => {
-                    const normalizedAid = account?.aid || account?.accountId;
-                    if (!normalizedAid) return null;
-
-                    const normalizedSid = account?.sid || account?.sessionId;
-                    const normalizedSkey = account?.skey || account?.sessionKey;
-
+                    const aid = account?.aid || account?.accountId;
+                    if (!aid) return null;
                     return {
-                        aid: normalizedAid,
-                        sid: normalizedSid,
-                        skey: normalizedSkey,
-                        accountId: normalizedAid,
-                        sessionId: normalizedSid,
-                        sessionKey: normalizedSkey,
-                        neupId: account?.neupId || '',
-                        expired: Boolean(account?.expired),
-                        active: Boolean(account?.active),
+                        aid,
+                        sid: account?.sid || account?.sessionId,
+                        skey: account?.skey || account?.sessionKey,
+                        def: account?.def === 1 ? 1 : 0,
+                        nid: account?.nid || account?.neupId || '',
+                        neupId: account?.nid || account?.neupId || '',
                     } as StoredAccount;
                 })
                 .filter(Boolean) as StoredAccount[]
             : [];
 
+        const active = allAccounts.find(a => a.def === 1);
+        const aid = active?.aid || '';
+        const sid = active?.sid || '';
+        const skey = active?.skey || '';
+
+        const managingCookie = await this.get('auth_managing');
         let managingAccountId: string | undefined = undefined;
         if (managingCookie && (managingCookie.startsWith('brand.') || managingCookie.startsWith('dependent.') || managingCookie.startsWith('delegated.'))) {
             managingAccountId = managingCookie.split('.')[1];
@@ -123,7 +116,7 @@ export class AuthCookiesHelper extends Singleton {
             aid,
             sid,
             skey,
-            jwt,
+            jwt: undefined as string | undefined,
             accountId: aid,
             sessionId: sid,
             sessionKey: skey,
@@ -133,8 +126,6 @@ export class AuthCookiesHelper extends Singleton {
     }
 
     public async setSessionCookies(session: Session, expires: Date) {
-        const options = { ...COOKIE_OPTIONS, expires };
-
         const aid = session.aid || session.accountId;
         const sid = session.sid || session.sessionId;
         const skey = session.skey || session.sessionKey;
@@ -143,33 +134,38 @@ export class AuthCookiesHelper extends Singleton {
             throw new Error('Missing session values for cookie set.');
         }
 
-        await this.set('auth_aid', aid, options);
-        await this.set('auth_sid', sid, options);
-        await this.set('auth_skey', skey, options);
+        // Mark this account as def:1, all others def:0 in auth_accounts
+        const existing = await this.getJson<unknown[]>('auth_accounts', []);
+        const accounts = Array.isArray(existing) ? existing : [];
 
-        if (session.jwt) {
-            await this.set('auth_jwt', session.jwt, options);
-        } else {
-            await this.del('auth_jwt');
-        }
+        const others = accounts
+            .map((a: any) => ({ ...a, def: 0 }))
+            .filter((a: any) => (a?.aid || a?.accountId) !== aid);
 
-        // Remove legacy cookie keys after writing the new keys.
-        await this.del('auth_account_id');
-        await this.del('auth_session_id');
-        await this.del('auth_session_key');
+        const current = {
+            aid,
+            sid,
+            skey,
+            def: 1,
+            nid: session.jwt ? '' : (accounts.find((a: any) => (a?.aid || a?.accountId) === aid) as any)?.nid || '',
+        };
+
+        await this.setJson('auth_accounts', [...others, current], {
+            ...COOKIE_OPTIONS,
+            expires,
+        });
     }
 
     public async setStoredAccountsCookie(accounts: StoredAccount[]) {
-        const normalizedAccounts = accounts.map((account) => ({
-            aid: account.aid || account.accountId,
-            sid: account.sid || account.sessionId,
-            skey: account.skey || account.sessionKey,
-            neupId: account.neupId,
-            expired: account.expired,
-            active: account.active,
+        const normalized = accounts.map((a) => ({
+            aid: a.aid || a.accountId,
+            sid: a.sid || a.sessionId,
+            skey: a.skey || a.sessionKey,
+            def: a.def ?? 0,
+            nid: a.nid || a.neupId || '',
         }));
 
-        await this.setJson('auth_accounts', normalizedAccounts, LONG_LIVED_COOKIE_OPTIONS);
+        await this.setJson('auth_accounts', normalized, LONG_LIVED_COOKIE_OPTIONS);
     }
 
     public async setManagingCookie(value: string, expires: Date) {
@@ -181,6 +177,22 @@ export class AuthCookiesHelper extends Singleton {
     }
 
     public async clearSessionCookies() {
+        // Mark the active account as def:0 and strip its session keys
+        const existing = await this.getJson<unknown[]>('auth_accounts', []);
+        if (Array.isArray(existing) && existing.length > 0) {
+            const updated = existing.map((a: any) => {
+                if (a?.def === 1) {
+                    const { sid: _s, skey: _sk, ...rest } = a;
+                    return { ...rest, def: 0 };
+                }
+                return a;
+            });
+            await this.setJson('auth_accounts', updated, LONG_LIVED_COOKIE_OPTIONS);
+        }
+
+        await this.del('auth_managing');
+
+        // Remove all legacy individual session cookies
         await this.del('auth_aid');
         await this.del('auth_sid');
         await this.del('auth_skey');
@@ -188,9 +200,6 @@ export class AuthCookiesHelper extends Singleton {
         await this.del('auth_account_id');
         await this.del('auth_session_id');
         await this.del('auth_session_key');
-        await this.del('auth_managing');
-
-        // Also remove old, unnecessary cookies if they exist.
         await this.del('auth_permit');
         await this.del('profile_name');
         await this.del('profile_neupid');
