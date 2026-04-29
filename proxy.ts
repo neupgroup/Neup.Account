@@ -47,9 +47,11 @@ export function proxy(request: NextRequest) {
   if (authAccountsRaw) {
     try {
       const accounts = JSON.parse(authAccountsRaw);
-      hasActiveSession = Array.isArray(accounts) && accounts.some(
-        (a: any) => a?.def === 1 && a?.aid && a?.sid && a?.skey
-      );
+      hasActiveSession = Array.isArray(accounts) &&
+        accounts.length > 0 &&
+        accounts.some(
+          (a: any) => a?.def === 1 && a?.aid && a?.sid && a?.skey
+        );
     } catch { /* invalid cookie, treat as no session */ }
   }
 
