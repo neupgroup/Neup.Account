@@ -19,13 +19,9 @@ export type StoredAccount = {
   aid: string;
   sid?: string;
   skey?: string;
-  accountId?: string;
-  sessionId?: string;
-  sessionKey?: string;
   def: 0 | 1;
   nid?: string;
-  // legacy compat — kept so callers that read neupId still work
-  neupId?: string;
+  neupId?: string; // legacy compat — kept so callers that read neupId still work
   isBrand?: boolean;
   isUnknown?: boolean;
 };
@@ -54,9 +50,6 @@ function normalizeStoredAccount(account: StoredAccount): StoredAccount {
     aid,
     sid,
     skey,
-    accountId: account.accountId ?? aid,
-    sessionId: account.sessionId ?? sid,
-    sessionKey: account.sessionKey ?? skey,
     def: account.def ?? 0,
     nid,
     neupId: nid,
@@ -97,9 +90,6 @@ export async function createAndSetSession(
       aid: accountId,
       sid: session.id,
       skey: sessionKey,
-      accountId,
-      sessionId: session.id,
-      sessionKey,
       def: 1,
       nid: primaryNeupId,
       neupId: primaryNeupId,

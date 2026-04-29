@@ -14,13 +14,12 @@ export function AccountActions({ account }: { account: StoredAccount }) {
     const { toast } = useToast();
     
     if (account.isUnknown) return null;
-    // If sessionId is explicitly empty string, it's a managed account (e.g. brand/dependent) from DB, not a stored session.
-    if (account.sessionId === '') return null;
+    if (account.sid === '') return null;
 
     const handleSignOut = () => {
         startTransition(async () => {
-            if (!account.sessionId) return;
-            const result = await logoutStoredSession(account.sessionId);
+            if (!account.sid) return;
+            const result = await logoutStoredSession(account.sid);
             if (result.success) {
                 toast({ title: "Session Expired", description: "You have been signed out of this account." });
             } else {
@@ -32,7 +31,7 @@ export function AccountActions({ account }: { account: StoredAccount }) {
 
     const handleRemove = () => {
         startTransition(async () => {
-            const targetAccountId = account.accountId || account.aid;
+            const targetAccountId = account.aid;
             const result = await removeStoredAccount(targetAccountId);
             if (result.success) {
                 toast({ title: "Account Removed", description: "The account has been removed from this device." });
@@ -46,7 +45,7 @@ export function AccountActions({ account }: { account: StoredAccount }) {
     return (
         <div data-action-button="true">
             <span className="text-muted-foreground">&bull;</span>
-            {!account.sessionId ? (
+            {!account.sid ? (
                 <Button variant="link" size="sm" onClick={handleRemove} disabled={isPending} className="p-0 h-auto ml-2 text-destructive">
                     {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Remove"}
                 </Button>

@@ -24,10 +24,10 @@ export function SwitchAccountButton({ account }: { account: CombinedAccount }) {
     useEffect(() => {
         async function checkActive() {
             const activeId = await getActiveAccountId();
-            setIsActive(account.accountId === activeId);
+            setIsActive(account.aid === activeId);
         }
         checkActive();
-    }, [account.accountId]);
+    }, [account.aid]);
 
     const handleSwitch = () => {
         startTransition(async () => {
@@ -48,10 +48,10 @@ export function SwitchAccountButton({ account }: { account: CombinedAccount }) {
         return <Button variant="secondary" size="sm" disabled>Current</Button>;
     }
     
-    if (account.expired) {
+    if (!account.sid) {
         return (
              <Button variant="outline" size="sm" asChild>
-                <a href={`/auth/signin?neupId=${account.neupId}`}>Sign In</a>
+                <a href={`/auth/signin?step=password&neupId=${account.nid || account.neupId}`}>Sign In</a>
             </Button>
         );
     }

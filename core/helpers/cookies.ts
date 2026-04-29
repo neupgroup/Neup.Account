@@ -134,7 +134,6 @@ export class AuthCookiesHelper extends Singleton {
             throw new Error('Missing session values for cookie set.');
         }
 
-        // Mark this account as def:1, all others def:0 in auth_accounts
         const existing = await this.getJson<unknown[]>('auth_accounts', []);
         const accounts = Array.isArray(existing) ? existing : [];
 
@@ -142,12 +141,14 @@ export class AuthCookiesHelper extends Singleton {
             .map((a: any) => ({ ...a, def: 0 }))
             .filter((a: any) => (a?.aid || a?.accountId) !== aid);
 
+        const existingEntry = accounts.find((a: any) => (a?.aid || a?.accountId) === aid) as any;
+
         const current = {
             aid,
             sid,
             skey,
             def: 1,
-            nid: session.jwt ? '' : (accounts.find((a: any) => (a?.aid || a?.accountId) === aid) as any)?.nid || '',
+            nid: existingEntry?.nid || '',
         };
 
         await this.setJson('auth_accounts', [...others, current], {
@@ -158,9 +159,9 @@ export class AuthCookiesHelper extends Singleton {
 
     public async setStoredAccountsCookie(accounts: StoredAccount[]) {
         const normalized = accounts.map((a) => ({
-            aid: a.aid || a.accountId,
-            sid: a.sid || a.sessionId,
-            skey: a.skey || a.sessionKey,
+            aid: a.aid,
+            sid: a.sid,
+            skey: a.skey,
             def: a.def ?? 0,
             nid: a.nid || a.neupId || '',
         }));

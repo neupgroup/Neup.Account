@@ -108,15 +108,13 @@ export async function validateJwt(input: ValidateJwtInput): Promise<JwtValidatio
  * Reads JWT session values from cookies and validates them.
  */
 export async function validateJwtFromCookies(): Promise<JwtValidationResult> {
-	const aid = (await authCookies.get('aid')) || (await authCookies.get('auth_aid')) || '';
-	const sid = (await authCookies.get('sid')) || (await authCookies.get('auth_sid')) || '';
-	const skey = (await authCookies.get('skey')) || (await authCookies.get('auth_skey')) || '';
-	const token = (await authCookies.get('jwt')) || (await authCookies.get('auth_jwt')) || '';
+	const { accountId, sessionId, sessionKey } = await authCookies.getSessionCookies();
+	const token = (await authCookies.get('auth_jwt')) || '';
 
 	return validateJwt({
-		aid,
-		sid,
-		skey,
+		aid: accountId || '',
+		sid: sessionId || '',
+		skey: sessionKey || '',
 		jwt: token,
 	});
 }

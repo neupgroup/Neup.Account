@@ -15,9 +15,6 @@ const ValidateInputSchema = z.object({
   auth_aid: z.string().min(1).optional(),
   auth_sid: z.string().min(1).optional(),
   auth_skey: z.string().min(1).optional(),
-  auth_account_id: z.string().min(1).optional(),
-  auth_session_id: z.string().min(1).optional(),
-  auth_session_key: z.string().min(1).optional(),
   signup: z.boolean().optional(),
 });
 
@@ -64,15 +61,12 @@ export async function validateExternalRequest(input: ValidateInput): Promise<Val
     auth_aid,
     auth_sid,
     auth_skey,
-    auth_account_id, 
-    auth_session_id, 
-    auth_session_key,
     signup
   } = parsed.data;
 
-  const internalAid = auth_aid || auth_account_id;
-  const internalSid = auth_sid || auth_session_id;
-  const internalSkey = auth_skey || auth_session_key;
+  const internalAid = auth_aid;
+  const internalSid = auth_sid;
+  const internalSkey = auth_skey;
 
   // 1. App Validation
   const app = await prisma.application.findUnique({

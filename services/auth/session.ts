@@ -31,9 +31,9 @@ export type AuthValidationResult =
  * Inputs required to validate a session without reading cookies.
  */
 export type ValidateAuthSessionInput = {
-	auth_aid: string;
-	auth_sid: string;
-	auth_skey: string;
+	aid: string;
+	sid: string;
+	skey: string;
 };
 
 
@@ -129,36 +129,23 @@ function hasActiveBlock(block: BlockInfo, now: Date): boolean {
  * Validates the provided auth session values against the database.
  */
 export async function validateAuthSession(input: ValidateAuthSessionInput): Promise<AuthValidationResult> {
-	const { auth_aid, auth_sid, auth_skey } = input;
+	const { aid, sid, skey } = input;
 
-	if (!auth_aid || !auth_sid || !auth_skey) {
-		return {
-			status: 'invalid',
-			reason: 'invalidSource',
-		};
+	if (!aid || !sid || !skey) {
+		return { status: 'invalid', reason: 'invalidSource' };
 	}
 
 	const session = await prisma.authSession.findUnique({
-		where: { id: auth_sid },
-		select: {
-			accountId: true,
-			key: true,
-			validTill: true,
-		},
+		where: { id: sid },
+		select: { accountId: true, key: true, validTill: true },
 	});
 
 	if (!session) {
-		return {
-			status: 'invalid',
-			reason: '404',
-		};
+		return { status: 'invalid', reason: '404' };
 	}
 
-	if (session.accountId !== auth_aid || session.key !== auth_skey) {
-		return {
-			status: 'invalid',
-			reason: 'invalidSource',
-		};
+	if (session.accountId !== aid || session.key !== skey) {
+		return { status: 'invalid', reason: 'invalidSource' };
 	}
 
 	const now = new Date();
@@ -171,7 +158,7 @@ export async function validateAuthSession(input: ValidateAuthSessionInput): Prom
 	}
 
 	const account = await prisma.account.findUnique({
-		where: { id: auth_aid },
+		where: { id: aid },
 		select: {
 			id: true,
 			status: true,
@@ -209,9 +196,9 @@ export async function validateAuthSession(input: ValidateAuthSessionInput): Prom
 export async function validateAuthSessionFromCookies(): Promise<AuthValidationResult> {
 	const { accountId, sessionId, sessionKey } = await authCookies.getSessionCookies();
 	return validateAuthSession({
-		auth_aid: accountId || '',
-		auth_sid: sessionId || '',
-		auth_skey: sessionKey || '',
+		aid: accountId || '',
+		sid: sessionId || '',
+		skey: sessionKey || '',
 	});
 }
 

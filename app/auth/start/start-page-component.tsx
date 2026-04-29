@@ -38,7 +38,7 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
   const errorDescription = searchParams.get('error_description');
   const redirects = searchParams.get('redirects');
   const didRedirectRef = useRef(false);
-  const visibleAccounts = accounts.filter((account) => Boolean(account.accountId) && !account.isUnknown);
+  const visibleAccounts = accounts.filter((account) => Boolean(account.aid) && !account.isUnknown);
 
   useEffect(() => {
     void cleanupExpiredStoredSessions();
