@@ -3,6 +3,7 @@
 import { createContext, useState, useEffect, type ReactNode, useContext } from 'react';
 import { type UserProfile, getEncodedUserPermissions, getUserProfile as fetchUserProfile } from '@/core/helpers/user';
 import { getActiveAccountId, getPersonalAccountId } from '@/core/helpers/auth-actions';
+import { verifyActiveSession } from '@/services/auth/verify';
 
 type SessionState = {
     loading: boolean;
@@ -26,7 +27,6 @@ export function useSession() {
 }
 
 const SESSION_STORAGE_KEY = 'neup-session-cache';
-const PUBLIC_KEY_STORAGE_KEY = 'neup-session-pubkey';
 
 // PINNED PUBLIC KEY
 // This is the only key the application trusts for verifying permissions.
@@ -109,11 +109,21 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
     const fetchData = async (forceRefresh = false) => {
         setSessionState(s => ({ ...s, loading: true }));
 
+        // Always verify the session against the DB first — this catches remote logouts
+        // and expired sessions regardless of what's in the client-side cache.
+        const verification = await verifyActiveSession();
+        if (!verification.valid) {
+            if (typeof window !== 'undefined') {
+                sessionStorage.removeItem(SESSION_STORAGE_KEY);
+            }
+            setSessionState(s => ({ ...s, loading: false, profile: null, permissions: [] }));
+            return;
+        }
+
         if (!forceRefresh && typeof window !== 'undefined') {
             const cachedData = sessionStorage.getItem(SESSION_STORAGE_KEY);
-            const publicKey = sessionStorage.getItem(PUBLIC_KEY_STORAGE_KEY);
             
-            if (cachedData && publicKey) {
+            if (cachedData) {
                 try {
                     const parsedData = JSON.parse(cachedData);
                     
@@ -175,7 +185,6 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 
             if (typeof window !== 'undefined') {
                 sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(newState));
-                sessionStorage.setItem(PUBLIC_KEY_STORAGE_KEY, encodedPerms.publicKey);
             }
 
         } catch (error) {
@@ -189,7 +198,6 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
     const clearCacheAndRefetch = () => {
         if (typeof window !== 'undefined') {
             sessionStorage.removeItem(SESSION_STORAGE_KEY);
-            sessionStorage.removeItem(PUBLIC_KEY_STORAGE_KEY);
         }
         fetchData(true);
     };
