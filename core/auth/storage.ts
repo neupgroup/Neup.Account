@@ -1,4 +1,4 @@
-export const PROFILE_INFO_KEY = 'profileInfo';
+export const PROFILE_INFO_KEY = 'profile';
 export const JWT_KEY = 'jwt';
 
 export type StoredProfileInfo = {
