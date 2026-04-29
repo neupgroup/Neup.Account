@@ -42,7 +42,9 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
 
   useEffect(() => {
     void cleanupExpiredStoredSessions();
+  }, []);
 
+  useEffect(() => {
     if (error === 'inactivity') {
       toastRef.current({
         variant: 'default',
@@ -62,9 +64,7 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
       });
     }
 
-    if (didRedirectRef.current) {
-      return;
-    }
+    if (didRedirectRef.current) return;
 
     if (hasActiveSession && !error && isSecure) {
       const preferredTarget =
@@ -85,7 +85,8 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
         }
       }
     }
-  }, [error, isSecure, hasActiveSession, redirects, router, searchParams]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error, isSecure, hasActiveSession, redirects, router]);
 
   const getUrlWithReturn = (baseUrl: string) => {
     const withContext = appendAuthCallbackContext(baseUrl, searchParams);
