@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import bcrypt from 'bcryptjs';
 import prisma from '../core/helpers/prisma';
+import { ROOT_PERMISSIONS } from '../core/helpers/permissions-config';
 
 if (!process.env.DATABASE_URL) {
   throw new Error('DATABASE_URL is not set. Please configure your database connection.');
@@ -125,9 +126,14 @@ async function main() {
           accountId,
           forSelf: false,
           isRoot: true,
-          permissions: [],
+          permissions: ROOT_PERMISSIONS,
           restrictions: [],
         },
+      });
+    } else {
+      await prisma.permit.update({
+        where: { id: existingRootPermit.id },
+        data: { permissions: ROOT_PERMISSIONS, restrictions: [] },
       });
     }
   }

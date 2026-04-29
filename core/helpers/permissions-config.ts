@@ -32,4 +32,15 @@ export const DEFAULT_PERMISSIONS: string[] = [
     'payment.method.show', 'payment.transactions.show', 'payment.subscriptions.show', 'payment.purchase_neup_pro.view'
 ];
 
+export const ROOT_PERMISSIONS: string[] = [
+    ...DEFAULT_PERMISSIONS,
+
+    // Root-only
+    'admin.accounts.view', 'admin.accounts.modify', 'admin.accounts.delete',
+    'admin.applications.view', 'admin.applications.modify', 'admin.applications.delete',
+    'admin.permits.view', 'admin.permits.modify', 'admin.permits.delete',
+    'admin.verifications.view', 'admin.verifications.modify',
+    'admin.system.view', 'admin.system.modify',
+];
+
 export type PermitType = 'default' | 'addition' | 'reduction' | 'addition_reduction';
