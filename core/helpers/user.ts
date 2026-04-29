@@ -3,7 +3,6 @@
 import prisma from '@/core/helpers/prisma';
 import { logError } from './logger';
 import { getActiveAccountId, getPersonalAccountId } from './auth-actions';
-import { encodePermissions } from './crypto';
 import { PERMISSION_SET } from './permissions';
 
 
@@ -29,11 +28,6 @@ export type UserProfile = {
   accountType?: string;
   permit?: string;
   pro?: boolean;
-};
-
-export type EncodedPermissions = {
-  encoded: string;
-  publicKey: string;
 };
 
 export type UserContacts = {
@@ -259,12 +253,6 @@ export async function getUserPermissions(accountId?: string, appId?: string): Pr
     return [];
   }
 }
-
-export async function getEncodedUserPermissions(accountId?: string, appId?: string): Promise<EncodedPermissions> {
-  const permissions = await getUserPermissions(accountId, appId);
-  return encodePermissions(permissions);
-}
-
 
 export async function checkPermissions(
   requiredPermissions: string[],

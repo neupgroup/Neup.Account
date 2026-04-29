@@ -1,8 +1,7 @@
 'use server';
 
 import { getActiveAccountId, getPersonalAccountId } from '@/core/helpers/auth-actions';
-import { getUserProfile } from '@/core/helpers/user';
-import { getEncodedUserPermissions } from '@/core/helpers/user';
+import { getUserProfile, getUserPermissions } from '@/core/helpers/user';
 import { verifyActiveSession } from '@/services/auth/verify';
 import type { StoredProfileInfo } from './storage';
 
@@ -11,16 +10,11 @@ export type SessionCheckResult =
     | {
           valid: true;
           profileInfo: StoredProfileInfo;
-          encodedPermissions: string;
+          permissions: string[];
           accountId: string;
           personalAccountId: string;
       };
 
-/**
- * Authoritative session check. Verifies the session against the DB,
- * then returns fresh profile info and encoded permissions.
- * The client compares these against its cached values and updates if changed.
- */
 export async function checkSession(): Promise<SessionCheckResult> {
     const verification = await verifyActiveSession();
     if (!verification.valid) {
@@ -36,26 +30,24 @@ export async function checkSession(): Promise<SessionCheckResult> {
         return { valid: false };
     }
 
-    const [profile, encodedPerms] = await Promise.all([
+    const [profile, permissions] = await Promise.all([
         getUserProfile(activeId),
-        getEncodedUserPermissions(activeId),
+        getUserPermissions(activeId),
     ]);
 
     if (!profile) {
         return { valid: false };
     }
 
-    const profileInfo: StoredProfileInfo = {
-        firstName: profile.nameFirst,
-        lastName: profile.nameLast,
-        neupId: profile.neupIdPrimary,
-        accountType: profile.accountType,
-    };
-
     return {
         valid: true,
-        profileInfo,
-        encodedPermissions: encodedPerms.encoded,
+        profileInfo: {
+            firstName: profile.nameFirst,
+            lastName: profile.nameLast,
+            neupId: profile.neupIdPrimary,
+            accountType: profile.accountType,
+        },
+        permissions,
         accountId: activeId,
         personalAccountId: personalId,
     };

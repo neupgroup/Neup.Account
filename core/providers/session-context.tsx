@@ -10,7 +10,6 @@ import {
     getStoredJwt,
     setStoredJwt,
     clearAuthStorage,
-    type StoredProfileInfo,
 } from '@/core/auth/storage';
 
 type SessionState = {
@@ -20,7 +19,6 @@ type SessionState = {
     accountId: string | null;
     personalAccountId: string | null;
     isManaging: boolean;
-    encodedPermissions?: string;
     refetch: () => void;
 };
 
@@ -32,56 +30,6 @@ export function useSession() {
         throw new Error('useSession must be used within a SessionProvider');
     }
     return context;
-}
-
-// PINNED PUBLIC KEY
-const PINNED_PUBLIC_KEY = `-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1MRyZBxfprhH/PfgUtst
-JwKTNubWb9pyPTuSRnS8x2J/DJ+5L785UT2Q48wD2a8vAr5gFKVvq2bhnv3qPopk
-Y+KkcKQZyGlAoDLzFzOaDRH4t0KhA68+FVJKRGzwUbj1lDepxB5q28ChisKHdiDU
-JDQGgGLFf4rG2x1lmr0MNzncW7F3EvaR42Y2QWuzZXnNF6YN+XRisp8cVmR+NdZL
-6f0bNpyGsr13IIDvFyZxcKC/c0EhGcKn729+w2CMun30wgfN+DqtFSAj9Q3oQC6c
-BqpzKC8u7hkvWQ1sUJPDVJUfANayYpFDqBzIjmUJKhPK+oOxxfFmAbt1wZd09zAq
-qwIDAQAB
------END PUBLIC KEY-----`;
-
-async function decodeAndVerifyPermissions(encoded: string): Promise<string[]> {
-    const outerPayload = JSON.parse(atob(encoded));
-    const { data: dataBase64, signature: signatureBase64 } = outerPayload;
-
-    const data = atob(dataBase64);
-    const dataBuffer = new TextEncoder().encode(data);
-    const signatureBuffer = Uint8Array.from(atob(signatureBase64), c => c.charCodeAt(0));
-
-    const pemHeader = "-----BEGIN PUBLIC KEY-----";
-    const pemFooter = "-----END PUBLIC KEY-----";
-    const pemContents = PINNED_PUBLIC_KEY.substring(
-        PINNED_PUBLIC_KEY.indexOf(pemHeader) + pemHeader.length,
-        PINNED_PUBLIC_KEY.indexOf(pemFooter)
-    ).replace(/\s/g, "");
-
-    const binaryKey = Uint8Array.from(atob(pemContents), c => c.charCodeAt(0));
-
-    const publicKey = await window.crypto.subtle.importKey(
-        "spki",
-        binaryKey.buffer,
-        { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
-        false,
-        ["verify"]
-    );
-
-    const isValid = await window.crypto.subtle.verify(
-        "RSASSA-PKCS1-v1_5",
-        publicKey,
-        signatureBuffer,
-        dataBuffer
-    );
-
-    if (!isValid) {
-        throw new Error("TAMPER_DETECTED");
-    }
-
-    return JSON.parse(data);
 }
 
 export const SessionProvider = ({ children }: { children: ReactNode }) => {
@@ -98,7 +46,6 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
     const fetchData = async (forceRefresh = false) => {
         setSessionState(s => ({ ...s, loading: true }));
 
-        // Always verify session against DB first — catches remote logouts
         const result = await checkSession();
 
         if (!result.valid) {
@@ -107,54 +54,38 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
             return;
         }
 
-        // Check if cached profileInfo is still valid, update if changed
+        // Update profileInfo in sessionStorage if changed
         const cachedProfile = getStoredProfileInfo();
-        const freshProfile = result.profileInfo;
         const profileChanged = !cachedProfile ||
-            cachedProfile.firstName !== freshProfile.firstName ||
-            cachedProfile.lastName !== freshProfile.lastName ||
-            cachedProfile.neupId !== freshProfile.neupId ||
-            cachedProfile.accountType !== freshProfile.accountType;
+            cachedProfile.firstName !== result.profileInfo.firstName ||
+            cachedProfile.lastName !== result.profileInfo.lastName ||
+            cachedProfile.neupId !== result.profileInfo.neupId ||
+            cachedProfile.accountType !== result.profileInfo.accountType;
 
         if (profileChanged) {
-            setStoredProfileInfo(freshProfile);
+            setStoredProfileInfo(result.profileInfo);
         }
 
-        // Check if permissions changed, update jwt if so
-        const cachedJwt = getStoredJwt();
-        const freshEncoded = result.encodedPermissions;
-        const permissionsChanged = !cachedJwt || cachedJwt !== freshEncoded;
-
-        if (permissionsChanged) {
-            setStoredJwt(freshEncoded);
+        // Update permissions in sessionStorage (stored as JSON in jwt key) if changed
+        const cachedPermissions = getStoredJwt();
+        const freshPermissionsJson = JSON.stringify(result.permissions);
+        if (cachedPermissions !== freshPermissionsJson) {
+            setStoredJwt(freshPermissionsJson);
         }
 
-        // Decode and verify permissions
-        let permissions: string[] = [];
-        try {
-            permissions = await decodeAndVerifyPermissions(freshEncoded);
-        } catch {
-            clearAuthStorage();
-            setSessionState(s => ({ ...s, loading: false, profile: null, permissions: [] }));
-            return;
-        }
-
-        // Fetch full profile for UI (only if forced or profile changed)
-        let fullProfile: UserProfile | null = null;
-        if (forceRefresh || profileChanged || !sessionState.profile) {
+        // Fetch full profile for UI only if needed
+        let fullProfile: UserProfile | null = sessionState.profile;
+        if (forceRefresh || profileChanged || !fullProfile) {
             fullProfile = await fetchUserProfile(result.accountId);
-        } else {
-            fullProfile = sessionState.profile;
         }
 
         setSessionState({
             loading: false,
             profile: fullProfile,
-            permissions,
+            permissions: result.permissions,
             accountId: result.accountId,
             personalAccountId: result.personalAccountId,
             isManaging: result.accountId !== result.personalAccountId,
-            encodedPermissions: freshEncoded,
             refetch: () => fetchData(true),
         });
     };
