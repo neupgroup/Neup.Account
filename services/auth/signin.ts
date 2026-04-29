@@ -92,6 +92,78 @@ export async function submitNeupId(data: z.infer<typeof neupIdSchema>) {
 
 
 /**
+ * Function submitPasswordWithNeupId.
+ * Used when neupId is passed directly (e.g. via URL param).
+ * Resolves the account internally and always returns the same error to prevent account enumeration.
+ */
+export async function submitPasswordWithNeupId(data: { neupId: string; password: string; authRequestId: string }): Promise<{ success: boolean; mfaRequired: boolean; error?: string; isPendingDeletion?: boolean }> {
+    const neupId = data.neupId?.trim().toLowerCase();
+    const { password, authRequestId } = data;
+
+    if (!neupId || !password || !authRequestId) {
+        return { success: false, mfaRequired: false, error: 'Invalid credentials.' };
+    }
+
+    const request = await getAuthRequest(authRequestId);
+    if (!request) {
+        return { success: false, mfaRequired: false, error: 'Session Expired, Try again.' };
+    }
+
+    const neupIdRecord = await prisma.neupId.findUnique({ where: { id: neupId } });
+    const accountId = neupIdRecord?.accountId;
+
+    if (!accountId) {
+        return { success: false, mfaRequired: false, error: 'Invalid credentials.' };
+    }
+
+    const account = await prisma.account.findUnique({ where: { id: accountId }, select: { status: true } });
+    const isPendingDeletion = account?.status === 'pending_deletion';
+
+    const passwordRecord = await prisma.authMethod.findFirst({
+        where: { accountId, type: 'password', order: 'primary', status: 'active' },
+        select: { value: true },
+    });
+
+    if (!passwordRecord) {
+        return { success: false, mfaRequired: false, error: 'Invalid credentials.' };
+    }
+
+    const passwordCheck = await verifyPassword({ password, storedHash: passwordRecord.value });
+    if (passwordCheck.status !== 'valid') {
+        return { success: false, mfaRequired: false, error: 'Invalid credentials.' };
+    }
+
+    await prisma.authRequest.update({
+        where: { id: request.id },
+        data: {
+            data: { neupId, isPendingDeletion },
+            accountId,
+            status: isPendingDeletion ? 'pending_password' : 'pending_password',
+        },
+    });
+
+    if (isPendingDeletion) {
+        return { success: true, mfaRequired: false, isPendingDeletion: true };
+    }
+
+    const mfaEnabled = false;
+    if (mfaEnabled) {
+        await prisma.authRequest.update({ where: { id: request.id }, data: { status: 'pending_mfa' } });
+        await extendAuthRequest(request.id);
+        return { success: true, mfaRequired: true };
+    }
+
+    const sessionResult = await makeSession({ accountId, loginType: 'Password' });
+    if (!sessionResult.success) {
+        return { success: false, mfaRequired: false, error: sessionResult.error || 'Failed to create session.' };
+    }
+
+    await prisma.authRequest.update({ where: { id: request.id }, data: { status: 'completed' } });
+    return { success: true, mfaRequired: false };
+}
+
+
+/**
  * Function submitPassword.
  */
 export async function submitPassword(data: z.infer<typeof passwordSchema>): Promise<{ success: boolean; mfaRequired: boolean; error?: string; isPendingDeletion?: boolean }> {

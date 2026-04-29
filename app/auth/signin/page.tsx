@@ -6,7 +6,7 @@ import React, { useState, useEffect, useTransition, Suspense } from 'react';
 import NProgress from 'nprogress';
 
 import { useToast } from '@/core/hooks/use-toast';
-import { submitNeupId, submitPassword } from '@/services/auth/signin';
+import { submitNeupId, submitPassword, submitPasswordWithNeupId } from '@/services/auth/signin';
 import { getSignupStepData } from '@/services/auth/signup';
 import { cancelAccountDeletion } from '@/services/data/delete';
 import { initializeAuthFlow } from '@/services/auth/initialize';
@@ -95,6 +95,7 @@ function NeupIdStep() {
         }
         const params = new URLSearchParams(searchParams.toString());
         params.set('step', 'password');
+        params.delete('neupId');
         redirectInApp(router, `/auth/signin?${params.toString()}`);
       } else {
         if (isExpiredSessionError(result.error)) {
@@ -190,6 +191,7 @@ function PasswordStep() {
   const [password, setPassword] = useState('');
   const [isSubmitting, startPasswordSubmit] = useTransition();
   const [authRequestId, setAuthRequestId] = useState<string | null>(null);
+  const neupIdFromUrl = (searchParams.get('neupId') || '').trim().toLowerCase();
 
   const [showDeletionDialog, setShowDeletionDialog] = useState(false);
 
@@ -200,67 +202,20 @@ function PasswordStep() {
     let isMounted = true;
 
     const setupPasswordStep = async () => {
-      const requestedNeupId = (searchParams.get('neupId') || '').trim().toLowerCase();
-      let currentRequestId = sessionStorage.getItem('temp_auth_id');
-
-      const setRequestId = (id: string) => {
-        sessionStorage.setItem('temp_auth_id', id);
-        if (isMounted) {
-          setAuthRequestId(id);
-        }
-      };
-
-      const ensureAuthRequest = async () => {
-        if (currentRequestId) {
-          setRequestId(currentRequestId);
-          return currentRequestId;
-        }
-
-        currentRequestId = await initializeAuthFlow(null, 'signin');
-        setRequestId(currentRequestId);
-        return currentRequestId;
-      };
-
-      const submitRequestedNeupId = async (targetNeupId: string) => {
-        const activeRequestId = await ensureAuthRequest();
-        let result = await submitNeupId({ neupId: targetNeupId, authRequestId: activeRequestId });
-
-        if (!result.success && isExpiredSessionError(result.error)) {
+      // If neupId is in the URL, we skip pre-validation and show the password form directly.
+      // Account existence is only revealed at password submission time.
+      if (neupIdFromUrl) {
+        if (isMounted) setNeupId(neupIdFromUrl);
+        let currentRequestId = sessionStorage.getItem('temp_auth_id');
+        if (!currentRequestId) {
           currentRequestId = await initializeAuthFlow(null, 'signin');
-          setRequestId(currentRequestId);
-          result = await submitNeupId({ neupId: targetNeupId, authRequestId: currentRequestId });
+          sessionStorage.setItem('temp_auth_id', currentRequestId);
         }
-
-        return result;
-      };
-
-      if (requestedNeupId) {
-        try {
-          const neupIdResult = await submitRequestedNeupId(requestedNeupId);
-
-          if (!neupIdResult.success) {
-            toast({
-              variant: 'destructive',
-              title: 'Sign In Failed',
-              description: neupIdResult.error || 'Invalid NeupID.',
-            });
-            return;
-          }
-
-          if (neupIdResult.userInfo) {
-            sessionStorage.setItem('temp_user_info', JSON.stringify(neupIdResult.userInfo));
-          }
-
-          if (isMounted) {
-            setNeupId(requestedNeupId);
-          }
-          return;
-        } catch (error) {
-          console.error('Failed to prepare password step:', error);
-          toast({ variant: 'destructive', title: 'Error', description: 'Failed to initialize sign in. Please try again.' });
-          return;
-        }
+        if (isMounted) setAuthRequestId(currentRequestId);
+        return;
       }
+
+      let currentRequestId = sessionStorage.getItem('temp_auth_id');
 
       if (!currentRequestId) {
         const params = new URLSearchParams(searchParams.toString());
@@ -269,18 +224,15 @@ function PasswordStep() {
         return;
       }
 
-      setRequestId(currentRequestId);
+      sessionStorage.setItem('temp_auth_id', currentRequestId);
+      if (isMounted) setAuthRequestId(currentRequestId);
 
       const savedUserInfo = sessionStorage.getItem('temp_user_info');
       if (savedUserInfo) {
         try {
           const parsed = JSON.parse(savedUserInfo);
-          if (parsed.neupId && isMounted) {
-            setNeupId(parsed.neupId);
-          }
-        } catch {
-          // ignore parse error
-        }
+          if (parsed.neupId && isMounted) setNeupId(parsed.neupId);
+        } catch { /* ignore */ }
       }
 
       const { data } = await getSignupStepData(currentRequestId);
@@ -294,11 +246,8 @@ function PasswordStep() {
     };
 
     setupPasswordStep();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [router, searchParams, toast]);
+    return () => { isMounted = false; };
+  }, [router, searchParams, toast, neupIdFromUrl]);
 
   const handlePasswordSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -308,7 +257,9 @@ function PasswordStep() {
     }
     NProgress.start();
     startPasswordSubmit(async () => {
-      let result = await submitPassword({ password, authRequestId });
+      let result = neupIdFromUrl
+        ? await submitPasswordWithNeupId({ neupId: neupIdFromUrl, password, authRequestId })
+        : await submitPassword({ password, authRequestId });
 
       if (!result.success && isExpiredSessionError(result.error)) {
         try {
@@ -316,16 +267,19 @@ function PasswordStep() {
           sessionStorage.setItem('temp_auth_id', refreshedId);
           setAuthRequestId(refreshedId);
 
-          const neupIdResult = await submitNeupId({ neupId, authRequestId: refreshedId });
-          if (!neupIdResult.success) {
-            toast({ variant: 'destructive', title: EXPIRED_SESSION_ERROR, description: 'Please enter your NeupID again.' });
-            const params = new URLSearchParams(searchParams.toString());
-            params.set('step', 'neupid');
-            redirectInApp(router, `/auth/signin?${params.toString()}`);
-            return;
+          if (neupIdFromUrl) {
+            result = await submitPasswordWithNeupId({ neupId: neupIdFromUrl, password, authRequestId: refreshedId });
+          } else {
+            const neupIdResult = await submitNeupId({ neupId, authRequestId: refreshedId });
+            if (!neupIdResult.success) {
+              toast({ variant: 'destructive', title: EXPIRED_SESSION_ERROR, description: 'Please enter your NeupID again.' });
+              const params = new URLSearchParams(searchParams.toString());
+              params.set('step', 'neupid');
+              redirectInApp(router, `/auth/signin?${params.toString()}`);
+              return;
+            }
+            result = await submitPassword({ password, authRequestId: refreshedId });
           }
-
-          result = await submitPassword({ password, authRequestId: refreshedId });
         } catch (error) {
           console.error('Failed to refresh signin session:', error);
           toast({ variant: 'destructive', title: EXPIRED_SESSION_ERROR, description: 'Please try again.' });
