@@ -32,6 +32,7 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
   const router = useRouter();
   const searchParams = useSearchParams();
   const { toast } = useToast();
+  const toastRef = useRef(toast);
   const isSecure = useSecurityCheck();
   const error = searchParams.get('error');
   const errorDescription = searchParams.get('error_description');
@@ -43,7 +44,7 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
     void cleanupExpiredStoredSessions();
 
     if (error === 'inactivity') {
-      toast({
+      toastRef.current({
         variant: 'default',
         title: 'Signed Out',
         description: 'Signed Out because of Inactvity',
@@ -52,7 +53,7 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
     }
 
     if (!isSecure) {
-      toast({
+      toastRef.current({
         variant: 'destructive',
         title: 'Insecure Conditions',
         description: 'Cant Authenticate.',
@@ -84,7 +85,7 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
         }
       }
     }
-  }, [error, toast, isSecure, hasActiveSession, redirects, router, searchParams]);
+  }, [error, isSecure, hasActiveSession, redirects, router, searchParams]);
 
   const getUrlWithReturn = (baseUrl: string) => {
     const withContext = appendAuthCallbackContext(baseUrl, searchParams);
@@ -117,25 +118,13 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
               </Alert>
             )}
 
-            {hasActiveSession && (
-              <Link
-                href={redirects ? redirects : "/"}
-                className="flex w-full items-center justify-between p-4 border rounded-lg bg-accent/10 border-accent hover:bg-accent/20 transition-colors"
-              >
-                <div>
-                  <h3 className="font-semibold text-accent">Continue</h3>
-                  <p className="text-sm text-muted-foreground">Continue with your Account you're currently signed in.</p>
-                </div>
-                <ChevronRight className="h-5 w-5 text-accent" />
-              </Link>
-            )}
-
             {visibleAccounts.length > 0 && (
               <div className="space-y-2">
                  {visibleAccounts.map((acc) => (
-                    <AccountListItem 
-                        key={acc.accountId!}
+                    <AccountListItem
+                        key={acc.aid}
                         account={acc}
+                        isActive={acc.def === 1}
                     />
                 ))}
               </div>

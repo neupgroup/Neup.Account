@@ -12,6 +12,7 @@ import { AccountActions } from './account-actions';
 import { switchActiveAccount, switchToBrand, switchToDependent, switchToDelegated } from '@/services/auth/switch';
 import { appendAuthCallbackContext, appendRedirect } from '@/core/helpers/auth-callback';
 import { redirectInApp } from '@/core/helpers/navigation';
+import { cn } from '@/core/helpers/utils';
 
 type CombinedAccount = StoredAccount & {
     displayName?: string;
@@ -22,10 +23,10 @@ type CombinedAccount = StoredAccount & {
     accountType?: string;
 };
 
-export function AccountListItem({ account }: { account: CombinedAccount }) {
+export function AccountListItem({ account, isActive }: { account: CombinedAccount; isActive?: boolean }) {
     const [details, setDetails] = useState<Partial<CombinedAccount>>({
         displayName: account.displayName,
-        neupId: account.neupId,
+        neupId: account.nid || account.neupId,
         displayPhoto: account.isBrand ? 'https://neupgroup.com/assets/brand.png' : 'https://neupgroup.com/assets/user.png',
     });
     const [loading, setLoading] = useState(true);
@@ -37,11 +38,7 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
     const getSigninUrl = (neupId?: string) => {
         const params = new URLSearchParams();
         params.set('step', 'password');
-
-        if (neupId) {
-            params.set('neupId', neupId);
-        }
-
+        if (neupId) params.set('neupId', neupId);
         const baseUrl = `/auth/signin?${params.toString()}`;
         const withContext = appendAuthCallbackContext(baseUrl, searchParams);
         return appendRedirect(withContext, redirects);
@@ -121,9 +118,9 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
                  return;
             }
 
-            if (finalAccount.sessionId) {
-                if (finalAccount.expired) {
-                    redirectInApp(router, getSigninUrl(finalAccount.neupId));
+            if (finalAccount.sid || finalAccount.sessionId) {
+                if (finalAccount.def !== 1 && !finalAccount.sid) {
+                    redirectInApp(router, getSigninUrl(finalAccount.nid || finalAccount.neupId));
                     return;
                 }
 
@@ -134,8 +131,8 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
                 return;
             }
 
-            if (finalAccount.sessionId === undefined) {
-                redirectInApp(router, getSigninUrl(finalAccount.neupId));
+            if (!finalAccount.sid && !finalAccount.sessionId) {
+                redirectInApp(router, getSigninUrl(finalAccount.nid || finalAccount.neupId));
                 return;
             }
 
@@ -164,7 +161,12 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
     return (
         <div
             onClick={handleClick}
-            className="w-full flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer"
+            className={cn(
+                "w-full flex items-center justify-between p-4 border rounded-lg transition-colors cursor-pointer",
+                isActive
+                    ? "bg-accent/10 border-accent hover:bg-accent/20"
+                    : "hover:bg-muted/50"
+            )}
             role="button"
             tabIndex={0}
             onKeyDown={(e) => {
@@ -176,7 +178,7 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
         >
             <div className="flex items-center gap-4">
                 <div>
-                    <h3 className="font-semibold">{finalAccount.displayName}</h3>
+                    <h3 className={cn("font-semibold", isActive && "text-accent")}>{finalAccount.displayName}</h3>
                     <div className="flex items-center gap-2">
                         <p className="text-sm text-muted-foreground">
                             @{finalAccount.neupId}
@@ -185,7 +187,7 @@ export function AccountListItem({ account }: { account: CombinedAccount }) {
                     </div>
                 </div>
             </div>
-            <ChevronRight className="h-5 w-5 text-muted-foreground" />
+            <ChevronRight className={cn("h-5 w-5", isActive ? "text-accent" : "text-muted-foreground")} />
         </div>
     );
 }

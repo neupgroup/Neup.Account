@@ -110,13 +110,11 @@ export async function logoutStoredSession(sessionId: string): Promise<{ success:
         if (allAccounts.length > 0) {
             const updatedAccounts = allAccounts.map(acc => {
                 if (acc.sid === sessionId) {
-                    // Remove session details but keep account in list
-                    return { 
-                        ...acc, 
-                        sid: undefined, 
-                        skey: undefined, 
-                        expired: true,
-                        active: false 
+                    return {
+                        ...acc,
+                        sid: undefined,
+                        skey: undefined,
+                        def: 0 as const,
                     };
                 }
                 return acc;
@@ -287,16 +285,15 @@ async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
 
   const validatedAccounts = await Promise.all(
     allAccounts.map(async (account) => {
-      if (account.expired) return account;
-      // If session info is missing, mark as expired but keep account
-    if (!account.sid || !account.skey) return { ...account, expired: true };
+      if (account.def !== 1) return account;
+      if (!account.sid || !account.skey) return { ...account, def: 0 as const, sid: undefined, skey: undefined };
 
       try {
         const session = await prisma.authSession.findUnique({
             where: { id: account.sid }
         });
 
-        if (!session) return { ...account, expired: true };
+        if (!session) return { ...account, def: 0 as const, sid: undefined, skey: undefined };
 
         const dbValidTill = session.validTill;
         const dbKey = session.key;
@@ -309,13 +306,13 @@ async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
           dbKey !== account.skey;
 
         if (isInvalid) {
-            return { ...account, expired: true };
+            return { ...account, def: 0 as const, sid: undefined, skey: undefined };
         }
 
         return account;
       } catch (e) {
         await logError('database', e, 'getValidatedStoredAccounts');
-        return { ...account, expired: true };
+        return { ...account, def: 0 as const, sid: undefined, skey: undefined };
       }
     })
   );

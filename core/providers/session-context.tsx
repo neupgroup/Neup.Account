@@ -3,7 +3,7 @@
 import { createContext, useState, useEffect, type ReactNode, useContext } from 'react';
 import { type UserProfile, getUserProfile as fetchUserProfile } from '@/core/helpers/user';
 import { getActiveAccountId, getPersonalAccountId } from '@/core/helpers/auth-actions';
-import { checkSession } from '@/core/auth/session-check';
+import { checkSession } from '@/core/auth/check';
 import {
     getStoredProfileInfo,
     setStoredProfileInfo,
