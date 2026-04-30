@@ -12,7 +12,7 @@ import { cancelAccountDeletion } from '@/services/data/delete';
 import { initializeAuthFlow } from '@/services/auth/initialize';
 import { verifyTotpFromPost } from '@/services/auth/totp';
 import { switchActiveAccountByNeupId } from '@/services/auth/switch';
-import { redirectInApp } from '@/core/helpers/navigation';
+import { redirectInApp } from '@/core/helpers/link';
 import { appendAuthCallbackContext, appendRedirect, hasAuthCallbackContext, shouldReturnToAuthStartForExternalAuthentication } from '@/core/helpers/auth-callback';
 
 import { Button } from '@/components/ui/button';
@@ -300,12 +300,12 @@ function PasswordStep() {
           sessionStorage.clear();
 
           if (shouldReturnToAuthStartForExternalAuthentication(searchParams)) {
-            redirectInApp(router, appendAuthCallbackContext('/auth/start', searchParams));
+            redirectInApp(appendAuthCallbackContext('/auth/start', searchParams), null, { hard: true });
             return;
           }
 
           if (redirects) {
-            redirectInApp(router, redirects);
+            redirectInApp(redirects, null, { hard: true });
             return;
           }
 
@@ -314,11 +314,11 @@ function PasswordStep() {
             params.delete('step');
             params.delete('neupId');
             params.set('step', 'access');
-            redirectInApp(router, `/auth/sign?${params.toString()}`);
+            redirectInApp(`/auth/sign?${params.toString()}`, null, { hard: true });
             return;
           }
 
-          redirectInApp(router, '/');
+          redirectInApp('/', null, { hard: true });
         }
       } else {
         toast({ variant: 'destructive', title: isExpiredSessionError(result.error) ? EXPIRED_SESSION_ERROR : 'Sign In Failed', description: result.error });

@@ -37,12 +37,11 @@ export async function logoutActiveSession() {
             if (allAccounts.length > 0) {
                 const updatedAccounts = allAccounts.map(acc => {
                     if (acc.sid === sid) {
-                        // Remove session details for the signed out account
                         return {
                             ...acc,
                             sid: undefined,
                             skey: undefined,
-                            expired: true,
+                            def: 0 as const,
                         };
                     }
                     return acc;

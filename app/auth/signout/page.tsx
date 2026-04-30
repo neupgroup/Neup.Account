@@ -2,12 +2,11 @@
 "use client"
 
 import { useEffect, useRef, Suspense } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import { logoutActiveSession } from "@/services/auth/signout"
-import { redirectInApp } from "@/core/helpers/navigation"
+import { redirectInApp } from "@/core/helpers/link"
 
 function SignOut() {
-    const router = useRouter()
     const searchParams = useSearchParams()
     const formRef = useRef<HTMLFormElement>(null)
 
@@ -34,13 +33,11 @@ function SignOut() {
             const errorParam = searchParams.get('error');
             const errorDescParam = searchParams.get('error_description');
 
-            let redirectUrl = "/";
             if (errorParam) {
-                redirectUrl = `/auth/signin?error=${errorParam}&error_description=${errorDescParam || 'Please sign in again.'}`;
+                redirectInApp(`/auth/start?error=${errorParam}&error_description=${errorDescParam || 'Please sign in again.'}`, null, { hard: true });
+            } else {
+                redirectInApp('/auth/start', null, { hard: true });
             }
-
-            redirectInApp(router, redirectUrl);
-            router.refresh();
         }
     }
 
