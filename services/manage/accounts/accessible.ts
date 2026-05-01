@@ -52,13 +52,10 @@ export async function getAccessibleAccounts(): Promise<AccessibleAccount[]> {
 
             const accessibleAccount: AccessibleAccount = {
                 aid: targetAccount.id,
-                accountId: targetAccount.id,
+                def: 0,
                 sid: '',
-                sessionId: '', // No session for managed accounts
                 skey: '',
-                sessionKey: '',
                 neupId: neupId,
-                expired: false,
                 active: false,
                 isBrand: targetAccount.accountType === 'brand',
                 isDependent: targetAccount.accountType === 'dependent',

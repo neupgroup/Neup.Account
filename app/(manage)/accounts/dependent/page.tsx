@@ -24,12 +24,9 @@ export default async function DependentAccountsPage() {
 
     const mappedAccounts = dependentAccounts.map(acc => ({
         aid: acc.id,
-        accountId: acc.id,
+        def: 0 as const,
         sid: '',
-        sessionId: '',
         skey: '',
-        sessionKey: '',
-        expired: false,
         displayName: acc.nameDisplay || '',
         neupId: acc.neupId || '',
         displayPhoto: acc.accountPhoto || '',
@@ -57,7 +54,7 @@ export default async function DependentAccountsPage() {
                 <CardContent className="p-0 divide-y">
                     {mappedAccounts.length > 0 ? (
                         mappedAccounts.map(acc => (
-                            <AccountListItem key={acc.accountId} account={acc} />
+                            <AccountListItem key={acc.aid} account={acc} />
                         ))
                     ) : (
                         <div className="flex flex-col items-center justify-center text-center p-8 gap-4">

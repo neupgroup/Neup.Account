@@ -92,7 +92,7 @@ export function AccountListItem({ account, isActive }: { account: CombinedAccoun
         }
 
         startSwitchTransition(async () => {
-            const targetAccountId = finalAccount.aid || finalAccount.accountId;
+            const targetAccountId = finalAccount.aid || finalAccount.accountId || '';
 
             if (finalAccount.isBrand) {
                  const res = await switchToBrand(targetAccountId);

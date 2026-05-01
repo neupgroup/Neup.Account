@@ -20,15 +20,12 @@ export default async function BrandAccountsPage() {
 
     const mappedBrandAccounts = brandAccounts.map(brand => ({
         aid: brand.id,
-        accountId: brand.id,
+        def: 0 as const,
         sid: '',
-        sessionId: '',
         skey: '',
-        sessionKey: '',
-        expired: false,
         isBrand: true,
         displayName: brand.name,
-        neupId: `brand`, // Placeholder
+        neupId: `brand`,
         displayPhoto: brand.logoUrl,
         plan: brand.plan,
     }));
@@ -53,7 +50,7 @@ export default async function BrandAccountsPage() {
                     {mappedBrandAccounts.length > 0 ? (
                         mappedBrandAccounts.map(acc => (
                             <AccountListItem
-                                key={acc.accountId}
+                                key={acc.aid}
                                 account={acc}
                             />
                         ))

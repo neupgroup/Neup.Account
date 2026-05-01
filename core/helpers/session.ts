@@ -24,6 +24,15 @@ export type StoredAccount = {
   neupId?: string; // legacy compat — kept so callers that read neupId still work
   isBrand?: boolean;
   isUnknown?: boolean;
+  // legacy aliases — kept for backward compat with callers that use the old field names
+  accountId?: string;
+  sessionId?: string;
+  sessionKey?: string;
+  expired?: boolean;
+  displayName?: string;
+  displayPhoto?: string;
+  isDependent?: boolean;
+  accountType?: string;
 };
 import { setStoredAccountsCookie, getSessionCookies, clearManagingCookie, setManagingCookie } from './cookies';
 import { getUserNeupIds, validateNeupId } from './user';
