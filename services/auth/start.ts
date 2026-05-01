@@ -27,10 +27,19 @@ export async function getAuthStartPageData(searchParams: Record<string, string |
     if (uniqueIds.length > 0) {
       const existing = await prisma.account.findMany({
         where: { id: { in: uniqueIds } },
-        select: { id: true },
+        select: { id: true, displayName: true, displayImage: true },
       });
-      const existingIds = new Set(existing.map((entry) => entry.id));
-      accounts = accounts.filter((account) => existingIds.has(account.aid));
+      const existingMap = new Map(existing.map((entry) => [entry.id, entry]));
+      accounts = accounts
+        .filter((account) => existingMap.has(account.aid))
+        .map((account) => {
+          const row = existingMap.get(account.aid);
+          return {
+            ...account,
+            displayName: row?.displayName || account.displayName,
+            displayPhoto: row?.displayImage || account.displayPhoto,
+          };
+        });
     }
   } catch {
     // If the database is unavailable, fall back to showing the stored accounts.

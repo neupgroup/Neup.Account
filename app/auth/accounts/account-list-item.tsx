@@ -27,7 +27,7 @@ export function AccountListItem({ account, isActive }: { account: CombinedAccoun
     const [details, setDetails] = useState<Partial<CombinedAccount>>({
         displayName: account.displayName,
         neupId: account.nid || account.neupId,
-        displayPhoto: account.isBrand ? 'https://neupgroup.com/assets/brand.png' : 'https://neupgroup.com/assets/user.png',
+        displayPhoto: account.displayPhoto || (account.isBrand ? 'https://neupgroup.com/assets/brand.png' : 'https://neupgroup.com/assets/user.png'),
     });
     const [loading, setLoading] = useState(true);
     const [isSwitching, startSwitchTransition] = useTransition();
@@ -56,7 +56,9 @@ export function AccountListItem({ account, isActive }: { account: CombinedAccoun
                 return;
             }
 
-            if (account.displayName && account.displayPhoto && !account.isUnknown) {
+
+
+            if (account.displayName) {
                 if (isMounted) setLoading(false);
                 return;
             }
