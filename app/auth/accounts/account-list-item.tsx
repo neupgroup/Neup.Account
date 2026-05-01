@@ -98,19 +98,13 @@ export function AccountListItem({ account, isActive }: { account: CombinedAccoun
 
             if (finalAccount.isBrand) {
                  const res = await switchToBrand(targetAccountId);
-                 if (res.success) {
-                    if (redirects) redirectInApp(router, redirects);
-                    else router.refresh();
-                 }
+                 if (res.success) redirectInApp(router, redirects || '/');
                  return;
             }
 
             if (finalAccount.isDependent) {
                  const res = await switchToDependent(targetAccountId);
-                 if (res.success) {
-                    if (redirects) redirectInApp(router, redirects);
-                    else router.refresh();
-                 }
+                 if (res.success) redirectInApp(router, redirects || '/');
                  return;
             }
 
@@ -133,10 +127,7 @@ export function AccountListItem({ account, isActive }: { account: CombinedAccoun
             }
 
             const res = await switchToDelegated(targetAccountId);
-            if (res.success) {
-                if (redirects) redirectInApp(router, redirects);
-                else router.refresh();
-            }
+            if (res.success) redirectInApp(router, redirects || '/');
         });
     };
 
