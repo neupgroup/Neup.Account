@@ -361,6 +361,15 @@ exports.Prisma.ApplicationConnectionScalarFieldEnum = {
   connectedAt: 'connectedAt'
 };
 
+exports.Prisma.ApplicationBridgeScalarFieldEnum = {
+  id: 'id',
+  appId: 'appId',
+  type: 'type',
+  value: 'value',
+  details: 'details',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -415,7 +424,8 @@ exports.Prisma.ModelName = {
   PortfolioAsset: 'PortfolioAsset',
   PortfolioMember: 'PortfolioMember',
   PortfolioRole: 'PortfolioRole',
-  ApplicationConnection: 'ApplicationConnection'
+  ApplicationConnection: 'ApplicationConnection',
+  ApplicationBridge: 'ApplicationBridge'
 };
 
 /**

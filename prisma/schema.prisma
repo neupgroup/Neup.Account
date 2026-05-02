@@ -286,6 +286,7 @@ model Application {
   status         String                  @default("development")
   owner          Account?                @relation(fields: [ownerAccountId], references: [id], map: "applications_ownerAccountId_fkey")
   connections    ApplicationConnection[]
+  bridge         ApplicationBridge[]
 
   @@map("application")
 }
@@ -355,4 +356,17 @@ model ApplicationConnection {
 
   @@unique([accountId, appId], map: "user_app_connections_accountId_appId_key")
   @@map("application_connection")
+}
+
+model ApplicationBridge {
+  id          String      @id @default(uuid())
+  appId       String
+  type        String
+  value       String
+  details     Json?
+  createdAt   DateTime    @default(now())
+  application Application @relation(fields: [appId], references: [id], onDelete: Cascade)
+
+  @@index([appId, type])
+  @@map("application_bridge")
 }

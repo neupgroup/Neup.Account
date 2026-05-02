@@ -128,6 +128,11 @@ export type PortfolioRole = $Result.DefaultSelection<Prisma.$PortfolioRolePayloa
  * 
  */
 export type ApplicationConnection = $Result.DefaultSelection<Prisma.$ApplicationConnectionPayload>
+/**
+ * Model ApplicationBridge
+ * 
+ */
+export type ApplicationBridge = $Result.DefaultSelection<Prisma.$ApplicationBridgePayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -475,6 +480,16 @@ export class PrismaClient<
     * ```
     */
   get applicationConnection(): Prisma.ApplicationConnectionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.applicationBridge`: Exposes CRUD operations for the **ApplicationBridge** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ApplicationBridges
+    * const applicationBridges = await prisma.applicationBridge.findMany()
+    * ```
+    */
+  get applicationBridge(): Prisma.ApplicationBridgeDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -931,7 +946,8 @@ export namespace Prisma {
     PortfolioAsset: 'PortfolioAsset',
     PortfolioMember: 'PortfolioMember',
     PortfolioRole: 'PortfolioRole',
-    ApplicationConnection: 'ApplicationConnection'
+    ApplicationConnection: 'ApplicationConnection',
+    ApplicationBridge: 'ApplicationBridge'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -947,7 +963,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "accountOwnership" | "systemConfig" | "authRequest" | "activity" | "notification" | "request" | "family" | "verification" | "contact" | "neupId" | "authMethod" | "permit" | "authSession" | "systemError" | "application" | "portfolio" | "portfolioAsset" | "portfolioMember" | "portfolioRole" | "applicationConnection"
+      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "accountOwnership" | "systemConfig" | "authRequest" | "activity" | "notification" | "request" | "family" | "verification" | "contact" | "neupId" | "authMethod" | "permit" | "authSession" | "systemError" | "application" | "portfolio" | "portfolioAsset" | "portfolioMember" | "portfolioRole" | "applicationConnection" | "applicationBridge"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2653,6 +2669,80 @@ export namespace Prisma {
           }
         }
       }
+      ApplicationBridge: {
+        payload: Prisma.$ApplicationBridgePayload<ExtArgs>
+        fields: Prisma.ApplicationBridgeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ApplicationBridgeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationBridgePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ApplicationBridgeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationBridgePayload>
+          }
+          findFirst: {
+            args: Prisma.ApplicationBridgeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationBridgePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ApplicationBridgeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationBridgePayload>
+          }
+          findMany: {
+            args: Prisma.ApplicationBridgeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationBridgePayload>[]
+          }
+          create: {
+            args: Prisma.ApplicationBridgeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationBridgePayload>
+          }
+          createMany: {
+            args: Prisma.ApplicationBridgeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ApplicationBridgeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationBridgePayload>[]
+          }
+          delete: {
+            args: Prisma.ApplicationBridgeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationBridgePayload>
+          }
+          update: {
+            args: Prisma.ApplicationBridgeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationBridgePayload>
+          }
+          deleteMany: {
+            args: Prisma.ApplicationBridgeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ApplicationBridgeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ApplicationBridgeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationBridgePayload>[]
+          }
+          upsert: {
+            args: Prisma.ApplicationBridgeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationBridgePayload>
+          }
+          aggregate: {
+            args: Prisma.ApplicationBridgeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateApplicationBridge>
+          }
+          groupBy: {
+            args: Prisma.ApplicationBridgeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationBridgeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ApplicationBridgeCountArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationBridgeCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2784,6 +2874,7 @@ export namespace Prisma {
     portfolioMember?: PortfolioMemberOmit
     portfolioRole?: PortfolioRoleOmit
     applicationConnection?: ApplicationConnectionOmit
+    applicationBridge?: ApplicationBridgeOmit
   }
 
   /* Types for Logging */
@@ -3071,10 +3162,12 @@ export namespace Prisma {
 
   export type ApplicationCountOutputType = {
     connections: number
+    bridge: number
   }
 
   export type ApplicationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     connections?: boolean | ApplicationCountOutputTypeCountConnectionsArgs
+    bridge?: boolean | ApplicationCountOutputTypeCountBridgeArgs
   }
 
   // Custom InputTypes
@@ -3093,6 +3186,13 @@ export namespace Prisma {
    */
   export type ApplicationCountOutputTypeCountConnectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ApplicationConnectionWhereInput
+  }
+
+  /**
+   * ApplicationCountOutputType without action
+   */
+  export type ApplicationCountOutputTypeCountBridgeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationBridgeWhereInput
   }
 
 
@@ -22361,6 +22461,7 @@ export namespace Prisma {
     status?: boolean
     owner?: boolean | Application$ownerArgs<ExtArgs>
     connections?: boolean | Application$connectionsArgs<ExtArgs>
+    bridge?: boolean | Application$bridgeArgs<ExtArgs>
     _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
 
@@ -22421,6 +22522,7 @@ export namespace Prisma {
   export type ApplicationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     owner?: boolean | Application$ownerArgs<ExtArgs>
     connections?: boolean | Application$connectionsArgs<ExtArgs>
+    bridge?: boolean | Application$bridgeArgs<ExtArgs>
     _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ApplicationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -22435,6 +22537,7 @@ export namespace Prisma {
     objects: {
       owner: Prisma.$AccountPayload<ExtArgs> | null
       connections: Prisma.$ApplicationConnectionPayload<ExtArgs>[]
+      bridge: Prisma.$ApplicationBridgePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -22847,6 +22950,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     owner<T extends Application$ownerArgs<ExtArgs> = {}>(args?: Subset<T, Application$ownerArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     connections<T extends Application$connectionsArgs<ExtArgs> = {}>(args?: Subset<T, Application$connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    bridge<T extends Application$bridgeArgs<ExtArgs> = {}>(args?: Subset<T, Application$bridgeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationBridgePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -23326,6 +23430,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ApplicationConnectionScalarFieldEnum | ApplicationConnectionScalarFieldEnum[]
+  }
+
+  /**
+   * Application.bridge
+   */
+  export type Application$bridgeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationBridge
+     */
+    select?: ApplicationBridgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationBridge
+     */
+    omit?: ApplicationBridgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationBridgeInclude<ExtArgs> | null
+    where?: ApplicationBridgeWhereInput
+    orderBy?: ApplicationBridgeOrderByWithRelationInput | ApplicationBridgeOrderByWithRelationInput[]
+    cursor?: ApplicationBridgeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApplicationBridgeScalarFieldEnum | ApplicationBridgeScalarFieldEnum[]
   }
 
   /**
@@ -28679,6 +28807,1073 @@ export namespace Prisma {
 
 
   /**
+   * Model ApplicationBridge
+   */
+
+  export type AggregateApplicationBridge = {
+    _count: ApplicationBridgeCountAggregateOutputType | null
+    _min: ApplicationBridgeMinAggregateOutputType | null
+    _max: ApplicationBridgeMaxAggregateOutputType | null
+  }
+
+  export type ApplicationBridgeMinAggregateOutputType = {
+    id: string | null
+    appId: string | null
+    type: string | null
+    value: string | null
+    createdAt: Date | null
+  }
+
+  export type ApplicationBridgeMaxAggregateOutputType = {
+    id: string | null
+    appId: string | null
+    type: string | null
+    value: string | null
+    createdAt: Date | null
+  }
+
+  export type ApplicationBridgeCountAggregateOutputType = {
+    id: number
+    appId: number
+    type: number
+    value: number
+    details: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ApplicationBridgeMinAggregateInputType = {
+    id?: true
+    appId?: true
+    type?: true
+    value?: true
+    createdAt?: true
+  }
+
+  export type ApplicationBridgeMaxAggregateInputType = {
+    id?: true
+    appId?: true
+    type?: true
+    value?: true
+    createdAt?: true
+  }
+
+  export type ApplicationBridgeCountAggregateInputType = {
+    id?: true
+    appId?: true
+    type?: true
+    value?: true
+    details?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ApplicationBridgeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApplicationBridge to aggregate.
+     */
+    where?: ApplicationBridgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationBridges to fetch.
+     */
+    orderBy?: ApplicationBridgeOrderByWithRelationInput | ApplicationBridgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ApplicationBridgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationBridges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationBridges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ApplicationBridges
+    **/
+    _count?: true | ApplicationBridgeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ApplicationBridgeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ApplicationBridgeMaxAggregateInputType
+  }
+
+  export type GetApplicationBridgeAggregateType<T extends ApplicationBridgeAggregateArgs> = {
+        [P in keyof T & keyof AggregateApplicationBridge]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateApplicationBridge[P]>
+      : GetScalarType<T[P], AggregateApplicationBridge[P]>
+  }
+
+
+
+
+  export type ApplicationBridgeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationBridgeWhereInput
+    orderBy?: ApplicationBridgeOrderByWithAggregationInput | ApplicationBridgeOrderByWithAggregationInput[]
+    by: ApplicationBridgeScalarFieldEnum[] | ApplicationBridgeScalarFieldEnum
+    having?: ApplicationBridgeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ApplicationBridgeCountAggregateInputType | true
+    _min?: ApplicationBridgeMinAggregateInputType
+    _max?: ApplicationBridgeMaxAggregateInputType
+  }
+
+  export type ApplicationBridgeGroupByOutputType = {
+    id: string
+    appId: string
+    type: string
+    value: string
+    details: JsonValue | null
+    createdAt: Date
+    _count: ApplicationBridgeCountAggregateOutputType | null
+    _min: ApplicationBridgeMinAggregateOutputType | null
+    _max: ApplicationBridgeMaxAggregateOutputType | null
+  }
+
+  type GetApplicationBridgeGroupByPayload<T extends ApplicationBridgeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ApplicationBridgeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ApplicationBridgeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ApplicationBridgeGroupByOutputType[P]>
+            : GetScalarType<T[P], ApplicationBridgeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ApplicationBridgeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    appId?: boolean
+    type?: boolean
+    value?: boolean
+    details?: boolean
+    createdAt?: boolean
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["applicationBridge"]>
+
+  export type ApplicationBridgeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    appId?: boolean
+    type?: boolean
+    value?: boolean
+    details?: boolean
+    createdAt?: boolean
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["applicationBridge"]>
+
+  export type ApplicationBridgeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    appId?: boolean
+    type?: boolean
+    value?: boolean
+    details?: boolean
+    createdAt?: boolean
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["applicationBridge"]>
+
+  export type ApplicationBridgeSelectScalar = {
+    id?: boolean
+    appId?: boolean
+    type?: boolean
+    value?: boolean
+    details?: boolean
+    createdAt?: boolean
+  }
+
+  export type ApplicationBridgeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "appId" | "type" | "value" | "details" | "createdAt", ExtArgs["result"]["applicationBridge"]>
+  export type ApplicationBridgeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }
+  export type ApplicationBridgeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }
+  export type ApplicationBridgeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }
+
+  export type $ApplicationBridgePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ApplicationBridge"
+    objects: {
+      application: Prisma.$ApplicationPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      appId: string
+      type: string
+      value: string
+      details: Prisma.JsonValue | null
+      createdAt: Date
+    }, ExtArgs["result"]["applicationBridge"]>
+    composites: {}
+  }
+
+  type ApplicationBridgeGetPayload<S extends boolean | null | undefined | ApplicationBridgeDefaultArgs> = $Result.GetResult<Prisma.$ApplicationBridgePayload, S>
+
+  type ApplicationBridgeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ApplicationBridgeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ApplicationBridgeCountAggregateInputType | true
+    }
+
+  export interface ApplicationBridgeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ApplicationBridge'], meta: { name: 'ApplicationBridge' } }
+    /**
+     * Find zero or one ApplicationBridge that matches the filter.
+     * @param {ApplicationBridgeFindUniqueArgs} args - Arguments to find a ApplicationBridge
+     * @example
+     * // Get one ApplicationBridge
+     * const applicationBridge = await prisma.applicationBridge.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ApplicationBridgeFindUniqueArgs>(args: SelectSubset<T, ApplicationBridgeFindUniqueArgs<ExtArgs>>): Prisma__ApplicationBridgeClient<$Result.GetResult<Prisma.$ApplicationBridgePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ApplicationBridge that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ApplicationBridgeFindUniqueOrThrowArgs} args - Arguments to find a ApplicationBridge
+     * @example
+     * // Get one ApplicationBridge
+     * const applicationBridge = await prisma.applicationBridge.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ApplicationBridgeFindUniqueOrThrowArgs>(args: SelectSubset<T, ApplicationBridgeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ApplicationBridgeClient<$Result.GetResult<Prisma.$ApplicationBridgePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApplicationBridge that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationBridgeFindFirstArgs} args - Arguments to find a ApplicationBridge
+     * @example
+     * // Get one ApplicationBridge
+     * const applicationBridge = await prisma.applicationBridge.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ApplicationBridgeFindFirstArgs>(args?: SelectSubset<T, ApplicationBridgeFindFirstArgs<ExtArgs>>): Prisma__ApplicationBridgeClient<$Result.GetResult<Prisma.$ApplicationBridgePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApplicationBridge that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationBridgeFindFirstOrThrowArgs} args - Arguments to find a ApplicationBridge
+     * @example
+     * // Get one ApplicationBridge
+     * const applicationBridge = await prisma.applicationBridge.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ApplicationBridgeFindFirstOrThrowArgs>(args?: SelectSubset<T, ApplicationBridgeFindFirstOrThrowArgs<ExtArgs>>): Prisma__ApplicationBridgeClient<$Result.GetResult<Prisma.$ApplicationBridgePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ApplicationBridges that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationBridgeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ApplicationBridges
+     * const applicationBridges = await prisma.applicationBridge.findMany()
+     * 
+     * // Get first 10 ApplicationBridges
+     * const applicationBridges = await prisma.applicationBridge.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const applicationBridgeWithIdOnly = await prisma.applicationBridge.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ApplicationBridgeFindManyArgs>(args?: SelectSubset<T, ApplicationBridgeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationBridgePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ApplicationBridge.
+     * @param {ApplicationBridgeCreateArgs} args - Arguments to create a ApplicationBridge.
+     * @example
+     * // Create one ApplicationBridge
+     * const ApplicationBridge = await prisma.applicationBridge.create({
+     *   data: {
+     *     // ... data to create a ApplicationBridge
+     *   }
+     * })
+     * 
+     */
+    create<T extends ApplicationBridgeCreateArgs>(args: SelectSubset<T, ApplicationBridgeCreateArgs<ExtArgs>>): Prisma__ApplicationBridgeClient<$Result.GetResult<Prisma.$ApplicationBridgePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ApplicationBridges.
+     * @param {ApplicationBridgeCreateManyArgs} args - Arguments to create many ApplicationBridges.
+     * @example
+     * // Create many ApplicationBridges
+     * const applicationBridge = await prisma.applicationBridge.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ApplicationBridgeCreateManyArgs>(args?: SelectSubset<T, ApplicationBridgeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ApplicationBridges and returns the data saved in the database.
+     * @param {ApplicationBridgeCreateManyAndReturnArgs} args - Arguments to create many ApplicationBridges.
+     * @example
+     * // Create many ApplicationBridges
+     * const applicationBridge = await prisma.applicationBridge.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ApplicationBridges and only return the `id`
+     * const applicationBridgeWithIdOnly = await prisma.applicationBridge.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ApplicationBridgeCreateManyAndReturnArgs>(args?: SelectSubset<T, ApplicationBridgeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationBridgePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ApplicationBridge.
+     * @param {ApplicationBridgeDeleteArgs} args - Arguments to delete one ApplicationBridge.
+     * @example
+     * // Delete one ApplicationBridge
+     * const ApplicationBridge = await prisma.applicationBridge.delete({
+     *   where: {
+     *     // ... filter to delete one ApplicationBridge
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ApplicationBridgeDeleteArgs>(args: SelectSubset<T, ApplicationBridgeDeleteArgs<ExtArgs>>): Prisma__ApplicationBridgeClient<$Result.GetResult<Prisma.$ApplicationBridgePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ApplicationBridge.
+     * @param {ApplicationBridgeUpdateArgs} args - Arguments to update one ApplicationBridge.
+     * @example
+     * // Update one ApplicationBridge
+     * const applicationBridge = await prisma.applicationBridge.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ApplicationBridgeUpdateArgs>(args: SelectSubset<T, ApplicationBridgeUpdateArgs<ExtArgs>>): Prisma__ApplicationBridgeClient<$Result.GetResult<Prisma.$ApplicationBridgePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ApplicationBridges.
+     * @param {ApplicationBridgeDeleteManyArgs} args - Arguments to filter ApplicationBridges to delete.
+     * @example
+     * // Delete a few ApplicationBridges
+     * const { count } = await prisma.applicationBridge.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ApplicationBridgeDeleteManyArgs>(args?: SelectSubset<T, ApplicationBridgeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ApplicationBridges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationBridgeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ApplicationBridges
+     * const applicationBridge = await prisma.applicationBridge.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ApplicationBridgeUpdateManyArgs>(args: SelectSubset<T, ApplicationBridgeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ApplicationBridges and returns the data updated in the database.
+     * @param {ApplicationBridgeUpdateManyAndReturnArgs} args - Arguments to update many ApplicationBridges.
+     * @example
+     * // Update many ApplicationBridges
+     * const applicationBridge = await prisma.applicationBridge.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ApplicationBridges and only return the `id`
+     * const applicationBridgeWithIdOnly = await prisma.applicationBridge.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ApplicationBridgeUpdateManyAndReturnArgs>(args: SelectSubset<T, ApplicationBridgeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationBridgePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ApplicationBridge.
+     * @param {ApplicationBridgeUpsertArgs} args - Arguments to update or create a ApplicationBridge.
+     * @example
+     * // Update or create a ApplicationBridge
+     * const applicationBridge = await prisma.applicationBridge.upsert({
+     *   create: {
+     *     // ... data to create a ApplicationBridge
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ApplicationBridge we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ApplicationBridgeUpsertArgs>(args: SelectSubset<T, ApplicationBridgeUpsertArgs<ExtArgs>>): Prisma__ApplicationBridgeClient<$Result.GetResult<Prisma.$ApplicationBridgePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ApplicationBridges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationBridgeCountArgs} args - Arguments to filter ApplicationBridges to count.
+     * @example
+     * // Count the number of ApplicationBridges
+     * const count = await prisma.applicationBridge.count({
+     *   where: {
+     *     // ... the filter for the ApplicationBridges we want to count
+     *   }
+     * })
+    **/
+    count<T extends ApplicationBridgeCountArgs>(
+      args?: Subset<T, ApplicationBridgeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ApplicationBridgeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ApplicationBridge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationBridgeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ApplicationBridgeAggregateArgs>(args: Subset<T, ApplicationBridgeAggregateArgs>): Prisma.PrismaPromise<GetApplicationBridgeAggregateType<T>>
+
+    /**
+     * Group by ApplicationBridge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationBridgeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ApplicationBridgeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ApplicationBridgeGroupByArgs['orderBy'] }
+        : { orderBy?: ApplicationBridgeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ApplicationBridgeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetApplicationBridgeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ApplicationBridge model
+   */
+  readonly fields: ApplicationBridgeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ApplicationBridge.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ApplicationBridgeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    application<T extends ApplicationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationDefaultArgs<ExtArgs>>): Prisma__ApplicationClient<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ApplicationBridge model
+   */
+  interface ApplicationBridgeFieldRefs {
+    readonly id: FieldRef<"ApplicationBridge", 'String'>
+    readonly appId: FieldRef<"ApplicationBridge", 'String'>
+    readonly type: FieldRef<"ApplicationBridge", 'String'>
+    readonly value: FieldRef<"ApplicationBridge", 'String'>
+    readonly details: FieldRef<"ApplicationBridge", 'Json'>
+    readonly createdAt: FieldRef<"ApplicationBridge", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ApplicationBridge findUnique
+   */
+  export type ApplicationBridgeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationBridge
+     */
+    select?: ApplicationBridgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationBridge
+     */
+    omit?: ApplicationBridgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationBridgeInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationBridge to fetch.
+     */
+    where: ApplicationBridgeWhereUniqueInput
+  }
+
+  /**
+   * ApplicationBridge findUniqueOrThrow
+   */
+  export type ApplicationBridgeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationBridge
+     */
+    select?: ApplicationBridgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationBridge
+     */
+    omit?: ApplicationBridgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationBridgeInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationBridge to fetch.
+     */
+    where: ApplicationBridgeWhereUniqueInput
+  }
+
+  /**
+   * ApplicationBridge findFirst
+   */
+  export type ApplicationBridgeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationBridge
+     */
+    select?: ApplicationBridgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationBridge
+     */
+    omit?: ApplicationBridgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationBridgeInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationBridge to fetch.
+     */
+    where?: ApplicationBridgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationBridges to fetch.
+     */
+    orderBy?: ApplicationBridgeOrderByWithRelationInput | ApplicationBridgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApplicationBridges.
+     */
+    cursor?: ApplicationBridgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationBridges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationBridges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApplicationBridges.
+     */
+    distinct?: ApplicationBridgeScalarFieldEnum | ApplicationBridgeScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationBridge findFirstOrThrow
+   */
+  export type ApplicationBridgeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationBridge
+     */
+    select?: ApplicationBridgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationBridge
+     */
+    omit?: ApplicationBridgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationBridgeInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationBridge to fetch.
+     */
+    where?: ApplicationBridgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationBridges to fetch.
+     */
+    orderBy?: ApplicationBridgeOrderByWithRelationInput | ApplicationBridgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApplicationBridges.
+     */
+    cursor?: ApplicationBridgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationBridges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationBridges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApplicationBridges.
+     */
+    distinct?: ApplicationBridgeScalarFieldEnum | ApplicationBridgeScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationBridge findMany
+   */
+  export type ApplicationBridgeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationBridge
+     */
+    select?: ApplicationBridgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationBridge
+     */
+    omit?: ApplicationBridgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationBridgeInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationBridges to fetch.
+     */
+    where?: ApplicationBridgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationBridges to fetch.
+     */
+    orderBy?: ApplicationBridgeOrderByWithRelationInput | ApplicationBridgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ApplicationBridges.
+     */
+    cursor?: ApplicationBridgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationBridges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationBridges.
+     */
+    skip?: number
+    distinct?: ApplicationBridgeScalarFieldEnum | ApplicationBridgeScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationBridge create
+   */
+  export type ApplicationBridgeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationBridge
+     */
+    select?: ApplicationBridgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationBridge
+     */
+    omit?: ApplicationBridgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationBridgeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ApplicationBridge.
+     */
+    data: XOR<ApplicationBridgeCreateInput, ApplicationBridgeUncheckedCreateInput>
+  }
+
+  /**
+   * ApplicationBridge createMany
+   */
+  export type ApplicationBridgeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ApplicationBridges.
+     */
+    data: ApplicationBridgeCreateManyInput | ApplicationBridgeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ApplicationBridge createManyAndReturn
+   */
+  export type ApplicationBridgeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationBridge
+     */
+    select?: ApplicationBridgeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationBridge
+     */
+    omit?: ApplicationBridgeOmit<ExtArgs> | null
+    /**
+     * The data used to create many ApplicationBridges.
+     */
+    data: ApplicationBridgeCreateManyInput | ApplicationBridgeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationBridgeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ApplicationBridge update
+   */
+  export type ApplicationBridgeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationBridge
+     */
+    select?: ApplicationBridgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationBridge
+     */
+    omit?: ApplicationBridgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationBridgeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ApplicationBridge.
+     */
+    data: XOR<ApplicationBridgeUpdateInput, ApplicationBridgeUncheckedUpdateInput>
+    /**
+     * Choose, which ApplicationBridge to update.
+     */
+    where: ApplicationBridgeWhereUniqueInput
+  }
+
+  /**
+   * ApplicationBridge updateMany
+   */
+  export type ApplicationBridgeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ApplicationBridges.
+     */
+    data: XOR<ApplicationBridgeUpdateManyMutationInput, ApplicationBridgeUncheckedUpdateManyInput>
+    /**
+     * Filter which ApplicationBridges to update
+     */
+    where?: ApplicationBridgeWhereInput
+    /**
+     * Limit how many ApplicationBridges to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApplicationBridge updateManyAndReturn
+   */
+  export type ApplicationBridgeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationBridge
+     */
+    select?: ApplicationBridgeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationBridge
+     */
+    omit?: ApplicationBridgeOmit<ExtArgs> | null
+    /**
+     * The data used to update ApplicationBridges.
+     */
+    data: XOR<ApplicationBridgeUpdateManyMutationInput, ApplicationBridgeUncheckedUpdateManyInput>
+    /**
+     * Filter which ApplicationBridges to update
+     */
+    where?: ApplicationBridgeWhereInput
+    /**
+     * Limit how many ApplicationBridges to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationBridgeIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ApplicationBridge upsert
+   */
+  export type ApplicationBridgeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationBridge
+     */
+    select?: ApplicationBridgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationBridge
+     */
+    omit?: ApplicationBridgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationBridgeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ApplicationBridge to update in case it exists.
+     */
+    where: ApplicationBridgeWhereUniqueInput
+    /**
+     * In case the ApplicationBridge found by the `where` argument doesn't exist, create a new ApplicationBridge with this data.
+     */
+    create: XOR<ApplicationBridgeCreateInput, ApplicationBridgeUncheckedCreateInput>
+    /**
+     * In case the ApplicationBridge was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ApplicationBridgeUpdateInput, ApplicationBridgeUncheckedUpdateInput>
+  }
+
+  /**
+   * ApplicationBridge delete
+   */
+  export type ApplicationBridgeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationBridge
+     */
+    select?: ApplicationBridgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationBridge
+     */
+    omit?: ApplicationBridgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationBridgeInclude<ExtArgs> | null
+    /**
+     * Filter which ApplicationBridge to delete.
+     */
+    where: ApplicationBridgeWhereUniqueInput
+  }
+
+  /**
+   * ApplicationBridge deleteMany
+   */
+  export type ApplicationBridgeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApplicationBridges to delete
+     */
+    where?: ApplicationBridgeWhereInput
+    /**
+     * Limit how many ApplicationBridges to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApplicationBridge without action
+   */
+  export type ApplicationBridgeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationBridge
+     */
+    select?: ApplicationBridgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationBridge
+     */
+    omit?: ApplicationBridgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationBridgeInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -29000,6 +30195,18 @@ export namespace Prisma {
   };
 
   export type ApplicationConnectionScalarFieldEnum = (typeof ApplicationConnectionScalarFieldEnum)[keyof typeof ApplicationConnectionScalarFieldEnum]
+
+
+  export const ApplicationBridgeScalarFieldEnum: {
+    id: 'id',
+    appId: 'appId',
+    type: 'type',
+    value: 'value',
+    details: 'details',
+    createdAt: 'createdAt'
+  };
+
+  export type ApplicationBridgeScalarFieldEnum = (typeof ApplicationBridgeScalarFieldEnum)[keyof typeof ApplicationBridgeScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -30390,6 +31597,7 @@ export namespace Prisma {
     status?: StringFilter<"Application"> | string
     owner?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
     connections?: ApplicationConnectionListRelationFilter
+    bridge?: ApplicationBridgeListRelationFilter
   }
 
   export type ApplicationOrderByWithRelationInput = {
@@ -30409,6 +31617,7 @@ export namespace Prisma {
     status?: SortOrder
     owner?: AccountOrderByWithRelationInput
     connections?: ApplicationConnectionOrderByRelationAggregateInput
+    bridge?: ApplicationBridgeOrderByRelationAggregateInput
   }
 
   export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
@@ -30431,6 +31640,7 @@ export namespace Prisma {
     status?: StringFilter<"Application"> | string
     owner?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
     connections?: ApplicationConnectionListRelationFilter
+    bridge?: ApplicationBridgeListRelationFilter
   }, "id">
 
   export type ApplicationOrderByWithAggregationInput = {
@@ -30749,6 +31959,66 @@ export namespace Prisma {
     accountId?: StringWithAggregatesFilter<"ApplicationConnection"> | string
     appId?: StringWithAggregatesFilter<"ApplicationConnection"> | string
     connectedAt?: DateTimeWithAggregatesFilter<"ApplicationConnection"> | Date | string
+  }
+
+  export type ApplicationBridgeWhereInput = {
+    AND?: ApplicationBridgeWhereInput | ApplicationBridgeWhereInput[]
+    OR?: ApplicationBridgeWhereInput[]
+    NOT?: ApplicationBridgeWhereInput | ApplicationBridgeWhereInput[]
+    id?: StringFilter<"ApplicationBridge"> | string
+    appId?: StringFilter<"ApplicationBridge"> | string
+    type?: StringFilter<"ApplicationBridge"> | string
+    value?: StringFilter<"ApplicationBridge"> | string
+    details?: JsonNullableFilter<"ApplicationBridge">
+    createdAt?: DateTimeFilter<"ApplicationBridge"> | Date | string
+    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
+  }
+
+  export type ApplicationBridgeOrderByWithRelationInput = {
+    id?: SortOrder
+    appId?: SortOrder
+    type?: SortOrder
+    value?: SortOrder
+    details?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    application?: ApplicationOrderByWithRelationInput
+  }
+
+  export type ApplicationBridgeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ApplicationBridgeWhereInput | ApplicationBridgeWhereInput[]
+    OR?: ApplicationBridgeWhereInput[]
+    NOT?: ApplicationBridgeWhereInput | ApplicationBridgeWhereInput[]
+    appId?: StringFilter<"ApplicationBridge"> | string
+    type?: StringFilter<"ApplicationBridge"> | string
+    value?: StringFilter<"ApplicationBridge"> | string
+    details?: JsonNullableFilter<"ApplicationBridge">
+    createdAt?: DateTimeFilter<"ApplicationBridge"> | Date | string
+    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
+  }, "id">
+
+  export type ApplicationBridgeOrderByWithAggregationInput = {
+    id?: SortOrder
+    appId?: SortOrder
+    type?: SortOrder
+    value?: SortOrder
+    details?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: ApplicationBridgeCountOrderByAggregateInput
+    _max?: ApplicationBridgeMaxOrderByAggregateInput
+    _min?: ApplicationBridgeMinOrderByAggregateInput
+  }
+
+  export type ApplicationBridgeScalarWhereWithAggregatesInput = {
+    AND?: ApplicationBridgeScalarWhereWithAggregatesInput | ApplicationBridgeScalarWhereWithAggregatesInput[]
+    OR?: ApplicationBridgeScalarWhereWithAggregatesInput[]
+    NOT?: ApplicationBridgeScalarWhereWithAggregatesInput | ApplicationBridgeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ApplicationBridge"> | string
+    appId?: StringWithAggregatesFilter<"ApplicationBridge"> | string
+    type?: StringWithAggregatesFilter<"ApplicationBridge"> | string
+    value?: StringWithAggregatesFilter<"ApplicationBridge"> | string
+    details?: JsonNullableWithAggregatesFilter<"ApplicationBridge">
+    createdAt?: DateTimeWithAggregatesFilter<"ApplicationBridge"> | Date | string
   }
 
   export type AccountCreateInput = {
@@ -32140,6 +33410,7 @@ export namespace Prisma {
     status?: string
     owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
+    bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateInput = {
@@ -32158,6 +33429,7 @@ export namespace Prisma {
     policies?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
+    bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUpdateInput = {
@@ -32176,6 +33448,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
+    bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateInput = {
@@ -32194,6 +33467,7 @@ export namespace Prisma {
     policies?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
+    bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationCreateManyInput = {
@@ -32508,6 +33782,68 @@ export namespace Prisma {
     accountId?: StringFieldUpdateOperationsInput | string
     appId?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationBridgeCreateInput = {
+    id?: string
+    type: string
+    value: string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    application: ApplicationCreateNestedOneWithoutBridgeInput
+  }
+
+  export type ApplicationBridgeUncheckedCreateInput = {
+    id?: string
+    appId: string
+    type: string
+    value: string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type ApplicationBridgeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    application?: ApplicationUpdateOneRequiredWithoutBridgeNestedInput
+  }
+
+  export type ApplicationBridgeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    appId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationBridgeCreateManyInput = {
+    id?: string
+    appId: string
+    type: string
+    value: string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type ApplicationBridgeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationBridgeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    appId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -33470,6 +34806,16 @@ export namespace Prisma {
     type?: SortOrder
   }
 
+  export type ApplicationBridgeListRelationFilter = {
+    every?: ApplicationBridgeWhereInput
+    some?: ApplicationBridgeWhereInput
+    none?: ApplicationBridgeWhereInput
+  }
+
+  export type ApplicationBridgeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type ApplicationCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -33654,6 +35000,31 @@ export namespace Prisma {
     accountId?: SortOrder
     appId?: SortOrder
     connectedAt?: SortOrder
+  }
+
+  export type ApplicationBridgeCountOrderByAggregateInput = {
+    id?: SortOrder
+    appId?: SortOrder
+    type?: SortOrder
+    value?: SortOrder
+    details?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ApplicationBridgeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    appId?: SortOrder
+    type?: SortOrder
+    value?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ApplicationBridgeMinOrderByAggregateInput = {
+    id?: SortOrder
+    appId?: SortOrder
+    type?: SortOrder
+    value?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type AccountTypeBrandCreateNestedOneWithoutAccountInput = {
@@ -34766,11 +36137,25 @@ export namespace Prisma {
     connect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
   }
 
+  export type ApplicationBridgeCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ApplicationBridgeCreateWithoutApplicationInput, ApplicationBridgeUncheckedCreateWithoutApplicationInput> | ApplicationBridgeCreateWithoutApplicationInput[] | ApplicationBridgeUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationBridgeCreateOrConnectWithoutApplicationInput | ApplicationBridgeCreateOrConnectWithoutApplicationInput[]
+    createMany?: ApplicationBridgeCreateManyApplicationInputEnvelope
+    connect?: ApplicationBridgeWhereUniqueInput | ApplicationBridgeWhereUniqueInput[]
+  }
+
   export type ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput = {
     create?: XOR<ApplicationConnectionCreateWithoutApplicationInput, ApplicationConnectionUncheckedCreateWithoutApplicationInput> | ApplicationConnectionCreateWithoutApplicationInput[] | ApplicationConnectionUncheckedCreateWithoutApplicationInput[]
     connectOrCreate?: ApplicationConnectionCreateOrConnectWithoutApplicationInput | ApplicationConnectionCreateOrConnectWithoutApplicationInput[]
     createMany?: ApplicationConnectionCreateManyApplicationInputEnvelope
     connect?: ApplicationConnectionWhereUniqueInput | ApplicationConnectionWhereUniqueInput[]
+  }
+
+  export type ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ApplicationBridgeCreateWithoutApplicationInput, ApplicationBridgeUncheckedCreateWithoutApplicationInput> | ApplicationBridgeCreateWithoutApplicationInput[] | ApplicationBridgeUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationBridgeCreateOrConnectWithoutApplicationInput | ApplicationBridgeCreateOrConnectWithoutApplicationInput[]
+    createMany?: ApplicationBridgeCreateManyApplicationInputEnvelope
+    connect?: ApplicationBridgeWhereUniqueInput | ApplicationBridgeWhereUniqueInput[]
   }
 
   export type AccountUpdateOneWithoutOwnedApplicationsNestedInput = {
@@ -34797,6 +36182,20 @@ export namespace Prisma {
     deleteMany?: ApplicationConnectionScalarWhereInput | ApplicationConnectionScalarWhereInput[]
   }
 
+  export type ApplicationBridgeUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ApplicationBridgeCreateWithoutApplicationInput, ApplicationBridgeUncheckedCreateWithoutApplicationInput> | ApplicationBridgeCreateWithoutApplicationInput[] | ApplicationBridgeUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationBridgeCreateOrConnectWithoutApplicationInput | ApplicationBridgeCreateOrConnectWithoutApplicationInput[]
+    upsert?: ApplicationBridgeUpsertWithWhereUniqueWithoutApplicationInput | ApplicationBridgeUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ApplicationBridgeCreateManyApplicationInputEnvelope
+    set?: ApplicationBridgeWhereUniqueInput | ApplicationBridgeWhereUniqueInput[]
+    disconnect?: ApplicationBridgeWhereUniqueInput | ApplicationBridgeWhereUniqueInput[]
+    delete?: ApplicationBridgeWhereUniqueInput | ApplicationBridgeWhereUniqueInput[]
+    connect?: ApplicationBridgeWhereUniqueInput | ApplicationBridgeWhereUniqueInput[]
+    update?: ApplicationBridgeUpdateWithWhereUniqueWithoutApplicationInput | ApplicationBridgeUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ApplicationBridgeUpdateManyWithWhereWithoutApplicationInput | ApplicationBridgeUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ApplicationBridgeScalarWhereInput | ApplicationBridgeScalarWhereInput[]
+  }
+
   export type ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput = {
     create?: XOR<ApplicationConnectionCreateWithoutApplicationInput, ApplicationConnectionUncheckedCreateWithoutApplicationInput> | ApplicationConnectionCreateWithoutApplicationInput[] | ApplicationConnectionUncheckedCreateWithoutApplicationInput[]
     connectOrCreate?: ApplicationConnectionCreateOrConnectWithoutApplicationInput | ApplicationConnectionCreateOrConnectWithoutApplicationInput[]
@@ -34809,6 +36208,20 @@ export namespace Prisma {
     update?: ApplicationConnectionUpdateWithWhereUniqueWithoutApplicationInput | ApplicationConnectionUpdateWithWhereUniqueWithoutApplicationInput[]
     updateMany?: ApplicationConnectionUpdateManyWithWhereWithoutApplicationInput | ApplicationConnectionUpdateManyWithWhereWithoutApplicationInput[]
     deleteMany?: ApplicationConnectionScalarWhereInput | ApplicationConnectionScalarWhereInput[]
+  }
+
+  export type ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ApplicationBridgeCreateWithoutApplicationInput, ApplicationBridgeUncheckedCreateWithoutApplicationInput> | ApplicationBridgeCreateWithoutApplicationInput[] | ApplicationBridgeUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationBridgeCreateOrConnectWithoutApplicationInput | ApplicationBridgeCreateOrConnectWithoutApplicationInput[]
+    upsert?: ApplicationBridgeUpsertWithWhereUniqueWithoutApplicationInput | ApplicationBridgeUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ApplicationBridgeCreateManyApplicationInputEnvelope
+    set?: ApplicationBridgeWhereUniqueInput | ApplicationBridgeWhereUniqueInput[]
+    disconnect?: ApplicationBridgeWhereUniqueInput | ApplicationBridgeWhereUniqueInput[]
+    delete?: ApplicationBridgeWhereUniqueInput | ApplicationBridgeWhereUniqueInput[]
+    connect?: ApplicationBridgeWhereUniqueInput | ApplicationBridgeWhereUniqueInput[]
+    update?: ApplicationBridgeUpdateWithWhereUniqueWithoutApplicationInput | ApplicationBridgeUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ApplicationBridgeUpdateManyWithWhereWithoutApplicationInput | ApplicationBridgeUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ApplicationBridgeScalarWhereInput | ApplicationBridgeScalarWhereInput[]
   }
 
   export type PortfolioAssetCreateNestedManyWithoutPortfolioInput = {
@@ -35033,6 +36446,20 @@ export namespace Prisma {
     upsert?: ApplicationUpsertWithoutConnectionsInput
     connect?: ApplicationWhereUniqueInput
     update?: XOR<XOR<ApplicationUpdateToOneWithWhereWithoutConnectionsInput, ApplicationUpdateWithoutConnectionsInput>, ApplicationUncheckedUpdateWithoutConnectionsInput>
+  }
+
+  export type ApplicationCreateNestedOneWithoutBridgeInput = {
+    create?: XOR<ApplicationCreateWithoutBridgeInput, ApplicationUncheckedCreateWithoutBridgeInput>
+    connectOrCreate?: ApplicationCreateOrConnectWithoutBridgeInput
+    connect?: ApplicationWhereUniqueInput
+  }
+
+  export type ApplicationUpdateOneRequiredWithoutBridgeNestedInput = {
+    create?: XOR<ApplicationCreateWithoutBridgeInput, ApplicationUncheckedCreateWithoutBridgeInput>
+    connectOrCreate?: ApplicationCreateOrConnectWithoutBridgeInput
+    upsert?: ApplicationUpsertWithoutBridgeInput
+    connect?: ApplicationWhereUniqueInput
+    update?: XOR<XOR<ApplicationUpdateToOneWithWhereWithoutBridgeInput, ApplicationUpdateWithoutBridgeInput>, ApplicationUncheckedUpdateWithoutBridgeInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -35327,6 +36754,7 @@ export namespace Prisma {
     policies?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
+    bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutOwnerInput = {
@@ -35344,6 +36772,7 @@ export namespace Prisma {
     policies?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
+    bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutOwnerInput = {
@@ -38521,6 +39950,32 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ApplicationBridgeCreateWithoutApplicationInput = {
+    id?: string
+    type: string
+    value: string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type ApplicationBridgeUncheckedCreateWithoutApplicationInput = {
+    id?: string
+    type: string
+    value: string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type ApplicationBridgeCreateOrConnectWithoutApplicationInput = {
+    where: ApplicationBridgeWhereUniqueInput
+    create: XOR<ApplicationBridgeCreateWithoutApplicationInput, ApplicationBridgeUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ApplicationBridgeCreateManyApplicationInputEnvelope = {
+    data: ApplicationBridgeCreateManyApplicationInput | ApplicationBridgeCreateManyApplicationInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AccountUpsertWithoutOwnedApplicationsInput = {
     update: XOR<AccountUpdateWithoutOwnedApplicationsInput, AccountUncheckedUpdateWithoutOwnedApplicationsInput>
     create: XOR<AccountCreateWithoutOwnedApplicationsInput, AccountUncheckedCreateWithoutOwnedApplicationsInput>
@@ -38604,6 +40059,34 @@ export namespace Prisma {
   export type ApplicationConnectionUpdateManyWithWhereWithoutApplicationInput = {
     where: ApplicationConnectionScalarWhereInput
     data: XOR<ApplicationConnectionUpdateManyMutationInput, ApplicationConnectionUncheckedUpdateManyWithoutApplicationInput>
+  }
+
+  export type ApplicationBridgeUpsertWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationBridgeWhereUniqueInput
+    update: XOR<ApplicationBridgeUpdateWithoutApplicationInput, ApplicationBridgeUncheckedUpdateWithoutApplicationInput>
+    create: XOR<ApplicationBridgeCreateWithoutApplicationInput, ApplicationBridgeUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ApplicationBridgeUpdateWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationBridgeWhereUniqueInput
+    data: XOR<ApplicationBridgeUpdateWithoutApplicationInput, ApplicationBridgeUncheckedUpdateWithoutApplicationInput>
+  }
+
+  export type ApplicationBridgeUpdateManyWithWhereWithoutApplicationInput = {
+    where: ApplicationBridgeScalarWhereInput
+    data: XOR<ApplicationBridgeUpdateManyMutationInput, ApplicationBridgeUncheckedUpdateManyWithoutApplicationInput>
+  }
+
+  export type ApplicationBridgeScalarWhereInput = {
+    AND?: ApplicationBridgeScalarWhereInput | ApplicationBridgeScalarWhereInput[]
+    OR?: ApplicationBridgeScalarWhereInput[]
+    NOT?: ApplicationBridgeScalarWhereInput | ApplicationBridgeScalarWhereInput[]
+    id?: StringFilter<"ApplicationBridge"> | string
+    appId?: StringFilter<"ApplicationBridge"> | string
+    type?: StringFilter<"ApplicationBridge"> | string
+    value?: StringFilter<"ApplicationBridge"> | string
+    details?: JsonNullableFilter<"ApplicationBridge">
+    createdAt?: DateTimeFilter<"ApplicationBridge"> | Date | string
   }
 
   export type PortfolioAssetCreateWithoutPortfolioInput = {
@@ -39233,6 +40716,7 @@ export namespace Prisma {
     policies?: NullableJsonNullValueInput | InputJsonValue
     status?: string
     owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
+    bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutConnectionsInput = {
@@ -39250,6 +40734,7 @@ export namespace Prisma {
     ownerAccountId?: string | null
     policies?: NullableJsonNullValueInput | InputJsonValue
     status?: string
+    bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutConnectionsInput = {
@@ -39352,6 +40837,7 @@ export namespace Prisma {
     policies?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
+    bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutConnectionsInput = {
@@ -39369,6 +40855,95 @@ export namespace Prisma {
     ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     policies?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
+    bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationCreateWithoutBridgeInput = {
+    id: string
+    name: string
+    party?: string
+    description?: string | null
+    icon?: string | null
+    website?: string | null
+    developer?: string | null
+    appSecret?: string | null
+    createdAt?: Date | string
+    access?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    owner?: AccountCreateNestedOneWithoutOwnedApplicationsInput
+    connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationUncheckedCreateWithoutBridgeInput = {
+    id: string
+    name: string
+    party?: string
+    description?: string | null
+    icon?: string | null
+    website?: string | null
+    developer?: string | null
+    appSecret?: string | null
+    createdAt?: Date | string
+    access?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: string | null
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationCreateOrConnectWithoutBridgeInput = {
+    where: ApplicationWhereUniqueInput
+    create: XOR<ApplicationCreateWithoutBridgeInput, ApplicationUncheckedCreateWithoutBridgeInput>
+  }
+
+  export type ApplicationUpsertWithoutBridgeInput = {
+    update: XOR<ApplicationUpdateWithoutBridgeInput, ApplicationUncheckedUpdateWithoutBridgeInput>
+    create: XOR<ApplicationCreateWithoutBridgeInput, ApplicationUncheckedCreateWithoutBridgeInput>
+    where?: ApplicationWhereInput
+  }
+
+  export type ApplicationUpdateToOneWithWhereWithoutBridgeInput = {
+    where?: ApplicationWhereInput
+    data: XOR<ApplicationUpdateWithoutBridgeInput, ApplicationUncheckedUpdateWithoutBridgeInput>
+  }
+
+  export type ApplicationUpdateWithoutBridgeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    party?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    developer?: NullableStringFieldUpdateOperationsInput | string | null
+    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    access?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    owner?: AccountUpdateOneWithoutOwnedApplicationsNestedInput
+    connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationUncheckedUpdateWithoutBridgeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    party?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    developer?: NullableStringFieldUpdateOperationsInput | string | null
+    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    access?: NullableJsonNullValueInput | InputJsonValue
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    ownerAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    policies?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type AccountOwnershipCreateManyChildInput = {
@@ -39606,6 +41181,7 @@ export namespace Prisma {
     policies?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
+    bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutOwnerInput = {
@@ -39623,6 +41199,7 @@ export namespace Prisma {
     policies?: NullableJsonNullValueInput | InputJsonValue
     status?: StringFieldUpdateOperationsInput | string
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
+    bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateManyWithoutOwnerInput = {
@@ -40171,6 +41748,14 @@ export namespace Prisma {
     connectedAt?: Date | string
   }
 
+  export type ApplicationBridgeCreateManyApplicationInput = {
+    id?: string
+    type: string
+    value: string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
   export type ApplicationConnectionUpdateWithoutApplicationInput = {
     id?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40187,6 +41772,30 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationBridgeUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationBridgeUncheckedUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationBridgeUncheckedUpdateManyWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PortfolioAssetCreateManyPortfolioInput = {

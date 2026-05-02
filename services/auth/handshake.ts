@@ -22,6 +22,24 @@ export async function bridgeBuildGrantRedirect(input: {
     return { redirectTo: errorUrl.toString() };
   }
 
+  if (!appId) {
+    const errorUrl = new URL('/auth/start', requestUrl);
+    errorUrl.searchParams.set('error', 'missing_app_id');
+    errorUrl.searchParams.set('error_description', 'An application ID (appId) must be provided.');
+    return { redirectTo: errorUrl.toString() };
+  }
+
+  // Validate redirectsTo against registered callback URLs before doing anything else
+  let redirectOrigin: string;
+  try {
+    redirectOrigin = new URL(redirectsTo).origin;
+  } catch {
+    const errorUrl = new URL('/auth/start', requestUrl);
+    errorUrl.searchParams.set('error', 'invalid_redirect');
+    errorUrl.searchParams.set('error_description', 'The redirectsTo parameter is not a valid URL.');
+    return { redirectTo: errorUrl.toString() };
+  }
+
   const finalRedirectUrl = new URL(redirectsTo);
   searchParams.forEach((value, key) => {
     if (key !== 'redirectsTo' && key !== 'appId') {
@@ -29,18 +47,33 @@ export async function bridgeBuildGrantRedirect(input: {
     }
   });
 
-  if (!appId) {
-    finalRedirectUrl.searchParams.set('error', 'missing_app_id');
-    finalRedirectUrl.searchParams.set('error_description', 'An application ID (appId) must be provided.');
-    return { redirectTo: finalRedirectUrl.toString() };
-  }
-
   try {
-    const application = await prisma.application.findUnique({ where: { id: appId } });
+    const [application, registeredCallbacks] = await Promise.all([
+      prisma.application.findUnique({ where: { id: appId } }),
+      prisma.applicationBridge.findMany({
+        where: { appId, type: 'callbackUrl' },
+        select: { value: true },
+      }),
+    ]);
 
     if (!application || !application.appSecret) {
       finalRedirectUrl.searchParams.set('error', 'invalid_app');
       finalRedirectUrl.searchParams.set('error_description', 'The provided application ID is invalid or not fully configured.');
+      return { redirectTo: finalRedirectUrl.toString() };
+    }
+
+    // Reject if no callback URLs are registered or the origin doesn't match any
+    const isAllowed = registeredCallbacks.some((cb) => {
+      try {
+        return new URL(cb.value).origin === redirectOrigin;
+      } catch {
+        return false;
+      }
+    });
+
+    if (!isAllowed) {
+      finalRedirectUrl.searchParams.set('error', 'invalid_redirect');
+      finalRedirectUrl.searchParams.set('error_description', 'The redirectsTo URL is not registered as a valid callback for this application.');
       return { redirectTo: finalRedirectUrl.toString() };
     }
 
