@@ -549,7 +549,6 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
 
     return { success: true };
   } catch (error) {
-    console.error('Registration error:', error);
     await logError('database', error, 'submitTermsStep');
     return {
       success: false,
