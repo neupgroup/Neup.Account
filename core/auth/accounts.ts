@@ -78,4 +78,21 @@ export async function updateDefaultAccount(identifier: string | number): Promise
     });
 }
 
+export async function cleanAccounts(): Promise<void> {
+    const existing = await getAccounts();
+
+    const cleaned = existing.filter(a => a.aid && a.sid && a.skey);
+
+    const expires = new Date();
+    expires.setFullYear(expires.getFullYear() + 1);
+
+    await cookieProvider.setCookieRaw('auth_accounts', JSON.stringify(cleaned), {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
+        path: '/',
+        expires,
+    });
+}
+
 
