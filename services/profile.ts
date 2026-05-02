@@ -7,8 +7,8 @@ import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { format, isValid, parse as parseWithFormat } from 'date-fns';
 import { brandProfileFormSchema } from '@/services/profile/schema';
-import { getUserProfile, checkPermissions, checkNeupIdAvailability, getUserNeupIds } from '@/core/helpers/user';
-import { logActivity } from '@/core/helpers/log-actions';
+import { getUserProfile, checkPermissions, checkNeupIdAvailability, getUserNeupIds } from '@/services/user';
+import { logActivity } from '@/services/log-actions';
 import { getAITextResponse } from '@/services/shared/ai';
 
 

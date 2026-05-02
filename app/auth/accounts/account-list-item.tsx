@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useState, useTransition } from 'react';
-import { getUserProfile } from '@/core/helpers/user';
+import { getUserProfile } from '@/services/user';
 import type { StoredAccount } from '@/core/auth/session';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useRouter, useSearchParams } from 'next/navigation';

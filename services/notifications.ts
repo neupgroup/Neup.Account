@@ -4,7 +4,7 @@ import prisma from '@/core/helpers/prisma';
 import { getPersonalAccountId } from '@/core/auth/verify';
 import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
-import { checkPermissions, getUserProfile } from '@/core/helpers/user';
+import { checkPermissions, getUserProfile } from '@/services/user';
 
 /**
  * Type Notification.

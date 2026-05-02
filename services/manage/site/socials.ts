@@ -3,7 +3,7 @@
 import {z} from 'zod';
 import {revalidatePath} from 'next/cache';
 import {logError} from '@/core/helpers/logger';
-import {checkPermissions} from '@/core/helpers/user';
+import {checkPermissions} from '@/services/user';
 import crypto from 'crypto';
 import { SYSTEM_CONFIG_KEYS, readSystemConfigData, writeSystemConfigData } from '@/services/manage/site/system-config';
 

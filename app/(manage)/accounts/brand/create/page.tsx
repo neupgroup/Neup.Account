@@ -33,7 +33,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { CheckCircle2, XCircle, Loader2 } from "@/components/icons"
 import { BackButton } from "@/components/ui/back-button"
 import { brandCreationSchema } from "@/services/manage/accounts/schema"
-import { checkNeupIdAvailability } from '@/core/helpers/user'
+import { checkNeupIdAvailability } from '@/services/user'
 import { SecondaryHeader } from "@/components/ui/secondary-header"
 import { redirectInApp } from "@/core/helpers/navigation";
 

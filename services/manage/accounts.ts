@@ -4,7 +4,7 @@
 
 import prisma from '@/core/helpers/prisma';
 import { logError } from '@/core/helpers/logger';
-import { checkPermissions } from '@/core/helpers/user';
+import { checkPermissions } from '@/services/user';
 
 export type UserStats = {
     totalUsers: number;

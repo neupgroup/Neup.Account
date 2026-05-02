@@ -19,10 +19,10 @@ import {
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge"
-import { getActivities, ActivityLog } from "@/core/helpers/log-actions"
+import { getActivities, ActivityLog } from "@/services/log-actions"
 import { ChevronLeft, ChevronRight, Ban } from "lucide-react";
 import { BackButton } from "@/components/ui/back-button";
-import { checkPermissions } from '@/core/helpers/user';
+import { checkPermissions } from '@/services/user';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useEffect, useState, useCallback, use } from "react";
 import { Skeleton } from "@/components/ui/skeleton";

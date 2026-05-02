@@ -3,11 +3,11 @@
 import { headers } from 'next/headers';
 import prisma from '@/core/helpers/prisma';
 import { getActiveAccountId } from '@/core/auth/verify';
-import { checkPermissions } from '@/core/helpers/user';
+import { checkPermissions } from '@/services/user';
 import { authenticator } from 'otplib';
 import { z } from 'zod';
 import bcrypt from 'bcryptjs';
-import { logActivity } from '@/core/helpers/log-actions';
+import { logActivity } from '@/services/log-actions';
 import { logError } from '@/core/helpers/logger';
 import { createNotification } from '@/services/notifications';
 import { encrypt, decrypt } from '@/services/security/totp';

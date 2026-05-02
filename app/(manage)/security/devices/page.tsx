@@ -6,7 +6,7 @@ import { getUserSessions } from "@/services/security/sessions";
 import { SessionManager } from "@/app/(manage)/security/session-manager";
 import { getActiveSession } from '@/core/auth/session';
 import { BackButton } from "@/components/ui/back-button";
-import { checkPermissions } from '@/core/helpers/user';
+import { checkPermissions } from '@/services/user';
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Ban } from "lucide-react";
 import { PrimaryHeader } from "@/components/ui/primary-header";

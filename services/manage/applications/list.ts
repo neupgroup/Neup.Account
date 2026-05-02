@@ -1,4 +1,4 @@
-import { checkPermissions } from '@/core/helpers/user';
+import { checkPermissions } from '@/services/user';
 import { getManagedApplications } from '@/services/manage/applications';
 import { getSignedApplications } from '@/services/data/signed-applications';
 

@@ -11,7 +11,7 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { getActivity } from "@/services/manage/users";
 import { Ban, MapPin } from "@/components/icons";
-import { checkPermissions } from '@/core/helpers/user';
+import { checkPermissions } from '@/services/user';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";

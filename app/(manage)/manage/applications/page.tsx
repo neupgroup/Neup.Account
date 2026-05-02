@@ -3,7 +3,7 @@ import { BackButton } from '@/components/ui/back-button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { checkPermissions } from '@/core/helpers/user';
+import { checkPermissions } from '@/services/user';
 import { getManagedApplications } from '@/services/manage/applications';
 import { updateManagedApplicationStatusFromForm } from '@/services/manage/applications/status-action';
 

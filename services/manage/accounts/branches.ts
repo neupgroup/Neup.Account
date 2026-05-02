@@ -2,11 +2,11 @@
  
  import { z } from 'zod';
  import prisma from '@/core/helpers/prisma';
-import { logActivity } from '@/core/helpers/log-actions';
+import { logActivity } from '@/services/log-actions';
 import { logError } from '@/core/helpers/logger';
 import { headers } from 'next/headers';
 import { revalidatePath } from 'next/cache';
-import { getUserNeupIds, getUserProfile, checkPermissions } from '@/core/helpers/user';
+import { getUserNeupIds, getUserProfile, checkPermissions } from '@/services/user';
 import { getActiveAccountId, getPersonalAccountId } from '@/core/auth/verify';
 
 /**

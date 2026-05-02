@@ -2,7 +2,7 @@
 
 import prisma from '@/core/helpers/prisma';
 import { getPersonalAccountId } from '@/core/auth/verify';
-import { checkPermissions } from '@/core/helpers/user';
+import { checkPermissions } from '@/services/user';
 import { logError } from '@/core/helpers/logger';
 import type { Application } from '@/services/manage/application-types';
 

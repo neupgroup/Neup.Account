@@ -18,10 +18,10 @@ import {
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge"
-import { getActivities } from "@/core/helpers/log-actions"
+import { getActivities } from "@/services/log-actions"
 import { ChevronLeft, ChevronRight, Ban } from "@/components/icons";
 import { BackButton } from "@/components/ui/back-button";
-import { checkPermissions } from '@/core/helpers/user';
+import { checkPermissions } from '@/services/user';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useEffect, useState, useCallback } from "react";
 import { Skeleton } from "@/components/ui/skeleton";

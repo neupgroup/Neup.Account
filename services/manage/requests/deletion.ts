@@ -1,12 +1,12 @@
 'use server';
 
 import prisma from '@/core/helpers/prisma';
-import { getUserProfile, checkPermissions, isRootUser } from '@/core/helpers/user';
+import { getUserProfile, checkPermissions, isRootUser } from '@/services/user';
 import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
 import { deleteUserAccount } from '@/services/manage/user-actions';
 import { getPersonalAccountId } from '@/core/auth/verify';
-import { logActivity } from '@/core/helpers/log-actions';
+import { logActivity } from '@/services/log-actions';
 import { z } from 'zod';
 
 /**

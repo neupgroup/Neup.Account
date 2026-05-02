@@ -6,7 +6,7 @@
 // redundant server calls on subsequent renders. Cache is invalidated on refetch().
 
 import { createContext, useState, useEffect, type ReactNode, useContext } from 'react';
-import { type UserProfile, getUserProfile as fetchUserProfile } from '@/core/helpers/user';
+import { type UserProfile, getUserProfile as fetchUserProfile } from '@/services/user';
 import { getActiveAccountId, getPersonalAccountId } from '@/core/auth/verify';
 import { checkSession } from '@/core/auth/check';
 import {

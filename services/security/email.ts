@@ -1,11 +1,11 @@
 'use server';
 
-import { logActivity } from '@/core/helpers/log-actions';
+import { logActivity } from '@/services/log-actions';
 import { logError } from '@/core/helpers/logger';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { getPersonalAccountId } from '@/core/auth/verify';
-import { checkPermissions } from '@/core/helpers/user';
+import { checkPermissions } from '@/services/user';
 import { emailFormSchema } from '@/services/security/schema';
 import { createNotification } from '../notifications';
 import prisma from '@/core/helpers/prisma';

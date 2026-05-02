@@ -3,11 +3,11 @@
 'use server';
 
 import prisma from '@/core/helpers/prisma';
-import { getUserNeupIds, getUserProfile as fetchUserProfile, checkPermissions } from '@/core/helpers/user';
+import { getUserNeupIds, getUserProfile as fetchUserProfile, checkPermissions } from '@/services/user';
 import { getPersonalAccountId } from '@/core/auth/verify';
 import { revalidatePath } from 'next/cache';
-import { logActivity } from '@/core/helpers/log-actions';
-import type { UserProfile } from '@/core/helpers/user';
+import { logActivity } from '@/services/log-actions';
+import type { UserProfile } from '@/services/user';
 
 export type UserDetails = {
   accountId: string;

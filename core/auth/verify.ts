@@ -5,9 +5,8 @@
 // "who is logged in" calls into this file.
 
 import { redirect } from 'next/navigation';
-import prisma from '@/core/helpers/prisma';
-import { logError } from '@/core/helpers/logger';
-import { authCookies, getSessionCookies } from '@/core/helpers/cookies';
+import { verifyActiveSession } from '@/services/auth/verify';
+import { getSessionCookies } from '@/core/helpers/cookies';
 
 // Represents an active session with both shorthand and legacy field names.
 export type Session = {
@@ -29,7 +28,7 @@ export async function hasActiveSessionCookies(): Promise<boolean> {
   return Boolean(accountId && sessionId && sessionKey);
 }
 
-// Reads the session from cookies and validates it against the database.
+// Reads the session from cookies and validates it against the database via services/auth/verify.
 // Returns null if the session is missing, expired, or tampered with.
 export async function getActiveSession(): Promise<Session | null> {
   const { accountId, sessionId, sessionKey } = await getSessionCookies();
@@ -38,42 +37,17 @@ export async function getActiveSession(): Promise<Session | null> {
     return null;
   }
 
-  try {
-    const session = await prisma.authSession.findUnique({
-      where: { id: sessionId },
-    });
+  const result = await verifyActiveSession();
+  if (!result.valid) return null;
 
-    if (!session) {
-      return null;
-    }
-
-    const dbValidTill = session.validTill;
-    const dbKey = session.key;
-
-    // Reject if expired, account mismatch, or key mismatch
-    const isInvalid =
-      !dbValidTill ||
-      dbValidTill < new Date() ||
-      session.accountId !== accountId ||
-      !dbKey ||
-      dbKey !== sessionKey;
-
-    if (isInvalid) {
-      return null;
-    }
-
-    return {
-      aid: session.accountId,
-      sid: sessionId,
-      skey: dbKey,
-      accountId: session.accountId,
-      sessionId: sessionId,
-      sessionKey: dbKey,
-    };
-  } catch (error) {
-    await logError('database', error, 'getActiveSession');
-    return null;
-  }
+  return {
+    aid: accountId,
+    sid: sessionId,
+    skey: sessionKey,
+    accountId,
+    sessionId,
+    sessionKey,
+  };
 }
 
 // Validates the current session and redirects to signout if it is invalid.

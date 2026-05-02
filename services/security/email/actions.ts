@@ -2,12 +2,12 @@
 
 import prisma from '@/core/helpers/prisma';
 import { getPersonalAccountId } from '@/core/auth/verify';
-import { logActivity } from '@/core/helpers/log-actions';
+import { logActivity } from '@/services/log-actions';
 import { logError } from '@/core/helpers/logger';
 import { emailFormSchema } from '@/services/security/schema';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
-import { checkPermissions } from '@/core/helpers/user-actions';
+import { checkPermissions } from '@/services/user';
 
 const CONTACT_TYPE = 'recoveryEmail';
 

@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { getUserProfile, getUserContacts, getUserNeupIds } from '@/core/helpers/user';
+import { getUserProfile, getUserContacts, getUserNeupIds } from '@/services/user';
 import { getActiveSession } from '@/core/auth/session';
 import { logError } from '@/core/helpers/logger';
 

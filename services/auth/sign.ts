@@ -8,7 +8,7 @@ import {
 } from '@/core/auth/callback';
 import prisma from '@/core/helpers/prisma';
 import { randomBytes } from 'crypto';
-import { getUserProfile } from '@/core/helpers/user';
+import { getUserProfile } from '@/services/user';
 import { validateExternalRequest } from '@/services/auth/validate';
 
 const EXTERNAL_LOGIN_PREFIX = 'external_app:';
@@ -386,4 +386,11 @@ export async function bridgeSignIntoApplication(input: { appId?: string; appType
 	} catch {
 		return { status: 500, body: { success: false, error: 'Internal server error.' } };
 	}
+}
+
+// Looks up the display name of an application by its ID.
+export async function getApplicationName(appId: string | null): Promise<string | null> {
+  if (!appId) return null;
+  const app = await prisma.application.findUnique({ where: { id: appId }, select: { name: true } });
+  return app?.name ?? null;
 }

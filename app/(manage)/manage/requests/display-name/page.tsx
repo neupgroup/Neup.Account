@@ -10,7 +10,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Ban, Loader2 } from '@/components/icons';
 import { BackButton } from '@/components/ui/back-button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { checkPermissions } from '@/core/helpers/user';
+import { checkPermissions } from '@/services/user';
 import { useToast } from '@/core/hooks/use-toast';
 import { getDisplayNameRequests, processDisplayNameRequest, type DisplayNameRequest } from '@/services/manage/requests/display-name';
 

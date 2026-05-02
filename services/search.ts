@@ -2,7 +2,7 @@
 'use server';
 
 import { logError } from '@/core/helpers/logger';
-import { checkPermissions } from '@/core/helpers/user';
+import { checkPermissions } from '@/services/user';
 import prisma from '@/core/helpers/prisma';
 import { PERMISSION_SET } from '@/core/helpers/permissions';
 

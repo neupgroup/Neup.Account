@@ -2,7 +2,7 @@
 
 import prisma from '@/core/helpers/prisma';
 import { z } from 'zod';
-import { getUserProfile, getUserNeupIds } from '@/core/helpers/user';
+import { getUserProfile, getUserNeupIds } from '@/services/user';
 
 const ValidateInputSchema = z.object({
   appId: z.string().min(1),

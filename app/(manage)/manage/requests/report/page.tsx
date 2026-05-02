@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { checkPermissions } from '@/core/helpers/user'
+import { checkPermissions } from '@/services/user'
 import { notFound } from "next/navigation"
 import { BackButton } from "@/components/ui/back-button"
 

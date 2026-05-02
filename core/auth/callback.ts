@@ -114,10 +114,6 @@ export function buildCallbackUrl(
 }
 
 // --- Server-side variants ---
-// The functions below work with Next.js page searchParams (Record<string, string | string[]>)
-// instead of URLSearchParams, since server components receive params in that shape.
-
-import prisma from '@/core/helpers/prisma';
 
 type SearchParamsRecord = Record<string, string | string[] | undefined>;
 
@@ -166,8 +162,5 @@ export function buildAuthCallbackWithStatus(context: ServerAuthContext, status: 
 }
 
 // Looks up the display name of an application by its ID.
-export async function getApplicationName(appId: string | null): Promise<string | null> {
-  if (!appId) return null;
-  const app = await prisma.application.findUnique({ where: { id: appId }, select: { name: true } });
-  return app?.name ?? null;
-}
+// Moved to services/auth/sign.ts — kept here as a re-export for backward compat.
+export { getApplicationName } from '@/services/auth/sign';

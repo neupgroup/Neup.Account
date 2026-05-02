@@ -3,13 +3,13 @@
 import { z } from 'zod';
 import prisma from '@/core/helpers/prisma';
 import { getPersonalAccountId } from '@/core/auth/verify';
-import { logActivity } from '@/core/helpers/log-actions';
+import { logActivity } from '@/services/log-actions';
 import { logError } from '@/core/helpers/logger';
 import { headers } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import bcrypt from 'bcryptjs';
 import { dependentFormSchema } from '@/services/manage/accounts/schema';
-import { checkPermissions, getUserProfile, getUserNeupIds } from '@/core/helpers/user';
+import { checkPermissions, getUserProfile, getUserNeupIds } from '@/services/user';
 
 
 /**

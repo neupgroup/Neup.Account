@@ -3,7 +3,7 @@
  import prisma from '@/core/helpers/prisma';
  import { getPersonalAccountId } from '@/core/auth/verify';
  import { logError } from '@/core/helpers/logger';
- import { getUserProfile, checkPermissions } from '@/core/helpers/user';
+ import { getUserProfile, checkPermissions } from '@/services/user';
  import { revalidatePath } from 'next/cache';
  import { z } from 'zod';
  

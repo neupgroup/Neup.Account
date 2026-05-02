@@ -1,6 +1,6 @@
 
 import { NextResponse, type NextRequest } from 'next/server';
-import { getUserProfile, getUserNeupIds } from '@/core/helpers/user-actions';
+import { getUserProfile, getUserNeupIds } from '@/services/user';
 
 export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
@@ -23,9 +23,9 @@ export async function GET(request: NextRequest) {
         // Return only publicly safe information
         const publicProfile = {
             accountId: accountId,
-            displayName: profile.displayName || `${profile.firstName} ${profile.lastName}`.trim(),
+            displayName: profile.nameDisplay || `${profile.nameFirst || ''} ${profile.nameLast || ''}`.trim(),
             neupId: neupIds[0] || null,
-            displayPhoto: profile.displayPhoto,
+            displayPhoto: profile.accountPhoto,
         };
 
         return NextResponse.json({

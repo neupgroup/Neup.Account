@@ -2,7 +2,7 @@
 
 import prisma from '@/core/helpers/prisma';
 import { getActiveAccountId, getActiveSession } from '@/core/auth/verify';
-import { logActivity } from '@/core/helpers/log-actions';
+import { logActivity } from '@/services/log-actions';
 import { logError } from '@/core/helpers/logger';
 
 export type ManagedSession = {

@@ -5,7 +5,7 @@
 // This is called on every page load by the client-side SessionProvider.
 
 import { getActiveAccountId, getPersonalAccountId } from '@/core/auth/verify';
-import { getUserProfile, getUserPermissions } from '@/core/helpers/user';
+import { getUserProfile, getUserPermissions } from '@/services/user';
 import { verifyActiveSession } from '@/services/auth/verify';
 import type { StoredProfileInfo } from './storage';
 

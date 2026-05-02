@@ -2,11 +2,11 @@
 
 import prisma from '@/core/helpers/prisma';
 import { getPersonalAccountId } from '@/core/auth/verify';
-import { logActivity } from '@/core/helpers/log-actions';
+import { logActivity } from '@/services/log-actions';
 import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
 import crypto from 'crypto';
-import { checkPermissions } from '@/core/helpers/user';
+import { checkPermissions } from '@/services/user';
 import { createNotification } from '../notifications';
 
 /**

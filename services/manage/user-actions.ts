@@ -3,9 +3,9 @@
 import prisma from '@/core/helpers/prisma';
 import { Prisma } from '../../prisma/generated/client/client';
 import { logError } from '@/core/helpers/logger';
-import { checkPermissions, getUserNeupIds } from '@/core/helpers/user';
+import { checkPermissions, getUserNeupIds } from '@/services/user';
 import { getPersonalAccountId } from '@/core/auth/verify';
-import { logActivity } from '@/core/helpers/log-actions';
+import { logActivity } from '@/services/log-actions';
 import { headers } from 'next/headers';
 import crypto from 'crypto';
 import { z } from 'zod';

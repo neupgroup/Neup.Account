@@ -1,7 +1,7 @@
 'use server';
 
 import { z } from 'zod';
-import { validateNeupId } from '@/core/helpers/user';
+import { validateNeupId } from '@/services/user';
 import { getAuthRequest, extendAuthRequest } from './utils';
 import prisma from '@/core/helpers/prisma';
 import { verifyPassword } from './password';
@@ -74,7 +74,7 @@ export async function submitNeupId(data: z.infer<typeof neupIdSchema>) {
 
     await extendAuthRequest(request.id);
 
-    const { getUserProfile, getUserContacts } = await import('@/core/helpers/user');
+    const { getUserProfile, getUserContacts } = await import('@/services/user');
     const profile = await getUserProfile(accountId);
     const contacts = await getUserContacts(accountId);
 

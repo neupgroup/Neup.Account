@@ -1,8 +1,8 @@
 'use server';
 
 import prisma from '@/core/helpers/prisma';
-import { getUserProfile, checkPermissions, getUserNeupIds } from '@/core/helpers/user';
-import { logActivity } from '@/core/helpers/log-actions';
+import { getUserProfile, checkPermissions, getUserNeupIds } from '@/services/user';
+import { logActivity } from '@/services/log-actions';
 import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
 

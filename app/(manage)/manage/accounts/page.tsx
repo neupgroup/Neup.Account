@@ -14,7 +14,7 @@ import type { UserStats } from '@/services/manage/accounts';
 import { Users, UserCheck, UserPlus, ShieldCheck, Search, Ban, List } from "@/components/icons"
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/core/hooks/use-toast"
-import { checkPermissions } from '@/core/helpers/user'
+import { checkPermissions } from '@/services/user'
 import { Skeleton } from "@/components/ui/skeleton"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { ListItem } from "@/components/ui/list-item"

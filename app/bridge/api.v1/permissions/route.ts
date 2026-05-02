@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { getUserPermissions } from '@/core/helpers/user';
+import { getUserPermissions } from '@/services/user';
 import { getActiveSession } from '@/core/auth/session';
 
 export async function GET(request: NextRequest) {

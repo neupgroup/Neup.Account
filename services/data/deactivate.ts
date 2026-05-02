@@ -1,11 +1,11 @@
 'use server';
 
 import { z } from "zod";
-import { logActivity } from "@/core/helpers/log-actions";
+import { logActivity } from "@/services/log-actions";
 import { logError } from "@/core/helpers/logger";
 import prisma from "@/core/helpers/prisma";
 import bcrypt from "bcryptjs";
-import { checkPermissions } from "@/core/helpers/user";
+import { checkPermissions } from "@/services/user";
 import { getActiveAccountId } from "@/core/auth/verify";
 import { logoutActiveSession } from "../auth/signout";
 

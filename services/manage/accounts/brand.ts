@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from '@/core/helpers/prisma';
-import { checkPermissions, getUserProfile } from '@/core/helpers/user';
+import { checkPermissions, getUserProfile } from '@/services/user';
 import { logError } from '@/core/helpers/logger';
 import { switchToBrand as switchToBrandAction, switchToPersonal as switchToPersonalAction } from '@/core/auth/session';
 import { getPersonalAccountId } from '@/core/auth/verify';
@@ -9,7 +9,7 @@ import { z } from 'zod';
 import { headers } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import { brandCreationSchema } from '@/services/manage/accounts/schema';
-import { logActivity } from '@/core/helpers/log-actions';
+import { logActivity } from '@/services/log-actions';
 
 export type BrandAccount = {
     id: string;

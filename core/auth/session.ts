@@ -43,7 +43,7 @@ export type StoredAccount = {
 };
 
 import { setStoredAccountsCookie, getSessionCookies, clearManagingCookie, setManagingCookie } from '@/core/helpers/cookies';
-import { getUserNeupIds, validateNeupId } from '@/core/helpers/user';
+import { getUserNeupIds, validateNeupId } from '@/services/user';
 import {
   getActiveSession as getActiveSessionAction,
   getActiveAccountId as getActiveAccountIdAction,

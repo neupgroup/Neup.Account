@@ -1,5 +1,5 @@
 
-import { checkPermissions } from '@/core/helpers/user';
+import { checkPermissions } from '@/services/user';
 import { notFound } from 'next/navigation';
 import { DashboardHeader } from '@/components/dashboard/dashboard-header';
 import { BillingCard } from '@/components/dashboard/billing-card';

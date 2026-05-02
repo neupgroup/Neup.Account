@@ -2,7 +2,7 @@
 
 import prisma from '@/core/helpers/prisma';
 import { getPersonalAccountId } from '@/core/auth/verify';
-import { getUserProfile, getUserNeupIds } from '@/core/helpers/user';
+import { getUserProfile, getUserNeupIds } from '@/services/user';
 import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';

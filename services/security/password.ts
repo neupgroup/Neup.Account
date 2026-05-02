@@ -2,8 +2,8 @@
 
 import { z } from 'zod';
 import { getActiveAccountId } from '@/core/auth/verify';
-import { checkPermissions } from '@/core/helpers/user';
-import { logActivity } from '@/core/helpers/log-actions';
+import { checkPermissions } from '@/services/user';
+import { logActivity } from '@/services/log-actions';
 import { logError } from '@/core/helpers/logger';
 import { changePasswordSchema } from '@/services/security/schema';
 import { createNotification } from '../notifications';
