@@ -222,8 +222,7 @@ export async function submitContactStep(authRequestId: string, data: z.infer<typ
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
-  // Skip OTP verification - directly mark phone as verified
-  console.log(`Phone number saved: ${validation.data.phone} (OTP verification skipped)`);
+  // OTP verification skipped — phone is marked as verified directly.
 
   const currentData = request.data.data as SignupRequestData;
   const newData = {
