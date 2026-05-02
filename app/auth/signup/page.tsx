@@ -861,14 +861,8 @@ function SignupFlow() {
   useEffect(() => {
     if (!step) {
       const startFlow = async () => {
-        if (typeof window !== 'undefined' && !window.isSecureContext) {
-          redirectInApp(router, '/auth/start');
-          return;
-        }
         try {
           const currentId = sessionStorage.getItem('temp_auth_id');
-          // We can't rely on initializeAuthFlow to redirect because we want to control it here
-          // initializeAuthFlow returns an ID.
           const newId = await initializeAuthFlow(currentId, 'signup');
           sessionStorage.setItem('temp_auth_id', newId);
 

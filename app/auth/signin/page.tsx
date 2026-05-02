@@ -589,10 +589,6 @@ function SigninFlow() {
   useEffect(() => {
     if (!step) {
       const startFlow = async () => {
-        if (typeof window !== 'undefined' && !window.isSecureContext) {
-          redirectInApp('/auth/start', router);
-          return;
-        }
         try {
           const currentId = sessionStorage.getItem('temp_auth_id');
           const newId = await initializeAuthFlow(currentId, 'signin');

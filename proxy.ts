@@ -1,14 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// Returns true if the current browser context is considered secure.
-// HTTPS pages and secure contexts return true. Plain HTTP — including localhost — returns false.
-export function isConnectionSecure(): boolean {
-  if (typeof window === 'undefined') return true;
-  if (window.location.protocol === 'http:') return false;
-  return window.isSecureContext;
-}
-
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 

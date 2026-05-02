@@ -8,8 +8,6 @@ import { useEffect, useRef } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import React from 'react';
 import { useToast } from '@/core/hooks/use-toast';
-import { useSecurityCheck } from '@/core/hooks/use-security-check';
-import { cn } from '@/core/helpers/utils';
 import { AccountListItem } from '../accounts/account-list-item';
 import type { StoredAccount } from '@/core/auth/session';
 import { appendAuthCallbackContext, appendRedirect, getAppDisplayName, shouldReturnToAuthStartForExternalAuthentication } from '@/core/auth/callback';
@@ -33,7 +31,6 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
   const searchParams = useSearchParams();
   const { toast } = useToast();
   const toastRef = useRef(toast);
-  const isSecure = useSecurityCheck();
   const error = searchParams.get('error');
   const errorDescription = searchParams.get('error_description');
   const redirects = searchParams.get('redirects');
@@ -54,19 +51,9 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
       });
     }
 
-    if (!isSecure) {
-      toastRef.current({
-        variant: 'destructive',
-        title: 'Insecure Conditions',
-        description: 'Cant Authenticate.',
-        duration: Infinity,
-        dismissible: false,
-      });
-    }
-
     if (didRedirectRef.current) return;
 
-    if (hasActiveSession && !error && isSecure) {
+    if (hasActiveSession && !error) {
       const preferredTarget =
         redirects && isSafeRedirectTarget(redirects)
           ? redirects
@@ -86,7 +73,7 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error, isSecure, hasActiveSession, redirects, router]);
+  }, [error, hasActiveSession, redirects, router]);
 
   const getUrlWithReturn = (baseUrl: string) => {
     const withContext = appendAuthCallbackContext(baseUrl, searchParams);
@@ -108,7 +95,7 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className={cn("space-y-4", !isSecure && "pointer-events-none opacity-50")}>
+          <div className="space-y-4">
             {error && (
               <Alert variant="destructive">
                 <AlertTriangle className="h-4 w-4" />
