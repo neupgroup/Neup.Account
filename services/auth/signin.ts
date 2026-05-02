@@ -38,7 +38,7 @@ export async function submitNeupId(data: z.infer<typeof neupIdSchema>) {
     const { neupId, authRequestId } = validation.data;
     const lowerCaseNeupId = neupId.toLowerCase();
 
-    const request = await getAuthRequest(authRequestId);
+    const request = await getAuthRequest(authRequestId, { expectedType: 'signin' });
     if (!request) {
         return { success: false, error: 'Session Expired, Try again.' };
     }
@@ -104,7 +104,7 @@ export async function submitPasswordWithNeupId(data: { neupId: string; password:
         return { success: false, mfaRequired: false, error: 'Invalid credentials.' };
     }
 
-    const request = await getAuthRequest(authRequestId);
+    const request = await getAuthRequest(authRequestId, { expectedType: 'signin' });
     if (!request) {
         return { success: false, mfaRequired: false, error: 'Session Expired, Try again.' };
     }
@@ -174,7 +174,7 @@ export async function submitPassword(data: z.infer<typeof passwordSchema>): Prom
 
     const { password, authRequestId } = validation.data;
 
-    const request = await getAuthRequest(authRequestId);
+    const request = await getAuthRequest(authRequestId, { expectedType: 'signin' });
     if (!request || !request.data.accountId) {
         return { success: false, mfaRequired: false, error: 'Session Expired, Try again.' };
     }

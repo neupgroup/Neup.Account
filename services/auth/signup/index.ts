@@ -63,7 +63,7 @@ export async function getSignupStepData(authRequestId: string) {
   if (!authRequestId) {
     return { success: false, data: null };
   }
-  const request = await getAuthRequest(authRequestId);
+  const request = await getAuthRequest(authRequestId, { expectedType: 'signup' });
   if (!request) {
     return { success: false, data: null };
   }
@@ -86,7 +86,7 @@ export async function submitNameStep(authRequestId: string, data: z.infer<typeof
       details: validation.error.flatten(),
     };
 
-  const request = await getAuthRequest(authRequestId);
+  const request = await getAuthRequest(authRequestId, { expectedType: 'signup' });
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
@@ -130,7 +130,7 @@ export async function submitDemographicsStep(authRequestId: string, data: z.infe
       details: validation.error.flatten(),
     };
 
-  const request = await getAuthRequest(authRequestId);
+  const request = await getAuthRequest(authRequestId, { expectedType: 'signup' });
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
@@ -180,7 +180,7 @@ export async function submitNationalityStep(authRequestId: string, data: z.infer
       details: validation.error.flatten(),
     };
 
-  const request = await getAuthRequest(authRequestId);
+  const request = await getAuthRequest(authRequestId, { expectedType: 'signup' });
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
@@ -218,7 +218,7 @@ export async function submitContactStep(authRequestId: string, data: z.infer<typ
       details: validation.error.flatten(),
     };
 
-  const request = await getAuthRequest(authRequestId);
+  const request = await getAuthRequest(authRequestId, { expectedType: 'signup' });
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
@@ -259,7 +259,7 @@ export async function submitOtpStep(authRequestId: string, data: z.infer<typeof 
       details: validation.error.flatten(),
     };
 
-  const request = await getAuthRequest(authRequestId);
+  const request = await getAuthRequest(authRequestId, { expectedType: 'signup' });
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
@@ -311,7 +311,7 @@ export async function submitNeupIdStep(authRequestId: string, data: z.infer<type
     return { success: false, error: 'This NeupID is already taken.' };
   }
 
-  const request = await getAuthRequest(authRequestId);
+  const request = await getAuthRequest(authRequestId, { expectedType: 'signup' });
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
@@ -358,7 +358,7 @@ export async function submitPasswordStep(authRequestId: string, data: z.infer<ty
     return { success: false, error: 'Invalid password.' };
   }
 
-  const request = await getAuthRequest(authRequestId);
+  const request = await getAuthRequest(authRequestId, { expectedType: 'signup' });
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 
@@ -398,7 +398,7 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
       details: validation.error.flatten(),
     };
 
-  const request = await getAuthRequest(authRequestId);
+  const request = await getAuthRequest(authRequestId, { expectedType: 'signup' });
   if (!request)
     return { success: false, error: 'Signup session expired.' };
 

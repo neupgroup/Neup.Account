@@ -237,7 +237,7 @@ export async function verifyTotpFromPost(
 	}
 
 	const { token, authRequestId } = validation.data;
-	const request = await getAuthRequest(authRequestId);
+	const request = await getAuthRequest(authRequestId, { expectedType: 'signin' });
 
 	if (!request || !request.data.accountId) {
 		return { success: false, error: 'Your session has expired. Please try again.' };
