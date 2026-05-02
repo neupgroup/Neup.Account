@@ -90,7 +90,12 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
   const visibleAccounts = accounts.filter((account) => Boolean(account.aid) && !account.isUnknown);
 
   useEffect(() => {
-    void cleanupExpiredStoredSessions();
+    // Run cleanup at most once per browser session to avoid DB calls on every visit.
+    const CLEANUP_KEY = 'auth_cleanup_done';
+    if (typeof window !== 'undefined' && !sessionStorage.getItem(CLEANUP_KEY)) {
+      sessionStorage.setItem(CLEANUP_KEY, '1');
+      void cleanupExpiredStoredSessions();
+    }
   }, []);
 
   useEffect(() => {
