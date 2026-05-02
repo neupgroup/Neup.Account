@@ -108,12 +108,12 @@ export function AccountListItem({ account, isActive }: { account: CombinedAccoun
                  return;
             }
 
-            if (finalAccount.sid || finalAccount.sessionId) {
-                if (finalAccount.def !== 1 && !finalAccount.sid) {
-                    redirectInApp(router, getSigninUrl(finalAccount.nid || finalAccount.neupId));
-                    return;
-                }
+            if (finalAccount.def === 1 && (finalAccount.sid || finalAccount.sessionId)) {
+                redirectInApp(router, redirects || '/');
+                return;
+            }
 
+            if (finalAccount.sid || finalAccount.sessionId) {
                 const res = await switchActiveAccount(finalAccount);
                 if (res.success) {
                     redirectInApp(router, redirects || '/');
@@ -121,10 +121,7 @@ export function AccountListItem({ account, isActive }: { account: CombinedAccoun
                 return;
             }
 
-            if (!finalAccount.sid && !finalAccount.sessionId) {
-                redirectInApp(router, getSigninUrl(finalAccount.nid || finalAccount.neupId));
-                return;
-            }
+            redirectInApp(router, getSigninUrl(finalAccount.nid || finalAccount.neupId));
 
             const res = await switchToDelegated(targetAccountId);
             if (res.success) redirectInApp(router, redirects || '/');
