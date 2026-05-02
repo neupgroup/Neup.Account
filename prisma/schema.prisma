@@ -27,8 +27,6 @@ model Account {
   contacts          Contact[]
   neupIds           NeupId[]
   notifications     Notification[]
-  permits           Permit[]
-  targetPermits     Permit[]                @relation("TargetAccount")
   portfolioMembers  PortfolioMember[]
   portfolioRoles    PortfolioRole[]
   receivedRequests  Request[]               @relation("ReceivedRequests")
@@ -211,29 +209,6 @@ model AuthMethod {
   @@map("auth_method")
 }
 
-model Permit {
-  id               String    @id(map: "permits_pkey") @default(uuid())
-  accountId        String
-  targetAccountId  String?
-  forSelf          Boolean   @default(false)
-  isRoot           Boolean   @default(false)
-  permissions      String[]
-  restrictions     String[]
-  createdOn        DateTime  @default(now())
-  expiryDate       DateTime?
-  fullAccess       Boolean   @default(false)
-  issueDate        DateTime?
-  issuingAuthority String?
-  managedBy        String?
-  permitNumber     String?
-  permitSubType    String?
-  permitType       String?
-  status           String    @default("active")
-  account          Account   @relation(fields: [accountId], references: [id], map: "permits_accountId_fkey")
-  targetAccount    Account?  @relation("TargetAccount", fields: [targetAccountId], references: [id], map: "permits_targetAccountId_fkey")
-
-  @@map("permit")
-}
 
 model AuthSession {
   id           String    @id(map: "sessions_pkey") @default(uuid())

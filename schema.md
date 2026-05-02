@@ -135,25 +135,6 @@ table: neupid
   isPrimary: boolean, default false
   dateAdded: timestamp, default now()
 
-table: permit
-  id: text, primary key, default uuid()
-  accountId: text, references account.id
-  targetAccountId: text, references account.id
-  forSelf: boolean, default false
-  isRoot: boolean, default false
-  permissions: array
-  restrictions: array
-  createdOn: timestamp, default now()
-  expiryDate: timestamp
-  fullAccess: boolean, default false
-  issueDate: timestamp
-  issuingAuthority: text
-  managedBy: text
-  permitNumber: text
-  permitSubType: text
-  permitType: text
-  status: text, default 'active'
-
 table: system_error
   id: text, primary key, default uuid()
   message: text
