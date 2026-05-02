@@ -5,7 +5,6 @@
 
 import prisma from '@/core/helpers/prisma';
 import { headers } from 'next/headers';
-import { getUserProfile } from '@/services/user';
 import { logError } from '@/core/helpers/logger';
 import { getActiveAccountId } from '@/core/auth/verify';
 
@@ -95,32 +94,51 @@ export async function getActivities({ startAfter: startAfterDocId, forCurrentUse
 
         let hasNextPage = pageDocs.length > PAGE_SIZE;
         if (hasNextPage) {
-            pageDocs.pop(); // remove the extra record used for next-page detection
+            pageDocs.pop();
         }
 
-        const logs: ActivityLog[] = await Promise.all(pageDocs.map(async (doc) => {
-            const [actorProfile, neupIds] = await Promise.all([
-                getUserProfile(doc.actorAccountId),
-                prisma.neupId.findMany({
-                    where: { accountId: doc.actorAccountId },
-                    take: 1
-                })
-            ]);
-            
-            // Resolve the best available display name for the actor
-            const getDisplayName = (profile: any, fallbackId: string) => {
-                if (!profile) return fallbackId;
-                return profile.nameDisplay || profile.displayName || `${profile.nameFirst || ''} ${profile.nameLast || ''}`.trim() || fallbackId;
-            };
+        if (pageDocs.length === 0) {
+            return { logs: [], hasNextPage: false };
+        }
 
-            return {
-                id: doc.id,
-                user: getDisplayName(actorProfile, doc.actorAccountId),
-                neupId: neupIds[0]?.id || 'N/A',
-                action: doc.action,
-                status: doc.status,
-                timestamp: doc.timestamp.toLocaleString(),
-            };
+        // Collect unique actor IDs and batch-fetch profiles and NeupIDs in 2 queries
+        const uniqueActorIds = Array.from(new Set(pageDocs.map(doc => doc.actorAccountId)));
+
+        const [accounts, neupIdRows] = await Promise.all([
+            prisma.account.findMany({
+                where: { id: { in: uniqueActorIds } },
+                select: {
+                    id: true,
+                    displayName: true,
+                    individualProfile: { select: { firstName: true, lastName: true } },
+                    brandProfile: { select: { brandName: true } },
+                },
+            }),
+            prisma.neupId.findMany({
+                where: { accountId: { in: uniqueActorIds }, isPrimary: true },
+                select: { accountId: true, id: true },
+            }),
+        ]);
+
+        const accountMap = new Map(accounts.map(a => [a.id, a]));
+        const neupIdMap = new Map(neupIdRows.map(n => [n.accountId, n.id]));
+
+        const getDisplayName = (accountId: string): string => {
+            const a = accountMap.get(accountId);
+            if (!a) return accountId;
+            return a.brandProfile?.brandName
+                || a.displayName
+                || `${a.individualProfile?.firstName || ''} ${a.individualProfile?.lastName || ''}`.trim()
+                || accountId;
+        };
+
+        const logs: ActivityLog[] = pageDocs.map(doc => ({
+            id: doc.id,
+            user: getDisplayName(doc.actorAccountId),
+            neupId: neupIdMap.get(doc.actorAccountId) || 'N/A',
+            action: doc.action,
+            status: doc.status,
+            timestamp: doc.timestamp.toLocaleString(),
         }));
         
         return { logs, hasNextPage };
