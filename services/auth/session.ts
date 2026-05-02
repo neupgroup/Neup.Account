@@ -4,7 +4,7 @@ import { headers } from 'next/headers';
 import prisma from '@/core/helpers/prisma';
 import { createAndSetSession } from '@/core/auth/session';
 import { authCookies } from '@/core/helpers/cookies';
-import { getActiveSession } from '@/core/auth/session';
+import { getActiveSession } from '@/core/auth/verify';
 import { makeNotification } from '@/services/notifications';
 
 /**

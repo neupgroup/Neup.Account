@@ -1,7 +1,7 @@
 
 import { getBrandAccounts } from "@/services/manage/accounts/brand";
 import { notFound } from "next/navigation";
-import { getPersonalAccountId } from '@/core/auth/session';
+import { getPersonalAccountId } from '@/core/auth/verify';
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { AccountListItem } from "@/components/elements/account-item";
 import { Button } from "@/components/ui/button";

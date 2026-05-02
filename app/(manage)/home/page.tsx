@@ -5,7 +5,7 @@ import { DashboardHeader } from '@/components/dashboard/dashboard-header';
 import { BillingCard } from '@/components/dashboard/billing-card';
 import { SettingsCard } from '@/components/dashboard/settings-card';
 import { WarningDisplay } from '@/components/warning-display';
-import { getActiveAccountId } from '@/core/auth/session';
+import { getActiveAccountId } from '@/core/auth/verify';
 import { NotificationsCard } from '@/components/dashboard/notifications-card';
 
 export default async function HomePage() {

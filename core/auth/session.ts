@@ -44,12 +44,6 @@ export type StoredAccount = {
 
 import { setStoredAccountsCookie, getSessionCookies, clearManagingCookie, setManagingCookie } from '@/core/helpers/cookies';
 import { getUserNeupIds, validateNeupId } from '@/services/user';
-import {
-  getActiveSession as getActiveSessionAction,
-  getActiveAccountId as getActiveAccountIdAction,
-  getPersonalAccountId as getPersonalAccountIdAction,
-  validateCurrentSession as validateCurrentSessionAction,
-} from '@/core/auth/verify';
 
 const SESSION_DURATION_DAYS = 30;
 
@@ -342,19 +336,4 @@ export async function switchToPersonal() {
   }
 }
 
-// Re-exports from verify.ts for convenience so callers don't need two imports.
-export async function getActiveSession() {
-  return getActiveSessionAction();
-}
 
-export async function getActiveAccountId() {
-  return getActiveAccountIdAction();
-}
-
-export async function getPersonalAccountId() {
-  return getPersonalAccountIdAction();
-}
-
-export async function validateCurrentSession() {
-  return validateCurrentSessionAction();
-}

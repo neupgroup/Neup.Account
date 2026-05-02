@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers';
 import type { StoredAccount } from '@/core/auth/session';
-import type { Session } from "@/core/auth/verify";
+import type { Session } from "@/core/auth/session";
 import { Singleton } from '@/core/interface/singleton';
 
 type CookieStore = Awaited<ReturnType<typeof cookies>>;

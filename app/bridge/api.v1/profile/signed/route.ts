@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { getUserProfile, getUserContacts, getUserNeupIds } from '@/services/user';
-import { getActiveSession } from '@/core/auth/session';
+import { getActiveSession } from '@/core/auth/verify';
 import { logError } from '@/core/helpers/logger';
 
 export async function POST(request: NextRequest) {
