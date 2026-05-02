@@ -40,36 +40,37 @@ export async function bridgeIssueGrant(input: {
 
   try {
     const now = new Date();
-    const request = await prisma.authRequest.findUnique({
-      where: { id: tempToken },
-      select: { id: true, type: true, status: true, data: true, accountId: true, expiresAt: true },
-    });
 
-    const requestData = (request?.data as Record<string, any> | null) || {};
-    const requestAppId = typeof requestData.appId === 'string' ? requestData.appId : null;
-
-    if (
-      !request ||
-      request.type !== 'bridge_grant' ||
-      request.status !== 'pending' ||
-      !request.accountId ||
-      request.expiresAt <= now ||
-      requestAppId !== appId
-    ) {
+    // Atomically consume the token in a single query — no TOCTOU window.
+    // update() throws if no row matches, which means the token was already used,
+    // expired, or never existed. We catch that and return 401.
+    let request: { id: string; type: string; data: unknown; accountId: string | null; expiresAt: Date };
+    try {
+      request = await prisma.authRequest.update({
+        where: {
+          id: tempToken,
+          type: 'bridge_grant',
+          status: 'pending',
+        },
+        data: { status: 'used' },
+        select: { id: true, type: true, data: true, accountId: true, expiresAt: true },
+      });
+    } catch {
       return {
         status: 401,
         body: { error: 'invalid_token', error_description: 'Token not found, expired, or already used' },
       };
     }
 
-    const consumed = await prisma.authRequest.updateMany({
-      where: { id: tempToken, type: 'bridge_grant', status: 'pending' },
-      data: { status: 'used' },
-    });
-    if (consumed.count === 0) {
+    const requestData = (request.data as Record<string, any> | null) || {};
+    const requestAppId = typeof requestData.appId === 'string' ? requestData.appId : null;
+
+    // Validate expiry and appId after consumption — if invalid, the token is still
+    // marked used so it cannot be replayed.
+    if (!request.accountId || request.expiresAt <= now || requestAppId !== appId) {
       return {
         status: 401,
-        body: { error: 'invalid_token', error_description: 'Token already used' },
+        body: { error: 'invalid_token', error_description: 'Token not found, expired, or already used' },
       };
     }
 
