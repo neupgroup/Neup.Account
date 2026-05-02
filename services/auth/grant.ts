@@ -3,10 +3,23 @@ import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import { logError } from '@/core/helpers/logger';
 import { makeNotification } from '@/services/notifications';
+import { getUserPermissions, isRootUser } from '@/services/user';
 
 const EXTERNAL_LOGIN_PREFIX = 'external_app:';
 function externalLoginType(appId: string) {
   return `${EXTERNAL_LOGIN_PREFIX}${appId}`;
+}
+
+// Resolves the role name and permission set for an account in the context of an external app.
+async function resolveAccountGrant(accountId: string, appId: string): Promise<{ role: string; permissions: string[] }> {
+  const [account, permissions, isRoot] = await Promise.all([
+    prisma.account.findUnique({ where: { id: accountId }, select: { accountType: true } }),
+    getUserPermissions(accountId, appId),
+    isRootUser(accountId),
+  ]);
+
+  const role = isRoot ? 'root' : (account?.accountType ?? 'individual');
+  return { role, permissions };
 }
 
 /**
@@ -60,8 +73,7 @@ export async function bridgeIssueGrant(input: {
       };
     }
 
-    const roleName = 'user';
-    const permissions: string[] = [];
+    const { role: roleName, permissions } = await resolveAccountGrant(request.accountId, appId);
 
     const skey = crypto.randomBytes(32).toString('hex');
 
@@ -190,8 +202,7 @@ export async function bridgeRefreshGrant(input: {
       };
     }
 
-    const roleName = 'user';
-    const permissions: string[] = [];
+    const { role: roleName, permissions } = await resolveAccountGrant(aid, appId);
 
     const sessionExpSeconds = 60 * 60 * 24 * 7;
     const newSessionExpiresOn = new Date();
