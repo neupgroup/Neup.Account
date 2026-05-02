@@ -1,5 +1,10 @@
 "use client";
 
+// Provides the active session state to the entire component tree.
+// On mount, calls checkSession() to verify the session and load the profile and permissions.
+// Caches a lightweight profile snapshot and permissions JSON in sessionStorage to avoid
+// redundant server calls on subsequent renders. Cache is invalidated on refetch().
+
 import { createContext, useState, useEffect, type ReactNode, useContext } from 'react';
 import { type UserProfile, getUserProfile as fetchUserProfile } from '@/core/helpers/user';
 import { getActiveAccountId, getPersonalAccountId } from '@/core/auth/verify';
@@ -18,12 +23,13 @@ type SessionState = {
     permissions: string[] | null;
     accountId: string | null;
     personalAccountId: string | null;
-    isManaging: boolean;
+    isManaging: boolean; // true when the active account differs from the personal account
     refetch: () => void;
 };
 
 const SessionContext = createContext<SessionState | undefined>(undefined);
 
+// Hook to consume the session context. Must be used inside a SessionProvider.
 export function useSession() {
     const context = useContext(SessionContext);
     if (!context) {
@@ -49,12 +55,13 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
         const result = await checkSession();
 
         if (!result.valid) {
+            // Clear any stale cached data on invalid session
             deleteSessionData();
             setSessionState(s => ({ ...s, loading: false, profile: null, permissions: [] }));
             return;
         }
 
-        // Update profileInfo in sessionStorage if changed
+        // Compare cached profile against fresh data — only update sessionStorage if changed
         const cachedProfile = getSessionData(PROFILE_INFO_KEY);
         const profileChanged = !cachedProfile ||
             cachedProfile.firstName !== result.profileInfo.firstName ||
@@ -66,14 +73,14 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
             setSessionData(PROFILE_INFO_KEY, result.profileInfo);
         }
 
-        // Update permissions in sessionStorage (stored as JSON in jwt key) if changed
+        // Compare cached permissions JSON — only update if the set has changed
         const cachedPermissions = getSessionData(JWT_KEY);
         const freshPermissionsJson = JSON.stringify(result.permissions);
         if (cachedPermissions !== freshPermissionsJson) {
             setSessionData(JWT_KEY, freshPermissionsJson);
         }
 
-        // Fetch full profile for UI only if needed
+        // Only fetch the full profile from the server if the data has changed or is missing
         let fullProfile: UserProfile | null = sessionState.profile;
         if (forceRefresh || profileChanged || !fullProfile) {
             fullProfile = await fetchUserProfile(result.accountId);
@@ -90,6 +97,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
         });
     };
 
+    // Clears the sessionStorage cache and forces a full re-fetch from the server.
     const clearCacheAndRefetch = () => {
         deleteSessionData();
         fetchData(true);

@@ -1,10 +1,15 @@
 'use server';
 
+// Manages the auth_accounts cookie array and all account-switching logic.
+// This is the main session layer — it creates sessions, validates stored accounts,
+// and handles switching between personal, brand, dependent, and delegated contexts.
+
 import prisma from '@/core/helpers/prisma';
 import crypto from 'crypto';
 
 import { logError } from '@/core/helpers/logger';
 
+// Represents an active session with both shorthand and legacy field names.
 export type Session = {
   aid?: string;
   sid?: string;
@@ -15,6 +20,8 @@ export type Session = {
   jwt?: string;
 };
 
+// Represents one account entry stored in the auth_accounts cookie.
+// def: 1 means this is the currently active account.
 export type StoredAccount = {
   aid: string;
   sid?: string;
@@ -34,6 +41,7 @@ export type StoredAccount = {
   isDependent?: boolean;
   accountType?: string;
 };
+
 import { setStoredAccountsCookie, getSessionCookies, clearManagingCookie, setManagingCookie } from '@/core/helpers/cookies';
 import { getUserNeupIds, validateNeupId } from '@/core/helpers/user';
 import {
@@ -43,11 +51,9 @@ import {
   validateCurrentSession as validateCurrentSessionAction,
 } from '@/core/auth/verify';
 
-// --- Constants ---
 const SESSION_DURATION_DAYS = 30;
 
-// --- Session Logic ---
-
+// Normalizes a stored account by resolving legacy field aliases into canonical fields.
 function normalizeStoredAccount(account: StoredAccount): StoredAccount {
   const sid = account.sid ?? account.sessionId;
   const skey = account.skey ?? account.sessionKey;
@@ -65,6 +71,9 @@ function normalizeStoredAccount(account: StoredAccount): StoredAccount {
   };
 }
 
+// Creates a new auth session in the database and writes it to the auth_accounts cookie.
+// Marks all other stored accounts as inactive (def: 0) and removes any previous
+// session for the same accountId before adding the new one.
 export async function createAndSetSession(
   accountId: string,
   loginType: string,
@@ -119,12 +128,14 @@ export async function createAndSetSession(
   }
 }
 
-// --- Stored Account Management ---
+// Returns all accounts stored in the auth_accounts cookie, normalized.
 export async function getStoredAccounts(): Promise<StoredAccount[]> {
   const { allAccounts } = await getSessionCookies();
   return allAccounts.map(normalizeStoredAccount);
 }
 
+// Returns all stored accounts, but validates the active account (def: 1) against the DB.
+// If the active session is expired or invalid, it is demoted to def: 0.
 export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
   const { allAccounts } = await getSessionCookies();
   if (allAccounts.length === 0) {
@@ -137,6 +148,7 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
     allAccounts.map(async (rawAccount: StoredAccount) => {
       const account = normalizeStoredAccount(rawAccount);
 
+      // Only validate the active account — inactive ones are trusted as-is
       if (account.def !== 1) return account;
       if (!account.sid || !account.skey) return { ...account, def: 0 as const };
 
@@ -178,6 +190,8 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
   return validatedAccounts;
 }
 
+// Validates all stored accounts, strips session keys from expired ones,
+// and removes any accounts that no longer exist in the database.
 export async function cleanupExpiredStoredSessions(): Promise<StoredAccount[]> {
   const validatedAccounts = await getValidatedStoredAccounts();
 
@@ -195,6 +209,7 @@ export async function cleanupExpiredStoredSessions(): Promise<StoredAccount[]> {
 
   let prunedAccounts = cleanedAccounts;
   try {
+    // Remove accounts whose IDs no longer exist in the database
     const uniqueIds = Array.from(new Set(prunedAccounts.map((account) => account.aid).filter(Boolean)));
     if (uniqueIds.length > 0) {
       const existing = await prisma.account.findMany({
@@ -212,7 +227,8 @@ export async function cleanupExpiredStoredSessions(): Promise<StoredAccount[]> {
   return prunedAccounts;
 }
 
-// --- Account Switching ---
+// Validates the given account's session against the DB, then sets it as the active
+// account (def: 1) in the cookie and clears any managing context.
 export async function switchToAccount(account: StoredAccount) {
     if (!account.sid || !account.skey) {
         return { success: false, error: 'Invalid session information. Please sign in.' };
@@ -252,7 +268,6 @@ export async function switchToAccount(account: StoredAccount) {
         }));
         await setStoredAccountsCookie(updatedAccounts);
 
-
         return { success: true };
     } catch (error) {
         await logError('database', error, `switchActiveAccount: ${account.aid}`);
@@ -260,6 +275,7 @@ export async function switchToAccount(account: StoredAccount) {
     }
 }
 
+// Looks up a stored account by NeupID and switches to it if the session is valid.
 export async function switchToAccountByNeupId(neupId: string): Promise<{ success: boolean; error?: string }> {
   const normalizedNeupId = neupId.toLowerCase().trim();
 
@@ -284,6 +300,7 @@ export async function switchToAccountByNeupId(neupId: string): Promise<{ success
   return switchToAccount(matchedAccount);
 }
 
+// Sets the auth_managing cookie to a brand context so the user operates as that brand.
 export async function switchToBrand(brandId: string) {
   try {
     const expiresOn = new Date();
@@ -296,6 +313,7 @@ export async function switchToBrand(brandId: string) {
   }
 }
 
+// Sets the auth_managing cookie to a dependent context.
 export async function switchToDependent(dependentId: string) {
   try {
     const expiresOn = new Date();
@@ -308,6 +326,7 @@ export async function switchToDependent(dependentId: string) {
   }
 }
 
+// Sets the auth_managing cookie to a delegated account context.
 export async function switchToDelegated(accountId: string) {
   try {
     const expiresOn = new Date();
@@ -320,6 +339,7 @@ export async function switchToDelegated(accountId: string) {
   }
 }
 
+// Clears the auth_managing cookie, returning the user to their personal account context.
 export async function switchToPersonal() {
   try {
     await clearManagingCookie();
@@ -328,6 +348,7 @@ export async function switchToPersonal() {
   }
 }
 
+// Re-exports from verify.ts for convenience so callers don't need two imports.
 export async function getActiveSession() {
   return getActiveSessionAction();
 }

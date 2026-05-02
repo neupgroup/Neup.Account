@@ -1,5 +1,8 @@
-
 "use client";
+
+// Provides the user's geolocation coordinates to the component tree via React context.
+// Fetches once on mount with low accuracy and a 1-hour cache to avoid repeated prompts.
+// Consumers call useContext(Geolocation) to read latitude, longitude, and any error.
 
 import { createContext, useState, useEffect, type ReactNode } from 'react';
 
@@ -39,7 +42,7 @@ export const GeolocationProvider = ({ children }: { children: ReactNode }) => {
     const options = {
         enableHighAccuracy: false,
         timeout: 10000,
-        maximumAge: 3600000 // 1 hour
+        maximumAge: 3600000 // cache the position for 1 hour before re-requesting
     };
 
     navigator.geolocation.getCurrentPosition(successHandler, errorHandler, options);

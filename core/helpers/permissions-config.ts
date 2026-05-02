@@ -1,3 +1,7 @@
+// Static permission definitions for the Neup.Account permission system.
+// DEFAULT_PERMISSIONS is the baseline set granted to every regular account.
+// ROOT_PERMISSIONS extends the default set with admin-only capabilities.
+// These strings are stored in permit records and checked at runtime via getUserPermissions().
 
 export const DEFAULT_PERMIT_TYPE = 'default';
 
@@ -32,6 +36,7 @@ export const DEFAULT_PERMISSIONS: string[] = [
     'payment.method.show', 'payment.transactions.show', 'payment.subscriptions.show', 'payment.purchase_neup_pro.view'
 ];
 
+// Extends DEFAULT_PERMISSIONS with admin-only permissions for root users.
 export const ROOT_PERMISSIONS: string[] = [
     ...DEFAULT_PERMISSIONS,
 

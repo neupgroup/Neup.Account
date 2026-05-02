@@ -1,9 +1,14 @@
+// Singleton cookie provider for server-side cookie operations.
+// Use setCookie() for standard auth cookies (secure, httpOnly, domain-wide).
+// Use setCookieRaw() when you need full control over cookie attributes.
+
 import { cookies } from 'next/headers';
 import { Singleton } from '@/core/interface/singleton';
 
 type CookieStore = Awaited<ReturnType<typeof cookies>>;
 type SameSite = 'strict' | 'lax' | 'none';
 
+// Full set of options available when setting a cookie via setCookieRaw().
 export type CookieRawOptions = {
     httpOnly?: boolean;
     secure?: boolean;
@@ -25,10 +30,12 @@ class CookieProvider extends Singleton {
         return this.instanceFor<CookieProvider>();
     }
 
+    // Resolves the Next.js cookie store for the current request.
     private async store(): Promise<CookieStore> {
         return cookies();
     }
 
+    // Returns all cookies as a plain key-value record.
     async getCookies(): Promise<Record<string, string>> {
         const store = await this.store();
         const result: Record<string, string> = {};
@@ -38,11 +45,14 @@ class CookieProvider extends Singleton {
         return result;
     }
 
+    // Returns the value of a single cookie by name, or undefined if not set.
     async getCookie(name: string): Promise<string | undefined> {
         const store = await this.store();
         return store.get(name)?.value;
     }
 
+    // Sets a cookie with secure defaults: httpOnly, secure, sameSite lax, domain-wide.
+    // The domain is read from the COOKIE_DOMAIN env var, defaulting to .neupgroup.com.
     async setCookie(name: string, value: string, expiresOn: Date): Promise<void> {
         const store = await this.store();
         store.set(name, value, {
@@ -55,6 +65,8 @@ class CookieProvider extends Singleton {
         });
     }
 
+    // Sets a cookie with full control over all attributes.
+    // Defaults to httpOnly: true, secure: true, sameSite: lax if not specified.
     async setCookieRaw(name: string, value: string, options: CookieRawOptions = {}): Promise<void> {
         const store = await this.store();
         store.set(name, value, {
@@ -70,6 +82,7 @@ class CookieProvider extends Singleton {
         });
     }
 
+    // Deletes a cookie by name.
     async deleteCookie(name: string): Promise<void> {
         const store = await this.store();
         store.delete(name);

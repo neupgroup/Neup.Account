@@ -1,5 +1,9 @@
 'use server';
 
+// Centralized error logging. Writes to both the console and /core/logs/error.log.
+// Automatically captures the current IP and account ID from the request context.
+// Generates an MD5 signature per error type+message so duplicate errors are identifiable.
+
 import { headers } from 'next/headers';
 import { getActiveAccountId } from '@/core/auth/verify';
 import crypto from 'crypto';
@@ -19,6 +23,7 @@ export async function logError(
     const ip = (await headers()).get('x-forwarded-for') || 'Unknown IP';
     const accountId = await getActiveAccountId();
 
+    // Normalize the error into a string regardless of its original type
     if (error instanceof Error) {
         errorMessage = error.stack || error.message;
     } else if (typeof error === 'string') {
@@ -31,6 +36,7 @@ export async function logError(
         }
     }
     
+    // Hash the first line of the error message to create a stable dedup signature
     const firstLine = errorMessage.split('\n')[0];
     const signature = crypto.createHash('md5').update(`${type}:${firstLine}`).digest('hex');
 
@@ -45,7 +51,6 @@ export async function logError(
         timestamp: new Date().toISOString(),
     };
 
-    // Console-based logging fallback
     // eslint-disable-next-line no-console
     console.error("ERROR", logEntry);
 
@@ -54,6 +59,7 @@ export async function logError(
         const logFilePath = path.join(process.cwd(), 'core', 'logs', 'error.log');
         const logDir = path.dirname(logFilePath);
         
+        // Create the log directory if it doesn't exist yet
         if (!fs.existsSync(logDir)) {
             fs.mkdirSync(logDir, { recursive: true });
         }

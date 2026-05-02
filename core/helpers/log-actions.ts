@@ -1,11 +1,15 @@
 'use server';
 
+// Handles writing and reading activity logs from the database.
+// Activity logs record user actions (e.g. login, profile update) with status and IP.
+
 import prisma from '@/core/helpers/prisma';
 import { headers } from 'next/headers';
 import { getUserProfile } from './user';
 import { logError } from './logger';
 import { getActiveAccountId } from '@/core/auth/verify';
 
+// Number of activity logs returned per page
 const PAGE_SIZE = 10;
 
 export type ActivityLog = {
@@ -17,6 +21,9 @@ export type ActivityLog = {
     timestamp: string;
 };
 
+// Writes a single activity entry to the database.
+// If actorAccountId is not provided, the target account is assumed to be the actor.
+// IP is read from the request headers if not explicitly passed.
 export async function logActivity(
     targetAccountId: string,
     action: string,
@@ -47,7 +54,6 @@ export async function logActivity(
     }
 }
 
-
 type GetActivitiesParams = {
   startAfter?: string;
   forCurrentUser?: boolean;
@@ -58,6 +64,9 @@ type GetActivitiesResponse = {
   hasNextPage: boolean;
 };
 
+// Fetches a paginated list of activity logs, ordered by most recent first.
+// If forCurrentUser is true, only logs where the actor is the current account are returned.
+// Uses cursor-based pagination via startAfter (the ID of the last seen log).
 export async function getActivities({ startAfter: startAfterDocId, forCurrentUser = false }: GetActivitiesParams): Promise<GetActivitiesResponse> {
     try {
         const currentAccountId = await getActiveAccountId();
@@ -73,6 +82,7 @@ export async function getActivities({ startAfter: startAfterDocId, forCurrentUse
         const queryOptions: any = {
             where,
             orderBy: { timestamp: 'desc' },
+            // Fetch one extra to determine if there is a next page
             take: PAGE_SIZE + 1,
         };
 
@@ -84,13 +94,11 @@ export async function getActivities({ startAfter: startAfterDocId, forCurrentUse
         const pageDocs = await prisma.activity.findMany(queryOptions);
 
         let hasNextPage = pageDocs.length > PAGE_SIZE;
-        if(hasNextPage) {
-            pageDocs.pop(); // remove the extra one
+        if (hasNextPage) {
+            pageDocs.pop(); // remove the extra record used for next-page detection
         }
 
-        let logs: ActivityLog[] = await Promise.all(pageDocs.map(async (doc) => {
-            const timestamp = doc.timestamp;
-
+        const logs: ActivityLog[] = await Promise.all(pageDocs.map(async (doc) => {
             const [actorProfile, neupIds] = await Promise.all([
                 getUserProfile(doc.actorAccountId),
                 prisma.neupId.findMany({
@@ -99,10 +107,11 @@ export async function getActivities({ startAfter: startAfterDocId, forCurrentUse
                 })
             ]);
             
+            // Resolve the best available display name for the actor
             const getDisplayName = (profile: any, fallbackId: string) => {
                 if (!profile) return fallbackId;
                 return profile.nameDisplay || profile.displayName || `${profile.nameFirst || ''} ${profile.nameLast || ''}`.trim() || fallbackId;
-            }
+            };
 
             return {
                 id: doc.id,
@@ -110,20 +119,14 @@ export async function getActivities({ startAfter: startAfterDocId, forCurrentUse
                 neupId: neupIds[0]?.id || 'N/A',
                 action: doc.action,
                 status: doc.status,
-                timestamp: timestamp.toLocaleString(),
+                timestamp: doc.timestamp.toLocaleString(),
             };
         }));
         
-        return {
-            logs: logs,
-            hasNextPage,
-        };
+        return { logs, hasNextPage };
 
     } catch (error) {
         await logError('database', error, 'getActivities');
-        return {
-            logs: [],
-            hasNextPage: false,
-        };
+        return { logs: [], hasNextPage: false };
     }
 }
