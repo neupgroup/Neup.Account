@@ -7,7 +7,7 @@ import { logActivity } from '@/services/log-actions';
 import { headers } from 'next/headers';
 import { logError } from '@/core/helpers/logger';
 import type { z } from 'zod';
-import { getAuthRequest, extendAuthRequest } from '../utils';
+import { getAuthRequest, extendAuthRequest } from '../auth-request';
 import { verifyPassword } from '../password';
 import { makeSession } from '../session';
 import {

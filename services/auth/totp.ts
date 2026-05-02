@@ -12,7 +12,7 @@ import { logError } from '@/core/helpers/logger';
 import { createNotification } from '@/services/notifications';
 import { encrypt, decrypt } from '@/services/security/totp';
 import { createAndSetSession } from '@/core/auth/session';
-import { getAuthRequest } from './utils';
+import { getAuthRequest } from './auth-request';
 
 /**
  * Result returned by TOTP helpers.

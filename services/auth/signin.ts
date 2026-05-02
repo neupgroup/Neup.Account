@@ -2,7 +2,7 @@
 
 import { z } from 'zod';
 import { validateNeupId } from '@/services/user';
-import { getAuthRequest, extendAuthRequest } from './utils';
+import { getAuthRequest, extendAuthRequest } from './auth-request';
 import prisma from '@/core/helpers/prisma';
 import { verifyPassword } from './password';
 import { makeSession } from './session';
