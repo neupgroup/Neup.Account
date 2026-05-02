@@ -46,6 +46,7 @@ model AccountTypeIndividual {
   lastName           String?
   dateOfBirth        DateTime?
   countryOfResidence String?
+  details            Json?
   account            Account   @relation(fields: [accountId], references: [id], onDelete: Cascade, map: "account_type__individual_accountId_fkey")
 
   @@map("account_meta__individual")
@@ -54,9 +55,9 @@ model AccountTypeIndividual {
 model AccountTypeBrand {
   accountId     String   @id @unique(map: "account_type__brand_accountId_key")
   brandName     String?
-  dateCreated   DateTime @default(now())
   isLegalEntity Boolean  @default(false)
   originCountry String?
+  details       Json?
   account       Account  @relation(fields: [accountId], references: [id], onDelete: Cascade, map: "account_type__brand_accountId_fkey")
 
   @@map("account_meta__brand")
