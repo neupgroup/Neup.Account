@@ -2,7 +2,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { isConnectionSecure } from '@/core/helpers/security-check';
+import { isConnectionSecure } from '@/proxy';
 
 export function useSecurityCheck() {
   const [isSecure, setIsSecure] = useState(true);

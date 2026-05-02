@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useSecurityCheck } from '@/core/hooks/use-security-check';
-import { isConnectionSecure } from '@/core/helpers/security-check';
+import { isConnectionSecure } from '@/proxy';
 import { redirectInApp } from '@/services/navigation';
 
 export function SecurityGuard({ children }: { children: React.ReactNode }) {
