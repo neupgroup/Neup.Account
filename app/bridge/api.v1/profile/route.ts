@@ -1,6 +1,6 @@
 
 import { NextRequest, NextResponse } from 'next/server';
-import { bridgeGetProfile } from '@/services/auth/profile';
+import { bridgeGetProfile } from '@/services/profile';
 
 export const dynamic = 'force-dynamic';
 
