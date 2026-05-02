@@ -75,7 +75,7 @@ export function MobileNav() {
         
         const accountNavItems = isManaging
             ? navItems.accountNav.map(item => 
-                item.label === "Switch Account" ? { ...item, href: '/auth/switch' } : item
+                item.label === "Switch Account" ? { ...item, href: '/auth/start' } : item
               )
             : navItems.accountNav;
 

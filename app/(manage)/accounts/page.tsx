@@ -8,7 +8,7 @@ import { ListItem } from '@/components/ui/list-item';
 import { SecondaryHeader } from '@/components/ui/secondary-header';
 import { Bot, Building, UserPlus, FolderGit2 } from '@/components/icons';
 import { PrimaryHeader } from '@/components/ui/primary-header';
-import { AccountListItem } from '@/app/auth/accounts/account-list-item';
+import { AccountListItem } from '@/components/elements/account-item';
 
 
 const LinkAndCreateFeatures = () => (

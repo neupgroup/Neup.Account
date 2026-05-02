@@ -31,7 +31,7 @@ export function DashboardNav() {
         
         const accountNavItems = isManaging
             ? navItems.accountNav.map(item => 
-                item.label === "Switch Account" ? { ...item, href: '/auth/switchback' } : item
+                item.label === "Switch Account" ? { ...item, href: '/auth/start' } : item
               )
             : navItems.accountNav;
 

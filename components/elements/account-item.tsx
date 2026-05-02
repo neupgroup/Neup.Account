@@ -8,7 +8,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronRight } from '@/components/icons';
-import { AccountActions } from './account-actions';
+import { AccountActions } from '@/app/auth/start/start-page-component';
 import { switchActiveAccount, switchToBrand, switchToDependent, switchToDelegated } from '@/services/auth/switch';
 import { appendAuthCallbackContext, appendRedirect } from '@/core/auth/callback';
 import { redirectInApp } from '@/services/navigation';
