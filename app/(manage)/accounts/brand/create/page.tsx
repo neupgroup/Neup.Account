@@ -235,7 +235,7 @@ export default function CreateBrandPage() {
                                         <FormControl><Checkbox checked={field.value} onCheckedChange={field.onChange} /></FormControl>
                                         <div className="space-y-1 leading-none">
                                             <FormLabel>
-                                                I agree to the <Link href="/policies" target="_blank" className="underline text-primary">terms and conditions</Link> for creating and managing a brand account.
+                                                I agree to the terms and conditions for creating and managing a brand account.
                                             </FormLabel>
                                             <FormMessage />
                                         </div>

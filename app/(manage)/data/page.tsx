@@ -18,12 +18,6 @@ export default async function DataAndPrivacyPage() {
             href: "/data/activity",
         },
         {
-            icon: FileText,
-            title: "Agreed Terms",
-            description: "Review terms and conditions you have agreed to.",
-            href: "/data/policies",
-        },
-        {
             icon: Trash2,
             title: "Delete Your Account",
             description: "Permanently delete your account and associated data.",

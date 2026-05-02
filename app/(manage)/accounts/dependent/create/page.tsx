@@ -255,7 +255,7 @@ export default function CreateDependentPage() {
                                         </FormControl>
                                         <div className="space-y-1 leading-none">
                                             <FormLabel>
-                                                I acknowledge that I am the parent or legal guardian and I agree to the <Link href="/policies" target="_blank" className="underline text-primary">terms and conditions</Link> on behalf of the dependent.
+                                                I acknowledge that I am the parent or legal guardian and I agree to the terms and conditions on behalf of the dependent.
                                             </FormLabel>
                                             <FormMessage />
                                         </div>

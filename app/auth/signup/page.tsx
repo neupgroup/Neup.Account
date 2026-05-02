@@ -835,7 +835,7 @@ function TermsStep() {
                             </FormControl>
                             <div className="space-y-1 leading-none">
                                 <FormLabel>
-                                    I agree to the <Link href="/policies" target="_blank" className="underline text-primary">terms and conditions</Link>.
+                                    I agree to the terms and conditions.
                                 </FormLabel>
                                 <FormMessage />
                             </div>
