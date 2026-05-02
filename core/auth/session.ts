@@ -136,8 +136,6 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
     return [];
   }
 
-  const { accountId: activeAccountId } = await getSessionCookies();
-
   const validatedAccounts = await Promise.all(
     allAccounts.map(async (rawAccount: StoredAccount) => {
       const account = normalizeStoredAccount(rawAccount);
