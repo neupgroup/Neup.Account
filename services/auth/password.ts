@@ -29,11 +29,6 @@ export type VerifyPasswordInput = {
 };
 
 
-/**
- * Backward-compatible alias for verify input.
- */
-export type CheckPasswordInput = VerifyPasswordInput;
-
 
 /**
  * Password payload extracted from a POST body or a form submission.
@@ -132,13 +127,6 @@ export async function verifyPassword(input: VerifyPasswordInput): Promise<Passwo
 }
 
 
-/**
- * Backward-compatible alias for verifyPassword.
- */
-export async function checkPassword(input: CheckPasswordInput): Promise<PasswordCheckResult> {
-	return verifyPassword(input);
-}
-
 
 /**
  * Validates a password from a POST body.
@@ -160,16 +148,6 @@ export async function verifyPasswordFromPost(
 }
 
 
-/**
- * Backward-compatible alias for verifyPasswordFromPost.
- */
-export async function checkPasswordFromPost(
-	input: Request | PasswordPayload,
-	options: Omit<CheckPasswordInput, 'password'> & { fieldName?: string } = {}
-): Promise<PasswordCheckResult> {
-	return verifyPasswordFromPost(input, options);
-}
-
 
 /**
  * Validates a password from a form submission.
@@ -189,16 +167,6 @@ export async function verifyPasswordFromForm(
 	});
 }
 
-
-/**
- * Backward-compatible alias for verifyPasswordFromForm.
- */
-export async function checkPasswordFromForm(
-	formData: FormData,
-	options: Omit<CheckPasswordInput, 'password'> & { fieldName?: string } = {}
-): Promise<PasswordCheckResult> {
-	return verifyPasswordFromForm(formData, options);
-}
 
 
 /**
