@@ -15,8 +15,6 @@ import type { StoredAccount } from '@/core/auth/session';
 import { getSessionCookies, setStoredAccountsCookie, clearSessionCookies } from '@/core/helpers/cookies';
 import { makeNotification } from '../notifications';
 
-// This function is now just a wrapper or re-export if needed, but the main logic is in lib/session
-// However, the client uses this file for actions.
 export async function getStoredAccounts(): Promise<StoredAccount[]> {
     return getValidatedStoredAccounts();
 }

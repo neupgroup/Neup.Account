@@ -161,6 +161,3 @@ export function buildAuthCallbackWithStatus(context: ServerAuthContext, status: 
   return buildCallbackUrl(context.authenticatesTo, context, status);
 }
 
-// Looks up the display name of an application by its ID.
-// Moved to services/auth/sign.ts — kept here as a re-export for backward compat.
-export { getApplicationName } from '@/services/auth/sign';
