@@ -8,6 +8,7 @@
     "build:strict": "eslint . && npm run typecheck && next build",
     "start": "next start --port 2226",
     "seed": "tsx prisma/seed.ts",
+    "grant-root": "tsx prisma/grant-root.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"

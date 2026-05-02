@@ -48,15 +48,6 @@ type SignupRequestData = {
 
 
 /**
- * Function isFirstUser.
- */
-async function isFirstUser() {
-  const count = await prisma.account.count();
-  return count === 0;
-}
-
-
-/**
  * Function getSignupStepData.
  */
 export async function getSignupStepData(authRequestId: string) {
@@ -458,9 +449,7 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
   const userAgent = headersList.get('user-agent') || 'Unknown User-Agent';
 
   try {
-    const isAdmin = await isFirstUser();
-
-    const neupIdTaken = await prisma.neupId.findUnique({
+ = await prisma.neupId.findUnique({
         where: { id: neupId },
     });
     if (neupIdTaken) {
