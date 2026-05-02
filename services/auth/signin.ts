@@ -138,7 +138,7 @@ export async function submitPasswordWithNeupId(data: { neupId: string; password:
         data: {
             data: { neupId, isPendingDeletion },
             accountId,
-            status: isPendingDeletion ? 'pending_password' : 'pending_password',
+            status: isPendingDeletion ? 'pending_deletion_confirmation' : 'pending_completion',
         },
     });
 
