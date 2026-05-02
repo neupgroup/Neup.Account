@@ -49,9 +49,9 @@ export async function logError(
     // eslint-disable-next-line no-console
     console.error("ERROR", logEntry);
 
-    // File-based logging to /base/logs/error.log
+    // File-based logging to /core/logs/error.log
     try {
-        const logFilePath = path.join(process.cwd(), 'base', 'logs', 'error.log');
+        const logFilePath = path.join(process.cwd(), 'core', 'logs', 'error.log');
         const logDir = path.dirname(logFilePath);
         
         if (!fs.existsSync(logDir)) {
