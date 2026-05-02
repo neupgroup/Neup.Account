@@ -3,7 +3,7 @@
 import prisma from '@/core/helpers/prisma';
 import crypto from 'crypto';
 
-import { logError } from './logger';
+import { logError } from '@/core/helpers/logger';
 
 export type Session = {
   aid?: string;
@@ -34,14 +34,14 @@ export type StoredAccount = {
   isDependent?: boolean;
   accountType?: string;
 };
-import { setStoredAccountsCookie, getSessionCookies, clearManagingCookie, setManagingCookie } from './cookies';
-import { getUserNeupIds, validateNeupId } from './user';
+import { setStoredAccountsCookie, getSessionCookies, clearManagingCookie, setManagingCookie } from '@/core/helpers/cookies';
+import { getUserNeupIds, validateNeupId } from '@/core/helpers/user';
 import {
   getActiveSession as getActiveSessionAction,
   getActiveAccountId as getActiveAccountIdAction,
   getPersonalAccountId as getPersonalAccountIdAction,
   validateCurrentSession as validateCurrentSessionAction,
-} from './auth-actions';
+} from '@/core/auth/actions';
 
 // --- Constants ---
 const SESSION_DURATION_DAYS = 30;
@@ -106,8 +106,8 @@ export async function createAndSetSession(
     
     // Mark all others as def:0, remove previous session for this accountId, add new one
     const filteredAccounts = existingAccounts
-      .map(acc => ({ ...acc, def: 0 as const }))
-      .filter(acc => acc.aid !== accountId);
+      .map((acc: StoredAccount) => ({ ...acc, def: 0 as const }))
+      .filter((acc: StoredAccount) => acc.aid !== accountId);
 
     const allAccounts = [...filteredAccounts, newStoredAccount];
     
@@ -134,7 +134,7 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
   const { accountId: activeAccountId } = await getSessionCookies();
 
   const validatedAccounts = await Promise.all(
-    allAccounts.map(async (rawAccount) => {
+    allAccounts.map(async (rawAccount: StoredAccount) => {
       const account = normalizeStoredAccount(rawAccount);
 
       if (account.def !== 1) return account;
@@ -246,7 +246,7 @@ export async function switchToAccount(account: StoredAccount) {
         await clearManagingCookie();
 
         const { allAccounts } = await getSessionCookies();
-        const updatedAccounts = allAccounts.map(acc => ({
+        const updatedAccounts = allAccounts.map((acc: StoredAccount) => ({
             ...acc,
             def: (acc.aid === account.aid ? 1 : 0) as 0 | 1,
         }));

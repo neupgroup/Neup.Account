@@ -1,7 +1,7 @@
  'use server';
  
  import prisma from '@/core/helpers/prisma';
- import { getPersonalAccountId } from '@/core/helpers/auth-actions';
+ import { getPersonalAccountId } from '@/core/auth/actions';
  import { logActivity } from '@/core/helpers/log-actions';
  import { logError } from '@/core/helpers/logger';
  import { checkPermissions, getUserNeupIds } from '@/core/helpers/user';

@@ -4,7 +4,7 @@ import {
 } from "@/components/ui/card";
 import { getUserSessions } from "@/services/security/sessions";
 import { SessionManager } from "@/app/(manage)/security/session-manager";
-import { getActiveSession } from '@/core/helpers/session';
+import { getActiveSession } from '@/core/auth/session';
 import { BackButton } from "@/components/ui/back-button";
 import { checkPermissions } from '@/core/helpers/user';
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";

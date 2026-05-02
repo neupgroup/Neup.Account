@@ -2,7 +2,7 @@
 
 import { headers } from 'next/headers';
 import prisma from '@/core/helpers/prisma';
-import { getActiveAccountId } from '@/core/helpers/auth-actions';
+import { getActiveAccountId } from '@/core/auth/actions';
 import { checkPermissions } from '@/core/helpers/user';
 import { authenticator } from 'otplib';
 import { z } from 'zod';
@@ -11,7 +11,7 @@ import { logActivity } from '@/core/helpers/log-actions';
 import { logError } from '@/core/helpers/logger';
 import { createNotification } from '@/services/notifications';
 import { encrypt, decrypt } from '@/services/security/totp';
-import { createAndSetSession } from '@/core/helpers/session';
+import { createAndSetSession } from '@/core/auth/session';
 import { getAuthRequest } from './utils';
 
 /**

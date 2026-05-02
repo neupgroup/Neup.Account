@@ -10,8 +10,8 @@ import {
     switchToPersonal as switchToPersonalAction,
     switchToDependent as switchToDependentAction,
     switchToDelegated as switchToDelegatedAction,
-} from '@/core/helpers/session';
-import type { StoredAccount } from '@/core/helpers/session';
+} from '@/core/auth/session';
+import type { StoredAccount } from '@/core/auth/session';
 import { getSessionCookies, setStoredAccountsCookie, clearSessionCookies } from '@/core/helpers/cookies';
 import { makeNotification } from '../notifications';
 
@@ -43,7 +43,7 @@ export async function switchActiveAccount(account: StoredAccount) {
  * Function switchActiveAccountByNeupId.
  */
 export async function switchActiveAccountByNeupId(neupId: string) {
-    const { switchToAccountByNeupId } = await import('@/core/helpers/session');
+    const { switchToAccountByNeupId } = await import('@/core/auth/session');
     const result = await switchToAccountByNeupId(neupId);
 
     if (result.success) {

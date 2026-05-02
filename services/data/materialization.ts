@@ -1,7 +1,7 @@
 'use server';
 
 import { z } from "zod";
-import { getActiveAccountId } from "@/core/helpers/auth-actions";
+import { getActiveAccountId } from "@/core/auth/actions";
 import { logActivity } from "@/core/helpers/log-actions";
 import { logError } from "@/core/helpers/logger";
 import prisma from "@/core/helpers/prisma";

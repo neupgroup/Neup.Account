@@ -6,7 +6,7 @@ import { logError } from '@/core/helpers/logger';
 import { phoneFormSchema } from '@/services/security/schema';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
-import { getPersonalAccountId } from '@/core/helpers/auth-actions';
+import { getPersonalAccountId } from '@/core/auth/actions';
 import { checkPermissions } from '@/core/helpers/user';
 import { createNotification } from '../notifications';
 

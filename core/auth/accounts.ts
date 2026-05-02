@@ -1,7 +1,7 @@
 'use server';
 
 import { cookieProvider } from '@/core/providers/cookies';
-import type { StoredAccount } from '@/core/helpers/session';
+import type { StoredAccount } from '@/core/auth/session';
 
 export async function getAccounts(): Promise<StoredAccount[]> {
     const raw = await cookieProvider.getCookie('auth_accounts');

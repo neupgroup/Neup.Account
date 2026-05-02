@@ -5,7 +5,7 @@ import { FamilyManager } from "./family-manager";
 import Link from "next/link";
 import { PartnerManager } from "./partner-manager";
 import { BackButton } from "@/components/ui/back-button";
-import { getPersonalAccountId } from '@/core/helpers/session';
+import { getPersonalAccountId } from '@/core/auth/session';
 import { getUserProfile, checkPermissions } from '@/core/helpers/user';
 import { notFound } from "next/navigation";
 import { SecondaryHeader } from "@/components/ui/secondary-header";

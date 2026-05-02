@@ -3,14 +3,14 @@
 
 import { useEffect, useState, useTransition } from 'react';
 import { getUserProfile } from '@/core/helpers/user';
-import type { StoredAccount } from '@/core/helpers/session';
+import type { StoredAccount } from '@/core/auth/session';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronRight } from '@/components/icons';
 import { AccountActions } from './account-actions';
 import { switchActiveAccount, switchToBrand, switchToDependent, switchToDelegated } from '@/services/auth/switch';
-import { appendAuthCallbackContext, appendRedirect } from '@/core/helpers/auth-callback';
+import { appendAuthCallbackContext, appendRedirect } from '@/core/auth/callback';
 import { redirectInApp } from '@/core/helpers/navigation';
 import { cn } from '@/core/helpers/utils';
 

@@ -1,4 +1,4 @@
-import { getActiveSession } from '@/core/helpers/auth-actions';
+import { getActiveSession } from '@/core/auth/actions';
 import { logError } from '@/core/helpers/logger';
 import prisma from '@/core/helpers/prisma';
 import crypto from 'crypto';

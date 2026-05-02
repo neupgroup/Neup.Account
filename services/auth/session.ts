@@ -2,9 +2,9 @@
 
 import { headers } from 'next/headers';
 import prisma from '@/core/helpers/prisma';
-import { createAndSetSession } from '@/core/helpers/session';
+import { createAndSetSession } from '@/core/auth/session';
 import { authCookies } from '@/core/helpers/cookies';
-import { getActiveSession } from '@/core/helpers/session';
+import { getActiveSession } from '@/core/auth/session';
 import { makeNotification } from '@/services/notifications';
 
 /**

@@ -9,7 +9,7 @@ import { useToast } from '@/core/hooks/use-toast';
 import { kycFormSchema, type KycFormValues } from '@/services/manage/profile/schema';
 import { submitKyc } from '@/services/manage/profile/documents';
 import { uploadFile } from '@/services/upload';
-import { getPersonalAccountId } from '@/core/helpers/session';
+import { getPersonalAccountId } from '@/core/auth/session';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';

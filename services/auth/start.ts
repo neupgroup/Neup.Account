@@ -1,6 +1,6 @@
 import prisma from '@/core/helpers/prisma';
-import { getActiveSession } from '@/core/helpers/auth-actions';
-import { getValidatedStoredAccounts } from '@/core/helpers/session';
+import { getActiveSession } from '@/core/auth/actions';
+import { getValidatedStoredAccounts } from '@/core/auth/session';
 
 /**
  * Function getFirstValue.

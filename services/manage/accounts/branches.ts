@@ -7,7 +7,7 @@ import { logError } from '@/core/helpers/logger';
 import { headers } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import { getUserNeupIds, getUserProfile, checkPermissions } from '@/core/helpers/user';
-import { getActiveAccountId, getPersonalAccountId } from '@/core/helpers/auth-actions';
+import { getActiveAccountId, getPersonalAccountId } from '@/core/auth/actions';
 
 /**
  * Type BranchAccount.

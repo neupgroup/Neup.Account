@@ -4,7 +4,7 @@
 
 import prisma from '@/core/helpers/prisma';
 import { getUserNeupIds, getUserProfile as fetchUserProfile, checkPermissions } from '@/core/helpers/user';
-import { getPersonalAccountId } from '@/core/helpers/auth-actions';
+import { getPersonalAccountId } from '@/core/auth/actions';
 import { revalidatePath } from 'next/cache';
 import { logActivity } from '@/core/helpers/log-actions';
 import type { UserProfile } from '@/core/helpers/user';

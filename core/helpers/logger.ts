@@ -1,7 +1,7 @@
 'use server';
 
 import { headers } from 'next/headers';
-import { getActiveAccountId } from './auth-actions';
+import { getActiveAccountId } from '@/core/auth/actions';
 import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';

@@ -6,7 +6,7 @@ import { logError } from "@/core/helpers/logger";
 import prisma from "@/core/helpers/prisma";
 import bcrypt from "bcryptjs";
 import { checkPermissions } from "@/core/helpers/user";
-import { getActiveAccountId } from "@/core/helpers/auth-actions";
+import { getActiveAccountId } from "@/core/auth/actions";
 import { logoutActiveSession } from "../auth/signout";
 
 const formSchema = z.object({

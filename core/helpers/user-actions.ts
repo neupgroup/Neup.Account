@@ -3,7 +3,7 @@
 
 import prisma from './prisma';
 import { logError } from './logger';
-import { getActiveAccountId as getActiveAccountIdFromServer, getPersonalAccountId as getPersonalAccountIdFromServer } from './auth-actions';
+import { getActiveAccountId as getActiveAccountIdFromServer, getPersonalAccountId as getPersonalAccountIdFromServer } from '@/core/auth/actions';
 
 export type UserProfile = {
     firstName?: string;

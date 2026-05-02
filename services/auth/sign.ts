@@ -1,11 +1,11 @@
 import { getSessionCookies } from '@/core/helpers/cookies';
-import { getValidatedStoredAccounts } from '@/core/helpers/session';
-import { getAppDisplayName } from '@/core/helpers/auth-callback';
+import { getValidatedStoredAccounts } from '@/core/auth/session';
+import { getAppDisplayName } from '@/core/auth/callback';
 import {
 	buildAuthCallbackWithStatus,
 	buildAuthQuery,
 	getServerAuthContext,
-} from '@/core/helpers/auth-callback-server';
+} from '@/core/auth/callback-server';
 import prisma from '@/core/helpers/prisma';
 import { randomBytes } from 'crypto';
 import { getUserProfile } from '@/core/helpers/user';

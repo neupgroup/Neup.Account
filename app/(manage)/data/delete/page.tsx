@@ -22,7 +22,7 @@ import { BackButton } from "@/components/ui/back-button";
 import { Geolocation } from "@/core/providers/geolocation";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 import { getAccountType } from '@/core/helpers/user';
-import { getActiveAccountId } from '@/core/helpers/session';
+import { getActiveAccountId } from '@/core/auth/session';
 import { useRouter } from "next/navigation";
 import { redirectInApp } from "@/core/helpers/navigation";
 

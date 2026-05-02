@@ -13,7 +13,7 @@ import { initializeAuthFlow } from '@/services/auth/initialize';
 import { verifyTotpFromPost } from '@/services/auth/totp';
 import { switchActiveAccountByNeupId } from '@/services/auth/switch';
 import { redirectInApp } from '@/core/helpers/link';
-import { appendAuthCallbackContext, appendRedirect, hasAuthCallbackContext, shouldReturnToAuthStartForExternalAuthentication } from '@/core/helpers/auth-callback';
+import { appendAuthCallbackContext, appendRedirect, hasAuthCallbackContext, shouldReturnToAuthStartForExternalAuthentication } from '@/core/auth/callback';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';

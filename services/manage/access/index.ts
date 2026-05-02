@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from '@/core/helpers/prisma';
-import { getActiveAccountId, getPersonalAccountId } from '@/core/helpers/auth-actions';
+import { getActiveAccountId, getPersonalAccountId } from '@/core/auth/actions';
 import { getUserProfile, getUserNeupIds, getAccountType, getUserPermissions, checkPermissions } from '@/core/helpers/user';
 import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';

@@ -1,9 +1,9 @@
 'use server';
 
 import prisma from '@/core/helpers/prisma';
-import { getPersonalAccountId } from '@/core/helpers/auth-actions';
+import { getPersonalAccountId } from '@/core/auth/actions';
 import { logError } from '@/core/helpers/logger';
-import type { StoredAccount } from '@/core/helpers/session';
+import type { StoredAccount } from '@/core/auth/session';
 
 // Define a type that extends StoredAccount with the fields we need
 export type AccessibleAccount = StoredAccount & {
