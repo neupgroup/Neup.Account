@@ -3,7 +3,7 @@
 import { useState, useTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/core/hooks/use-toast";
-import { sendWarning, blockServiceAccess, unblockServiceAccess } from "@/services/manage/user-actions";
+import { sendWarning, blockServiceAccess, unblockServiceAccess } from "@/services/manage/users";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
