@@ -34,3 +34,48 @@ export async function getActiveAccount(): Promise<StoredAccount | null> {
     const accounts = await getAccounts();
     return accounts.find(a => a.def === 1) ?? null;
 }
+
+export async function addAccount(aid: string, sid: string, skey: string, nid: string): Promise<void> {
+    const existing = await getAccounts();
+
+    const others = existing
+        .map(a => ({ ...a, def: 0 as const }))
+        .filter(a => a.aid !== aid);
+
+    const newAccount: StoredAccount = { aid, sid, skey, def: 1, nid, neupId: nid };
+
+    const expires = new Date();
+    expires.setFullYear(expires.getFullYear() + 1);
+
+    await cookieProvider.setCookieRaw('auth_accounts', JSON.stringify([...others, newAccount]), {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
+        path: '/',
+        expires,
+    });
+}
+
+export async function updateDefaultAccount(identifier: string | number): Promise<void> {
+    const existing = await getAccounts();
+
+    const updated = existing.map((a, index) => {
+        const isTarget = typeof identifier === 'number'
+            ? index === identifier
+            : a.aid === identifier;
+        return { ...a, def: (isTarget ? 1 : 0) as 0 | 1 };
+    });
+
+    const expires = new Date();
+    expires.setFullYear(expires.getFullYear() + 1);
+
+    await cookieProvider.setCookieRaw('auth_accounts', JSON.stringify(updated), {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
+        path: '/',
+        expires,
+    });
+}
+
+
