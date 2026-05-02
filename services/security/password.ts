@@ -1,7 +1,7 @@
 'use server';
 
 import { z } from 'zod';
-import { getActiveAccountId } from '@/core/auth/actions';
+import { getActiveAccountId } from '@/core/auth/verify';
 import { checkPermissions } from '@/core/helpers/user';
 import { logActivity } from '@/core/helpers/log-actions';
 import { logError } from '@/core/helpers/logger';

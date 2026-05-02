@@ -41,7 +41,7 @@ import {
   getActiveAccountId as getActiveAccountIdAction,
   getPersonalAccountId as getPersonalAccountIdAction,
   validateCurrentSession as validateCurrentSessionAction,
-} from '@/core/auth/actions';
+} from '@/core/auth/verify';
 
 // --- Constants ---
 const SESSION_DURATION_DAYS = 30;

@@ -1,6 +1,6 @@
 'use server';
 
-import { getActiveAccountId, getPersonalAccountId } from '@/core/auth/actions';
+import { getActiveAccountId, getPersonalAccountId } from '@/core/auth/verify';
 import { getUserProfile, getUserPermissions } from '@/core/helpers/user';
 import { verifyActiveSession } from '@/services/auth/verify';
 import type { StoredProfileInfo } from './storage';

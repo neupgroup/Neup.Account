@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from '@/core/helpers/prisma';
-import { getPersonalAccountId } from '@/core/auth/actions';
+import { getPersonalAccountId } from '@/core/auth/verify';
 import { logActivity } from '@/core/helpers/log-actions';
 import { logError } from '@/core/helpers/logger';
 import { emailFormSchema } from '@/services/security/schema';

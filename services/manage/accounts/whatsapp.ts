@@ -1,6 +1,6 @@
  'use server';
  
- import { getActiveAccountId } from '@/core/auth/actions';
+ import { getActiveAccountId } from '@/core/auth/verify';
  import { logError } from '@/core/helpers/logger';
  import { z } from 'zod';
  import { whatsAppFormSchema, verifyCodeSchema } from '@/app/(manage)/accounts/whatsapp/schema';

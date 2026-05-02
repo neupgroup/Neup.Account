@@ -5,7 +5,7 @@ import { getUserProfile, checkPermissions, isRootUser } from '@/core/helpers/use
 import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
 import { deleteUserAccount } from '@/services/manage/user-actions';
-import { getPersonalAccountId } from '@/core/auth/actions';
+import { getPersonalAccountId } from '@/core/auth/verify';
 import { logActivity } from '@/core/helpers/log-actions';
 import { z } from 'zod';
 

@@ -2,7 +2,7 @@
 
 import { z } from 'zod';
 import prisma from '@/core/helpers/prisma';
-import { getPersonalAccountId } from '@/core/auth/actions';
+import { getPersonalAccountId } from '@/core/auth/verify';
 import { logActivity } from '@/core/helpers/log-actions';
 import { logError } from '@/core/helpers/logger';
 import { headers } from 'next/headers';

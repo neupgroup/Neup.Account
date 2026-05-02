@@ -4,7 +4,7 @@ import prisma from '@/core/helpers/prisma';
 import { headers } from 'next/headers';
 import { getUserProfile } from './user';
 import { logError } from './logger';
-import { getActiveAccountId } from '@/core/auth/actions';
+import { getActiveAccountId } from '@/core/auth/verify';
 
 const PAGE_SIZE = 10;
 

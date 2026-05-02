@@ -2,7 +2,7 @@
 
 import { headers } from 'next/headers';
 import prisma from '@/core/helpers/prisma';
-import { getActiveAccountId } from '@/core/auth/actions';
+import { getActiveAccountId } from '@/core/auth/verify';
 import { checkPermissions } from '@/core/helpers/user';
 import { authenticator } from 'otplib';
 import { z } from 'zod';

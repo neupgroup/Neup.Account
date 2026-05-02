@@ -5,7 +5,7 @@ import {
 	buildAuthCallbackWithStatus,
 	buildAuthQuery,
 	getServerAuthContext,
-} from '@/core/auth/callback-server';
+} from '@/core/auth/callback';
 import prisma from '@/core/helpers/prisma';
 import { randomBytes } from 'crypto';
 import { getUserProfile } from '@/core/helpers/user';

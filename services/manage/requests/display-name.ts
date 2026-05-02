@@ -5,7 +5,7 @@ import { getUserProfile, checkPermissions } from '@/core/helpers/user';
 import { logActivity } from '@/core/helpers/log-actions';
 import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
-import { getPersonalAccountId } from '@/core/auth/actions';
+import { getPersonalAccountId } from '@/core/auth/verify';
 
 /**
  * Type DisplayNameRequest.

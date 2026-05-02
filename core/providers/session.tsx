@@ -2,7 +2,7 @@
 
 import { createContext, useState, useEffect, type ReactNode, useContext } from 'react';
 import { type UserProfile, getUserProfile as fetchUserProfile } from '@/core/helpers/user';
-import { getActiveAccountId, getPersonalAccountId } from '@/core/auth/actions';
+import { getActiveAccountId, getPersonalAccountId } from '@/core/auth/verify';
 import { checkSession } from '@/core/auth/check';
 import {
     getSessionData,

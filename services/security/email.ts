@@ -4,7 +4,7 @@ import { logActivity } from '@/core/helpers/log-actions';
 import { logError } from '@/core/helpers/logger';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
-import { getPersonalAccountId } from '@/core/auth/actions';
+import { getPersonalAccountId } from '@/core/auth/verify';
 import { checkPermissions } from '@/core/helpers/user';
 import { emailFormSchema } from '@/services/security/schema';
 import { createNotification } from '../notifications';

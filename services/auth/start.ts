@@ -1,5 +1,5 @@
 import prisma from '@/core/helpers/prisma';
-import { getActiveSession } from '@/core/auth/actions';
+import { getActiveSession } from '@/core/auth/verify';
 import { getValidatedStoredAccounts } from '@/core/auth/session';
 
 /**

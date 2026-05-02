@@ -3,7 +3,7 @@
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import prisma from '@/core/helpers/prisma';
-import { getActiveAccountId } from '@/core/auth/actions';
+import { getActiveAccountId } from '@/core/auth/verify';
 import { logError } from '@/core/helpers/logger';
 
 const memberPattern = /^(account:)?[^\s:]+$/;

@@ -4,7 +4,7 @@ import prisma from '@/core/helpers/prisma';
 import { checkPermissions, getUserProfile } from '@/core/helpers/user';
 import { logError } from '@/core/helpers/logger';
 import { switchToBrand as switchToBrandAction, switchToPersonal as switchToPersonalAction } from '@/core/auth/session';
-import { getPersonalAccountId } from '@/core/auth/actions';
+import { getPersonalAccountId } from '@/core/auth/verify';
 import { z } from 'zod';
 import { headers } from 'next/headers';
 import { revalidatePath } from 'next/cache';

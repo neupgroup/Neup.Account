@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { buildAuthQuery, getServerAuthContext } from '@/core/auth/callback-server';
+import { buildAuthQuery, getServerAuthContext } from '@/core/auth/callback';
 
 type TermsPageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;

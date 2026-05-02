@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from '@/core/helpers/prisma';
-import { getActiveAccountId, getActiveSession } from '@/core/auth/actions';
+import { getActiveAccountId, getActiveSession } from '@/core/auth/verify';
 import { logActivity } from '@/core/helpers/log-actions';
 import { logError } from '@/core/helpers/logger';
 

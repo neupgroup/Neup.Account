@@ -1,7 +1,7 @@
 
 'use server';
 
-import { getActiveAccountId, getPersonalAccountId } from '@/core/auth/actions';
+import { getActiveAccountId, getPersonalAccountId } from '@/core/auth/verify';
 import { logError } from '@/core/helpers/logger';
 
 // Make sure to set this in your environment variables

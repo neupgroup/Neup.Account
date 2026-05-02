@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from '@/core/helpers/prisma';
-import { getActiveAccountId } from '@/core/auth/actions';
+import { getActiveAccountId } from '@/core/auth/verify';
 import { getUserNeupIds, checkPermissions } from '@/core/helpers/user';
 import { authenticator } from 'otplib';
 import qrcode from 'qrcode';
