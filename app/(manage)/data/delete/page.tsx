@@ -24,7 +24,7 @@ import { SecondaryHeader } from "@/components/ui/secondary-header";
 import { getAccountType } from '@/services/user';
 import { getActiveAccountId } from '@/core/auth/session';
 import { useRouter } from "next/navigation";
-import { redirectInApp } from "@/core/helpers/navigation";
+import { redirectInApp } from "@/services/navigation";
 
 
 export default function DeleteAccountPage() {

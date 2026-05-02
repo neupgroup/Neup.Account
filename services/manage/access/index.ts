@@ -7,8 +7,8 @@ import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { logActivity } from '@/services/log-actions';
-import type { Permission } from '@/core/helpers/permissions';
-import { PERMISSION_SET } from '@/core/helpers/permissions';
+import type { Permission } from '@/services/permissions';
+import { PERMISSION_SET } from '@/services/permissions';
 
 export type UserAccess = {
   permitId: string;

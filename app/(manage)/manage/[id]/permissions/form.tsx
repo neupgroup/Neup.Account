@@ -4,7 +4,7 @@
 import { useState, useTransition } from "react";
 import { useToast } from "@/core/hooks/use-toast";
 import { updateUserPermissions } from "@/services/manage/users";
-import type { Permission } from '@/core/helpers/permissions';
+import type { Permission } from '@/services/permissions';
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";

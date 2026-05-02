@@ -21,7 +21,7 @@ import { ListItem } from "@/components/ui/list-item"
 import { TertiaryHeader } from "@/components/ui/tertiary-header"
 import { PrimaryHeader } from "@/components/ui/primary-header"
 import NProgress from 'nprogress';
-import { redirectInApp } from "@/core/helpers/navigation";
+import { redirectInApp } from "@/services/navigation";
 
 function AccountsPageSkeleton() {
     return (

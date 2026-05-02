@@ -35,7 +35,7 @@ import { BackButton } from "@/components/ui/back-button"
 import { brandCreationSchema } from "@/services/manage/accounts/schema"
 import { checkNeupIdAvailability } from '@/services/user'
 import { SecondaryHeader } from "@/components/ui/secondary-header"
-import { redirectInApp } from "@/core/helpers/navigation";
+import { redirectInApp } from "@/services/navigation";
 
 type FormData = z.infer<typeof brandCreationSchema>;
 

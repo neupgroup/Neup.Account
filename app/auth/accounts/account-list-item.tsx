@@ -11,7 +11,7 @@ import { ChevronRight } from '@/components/icons';
 import { AccountActions } from './account-actions';
 import { switchActiveAccount, switchToBrand, switchToDependent, switchToDelegated } from '@/services/auth/switch';
 import { appendAuthCallbackContext, appendRedirect } from '@/core/auth/callback';
-import { redirectInApp } from '@/core/helpers/navigation';
+import { redirectInApp } from '@/services/navigation';
 import { cn } from '@/core/helpers/utils';
 
 type CombinedAccount = StoredAccount & {

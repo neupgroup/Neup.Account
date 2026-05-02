@@ -8,7 +8,7 @@ import type { StoredAccount } from '@/core/auth/session';
 import { switchActiveAccount } from '@/services/auth/switch';
 import { useToast } from '@/core/hooks/use-toast';
 import { getActiveAccountId } from '@/core/auth/session';
-import { redirectInApp } from '@/core/helpers/navigation';
+import { redirectInApp } from '@/services/navigation';
 
 type CombinedAccount = StoredAccount & {
     isBrand?: boolean;

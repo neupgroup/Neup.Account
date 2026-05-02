@@ -26,7 +26,7 @@ import { checkPermissions } from '@/services/user';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useEffect, useState, useCallback, use } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { redirectInApp } from "@/core/helpers/navigation";
+import { redirectInApp } from "@/services/navigation";
 
 
 const statusVariantMap: { [key: string]: "default" | "destructive" | "secondary" } = {

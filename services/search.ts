@@ -4,7 +4,7 @@
 import { logError } from '@/core/helpers/logger';
 import { checkPermissions } from '@/services/user';
 import prisma from '@/core/helpers/prisma';
-import { PERMISSION_SET } from '@/core/helpers/permissions';
+import { PERMISSION_SET } from '@/services/permissions';
 
 export type SearchResult = {
     id: string;

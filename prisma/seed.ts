@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import bcrypt from 'bcryptjs';
 import prisma from '../core/helpers/prisma';
-import { ROOT_PERMISSIONS } from '../core/helpers/permissions-config';
+import { ROOT_PERMISSIONS } from '../services/permissions-config';
 
 if (!process.env.DATABASE_URL) {
   throw new Error('DATABASE_URL is not set. Please configure your database connection.');

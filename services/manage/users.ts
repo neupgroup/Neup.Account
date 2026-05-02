@@ -118,7 +118,7 @@ export async function getActivity(accountId: string): Promise<UserActivityLog[]>
     });
 }
 
-import { PERMISSION_SET } from '@/core/helpers/permissions';
+import { PERMISSION_SET } from '@/services/permissions';
 
 
 /**

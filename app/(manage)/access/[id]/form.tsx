@@ -27,9 +27,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import type { Permission } from '@/core/helpers/permissions';
+import type { Permission } from '@/services/permissions';
 import { Loader2 } from "@/components/icons";
-import { redirectInApp } from "@/core/helpers/navigation";
+import { redirectInApp } from "@/services/navigation";
 
 export function AccessManagementForm({
   permitId,

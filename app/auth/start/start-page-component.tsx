@@ -13,7 +13,7 @@ import { cn } from '@/core/helpers/utils';
 import { AccountListItem } from '../accounts/account-list-item';
 import type { StoredAccount } from '@/core/auth/session';
 import { appendAuthCallbackContext, appendRedirect, getAppDisplayName, shouldReturnToAuthStartForExternalAuthentication } from '@/core/auth/callback';
-import { redirectInApp } from '@/core/helpers/navigation';
+import { redirectInApp } from '@/services/navigation';
 import { cleanupExpiredStoredSessions } from '@/core/auth/session';
 
 interface StartPageComponentProps {

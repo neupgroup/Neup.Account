@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getPermissions, getUserDetails } from "@/services/manage/users";
 import { getAccountType } from '@/services/user';
 import { getMasterPermissions } from "@/services/manage/access/index";
-import { PERMISSION_METADATA } from "@/core/helpers/permissions";
+import { PERMISSION_METADATA } from "@/services/permissions";
 import { BackButton } from "@/components/ui/back-button";
 import { PermissionEditor } from "./form";
 import { PrimaryHeader } from "@/components/ui/primary-header";
