@@ -371,3 +371,54 @@ model ApplicationBridge {
   @@index([appId, type])
   @@map("application_bridge")
 }
+
+model Role {
+  id          String   @id @default(uuid())
+  name        String
+  accountId   String
+  permissions String[]
+  description String?
+  account     Account  @relation(fields: [accountId], references: [id], map: "roles_accountId_fkey")
+  accesses    Access[]
+  calculated  RoleCalculated[]
+
+  @@map("role")
+}
+
+model Permission {
+  id          String           @id @default(uuid())
+  name        String
+  description String?
+  isRoot      Boolean          @default(false)
+  calculated  RoleCalculated[]
+  accesses    Access[]
+
+  @@map("permission")
+}
+
+model RoleCalculated {
+  id           String     @id @default(uuid())
+  roleId       String
+  permissionId String
+  hasRoot      Boolean    @default(false)
+  role         Role       @relation(fields: [roleId], references: [id], map: "role_calculated_roleId_fkey")
+  permission   Permission @relation(fields: [permissionId], references: [id], map: "role_calculated_permissionId_fkey")
+
+  @@map("role_calculated")
+}
+
+model Access {
+  id           String     @id @default(uuid())
+  accountId    String
+  permissionId String
+  recipientId  String
+  expiresAt    DateTime?
+  status       String     @default("active")
+  portfolioId  String?
+  account      Account    @relation(fields: [accountId], references: [id], map: "access_accountId_fkey")
+  recipient    Account    @relation(fields: [recipientId], references: [id], map: "access_recipientId_fkey")
+  permission   Permission @relation(fields: [permissionId], references: [id], map: "access_permissionId_fkey")
+  portfolio    Portfolio? @relation(fields: [portfolioId], references: [id], map: "access_portfolioId_fkey")
+
+  @@map("access")
+}

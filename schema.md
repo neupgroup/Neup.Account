@@ -18,6 +18,8 @@ table: account_meta__individual
   dateOfBirth: timestamp
   countryOfResidence: text
   details: json[]
+  role: text -> add this table.
+
 
 table: account_meta__brand
   accountId: text, primary key, references account.id
@@ -25,6 +27,7 @@ table: account_meta__brand
   isLegalEntity: boolean, default false
   originCountry: text
   details: json[]
+
 table: contact
   id: text, primary key, default uuid()
   accountId: text, references account.id
@@ -197,6 +200,34 @@ table: application_bridge
   details: jsonb
   createdAt: timestamp, default now()
   index: (appId, type)
+
+table: permission
+  id: text, primary key, default uuid()
+  name: text
+  description: text
+  isRoot: boolean, default false
+
+table: role
+  id: text, primary key, default uuid()
+  name: text
+  accountId: text, references account.id
+  permissions: array
+  description: text
+
+table: role_calculated
+  id: text, primary key, default uuid()
+  roleId: text, references role.id
+  permissionId: text, references permission.id
+  hasRoot: boolean, default false
+
+table: access
+  id: text, primary key, default uuid()
+  accountId: text, references account.id
+  permissionId: text, references permission.id
+  recipientId: text, references account.id
+  expiresAt: timestamp, nullable
+  status: text, default 'active'
+  portfolioId: text, references portfolio.id, nullable
 
 table: portfolio
   id: text, primary key, default uuid()
