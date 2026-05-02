@@ -40,8 +40,7 @@ model Account {
 }
 
 model AccountTypeIndividual {
-  id                 String    @id(map: "account_type__individual_pkey") @default(uuid())
-  accountId          String    @unique(map: "account_type__individual_accountId_key")
+  accountId          String    @id @unique(map: "account_type__individual_accountId_key")
   firstName          String?
   middleName         String?
   lastName           String?
@@ -53,8 +52,7 @@ model AccountTypeIndividual {
 }
 
 model AccountTypeBrand {
-  id            String   @id(map: "account_type__brand_pkey") @default(uuid())
-  accountId     String   @unique(map: "account_type__brand_accountId_key")
+  accountId     String   @id @unique(map: "account_type__brand_accountId_key")
   brandName     String?
   dateCreated   DateTime @default(now())
   isLegalEntity Boolean  @default(false)
@@ -242,7 +240,7 @@ model AuthSession {
   key          String?
   ipAddress    String
   userAgent    String
-  validTill    DateTime? @db.Timestamp(6)
+  validTill    DateTime?
   lastLoggedIn DateTime
   loginType    String
   geolocation  String?

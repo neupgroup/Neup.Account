@@ -4759,7 +4759,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualMinAggregateOutputType = {
-    id: string | null
     accountId: string | null
     firstName: string | null
     middleName: string | null
@@ -4769,7 +4768,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualMaxAggregateOutputType = {
-    id: string | null
     accountId: string | null
     firstName: string | null
     middleName: string | null
@@ -4779,7 +4777,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualCountAggregateOutputType = {
-    id: number
     accountId: number
     firstName: number
     middleName: number
@@ -4791,7 +4788,6 @@ export namespace Prisma {
 
 
   export type AccountTypeIndividualMinAggregateInputType = {
-    id?: true
     accountId?: true
     firstName?: true
     middleName?: true
@@ -4801,7 +4797,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualMaxAggregateInputType = {
-    id?: true
     accountId?: true
     firstName?: true
     middleName?: true
@@ -4811,7 +4806,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualCountAggregateInputType = {
-    id?: true
     accountId?: true
     firstName?: true
     middleName?: true
@@ -4894,7 +4888,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualGroupByOutputType = {
-    id: string
     accountId: string
     firstName: string | null
     middleName: string | null
@@ -4921,7 +4914,6 @@ export namespace Prisma {
 
 
   export type AccountTypeIndividualSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
     accountId?: boolean
     firstName?: boolean
     middleName?: boolean
@@ -4932,7 +4924,6 @@ export namespace Prisma {
   }, ExtArgs["result"]["accountTypeIndividual"]>
 
   export type AccountTypeIndividualSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
     accountId?: boolean
     firstName?: boolean
     middleName?: boolean
@@ -4943,7 +4934,6 @@ export namespace Prisma {
   }, ExtArgs["result"]["accountTypeIndividual"]>
 
   export type AccountTypeIndividualSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
     accountId?: boolean
     firstName?: boolean
     middleName?: boolean
@@ -4954,7 +4944,6 @@ export namespace Prisma {
   }, ExtArgs["result"]["accountTypeIndividual"]>
 
   export type AccountTypeIndividualSelectScalar = {
-    id?: boolean
     accountId?: boolean
     firstName?: boolean
     middleName?: boolean
@@ -4963,7 +4952,7 @@ export namespace Prisma {
     countryOfResidence?: boolean
   }
 
-  export type AccountTypeIndividualOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "firstName" | "middleName" | "lastName" | "dateOfBirth" | "countryOfResidence", ExtArgs["result"]["accountTypeIndividual"]>
+  export type AccountTypeIndividualOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"accountId" | "firstName" | "middleName" | "lastName" | "dateOfBirth" | "countryOfResidence", ExtArgs["result"]["accountTypeIndividual"]>
   export type AccountTypeIndividualInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }
@@ -4980,7 +4969,6 @@ export namespace Prisma {
       account: Prisma.$AccountPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: string
       accountId: string
       firstName: string | null
       middleName: string | null
@@ -5070,8 +5058,8 @@ export namespace Prisma {
      * // Get first 10 AccountTypeIndividuals
      * const accountTypeIndividuals = await prisma.accountTypeIndividual.findMany({ take: 10 })
      * 
-     * // Only select the `id`
-     * const accountTypeIndividualWithIdOnly = await prisma.accountTypeIndividual.findMany({ select: { id: true } })
+     * // Only select the `accountId`
+     * const accountTypeIndividualWithAccountIdOnly = await prisma.accountTypeIndividual.findMany({ select: { accountId: true } })
      * 
      */
     findMany<T extends AccountTypeIndividualFindManyArgs>(args?: SelectSubset<T, AccountTypeIndividualFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountTypeIndividualPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -5115,9 +5103,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many AccountTypeIndividuals and only return the `id`
-     * const accountTypeIndividualWithIdOnly = await prisma.accountTypeIndividual.createManyAndReturn({
-     *   select: { id: true },
+     * // Create many AccountTypeIndividuals and only return the `accountId`
+     * const accountTypeIndividualWithAccountIdOnly = await prisma.accountTypeIndividual.createManyAndReturn({
+     *   select: { accountId: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -5206,9 +5194,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more AccountTypeIndividuals and only return the `id`
-     * const accountTypeIndividualWithIdOnly = await prisma.accountTypeIndividual.updateManyAndReturn({
-     *   select: { id: true },
+     * // Update zero or more AccountTypeIndividuals and only return the `accountId`
+     * const accountTypeIndividualWithAccountIdOnly = await prisma.accountTypeIndividual.updateManyAndReturn({
+     *   select: { accountId: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -5411,7 +5399,6 @@ export namespace Prisma {
    * Fields of the AccountTypeIndividual model
    */
   interface AccountTypeIndividualFieldRefs {
-    readonly id: FieldRef<"AccountTypeIndividual", 'String'>
     readonly accountId: FieldRef<"AccountTypeIndividual", 'String'>
     readonly firstName: FieldRef<"AccountTypeIndividual", 'String'>
     readonly middleName: FieldRef<"AccountTypeIndividual", 'String'>
@@ -5843,7 +5830,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandMinAggregateOutputType = {
-    id: string | null
     accountId: string | null
     brandName: string | null
     dateCreated: Date | null
@@ -5852,7 +5838,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandMaxAggregateOutputType = {
-    id: string | null
     accountId: string | null
     brandName: string | null
     dateCreated: Date | null
@@ -5861,7 +5846,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandCountAggregateOutputType = {
-    id: number
     accountId: number
     brandName: number
     dateCreated: number
@@ -5872,7 +5856,6 @@ export namespace Prisma {
 
 
   export type AccountTypeBrandMinAggregateInputType = {
-    id?: true
     accountId?: true
     brandName?: true
     dateCreated?: true
@@ -5881,7 +5864,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandMaxAggregateInputType = {
-    id?: true
     accountId?: true
     brandName?: true
     dateCreated?: true
@@ -5890,7 +5872,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandCountAggregateInputType = {
-    id?: true
     accountId?: true
     brandName?: true
     dateCreated?: true
@@ -5972,7 +5953,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandGroupByOutputType = {
-    id: string
     accountId: string
     brandName: string | null
     dateCreated: Date
@@ -5998,7 +5978,6 @@ export namespace Prisma {
 
 
   export type AccountTypeBrandSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
     accountId?: boolean
     brandName?: boolean
     dateCreated?: boolean
@@ -6008,7 +5987,6 @@ export namespace Prisma {
   }, ExtArgs["result"]["accountTypeBrand"]>
 
   export type AccountTypeBrandSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
     accountId?: boolean
     brandName?: boolean
     dateCreated?: boolean
@@ -6018,7 +5996,6 @@ export namespace Prisma {
   }, ExtArgs["result"]["accountTypeBrand"]>
 
   export type AccountTypeBrandSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
     accountId?: boolean
     brandName?: boolean
     dateCreated?: boolean
@@ -6028,7 +6005,6 @@ export namespace Prisma {
   }, ExtArgs["result"]["accountTypeBrand"]>
 
   export type AccountTypeBrandSelectScalar = {
-    id?: boolean
     accountId?: boolean
     brandName?: boolean
     dateCreated?: boolean
@@ -6036,7 +6012,7 @@ export namespace Prisma {
     originCountry?: boolean
   }
 
-  export type AccountTypeBrandOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "brandName" | "dateCreated" | "isLegalEntity" | "originCountry", ExtArgs["result"]["accountTypeBrand"]>
+  export type AccountTypeBrandOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"accountId" | "brandName" | "dateCreated" | "isLegalEntity" | "originCountry", ExtArgs["result"]["accountTypeBrand"]>
   export type AccountTypeBrandInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
   }
@@ -6053,7 +6029,6 @@ export namespace Prisma {
       account: Prisma.$AccountPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: string
       accountId: string
       brandName: string | null
       dateCreated: Date
@@ -6142,8 +6117,8 @@ export namespace Prisma {
      * // Get first 10 AccountTypeBrands
      * const accountTypeBrands = await prisma.accountTypeBrand.findMany({ take: 10 })
      * 
-     * // Only select the `id`
-     * const accountTypeBrandWithIdOnly = await prisma.accountTypeBrand.findMany({ select: { id: true } })
+     * // Only select the `accountId`
+     * const accountTypeBrandWithAccountIdOnly = await prisma.accountTypeBrand.findMany({ select: { accountId: true } })
      * 
      */
     findMany<T extends AccountTypeBrandFindManyArgs>(args?: SelectSubset<T, AccountTypeBrandFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountTypeBrandPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -6187,9 +6162,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many AccountTypeBrands and only return the `id`
-     * const accountTypeBrandWithIdOnly = await prisma.accountTypeBrand.createManyAndReturn({
-     *   select: { id: true },
+     * // Create many AccountTypeBrands and only return the `accountId`
+     * const accountTypeBrandWithAccountIdOnly = await prisma.accountTypeBrand.createManyAndReturn({
+     *   select: { accountId: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -6278,9 +6253,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more AccountTypeBrands and only return the `id`
-     * const accountTypeBrandWithIdOnly = await prisma.accountTypeBrand.updateManyAndReturn({
-     *   select: { id: true },
+     * // Update zero or more AccountTypeBrands and only return the `accountId`
+     * const accountTypeBrandWithAccountIdOnly = await prisma.accountTypeBrand.updateManyAndReturn({
+     *   select: { accountId: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -6483,7 +6458,6 @@ export namespace Prisma {
    * Fields of the AccountTypeBrand model
    */
   interface AccountTypeBrandFieldRefs {
-    readonly id: FieldRef<"AccountTypeBrand", 'String'>
     readonly accountId: FieldRef<"AccountTypeBrand", 'String'>
     readonly brandName: FieldRef<"AccountTypeBrand", 'String'>
     readonly dateCreated: FieldRef<"AccountTypeBrand", 'DateTime'>
@@ -28733,7 +28707,6 @@ export namespace Prisma {
 
 
   export const AccountTypeIndividualScalarFieldEnum: {
-    id: 'id',
     accountId: 'accountId',
     firstName: 'firstName',
     middleName: 'middleName',
@@ -28746,7 +28719,6 @@ export namespace Prisma {
 
 
   export const AccountTypeBrandScalarFieldEnum: {
-    id: 'id',
     accountId: 'accountId',
     brandName: 'brandName',
     dateCreated: 'dateCreated',
@@ -29277,7 +29249,6 @@ export namespace Prisma {
     AND?: AccountTypeIndividualWhereInput | AccountTypeIndividualWhereInput[]
     OR?: AccountTypeIndividualWhereInput[]
     NOT?: AccountTypeIndividualWhereInput | AccountTypeIndividualWhereInput[]
-    id?: StringFilter<"AccountTypeIndividual"> | string
     accountId?: StringFilter<"AccountTypeIndividual"> | string
     firstName?: StringNullableFilter<"AccountTypeIndividual"> | string | null
     middleName?: StringNullableFilter<"AccountTypeIndividual"> | string | null
@@ -29288,7 +29259,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualOrderByWithRelationInput = {
-    id?: SortOrder
     accountId?: SortOrder
     firstName?: SortOrderInput | SortOrder
     middleName?: SortOrderInput | SortOrder
@@ -29299,7 +29269,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
     accountId?: string
     AND?: AccountTypeIndividualWhereInput | AccountTypeIndividualWhereInput[]
     OR?: AccountTypeIndividualWhereInput[]
@@ -29310,10 +29279,9 @@ export namespace Prisma {
     dateOfBirth?: DateTimeNullableFilter<"AccountTypeIndividual"> | Date | string | null
     countryOfResidence?: StringNullableFilter<"AccountTypeIndividual"> | string | null
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-  }, "id" | "accountId">
+  }, "accountId" | "accountId">
 
   export type AccountTypeIndividualOrderByWithAggregationInput = {
-    id?: SortOrder
     accountId?: SortOrder
     firstName?: SortOrderInput | SortOrder
     middleName?: SortOrderInput | SortOrder
@@ -29329,7 +29297,6 @@ export namespace Prisma {
     AND?: AccountTypeIndividualScalarWhereWithAggregatesInput | AccountTypeIndividualScalarWhereWithAggregatesInput[]
     OR?: AccountTypeIndividualScalarWhereWithAggregatesInput[]
     NOT?: AccountTypeIndividualScalarWhereWithAggregatesInput | AccountTypeIndividualScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"AccountTypeIndividual"> | string
     accountId?: StringWithAggregatesFilter<"AccountTypeIndividual"> | string
     firstName?: StringNullableWithAggregatesFilter<"AccountTypeIndividual"> | string | null
     middleName?: StringNullableWithAggregatesFilter<"AccountTypeIndividual"> | string | null
@@ -29342,7 +29309,6 @@ export namespace Prisma {
     AND?: AccountTypeBrandWhereInput | AccountTypeBrandWhereInput[]
     OR?: AccountTypeBrandWhereInput[]
     NOT?: AccountTypeBrandWhereInput | AccountTypeBrandWhereInput[]
-    id?: StringFilter<"AccountTypeBrand"> | string
     accountId?: StringFilter<"AccountTypeBrand"> | string
     brandName?: StringNullableFilter<"AccountTypeBrand"> | string | null
     dateCreated?: DateTimeFilter<"AccountTypeBrand"> | Date | string
@@ -29352,7 +29318,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandOrderByWithRelationInput = {
-    id?: SortOrder
     accountId?: SortOrder
     brandName?: SortOrderInput | SortOrder
     dateCreated?: SortOrder
@@ -29362,7 +29327,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
     accountId?: string
     AND?: AccountTypeBrandWhereInput | AccountTypeBrandWhereInput[]
     OR?: AccountTypeBrandWhereInput[]
@@ -29372,10 +29336,9 @@ export namespace Prisma {
     isLegalEntity?: BoolFilter<"AccountTypeBrand"> | boolean
     originCountry?: StringNullableFilter<"AccountTypeBrand"> | string | null
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
-  }, "id" | "accountId">
+  }, "accountId" | "accountId">
 
   export type AccountTypeBrandOrderByWithAggregationInput = {
-    id?: SortOrder
     accountId?: SortOrder
     brandName?: SortOrderInput | SortOrder
     dateCreated?: SortOrder
@@ -29390,7 +29353,6 @@ export namespace Prisma {
     AND?: AccountTypeBrandScalarWhereWithAggregatesInput | AccountTypeBrandScalarWhereWithAggregatesInput[]
     OR?: AccountTypeBrandScalarWhereWithAggregatesInput[]
     NOT?: AccountTypeBrandScalarWhereWithAggregatesInput | AccountTypeBrandScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"AccountTypeBrand"> | string
     accountId?: StringWithAggregatesFilter<"AccountTypeBrand"> | string
     brandName?: StringNullableWithAggregatesFilter<"AccountTypeBrand"> | string | null
     dateCreated?: DateTimeWithAggregatesFilter<"AccountTypeBrand"> | Date | string
@@ -30943,7 +30905,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualCreateInput = {
-    id?: string
     firstName?: string | null
     middleName?: string | null
     lastName?: string | null
@@ -30953,7 +30914,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualUncheckedCreateInput = {
-    id?: string
     accountId: string
     firstName?: string | null
     middleName?: string | null
@@ -30963,7 +30923,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30973,7 +30932,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -30983,7 +30941,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualCreateManyInput = {
-    id?: string
     accountId: string
     firstName?: string | null
     middleName?: string | null
@@ -30993,7 +30950,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31002,7 +30958,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31012,7 +30967,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandCreateInput = {
-    id?: string
     brandName?: string | null
     dateCreated?: Date | string
     isLegalEntity?: boolean
@@ -31021,7 +30975,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandUncheckedCreateInput = {
-    id?: string
     accountId: string
     brandName?: string | null
     dateCreated?: Date | string
@@ -31030,7 +30983,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
     brandName?: NullableStringFieldUpdateOperationsInput | string | null
     dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
     isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
@@ -31039,7 +30991,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
     brandName?: NullableStringFieldUpdateOperationsInput | string | null
     dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31048,7 +30999,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandCreateManyInput = {
-    id?: string
     accountId: string
     brandName?: string | null
     dateCreated?: Date | string
@@ -31057,7 +31007,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
     brandName?: NullableStringFieldUpdateOperationsInput | string | null
     dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
     isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
@@ -31065,7 +31014,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
     brandName?: NullableStringFieldUpdateOperationsInput | string | null
     dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32918,7 +32866,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualCountOrderByAggregateInput = {
-    id?: SortOrder
     accountId?: SortOrder
     firstName?: SortOrder
     middleName?: SortOrder
@@ -32928,7 +32875,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualMaxOrderByAggregateInput = {
-    id?: SortOrder
     accountId?: SortOrder
     firstName?: SortOrder
     middleName?: SortOrder
@@ -32938,7 +32884,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualMinOrderByAggregateInput = {
-    id?: SortOrder
     accountId?: SortOrder
     firstName?: SortOrder
     middleName?: SortOrder
@@ -32962,7 +32907,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandCountOrderByAggregateInput = {
-    id?: SortOrder
     accountId?: SortOrder
     brandName?: SortOrder
     dateCreated?: SortOrder
@@ -32971,7 +32915,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandMaxOrderByAggregateInput = {
-    id?: SortOrder
     accountId?: SortOrder
     brandName?: SortOrder
     dateCreated?: SortOrder
@@ -32980,7 +32923,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandMinOrderByAggregateInput = {
-    id?: SortOrder
     accountId?: SortOrder
     brandName?: SortOrder
     dateCreated?: SortOrder
@@ -35287,7 +35229,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandCreateWithoutAccountInput = {
-    id?: string
     brandName?: string | null
     dateCreated?: Date | string
     isLegalEntity?: boolean
@@ -35295,7 +35236,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandUncheckedCreateWithoutAccountInput = {
-    id?: string
     brandName?: string | null
     dateCreated?: Date | string
     isLegalEntity?: boolean
@@ -35308,7 +35248,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualCreateWithoutAccountInput = {
-    id?: string
     firstName?: string | null
     middleName?: string | null
     lastName?: string | null
@@ -35317,7 +35256,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualUncheckedCreateWithoutAccountInput = {
-    id?: string
     firstName?: string | null
     middleName?: string | null
     lastName?: string | null
@@ -35886,7 +35824,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
     brandName?: NullableStringFieldUpdateOperationsInput | string | null
     dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
     isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
@@ -35894,7 +35831,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeBrandUncheckedUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
     brandName?: NullableStringFieldUpdateOperationsInput | string | null
     dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
     isLegalEntity?: BoolFieldUpdateOperationsInput | boolean
@@ -35913,7 +35849,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35922,7 +35857,6 @@ export namespace Prisma {
   }
 
   export type AccountTypeIndividualUncheckedUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     middleName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null

@@ -132,7 +132,6 @@ exports.Prisma.AccountScalarFieldEnum = {
 };
 
 exports.Prisma.AccountTypeIndividualScalarFieldEnum = {
-  id: 'id',
   accountId: 'accountId',
   firstName: 'firstName',
   middleName: 'middleName',
@@ -142,7 +141,6 @@ exports.Prisma.AccountTypeIndividualScalarFieldEnum = {
 };
 
 exports.Prisma.AccountTypeBrandScalarFieldEnum = {
-  id: 'id',
   accountId: 'accountId',
   brandName: 'brandName',
   dateCreated: 'dateCreated',
