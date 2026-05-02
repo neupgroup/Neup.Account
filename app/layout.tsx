@@ -2,7 +2,7 @@ import type {Metadata} from 'next';
 import './globals.css';
 import 'nprogress/nprogress.css';
 import { Toaster } from "@/components/ui/toaster"
-import { GeolocationProvider } from '@/core/providers/geolocation-context';
+import { GeolocationProvider } from '@/core/providers/geolocation';
 import { SessionProvider } from '@/core/providers/session-context';
 import { PageProgressBar } from '@/components/page-progress-bar';
 import { Suspense } from 'react';

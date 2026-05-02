@@ -10,7 +10,7 @@ import { Loader2, PowerOff } from "@/components/icons";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BackButton } from "@/components/ui/back-button";
-import { GeolocationContext } from "@/core/providers/geolocation-context";
+import { Geolocation } from "@/core/providers/geolocation";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 import { useRouter } from "next/navigation";
 import { redirectInApp } from "@/core/helpers/navigation";
@@ -20,7 +20,7 @@ export default function DeactivateAccountPage() {
   const [isPending, startTransition] = useTransition();
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
   const { toast } = useToast();
-  const geo = useContext(GeolocationContext);
+  const geo = useContext(Geolocation);
   const router = useRouter();
 
   const handleSubmit = (formData: FormData) => {

@@ -19,7 +19,7 @@ import { Loader2, Trash2 } from "@/components/icons";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BackButton } from "@/components/ui/back-button";
-import { GeolocationContext } from "@/core/providers/geolocation-context";
+import { Geolocation } from "@/core/providers/geolocation";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 import { getAccountType } from '@/core/helpers/user';
 import { getActiveAccountId } from '@/core/helpers/session';
@@ -33,7 +33,7 @@ export default function DeleteAccountPage() {
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState(true);
   const { toast } = useToast();
-  const geo = useContext(GeolocationContext);
+  const geo = useContext(Geolocation);
   const router = useRouter();
 
   useEffect(() => {

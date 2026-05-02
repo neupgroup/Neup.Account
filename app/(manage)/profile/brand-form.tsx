@@ -23,7 +23,7 @@ import { Label } from '@/components/ui/label'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { GeolocationContext } from '@/core/providers/geolocation-context'
+import { Geolocation } from '@/core/providers/geolocation'
 import { Loader2 } from '@/components/icons'
 
 type BrandFormValues = z.infer<typeof brandProfileFormSchema>;
@@ -32,7 +32,7 @@ export function BrandProfileForm({ accountId, children }: { accountId: string, c
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const { toast } = useToast();
-    const geo = useContext(GeolocationContext);
+    const geo = useContext(Geolocation);
     const [dateInput, setDateInput] = useState<string>('');
     const [isParsingDate, setIsParsingDate] = useState(false);
 

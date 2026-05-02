@@ -35,7 +35,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BackButton } from "@/components/ui/back-button";
-import { GeolocationContext } from "@/core/providers/geolocation-context";
+import { Geolocation } from "@/core/providers/geolocation";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 
 const formSchema = z.object({
@@ -48,7 +48,7 @@ export default function MaterializationPage() {
   const [isRequested, setIsRequested] = useState(false);
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
   const { toast } = useToast();
-  const geo = useContext(GeolocationContext);
+  const geo = useContext(Geolocation);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

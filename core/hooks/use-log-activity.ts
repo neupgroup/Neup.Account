@@ -1,13 +1,13 @@
 "use client";
 
 import {useContext} from 'react';
-import {GeolocationContext} from '@/core/providers/geolocation-context';
+import {Geolocation} from '@/core/providers/geolocation';
 import {logActivity} from '@/core/helpers/log-actions';
 
 
 // Client-side hook to wrap logActivity and inject geolocation
 export function useLogActivity() {
-    const geo = useContext(GeolocationContext);
+    const geo = useContext(Geolocation);
 
     return (
         targetAccountId: string,

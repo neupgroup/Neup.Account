@@ -9,7 +9,7 @@ type GeolocationState = {
   error: string | null;
 };
 
-export const GeolocationContext = createContext<GeolocationState | undefined>(undefined);
+export const Geolocation = createContext<GeolocationState | undefined>(undefined);
 
 export const GeolocationProvider = ({ children }: { children: ReactNode }) => {
   const [location, setLocation] = useState<GeolocationState>({
@@ -46,8 +46,8 @@ export const GeolocationProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <GeolocationContext.Provider value={location}>
+    <Geolocation.Provider value={location}>
       {children}
-    </GeolocationContext.Provider>
+    </Geolocation.Provider>
   );
 };
