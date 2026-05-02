@@ -41,7 +41,7 @@ export default async function AccountsPage() {
     notFound();
   }
 
-  const isManaging = Boolean(await authCookies.get('auth_managing'));
+  const isManaging = Boolean(await authCookies.get('managing'));
 
   let accountsToShow: any[] = [];
 

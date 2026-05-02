@@ -300,12 +300,10 @@ export async function switchToAccountByNeupId(neupId: string): Promise<{ success
   return switchToAccount(matchedAccount);
 }
 
-// Sets the auth_managing cookie to a brand context so the user operates as that brand.
+// Sets the managing cookie so the user operates as a brand account.
 export async function switchToBrand(brandId: string) {
   try {
-    const expiresOn = new Date();
-    expiresOn.setDate(expiresOn.getDate() + SESSION_DURATION_DAYS);
-    await setManagingCookie(`brand.${brandId}`, expiresOn);
+    await setManagingCookie(brandId);
     return { success: true };
   } catch (error) {
     await logError('auth', error, `switchToBrand: ${brandId}`);
@@ -313,12 +311,10 @@ export async function switchToBrand(brandId: string) {
   }
 }
 
-// Sets the auth_managing cookie to a dependent context.
+// Sets the managing cookie so the user operates as a dependent account.
 export async function switchToDependent(dependentId: string) {
   try {
-    const expiresOn = new Date();
-    expiresOn.setDate(expiresOn.getDate() + SESSION_DURATION_DAYS);
-    await setManagingCookie(`dependent.${dependentId}`, expiresOn);
+    await setManagingCookie(dependentId);
     return { success: true };
   } catch (error) {
     await logError('auth', error, `switchToDependent: ${dependentId}`);
@@ -326,12 +322,10 @@ export async function switchToDependent(dependentId: string) {
   }
 }
 
-// Sets the auth_managing cookie to a delegated account context.
+// Sets the managing cookie so the user operates as a delegated account.
 export async function switchToDelegated(accountId: string) {
   try {
-    const expiresOn = new Date();
-    expiresOn.setDate(expiresOn.getDate() + SESSION_DURATION_DAYS);
-    await setManagingCookie(`delegated.${accountId}`, expiresOn);
+    await setManagingCookie(accountId);
     return { success: true };
   } catch (error) {
     await logError('auth', error, `switchToDelegated: ${accountId}`);

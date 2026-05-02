@@ -106,11 +106,8 @@ export class AuthCookiesHelper extends Singleton {
         const sid = active?.sid || '';
         const skey = active?.skey || '';
 
-        const managingCookie = await this.get('auth_managing');
-        let managingAccountId: string | undefined = undefined;
-        if (managingCookie && (managingCookie.startsWith('brand.') || managingCookie.startsWith('dependent.') || managingCookie.startsWith('delegated.'))) {
-            managingAccountId = managingCookie.split('.')[1];
-        }
+        const managingCookie = await this.get('managing');
+        const managingAccountId = managingCookie || undefined;
 
         return {
             aid,
@@ -169,12 +166,14 @@ export class AuthCookiesHelper extends Singleton {
         await this.setJson('auth_accounts', normalized, LONG_LIVED_COOKIE_OPTIONS);
     }
 
-    public async setManagingCookie(value: string, expires: Date) {
-        await this.set('auth_managing', value, { ...COOKIE_OPTIONS, expires });
+    public async setManagingCookie(accountId: string) {
+        const expires = new Date();
+        expires.setDate(expires.getDate() + 30);
+        await this.set('managing', accountId, { ...COOKIE_OPTIONS, expires });
     }
 
     public async clearManagingCookie() {
-        await this.del('auth_managing');
+        await this.del('managing');
     }
 
     public async clearSessionCookies() {
@@ -191,7 +190,7 @@ export class AuthCookiesHelper extends Singleton {
             await this.setJson('auth_accounts', updated, LONG_LIVED_COOKIE_OPTIONS);
         }
 
-        await this.del('auth_managing');
+        await this.del('managing');
 
         // Remove all legacy individual session cookies
         await this.del('auth_aid');
@@ -238,8 +237,8 @@ export async function setStoredAccountsCookie(accounts: StoredAccount[]) {
 /**
  * Sets the cookie to indicate which brand/dependent account is being managed.
  */
-export async function setManagingCookie(value: string, expires: Date) {
-    return authCookies.setManagingCookie(value, expires);
+export async function setManagingCookie(accountId: string) {
+    return authCookies.setManagingCookie(accountId);
 }
 
 

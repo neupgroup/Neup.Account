@@ -57,6 +57,23 @@ export async function getActiveAccount(): Promise<StoredAccount | null> {
     return accounts.find(a => a.def === 1) ?? null;
 }
 
+// Returns the ID of the account currently being managed (from the managing cookie),
+// or null if the user is operating as their personal account.
+export async function getManagedAccountId(): Promise<string | null> {
+    const raw = await cookieProvider.getCookie('managing');
+    return raw || null;
+}
+
+// Returns the effective active account ID.
+// If a managing cookie is set, returns that ID.
+// Otherwise returns the def: 1 account ID.
+export async function getEffectiveAccountId(): Promise<string | null> {
+    const managing = await getManagedAccountId();
+    if (managing) return managing;
+    const active = await getActiveAccount();
+    return active?.aid ?? null;
+}
+
 // Adds a new account to the auth_accounts cookie and marks it as active (def: 1).
 // Demotes all other accounts to def: 0 and removes any previous entry for the same aid.
 export async function addAccount(aid: string, sid: string, skey: string, nid: string): Promise<void> {
