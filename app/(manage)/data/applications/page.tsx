@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getApplicationsPageData, type FlatAppItem } from '@/services/manage/applications/list';
+import { getApplicationsPageData, type FlatAppItem } from '@/services/applications/form-actions';
 import { Button } from '@/components/ui/button';
 import { AppWindow, Building, BarChart, Share2, ChevronRight, type LucideIcon } from '@/components/icons';
 

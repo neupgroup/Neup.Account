@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Loader2 } from '@/components/icons';
-import { addUserApplicationAccess, updateUserApplicationPermissions } from '@/services/data/application-access';
+import { addUserApplicationAccess, updateUserApplicationPermissions } from '@/services/applications/access';
 
 type ApplicationAccessFormProps = {
   mode: 'add' | 'edit';

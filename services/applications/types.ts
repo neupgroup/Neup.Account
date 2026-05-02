@@ -1,3 +1,5 @@
+// All shared types and constants for the application domain.
+
 export const applicationAccessFields = [
   'neupid',
   'firstName',
@@ -10,6 +12,8 @@ export const applicationAccessFields = [
   'gender',
 ] as const;
 
+export type ApplicationAccessField = (typeof applicationAccessFields)[number];
+
 export type Application = {
   id: string;
   name: string;
@@ -19,37 +23,17 @@ export type Application = {
   slug?: string;
   dataAccessed?: string[];
   icon?: 'app-window' | 'building' | 'bar-chart' | 'share-2';
-  access?: Array<'neupid' | 'firstName' | 'lastName' | 'middleName' | 'displayName' | 'dateBirth' | 'age' | 'isMinor' | 'gender'>;
+  access?: ApplicationAccessField[];
   policies?: Array<{ name: string; policy: string }>;
-  endpoints?: {
-    dataDeletionApi?: string;
-    dataDeletionPage?: string;
-    accountBlock?: string;
-    accountBlockApi?: string;
-    logoutPage?: string;
-    logoutApi?: string;
-  };
+  endpoints?: ApplicationEndpointConfig;
   ownerAccountId?: string;
 };
 
-/**
- * Type ApplicationAccessField.
- */
-export type ApplicationAccessField = (typeof applicationAccessFields)[number];
-
-
-/**
- * Type ApplicationPolicyEntry.
- */
 export type ApplicationPolicyEntry = {
   name: string;
   policy: string;
 };
 
-
-/**
- * Type ApplicationEndpointConfig.
- */
 export type ApplicationEndpointConfig = {
   dataDeletionApi?: string;
   dataDeletionPage?: string;
@@ -59,10 +43,6 @@ export type ApplicationEndpointConfig = {
   logoutApi?: string;
 };
 
-
-/**
- * Type ManagedApplication.
- */
 export type ManagedApplication = {
   id: string;
   name: string;

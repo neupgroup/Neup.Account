@@ -4,8 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { checkPermissions } from '@/services/user';
-import { getManagedApplications } from '@/services/manage/applications';
-import { updateManagedApplicationStatusFromForm } from '@/services/manage/applications/status-action';
+import { getManagedApplications } from '@/services/applications/manage';
+import { updateManagedApplicationStatusFromForm } from '@/services/applications/form-actions';
 
 const statusOptions = ['development', 'active', 'rejected', 'blocked'] as const;
 

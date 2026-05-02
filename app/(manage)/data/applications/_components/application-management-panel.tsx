@@ -13,14 +13,14 @@ import {
   saveApplicationEndpoints,
   saveApplicationPolicies,
   saveApplicationSecret,
-} from '@/services/manage/applications';
+} from '@/services/applications/manage';
 import {
   applicationAccessFields,
   type ApplicationAccessField,
   type ApplicationEndpointConfig,
   type ApplicationPolicyEntry,
   type ManagedApplication,
-} from '@/services/manage/application-types';
+} from '@/services/applications/types';
 
 function generateSecretKey(): string {
   const bytes = new Uint8Array(32);

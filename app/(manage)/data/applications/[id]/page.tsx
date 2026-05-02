@@ -4,8 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   getApplicationDetailsForViewer,
-} from '@/services/manage/applications';
-import { deleteManagedApplicationFromDetailsPage } from '@/services/manage/applications/actions';
+} from '@/services/applications/manage';
+import { deleteManagedApplicationFromDetailsPage } from '@/services/applications/form-actions';
 import { AppWindow, Building, BarChart, Share2, ExternalLink, type LucideIcon } from '@/components/icons';
 
 type ApplicationDetailPageProps = {

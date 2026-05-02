@@ -9,11 +9,12 @@ import { checkPermissions } from '@/services/user';
 import { logError } from '@/core/helpers/logger';
 import {
   applicationAccessFields,
+  type Application,
   type ApplicationAccessField,
   type ApplicationEndpointConfig,
   type ApplicationPolicyEntry,
   type ManagedApplication,
-} from './application-types';
+} from '@/services/applications/types';
 
 const createApplicationSchema = z.object({
   name: z.string().trim().min(1, 'Application name is required.').max(120, 'Application name is too long.'),
@@ -930,4 +931,43 @@ export async function updateManagedApplicationStatus(input: { appId: string; sta
     await logError('database', error, `updateManagedApplicationStatus:${parsed.data.appId}`);
     return { success: false, error: 'Failed to update application status.' };
   }
+}
+
+// Returns all applications, optionally filtered by a search query.
+export async function getApps(searchQuery?: string): Promise<Application[]> {
+    try {
+        const apps = await prisma.application.findMany({
+            where: searchQuery ? {
+                OR: [
+                    { name: { contains: searchQuery, mode: 'insensitive' } },
+                    { id: { contains: searchQuery, mode: 'insensitive' } },
+                    { description: { contains: searchQuery, mode: 'insensitive' } },
+                ],
+            } : {},
+            orderBy: { createdAt: 'desc' }
+        });
+
+        return apps.map(app => {
+            const { appSecret, ...data } = app;
+            return { ...data } as unknown as Application;
+        });
+    } catch (error) {
+        await logError('database', error, 'getApps');
+        return [];
+    }
+}
+
+// Returns a single application by ID, stripping the secret key.
+export async function getAppDetails(appId: string): Promise<Application | null> {
+    try {
+        const app = await prisma.application.findUnique({ where: { id: appId } });
+        if (app) {
+            const { appSecret, ...data } = app;
+            return { ...data } as unknown as Application;
+        }
+        return null;
+    } catch (error) {
+        await logError('database', error, `getApplicationDetails: ${appId}`);
+        return null;
+    }
 }

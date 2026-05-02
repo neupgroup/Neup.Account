@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { getConnectedApplications } from '@/services/data/applications';
+import { getConnectedApplications } from '@/services/applications/connected';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { AppWindow, ChevronRight } from '@/components/icons';
