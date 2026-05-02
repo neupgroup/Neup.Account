@@ -7,7 +7,7 @@ import { cn } from "@/core/helpers/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { type NavSection, navItems, allPermissionsMap } from "./nav-data"
 import { Skeleton } from "./ui/skeleton";
-import { useSession } from "@/core/providers/session-context";
+import { useSession } from "@/core/providers/session";
 
 export function DashboardNav() {
     const pathname = usePathname();

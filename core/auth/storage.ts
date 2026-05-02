@@ -8,33 +8,33 @@ export type StoredProfileInfo = {
     accountType?: string;
 };
 
-export function getStoredProfileInfo(): StoredProfileInfo | null {
+type SessionDataMap = {
+    [PROFILE_INFO_KEY]: StoredProfileInfo;
+    [JWT_KEY]: string;
+};
+
+export function getSessionData<K extends keyof SessionDataMap>(key: K): SessionDataMap[K] | null {
     if (typeof window === 'undefined') return null;
     try {
-        const raw = sessionStorage.getItem(PROFILE_INFO_KEY);
-        return raw ? JSON.parse(raw) : null;
+        const raw = sessionStorage.getItem(key);
+        if (!raw) return null;
+        return key === JWT_KEY ? raw as SessionDataMap[K] : JSON.parse(raw);
     } catch {
         return null;
     }
 }
 
-export function setStoredProfileInfo(data: StoredProfileInfo) {
+export function setSessionData<K extends keyof SessionDataMap>(key: K, value: SessionDataMap[K]) {
     if (typeof window === 'undefined') return;
-    sessionStorage.setItem(PROFILE_INFO_KEY, JSON.stringify(data));
+    sessionStorage.setItem(key, key === JWT_KEY ? value as string : JSON.stringify(value));
 }
 
-export function getStoredJwt(): string | null {
-    if (typeof window === 'undefined') return null;
-    return sessionStorage.getItem(JWT_KEY);
-}
-
-export function setStoredJwt(token: string) {
+export function deleteSessionData(key?: keyof SessionDataMap) {
     if (typeof window === 'undefined') return;
-    sessionStorage.setItem(JWT_KEY, token);
-}
-
-export function clearAuthStorage() {
-    if (typeof window === 'undefined') return;
-    sessionStorage.removeItem(PROFILE_INFO_KEY);
-    sessionStorage.removeItem(JWT_KEY);
+    if (key) {
+        sessionStorage.removeItem(key);
+    } else {
+        sessionStorage.removeItem(PROFILE_INFO_KEY);
+        sessionStorage.removeItem(JWT_KEY);
+    }
 }

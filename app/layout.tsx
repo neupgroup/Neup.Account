@@ -3,7 +3,7 @@ import './globals.css';
 import 'nprogress/nprogress.css';
 import { Toaster } from "@/components/ui/toaster"
 import { GeolocationProvider } from '@/core/providers/geolocation';
-import { SessionProvider } from '@/core/providers/session-context';
+import { SessionProvider } from '@/core/providers/session';
 import { PageProgressBar } from '@/components/page-progress-bar';
 import { Suspense } from 'react';
 import { UrlErrorBanner } from '@/components/ui/url-error-banner';

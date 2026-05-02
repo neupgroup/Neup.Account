@@ -27,7 +27,7 @@ import {
 import { type NavSection, navItems, allPermissionsMap } from "./nav-data";
 import { NotificationBell } from "./warning-display";
 import { ListItem } from "./ui/list-item";
-import { useSession } from "@/core/providers/session-context";
+import { useSession } from "@/core/providers/session";
 import { Skeleton } from "./ui/skeleton";
 
 const iconMap: { [key: string]: LucideIcon | React.ElementType } = {

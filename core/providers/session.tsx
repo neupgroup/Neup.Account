@@ -5,11 +5,11 @@ import { type UserProfile, getUserProfile as fetchUserProfile } from '@/core/hel
 import { getActiveAccountId, getPersonalAccountId } from '@/core/helpers/auth-actions';
 import { checkSession } from '@/core/auth/check';
 import {
-    getStoredProfileInfo,
-    setStoredProfileInfo,
-    getStoredJwt,
-    setStoredJwt,
-    clearAuthStorage,
+    getSessionData,
+    setSessionData,
+    deleteSessionData,
+    PROFILE_INFO_KEY,
+    JWT_KEY,
 } from '@/core/auth/storage';
 
 type SessionState = {
@@ -49,13 +49,13 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
         const result = await checkSession();
 
         if (!result.valid) {
-            clearAuthStorage();
+            deleteSessionData();
             setSessionState(s => ({ ...s, loading: false, profile: null, permissions: [] }));
             return;
         }
 
         // Update profileInfo in sessionStorage if changed
-        const cachedProfile = getStoredProfileInfo();
+        const cachedProfile = getSessionData(PROFILE_INFO_KEY);
         const profileChanged = !cachedProfile ||
             cachedProfile.firstName !== result.profileInfo.firstName ||
             cachedProfile.lastName !== result.profileInfo.lastName ||
@@ -63,14 +63,14 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
             cachedProfile.accountType !== result.profileInfo.accountType;
 
         if (profileChanged) {
-            setStoredProfileInfo(result.profileInfo);
+            setSessionData(PROFILE_INFO_KEY, result.profileInfo);
         }
 
         // Update permissions in sessionStorage (stored as JSON in jwt key) if changed
-        const cachedPermissions = getStoredJwt();
+        const cachedPermissions = getSessionData(JWT_KEY);
         const freshPermissionsJson = JSON.stringify(result.permissions);
         if (cachedPermissions !== freshPermissionsJson) {
-            setStoredJwt(freshPermissionsJson);
+            setSessionData(JWT_KEY, freshPermissionsJson);
         }
 
         // Fetch full profile for UI only if needed
@@ -91,7 +91,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const clearCacheAndRefetch = () => {
-        clearAuthStorage();
+        deleteSessionData();
         fetchData(true);
     };
 

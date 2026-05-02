@@ -18,7 +18,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form"
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
-import { useSession } from '@/core/providers/session-context'
+import { useSession } from '@/core/providers/session'
 import { BackButton } from '@/components/ui/back-button'
 import { cn } from '@/core/helpers/utils'
 import { Check, Loader2, UploadCloud } from '@/components/icons'

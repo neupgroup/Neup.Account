@@ -23,7 +23,7 @@ import { TertiaryHeader } from "@/components/ui/tertiary-header"
 import { PrimaryHeader } from "@/components/ui/primary-header"
 import NProgress from 'nprogress';
 import Link from "next/link"
-import { useSession } from "@/core/providers/session-context"
+import { useSession } from "@/core/providers/session"
 import { redirectInApp } from "@/core/helpers/navigation";
 
 function AccountsPageSkeleton() {
