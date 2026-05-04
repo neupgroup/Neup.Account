@@ -156,7 +156,7 @@ exports.Prisma.SystemConfigScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.AuthRequestScalarFieldEnum = {
+exports.Prisma.AuthnRequestScalarFieldEnum = {
   id: 'id',
   type: 'type',
   status: 'status',
@@ -242,7 +242,7 @@ exports.Prisma.NeupIdScalarFieldEnum = {
   dateAdded: 'dateAdded'
 };
 
-exports.Prisma.AuthMethodScalarFieldEnum = {
+exports.Prisma.AuthnMethodScalarFieldEnum = {
   accountId: 'accountId',
   value: 'value',
   id: 'id',
@@ -252,7 +252,7 @@ exports.Prisma.AuthMethodScalarFieldEnum = {
   detail: 'detail'
 };
 
-exports.Prisma.AuthSessionScalarFieldEnum = {
+exports.Prisma.AuthnSessionScalarFieldEnum = {
   id: 'id',
   accountId: 'accountId',
   key: 'key',
@@ -412,7 +412,7 @@ exports.Prisma.ModelName = {
   AccountTypeIndividual: 'AccountTypeIndividual',
   AccountTypeBrand: 'AccountTypeBrand',
   SystemConfig: 'SystemConfig',
-  AuthRequest: 'AuthRequest',
+  AuthnRequest: 'AuthnRequest',
   Activity: 'Activity',
   Notification: 'Notification',
   Request: 'Request',
@@ -421,8 +421,8 @@ exports.Prisma.ModelName = {
   Verification: 'Verification',
   Contact: 'Contact',
   NeupId: 'NeupId',
-  AuthMethod: 'AuthMethod',
-  AuthSession: 'AuthSession',
+  AuthnMethod: 'AuthnMethod',
+  AuthnSession: 'AuthnSession',
   SystemError: 'SystemError',
   Application: 'Application',
   Portfolio: 'Portfolio',

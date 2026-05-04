@@ -19,8 +19,8 @@ model Account {
   brandProfile      AccountTypeBrand?
   individualProfile AccountTypeIndividual?
   appConnections    ApplicationConnection[]
-  authMethods       AuthMethod[]
-  sessions          AuthSession[]
+  authMethods       AuthnMethod[]
+  sessions          AuthnSession[]
   contacts          Contact[]
   neupIds           NeupId[]
   notifications     Notification[]
@@ -72,7 +72,7 @@ model SystemConfig {
   @@map("system_config")
 }
 
-model AuthRequest {
+model AuthnRequest {
   id        String   @id(map: "auth_requests_pkey") @default(uuid())
   type      String
   status    String   @default("pending")
@@ -189,7 +189,7 @@ model NeupId {
   @@map("neupid")
 }
 
-model AuthMethod {
+model AuthnMethod {
   accountId         String
   value             String
   id                String  @id @default(uuid())
@@ -205,7 +205,7 @@ model AuthMethod {
 }
 
 
-model AuthSession {
+model AuthnSession {
   id           String    @id(map: "sessions_pkey") @default(uuid())
   accountId    String
   key          String?
@@ -403,14 +403,14 @@ model AuthzAssetsAccessGrant {
   roleId         String   @map("role_id")
   portfolioId    String   @map("portfolio_id")
 
-  asset      PortfolioAsset @relation(fields: [assetId], references: [id], map: "assets_access_grant_assetId_fkey")
-  target     Account        @relation(fields: [targetAccountId], references: [id], map: "assets_access_grant_target_account_id_fkey")
-  role       AuthzRole      @relation(fields: [roleId], references: [id], map: "assets_access_grant_role_id_fkey")
-  portfolio  Portfolio      @relation(fields: [portfolioId], references: [id], map: "assets_access_grant_portfolio_id_fkey")
+  asset      PortfolioAsset @relation(fields: [assetId], references: [id], map: "authz_assets_access_grant_assetId_fkey")
+  target     Account        @relation(fields: [targetAccountId], references: [id], map: "authz_assets_access_grant_target_account_id_fkey")
+  role       AuthzRole      @relation(fields: [roleId], references: [id], map: "authz_assets_access_grant_role_id_fkey")
+  portfolio  Portfolio      @relation(fields: [portfolioId], references: [id], map: "authz_assets_access_grant_portfolio_id_fkey")
 
-  @@index([assetId], map: "assets_access_grant_asset_id_idx")
-  @@index([targetAccountId], map: "assets_access_grant_target_account_id_idx")
-  @@index([roleId], map: "assets_access_grant_role_id_idx")
-  @@index([portfolioId], map: "assets_access_grant_portfolio_id_idx")
-  @@map("assets_access_grant")
+  @@index([assetId], map: "authz_assets_access_grant_asset_id_idx")
+  @@index([targetAccountId], map: "authz_assets_access_grant_target_account_id_idx")
+  @@index([roleId], map: "authz_assets_access_grant_role_id_idx")
+  @@index([portfolioId], map: "authz_assets_access_grant_portfolio_id_idx")
+  @@map("authz_assets_access_grant")
 }
