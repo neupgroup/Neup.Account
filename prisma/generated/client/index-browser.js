@@ -137,22 +137,17 @@ exports.Prisma.AccountTypeIndividualScalarFieldEnum = {
   middleName: 'middleName',
   lastName: 'lastName',
   dateOfBirth: 'dateOfBirth',
-  countryOfResidence: 'countryOfResidence'
+  countryOfResidence: 'countryOfResidence',
+  details: 'details',
+  roleId: 'roleId'
 };
 
 exports.Prisma.AccountTypeBrandScalarFieldEnum = {
   accountId: 'accountId',
   brandName: 'brandName',
-  dateCreated: 'dateCreated',
   isLegalEntity: 'isLegalEntity',
-  originCountry: 'originCountry'
-};
-
-exports.Prisma.AccountOwnershipScalarFieldEnum = {
-  id: 'id',
-  parentId: 'parentId',
-  childrenId: 'childrenId',
-  type: 'type'
+  originCountry: 'originCountry',
+  details: 'details'
 };
 
 exports.Prisma.SystemConfigScalarFieldEnum = {
@@ -193,7 +188,7 @@ exports.Prisma.NotificationScalarFieldEnum = {
   createdAt: 'createdAt',
   deletableOn: 'deletableOn',
   persistence: 'persistence',
-  requestId: 'requestId'
+  detail: 'detail'
 };
 
 exports.Prisma.RequestScalarFieldEnum = {
@@ -211,27 +206,25 @@ exports.Prisma.RequestScalarFieldEnum = {
 exports.Prisma.FamilyScalarFieldEnum = {
   id: 'id',
   createdBy: 'createdBy',
-  memberIds: 'memberIds',
-  members: 'members',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.FamilyMemberScalarFieldEnum = {
+  id: 'id',
+  familyId: 'familyId',
+  memberId: 'memberId',
+  role: 'role'
 };
 
 exports.Prisma.VerificationScalarFieldEnum = {
   id: 'id',
   accountId: 'accountId',
-  type: 'type',
-  token: 'token',
-  code: 'code',
   status: 'status',
   reason: 'reason',
   category: 'category',
-  verifiedBy: 'verifiedBy',
-  revokedBy: 'revokedBy',
-  revocationReason: 'revocationReason',
-  createdAt: 'createdAt',
-  verifiedAt: 'verifiedAt',
-  revokedAt: 'revokedAt'
+  doneBy: 'doneBy',
+  doneAt: 'doneAt',
+  previously: 'previously'
 };
 
 exports.Prisma.ContactScalarFieldEnum = {
@@ -244,6 +237,7 @@ exports.Prisma.ContactScalarFieldEnum = {
 exports.Prisma.NeupIdScalarFieldEnum = {
   id: 'id',
   accountId: 'accountId',
+  neupId: 'neupId',
   isPrimary: 'isPrimary',
   dateAdded: 'dateAdded'
 };
@@ -256,26 +250,6 @@ exports.Prisma.AuthMethodScalarFieldEnum = {
   order: 'order',
   status: 'status',
   detail: 'detail'
-};
-
-exports.Prisma.PermitScalarFieldEnum = {
-  id: 'id',
-  accountId: 'accountId',
-  targetAccountId: 'targetAccountId',
-  forSelf: 'forSelf',
-  isRoot: 'isRoot',
-  permissions: 'permissions',
-  restrictions: 'restrictions',
-  createdOn: 'createdOn',
-  expiryDate: 'expiryDate',
-  fullAccess: 'fullAccess',
-  issueDate: 'issueDate',
-  issuingAuthority: 'issuingAuthority',
-  managedBy: 'managedBy',
-  permitNumber: 'permitNumber',
-  permitSubType: 'permitSubType',
-  permitType: 'permitType',
-  status: 'status'
 };
 
 exports.Prisma.AuthSessionScalarFieldEnum = {
@@ -298,30 +272,22 @@ exports.Prisma.SystemErrorScalarFieldEnum = {
   timestamp: 'timestamp',
   accountId: 'accountId',
   geolocation: 'geolocation',
-  ipAddress: 'ipAddress',
-  problemLevel: 'problemLevel',
-  reproSteps: 'reproSteps',
-  solution: 'solution',
-  solvedBy: 'solvedBy',
-  status: 'status',
-  type: 'type'
+  ipAddress: 'ipAddress'
 };
 
 exports.Prisma.ApplicationScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  party: 'party',
   description: 'description',
   icon: 'icon',
   website: 'website',
   developer: 'developer',
   appSecret: 'appSecret',
   createdAt: 'createdAt',
-  access: 'access',
   endpoints: 'endpoints',
-  ownerAccountId: 'ownerAccountId',
-  policies: 'policies',
-  status: 'status'
+  status: 'status',
+  isInternal: 'isInternal',
+  details: 'details'
 };
 
 exports.Prisma.PortfolioScalarFieldEnum = {
@@ -346,14 +312,6 @@ exports.Prisma.PortfolioMemberScalarFieldEnum = {
   details: 'details'
 };
 
-exports.Prisma.PortfolioRoleScalarFieldEnum = {
-  id: 'id',
-  accountId: 'accountId',
-  portfolioId: 'portfolioId',
-  roleId: 'roleId',
-  details: 'details'
-};
-
 exports.Prisma.ApplicationConnectionScalarFieldEnum = {
   id: 'id',
   accountId: 'accountId',
@@ -368,6 +326,54 @@ exports.Prisma.ApplicationBridgeScalarFieldEnum = {
   value: 'value',
   details: 'details',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.ApplicationPolicyScalarFieldEnum = {
+  id: 'id',
+  appId: 'appId',
+  policyType: 'policyType',
+  policyValue: 'policyValue',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AuthzCapabilityScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  appId: 'appId',
+  scope: 'scope'
+};
+
+exports.Prisma.AuthzRoleScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  permissions: 'permissions',
+  description: 'description',
+  appId: 'appId',
+  scope: 'scope'
+};
+
+exports.Prisma.AuthzRoleCapabilityMapScalarFieldEnum = {
+  id: 'id',
+  roleId: 'roleId',
+  capabilityId: 'capabilityId'
+};
+
+exports.Prisma.AuthzAccountAccessGrantScalarFieldEnum = {
+  id: 'id',
+  ownerAccountId: 'ownerAccountId',
+  targetAccountId: 'targetAccountId',
+  roleId: 'roleId',
+  appId: 'appId',
+  portfolioId: 'portfolioId'
+};
+
+exports.Prisma.AuthzAssetsAccessGrantScalarFieldEnum = {
+  id: 'id',
+  assetId: 'assetId',
+  targetAccountId: 'targetAccountId',
+  roleId: 'roleId',
+  portfolioId: 'portfolioId'
 };
 
 exports.Prisma.SortOrder = {
@@ -405,27 +411,31 @@ exports.Prisma.ModelName = {
   Account: 'Account',
   AccountTypeIndividual: 'AccountTypeIndividual',
   AccountTypeBrand: 'AccountTypeBrand',
-  AccountOwnership: 'AccountOwnership',
   SystemConfig: 'SystemConfig',
   AuthRequest: 'AuthRequest',
   Activity: 'Activity',
   Notification: 'Notification',
   Request: 'Request',
   Family: 'Family',
+  FamilyMember: 'FamilyMember',
   Verification: 'Verification',
   Contact: 'Contact',
   NeupId: 'NeupId',
   AuthMethod: 'AuthMethod',
-  Permit: 'Permit',
   AuthSession: 'AuthSession',
   SystemError: 'SystemError',
   Application: 'Application',
   Portfolio: 'Portfolio',
   PortfolioAsset: 'PortfolioAsset',
   PortfolioMember: 'PortfolioMember',
-  PortfolioRole: 'PortfolioRole',
   ApplicationConnection: 'ApplicationConnection',
-  ApplicationBridge: 'ApplicationBridge'
+  ApplicationBridge: 'ApplicationBridge',
+  ApplicationPolicy: 'ApplicationPolicy',
+  AuthzCapability: 'AuthzCapability',
+  AuthzRole: 'AuthzRole',
+  AuthzRoleCapabilityMap: 'AuthzRoleCapabilityMap',
+  AuthzAccountAccessGrant: 'AuthzAccountAccessGrant',
+  AuthzAssetsAccessGrant: 'AuthzAssetsAccessGrant'
 };
 
 /**

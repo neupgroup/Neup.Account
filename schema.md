@@ -956,10 +956,10 @@ model AccountAccessGrant {
 - (done) `system_config`: `updatedAt` is not auto-updating in live DB (no trigger/default behavior equivalent to Prisma `@updatedAt`).
 
 ## Prisma Schema -> Expected Database Schema
-- Naming: Prisma still maps to `auth_method`/`auth_request`/`auth_session` and `families`; expected wants `authn_*` tables and `family`.
-- `AccountTypeIndividual`/`AccountTypeBrand`: Prisma has `details Json?`, but live DB currently has no `details` column; expected wants `details: json[]`.
-- `NeupId`: Prisma is missing expected `neupId` field.
-- `Notification`: Prisma uses `requestId` relation; expected removes `request_id` column and stores that in `detail`.
-- `Verification`: Prisma model does not match expected columns (`done_by`, `done_at`, `previously`) and includes many live-only fields.
-- Authz/permission models: Prisma defines `Role`/`Capability`/`RoleCapabilityMap`/`Access`/`AccountAccessGrant` (non-`authz_*`), but expected schema wants `authz_capability`, `authz_role`, `authz_role_capability_map`, `authz_account_access_grant`, plus `assets_access_grant`.
-- Prisma contains `AccountOwnership` and relations on `Account`; expected schema does not list `account_ownership`.
+- (done) Naming: Prisma still maps to `auth_method`/`auth_request`/`auth_session` and `families`; expected wants `authn_*` tables and `family`.
+- (done) `AccountTypeIndividual`/`AccountTypeBrand`: Prisma has `details Json?`, but live DB currently has no `details` column; expected wants `details: json[]`.
+- (done) `NeupId`: Prisma is missing expected `neupId` field.
+- (done) `Notification`: Prisma uses `requestId` relation; expected removes `request_id` column and stores that in `detail`.
+- (done) `Verification`: Prisma model does not match expected columns (`done_by`, `done_at`, `previously`) and includes many live-only fields.
+- (done) Authz/permission models: Prisma defines `Role`/`Capability`/`RoleCapabilityMap`/`Access`/`AccountAccessGrant` (non-`authz_*`), but expected schema wants `authz_capability`, `authz_role`, `authz_role_capability_map`, `authz_account_access_grant`, plus `assets_access_grant`.
+- (done) Prisma contains `AccountOwnership` and relations on `Account`; expected schema does not list `account_ownership`.

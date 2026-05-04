@@ -8,33 +8,33 @@ datasource db {
 }
 
 model Account {
-  id                String                  @id(map: "accounts_pkey") @default(uuid())
-  displayName       String?
-  accountType       String                  @default("individual")
-  displayImage      String?
-  status            String?
-  isVerified        Boolean                 @default(false)
-  details           Json?
-  createdAt         DateTime                @default(now())
-  brandProfile      AccountTypeBrand?
-  individualProfile AccountTypeIndividual?
-  childOwnerships   AccountOwnership[]      @relation("AccountOwnershipChild")
-  parentOwnerships  AccountOwnership[]      @relation("AccountOwnershipParent")
-  ownedApplications Application[]
-  appConnections    ApplicationConnection[]
-  authMethods       AuthMethod[]
-  sessions          AuthSession[]
-  contacts          Contact[]
-  neupIds           NeupId[]
-  notifications     Notification[]
-  permits           Permit[]
-  targetPermits     Permit[]                @relation("TargetAccount")
-  portfolioMembers  PortfolioMember[]
-  portfolioRoles    PortfolioRole[]
-  receivedRequests  Request[]               @relation("ReceivedRequests")
-  sentRequests      Request[]               @relation("SentRequests")
-  errorLogs         SystemError[]
-  verifications     Verification[]
+  id                      String                    @id(map: "accounts_pkey") @default(uuid())
+  displayName             String?
+  accountType             String                    @default("individual")
+  displayImage            String?
+  status                  String?
+  isVerified              Boolean                   @default(false)
+  details                 Json?
+  createdAt               DateTime                  @default(now())
+  brandProfile            AccountTypeBrand?
+  individualProfile       AccountTypeIndividual?
+  appConnections          ApplicationConnection[]
+  authMethods             AuthMethod[]
+  sessions                AuthSession[]
+  contacts                Contact[]
+  neupIds                 NeupId[]
+  notifications           Notification[]
+  portfolioMembers        PortfolioMember[]
+  familyMembers           FamilyMember[]
+  verificationActions     Verification[]            @relation("VerificationDoneBy")
+  authzOwnedGrants        AuthzAccountAccessGrant[] @relation("AuthzGrantOwner")
+  authzTargetGrants       AuthzAccountAccessGrant[] @relation("AuthzGrantTarget")
+  authzAssetsAccessGrants AuthzAssetsAccessGrant[]
+
+  receivedRequests Request[]      @relation("ReceivedRequests")
+  sentRequests     Request[]      @relation("SentRequests")
+  errorLogs        SystemError[]
+  verifications    Verification[]
 
   @@map("account")
 }
@@ -46,34 +46,22 @@ model AccountTypeIndividual {
   lastName           String?
   dateOfBirth        DateTime?
   countryOfResidence String?
+  details            Json?
+  roleId             String?   @map("roleId")
   account            Account   @relation(fields: [accountId], references: [id], onDelete: Cascade, map: "account_type__individual_accountId_fkey")
 
   @@map("account_meta__individual")
 }
 
 model AccountTypeBrand {
-  accountId     String   @id @unique(map: "account_type__brand_accountId_key")
+  accountId     String  @id @unique(map: "account_type__brand_accountId_key")
   brandName     String?
-  dateCreated   DateTime @default(now())
-  isLegalEntity Boolean  @default(false)
+  isLegalEntity Boolean @default(false)
   originCountry String?
-  account       Account  @relation(fields: [accountId], references: [id], onDelete: Cascade, map: "account_type__brand_accountId_fkey")
+  details       Json?
+  account       Account @relation(fields: [accountId], references: [id], onDelete: Cascade, map: "account_type__brand_accountId_fkey")
 
   @@map("account_meta__brand")
-}
-
-model AccountOwnership {
-  id         String  @id @default(uuid())
-  parentId   String
-  childrenId String
-  type       String
-  child      Account @relation("AccountOwnershipChild", fields: [childrenId], references: [id], onDelete: Cascade)
-  parent     Account @relation("AccountOwnershipParent", fields: [parentId], references: [id], onDelete: Cascade)
-
-  @@unique([parentId, childrenId, type])
-  @@index([parentId])
-  @@index([childrenId])
-  @@map("account_ownership")
 }
 
 model SystemConfig {
@@ -93,13 +81,13 @@ model AuthRequest {
   createdAt DateTime @default(now())
   expiresAt DateTime
 
-  @@map("auth_request")
+  @@map("authn_request")
 }
 
 model Activity {
   id              String   @id(map: "activity_logs_pkey") @default(uuid())
-  targetAccountId String
-  actorAccountId  String
+  targetAccountId String   @map("target_account_id")
+  actorAccountId  String   @map("actor_account_id")
   action          String
   status          String
   ip              String
@@ -111,66 +99,71 @@ model Activity {
 
 model Notification {
   id          String    @id(map: "notifications_pkey") @default(uuid())
-  accountId   String
+  accountId   String    @map("account_id")
   action      String?
   title       String?
   message     String?
   type        String    @default("info")
   read        Boolean   @default(false)
-  createdAt   DateTime  @default(now())
-  deletableOn DateTime?
+  createdAt   DateTime  @default(now()) @map("created_at")
+  deletableOn DateTime? @map("deletable_on")
   persistence String?
-  requestId   String?
+  detail      Json?
   account     Account   @relation(fields: [accountId], references: [id], map: "notifications_accountId_fkey")
-  request     Request?  @relation(fields: [requestId], references: [id], map: "notifications_requestId_fkey")
 
   @@map("notification")
 }
 
 model Request {
-  id            String         @id(map: "requests_pkey") @default(uuid())
-  senderId      String
-  recipientId   String
-  status        String         @default("pending")
-  action        String
-  type          String?
-  data          Json?          @default("{}")
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  notifications Notification[]
-  recipient     Account        @relation("ReceivedRequests", fields: [recipientId], references: [id], map: "requests_recipientId_fkey")
-  sender        Account        @relation("SentRequests", fields: [senderId], references: [id], map: "requests_senderId_fkey")
+  id          String   @id(map: "requests_pkey") @default(uuid())
+  senderId    String
+  recipientId String   @map("recipient_id")
+  status      String   @default("pending")
+  action      String
+  type        String?
+  data        Json?    @default("{}")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  recipient   Account  @relation("ReceivedRequests", fields: [recipientId], references: [id], map: "requests_recipientId_fkey")
+  sender      Account  @relation("SentRequests", fields: [senderId], references: [id], map: "requests_senderId_fkey")
 
   @@map("request")
 }
 
 model Family {
-  id        String   @id @default(uuid())
-  createdBy String
-  memberIds String[]
-  members   Json
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String         @id @default(uuid())
+  createdBy String         @map("created_by")
+  createdAt DateTime       @default(now()) @map("created_at")
+  members   FamilyMember[]
 
-  @@map("families")
+  @@map("family")
+}
+
+model FamilyMember {
+  id       String @id @default(uuid())
+  familyId String @map("family_id")
+  memberId String @map("member_id")
+  role     String @default("member")
+
+  family Family  @relation(fields: [familyId], references: [id], map: "family_member_family_id_fkey")
+  member Account @relation(fields: [memberId], references: [id], map: "family_member_member_id_fkey")
+
+  @@unique([familyId, memberId], map: "family_member_family_member_key")
+  @@map("family_member")
 }
 
 model Verification {
-  id               String    @id(map: "verifications_pkey") @default(uuid())
-  accountId        String
-  type             String
-  token            String?
-  code             String?
-  status           String    @default("pending")
-  reason           String?
-  category         String?
-  verifiedBy       String?
-  revokedBy        String?
-  revocationReason String?
-  createdAt        DateTime  @default(now())
-  verifiedAt       DateTime?
-  revokedAt        DateTime?
-  account          Account   @relation(fields: [accountId], references: [id], map: "verifications_accountId_fkey")
+  id         String   @id(map: "verification_pkey") @default(uuid())
+  accountId  String   @map("account_id")
+  status     String   @default("pending")
+  reason     String?
+  category   String?
+  doneBy     String?  @map("done_by")
+  doneAt     DateTime @default(now()) @map("done_at")
+  previously String?
+
+  account       Account  @relation(fields: [accountId], references: [id], onDelete: Cascade, map: "verification_account_id_fkey")
+  doneByAccount Account? @relation("VerificationDoneBy", fields: [doneBy], references: [id], map: "verification_done_by_fkey")
 
   @@map("verification")
 }
@@ -188,6 +181,7 @@ model Contact {
 model NeupId {
   id        String   @id(map: "neup_ids_pkey")
   accountId String
+  neupId    String   @unique(map: "neupid_neupid_key") @map("neupId")
   isPrimary Boolean  @default(false)
   dateAdded DateTime @default(now())
   account   Account  @relation(fields: [accountId], references: [id], map: "neup_ids_accountId_fkey")
@@ -196,42 +190,18 @@ model NeupId {
 }
 
 model AuthMethod {
-  accountId         String
-  value             String
-  id                String  @id @default(uuid())
-  type              String
-  order             String
-  status            String
-  detail            Json?
-  individualProfile Account @relation(fields: [accountId], references: [id], map: "passwords_accountId_fkey")
+  accountId String
+  value     String
+  id        String  @id @default(uuid())
+  type      String
+  order     String
+  status    String
+  detail    Json?
+  account   Account @relation(fields: [accountId], references: [id], map: "passwords_accountId_fkey")
 
   @@unique([accountId, type, order])
   @@index([accountId])
-  @@map("auth_method")
-}
-
-model Permit {
-  id               String    @id(map: "permits_pkey") @default(uuid())
-  accountId        String
-  targetAccountId  String?
-  forSelf          Boolean   @default(false)
-  isRoot           Boolean   @default(false)
-  permissions      String[]
-  restrictions     String[]
-  createdOn        DateTime  @default(now())
-  expiryDate       DateTime?
-  fullAccess       Boolean   @default(false)
-  issueDate        DateTime?
-  issuingAuthority String?
-  managedBy        String?
-  permitNumber     String?
-  permitSubType    String?
-  permitType       String?
-  status           String    @default("active")
-  account          Account   @relation(fields: [accountId], references: [id], map: "permits_accountId_fkey")
-  targetAccount    Account?  @relation("TargetAccount", fields: [targetAccountId], references: [id], map: "permits_targetAccountId_fkey")
-
-  @@map("permit")
+  @@map("authn_method")
 }
 
 model AuthSession {
@@ -247,69 +217,66 @@ model AuthSession {
   deviceType   String?
   account      Account   @relation(fields: [accountId], references: [id], map: "sessions_accountId_fkey")
 
-  @@map("auth_session")
+  @@map("authn_session")
 }
 
 model SystemError {
-  id           String   @id(map: "error_logs_pkey") @default(uuid())
-  message      String
-  context      String
-  timestamp    DateTime @default(now())
-  accountId    String?
-  geolocation  String?
-  ipAddress    String?
-  problemLevel String?
-  reproSteps   String?
-  solution     String?
-  solvedBy     String?
-  status       String   @default("new")
-  type         String
-  account      Account? @relation(fields: [accountId], references: [id], map: "error_logs_accountId_fkey")
+  id          String   @id(map: "error_logs_pkey") @default(uuid())
+  message     String
+  context     String
+  timestamp   DateTime @default(now())
+  accountId   String?
+  geolocation String?
+  ipAddress   String?
+  account     Account? @relation(fields: [accountId], references: [id], map: "error_logs_accountId_fkey")
 
   @@map("system_error")
 }
 
 model Application {
-  id             String                  @id(map: "applications_pkey")
-  name           String
-  party          String                  @default("third")
-  description    String?
-  icon           String?
-  website        String?
-  developer      String?
-  appSecret      String?
-  createdAt      DateTime                @default(now())
-  access         Json?
-  endpoints      Json?
-  ownerAccountId String?
-  policies       Json?
-  status         String                  @default("development")
-  owner          Account?                @relation(fields: [ownerAccountId], references: [id], map: "applications_ownerAccountId_fkey")
-  connections    ApplicationConnection[]
-  bridge         ApplicationBridge[]
+  id                       String                    @id(map: "applications_pkey")
+  name                     String
+  description              String?
+  icon                     String?
+  website                  String?
+  developer                String?
+  appSecret                String?
+  createdAt                DateTime                  @default(now()) @map("created_at")
+  endpoints                Json?
+  status                   String                    @default("development")
+  isInternal               Boolean                   @default(false) @map("isInternal")
+  details                  Json?
+  connections              ApplicationConnection[]
+  bridge                   ApplicationBridge[]
+  policies                 ApplicationPolicy[]
+  authzCapabilities        AuthzCapability[]
+  authzRoles               AuthzRole[]
+  authzAccountAccessGrants AuthzAccountAccessGrant[]
 
   @@map("application")
 }
 
 model Portfolio {
-  id          String            @id @default(uuid())
-  name        String
-  description String?
-  dateCreated DateTime          @default(now())
-  assets      PortfolioAsset[]
-  members     PortfolioMember[]
-  roles       PortfolioRole[]
+  id                       String                    @id @default(uuid())
+  name                     String
+  description              String?
+  dateCreated              DateTime                  @default(now())
+  assets                   PortfolioAsset[]
+  members                  PortfolioMember[]
+  authzAccountAccessGrants AuthzAccountAccessGrant[]
+  authzAssetsAccessGrants  AuthzAssetsAccessGrant[]
 
   @@map("portfolio")
 }
 
 model PortfolioAsset {
-  id          String    @id(map: "portfolio_assets_pkey") @default(uuid())
-  portfolioId String
-  assetType   String
-  assetId     String
-  details     Json?
-  portfolio   Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade, map: "portfolio_assets_portfolioId_fkey")
+  id                      String                   @id(map: "portfolio_assets_pkey") @default(uuid())
+  portfolioId             String
+  assetType               String
+  assetId                 String
+  details                 Json?
+  portfolio               Portfolio                @relation(fields: [portfolioId], references: [id], onDelete: Cascade, map: "portfolio_assets_portfolioId_fkey")
+  authzAssetsAccessGrants AuthzAssetsAccessGrant[]
 
   @@index([assetType, assetId], map: "portfolio_assets_assetType_assetId_idx")
   @@index([portfolioId], map: "portfolio_assets_portfolioId_idx")
@@ -330,27 +297,11 @@ model PortfolioMember {
   @@map("portfolio_member")
 }
 
-model PortfolioRole {
-  id          String    @id @default(uuid())
-  accountId   String
-  portfolioId String
-  roleId      String
-  details     Json?
-  account     Account   @relation(fields: [accountId], references: [id], onDelete: Cascade)
-  portfolio   Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
-
-  @@unique([accountId, portfolioId, roleId])
-  @@index([accountId])
-  @@index([portfolioId])
-  @@index([roleId])
-  @@map("portfolio_role")
-}
-
 model ApplicationConnection {
   id          String      @id(map: "user_app_connections_pkey") @default(uuid())
-  accountId   String
-  appId       String
-  connectedAt DateTime    @default(now())
+  accountId   String      @map("account_id")
+  appId       String      @map("app_id")
+  connectedAt DateTime    @default(now()) @map("connected_at")
   account     Account     @relation(fields: [accountId], references: [id], map: "user_app_connections_accountId_fkey")
   application Application @relation(fields: [appId], references: [id], map: "user_app_connections_appId_fkey")
 
@@ -360,13 +311,102 @@ model ApplicationConnection {
 
 model ApplicationBridge {
   id          String      @id @default(uuid())
-  appId       String
+  appId       String      @map("app_id")
   type        String
   value       String
   details     Json?
-  createdAt   DateTime    @default(now())
-  application Application @relation(fields: [appId], references: [id], onDelete: Cascade)
+  createdAt   DateTime    @default(now()) @map("created_at")
+  application Application @relation(fields: [appId], references: [id], onDelete: Cascade, map: "application_bridge_appId_fkey")
 
   @@index([appId, type])
   @@map("application_bridge")
+}
+
+model ApplicationPolicy {
+  id          String      @id @default(uuid())
+  appId       String      @map("app_id")
+  policyType  String      @map("policy_type")
+  policyValue Json        @map("policy_value")
+  createdAt   DateTime    @default(now()) @map("created_at")
+  application Application @relation(fields: [appId], references: [id], onDelete: Cascade, map: "application_policies_app_id_fkey")
+
+  @@index([appId, policyType], map: "application_policies_app_id_policy_type_idx")
+  @@map("application_policies")
+}
+
+model AuthzCapability {
+  id          String                   @id @default(uuid())
+  name        String
+  description String?
+  appId       String?                  @map("app_id")
+  scope       String?
+  application Application?             @relation(fields: [appId], references: [id])
+  roleMaps    AuthzRoleCapabilityMap[]
+
+  @@map("authz_capability")
+}
+
+model AuthzRole {
+  id           String                    @id @default(uuid())
+  name         String
+  permissions  String[]                  @default([])
+  description  String?
+  appId        String?                   @map("app_id")
+  scope        String?
+  application  Application?              @relation(fields: [appId], references: [id])
+  roleMaps     AuthzRoleCapabilityMap[]
+  grants       AuthzAccountAccessGrant[]
+  assetsGrants AuthzAssetsAccessGrant[]
+
+  @@map("authz_role")
+}
+
+model AuthzRoleCapabilityMap {
+  id           String          @id @default(uuid())
+  roleId       String          @map("role_id")
+  capabilityId String          @map("capability_id")
+  role         AuthzRole       @relation(fields: [roleId], references: [id])
+  capability   AuthzCapability @relation(fields: [capabilityId], references: [id])
+
+  @@map("authz_role_capability_map")
+}
+
+model AuthzAccountAccessGrant {
+  id              String  @id @default(uuid())
+  ownerAccountId  String  @map("owner_account_id")
+  targetAccountId String  @map("target_account_id")
+  roleId          String  @map("role_id")
+  appId           String  @map("app_id")
+  portfolioId     String? @map("portfolio_id")
+
+  owner       Account     @relation("AuthzGrantOwner", fields: [ownerAccountId], references: [id])
+  target      Account     @relation("AuthzGrantTarget", fields: [targetAccountId], references: [id])
+  role        AuthzRole   @relation(fields: [roleId], references: [id], map: "authz_account_access_grant_role_id_fkey")
+  application Application @relation(fields: [appId], references: [id], map: "authz_account_access_grant_app_id_fkey")
+  portfolio   Portfolio?  @relation(fields: [portfolioId], references: [id], map: "authz_account_access_grant_portfolio_id_fkey")
+
+  @@index([ownerAccountId], map: "authz_account_access_grant_owner_account_id_idx")
+  @@index([targetAccountId], map: "authz_account_access_grant_target_account_id_idx")
+  @@index([roleId], map: "authz_account_access_grant_role_id_idx")
+  @@index([appId], map: "authz_account_access_grant_app_id_idx")
+  @@map("authz_account_access_grant")
+}
+
+model AuthzAssetsAccessGrant {
+  id              String @id @default(uuid())
+  assetId         String @map("assetId")
+  targetAccountId String @map("target_account_id")
+  roleId          String @map("role_id")
+  portfolioId     String @map("portfolio_id")
+
+  asset     PortfolioAsset @relation(fields: [assetId], references: [id], map: "assets_access_grant_assetId_fkey")
+  target    Account        @relation(fields: [targetAccountId], references: [id], map: "assets_access_grant_target_account_id_fkey")
+  role      AuthzRole      @relation(fields: [roleId], references: [id], map: "assets_access_grant_role_id_fkey")
+  portfolio Portfolio      @relation(fields: [portfolioId], references: [id], map: "assets_access_grant_portfolio_id_fkey")
+
+  @@index([assetId], map: "assets_access_grant_asset_id_idx")
+  @@index([targetAccountId], map: "assets_access_grant_target_account_id_idx")
+  @@index([roleId], map: "assets_access_grant_role_id_idx")
+  @@index([portfolioId], map: "assets_access_grant_portfolio_id_idx")
+  @@map("assets_access_grant")
 }
