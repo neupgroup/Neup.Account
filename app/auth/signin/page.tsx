@@ -9,7 +9,7 @@ import { useToast } from '@/core/hooks/use-toast';
 import { submitNeupId, submitPassword, submitPasswordWithNeupId } from '@/services/auth/signin';
 import { getSignupStepData } from '@/services/auth/signup';
 import { cancelAccountDeletion } from '@/services/data/delete';
-import { initializeAuthFlow } from '@/services/auth/initialize';
+import { initializeAuthFlow } from '@/services/auth/AuthenticationFlow';
 import { verifyTotpFromPost } from '@/services/auth/totp';
 import { switchActiveAccountByNeupId } from '@/services/auth/switch';
 import { redirectInApp } from '@/core/helpers/link';

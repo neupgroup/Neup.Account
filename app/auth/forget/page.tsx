@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Loader2 } from '@/components/icons';
 import { useToast } from '@/core/hooks/use-toast';
-import { initializeAuthFlow } from '@/services/auth/initialize';
+import { initializeAuthFlow } from '@/services/auth/AuthenticationFlow';
 import { validateAuthSessionRequest } from '@/services/auth/auth-request';
 
 const AUTH_SESSION_STORAGE_KEY = 'AuthSessionRequest';

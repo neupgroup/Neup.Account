@@ -21,7 +21,7 @@ import {
     submitPasswordStep, 
     submitTermsStep 
 } from "@/services/auth/signup";
-import { initializeAuthFlow } from "@/services/auth/initialize";
+import { initializeAuthFlow } from "@/services/auth/AuthenticationFlow";
 import { parseDateString } from "@/services/profile";
 import { 
     nameSchema, 
