@@ -1,0 +1,459 @@
+/**
+ * _wholeRunner.ts
+ *
+ * Master seed runner — fully self-contained, no external files needed.
+ *
+ *   Step 1 — Insert application, roles, capabilities, and role-capability maps
+ *   Step 2 — Create the master account (interactive prompt) or use ACCOUNT_ID
+ *   Step 3 — Assign neup.account roles to the master account
+ *
+ * Configuration — edit the constants below, then run:
+ *   npx tsx --tsconfig tsconfig.json core/dbSeed/runner_neupaccount.ts
+ */
+
+import 'dotenv/config';
+import { createInterface } from 'node:readline/promises';
+import { stdin as input, stdout as output } from 'node:process';
+import { Pool } from 'pg';
+import bcrypt from 'bcryptjs';
+import { Prisma } from '@/prisma/generated/client';
+import prisma from '@/core/helpers/prisma';
+
+if (!process.env.DATABASE_URL) {
+  throw new Error('DATABASE_URL is not set.');
+}
+
+// =============================================================================
+// CONFIGURATION
+// Change these values to re-target a different app, roles, or account.
+// =============================================================================
+
+// The application this runner bootstraps.
+const APP_ID = 'neup.account';
+
+// Stable role IDs — must match what is inserted in the SQL below.
+const ROLE_INDIV_DEFAULT = 'individual-default-neup-account';
+const ROLE_INDIV_ROOT    = 'root-full-neup-account';
+const ROLE_APP_OWNER     = 'base-app-creator-neup-account';
+
+// Fill in an existing account ID to skip account creation and grant roles
+// directly to that account. Leave empty to create a new master account
+// (only valid when the database has no accounts yet).
+const ACCOUNT_ID = 'd7169b8d-df72-4284-89fc-ed3f27950ac7';
+
+// =============================================================================
+// BOOTSTRAP SQL
+// Inlined from default.sql — IDs reference the constants above so changing
+// APP_ID / ROLE_* above automatically updates the SQL as well.
+// =============================================================================
+
+const BOOTSTRAP_SQL = `
+BEGIN;
+
+-- 1. Application
+INSERT INTO "application" (
+  "id", "name", "description", "icon", "website",
+  "app_secret", "created_at", "endpoints", "status", "is_internal", "details"
+) VALUES (
+  '${APP_ID}',
+  '${APP_ID}',
+  'Official NeupAccount Application.',
+  'https://neupcdn.com/neupaccount/assets/logo.png',
+  'https://neupgroup.com/account',
+  NULL,
+  NOW(),
+  '"https://neupgroup.com/account"',
+  'active',
+  TRUE,
+  '[]'
+) ON CONFLICT ("id") DO NOTHING;
+
+-- 2. Roles
+INSERT INTO "authz_role" ("id", "name", "description", "app_id", "scope") VALUES
+  ('${ROLE_INDIV_DEFAULT}', 'individual.default', 'Default permission set for individual accounts.',  '${APP_ID}', 'default'),
+  ('${ROLE_INDIV_ROOT}',    'individual.root',    'Admin-only permission set for root accounts.',     '${APP_ID}', 'root'),
+  ('${ROLE_APP_OWNER}',     'application.owner',  'Role for application creators and owners.',        '${APP_ID}', 'creator')
+ON CONFLICT ("id") DO NOTHING;
+
+-- 3a. Capabilities — individual.default
+INSERT INTO "authz_capability" ("id", "name", "app_id", "scope") VALUES
+  ('cap-def-profile-view',                    'profile.view',                       '${APP_ID}', 'default'),
+  ('cap-def-profile-modify',                  'profile.modify',                     '${APP_ID}', 'default'),
+  ('cap-def-contact-view',                    'contact.view',                       '${APP_ID}', 'default'),
+  ('cap-def-contact-add',                     'contact.add',                        '${APP_ID}', 'default'),
+  ('cap-def-contact-modify',                  'contact.modify',                     '${APP_ID}', 'default'),
+  ('cap-def-contact-remove',                  'contact.remove',                     '${APP_ID}', 'default'),
+  ('cap-def-notification-read',               'notification.read',                  '${APP_ID}', 'default'),
+  ('cap-def-notification-delete',             'notification.delete',                '${APP_ID}', 'default'),
+  ('cap-def-security-pass-modify',            'security.pass.modify',               '${APP_ID}', 'default'),
+  ('cap-def-security-totp-add',               'security.totp.add',                  '${APP_ID}', 'default'),
+  ('cap-def-security-totp-remove',            'security.totp.remove',               '${APP_ID}', 'default'),
+  ('cap-def-security-backup-view',            'security.backup_codes.view',         '${APP_ID}', 'default'),
+  ('cap-def-security-backup-create',          'security.backup_codes.create',       '${APP_ID}', 'default'),
+  ('cap-def-security-recovery-accts-view',    'security.recovery_accounts.view',    '${APP_ID}', 'default'),
+  ('cap-def-security-recovery-accts-add',     'security.recovery_accounts.add',     '${APP_ID}', 'default'),
+  ('cap-def-security-recovery-accts-remove',  'security.recovery_accounts.remove',  '${APP_ID}', 'default'),
+  ('cap-def-security-recovery-phone-view',    'security.recovery_phone.view',       '${APP_ID}', 'default'),
+  ('cap-def-security-recovery-phone-add',     'security.recovery_phone.add',        '${APP_ID}', 'default'),
+  ('cap-def-security-recovery-phone-remove',  'security.recovery_phone.remove',     '${APP_ID}', 'default'),
+  ('cap-def-security-recovery-email-view',    'security.recovery_email.view',       '${APP_ID}', 'default'),
+  ('cap-def-security-recovery-email-add',     'security.recovery_email.add',        '${APP_ID}', 'default'),
+  ('cap-def-security-recovery-email-remove',  'security.recovery_email.remove',     '${APP_ID}', 'default'),
+  ('cap-def-security-devices-view',           'security.login_devices.view',        '${APP_ID}', 'default'),
+  ('cap-def-linked-brand-create',             'linked_accounts.brand.create',       '${APP_ID}', 'default'),
+  ('cap-def-linked-brand-view',               'linked_accounts.brand.view',         '${APP_ID}', 'default'),
+  ('cap-def-linked-dependent-create',         'linked_accounts.dependent.create',   '${APP_ID}', 'default'),
+  ('cap-def-linked-dependent-view',           'linked_accounts.dependent.view',     '${APP_ID}', 'default'),
+  ('cap-def-data-terms-view',                 'data.agreed_terms.view',             '${APP_ID}', 'default'),
+  ('cap-def-data-delete-start',               'data.delete_account.start',          '${APP_ID}', 'default'),
+  ('cap-def-data-deactivate-start',           'data.deactivate_account.start',      '${APP_ID}', 'default'),
+  ('cap-def-data-materialization-view',       'data.materialization.view',          '${APP_ID}', 'default'),
+  ('cap-def-data-materialization-modify',     'data.materialization.modify',        '${APP_ID}', 'default'),
+  ('cap-def-security-third-party-view',       'security.third_party.view',          '${APP_ID}', 'default'),
+  ('cap-def-security-recent-activities',      'security.recent_activities.view',    '${APP_ID}', 'default'),
+  ('cap-def-security-third-party-add',        'security.third_party.add',           '${APP_ID}', 'default'),
+  ('cap-def-security-third-party-remove',     'security.third_party.remove',        '${APP_ID}', 'default'),
+  ('cap-def-people-family-view',              'people.family.view',                 '${APP_ID}', 'default'),
+  ('cap-def-people-family-add',               'people.family.add',                  '${APP_ID}', 'default'),
+  ('cap-def-people-family-remove',            'people.family.remove',               '${APP_ID}', 'default'),
+  ('cap-def-people-family-partner-add',       'people.family.partner.add',          '${APP_ID}', 'default'),
+  ('cap-def-people-family-partner-remove',    'people.family.partner.remove',       '${APP_ID}', 'default'),
+  ('cap-def-people-block-list-view',          'people.block_list.view',             '${APP_ID}', 'default'),
+  ('cap-def-people-restrict-list-view',       'people.restrict_list.view',          '${APP_ID}', 'default'),
+  ('cap-def-payment-method-show',             'payment.method.show',                '${APP_ID}', 'default'),
+  ('cap-def-payment-transactions-show',       'payment.transactions.show',          '${APP_ID}', 'default'),
+  ('cap-def-payment-subscriptions-show',      'payment.subscriptions.show',         '${APP_ID}', 'default'),
+  ('cap-def-payment-neup-pro-view',           'payment.purchase_neup_pro.view',     '${APP_ID}', 'default'),
+  ('cap-def-linked-brand-manager',            'linked_accounts.brand.manager',      '${APP_ID}', 'default')
+ON CONFLICT ("id") DO NOTHING;
+
+INSERT INTO "authz_role_capability" (
+  "id", "role_id", "capability_id", "scope", "app_id", "role_name", "denormalized_capability"
+)
+SELECT
+  'rcp-def-' || c."id",
+  '${ROLE_INDIV_DEFAULT}',
+  c."id",
+  'default',
+  '${APP_ID}',
+  'individual.default',
+  '["profile.view","profile.modify","contact.view","contact.add","contact.modify","contact.remove","notification.read","notification.delete","security.pass.modify","security.totp.add","security.totp.remove","security.backup_codes.view","security.backup_codes.create","security.recovery_accounts.view","security.recovery_accounts.add","security.recovery_accounts.remove","security.recovery_phone.view","security.recovery_phone.add","security.recovery_phone.remove","security.recovery_email.view","security.recovery_email.add","security.recovery_email.remove","security.login_devices.view","linked_accounts.brand.create","linked_accounts.brand.view","linked_accounts.dependent.create","linked_accounts.dependent.view","data.agreed_terms.view","data.delete_account.start","data.deactivate_account.start","data.materialization.view","data.materialization.modify","security.third_party.view","security.recent_activities.view","security.third_party.add","security.third_party.remove","people.family.view","people.family.add","people.family.remove","people.family.partner.add","people.family.partner.remove","people.block_list.view","people.restrict_list.view","payment.method.show","payment.transactions.show","payment.subscriptions.show","payment.purchase_neup_pro.view","linked_accounts.brand.manager"]'::jsonb
+FROM "authz_capability" c
+WHERE c."app_id" = '${APP_ID}'
+  AND c."scope"  = 'default'
+ON CONFLICT ("id") DO NOTHING;
+
+-- 3b. Capabilities — individual.root (admin-only)
+INSERT INTO "authz_capability" ("id", "name", "app_id", "scope") VALUES
+  ('cap-root-admin-accounts-view',         'admin.accounts.view',          '${APP_ID}', 'root'),
+  ('cap-root-admin-accounts-modify',       'admin.accounts.modify',        '${APP_ID}', 'root'),
+  ('cap-root-admin-accounts-delete',       'admin.accounts.delete',        '${APP_ID}', 'root'),
+  ('cap-root-admin-applications-view',     'admin.applications.view',      '${APP_ID}', 'root'),
+  ('cap-root-admin-applications-modify',   'admin.applications.modify',    '${APP_ID}', 'root'),
+  ('cap-root-admin-applications-delete',   'admin.applications.delete',    '${APP_ID}', 'root'),
+  ('cap-root-admin-permits-view',          'admin.permits.view',           '${APP_ID}', 'root'),
+  ('cap-root-admin-permits-modify',        'admin.permits.modify',         '${APP_ID}', 'root'),
+  ('cap-root-admin-permits-delete',        'admin.permits.delete',         '${APP_ID}', 'root'),
+  ('cap-root-admin-verifications-view',    'admin.verifications.view',     '${APP_ID}', 'root'),
+  ('cap-root-admin-verifications-modify',  'admin.verifications.modify',   '${APP_ID}', 'root'),
+  ('cap-root-admin-system-view',           'admin.system.view',            '${APP_ID}', 'root'),
+  ('cap-root-admin-system-modify',         'admin.system.modify',          '${APP_ID}', 'root')
+ON CONFLICT ("id") DO NOTHING;
+
+INSERT INTO "authz_role_capability" (
+  "id", "role_id", "capability_id", "scope", "app_id", "role_name", "denormalized_capability"
+)
+SELECT
+  'rcp-root-' || c."id",
+  '${ROLE_INDIV_ROOT}',
+  c."id",
+  'root',
+  '${APP_ID}',
+  'individual.root',
+  '["admin.accounts.view","admin.accounts.modify","admin.accounts.delete","admin.applications.view","admin.applications.modify","admin.applications.delete","admin.permits.view","admin.permits.modify","admin.permits.delete","admin.verifications.view","admin.verifications.modify","admin.system.view","admin.system.modify"]'::jsonb
+FROM "authz_capability" c
+WHERE c."app_id" = '${APP_ID}'
+  AND c."scope"  = 'root'
+ON CONFLICT ("id") DO NOTHING;
+
+-- 3c. Capabilities — application.owner
+INSERT INTO "authz_capability" ("id", "name", "app_id", "scope") VALUES
+  ('cap-appowner-application-view',    'application.view',    '${APP_ID}', 'creator'),
+  ('cap-appowner-application-edit',    'application.edit',    '${APP_ID}', 'creator'),
+  ('cap-appowner-application-delete',  'application.delete',  '${APP_ID}', 'creator')
+ON CONFLICT ("id") DO NOTHING;
+
+INSERT INTO "authz_role_capability" (
+  "id", "role_id", "capability_id", "scope", "app_id", "role_name", "denormalized_capability"
+)
+SELECT
+  'rcp-appowner-' || c."id",
+  '${ROLE_APP_OWNER}',
+  c."id",
+  'creator',
+  '${APP_ID}',
+  'application.owner',
+  '["application.view","application.edit","application.delete"]'::jsonb
+FROM "authz_capability" c
+WHERE c."app_id" = '${APP_ID}'
+  AND c."scope"  = 'creator'
+ON CONFLICT ("id") DO NOTHING;
+
+COMMIT;
+`;
+
+// =============================================================================
+// LOGGING
+// =============================================================================
+
+function log(step: number, label: string, detail?: string) {
+  // eslint-disable-next-line no-console
+  console.log(`[Step ${step}] ${label}${detail ? ` — ${detail}` : ''}`);
+}
+
+function logSkipped(step: number, label: string, reason: string) {
+  // eslint-disable-next-line no-console
+  console.log(`[Step ${step}] SKIPPED ${label} — ${reason}`);
+}
+
+function logError(step: number, label: string, error: unknown) {
+  // eslint-disable-next-line no-console
+  console.error(`[Step ${step}] FAILED ${label}:`, error);
+}
+
+// =============================================================================
+// STEP 1 — Bootstrap SQL (application, roles, capabilities, maps)
+// Uses a raw pg pool — Prisma doesn't support multi-statement SQL.
+// =============================================================================
+
+async function runBootstrapSql(): Promise<void> {
+  const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+  try {
+    await pool.query(BOOTSTRAP_SQL);
+  } finally {
+    await pool.end();
+  }
+}
+
+// =============================================================================
+// STEP 2 — Create master account (interactive prompt)
+// =============================================================================
+
+type MasterAccountInput = {
+  firstName: string;
+  lastName: string;
+  neupId: string;
+  dateOfBirth: string;
+  countryOfResidence: string;
+  password: string;
+};
+
+function isValidIsoDate(value: string): boolean {
+  return /^\d{4}-\d{2}-\d{2}$/.test(value) && !Number.isNaN(new Date(`${value}T00:00:00.000Z`).getTime());
+}
+
+async function promptHidden(question: string): Promise<string> {
+  output.write(question);
+
+  return new Promise<string>((resolve) => {
+    const chunks: string[] = [];
+    const onData = (chunk: Buffer) => {
+      const char = chunk.toString('utf8');
+
+      if (char === '\r' || char === '\n') {
+        input.off('data', onData);
+        output.write('\n');
+        resolve(chunks.join('').trim());
+        return;
+      }
+
+      if (char === '\u0003') process.exit(130);
+
+      if (char === '\u0008' || char === '\u007f') {
+        chunks.pop();
+        return;
+      }
+
+      chunks.push(char);
+    };
+
+    input.on('data', onData);
+  });
+}
+
+async function promptMasterAccountInput(): Promise<MasterAccountInput> {
+  const rl = createInterface({ input, output });
+
+  try {
+    const firstName          = (await rl.question('First name: ')).trim();
+    const lastName           = (await rl.question('Last name: ')).trim();
+    const neupId             = (await rl.question('NeupID: ')).trim();
+    const dateOfBirth        = (await rl.question('Date of birth (YYYY-MM-DD): ')).trim();
+    const countryOfResidence = (await rl.question('Country of residence: ')).trim();
+
+    rl.close();
+
+    if (!firstName || !lastName || !neupId || !dateOfBirth || !countryOfResidence) {
+      throw new Error('All fields are required.');
+    }
+
+    if (!isValidIsoDate(dateOfBirth)) {
+      throw new Error('Date of birth must be in YYYY-MM-DD format.');
+    }
+
+    const password = await promptHidden('Password: ');
+    if (!password) throw new Error('Password is required.');
+
+    return { firstName, lastName, neupId, dateOfBirth, countryOfResidence, password };
+  } catch (error) {
+    rl.close();
+    throw error;
+  }
+}
+
+async function createMasterAccount(): Promise<{ skipped: boolean; reason?: string; accountId?: string }> {
+  const accountCount = await prisma.account.count();
+
+  if (accountCount > 0) {
+    return { skipped: true, reason: 'Accounts already exist in the database.' };
+  }
+
+  const inputData    = await promptMasterAccountInput();
+  const passwordHash = await bcrypt.hash(inputData.password, 10);
+  const dateOfBirth  = new Date(`${inputData.dateOfBirth}T00:00:00.000Z`);
+  const displayName  = `${inputData.firstName} ${inputData.lastName}`.trim();
+
+  const account = await prisma.account.create({
+    data: {
+      displayName,
+      accountType: 'individual',
+      status: 'active',
+      isVerified: true,
+      details: { role: 'master' } as Prisma.InputJsonValue,
+      individualProfile: {
+        create: {
+          firstName: inputData.firstName,
+          lastName: inputData.lastName,
+          dateOfBirth,
+          countryOfResidence: inputData.countryOfResidence,
+        },
+      },
+      authMethods: {
+        create: {
+          type: 'password',
+          value: passwordHash,
+          order: 'primary',
+          status: 'active',
+        },
+      },
+      neupIds: {
+        create: {
+          id: inputData.neupId,
+          neupId: inputData.neupId,
+          isPrimary: true,
+        },
+      },
+    },
+  });
+
+  return { skipped: false, accountId: account.id };
+}
+
+// =============================================================================
+// STEP 3 — Grant roles to the master account
+// =============================================================================
+
+async function assignRolesToAccount(accountId: string): Promise<void> {
+  for (const roleId of [ROLE_INDIV_DEFAULT, ROLE_INDIV_ROOT]) {
+    const existing = await prisma.authzAccountAccessGrant.findFirst({
+      where: { ownerAccountId: accountId, targetAccountId: accountId, appId: APP_ID, roleId },
+      select: { id: true },
+    });
+
+    if (!existing) {
+      await prisma.authzAccountAccessGrant.create({
+        data: { ownerAccountId: accountId, targetAccountId: accountId, appId: APP_ID, roleId },
+      });
+    }
+  }
+}
+
+// =============================================================================
+// MAIN
+// =============================================================================
+
+async function main() {
+  // eslint-disable-next-line no-console
+  console.log('\n=== neup.account seed runner ===\n');
+
+  // Step 1 — Bootstrap SQL
+  try {
+    log(1, 'Applying bootstrap SQL…');
+    await runBootstrapSql();
+    log(1, 'Bootstrap SQL applied', 'application, roles, capabilities, maps ready');
+  } catch (error) {
+    logError(1, 'runBootstrapSql', error);
+    throw error;
+  }
+
+  // Step 2 — Resolve account
+  let resolvedAccountId: string | null = null;
+
+  try {
+    if (ACCOUNT_ID) {
+      log(2, 'ACCOUNT_ID provided, verifying…');
+      const existing = await prisma.account.findUnique({
+        where: { id: ACCOUNT_ID },
+        select: { id: true },
+      });
+      if (!existing) {
+        throw new Error(`ACCOUNT_ID "${ACCOUNT_ID}" not found in the database.`);
+      }
+      resolvedAccountId = ACCOUNT_ID;
+      logSkipped(2, 'createMasterAccount', `using ACCOUNT_ID=${resolvedAccountId}`);
+    } else {
+      log(2, 'Creating master account…');
+      const result = await createMasterAccount();
+
+      if (result.skipped) {
+        throw new Error(
+          'Conditions unmet — accounts already exist but ACCOUNT_ID is empty.\n' +
+          "Set ACCOUNT_ID = '<id>' at the top of _wholeRunner.ts, then re-run."
+        );
+      }
+
+      resolvedAccountId = result.accountId ?? null;
+      log(2, 'Master account created', `accountId=${resolvedAccountId}`);
+    }
+  } catch (error) {
+    logError(2, 'createMasterAccount', error);
+    throw error;
+  }
+
+  // Step 3 — Assign roles
+  if (!resolvedAccountId) {
+    // eslint-disable-next-line no-console
+    console.warn('[Step 3] SKIPPED — no accountId available.');
+  } else {
+    try {
+      log(3, 'Assigning roles to master account…');
+      await assignRolesToAccount(resolvedAccountId);
+      log(3, 'Roles assigned', `accountId=${resolvedAccountId} → individual.default + individual.root`);
+    } catch (error) {
+      logError(3, 'assignRolesToAccount', error);
+      throw error;
+    }
+  }
+
+  // eslint-disable-next-line no-console
+  console.log('\n=== Seed complete ===\n');
+}
+
+main()
+  .then(() => prisma.$disconnect())
+  .catch(async (error) => {
+    // eslint-disable-next-line no-console
+    console.error('\nSeed runner failed:', error);
+    await prisma.$disconnect();
+    process.exit(1);
+  });
