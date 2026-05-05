@@ -312,14 +312,15 @@ export async function checkNeupIdAvailability(
   }
 }
 
-// Returns true if the account has a root-level permit in the database.
+// Returns true if the account has a root-scoped role grant in the database.
 export async function isRootUser(accountId: string): Promise<boolean> {
   if (!accountId) return false;
   try {
-    const count = await prisma.permit.count({
+    const count = await prisma.authzAccountAccessGrant.count({
       where: {
-        accountId: accountId,
-        isRoot: true,
+        targetAccountId: accountId,
+        appId: 'neup.account',
+        role: { scope: 'root' },
       },
     });
     return count > 0;

@@ -16,11 +16,10 @@ export type UserStats = {
  * Type AccountListItem.
  */
 export type AccountListItem = {
-    id: string; // accountId
+    id: string;
     name: string;
     dateCreated: string;
     accountType: string;
-    isRoot: boolean;
 };
 
 
@@ -75,29 +74,20 @@ export async function getAllAccounts(
     }
 
     try {
-        const [accounts, rootPermits] = await Promise.all([
-            prisma.account.findMany({
-                select: {
-                    id: true,
-                    displayName: true,
-                    createdAt: true,
-                    accountType: true,
-                },
-            }),
-            prisma.permit.findMany({
-                where: { isRoot: true },
-                select: { accountId: true },
-            }),
-        ]);
-
-        const rootSet = new Set(rootPermits.map(p => p.accountId));
+        const accounts = await prisma.account.findMany({
+            select: {
+                id: true,
+                displayName: true,
+                createdAt: true,
+                accountType: true,
+            },
+        });
 
         let allAccounts: AccountListItem[] = accounts.map(a => ({
             id: a.id,
             name: a.displayName || 'Unnamed Account',
             dateCreated: (a.createdAt ?? new Date(0)).toISOString(),
             accountType: a.accountType || 'individual',
-            isRoot: rootSet.has(a.id),
         }));
         
         // Filter
