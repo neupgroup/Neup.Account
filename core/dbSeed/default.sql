@@ -23,7 +23,7 @@ BEGIN;
 
 INSERT INTO "application" (
   "id", "name", "description", "icon", "website",
-  "appSecret", "created_at", "endpoints", "status", "isInternal", "details"
+  "app_secret", "created_at", "endpoints", "status", "is_internal", "details"
 ) VALUES (
   'neup.account',
   'neup.account',

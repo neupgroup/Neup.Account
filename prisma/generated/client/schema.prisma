@@ -244,11 +244,11 @@ model Application {
   description              String?
   icon                     String?
   website                  String?
-  appSecret                String?
+  appSecret                String?                   @map("app_secret")
   createdAt                DateTime                  @default(now()) @map("created_at")
   endpoints                Json?
   status                   String                    @default("development")
-  isInternal               Boolean                   @default(false) @map("isInternal")
+  isInternal               Boolean                   @default(false) @map("is_internal")
   details                  Json?
   connections              ApplicationConnection[]
   bridge                   ApplicationBridge[]
