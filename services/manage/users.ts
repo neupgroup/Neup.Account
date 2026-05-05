@@ -12,7 +12,6 @@ import crypto from 'crypto';
 import { z } from 'zod';
 import { createNotification } from '../notifications';
 import { setSessionCookies } from '@/core/helpers/cookies';
-import { PERMISSION_SET } from '@/services/permissions';
 import { warningReasons } from '@/app/(manage)/manage/[id]/forms';
 import type { UserProfile } from '@/services/user';
 
@@ -132,16 +131,8 @@ export async function getPermissions(accountId: string): Promise<UserPermissions
 
     const permissionIds = permit.permissions || [];
     const restrictionIds = permit.restrictions || [];
-    const allPermissions = new Set<string>();
-
-    permissionIds.forEach(id => {
-        const set = PERMISSION_SET[id];
-        set ? set.forEach(p => allPermissions.add(p)) : allPermissions.add(id);
-    });
-    restrictionIds.forEach(id => {
-        const set = PERMISSION_SET[id];
-        set ? set.forEach(p => allPermissions.delete(p)) : allPermissions.delete(id);
-    });
+    const allPermissions = new Set<string>(permissionIds);
+    restrictionIds.forEach(p => allPermissions.delete(p));
 
     return {
         assignedPermissions: permissionIds,

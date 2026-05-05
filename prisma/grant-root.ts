@@ -1,6 +1,9 @@
 import 'dotenv/config';
 import prisma from '../core/helpers/prisma';
-import { ROOT_PERMISSIONS } from '../services/permissions-config';
+
+// Root permissions are now managed via authz_role_capability in the database.
+// This script grants a legacy root Permit record for backward compatibility.
+const ROOT_PERMISSIONS: string[] = [];
 
 if (!process.env.DATABASE_URL) {
   throw new Error('DATABASE_URL is not set.');

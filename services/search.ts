@@ -4,7 +4,6 @@
 import { logError } from '@/core/helpers/logger';
 import { checkPermissions } from '@/services/user';
 import prisma from '@/core/helpers/prisma';
-import { PERMISSION_SET } from '@/services/permissions';
 
 export type SearchResult = {
     id: string;
@@ -82,23 +81,24 @@ export async function searchAll(query: string): Promise<SearchResult[]> {
     const canSearchPermissions = await checkPermissions(['root.permission.view']);
     if (canSearchPermissions) {
         try {
-            const queryLower = lowercasedQuery.toLowerCase();
-            
-            // Search in PERMISSION_SET keys and their permission lists
-            Object.entries(PERMISSION_SET).forEach(([setName, permissions]) => {
-                const nameMatches = setName.toLowerCase().includes(queryLower);
-                const accessMatches = permissions.some(p => p.toLowerCase().includes(queryLower));
-
-                if (nameMatches || accessMatches) {
-                    results.push({
-                        id: `permission-${setName}`,
-                        type: 'permission',
-                        title: setName,
-                        description: `${permissions.length} permissions included`,
-                        url: `/manage/access/${setName}`,
-                    });
-                }
+            const capabilities = await prisma.authzCapability.findMany({
+                where: {
+                    appId: 'neup.account',
+                    name: { contains: lowercasedQuery, mode: 'insensitive' },
+                },
+                select: { name: true, scope: true },
+                take: 50,
             });
+
+            for (const cap of capabilities) {
+                results.push({
+                    id: `permission-${cap.name}`,
+                    type: 'permission',
+                    title: cap.name,
+                    description: cap.scope ?? '',
+                    url: `/manage/access/${cap.name}`,
+                });
+            }
         } catch (error) {
             await logError('database', error, 'searchAll:permissions');
         }

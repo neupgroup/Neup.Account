@@ -1,7 +1,10 @@
 import 'dotenv/config';
 import bcrypt from 'bcryptjs';
 import prisma from '../core/helpers/prisma';
-import { ROOT_PERMISSIONS } from '../services/permissions-config';
+
+// Root permissions are now managed via authz_role_capability in the database.
+// This legacy seed writes to the Permit table for backward compatibility.
+const ROOT_PERMISSIONS: string[] = [];
 
 if (!process.env.DATABASE_URL) {
   throw new Error('DATABASE_URL is not set. Please configure your database connection.');

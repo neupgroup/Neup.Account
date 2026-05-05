@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { getIndividualAccountPermission } from '@/services/user';
+import { getAccountPermission } from '@/services/user';
 import { getActiveSession } from '@/core/auth/verify';
 
 export async function GET(request: NextRequest) {
@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ success: false, error: 'Unauthenticated.' }, { status: 401 });
     }
 
-    const permissions = await getIndividualAccountPermission(session.accountId);
+    const permissions = await getAccountPermission(session.accountId);
 
     return NextResponse.json({
         success: true,

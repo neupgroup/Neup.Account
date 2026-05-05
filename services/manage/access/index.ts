@@ -2,13 +2,16 @@
 
 import prisma from '@/core/helpers/prisma';
 import { getActiveAccountId, getPersonalAccountId } from '@/core/auth/verify';
-import { getUserProfile, getUserNeupIds, getAccountType, getIndividualAccountPermission, checkPermissions } from '@/services/user';
+import { getUserProfile, getUserNeupIds, getAccountType, getAccountPermission, checkPermissions } from '@/services/user';
 import { logError } from '@/core/helpers/logger';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { logActivity } from '@/services/log-actions';
-import type { Permission } from '@/services/permissions';
-import { PERMISSION_SET } from '@/services/permissions';
+
+export type Permission = {
+  id: string;
+  name: string;
+};
 
 export type UserAccess = {
   permitId: string;
@@ -38,17 +41,14 @@ export type AccessDetails = {
  * Function getMasterPermissions.
  */
 export async function getMasterPermissions(): Promise<Permission[]> {
-    // Collect all unique permission set keys (roles) and unique permissions from roles
-    const allSetKeys = Object.keys(PERMISSION_SET);
-    const allIndividualPermissions = new Set(Object.values(PERMISSION_SET).flat());
+    const capabilities = await prisma.authzCapability.findMany({
+        where: { appId: 'neup.account' },
+        select: { name: true },
+        orderBy: { name: 'asc' },
+    });
 
-    // Combine roles and individual permissions
-    const combined = new Set([...allSetKeys, ...allIndividualPermissions]);
-
-    return Array.from(combined).sort().map(p => ({
-        id: p,
-        name: p
-    }));
+    const unique = Array.from(new Set(capabilities.map(c => c.name)));
+    return unique.map(name => ({ id: name, name }));
 }
 
 
@@ -206,7 +206,7 @@ export async function getDelegatablePermissions(): Promise<Permission[]> {
     if (!managedAccountId) return [];
 
     // Get all permissions the current user has on the active account
-    const userPermissions = await getIndividualAccountPermission(managedAccountId);
+    const userPermissions = await getAccountPermission(managedAccountId);
     
     // Convert to Permission objects
     return userPermissions.sort().map(p => ({
@@ -235,14 +235,11 @@ export async function updatePermissions(permitId: string, newPermissionIds: stri
         }
 
         // --- Permission Delegation Check ---
-        const userResolvedPermissions = await getIndividualAccountPermission(currentAccountId);
+        const userResolvedPermissions = await getAccountPermission(currentAccountId);
         const userResolvedPermSet = new Set(userResolvedPermissions);
-        
-        // Ensure that for every role/permission we are granting, the user has all those permissions
-        const isAllowed = newPermissionIds.every(entry => {
-            const toApply = PERMISSION_SET[entry] || [entry];
-            return toApply.every(p => userResolvedPermSet.has(p));
-        });
+
+        // Ensure the user has every permission they are trying to grant
+        const isAllowed = newPermissionIds.every(p => userResolvedPermSet.has(p));
 
         if (!isAllowed) {
             return { success: false, error: "You are trying to grant permissions you do not possess." };

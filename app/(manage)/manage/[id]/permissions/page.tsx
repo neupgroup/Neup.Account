@@ -1,9 +1,6 @@
-
 import { notFound } from "next/navigation";
 import { getPermissions, getUserDetails } from "@/services/manage/users";
-import { getAccountType } from '@/services/user';
 import { getMasterPermissions } from "@/services/manage/access/index";
-import { PERMISSION_METADATA } from "@/services/permissions";
 import { BackButton } from "@/components/ui/back-button";
 import { PermissionEditor } from "./form";
 import { PrimaryHeader } from "@/components/ui/primary-header";
@@ -15,19 +12,11 @@ export default async function UserPermissionsPage({ params }: { params: Promise<
         notFound();
     }
 
-    const [userPermissions, allPermissions, accountType] = await Promise.all([
+    const [userPermissions, allPermissions] = await Promise.all([
         getPermissions(id),
-        getMasterPermissions(), // Fetch all permissions from permissions.ts
-        getAccountType(id),
+        getMasterPermissions(),
     ]);
 
-    // Filter permissions based on account type using metadata
-    const assignablePermissions = allPermissions.filter(p => {
-        const metadata = PERMISSION_METADATA[p.id];
-        if (!metadata) return true; // Show if no metadata defined
-        return metadata.intended_for.includes(accountType || 'individual');
-    });
-    
     return (
         <div className="grid gap-8">
             <BackButton href={`/manage/${id}`} />
@@ -35,9 +24,9 @@ export default async function UserPermissionsPage({ params }: { params: Promise<
                 title="Manage User Permissions"
                 description={`Assign or restrict permission sets for @${userDetails.neupId}.`}
             />
-            <PermissionEditor 
+            <PermissionEditor
                 accountId={id}
-                allPermissions={assignablePermissions}
+                allPermissions={allPermissions}
                 initialAssignedPermissions={userPermissions.assignedPermissions}
                 initialRestrictedPermissions={userPermissions.restrictedPermissions}
             />

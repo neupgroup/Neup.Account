@@ -6,7 +6,6 @@
 import prisma from '@/core/helpers/prisma';
 import { logError } from '@/core/helpers/logger';
 import { getActiveAccountId, getPersonalAccountId } from '@/core/auth/verify';
-import { PERMISSION_SET } from '@/services/permissions';
 
 
 // --- Types ---
@@ -164,7 +163,7 @@ export async function getUserNeupIdDetails(accountId?: string): Promise<{ id: st
 // Resolves account permissions by:
 // 1) finding role grants in authz_account_access_grant for targetAccountId + appId,
 // 2) loading denormalized capabilities from authz_role_capability for those roleIds.
-export async function getIndividualAccountPermission(accountId?: string): Promise<string[]> {
+export async function getAccountPermission(accountId?: string): Promise<string[]> {
   const activeId = accountId || (await getActiveAccountId());
   if (!activeId) return [];
 
@@ -172,7 +171,7 @@ export async function getIndividualAccountPermission(accountId?: string): Promis
     const grants = await prisma.authzAccountAccessGrant.findMany({
       where: {
         targetAccountId: activeId,
-        appId: 'neupaccount',
+        appId: 'neup.account',
       },
       select: { roleId: true },
     });
@@ -186,7 +185,7 @@ export async function getIndividualAccountPermission(accountId?: string): Promis
     const roleCapabilities = await prisma.authzRoleCapability.findMany({
       where: {
         roleId: { in: roleIds },
-        appId: 'neupaccount',
+        appId: 'neup.account',
       },
       select: {
         denormalizedCapability: true,
@@ -202,7 +201,7 @@ export async function getIndividualAccountPermission(accountId?: string): Promis
 
     return Array.from(new Set(capabilities));
   } catch (error) {
-    await logError('database', error, `getIndividualAccountPermission — grant/capability query failed for ${activeId}`);
+    await logError('database', error, `getAccountPermission — grant/capability query failed for ${activeId}`);
     return [];
   }
 }
@@ -214,7 +213,7 @@ export async function checkPermissions(
 ): Promise<boolean> {
   if (!requiredPermissions || requiredPermissions.length === 0) return true;
 
-  const userPermissions = await getIndividualAccountPermission(accountId);
+  const userPermissions = await getAccountPermission(accountId);
   const permissionsSet = new Set(userPermissions);
 
   return requiredPermissions.every((p) => permissionsSet.has(p));
