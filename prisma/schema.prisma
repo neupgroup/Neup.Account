@@ -373,7 +373,6 @@ model AuthzCapability {
 model AuthzRole {
   id          String  @id @default(uuid())
   name        String
-  permissions String[] @default([])
   description String?
   appId       String? @map("app_id")
   scope       String?
