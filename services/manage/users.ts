@@ -165,7 +165,7 @@ export async function updateUserPermissions(accountId: string, newPermissionIds:
         });
         if (!existing) {
             await prisma.permit.create({
-                data: { accountId, forSelf: true, isRoot: false, permissions: newPermissionIds, restrictions: newRestrictionIds },
+                data: { accountId, targetAccountId: accountId, forSelf: true, isRoot: false, permissions: newPermissionIds, restrictions: newRestrictionIds },
             });
         } else {
             await prisma.permit.update({

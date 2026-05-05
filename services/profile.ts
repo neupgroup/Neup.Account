@@ -464,7 +464,7 @@ export async function bridgeGetProfile(input: {
             accountType: account.accountType,
             isLegalEntity: account.brandProfile?.isLegalEntity,
             countryOfOrigin: account.brandProfile?.originCountry,
-            dateEstablished: account.brandProfile?.dateCreated?.toISOString(),
+            dateEstablished: account.brandProfile ? account.createdAt.toISOString() : undefined,
             emails,
             phones,
             contacts: account.contacts.map((c) => ({ type: c.contactType, value: c.value })),

@@ -137,6 +137,7 @@ export async function approveNeupIdRequest(requestId: string, accountId: string,
             prisma.neupId.create({
                 data: {
                     id: newNeupId.toLowerCase(),
+                    neupId: newNeupId.toLowerCase(),
                     accountId: accountId,
                     isPrimary: false,
                 }

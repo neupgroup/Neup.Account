@@ -87,21 +87,19 @@ export async function grantVerification(accountId: string, data: z.infer<typeof 
                 where: { id: accountId }, // Using accountId as ID for account verification to match Firestore logic
                 update: {
                     status: 'approved',
-                    verifiedBy: adminId,
-                    verifiedAt: new Date(),
+                    doneBy: adminId,
+                    doneAt: new Date(),
                     reason,
-                    category,
-                    type: 'account'
+                    category
                 },
                 create: {
                     id: accountId,
                     accountId,
                     status: 'approved',
-                    verifiedBy: adminId,
-                    verifiedAt: new Date(),
+                    doneBy: adminId,
+                    doneAt: new Date(),
                     reason,
-                    category,
-                    type: 'account'
+                    category
                 }
             })
         ]);
@@ -140,9 +138,9 @@ export async function revokeVerification(accountId: string, reason: string): Pro
                 where: { id: accountId },
                 data: {
                     status: 'revoked',
-                    revokedBy: adminId,
-                    revokedAt: new Date(),
-                    revocationReason: reason
+                    doneBy: adminId,
+                    doneAt: new Date(),
+                    reason
                 }
             })
         ]);
@@ -178,7 +176,7 @@ export async function getAccountVerification(accountId: string): Promise<{ verif
         return {
             verified: true,
             category: verification?.category || 'Standard',
-            verifiedAt: verification?.verifiedAt?.toLocaleDateString() || 'N/A'
+            verifiedAt: verification?.doneAt?.toLocaleDateString() || 'N/A'
         };
     } catch (error) {
         await logError('database', error, `getAccountVerification: ${accountId}`);

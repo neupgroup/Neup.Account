@@ -242,7 +242,7 @@ export async function getUserPermissions(accountId?: string, appId?: string): Pr
     if (appId) {
       const roleRows = await prisma.authzAccountAccessGrant.findMany({
         where: {
-          accountId: activeId,
+          targetAccountId: activeId,
           portfolio: {
             assets: {
               some: {

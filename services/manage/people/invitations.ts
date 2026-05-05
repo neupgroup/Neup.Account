@@ -25,17 +25,21 @@ export async function getInvitations(): Promise<Invitation[]> {
 
     try {
         const notifications = await prisma.notification.findMany({
-            where: { accountId },
-            include: {
-                request: true
-            }
+            where: { accountId }
         });
 
         const invitations: Invitation[] = [];
         for (const notif of notifications) {
-            if (!notif.requestId || !notif.request || notif.request.status !== 'pending') continue;
+            const detail = notif.detail as any || {};
+            const requestId = detail.requestId;
+            if (!requestId) continue;
 
-            const request = notif.request;
+            const request = await prisma.request.findUnique({
+                where: { id: requestId }
+            });
+            
+            if (!request || request.status !== 'pending') continue;
+
             const senderProfile = await getUserProfile(request.senderId);
             const senderNeupIds = await prisma.neupId.findMany({
                 where: { accountId: request.senderId }
@@ -82,56 +86,38 @@ export async function acceptRequest(requestId: string, notificationId: string): 
             if (request.action === 'family_invitation') {
                 const inviterId = request.senderId;
 
-                // Find family by memberIds (using @> for array containment in Postgres)
-                const families = await tx.$queryRaw<any[]>`
-                    SELECT * FROM families 
-                    WHERE "memberIds" @> ARRAY[${inviterId}]::text[] 
-                       OR "memberIds" @> ARRAY[${inviteeId}]::text[]
-                    LIMIT 1
-                `;
+                // Find family by checking if inviter is in a family
+                let family = await tx.family.findFirst({
+                    where: {
+                        members: { some: { memberId: inviterId } }
+                    }
+                });
 
-                let family;
-                if (families.length > 0) {
-                    family = families[0];
-                }
-
-                let updatedMembers: any[] = [];
-                let updatedMemberIds: string[] = [];
-                const now = new Date();
-
-                if (family) {
-                    updatedMembers = Array.isArray(family.members) ? family.members : JSON.parse(family.members);
-                    updatedMemberIds = family.memberIds;
-                } else {
-                    updatedMembers = [];
-                    updatedMemberIds = [];
-                }
-
-                if (!updatedMemberIds.includes(inviterId)) {
-                    updatedMembers.push({ accountId: inviterId, addedOn: now, addedBy: inviterId, hidden: false, status: 'approved' });
-                    updatedMemberIds.push(inviterId);
-                }
-                if (!updatedMemberIds.includes(inviteeId)) {
-                    updatedMembers.push({ accountId: inviteeId, addedOn: now, addedBy: inviterId, hidden: request.type === 'partner', status: 'approved' });
-                    updatedMemberIds.push(inviteeId);
-                }
-
-                if (family) {
-                    await tx.family.update({
-                        where: { id: family.id },
-                        data: {
-                            members: updatedMembers,
-                            memberIds: updatedMemberIds
-                        }
-                    });
-                } else {
-                    await tx.family.create({
+                if (!family) {
+                    // Create new family if it doesn't exist
+                    family = await tx.family.create({
                         data: {
                             createdBy: inviterId,
-                            memberIds: updatedMemberIds,
-                            members: updatedMembers
+                            members: {
+                                create: [
+                                    { memberId: inviterId, role: 'member' },
+                                    { memberId: inviteeId, role: 'member' }
+                                ]
+                            }
                         }
                     });
+                } else {
+                    // Check if invitee is already in family
+                    const existingMember = await tx.familyMember.findFirst({
+                        where: { familyId: family.id, memberId: inviteeId }
+                    });
+
+                    if (!existingMember) {
+                        // Add invitee to family
+                        await tx.familyMember.create({
+                            data: { familyId: family.id, memberId: inviteeId, role: 'member' }
+                        });
+                    }
                 }
 
             } else if (request.action === 'access_invitation') {
@@ -142,8 +128,7 @@ export async function acceptRequest(requestId: string, notificationId: string): 
                         permissions: ['independent.default'],
                         forSelf: false,
                         isRoot: false,
-                        restrictions: [],
-                        createdOn: new Date()
+                        restrictions: []
                     }
                 });
             }

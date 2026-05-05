@@ -30,6 +30,10 @@ model Account {
   authzOwnedGrants        AuthzAccountAccessGrant[] @relation("AuthzGrantOwner")
   authzTargetGrants       AuthzAccountAccessGrant[] @relation("AuthzGrantTarget")
   authzAssetsAccessGrants AuthzAssetsAccessGrant[]
+  permits                 Permit[]
+  permitTargets           Permit[]                  @relation("PermitTarget")
+  parentOwnerships        AccountOwnership[]        @relation("ChildAccount")
+  childOwnerships         AccountOwnership[]        @relation("ParentAccount")
 
   receivedRequests Request[]      @relation("ReceivedRequests")
   sentRequests     Request[]      @relation("SentRequests")
@@ -161,6 +165,7 @@ model Verification {
   doneBy     String?  @map("done_by")
   doneAt     DateTime @default(now()) @map("done_at")
   previously String?
+  createdAt  DateTime @default(now()) @map("created_at")
 
   account       Account  @relation(fields: [accountId], references: [id], onDelete: Cascade, map: "verification_account_id_fkey")
   doneByAccount Account? @relation("VerificationDoneBy", fields: [doneBy], references: [id], map: "verification_done_by_fkey")
@@ -297,6 +302,21 @@ model PortfolioMember {
   @@map("portfolio_member")
 }
 
+model AccountOwnership {
+  id         String   @id @default(uuid())
+  parentId   String   @map("parent_id")
+  childrenId String   @map("children_id")
+  type       String
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  parent   Account @relation("ParentAccount", fields: [parentId], references: [id], onDelete: Cascade, map: "account_ownership_parent_id_fkey")
+  children Account @relation("ChildAccount", fields: [childrenId], references: [id], onDelete: Cascade, map: "account_ownership_children_id_fkey")
+
+  @@index([parentId], map: "account_ownership_parent_id_idx")
+  @@index([childrenId], map: "account_ownership_children_id_idx")
+  @@map("account_ownership")
+}
+
 model ApplicationConnection {
   id          String      @id(map: "user_app_connections_pkey") @default(uuid())
   accountId   String      @map("account_id")
@@ -409,4 +429,23 @@ model AuthzAssetsAccessGrant {
   @@index([roleId], map: "authz_assets_access_grant_role_id_idx")
   @@index([portfolioId], map: "authz_assets_access_grant_portfolio_id_idx")
   @@map("authz_assets_access_grant")
+}
+
+model Permit {
+  id              String   @id @default(uuid())
+  accountId       String   @map("account_id")
+  targetAccountId String   @map("target_account_id")
+  forSelf         Boolean  @default(false) @map("for_self")
+  isRoot          Boolean  @default(false) @map("is_root")
+  permissions     String[] @default([])
+  restrictions    String[] @default([])
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  account       Account @relation(fields: [accountId], references: [id], onDelete: Cascade, map: "permit_account_id_fkey")
+  targetAccount Account @relation("PermitTarget", fields: [targetAccountId], references: [id], onDelete: Cascade, map: "permit_target_account_id_fkey")
+
+  @@index([accountId], map: "permit_account_id_idx")
+  @@index([targetAccountId], map: "permit_target_account_id_idx")
+  @@map("permit")
 }

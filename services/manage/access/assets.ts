@@ -327,24 +327,26 @@ export async function assignAssetMemberRole(input: {
       return { success: false, error: 'Member not found in this group.' };
     }
 
-    await prisma.authzAccountAccessGrant.upsert({
+    // Find or create the asset access grant
+    const existing = await prisma.authzAssetsAccessGrant.findFirst({
       where: {
-        accountId_portfolioId_roleId: {
-          accountId: member.accountId,
-          portfolioId: parsed.data.groupId,
-          roleId: parsed.data.role,
-        },
-      },
-      create: {
-        accountId: member.accountId,
-        portfolioId: parsed.data.groupId,
+        assetId: parsed.data.asset,
+        targetAccountId: member.accountId,
         roleId: parsed.data.role,
-        details: {},
-      },
-      update: {
-        details: {},
+        portfolioId: parsed.data.groupId,
       },
     });
+
+    if (!existing) {
+      await prisma.authzAssetsAccessGrant.create({
+        data: {
+          assetId: parsed.data.asset,
+          targetAccountId: member.accountId,
+          roleId: parsed.data.role,
+          portfolioId: parsed.data.groupId,
+        },
+      });
+    }
 
     revalidatePath(`/access/${parsed.data.groupId}`);
     return { success: true };

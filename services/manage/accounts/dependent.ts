@@ -159,6 +159,7 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
                 neupIds: {
                     create: {
                         id: neupId,
+                        neupId: neupId,
                         isPrimary: true
                     }
                 },
@@ -184,8 +185,7 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
                 forSelf: false,
                 isRoot: false,
                 permissions: ['independent.default'], // Guardian gets default independent permissions over dependent
-                restrictions: [],
-                createdOn: new Date(),
+                restrictions: []
             }
         });
         
@@ -193,11 +193,11 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
         await prisma.permit.create({
             data: {
                 accountId: dependentAccountId,
+                targetAccountId: dependentAccountId,
                 forSelf: true,
                 isRoot: false,
                 permissions: ['dependent.full'], // Dependent gets full dependent permissions for self
-                restrictions: [],
-                createdOn: new Date(),
+                restrictions: []
             }
         });
         

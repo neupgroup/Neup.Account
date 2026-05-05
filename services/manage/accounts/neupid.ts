@@ -30,6 +30,7 @@
     await prisma.neupId.create({
       data: {
         id: lowerCaseNeupId,
+        neupId: lowerCaseNeupId,
         accountId,
         isPrimary: false,
       },

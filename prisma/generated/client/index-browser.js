@@ -224,7 +224,8 @@ exports.Prisma.VerificationScalarFieldEnum = {
   category: 'category',
   doneBy: 'doneBy',
   doneAt: 'doneAt',
-  previously: 'previously'
+  previously: 'previously',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.ContactScalarFieldEnum = {
@@ -312,6 +313,14 @@ exports.Prisma.PortfolioMemberScalarFieldEnum = {
   details: 'details'
 };
 
+exports.Prisma.AccountOwnershipScalarFieldEnum = {
+  id: 'id',
+  parentId: 'parentId',
+  childrenId: 'childrenId',
+  type: 'type',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.ApplicationConnectionScalarFieldEnum = {
   id: 'id',
   accountId: 'accountId',
@@ -376,6 +385,18 @@ exports.Prisma.AuthzAssetsAccessGrantScalarFieldEnum = {
   portfolioId: 'portfolioId'
 };
 
+exports.Prisma.PermitScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  targetAccountId: 'targetAccountId',
+  forSelf: 'forSelf',
+  isRoot: 'isRoot',
+  permissions: 'permissions',
+  restrictions: 'restrictions',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -428,6 +449,7 @@ exports.Prisma.ModelName = {
   Portfolio: 'Portfolio',
   PortfolioAsset: 'PortfolioAsset',
   PortfolioMember: 'PortfolioMember',
+  AccountOwnership: 'AccountOwnership',
   ApplicationConnection: 'ApplicationConnection',
   ApplicationBridge: 'ApplicationBridge',
   ApplicationPolicy: 'ApplicationPolicy',
@@ -435,7 +457,8 @@ exports.Prisma.ModelName = {
   AuthzRole: 'AuthzRole',
   AuthzRoleCapabilityMap: 'AuthzRoleCapabilityMap',
   AuthzAccountAccessGrant: 'AuthzAccountAccessGrant',
-  AuthzAssetsAccessGrant: 'AuthzAssetsAccessGrant'
+  AuthzAssetsAccessGrant: 'AuthzAssetsAccessGrant',
+  Permit: 'Permit'
 };
 
 /**

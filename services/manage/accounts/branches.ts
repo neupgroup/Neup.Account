@@ -83,7 +83,6 @@ export async function createBranchAccount(data: z.infer<typeof formSchema>, geol
                     brandProfile: {
                         create: {
                             brandName: name,
-                            dateCreated: new Date(),
                             isLegalEntity: false,
                             originCountry: null,
                         },
@@ -97,10 +96,10 @@ export async function createBranchAccount(data: z.infer<typeof formSchema>, geol
                 data: {
                     accountId: personalAccountId,
                     targetAccountId: branchAccountId,
+                    forSelf: false,
                     isRoot: false,
                     permissions: ['individual.default'],
-                    createdOn: new Date(),
-                    managedBy: personalAccountId,
+                    restrictions: [],
                 }
             });
 
@@ -115,6 +114,7 @@ export async function createBranchAccount(data: z.infer<typeof formSchema>, geol
             await tx.neupId.create({
                 data: {
                     id: fullNeupId,
+                    neupId: fullNeupId,
                     accountId: branchAccountId,
                     isPrimary: true
                 }

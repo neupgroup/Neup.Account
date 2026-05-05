@@ -152,7 +152,7 @@ export async function getAccessDetails(permitId: string): Promise<AccessDetails 
                 id: permit.targetAccountId!,
                 name: grantedByProfile.nameDisplay || `${grantedByProfile.nameFirst} ${grantedByProfile.nameLast}`.trim()
             },
-            grantedOn: permit.createdOn.toLocaleString(),
+            grantedOn: permit.createdAt.toLocaleString(),
             permissions: permit.permissions || []
         }
 
@@ -343,9 +343,12 @@ export async function grantAccessByNeupId(formData: FormData, geolocation?: stri
         await prisma.notification.create({
           data: {
             accountId: targetAccountId,
-            requestId: request.id,
+            action: 'access_invitation',
+            title: 'New Access Invitation',
+            message: `You have received an access invitation from ${ownerAccountId}`,
+            type: 'info',
             read: false,
-            createdAt: new Date()
+            detail: { requestId: request.id }
           }
         });
 

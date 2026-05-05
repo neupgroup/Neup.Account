@@ -102,9 +102,6 @@ export async function getNotifications(): Promise<AllNotifications> {
 
     const notifications = await prisma.notification.findMany({
         where: { accountId },
-        include: {
-            request: true,
-        },
         orderBy: { createdAt: 'desc' }
     });
 
@@ -124,13 +121,17 @@ export async function getNotifications(): Promise<AllNotifications> {
             noticeType: notif.type as any,
         };
 
-        if (notif.requestId && notif.request) {
-            if (notif.request.status !== 'pending') continue;
+        const detail = (notif.detail as any) || {};
+        const requestId = detail.requestId;
 
-            const senderProfile = await getUserProfile(notif.request.senderId);
+        if (requestId) {
+            const request = await prisma.request.findUnique({ where: { id: String(requestId) } });
+            if (!request || request.status !== 'pending') continue;
+
+            const senderProfile = await getUserProfile(request.senderId);
             const senderNeupIdRecord = await prisma.neupId.findFirst({
                 where: {
-                    accountId: notif.request.senderId,
+                    accountId: request.senderId,
                     isPrimary: true,
                 },
                 select: { id: true },
@@ -140,9 +141,9 @@ export async function getNotifications(): Promise<AllNotifications> {
 
             requests.push({
                 ...baseNotification,
-                action: notif.request.action,
-                requestId: notif.requestId,
-                senderId: notif.request.senderId,
+                action: request.action,
+                requestId: request.id,
+                senderId: request.senderId,
                 senderName,
                 senderNeupId,
             });

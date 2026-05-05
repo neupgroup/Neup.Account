@@ -84,7 +84,7 @@ async function main() {
     const neupRecord = await prisma.neupId.findUnique({ where: { id: NEUP_ID } });
     if (!neupRecord) {
       await prisma.neupId.create({
-        data: { id: NEUP_ID, accountId, isPrimary: true },
+        data: { id: NEUP_ID, neupId: NEUP_ID, accountId, isPrimary: true },
       });
     } else if (neupRecord.accountId === accountId && !neupRecord.isPrimary) {
       await prisma.neupId.update({

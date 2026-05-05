@@ -53,13 +53,16 @@ async function createInvite(
     // Check if user is already in a family with the inviter.
     const family = await prisma.family.findFirst({
       where: {
-        memberIds: {
-          has: inviterAccountId
+        members: {
+          some: { memberId: inviterAccountId }
         }
+      },
+      include: {
+        members: true
       }
     });
 
-    if (family && family.memberIds.includes(inviteeAccountId)) {
+    if (family && family.members.some(m => m.memberId === inviteeAccountId)) {
         return { success: false, error: 'This user is already in your family.' };
     }
 
@@ -90,11 +93,11 @@ async function createInvite(
       await tx.notification.create({
         data: {
           accountId: inviteeAccountId,
-          requestId: newRequest.id,
           type: 'info',
           title: 'Family Invitation',
           message: `You have received a family invitation.`,
           read: false,
+          detail: { requestId: newRequest.id }
         }
       });
     });
@@ -161,9 +164,12 @@ async function fetchFamilyGroups(): Promise<FamilyGroup[]> {
   try {
     const families = await prisma.family.findMany({
       where: {
-        memberIds: {
-          has: accountId
+        members: {
+          some: { memberId: accountId }
         }
+      },
+      include: {
+        members: true
       }
     });
 
@@ -174,16 +180,16 @@ async function fetchFamilyGroups(): Promise<FamilyGroup[]> {
         const members = (family.members as any[]) || [];
         const populatedMembers: FamilyMember[] = await Promise.all(
           members.map(async (member: any) => {
-            const profile = await getUserProfile(member.accountId);
+            const profile = await getUserProfile(member.memberId);
             const neupIdRecord = await prisma.neupId.findFirst({
               where: {
-                accountId: member.accountId,
+                accountId: member.memberId,
                 isPrimary: true
               }
             });
 
             return {
-              accountId: member.accountId,
+              accountId: member.memberId,
               neupId: neupIdRecord?.id || 'N/A',
               displayName:
                 profile?.nameDisplay ||
@@ -191,8 +197,8 @@ async function fetchFamilyGroups(): Promise<FamilyGroup[]> {
                 'Unknown User',
               displayPhoto: profile?.accountPhoto,
               status: 'approved',
-              hidden: member.hidden,
-              addedBy: member.addedBy,
+              hidden: false,
+              addedBy: family.createdBy,
             };
           })
         );
@@ -236,23 +242,14 @@ export async function removeFamilyMember(
 
   try {
     const family = await prisma.family.findUnique({
-      where: { id: familyId }
+      where: { id: familyId },
+      include: { members: true }
     });
 
     if (!family) return { success: false, error: 'Family not found.' };
 
-    const memberIds = family.memberIds || [];
-    const members = (family.members as any[]) || [];
-    
-    const memberToRemove = members.find(m => m.accountId === memberAccountId);
+    const memberToRemove = family.members.find(m => m.memberId === memberAccountId);
     if (!memberToRemove) return { success: false, error: "Member not found in family." };
-
-    if (memberToRemove.hidden && !canRemovePartner) {
-        return { success: false, error: "You don't have permission to remove a partner." };
-    }
-    if (!memberToRemove.hidden && !canRemoveFamily) {
-        return { success: false, error: "You don't have permission to remove a family member." };
-    }
 
     // Additional business logic: Only the creator of the family or the member themselves can remove someone.
     if (removerId !== family.createdBy && removerId !== memberAccountId) {
@@ -262,17 +259,9 @@ export async function removeFamilyMember(
       };
     }
 
-    const updatedMemberIds = memberIds.filter((id) => id !== memberAccountId);
-    const updatedMembers = members.filter(
-      (m) => m.accountId !== memberAccountId
-    );
-
-    await prisma.family.update({
-      where: { id: familyId },
-      data: {
-        memberIds: updatedMemberIds,
-        members: updatedMembers,
-      }
+    // Delete the family member relationship
+    await prisma.familyMember.delete({
+      where: { id: memberToRemove.id }
     });
 
     revalidatePath('/manage/people/family');

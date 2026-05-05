@@ -137,6 +137,7 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
                     neupIds: {
                         create: {
                             id: neupId,
+                            neupId: neupId,
                             isPrimary: true
                         }
                     },
@@ -151,7 +152,6 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
                     brandProfile: {
                         create: {
                             brandName: nameBrand,
-                            dateCreated: new Date(),
                             isLegalEntity: Boolean(nameLegal || registrationId),
                             originCountry: servingAreas || null,
                         }
@@ -174,8 +174,7 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
                     forSelf: false,
                     isRoot: false,
                     permissions: ['independent.default'], // Founder gets default management permissions
-                    restrictions: [],
-                    createdOn: new Date()
+                    restrictions: []
                 }
             });
         });
