@@ -145,19 +145,19 @@ ON CONFLICT ("id") DO NOTHING;
 
 -- 3b. Capabilities — individual.root (admin-only)
 INSERT INTO "authz_capability" ("id", "name", "app_id", "scope") VALUES
-  ('cap-root-admin-accounts-view',         'admin.accounts.view',          '${APP_ID}', 'root'),
-  ('cap-root-admin-accounts-modify',       'admin.accounts.modify',        '${APP_ID}', 'root'),
-  ('cap-root-admin-accounts-delete',       'admin.accounts.delete',        '${APP_ID}', 'root'),
-  ('cap-root-admin-applications-view',     'admin.applications.view',      '${APP_ID}', 'root'),
-  ('cap-root-admin-applications-modify',   'admin.applications.modify',    '${APP_ID}', 'root'),
-  ('cap-root-admin-applications-delete',   'admin.applications.delete',    '${APP_ID}', 'root'),
-  ('cap-root-admin-permits-view',          'admin.permits.view',           '${APP_ID}', 'root'),
-  ('cap-root-admin-permits-modify',        'admin.permits.modify',         '${APP_ID}', 'root'),
-  ('cap-root-admin-permits-delete',        'admin.permits.delete',         '${APP_ID}', 'root'),
-  ('cap-root-admin-verifications-view',    'admin.verifications.view',     '${APP_ID}', 'root'),
-  ('cap-root-admin-verifications-modify',  'admin.verifications.modify',   '${APP_ID}', 'root'),
-  ('cap-root-admin-system-view',           'admin.system.view',            '${APP_ID}', 'root'),
-  ('cap-root-admin-system-modify',         'admin.system.modify',          '${APP_ID}', 'root')
+  ('cap-root-admin-accounts-view',         'root.account.view',            '${APP_ID}', 'root'),
+  ('cap-root-admin-accounts-modify',       'root.account.modify',          '${APP_ID}', 'root'),
+  ('cap-root-admin-accounts-delete',       'root.account.delete',          '${APP_ID}', 'root'),
+  ('cap-root-admin-accounts-search',       'root.account.search',          '${APP_ID}', 'root'),
+  ('cap-root-admin-accounts-create',       'root.account.create_individual','${APP_ID}', 'root'),
+  ('cap-root-admin-applications-view',     'root.app.view',                '${APP_ID}', 'root'),
+  ('cap-root-admin-applications-create',   'root.app.create',              '${APP_ID}', 'root'),
+  ('cap-root-admin-permits-view',          'root.permission.view',         '${APP_ID}', 'root'),
+  ('cap-root-admin-permits-edit',          'root.permission.edit',         '${APP_ID}', 'root'),
+  ('cap-root-admin-requests-view',         'root.requests.view',           '${APP_ID}', 'root'),
+  ('cap-root-admin-dashboard-view',        'root.dashboard.view',          '${APP_ID}', 'root'),
+  ('cap-root-admin-payment-config-view',   'root.payment_config.view',     '${APP_ID}', 'root'),
+  ('cap-root-admin-errors-view',           'root.errors.view',             '${APP_ID}', 'root')
 ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "authz_role_capability" (
@@ -170,7 +170,7 @@ SELECT
   'root',
   '${APP_ID}',
   'individual.root',
-  '["admin.accounts.view","admin.accounts.modify","admin.accounts.delete","admin.applications.view","admin.applications.modify","admin.applications.delete","admin.permits.view","admin.permits.modify","admin.permits.delete","admin.verifications.view","admin.verifications.modify","admin.system.view","admin.system.modify"]'::jsonb
+  '["root.account.view","root.account.modify","root.account.delete","root.account.search","root.account.create_individual","root.app.view","root.app.create","root.permission.view","root.permission.edit","root.requests.view","root.dashboard.view","root.payment_config.view","root.errors.view"]'::jsonb
 FROM "authz_capability" c
 WHERE c."app_id" = '${APP_ID}'
   AND c."scope"  = 'root'

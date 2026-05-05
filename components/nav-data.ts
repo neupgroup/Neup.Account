@@ -59,7 +59,7 @@ export const navItems = {
         },
     ],
     managementNav: [
-        { href: "/manage", label: "Home", description: "Manage account roles and permissions." },
+        { href: "/manage", label: "Dashboard", description: "Admin dashboard — accounts, apps, and system overview." },
         { href: "/manage/requests", label: "Requests", description: "Review and act on pending user requests." },
         { href: "/manage/applications", label: "Applications", description: "Approve, reject, block, or activate applications." },
         { href: "/manage/config", label: "Configurations", description: "Manage payment settings and footer social accounts." },
@@ -90,12 +90,14 @@ export const allPermissionsMap: Record<string, string[]> = {
     "Access & Control": ['security.third_party.view', 'security.third_party.add', 'security.third_party.remove'],
     "People & Sharing": ['people.family.view', 'people.family.add', 'people.family.remove', 'people.family.partner.add', 'people.family.partner.remove', 'people.block_list.view', 'people.restrict_list.view'],
     "Payment & Subscription": ['payment.method.show', 'payment.transactions.show', 'payment.subscriptions.show', 'payment.purchase_neup_pro.view'],
-    "Account": ["root.account.search", "root.account.create_individual"],
+    "Account": ["root.account.view", "root.account.search", "root.account.create_individual"],
     "Requests": ["root.requests.view"],
-    "Configurations": ["root.payment_config.view"],
-    "Permissions": ["root.permission.view"],
-    "Applications": ["root.app.view"],
+    "Configurations": ["root.payment_config.view", "root.errors.view"],
+    "Permissions": ["root.permission.view", "root.permission.edit"],
+    "Applications": ["root.app.view", "root.app.create"],
     "Site Config": ["root.payment_config.view", "root.errors.view"],
     "Branches": ['linked_accounts.brand.manage'],
     "Blocked Users": ['people.block_list.view', 'people.restrict_list.view'],
+    // Management nav — "Dashboard" is the admin home, distinct from user "Home"
+    "Dashboard": ["root.dashboard.view"],
 };
