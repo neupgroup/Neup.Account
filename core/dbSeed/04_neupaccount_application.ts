@@ -1,6 +1,6 @@
 import prisma from '@/core/helpers/prisma';
 import { Prisma } from '@/prisma/generated/client';
-import { seedApplicationOwnerRole } from './02_neupaccount_applicationRole';
+import { seedApplicationOwnerRole } from './05_neupaccount_applicationRole';
 
 const APPLICATION_ID = 'neup.account';
 
