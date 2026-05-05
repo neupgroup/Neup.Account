@@ -12,13 +12,13 @@ export async function bridgeBuildGrantRedirect(input: {
   searchParams: URLSearchParams;
 }): Promise<{ redirectTo: string }> {
   const { requestUrl, pathname, searchParams } = input;
-  const redirectsTo = searchParams.get('redirectsTo');
+  const authenticatesTo = searchParams.get('authenticatesTo');
   const appId = searchParams.get('appId');
 
-  if (!redirectsTo) {
+  if (!authenticatesTo) {
     const errorUrl = new URL('/auth/start', requestUrl);
     errorUrl.searchParams.set('error', 'invalid_request');
-    errorUrl.searchParams.set('error_description', 'The required "redirectsTo" parameter was not provided.');
+    errorUrl.searchParams.set('error_description', 'The required "authenticatesTo" parameter was not provided.');
     return { redirectTo: errorUrl.toString() };
   }
 
@@ -29,32 +29,26 @@ export async function bridgeBuildGrantRedirect(input: {
     return { redirectTo: errorUrl.toString() };
   }
 
-  // Validate redirectsTo against registered callback URLs before doing anything else
-  let redirectOrigin: string;
+  // Validate authenticatesTo is a valid URL
+  let authenticatesToUrl: URL;
   try {
-    redirectOrigin = new URL(redirectsTo).origin;
+    authenticatesToUrl = new URL(authenticatesTo);
   } catch {
     const errorUrl = new URL('/auth/start', requestUrl);
     errorUrl.searchParams.set('error', 'invalid_redirect');
-    errorUrl.searchParams.set('error_description', 'The redirectsTo parameter is not a valid URL.');
+    errorUrl.searchParams.set('error_description', 'The authenticatesTo parameter is not a valid URL.');
     return { redirectTo: errorUrl.toString() };
   }
 
-  const finalRedirectUrl = new URL(redirectsTo);
+  const finalRedirectUrl = new URL(authenticatesTo);
   searchParams.forEach((value, key) => {
-    if (key !== 'redirectsTo' && key !== 'appId') {
+    if (key !== 'authenticatesTo' && key !== 'appId') {
       finalRedirectUrl.searchParams.set(key, value);
     }
   });
 
   try {
-    const [application, registeredCallbacks] = await Promise.all([
-      prisma.application.findUnique({ where: { id: appId } }),
-      prisma.applicationBridge.findMany({
-        where: { appId, type: 'callbackUrl' },
-        select: { value: true },
-      }),
-    ]);
+    const application = await prisma.application.findUnique({ where: { id: appId } });
 
     if (!application || !application.appSecret) {
       finalRedirectUrl.searchParams.set('error', 'invalid_app');
@@ -62,18 +56,18 @@ export async function bridgeBuildGrantRedirect(input: {
       return { redirectTo: finalRedirectUrl.toString() };
     }
 
-    // Reject if no callback URLs are registered or the origin doesn't match any
-    const isAllowed = registeredCallbacks.some((cb) => {
-      try {
-        return new URL(cb.value).origin === redirectOrigin;
-      } catch {
-        return false;
-      }
+    // Check if authenticatesTo exists in the database
+    const authenticatesToRecord = await prisma.applicationBridge.findFirst({
+      where: {
+        appId,
+        type: 'authenticatesTo',
+        value: authenticatesTo,
+      },
     });
 
-    if (!isAllowed) {
+    if (!authenticatesToRecord) {
       finalRedirectUrl.searchParams.set('error', 'invalid_redirect');
-      finalRedirectUrl.searchParams.set('error_description', 'The redirectsTo URL is not registered as a valid callback for this application.');
+      finalRedirectUrl.searchParams.set('error_description', 'The authenticatesTo URL is not registered for this application.');
       return { redirectTo: finalRedirectUrl.toString() };
     }
 

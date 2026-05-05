@@ -24,12 +24,12 @@ Before an application can verify a session, it must initiate a handshake to obta
 - **Purpose**: Starts the signing flow and redirects to Neup.Account for authentication.
 - **Required query params**:
   - `appId`: Your application ID (encoded in public key).
-  - `redirectsTo`: Your server callback URL.
-- **Optional query params**: Any additional parameters will be forwarded to your `redirectsTo` unchanged.
+  - `authenticatesTo`: Your server callback URL (must be registered in database).
+- **Optional query params**: Any additional parameters will be forwarded to your `authenticatesTo` unchanged.
 
 ### How it works
 1. If the user is not signed in, they are redirected to `/auth/start?redirects=…`.
-2. After successful sign-in, the handshake redirects the user to your `redirectsTo` URL and appends:
+2. After successful sign-in, the handshake redirects the user to your `authenticatesTo` URL and appends:
    - `tempToken`: A short-lived, one-time token (5 minutes) for server-to-server verification.
    - `authType`: Either `signin` (existing user) or `signup` (new user for this app).
 3. Your app server must then verify the `tempToken` via the verification API before granting access.
@@ -414,7 +414,7 @@ CREATE TABLE users (
 
 ### Start Handshake (browser redirect)
 ```
-GET https://neupgroup.com/account/bridge/handshake.v1/auth/grant?appId=app_123&redirectsTo=https://yourapp.com/neup/callback
+GET https://neupgroup.com/account/bridge/handshake.v1/auth/grant?appId=app_123&authenticatesTo=https://yourapp.com/neup/callback
 ```
 
 ### Verify tempToken (External Apps)

@@ -161,3 +161,77 @@ export function buildAuthCallbackWithStatus(context: ServerAuthContext, status: 
   return buildCallbackUrl(context.authenticatesTo, context, status);
 }
 
+// --- Flow Navigation Parameters (backsTo and steps) ---
+
+// Represents persistent flow navigation parameters
+export type FlowParams = {
+  backsTo: string | null;
+  steps: string | null;
+};
+
+// Extracts backsTo and steps from client-side search params
+export function getFlowParams(searchParams: SearchParamsLike): FlowParams {
+  return {
+    backsTo: searchParams.get('backsTo'),
+    steps: searchParams.get('steps'),
+  };
+}
+
+// Extracts backsTo and steps from server-side search params
+export function getServerFlowParams(searchParams: SearchParamsRecord): FlowParams {
+  return {
+    backsTo: pickFirst(searchParams.backsTo) || null,
+    steps: pickFirst(searchParams.steps) || null,
+  };
+}
+
+// Checks if flow params exist in search params
+export function hasFlowParams(searchParams: SearchParamsLike): boolean {
+  const { backsTo, steps } = getFlowParams(searchParams);
+  return Boolean(backsTo || steps);
+}
+
+// Appends backsTo and steps params to a path
+export function appendFlowParams(path: string, searchParams: SearchParamsLike | null | undefined): string {
+  if (!searchParams) return path;
+
+  const { backsTo, steps } = getFlowParams(searchParams);
+  
+  if (!backsTo && !steps) {
+    return path;
+  }
+
+  const separator = path.includes('?') ? '&' : '?';
+  const params = new URLSearchParams();
+
+  if (backsTo) params.set('backsTo', backsTo);
+  if (steps) params.set('steps', steps);
+
+  return `${path}${separator}${params.toString()}`;
+}
+
+// Appends backsTo and steps params from a FlowParams object to a path
+export function appendFlowParamsObject(path: string, flowParams: FlowParams): string {
+  if (!flowParams.backsTo && !flowParams.steps) {
+    return path;
+  }
+
+  const separator = path.includes('?') ? '&' : '?';
+  const params = new URLSearchParams();
+
+  if (flowParams.backsTo) params.set('backsTo', flowParams.backsTo);
+  if (flowParams.steps) params.set('steps', flowParams.steps);
+
+  return `${path}${separator}${params.toString()}`;
+}
+
+// Combines appendAuthCallbackContext and appendFlowParams for auth flows
+export function appendAuthContextAndFlowParams(
+  path: string,
+  searchParams: SearchParamsLike
+): string {
+  let result = appendAuthCallbackContext(path, searchParams);
+  result = appendFlowParams(result, searchParams);
+  return result;
+}
+

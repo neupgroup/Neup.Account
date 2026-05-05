@@ -1,4 +1,5 @@
 import { APP_BASE_PATH } from '@/core/appconfig';
+import { getFlowParams, appendFlowParamsObject } from '@/core/auth/callback';
 
 type RouterLike = {
     push: (href: string, options?: { scroll?: boolean }) => void;
@@ -9,6 +10,7 @@ type RedirectOptions = {
     replace?: boolean;
     hard?: boolean;
     scroll?: boolean;
+    preserveFlowParams?: boolean; // Whether to preserve backsTo and steps params (default: true)
 };
 
 /**
@@ -31,30 +33,40 @@ function resolveHref(path: string): string {
  *
  * - When `router` is provided: uses Next.js router (base path handled automatically by Next.js).
  * - When `hard: true` or no router: uses window.location.href with base path prepended.
+ * - By default, preserves backsTo and steps params from the current URL.
  *
  * @param path  App-relative path, e.g. '/auth/start'
  * @param router  Next.js router instance (optional — omit for hard navigation)
- * @param options  { replace, hard, scroll }
+ * @param options  { replace, hard, scroll, preserveFlowParams }
  */
 export function redirectInApp(
     path: string,
     router?: RouterLike | null,
     options: RedirectOptions = {}
 ): void {
-    const { replace = false, hard = false, scroll } = options;
+    const { replace = false, hard = false, scroll, preserveFlowParams = true } = options;
+
+    let finalPath = path;
+
+    // Preserve backsTo and steps params if requested (default: true)
+    if (preserveFlowParams && typeof window !== 'undefined') {
+        const currentParams = new URLSearchParams(window.location.search);
+        const flowParams = getFlowParams(currentParams);
+        finalPath = appendFlowParamsObject(path, flowParams);
+    }
 
     if (router && !hard) {
         const navOptions = scroll !== undefined ? { scroll } : undefined;
         if (replace) {
-            router.replace(path, navOptions);
+            router.replace(finalPath, navOptions);
         } else {
-            router.push(path, navOptions);
+            router.push(finalPath, navOptions);
         }
         return;
     }
 
     // Hard navigation — must include base path manually
-    const resolved = resolveHref(path);
+    const resolved = resolveHref(finalPath);
     if (replace) {
         window.location.replace(resolved);
     } else {
