@@ -35017,6 +35017,7 @@ export namespace Prisma {
     role_id: string | null
     portfolio_id: string | null
     app_id: string | null
+    asset_type: string | null
   }
 
   export type AuthzAssetsAccessGrantMaxAggregateOutputType = {
@@ -35026,6 +35027,7 @@ export namespace Prisma {
     role_id: string | null
     portfolio_id: string | null
     app_id: string | null
+    asset_type: string | null
   }
 
   export type AuthzAssetsAccessGrantCountAggregateOutputType = {
@@ -35035,6 +35037,7 @@ export namespace Prisma {
     role_id: number
     portfolio_id: number
     app_id: number
+    asset_type: number
     _all: number
   }
 
@@ -35046,6 +35049,7 @@ export namespace Prisma {
     role_id?: true
     portfolio_id?: true
     app_id?: true
+    asset_type?: true
   }
 
   export type AuthzAssetsAccessGrantMaxAggregateInputType = {
@@ -35055,6 +35059,7 @@ export namespace Prisma {
     role_id?: true
     portfolio_id?: true
     app_id?: true
+    asset_type?: true
   }
 
   export type AuthzAssetsAccessGrantCountAggregateInputType = {
@@ -35064,6 +35069,7 @@ export namespace Prisma {
     role_id?: true
     portfolio_id?: true
     app_id?: true
+    asset_type?: true
     _all?: true
   }
 
@@ -35146,6 +35152,7 @@ export namespace Prisma {
     role_id: string
     portfolio_id: string | null
     app_id: string
+    asset_type: string | null
     _count: AuthzAssetsAccessGrantCountAggregateOutputType | null
     _min: AuthzAssetsAccessGrantMinAggregateOutputType | null
     _max: AuthzAssetsAccessGrantMaxAggregateOutputType | null
@@ -35172,6 +35179,7 @@ export namespace Prisma {
     role_id?: boolean
     portfolio_id?: boolean
     app_id?: boolean
+    asset_type?: boolean
     asset?: boolean | PortfolioAssetDefaultArgs<ExtArgs>
     account?: boolean | AccountDefaultArgs<ExtArgs>
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
@@ -35185,6 +35193,7 @@ export namespace Prisma {
     role_id?: boolean
     portfolio_id?: boolean
     app_id?: boolean
+    asset_type?: boolean
     asset?: boolean | PortfolioAssetDefaultArgs<ExtArgs>
     account?: boolean | AccountDefaultArgs<ExtArgs>
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
@@ -35198,6 +35207,7 @@ export namespace Prisma {
     role_id?: boolean
     portfolio_id?: boolean
     app_id?: boolean
+    asset_type?: boolean
     asset?: boolean | PortfolioAssetDefaultArgs<ExtArgs>
     account?: boolean | AccountDefaultArgs<ExtArgs>
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
@@ -35211,9 +35221,10 @@ export namespace Prisma {
     role_id?: boolean
     portfolio_id?: boolean
     app_id?: boolean
+    asset_type?: boolean
   }
 
-  export type AuthzAssetsAccessGrantOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "asset_id" | "account_id" | "role_id" | "portfolio_id" | "app_id", ExtArgs["result"]["authzAssetsAccessGrant"]>
+  export type AuthzAssetsAccessGrantOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "asset_id" | "account_id" | "role_id" | "portfolio_id" | "app_id" | "asset_type", ExtArgs["result"]["authzAssetsAccessGrant"]>
   export type AuthzAssetsAccessGrantInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     asset?: boolean | PortfolioAssetDefaultArgs<ExtArgs>
     account?: boolean | AccountDefaultArgs<ExtArgs>
@@ -35248,6 +35259,7 @@ export namespace Prisma {
       role_id: string
       portfolio_id: string | null
       app_id: string
+      asset_type: string | null
     }, ExtArgs["result"]["authzAssetsAccessGrant"]>
     composites: {}
   }
@@ -35681,6 +35693,7 @@ export namespace Prisma {
     readonly role_id: FieldRef<"AuthzAssetsAccessGrant", 'String'>
     readonly portfolio_id: FieldRef<"AuthzAssetsAccessGrant", 'String'>
     readonly app_id: FieldRef<"AuthzAssetsAccessGrant", 'String'>
+    readonly asset_type: FieldRef<"AuthzAssetsAccessGrant", 'String'>
   }
     
 
@@ -37588,7 +37601,8 @@ export namespace Prisma {
     account_id: 'account_id',
     role_id: 'role_id',
     portfolio_id: 'portfolio_id',
-    app_id: 'app_id'
+    app_id: 'app_id',
+    asset_type: 'asset_type'
   };
 
   export type AuthzAssetsAccessGrantScalarFieldEnum = (typeof AuthzAssetsAccessGrantScalarFieldEnum)[keyof typeof AuthzAssetsAccessGrantScalarFieldEnum]
@@ -39588,6 +39602,7 @@ export namespace Prisma {
     role_id?: StringFilter<"AuthzAssetsAccessGrant"> | string
     portfolio_id?: StringNullableFilter<"AuthzAssetsAccessGrant"> | string | null
     app_id?: StringFilter<"AuthzAssetsAccessGrant"> | string
+    asset_type?: StringNullableFilter<"AuthzAssetsAccessGrant"> | string | null
     asset?: XOR<PortfolioAssetScalarRelationFilter, PortfolioAssetWhereInput>
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
     role?: XOR<AuthzRoleScalarRelationFilter, AuthzRoleWhereInput>
@@ -39601,6 +39616,7 @@ export namespace Prisma {
     role_id?: SortOrder
     portfolio_id?: SortOrderInput | SortOrder
     app_id?: SortOrder
+    asset_type?: SortOrderInput | SortOrder
     asset?: PortfolioAssetOrderByWithRelationInput
     account?: AccountOrderByWithRelationInput
     role?: AuthzRoleOrderByWithRelationInput
@@ -39617,6 +39633,7 @@ export namespace Prisma {
     role_id?: StringFilter<"AuthzAssetsAccessGrant"> | string
     portfolio_id?: StringNullableFilter<"AuthzAssetsAccessGrant"> | string | null
     app_id?: StringFilter<"AuthzAssetsAccessGrant"> | string
+    asset_type?: StringNullableFilter<"AuthzAssetsAccessGrant"> | string | null
     asset?: XOR<PortfolioAssetScalarRelationFilter, PortfolioAssetWhereInput>
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
     role?: XOR<AuthzRoleScalarRelationFilter, AuthzRoleWhereInput>
@@ -39630,6 +39647,7 @@ export namespace Prisma {
     role_id?: SortOrder
     portfolio_id?: SortOrderInput | SortOrder
     app_id?: SortOrder
+    asset_type?: SortOrderInput | SortOrder
     _count?: AuthzAssetsAccessGrantCountOrderByAggregateInput
     _max?: AuthzAssetsAccessGrantMaxOrderByAggregateInput
     _min?: AuthzAssetsAccessGrantMinOrderByAggregateInput
@@ -39645,6 +39663,7 @@ export namespace Prisma {
     role_id?: StringWithAggregatesFilter<"AuthzAssetsAccessGrant"> | string
     portfolio_id?: StringNullableWithAggregatesFilter<"AuthzAssetsAccessGrant"> | string | null
     app_id?: StringWithAggregatesFilter<"AuthzAssetsAccessGrant"> | string
+    asset_type?: StringNullableWithAggregatesFilter<"AuthzAssetsAccessGrant"> | string | null
   }
 
   export type PermitWhereInput = {
@@ -41668,6 +41687,7 @@ export namespace Prisma {
   export type AuthzAssetsAccessGrantCreateInput = {
     id?: string
     app_id: string
+    asset_type?: string | null
     asset: PortfolioAssetCreateNestedOneWithoutAuthzAssetsAccessGrantsInput
     account: AccountCreateNestedOneWithoutAuthzAssetsAccessGrantsInput
     role: AuthzRoleCreateNestedOneWithoutAssetsGrantsInput
@@ -41681,11 +41701,13 @@ export namespace Prisma {
     role_id: string
     portfolio_id?: string | null
     app_id: string
+    asset_type?: string | null
   }
 
   export type AuthzAssetsAccessGrantUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     app_id?: StringFieldUpdateOperationsInput | string
+    asset_type?: NullableStringFieldUpdateOperationsInput | string | null
     asset?: PortfolioAssetUpdateOneRequiredWithoutAuthzAssetsAccessGrantsNestedInput
     account?: AccountUpdateOneRequiredWithoutAuthzAssetsAccessGrantsNestedInput
     role?: AuthzRoleUpdateOneRequiredWithoutAssetsGrantsNestedInput
@@ -41699,6 +41721,7 @@ export namespace Prisma {
     role_id?: StringFieldUpdateOperationsInput | string
     portfolio_id?: NullableStringFieldUpdateOperationsInput | string | null
     app_id?: StringFieldUpdateOperationsInput | string
+    asset_type?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzAssetsAccessGrantCreateManyInput = {
@@ -41708,11 +41731,13 @@ export namespace Prisma {
     role_id: string
     portfolio_id?: string | null
     app_id: string
+    asset_type?: string | null
   }
 
   export type AuthzAssetsAccessGrantUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     app_id?: StringFieldUpdateOperationsInput | string
+    asset_type?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzAssetsAccessGrantUncheckedUpdateManyInput = {
@@ -41722,6 +41747,7 @@ export namespace Prisma {
     role_id?: StringFieldUpdateOperationsInput | string
     portfolio_id?: NullableStringFieldUpdateOperationsInput | string | null
     app_id?: StringFieldUpdateOperationsInput | string
+    asset_type?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PermitCreateInput = {
@@ -43086,6 +43112,7 @@ export namespace Prisma {
     role_id?: SortOrder
     portfolio_id?: SortOrder
     app_id?: SortOrder
+    asset_type?: SortOrder
   }
 
   export type AuthzAssetsAccessGrantMaxOrderByAggregateInput = {
@@ -43095,6 +43122,7 @@ export namespace Prisma {
     role_id?: SortOrder
     portfolio_id?: SortOrder
     app_id?: SortOrder
+    asset_type?: SortOrder
   }
 
   export type AuthzAssetsAccessGrantMinOrderByAggregateInput = {
@@ -43104,6 +43132,7 @@ export namespace Prisma {
     role_id?: SortOrder
     portfolio_id?: SortOrder
     app_id?: SortOrder
+    asset_type?: SortOrder
   }
 
   export type StringNullableListFilter<$PrismaModel = never> = {
@@ -45838,6 +45867,7 @@ export namespace Prisma {
   export type AuthzAssetsAccessGrantCreateWithoutAccountInput = {
     id?: string
     app_id: string
+    asset_type?: string | null
     asset: PortfolioAssetCreateNestedOneWithoutAuthzAssetsAccessGrantsInput
     role: AuthzRoleCreateNestedOneWithoutAssetsGrantsInput
     portfolio?: PortfolioCreateNestedOneWithoutAuthzAssetsAccessGrantsInput
@@ -45849,6 +45879,7 @@ export namespace Prisma {
     role_id: string
     portfolio_id?: string | null
     app_id: string
+    asset_type?: string | null
   }
 
   export type AuthzAssetsAccessGrantCreateOrConnectWithoutAccountInput = {
@@ -46479,6 +46510,7 @@ export namespace Prisma {
     role_id?: StringFilter<"AuthzAssetsAccessGrant"> | string
     portfolio_id?: StringNullableFilter<"AuthzAssetsAccessGrant"> | string | null
     app_id?: StringFilter<"AuthzAssetsAccessGrant"> | string
+    asset_type?: StringNullableFilter<"AuthzAssetsAccessGrant"> | string | null
   }
 
   export type PermitUpsertWithWhereUniqueWithoutAccountInput = {
@@ -48985,6 +49017,7 @@ export namespace Prisma {
   export type AuthzAssetsAccessGrantCreateWithoutPortfolioInput = {
     id?: string
     app_id: string
+    asset_type?: string | null
     asset: PortfolioAssetCreateNestedOneWithoutAuthzAssetsAccessGrantsInput
     account: AccountCreateNestedOneWithoutAuthzAssetsAccessGrantsInput
     role: AuthzRoleCreateNestedOneWithoutAssetsGrantsInput
@@ -48996,6 +49029,7 @@ export namespace Prisma {
     account_id: string
     role_id: string
     app_id: string
+    asset_type?: string | null
   }
 
   export type AuthzAssetsAccessGrantCreateOrConnectWithoutPortfolioInput = {
@@ -49111,6 +49145,7 @@ export namespace Prisma {
   export type AuthzAssetsAccessGrantCreateWithoutAssetInput = {
     id?: string
     app_id: string
+    asset_type?: string | null
     account: AccountCreateNestedOneWithoutAuthzAssetsAccessGrantsInput
     role: AuthzRoleCreateNestedOneWithoutAssetsGrantsInput
     portfolio?: PortfolioCreateNestedOneWithoutAuthzAssetsAccessGrantsInput
@@ -49122,6 +49157,7 @@ export namespace Prisma {
     role_id: string
     portfolio_id?: string | null
     app_id: string
+    asset_type?: string | null
   }
 
   export type AuthzAssetsAccessGrantCreateOrConnectWithoutAssetInput = {
@@ -50356,6 +50392,7 @@ export namespace Prisma {
   export type AuthzAssetsAccessGrantCreateWithoutRoleInput = {
     id?: string
     app_id: string
+    asset_type?: string | null
     asset: PortfolioAssetCreateNestedOneWithoutAuthzAssetsAccessGrantsInput
     account: AccountCreateNestedOneWithoutAuthzAssetsAccessGrantsInput
     portfolio?: PortfolioCreateNestedOneWithoutAuthzAssetsAccessGrantsInput
@@ -50367,6 +50404,7 @@ export namespace Prisma {
     account_id: string
     portfolio_id?: string | null
     app_id: string
+    asset_type?: string | null
   }
 
   export type AuthzAssetsAccessGrantCreateOrConnectWithoutRoleInput = {
@@ -51768,6 +51806,7 @@ export namespace Prisma {
     role_id: string
     portfolio_id?: string | null
     app_id: string
+    asset_type?: string | null
   }
 
   export type PermitCreateManyAccountInput = {
@@ -52127,6 +52166,7 @@ export namespace Prisma {
   export type AuthzAssetsAccessGrantUpdateWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
     app_id?: StringFieldUpdateOperationsInput | string
+    asset_type?: NullableStringFieldUpdateOperationsInput | string | null
     asset?: PortfolioAssetUpdateOneRequiredWithoutAuthzAssetsAccessGrantsNestedInput
     role?: AuthzRoleUpdateOneRequiredWithoutAssetsGrantsNestedInput
     portfolio?: PortfolioUpdateOneWithoutAuthzAssetsAccessGrantsNestedInput
@@ -52138,6 +52178,7 @@ export namespace Prisma {
     role_id?: StringFieldUpdateOperationsInput | string
     portfolio_id?: NullableStringFieldUpdateOperationsInput | string | null
     app_id?: StringFieldUpdateOperationsInput | string
+    asset_type?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzAssetsAccessGrantUncheckedUpdateManyWithoutAccountInput = {
@@ -52146,6 +52187,7 @@ export namespace Prisma {
     role_id?: StringFieldUpdateOperationsInput | string
     portfolio_id?: NullableStringFieldUpdateOperationsInput | string | null
     app_id?: StringFieldUpdateOperationsInput | string
+    asset_type?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PermitUpdateWithoutAccountInput = {
@@ -52613,6 +52655,7 @@ export namespace Prisma {
     account_id: string
     role_id: string
     app_id: string
+    asset_type?: string | null
   }
 
   export type PortfolioAssetUpdateWithoutPortfolioInput = {
@@ -52683,6 +52726,7 @@ export namespace Prisma {
   export type AuthzAssetsAccessGrantUpdateWithoutPortfolioInput = {
     id?: StringFieldUpdateOperationsInput | string
     app_id?: StringFieldUpdateOperationsInput | string
+    asset_type?: NullableStringFieldUpdateOperationsInput | string | null
     asset?: PortfolioAssetUpdateOneRequiredWithoutAuthzAssetsAccessGrantsNestedInput
     account?: AccountUpdateOneRequiredWithoutAuthzAssetsAccessGrantsNestedInput
     role?: AuthzRoleUpdateOneRequiredWithoutAssetsGrantsNestedInput
@@ -52694,6 +52738,7 @@ export namespace Prisma {
     account_id?: StringFieldUpdateOperationsInput | string
     role_id?: StringFieldUpdateOperationsInput | string
     app_id?: StringFieldUpdateOperationsInput | string
+    asset_type?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzAssetsAccessGrantUncheckedUpdateManyWithoutPortfolioInput = {
@@ -52702,6 +52747,7 @@ export namespace Prisma {
     account_id?: StringFieldUpdateOperationsInput | string
     role_id?: StringFieldUpdateOperationsInput | string
     app_id?: StringFieldUpdateOperationsInput | string
+    asset_type?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzAssetsAccessGrantCreateManyAssetInput = {
@@ -52710,11 +52756,13 @@ export namespace Prisma {
     role_id: string
     portfolio_id?: string | null
     app_id: string
+    asset_type?: string | null
   }
 
   export type AuthzAssetsAccessGrantUpdateWithoutAssetInput = {
     id?: StringFieldUpdateOperationsInput | string
     app_id?: StringFieldUpdateOperationsInput | string
+    asset_type?: NullableStringFieldUpdateOperationsInput | string | null
     account?: AccountUpdateOneRequiredWithoutAuthzAssetsAccessGrantsNestedInput
     role?: AuthzRoleUpdateOneRequiredWithoutAssetsGrantsNestedInput
     portfolio?: PortfolioUpdateOneWithoutAuthzAssetsAccessGrantsNestedInput
@@ -52726,6 +52774,7 @@ export namespace Prisma {
     role_id?: StringFieldUpdateOperationsInput | string
     portfolio_id?: NullableStringFieldUpdateOperationsInput | string | null
     app_id?: StringFieldUpdateOperationsInput | string
+    asset_type?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzAssetsAccessGrantUncheckedUpdateManyWithoutAssetInput = {
@@ -52734,6 +52783,7 @@ export namespace Prisma {
     role_id?: StringFieldUpdateOperationsInput | string
     portfolio_id?: NullableStringFieldUpdateOperationsInput | string | null
     app_id?: StringFieldUpdateOperationsInput | string
+    asset_type?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzRoleCapabilityCreateManyCapabilityInput = {
@@ -52795,6 +52845,7 @@ export namespace Prisma {
     account_id: string
     portfolio_id?: string | null
     app_id: string
+    asset_type?: string | null
   }
 
   export type AuthzRoleCapabilityUpdateWithoutRoleInput = {
@@ -52851,6 +52902,7 @@ export namespace Prisma {
   export type AuthzAssetsAccessGrantUpdateWithoutRoleInput = {
     id?: StringFieldUpdateOperationsInput | string
     app_id?: StringFieldUpdateOperationsInput | string
+    asset_type?: NullableStringFieldUpdateOperationsInput | string | null
     asset?: PortfolioAssetUpdateOneRequiredWithoutAuthzAssetsAccessGrantsNestedInput
     account?: AccountUpdateOneRequiredWithoutAuthzAssetsAccessGrantsNestedInput
     portfolio?: PortfolioUpdateOneWithoutAuthzAssetsAccessGrantsNestedInput
@@ -52862,6 +52914,7 @@ export namespace Prisma {
     account_id?: StringFieldUpdateOperationsInput | string
     portfolio_id?: NullableStringFieldUpdateOperationsInput | string | null
     app_id?: StringFieldUpdateOperationsInput | string
+    asset_type?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzAssetsAccessGrantUncheckedUpdateManyWithoutRoleInput = {
@@ -52870,6 +52923,7 @@ export namespace Prisma {
     account_id?: StringFieldUpdateOperationsInput | string
     portfolio_id?: NullableStringFieldUpdateOperationsInput | string | null
     app_id?: StringFieldUpdateOperationsInput | string
+    asset_type?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

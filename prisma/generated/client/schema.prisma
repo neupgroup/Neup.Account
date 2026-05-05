@@ -422,6 +422,7 @@ model AuthzAssetsAccessGrant {
   role_id      String  @map("role_id")
   portfolio_id String? @map("portfolio_id")
   app_id       String  @map("app_id")
+  asset_type   String? @map("asset_type")
 
   asset     PortfolioAsset @relation(fields: [asset_id], references: [id], map: "authz_assets_access_grant_asset_id_fkey")
   account   Account        @relation(fields: [account_id], references: [id], map: "authz_assets_access_grant_account_id_fkey")
@@ -433,6 +434,7 @@ model AuthzAssetsAccessGrant {
   @@index([role_id], map: "authz_assets_access_grant_role_id_idx")
   @@index([portfolio_id], map: "authz_assets_access_grant_portfolio_id_idx")
   @@index([app_id], map: "authz_assets_access_grant_app_id_idx")
+  @@index([asset_type], map: "authz_assets_access_grant_asset_type_idx")
   @@map("authz_assets_access_grant")
 }
 
