@@ -387,6 +387,8 @@ model AuthzRoleCapability {
   capabilityId           String          @map("capability_id")
   scope                  String?
   denormalizedCapability Json?           @map("denormalized_capability")
+  appId                  String?         @map("app_id")
+  roleName               String?         @map("role_name")
   role                   AuthzRole       @relation(fields: [roleId], references: [id])
   capability             AuthzCapability @relation(fields: [capabilityId], references: [id])
 

@@ -32814,6 +32814,8 @@ export namespace Prisma {
     roleId: string | null
     capabilityId: string | null
     scope: string | null
+    appId: string | null
+    roleName: string | null
   }
 
   export type AuthzRoleCapabilityMaxAggregateOutputType = {
@@ -32821,6 +32823,8 @@ export namespace Prisma {
     roleId: string | null
     capabilityId: string | null
     scope: string | null
+    appId: string | null
+    roleName: string | null
   }
 
   export type AuthzRoleCapabilityCountAggregateOutputType = {
@@ -32829,6 +32833,8 @@ export namespace Prisma {
     capabilityId: number
     scope: number
     denormalizedCapability: number
+    appId: number
+    roleName: number
     _all: number
   }
 
@@ -32838,6 +32844,8 @@ export namespace Prisma {
     roleId?: true
     capabilityId?: true
     scope?: true
+    appId?: true
+    roleName?: true
   }
 
   export type AuthzRoleCapabilityMaxAggregateInputType = {
@@ -32845,6 +32853,8 @@ export namespace Prisma {
     roleId?: true
     capabilityId?: true
     scope?: true
+    appId?: true
+    roleName?: true
   }
 
   export type AuthzRoleCapabilityCountAggregateInputType = {
@@ -32853,6 +32863,8 @@ export namespace Prisma {
     capabilityId?: true
     scope?: true
     denormalizedCapability?: true
+    appId?: true
+    roleName?: true
     _all?: true
   }
 
@@ -32934,6 +32946,8 @@ export namespace Prisma {
     capabilityId: string
     scope: string | null
     denormalizedCapability: JsonValue | null
+    appId: string | null
+    roleName: string | null
     _count: AuthzRoleCapabilityCountAggregateOutputType | null
     _min: AuthzRoleCapabilityMinAggregateOutputType | null
     _max: AuthzRoleCapabilityMaxAggregateOutputType | null
@@ -32959,6 +32973,8 @@ export namespace Prisma {
     capabilityId?: boolean
     scope?: boolean
     denormalizedCapability?: boolean
+    appId?: boolean
+    roleName?: boolean
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
     capability?: boolean | AuthzCapabilityDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["authzRoleCapability"]>
@@ -32969,6 +32985,8 @@ export namespace Prisma {
     capabilityId?: boolean
     scope?: boolean
     denormalizedCapability?: boolean
+    appId?: boolean
+    roleName?: boolean
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
     capability?: boolean | AuthzCapabilityDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["authzRoleCapability"]>
@@ -32979,6 +32997,8 @@ export namespace Prisma {
     capabilityId?: boolean
     scope?: boolean
     denormalizedCapability?: boolean
+    appId?: boolean
+    roleName?: boolean
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
     capability?: boolean | AuthzCapabilityDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["authzRoleCapability"]>
@@ -32989,9 +33009,11 @@ export namespace Prisma {
     capabilityId?: boolean
     scope?: boolean
     denormalizedCapability?: boolean
+    appId?: boolean
+    roleName?: boolean
   }
 
-  export type AuthzRoleCapabilityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "roleId" | "capabilityId" | "scope" | "denormalizedCapability", ExtArgs["result"]["authzRoleCapability"]>
+  export type AuthzRoleCapabilityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "roleId" | "capabilityId" | "scope" | "denormalizedCapability" | "appId" | "roleName", ExtArgs["result"]["authzRoleCapability"]>
   export type AuthzRoleCapabilityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
     capability?: boolean | AuthzCapabilityDefaultArgs<ExtArgs>
@@ -33017,6 +33039,8 @@ export namespace Prisma {
       capabilityId: string
       scope: string | null
       denormalizedCapability: Prisma.JsonValue | null
+      appId: string | null
+      roleName: string | null
     }, ExtArgs["result"]["authzRoleCapability"]>
     composites: {}
   }
@@ -33447,6 +33471,8 @@ export namespace Prisma {
     readonly capabilityId: FieldRef<"AuthzRoleCapability", 'String'>
     readonly scope: FieldRef<"AuthzRoleCapability", 'String'>
     readonly denormalizedCapability: FieldRef<"AuthzRoleCapability", 'Json'>
+    readonly appId: FieldRef<"AuthzRoleCapability", 'String'>
+    readonly roleName: FieldRef<"AuthzRoleCapability", 'String'>
   }
     
 
@@ -37514,7 +37540,9 @@ export namespace Prisma {
     roleId: 'roleId',
     capabilityId: 'capabilityId',
     scope: 'scope',
-    denormalizedCapability: 'denormalizedCapability'
+    denormalizedCapability: 'denormalizedCapability',
+    appId: 'appId',
+    roleName: 'roleName'
   };
 
   export type AuthzRoleCapabilityScalarFieldEnum = (typeof AuthzRoleCapabilityScalarFieldEnum)[keyof typeof AuthzRoleCapabilityScalarFieldEnum]
@@ -39401,6 +39429,8 @@ export namespace Prisma {
     capabilityId?: StringFilter<"AuthzRoleCapability"> | string
     scope?: StringNullableFilter<"AuthzRoleCapability"> | string | null
     denormalizedCapability?: JsonNullableFilter<"AuthzRoleCapability">
+    appId?: StringNullableFilter<"AuthzRoleCapability"> | string | null
+    roleName?: StringNullableFilter<"AuthzRoleCapability"> | string | null
     role?: XOR<AuthzRoleScalarRelationFilter, AuthzRoleWhereInput>
     capability?: XOR<AuthzCapabilityScalarRelationFilter, AuthzCapabilityWhereInput>
   }
@@ -39411,6 +39441,8 @@ export namespace Prisma {
     capabilityId?: SortOrder
     scope?: SortOrderInput | SortOrder
     denormalizedCapability?: SortOrderInput | SortOrder
+    appId?: SortOrderInput | SortOrder
+    roleName?: SortOrderInput | SortOrder
     role?: AuthzRoleOrderByWithRelationInput
     capability?: AuthzCapabilityOrderByWithRelationInput
   }
@@ -39424,6 +39456,8 @@ export namespace Prisma {
     capabilityId?: StringFilter<"AuthzRoleCapability"> | string
     scope?: StringNullableFilter<"AuthzRoleCapability"> | string | null
     denormalizedCapability?: JsonNullableFilter<"AuthzRoleCapability">
+    appId?: StringNullableFilter<"AuthzRoleCapability"> | string | null
+    roleName?: StringNullableFilter<"AuthzRoleCapability"> | string | null
     role?: XOR<AuthzRoleScalarRelationFilter, AuthzRoleWhereInput>
     capability?: XOR<AuthzCapabilityScalarRelationFilter, AuthzCapabilityWhereInput>
   }, "id">
@@ -39434,6 +39468,8 @@ export namespace Prisma {
     capabilityId?: SortOrder
     scope?: SortOrderInput | SortOrder
     denormalizedCapability?: SortOrderInput | SortOrder
+    appId?: SortOrderInput | SortOrder
+    roleName?: SortOrderInput | SortOrder
     _count?: AuthzRoleCapabilityCountOrderByAggregateInput
     _max?: AuthzRoleCapabilityMaxOrderByAggregateInput
     _min?: AuthzRoleCapabilityMinOrderByAggregateInput
@@ -39448,6 +39484,8 @@ export namespace Prisma {
     capabilityId?: StringWithAggregatesFilter<"AuthzRoleCapability"> | string
     scope?: StringNullableWithAggregatesFilter<"AuthzRoleCapability"> | string | null
     denormalizedCapability?: JsonNullableWithAggregatesFilter<"AuthzRoleCapability">
+    appId?: StringNullableWithAggregatesFilter<"AuthzRoleCapability"> | string | null
+    roleName?: StringNullableWithAggregatesFilter<"AuthzRoleCapability"> | string | null
   }
 
   export type AuthzAccountAccessGrantWhereInput = {
@@ -41489,6 +41527,8 @@ export namespace Prisma {
     id?: string
     scope?: string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
+    appId?: string | null
+    roleName?: string | null
     role: AuthzRoleCreateNestedOneWithoutRoleMapsInput
     capability: AuthzCapabilityCreateNestedOneWithoutRoleMapsInput
   }
@@ -41499,12 +41539,16 @@ export namespace Prisma {
     capabilityId: string
     scope?: string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
+    appId?: string | null
+    roleName?: string | null
   }
 
   export type AuthzRoleCapabilityUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
+    appId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleName?: NullableStringFieldUpdateOperationsInput | string | null
     role?: AuthzRoleUpdateOneRequiredWithoutRoleMapsNestedInput
     capability?: AuthzCapabilityUpdateOneRequiredWithoutRoleMapsNestedInput
   }
@@ -41515,6 +41559,8 @@ export namespace Prisma {
     capabilityId?: StringFieldUpdateOperationsInput | string
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
+    appId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleName?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzRoleCapabilityCreateManyInput = {
@@ -41523,12 +41569,16 @@ export namespace Prisma {
     capabilityId: string
     scope?: string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
+    appId?: string | null
+    roleName?: string | null
   }
 
   export type AuthzRoleCapabilityUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
+    appId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleName?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzRoleCapabilityUncheckedUpdateManyInput = {
@@ -41537,6 +41587,8 @@ export namespace Prisma {
     capabilityId?: StringFieldUpdateOperationsInput | string
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
+    appId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleName?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzAccountAccessGrantCreateInput = {
@@ -42954,6 +43006,8 @@ export namespace Prisma {
     capabilityId?: SortOrder
     scope?: SortOrder
     denormalizedCapability?: SortOrder
+    appId?: SortOrder
+    roleName?: SortOrder
   }
 
   export type AuthzRoleCapabilityMaxOrderByAggregateInput = {
@@ -42961,6 +43015,8 @@ export namespace Prisma {
     roleId?: SortOrder
     capabilityId?: SortOrder
     scope?: SortOrder
+    appId?: SortOrder
+    roleName?: SortOrder
   }
 
   export type AuthzRoleCapabilityMinOrderByAggregateInput = {
@@ -42968,6 +43024,8 @@ export namespace Prisma {
     roleId?: SortOrder
     capabilityId?: SortOrder
     scope?: SortOrder
+    appId?: SortOrder
+    roleName?: SortOrder
   }
 
   export type PortfolioNullableScalarRelationFilter = {
@@ -50070,6 +50128,8 @@ export namespace Prisma {
     id?: string
     scope?: string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
+    appId?: string | null
+    roleName?: string | null
     role: AuthzRoleCreateNestedOneWithoutRoleMapsInput
   }
 
@@ -50078,6 +50138,8 @@ export namespace Prisma {
     roleId: string
     scope?: string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
+    appId?: string | null
+    roleName?: string | null
   }
 
   export type AuthzRoleCapabilityCreateOrConnectWithoutCapabilityInput = {
@@ -50166,6 +50228,8 @@ export namespace Prisma {
     capabilityId?: StringFilter<"AuthzRoleCapability"> | string
     scope?: StringNullableFilter<"AuthzRoleCapability"> | string | null
     denormalizedCapability?: JsonNullableFilter<"AuthzRoleCapability">
+    appId?: StringNullableFilter<"AuthzRoleCapability"> | string | null
+    roleName?: StringNullableFilter<"AuthzRoleCapability"> | string | null
   }
 
   export type ApplicationCreateWithoutAuthzRolesInput = {
@@ -50217,6 +50281,8 @@ export namespace Prisma {
     id?: string
     scope?: string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
+    appId?: string | null
+    roleName?: string | null
     capability: AuthzCapabilityCreateNestedOneWithoutRoleMapsInput
   }
 
@@ -50225,6 +50291,8 @@ export namespace Prisma {
     capabilityId: string
     scope?: string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
+    appId?: string | null
+    roleName?: string | null
   }
 
   export type AuthzRoleCapabilityCreateOrConnectWithoutRoleInput = {
@@ -52653,12 +52721,16 @@ export namespace Prisma {
     roleId: string
     scope?: string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
+    appId?: string | null
+    roleName?: string | null
   }
 
   export type AuthzRoleCapabilityUpdateWithoutCapabilityInput = {
     id?: StringFieldUpdateOperationsInput | string
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
+    appId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleName?: NullableStringFieldUpdateOperationsInput | string | null
     role?: AuthzRoleUpdateOneRequiredWithoutRoleMapsNestedInput
   }
 
@@ -52667,6 +52739,8 @@ export namespace Prisma {
     roleId?: StringFieldUpdateOperationsInput | string
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
+    appId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleName?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzRoleCapabilityUncheckedUpdateManyWithoutCapabilityInput = {
@@ -52674,6 +52748,8 @@ export namespace Prisma {
     roleId?: StringFieldUpdateOperationsInput | string
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
+    appId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleName?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzRoleCapabilityCreateManyRoleInput = {
@@ -52681,6 +52757,8 @@ export namespace Prisma {
     capabilityId: string
     scope?: string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
+    appId?: string | null
+    roleName?: string | null
   }
 
   export type AuthzAccountAccessGrantCreateManyRoleInput = {
@@ -52702,6 +52780,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
+    appId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleName?: NullableStringFieldUpdateOperationsInput | string | null
     capability?: AuthzCapabilityUpdateOneRequiredWithoutRoleMapsNestedInput
   }
 
@@ -52710,6 +52790,8 @@ export namespace Prisma {
     capabilityId?: StringFieldUpdateOperationsInput | string
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
+    appId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleName?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzRoleCapabilityUncheckedUpdateManyWithoutRoleInput = {
@@ -52717,6 +52799,8 @@ export namespace Prisma {
     capabilityId?: StringFieldUpdateOperationsInput | string
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
+    appId?: NullableStringFieldUpdateOperationsInput | string | null
+    roleName?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzAccountAccessGrantUpdateWithoutRoleInput = {

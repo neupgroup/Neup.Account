@@ -51,4 +51,5 @@ firestore-debug.log
 certificates
 
 # Error Logs
-core/logs/error.log
+/core/logs/error.log
+
