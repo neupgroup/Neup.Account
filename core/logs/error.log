@@ -1,0 +1,107 @@
+[2026-05-05T04:41:01.680Z] [database] [auto] [getValidatedStoredAccounts] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: 320469e5eb83cabcb3f35616fcd5d028]
+Message: TypeError: Cannot read properties of undefined (reading 'findUnique')
+    at /Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_715438a9._.js:373:180
+    at Array.map (<anonymous>)
+    at getValidatedStoredAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_715438a9._.js:364:61)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at listOnTimeout (node:internal/timers:567:9)
+    at process.processTimers (node:internal/timers:541:7)
+    at async getAuthStartPageData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__66233813._.js:100:20)
+    at async StartPage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__66233813._.js:173:22)
+--------------------------------------------------------------------------------
+[2026-05-05T04:41:01.691Z] [database] [auto] [getValidatedStoredAccounts] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: 320469e5eb83cabcb3f35616fcd5d028]
+Message: TypeError: Cannot read properties of undefined (reading 'findUnique')
+    at /Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_715438a9._.js:373:180
+    at Array.map (<anonymous>)
+    at getValidatedStoredAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_715438a9._.js:364:61)
+    at async getAuthStartPageData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__66233813._.js:100:20)
+    at async StartPage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__66233813._.js:173:22)
+--------------------------------------------------------------------------------
+[2026-05-05T04:41:01.876Z] [database] [auto] [getValidatedStoredAccounts] [IP: ::1] [Account: 63b6151e-2fa0-482d-8b63-4c5293b8bed0] [Signature: 320469e5eb83cabcb3f35616fcd5d028]
+Message: TypeError: Cannot read properties of undefined (reading 'findUnique')
+    at /Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_715438a9._.js:373:180
+    at Array.map (<anonymous>)
+    at getValidatedStoredAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_715438a9._.js:364:61)
+    at async cleanupExpiredStoredSessions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_715438a9._.js:415:31)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_41c8e578._.js:2979:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_41c8e578._.js:3185:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_41c8e578._.js:3556:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-05-05T04:52:18.820Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: null] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+connect ENETUNREACH 3.7.23.153:5432
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1451:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1524:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1632:21)
+--------------------------------------------------------------------------------
+[2026-05-05T04:52:24.897Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: null] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+connect ENETUNREACH 3.7.23.153:5432
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1451:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1524:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1632:21)
+--------------------------------------------------------------------------------
+[2026-05-05T04:52:53.433Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: null] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+connect ENETUNREACH 3.7.23.153:5432
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1451:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1524:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1632:21)
+--------------------------------------------------------------------------------
+[2026-05-05T04:52:56.896Z] [database] [auto] [readSystemConfigData:siteLogo] [IP: ::1] [Account: null] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.systemConfig.findUnique()` invocation:
+
+
+connect ENETUNREACH 3.7.23.153:5432
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async readSystemConfigData (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1451:21)
+    at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1524:22)
+    at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1632:21)
+--------------------------------------------------------------------------------

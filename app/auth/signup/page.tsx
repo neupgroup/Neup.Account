@@ -45,6 +45,16 @@ import { countries } from "./countries";
 import { redirectInApp } from "@/services/navigation";
 import { appendAuthCallbackContext, hasAuthCallbackContext, shouldReturnToAuthStartForExternalAuthentication } from "@/core/auth/callback";
 
+const SIGNUP_TIMEOUT_DESCRIPTION = 'Exceeded the time for SignUp.';
+
+function getSignupErrorToast(error?: string) {
+    const timeout = Boolean(error && error.includes(SIGNUP_TIMEOUT_DESCRIPTION));
+    return {
+        title: timeout ? 'Timeout Error' : 'Error',
+        description: timeout ? SIGNUP_TIMEOUT_DESCRIPTION : error,
+    };
+}
+
 // --- Components ---
 
 function NameStep() {
@@ -65,12 +75,12 @@ function NameStep() {
 
     useEffect(() => {
         const initFlow = async () => {
-            let id = sessionStorage.getItem('temp_auth_id');
+            let id = sessionStorage.getItem('AuthSessionRequest');
 
             if (!id) {
                 try {
                     id = await initializeAuthFlow(null, 'signup');
-                    sessionStorage.setItem('temp_auth_id', id);
+                    sessionStorage.setItem('AuthSessionRequest', id);
                     setAuthRequestId(id);
                 } catch (error) {
                     console.error("Failed to initialize signup flow", error);
@@ -101,7 +111,7 @@ function NameStep() {
     }, [router, form, toast, searchParams]);
 
     const onSubmit = async (data: z.infer<typeof nameSchema>) => {
-        const currentId = authRequestId || sessionStorage.getItem('temp_auth_id');
+        const currentId = authRequestId || sessionStorage.getItem('AuthSessionRequest');
         if (!currentId) {
             toast({ title: 'Please wait...', description: 'Initializing secure session.' });
             return;
@@ -114,7 +124,8 @@ function NameStep() {
             params.set('step', 'demographics');
             redirectInApp(router, `/auth/signup?${params.toString()}`);
         } else {
-            toast({ variant: 'destructive', title: 'Error', description: result.error });
+            const toastError = getSignupErrorToast(result.error);
+            toast({ variant: 'destructive', title: toastError.title, description: toastError.description });
             NProgress.done();
         }
     }
@@ -183,7 +194,7 @@ function DemographicsStep() {
     const genderValue = form.watch("gender");
     
     useEffect(() => {
-        const id = sessionStorage.getItem('temp_auth_id');
+        const id = sessionStorage.getItem('AuthSessionRequest');
         if (!id) {
             redirectInApp(router, '/auth/signup');
             return;
@@ -333,7 +344,10 @@ function DemographicsStep() {
     };
 
     const onSubmit = async (data: z.infer<typeof demographicsSchema>) => {
-        if (!authRequestId) return;
+        if (!authRequestId) {
+            toast({ variant: 'destructive', title: 'Timeout Error', description: SIGNUP_TIMEOUT_DESCRIPTION });
+            return;
+        }
         NProgress.start();
         
         // Convert Date to YYYY-MM-DD string to preserve local date and avoid UTC shifting
@@ -348,7 +362,8 @@ function DemographicsStep() {
             params.set('step', 'nationality');
             redirectInApp(router, `/auth/signup?${params.toString()}`);
         } else {
-            toast({ variant: 'destructive', title: 'Error', description: result.error });
+            const toastError = getSignupErrorToast(result.error);
+            toast({ variant: 'destructive', title: toastError.title, description: toastError.description });
             NProgress.done();
         }
     }
@@ -454,7 +469,7 @@ function NationalityStep() {
     });
 
     useEffect(() => {
-        const id = sessionStorage.getItem('temp_auth_id');
+        const id = sessionStorage.getItem('AuthSessionRequest');
         if (!id) {
             redirectInApp(router, '/auth/signup');
             return;
@@ -471,7 +486,10 @@ function NationalityStep() {
     }, [router, form]);
 
     const onSubmit = async (data: z.infer<typeof nationalitySchema>) => {
-        if (!authRequestId) return;
+        if (!authRequestId) {
+            toast({ variant: 'destructive', title: 'Timeout Error', description: SIGNUP_TIMEOUT_DESCRIPTION });
+            return;
+        }
         NProgress.start();
         const result = await submitNationalityStep(authRequestId, data);
         if (result.success) {
@@ -479,7 +497,8 @@ function NationalityStep() {
             params.set('step', 'contact');
             redirectInApp(router, `/auth/signup?${params.toString()}`);
         } else {
-            toast({ variant: 'destructive', title: 'Error', description: result.error });
+            const toastError = getSignupErrorToast(result.error);
+            toast({ variant: 'destructive', title: toastError.title, description: toastError.description });
             NProgress.done();
         }
     }
@@ -536,7 +555,7 @@ function ContactStep() {
     });
 
     useEffect(() => {
-        const id = sessionStorage.getItem('temp_auth_id');
+        const id = sessionStorage.getItem('AuthSessionRequest');
         if (!id) {
             redirectInApp(router, '/auth/signup');
             return;
@@ -553,7 +572,10 @@ function ContactStep() {
     }, [router, form]);
 
     const onSubmit = async (data: z.infer<typeof contactSchema>) => {
-        if (!authRequestId) return;
+        if (!authRequestId) {
+            toast({ variant: 'destructive', title: 'Timeout Error', description: SIGNUP_TIMEOUT_DESCRIPTION });
+            return;
+        }
         NProgress.start();
         const result = await submitContactStep(authRequestId, data);
         if (result.success) {
@@ -561,7 +583,8 @@ function ContactStep() {
             params.set('step', 'neupid');
             redirectInApp(router, `/auth/signup?${params.toString()}`);
         } else {
-            toast({ variant: 'destructive', title: 'Error', description: result.error });
+            const toastError = getSignupErrorToast(result.error);
+            toast({ variant: 'destructive', title: toastError.title, description: toastError.description });
             NProgress.done();
         }
     }
@@ -601,7 +624,7 @@ function OtpStep() {
     });
 
     useEffect(() => {
-        const id = sessionStorage.getItem('temp_auth_id');
+        const id = sessionStorage.getItem('AuthSessionRequest');
         if (!id) {
             redirectInApp(router, '/auth/signup');
             return;
@@ -610,7 +633,10 @@ function OtpStep() {
     }, [router]);
 
     const onSubmit = async (data: z.infer<typeof otpSchema>) => {
-        if (!authRequestId) return;
+        if (!authRequestId) {
+            toast({ variant: 'destructive', title: 'Timeout Error', description: SIGNUP_TIMEOUT_DESCRIPTION });
+            return;
+        }
         NProgress.start();
         const result = await submitOtpStep(authRequestId, data);
         if (result.success) {
@@ -618,7 +644,8 @@ function OtpStep() {
             params.set('step', 'neupid');
             redirectInApp(router, `/auth/signup?${params.toString()}`);
         } else {
-            toast({ variant: 'destructive', title: 'Error', description: result.error });
+            const toastError = getSignupErrorToast(result.error);
+            toast({ variant: 'destructive', title: toastError.title, description: toastError.description });
             NProgress.done();
         }
     }
@@ -658,7 +685,7 @@ function NeupIdStep() {
     });
 
     useEffect(() => {
-        const id = sessionStorage.getItem('temp_auth_id');
+        const id = sessionStorage.getItem('AuthSessionRequest');
         if (!id) {
             redirectInApp(router, '/auth/signup');
             return;
@@ -675,7 +702,10 @@ function NeupIdStep() {
     }, [router, form]);
 
     const onSubmit = async (data: z.infer<typeof neupidSchema>) => {
-        if (!authRequestId) return;
+        if (!authRequestId) {
+            toast({ variant: 'destructive', title: 'Timeout Error', description: SIGNUP_TIMEOUT_DESCRIPTION });
+            return;
+        }
         NProgress.start();
         const result = await submitNeupIdStep(authRequestId, data);
         if (result.success) {
@@ -683,7 +713,8 @@ function NeupIdStep() {
             params.set('step', 'password');
             redirectInApp(router, `/auth/signup?${params.toString()}`);
         } else {
-            toast({ variant: 'destructive', title: 'Error', description: result.error });
+            const toastError = getSignupErrorToast(result.error);
+            toast({ variant: 'destructive', title: toastError.title, description: toastError.description });
             NProgress.done();
         }
     }
@@ -723,7 +754,7 @@ function PasswordStep() {
     });
 
     useEffect(() => {
-        const id = sessionStorage.getItem('temp_auth_id');
+        const id = sessionStorage.getItem('AuthSessionRequest');
         if (!id) {
             redirectInApp(router, '/auth/signup');
             return;
@@ -732,7 +763,10 @@ function PasswordStep() {
     }, [router]);
 
     const onSubmit = async (data: z.infer<typeof passwordSchema>) => {
-        if (!authRequestId) return;
+        if (!authRequestId) {
+            toast({ variant: 'destructive', title: 'Timeout Error', description: SIGNUP_TIMEOUT_DESCRIPTION });
+            return;
+        }
         NProgress.start();
         const result = await submitPasswordStep(authRequestId, data);
         if (result.success) {
@@ -745,7 +779,8 @@ function PasswordStep() {
             params.set('step', 'terms');
             redirectInApp(router, `/auth/signup?${params.toString()}`);
         } else {
-            toast({ variant: 'destructive', title: 'Error', description: result.error });
+            const toastError = getSignupErrorToast(result.error);
+            toast({ variant: 'destructive', title: toastError.title, description: toastError.description });
             NProgress.done();
         }
     }
@@ -785,7 +820,7 @@ function TermsStep() {
     });
 
     useEffect(() => {
-        const id = sessionStorage.getItem('temp_auth_id');
+        const id = sessionStorage.getItem('AuthSessionRequest');
         if (!id) {
             redirectInApp(router, '/auth/signup');
             return;
@@ -794,7 +829,10 @@ function TermsStep() {
     }, [router]);
 
     const onSubmit = async (data: z.infer<typeof termsSchema>) => {
-        if (!authRequestId) return;
+        if (!authRequestId) {
+            toast({ variant: 'destructive', title: 'Timeout Error', description: SIGNUP_TIMEOUT_DESCRIPTION });
+            return;
+        }
         NProgress.start();
         const result = await submitTermsStep(authRequestId, data);
         if (result.success) {
@@ -815,7 +853,8 @@ function TermsStep() {
 
             redirectInApp(router, '/');
         } else {
-            toast({ variant: 'destructive', title: 'Error', description: result.error });
+            const toastError = getSignupErrorToast(result.error);
+            toast({ variant: 'destructive', title: toastError.title, description: toastError.description });
             NProgress.done();
         }
     }
@@ -862,9 +901,9 @@ function SignupFlow() {
     if (!step) {
       const startFlow = async () => {
         try {
-          const currentId = sessionStorage.getItem('temp_auth_id');
+          const currentId = sessionStorage.getItem('AuthSessionRequest');
           const newId = await initializeAuthFlow(currentId, 'signup');
-          sessionStorage.setItem('temp_auth_id', newId);
+          sessionStorage.setItem('AuthSessionRequest', newId);
 
           const redirects = searchParams.get('redirects');
           

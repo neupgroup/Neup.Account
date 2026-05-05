@@ -1,8 +1,10 @@
 'use server';
 
 import prisma from '@/core/helpers/prisma';
+import { getAuthTimeoutDescription, getAuthTimeoutError, type AuthFlowType } from './timeout';
 
-const AUTH_REQUEST_EXPIRATION_MINUTES = 7;
+const AUTH_REQUEST_EXPIRATION_MINUTES = 20;
+const AUTH_REQUEST_CREATED_WINDOW_MINUTES = 20;
 
 // Terminal statuses — requests in these states cannot be used again.
 const TERMINAL_STATUSES = new Set(['completed', 'used', 'cancelled', 'expired']);
@@ -25,6 +27,13 @@ export async function getAuthRequest(id: string, options: GetAuthRequestOptions 
   // Reject if past the expiry timestamp
   if (authRequest.expiresAt && authRequest.expiresAt < new Date()) return null;
 
+  // Hard timeout window from creation time.
+  const createdAtTime = new Date(authRequest.createdAt).getTime();
+  if (Number.isFinite(createdAtTime)) {
+    const ageMs = Date.now() - createdAtTime;
+    if (ageMs > AUTH_REQUEST_CREATED_WINDOW_MINUTES * 60_000) return null;
+  }
+
   // Reject if in a terminal state
   if (TERMINAL_STATUSES.has(authRequest.status)) return null;
 
@@ -35,6 +44,20 @@ export async function getAuthRequest(id: string, options: GetAuthRequestOptions 
   if (options.expectedStatuses && !options.expectedStatuses.includes(authRequest.status)) return null;
 
   return { data: authRequest, id: authRequest.id };
+}
+
+export async function validateAuthSessionRequest(requestId: string, flowType: AuthFlowType) {
+  const request = await getAuthRequest(requestId, { expectedType: flowType });
+  if (!request) {
+    return {
+      valid: false,
+      title: 'Timeout Error',
+      message: getAuthTimeoutDescription(flowType),
+      error: getAuthTimeoutError(flowType),
+    };
+  }
+
+  return { valid: true };
 }
 
 

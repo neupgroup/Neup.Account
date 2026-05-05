@@ -2,21 +2,58 @@
 "use client";
 
 import Link from 'next/link';
-import { useTransition, useState } from 'react';
+import { useEffect, useTransition, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Loader2 } from '@/components/icons';
 import { useToast } from '@/core/hooks/use-toast';
+import { initializeAuthFlow } from '@/services/auth/initialize';
+import { validateAuthSessionRequest } from '@/services/auth/auth-request';
+
+const AUTH_SESSION_STORAGE_KEY = 'AuthSessionRequest';
 
 export default function ForgetPage() {
   const [isPending, startTransition] = useTransition();
+  const [authRequestId, setAuthRequestId] = useState<string | null>(null);
   const { toast } = useToast();
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const initRequest = async () => {
+      try {
+        const currentId = sessionStorage.getItem(AUTH_SESSION_STORAGE_KEY);
+        const requestId = await initializeAuthFlow(currentId, 'forgot_password');
+        sessionStorage.setItem(AUTH_SESSION_STORAGE_KEY, requestId);
+        if (isMounted) setAuthRequestId(requestId);
+      } catch (error) {
+        console.error('Failed to initialize forgot-password flow', error);
+      }
+    };
+
+    initRequest();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     startTransition(async () => {
+      const requestId = authRequestId || sessionStorage.getItem(AUTH_SESSION_STORAGE_KEY);
+      if (!requestId) {
+        toast({ variant: 'destructive', title: 'Timeout Error', description: 'Exceeded the time for Forget Password.' });
+        return;
+      }
+
+      const validation = await validateAuthSessionRequest(requestId, 'forgot_password');
+      if (!validation.valid) {
+        toast({ variant: 'destructive', title: 'Timeout Error', description: 'Exceeded the time for Forget Password.' });
+        return;
+      }
+
       // In a real application, you would call a server action here.
       // For this demo, we'll just simulate a network request.
       await new Promise(resolve => setTimeout(resolve, 1500));

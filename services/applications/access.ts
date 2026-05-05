@@ -42,17 +42,10 @@ export async function getUserApplicationAccess(appId: string): Promise<UserAppli
         },
         select: { connectedAt: true },
       }),
-      prisma.portfolioRole.findMany({
+      prisma.authzAccountAccessGrant.findMany({
         where: {
-          accountId,
-          portfolio: {
-            assets: {
-              some: {
-                assetId: appId,
-                assetType: { in: ['application', 'app'] },
-              },
-            },
-          },
+          targetAccountId: accountId,
+          appId,
         },
         select: { roleId: true },
       }),
@@ -135,13 +128,19 @@ export async function addUserApplicationAccess(input: { appId: string; permissio
         });
       }
 
-      await tx.portfolioRole.deleteMany({
-        where: { accountId, portfolioId: portfolio.id },
+      await tx.authzAccountAccessGrant.deleteMany({
+        where: { targetAccountId: accountId, appId },
       });
 
       if (permissions.length > 0) {
-        await tx.portfolioRole.createMany({
-          data: permissions.map((roleId) => ({ accountId, portfolioId: portfolio.id, roleId })),
+        await tx.authzAccountAccessGrant.createMany({
+          data: permissions.map((roleId) => ({
+            ownerAccountId: accountId,
+            targetAccountId: accountId,
+            appId,
+            portfolioId: portfolio.id,
+            roleId,
+          })),
           skipDuplicates: true,
         });
       }
@@ -202,13 +201,19 @@ export async function updateUserApplicationPermissions(input: { appId: string; p
         });
       }
 
-      await tx.portfolioRole.deleteMany({
-        where: { accountId, portfolioId: portfolio.id },
+      await tx.authzAccountAccessGrant.deleteMany({
+        where: { targetAccountId: accountId, appId },
       });
 
       if (permissions.length > 0) {
-        await tx.portfolioRole.createMany({
-          data: permissions.map((roleId) => ({ accountId, portfolioId: portfolio.id, roleId })),
+        await tx.authzAccountAccessGrant.createMany({
+          data: permissions.map((roleId) => ({
+            ownerAccountId: accountId,
+            targetAccountId: accountId,
+            appId,
+            portfolioId: portfolio.id,
+            roleId,
+          })),
           skipDuplicates: true,
         });
       }

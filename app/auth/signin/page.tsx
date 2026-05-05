@@ -24,10 +24,10 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 
 // --- Components ---
 
-const EXPIRED_SESSION_ERROR = 'Session Expired, Try again.';
+const SIGNIN_TIMEOUT_DESCRIPTION = 'Exceeded the time for SignIn.';
 
 function isExpiredSessionError(error?: string) {
-  return error === EXPIRED_SESSION_ERROR || error === 'Your session has expired. Please try again.';
+  return Boolean(error && (error.includes('Exceeded the time for SignIn.') || error.includes('Your session has expired. Please try again.')));
 }
 
 function NeupIdStep() {
@@ -44,12 +44,12 @@ function NeupIdStep() {
 
   useEffect(() => {
     const initFlow = async () => {
-      let id = sessionStorage.getItem('temp_auth_id');
+      let id = sessionStorage.getItem('AuthSessionRequest');
 
       if (!id) {
         try {
           id = await initializeAuthFlow(null, 'signin');
-          sessionStorage.setItem('temp_auth_id', id);
+          sessionStorage.setItem('AuthSessionRequest', id);
           setAuthRequestId(id);
         } catch (error) {
           console.error("Failed to initialize auth flow", error);
@@ -79,7 +79,7 @@ function NeupIdStep() {
     event.preventDefault();
     setValidationError(null);
 
-    const currentId = authRequestId || sessionStorage.getItem('temp_auth_id');
+    const currentId = authRequestId || sessionStorage.getItem('AuthSessionRequest');
 
     if (!currentId) {
       toast({ title: 'Please wait...', description: 'Initializing secure session.' });
@@ -101,12 +101,12 @@ function NeupIdStep() {
         if (isExpiredSessionError(result.error)) {
           try {
             const newId = await initializeAuthFlow(null, 'signin');
-            sessionStorage.setItem('temp_auth_id', newId);
+            sessionStorage.setItem('AuthSessionRequest', newId);
             setAuthRequestId(newId);
           } catch (error) {
             console.error('Failed to refresh signin session:', error);
           }
-          setValidationError(EXPIRED_SESSION_ERROR);
+          setValidationError(SIGNIN_TIMEOUT_DESCRIPTION);
         } else {
           setValidationError(result.error || 'Invalid NeupID.');
         }
@@ -206,16 +206,16 @@ function PasswordStep() {
       // Account existence is only revealed at password submission time.
       if (neupIdFromUrl) {
         if (isMounted) setNeupId(neupIdFromUrl);
-        let currentRequestId = sessionStorage.getItem('temp_auth_id');
+        let currentRequestId = sessionStorage.getItem('AuthSessionRequest');
         if (!currentRequestId) {
           currentRequestId = await initializeAuthFlow(null, 'signin');
-          sessionStorage.setItem('temp_auth_id', currentRequestId);
+          sessionStorage.setItem('AuthSessionRequest', currentRequestId);
         }
         if (isMounted) setAuthRequestId(currentRequestId);
         return;
       }
 
-      let currentRequestId = sessionStorage.getItem('temp_auth_id');
+      let currentRequestId = sessionStorage.getItem('AuthSessionRequest');
 
       if (!currentRequestId) {
         const params = new URLSearchParams(searchParams.toString());
@@ -224,7 +224,7 @@ function PasswordStep() {
         return;
       }
 
-      sessionStorage.setItem('temp_auth_id', currentRequestId);
+      sessionStorage.setItem('AuthSessionRequest', currentRequestId);
       if (isMounted) setAuthRequestId(currentRequestId);
 
       const savedUserInfo = sessionStorage.getItem('temp_user_info');
@@ -264,7 +264,7 @@ function PasswordStep() {
       if (!result.success && isExpiredSessionError(result.error)) {
         try {
           const refreshedId = await initializeAuthFlow(null, 'signin');
-          sessionStorage.setItem('temp_auth_id', refreshedId);
+          sessionStorage.setItem('AuthSessionRequest', refreshedId);
           setAuthRequestId(refreshedId);
 
           if (neupIdFromUrl) {
@@ -272,7 +272,7 @@ function PasswordStep() {
           } else {
             const neupIdResult = await submitNeupId({ neupId, authRequestId: refreshedId });
             if (!neupIdResult.success) {
-              toast({ variant: 'destructive', title: EXPIRED_SESSION_ERROR, description: 'Please enter your NeupID again.' });
+              toast({ variant: 'destructive', title: 'Timeout Error', description: SIGNIN_TIMEOUT_DESCRIPTION });
               const params = new URLSearchParams(searchParams.toString());
               params.set('step', 'neupid');
               redirectInApp(`/auth/signin?${params.toString()}`, router);
@@ -282,7 +282,7 @@ function PasswordStep() {
           }
         } catch (error) {
           console.error('Failed to refresh signin session:', error);
-          toast({ variant: 'destructive', title: EXPIRED_SESSION_ERROR, description: 'Please try again.' });
+          toast({ variant: 'destructive', title: 'Timeout Error', description: SIGNIN_TIMEOUT_DESCRIPTION });
           NProgress.done();
           return;
         }
@@ -321,7 +321,11 @@ function PasswordStep() {
           redirectInApp('/', null, { hard: true });
         }
       } else {
-        toast({ variant: 'destructive', title: isExpiredSessionError(result.error) ? EXPIRED_SESSION_ERROR : 'Sign In Failed', description: result.error });
+        toast({
+          variant: 'destructive',
+          title: isExpiredSessionError(result.error) ? 'Timeout Error' : 'Sign In Failed',
+          description: isExpiredSessionError(result.error) ? SIGNIN_TIMEOUT_DESCRIPTION : result.error,
+        });
         NProgress.done();
       }
     });
@@ -446,7 +450,7 @@ function MfaStep() {
   const redirects = searchParams.get('redirects');
 
   useEffect(() => {
-    const id = sessionStorage.getItem('temp_auth_id');
+    const id = sessionStorage.getItem('AuthSessionRequest');
     if (!id) {
       redirectInApp('/auth/signin', router);
       return;
@@ -590,9 +594,9 @@ function SigninFlow() {
     if (!step) {
       const startFlow = async () => {
         try {
-          const currentId = sessionStorage.getItem('temp_auth_id');
+          const currentId = sessionStorage.getItem('AuthSessionRequest');
           const newId = await initializeAuthFlow(currentId, 'signin');
-          sessionStorage.setItem('temp_auth_id', newId);
+          sessionStorage.setItem('AuthSessionRequest', newId);
 
           const redirects = searchParams.get('redirects');
           const neupId = searchParams.get('neupId');

@@ -3,6 +3,7 @@
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import prisma from '@/core/helpers/prisma';
+import { Prisma } from '../../../prisma/generated/client/client';
 import { getActiveAccountId } from '@/core/auth/verify';
 import { logError } from '@/core/helpers/logger';
 
@@ -34,6 +35,14 @@ const assignRoleSchema = z.object({
   asset: z.string().min(1),
   role: z.string().trim().min(1, 'Role is required.').max(120, 'Role is too long.'),
 });
+
+type AccessAssetGroup = Prisma.PortfolioGetPayload<{
+  include: {
+    members: true;
+    assets: true;
+    roles: true;
+  };
+}>;
 
 /**
  * Function normalizeDetails.
@@ -98,7 +107,7 @@ export async function getAccessAssetGroups() {
 /**
  * Function getAccessAssetGroup.
  */
-export async function getAccessAssetGroup(groupId: string) {
+export async function getAccessAssetGroup(groupId: string): Promise<AccessAssetGroup | null> {
   const accountId = await getActiveAccountId();
   if (!accountId) return null;
 

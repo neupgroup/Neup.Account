@@ -3,6 +3,7 @@
 import { z } from 'zod';
 import { validateNeupId } from '@/services/user';
 import { getAuthRequest, extendAuthRequest } from './auth-request';
+import { getAuthTimeoutError } from './timeout';
 import prisma from '@/core/helpers/prisma';
 import { verifyPassword } from './password';
 import { makeSession } from './session';
@@ -40,7 +41,7 @@ export async function submitNeupId(data: z.infer<typeof neupIdSchema>) {
 
     const request = await getAuthRequest(authRequestId, { expectedType: 'signin' });
     if (!request) {
-        return { success: false, error: 'Session Expired, Try again.' };
+        return { success: false, error: getAuthTimeoutError('signin') };
     }
 
     const validationResult = await validateNeupId(lowerCaseNeupId);
@@ -106,7 +107,7 @@ export async function submitPasswordWithNeupId(data: { neupId: string; password:
 
     const request = await getAuthRequest(authRequestId, { expectedType: 'signin' });
     if (!request) {
-        return { success: false, mfaRequired: false, error: 'Session Expired, Try again.' };
+        return { success: false, mfaRequired: false, error: getAuthTimeoutError('signin') };
     }
 
     const neupIdRecord = await prisma.neupId.findUnique({ where: { id: neupId } });
@@ -176,7 +177,7 @@ export async function submitPassword(data: z.infer<typeof passwordSchema>): Prom
 
     const request = await getAuthRequest(authRequestId, { expectedType: 'signin' });
     if (!request || !request.data.accountId) {
-        return { success: false, mfaRequired: false, error: 'Session Expired, Try again.' };
+        return { success: false, mfaRequired: false, error: getAuthTimeoutError('signin') };
     }
 
     const accountId = request.data.accountId;

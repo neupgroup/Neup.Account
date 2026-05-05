@@ -38,6 +38,9 @@ export default async function AssetGroupPage({ params }: PageProps) {
   const addMemberAction = addMemberToAssetGroupFromForm.bind(null, id);
   const addAssetAction = addAssetToGroupFromForm.bind(null, id);
   const assignRoleAction = assignRoleToAssetMemberFromForm.bind(null, id);
+  const roleRows = (Array.isArray((group as { roles?: unknown }).roles)
+    ? (group as { roles?: unknown[] }).roles
+    : []) as Array<{ id: string; accountId: string; roleId: string }>;
 
   return (
     <div className="grid gap-6">
@@ -169,9 +172,9 @@ export default async function AssetGroupPage({ params }: PageProps) {
               {group.members.map((member) => (
                 <div key={member.id} className="border-b px-4 py-3 text-sm last:border-b-0">
                   <p className="font-medium mb-1">{member.accountId}</p>
-                  {group.roles.filter((roleRow) => roleRow.accountId === member.accountId).length > 0 ? (
+                  {roleRows.filter((roleRow) => roleRow.accountId === member.accountId).length > 0 ? (
                     <ul className="space-y-1 text-muted-foreground">
-                      {group.roles.filter((roleRow) => roleRow.accountId === member.accountId).map((roleRow) => (
+                      {roleRows.filter((roleRow) => roleRow.accountId === member.accountId).map((roleRow) => (
                         <li key={roleRow.id}>
                           {roleRow.roleId}
                         </li>

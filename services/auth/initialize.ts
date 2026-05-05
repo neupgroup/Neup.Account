@@ -3,7 +3,7 @@
 import prisma from '@/core/helpers/prisma';
 import { randomUUID } from 'crypto';
 
-const AUTH_REQUEST_EXPIRATION_MINUTES = 7;
+const AUTH_REQUEST_EXPIRATION_MINUTES = 20;
 
 /**
  * Function createAuthRequest.

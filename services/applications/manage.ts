@@ -95,23 +95,33 @@ function normalizePolicies(value: unknown): ApplicationPolicyEntry[] {
     return [];
   }
 
-  return value
+  // Handle legacy array shape: { name, policy }
+  const legacy = value
     .map((entry) => {
-      if (!entry || typeof entry !== 'object') {
-        return null;
-      }
-
+      if (!entry || typeof entry !== 'object') return null;
       const record = entry as Record<string, unknown>;
       const name = normalizeText(record.name);
       const policy = normalizeText(record.policy);
-
-      if (!name || !policy) {
-        return null;
-      }
-
+      if (!name || !policy) return null;
       return { name, policy };
     })
-    .filter((entry): entry is ApplicationPolicyEntry => entry !== null);
+    .filter((e): e is ApplicationPolicyEntry => e !== null);
+
+  if (legacy.length > 0) return legacy;
+
+  // Handle relational ApplicationPolicy shape: { policyType, policyValue }
+  return value
+    .map((entry) => {
+      if (!entry || typeof entry !== 'object') return null;
+      const record = entry as Record<string, unknown>;
+      const name = normalizeText(record.policyType ?? record.name);
+      const policyVal = record.policyValue ?? record.policy;
+      const policy = typeof policyVal === 'string' ? policyVal : JSON.stringify(policyVal);
+      const policyText = normalizeText(policy);
+      if (!name || !policyText) return null;
+      return { name, policy: policyText };
+    })
+    .filter((e): e is ApplicationPolicyEntry => e !== null);
 }
 
 
@@ -141,17 +151,10 @@ function normalizeEndpoints(value: unknown): ApplicationEndpointConfig {
 async function resolveApplicationAccessForAccount(accountId: string, appId: string): Promise<{ canView: boolean; canEdit: boolean }> {
   try {
     const [roleRows, memberRows] = await Promise.all([
-      prisma.portfolioRole.findMany({
+      prisma.authzAccountAccessGrant.findMany({
         where: {
-          accountId,
-          portfolio: {
-            assets: {
-              some: {
-                assetId: appId,
-                assetType: { in: applicationAssetTypes },
-              },
-            },
-          },
+          targetAccountId: accountId,
+          appId,
         },
         select: {
           roleId: true,
@@ -211,18 +214,8 @@ async function resolveApplicationAccessForAccount(accountId: string, appId: stri
  * Function getApplicationAuthorization.
  */
 async function getApplicationAuthorization(accountId: string, appId: string): Promise<{ exists: boolean; canView: boolean; canEdit: boolean }> {
-  const application = await prisma.application.findUnique({
-    where: { id: appId },
-    select: { id: true, ownerAccountId: true },
-  });
-
-  if (!application) {
-    return { exists: false, canView: false, canEdit: false };
-  }
-
-  if (application.ownerAccountId === accountId) {
-    return { exists: true, canView: true, canEdit: true };
-  }
+  const application = await prisma.application.findUnique({ where: { id: appId }, select: { id: true } });
+  if (!application) return { exists: false, canView: false, canEdit: false };
 
   const access = await resolveApplicationAccessForAccount(accountId, appId);
   return { exists: true, canView: access.canView, canEdit: access.canEdit };
@@ -235,23 +228,15 @@ async function getApplicationAuthorization(accountId: string, appId: string): Pr
 async function isApplicationOwnerForAccount(accountId: string, appId: string): Promise<boolean> {
   const app = await prisma.application.findUnique({
     where: { id: appId },
-    select: { ownerAccountId: true },
+    select: { id: true },
   });
 
   if (!app) return false;
-  if (app.ownerAccountId === accountId) return true;
 
-  const ownerRoleRows = await prisma.portfolioRole.findMany({
+  const ownerRoleRows = await prisma.authzAccountAccessGrant.findMany({
     where: {
-      accountId,
-      portfolio: {
-        assets: {
-          some: {
-            assetId: appId,
-            assetType: { in: applicationAssetTypes },
-          },
-        },
-      },
+      targetAccountId: accountId,
+      appId,
     },
     select: {
       roleId: true,
@@ -302,24 +287,14 @@ export async function getApplicationDetailsForViewer(appId: string): Promise<App
           description: true,
           icon: true,
           developer: true,
-          access: true,
+          details: true,
           policies: true,
           endpoints: true,
         },
       }),
       personalAccountId
-        ? prisma.portfolioRole.findMany({
-            where: {
-              accountId: personalAccountId,
-              portfolio: {
-                assets: {
-                  some: {
-                    assetId: appId,
-                    assetType: { in: ['application', 'app'] },
-                  },
-                },
-              },
-            },
+        ? prisma.authzAccountAccessGrant.findMany({
+            where: { targetAccountId: personalAccountId, appId },
             select: { roleId: true },
           })
         : [],
@@ -328,7 +303,7 @@ export async function getApplicationDetailsForViewer(appId: string): Promise<App
 
     if (!application) return null;
 
-    const configuredAccess = normalizeAccess(application.access);
+    const configuredAccess = normalizeAccess((application as any).details?.access ?? []);
     const policies = normalizePolicies(application.policies);
     const endpoints = normalizeEndpoints(application.endpoints);
 
@@ -411,7 +386,6 @@ export async function createManagedApplication(input: { name: string }) {
         data: {
           id: randomUUID(),
           name: parsed.data.name,
-          ownerAccountId: accountId,
           status: 'development',
         },
         select: {
@@ -485,24 +459,27 @@ export async function createManagedApplication(input: { name: string }) {
         });
       }
 
-      await tx.portfolioRole.upsert({
+      const existingGrant = await tx.authzAccountAccessGrant.findFirst({
         where: {
-          accountId_portfolioId_roleId: {
-            accountId,
-            portfolioId: portfolio.id,
-            roleId: 'application.owner',
-          },
-        },
-        create: {
-          accountId,
-          portfolioId: portfolio.id,
+          ownerAccountId: accountId,
+          targetAccountId: accountId,
           roleId: 'application.owner',
-          details: { assetId: createdApp.id },
-        },
-        update: {
-          details: { assetId: createdApp.id },
+          appId: createdApp.id,
+          portfolioId: portfolio.id,
         },
       });
+
+      if (!existingGrant) {
+        await tx.authzAccountAccessGrant.create({
+          data: {
+            ownerAccountId: accountId,
+            targetAccountId: accountId,
+            roleId: 'application.owner',
+            appId: createdApp.id,
+            portfolioId: portfolio.id,
+          },
+        });
+      }
 
       return { id: createdApp.id, groupId: portfolio.id };
     });
@@ -528,45 +505,32 @@ export async function getManagedApplications(): Promise<Array<{ id: string; name
   }
 
   try {
-    const ownedApplications = await prisma.application.findMany({
-      where: { ownerAccountId: accountId },
-      orderBy: { createdAt: 'desc' },
+    const ownedRows = await prisma.authzAccountAccessGrant.findMany({
+      where: { ownerAccountId: accountId, roleId: 'application.owner' },
+      orderBy: { id: 'desc' },
       select: {
-        id: true,
-        name: true,
-        icon: true,
-        developer: true,
-        createdAt: true,
-        appSecret: true,
-        status: true,
+        application: {
+          select: {
+            id: true,
+            name: true,
+            icon: true,
+            developer: true,
+            createdAt: true,
+            appSecret: true,
+            status: true,
+          },
+        },
       },
     });
+
+    const ownedApplications = ownedRows.map((r) => r.application);
 
     const ownedIds = new Set(ownedApplications.map((app) => app.id));
 
     const [roleRows, memberRows] = await Promise.all([
-      prisma.portfolioRole.findMany({
-        where: {
-          accountId,
-          portfolio: {
-            assets: {
-              some: {
-                assetType: { in: applicationAssetTypes },
-              },
-            },
-          },
-        },
-        select: {
-          roleId: true,
-          portfolio: {
-            select: {
-              assets: {
-                where: { assetType: { in: applicationAssetTypes } },
-                select: { assetId: true },
-              },
-            },
-          },
-        },
+      prisma.authzAccountAccessGrant.findMany({
+        where: { targetAccountId: accountId },
+        select: { roleId: true, appId: true },
       }),
       prisma.portfolioMember.findMany({
         where: {
@@ -596,8 +560,8 @@ export async function getManagedApplications(): Promise<Array<{ id: string; name
     const permittedViewAppIds = new Set<string>();
     for (const row of roleRows) {
       const normalizedRole = row.roleId.trim().toLowerCase();
-      if (viewRoleKeys.has(normalizedRole)) {
-        row.portfolio.assets.forEach((asset) => permittedViewAppIds.add(asset.assetId));
+      if (viewRoleKeys.has(normalizedRole) && row.appId) {
+        permittedViewAppIds.add(row.appId);
       }
     }
 
@@ -672,7 +636,7 @@ export async function getManagedApplication(appId: string): Promise<ManagedAppli
         name: true,
         createdAt: true,
         appSecret: true,
-        access: true,
+        details: true,
         policies: true,
         endpoints: true,
       },
@@ -687,7 +651,7 @@ export async function getManagedApplication(appId: string): Promise<ManagedAppli
       name: application.name,
       createdAt: application.createdAt,
       hasSecretKey: Boolean(application.appSecret),
-      access: normalizeAccess(application.access),
+      access: normalizeAccess((application as any).details?.access ?? []),
       policies: normalizePolicies(application.policies),
       endpoints: normalizeEndpoints(application.endpoints),
     };
@@ -773,7 +737,7 @@ export async function saveApplicationAccess(input: { appId: string; access: Appl
         id: parsed.data.appId,
       },
       data: {
-        access: parsed.data.access,
+        details: { access: parsed.data.access },
       },
     });
 
@@ -815,18 +779,18 @@ export async function saveApplicationPolicies(input: { appId: string; policies: 
       return { success: false, error: 'Permission denied.' };
     }
 
-    const result = await prisma.application.updateMany({
-      where: {
-        id: parsed.data.appId,
-      },
-      data: {
-        policies: parsed.data.policies,
-      },
+    await prisma.$transaction(async (tx) => {
+      await tx.applicationPolicy.deleteMany({ where: { appId: parsed.data.appId } });
+      if (parsed.data.policies.length > 0) {
+        await tx.applicationPolicy.createMany({
+          data: parsed.data.policies.map((p) => ({
+            appId: parsed.data.appId,
+            policyType: p.name,
+            policyValue: p.policy,
+          })),
+        });
+      }
     });
-
-    if (result.count === 0) {
-      return { success: false, error: 'Application not found.' };
-    }
 
     revalidatePath('/data/applications');
     revalidatePath(`/data/applications/${parsed.data.appId}`);

@@ -48,13 +48,13 @@ export async function getConnectedApplications(): Promise<ConnectedApplications>
         });
 
         const allApps: Application[] = connections.map((conn: any) => ({
-            id: conn.application.id,
-            name: conn.application.name,
-            party: conn.application.party as 'first' | 'third',
-            description: conn.application.description || '',
-            icon: conn.application.icon as any || undefined,
-            website: conn.application.website || undefined,
-            developer: conn.application.developer || undefined,
+          id: conn.application.id,
+          name: conn.application.name,
+          party: conn.application.isInternal ? 'first' : 'third',
+          description: conn.application.description || '',
+          icon: conn.application.icon as any || undefined,
+          website: conn.application.website || undefined,
+          developer: conn.application.developer || undefined,
         }));
 
         return {
@@ -75,15 +75,15 @@ export async function getApplicationDetails(appId: string): Promise<Application 
     try {
         const app = await prisma.application.findUnique({ where: { id: appId } });
         if (app) {
-            return {
-                id: app.id,
-                name: app.name,
-                party: app.party as 'first' | 'third',
-                description: app.description || '',
-                icon: app.icon as any || undefined,
-                website: (app as any).website || undefined,
-                developer: app.developer || undefined,
-            } as Application;
+          return {
+            id: app.id,
+            name: app.name,
+            party: app.isInternal ? 'first' : 'third',
+            description: app.description || '',
+            icon: app.icon as any || undefined,
+            website: (app as any).website || undefined,
+            developer: app.developer || undefined,
+          } as Application;
         }
         return null;
     } catch (error) {

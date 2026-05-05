@@ -80,7 +80,7 @@ export async function createAndSetSession(
     expiresOn.setDate(expiresOn.getDate() + SESSION_DURATION_DAYS);
     const sessionKey = crypto.randomUUID();
 
-    const session = await prisma.authSession.create({
+    const session = await prisma.authnSession.create({
       data: {
         accountId: accountId,
         key: sessionKey,
@@ -145,7 +145,7 @@ export async function getValidatedStoredAccounts(): Promise<StoredAccount[]> {
       if (!account.sid || !account.skey) return { ...account, def: 0 as const };
 
       try {
-        const session = await prisma.authSession.findUnique({
+        const session = await prisma.authnSession.findUnique({
           where: { id: account.sid },
           select: {
             id: true,
@@ -230,7 +230,7 @@ export async function switchToAccount(account: StoredAccount) {
     expiresOn.setDate(expiresOn.getDate() + SESSION_DURATION_DAYS);
     
     try {
-        const session = await prisma.authSession.findUnique({
+        const session = await prisma.authnSession.findUnique({
           where: { id: account.sid },
           select: {
             id: true,

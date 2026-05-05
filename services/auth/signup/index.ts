@@ -8,6 +8,7 @@ import { headers } from 'next/headers';
 import { logError } from '@/core/helpers/logger';
 import type { z } from 'zod';
 import { getAuthRequest, extendAuthRequest } from '../auth-request';
+import { getAuthTimeoutError } from '../timeout';
 import { verifyPassword } from '../password';
 import { makeSession } from '../session';
 import {
@@ -79,7 +80,7 @@ export async function submitNameStep(authRequestId: string, data: z.infer<typeof
 
   const request = await getAuthRequest(authRequestId, { expectedType: 'signup' });
   if (!request)
-    return { success: false, error: 'Signup session expired.' };
+    return { success: false, error: getAuthTimeoutError('signup') };
 
   const nameFirst = sanitizeName(validation.data.firstName);
   const nameMiddle = sanitizeName(validation.data.middleName);
@@ -123,7 +124,7 @@ export async function submitDemographicsStep(authRequestId: string, data: z.infe
 
   const request = await getAuthRequest(authRequestId, { expectedType: 'signup' });
   if (!request)
-    return { success: false, error: 'Signup session expired.' };
+    return { success: false, error: getAuthTimeoutError('signup') };
 
   let finalGender = validation.data.gender;
   let finalCustomGender = validation.data.customGender;
@@ -173,7 +174,7 @@ export async function submitNationalityStep(authRequestId: string, data: z.infer
 
   const request = await getAuthRequest(authRequestId, { expectedType: 'signup' });
   if (!request)
-    return { success: false, error: 'Signup session expired.' };
+    return { success: false, error: getAuthTimeoutError('signup') };
 
   const currentData = request.data.data as SignupRequestData;
   const newData = {
@@ -211,7 +212,7 @@ export async function submitContactStep(authRequestId: string, data: z.infer<typ
 
   const request = await getAuthRequest(authRequestId, { expectedType: 'signup' });
   if (!request)
-    return { success: false, error: 'Signup session expired.' };
+    return { success: false, error: getAuthTimeoutError('signup') };
 
   // OTP verification skipped — phone is marked as verified directly.
 
@@ -252,7 +253,7 @@ export async function submitOtpStep(authRequestId: string, data: z.infer<typeof 
 
   const request = await getAuthRequest(authRequestId, { expectedType: 'signup' });
   if (!request)
-    return { success: false, error: 'Signup session expired.' };
+    return { success: false, error: getAuthTimeoutError('signup') };
 
   // TODO: Verify OTP logic here
   if (validation.data.code !== '123456') {
@@ -304,7 +305,7 @@ export async function submitNeupIdStep(authRequestId: string, data: z.infer<type
 
   const request = await getAuthRequest(authRequestId, { expectedType: 'signup' });
   if (!request)
-    return { success: false, error: 'Signup session expired.' };
+    return { success: false, error: getAuthTimeoutError('signup') };
 
   const currentData = request.data.data as SignupRequestData;
   const newData = {
@@ -351,7 +352,7 @@ export async function submitPasswordStep(authRequestId: string, data: z.infer<ty
 
   const request = await getAuthRequest(authRequestId, { expectedType: 'signup' });
   if (!request)
-    return { success: false, error: 'Signup session expired.' };
+    return { success: false, error: getAuthTimeoutError('signup') };
 
   const hashedPassword = await bcrypt.hash(validation.data.password, 10);
 
@@ -391,7 +392,7 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
 
   const request = await getAuthRequest(authRequestId, { expectedType: 'signup' });
   if (!request)
-    return { success: false, error: 'Signup session expired.' };
+    return { success: false, error: getAuthTimeoutError('signup') };
 
   const requestData = request.data.data as SignupRequestData;
 
@@ -449,7 +450,7 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
   const userAgent = headersList.get('user-agent') || 'Unknown User-Agent';
 
   try {
- = await prisma.neupId.findUnique({
+    const neupIdTaken = await prisma.neupId.findUnique({
         where: { id: neupId },
     });
     if (neupIdTaken) {
