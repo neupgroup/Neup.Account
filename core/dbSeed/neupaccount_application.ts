@@ -1,6 +1,6 @@
 import prisma from '@/core/helpers/prisma';
 import { Prisma } from '@/prisma/generated/client';
-import { seedApplicationOwnerRole } from './05_neupaccount_applicationRole';
+import { seedApplicationOwnerRole } from './neupaccount_applicationRole';
 
 const APPLICATION_ID = 'neup.account';
 
@@ -22,7 +22,7 @@ export async function seedNeupaccountApplication(creatorAccountId?: string) {
     details: [] as Prisma.InputJsonValue,
   };
 
-  const result = await prisma.application.upsert({
+  await prisma.application.upsert({
     where: { id: APPLICATION_ID },
     update: {
       name: payload.name,
