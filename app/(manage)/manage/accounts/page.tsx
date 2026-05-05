@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useTransition, useCallback } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import { useDebounce } from 'use-debounce';
 import {
     Table,
@@ -27,7 +27,7 @@ import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { PrimaryHeader } from "@/components/ui/primary-header";
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import React from 'react';
 
 type SortKey = keyof AccountListItem | null;
@@ -36,7 +36,6 @@ function AccountsPageComponent() {
     const [permissionState, setPermissionState] = useState<'loading' | 'granted' | 'denied'>('loading');
     const [accounts, setAccounts] = useState<AccountListItem[]>([]);
     const [loading, startTransition] = useTransition();
-    const router = useRouter();
     const searchParams = useSearchParams();
 
     const [filter, setFilter] = useState(searchParams.get('q') || '');
@@ -47,13 +46,33 @@ function AccountsPageComponent() {
 
     const [debouncedFilter] = useDebounce(filter, 500);
 
+    // Permission check — runs once on mount
     useEffect(() => {
         checkPermissions(['root.account.view']).then(hasPerm => {
             setPermissionState(hasPerm ? 'granted' : 'denied');
         });
     }, []);
 
-    const fetchData = useCallback(() => {
+    // Fetch data whenever filter/sort/page changes.
+    // URL is updated via history.replaceState to avoid router reference instability.
+    useEffect(() => {
+        if (permissionState !== 'granted') return;
+
+        const url = new URL(window.location.href);
+        url.searchParams.set('page', String(page));
+        if (debouncedFilter) {
+            url.searchParams.set('q', debouncedFilter);
+        } else {
+            url.searchParams.delete('q');
+        }
+        if (sortKey) {
+            url.searchParams.set('sort', sortKey);
+        } else {
+            url.searchParams.delete('sort');
+        }
+        url.searchParams.set('dir', sortDirection);
+        window.history.replaceState(null, '', `${url.pathname}${url.search}`);
+
         startTransition(async () => {
             const { accounts: rows, hasNextPage: next } = await getAllAccounts(
                 debouncedFilter,
@@ -65,28 +84,8 @@ function AccountsPageComponent() {
             setAccounts(rows);
             setHasNextPage(next);
         });
-    }, [debouncedFilter, page, sortKey, sortDirection]);
-
-    useEffect(() => {
-        if (permissionState !== 'granted') return;
-
-        const newUrl = new URL(window.location.href);
-        newUrl.searchParams.set('page', String(page));
-        if (debouncedFilter) {
-            newUrl.searchParams.set('q', debouncedFilter);
-        } else {
-            newUrl.searchParams.delete('q');
-        }
-        if (sortKey) {
-            newUrl.searchParams.set('sort', sortKey);
-        } else {
-            newUrl.searchParams.delete('sort');
-        }
-        newUrl.searchParams.set('dir', sortDirection);
-
-        router.replace(`${newUrl.pathname}${newUrl.search}`, { scroll: false });
-        fetchData();
-    }, [page, debouncedFilter, sortKey, sortDirection, router, fetchData, permissionState]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [page, debouncedFilter, sortKey, sortDirection, permissionState]);
 
     const handleSort = (key: SortKey) => {
         if (sortKey === key) {
