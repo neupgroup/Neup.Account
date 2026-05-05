@@ -1,5 +1,5 @@
 
-import Link from 'next/link';
+import { FlowLink } from '@/components/ui/flow-link';
 
 const DEFAULT_LOGO_URL = 'https://neupgroup.com/assets/branding/neup.group/logo.svg';
 
@@ -24,11 +24,11 @@ export function NeupIdLogo({ iconHref, textHref, logoUrl }: NeupIdLogoProps) {
           loading="eager"
         />
       </a>
-      <Link href={textHref}>
+      <FlowLink href={textHref}>
         <span className="text-lg font-semibold tracking-tight font-headline">
           Neup.Account
         </span>
-      </Link>
+      </FlowLink>
     </div>
   );
 }

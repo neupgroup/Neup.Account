@@ -1,5 +1,5 @@
 
-import Link from "next/link"
+import { FlowLink } from '@/components/ui/flow-link'
 import {
     Table,
     TableBody,
@@ -61,9 +61,9 @@ export default async function NeupidApprovalsPage() {
                                 neupidRequests.map((item) => (
                                     <TableRow key={item.id}>
                                         <TableCell className="font-medium">
-                                            <Link href={`/manage/requests/${item.id}`} className="font-medium text-primary hover:underline">
+                                            <FlowLink href={`/manage/requests/${item.id}`} className="font-medium text-primary hover:underline">
                                                 {item.userFullName}
-                                            </Link>
+                                            </FlowLink>
                                         </TableCell>
                                         <TableCell>{item.requestedNeupId}</TableCell>
                                         <TableCell>{item.requestDate}</TableCell>

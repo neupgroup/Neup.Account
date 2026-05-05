@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { FlowLink } from '@/components/ui/flow-link';
 import { notFound } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -74,7 +75,7 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
           </div>
         </div>
         <Button variant="outline" asChild>
-          <Link href="/data/applications">Back</Link>
+          <FlowLink href="/data/applications">Back</FlowLink>
         </Button>
       </div>
 
@@ -94,7 +95,7 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
         </CardHeader>
         <CardContent>
           <Button asChild>
-            <Link href={authFlowPreviewUrl}>Preview Sign Flow</Link>
+            <FlowLink href={authFlowPreviewUrl}>Preview Sign Flow</FlowLink>
           </Button>
         </CardContent>
       </Card>

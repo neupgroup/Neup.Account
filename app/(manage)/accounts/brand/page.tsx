@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { AccountListItem } from "@/components/elements/account-item";
 import { Button } from "@/components/ui/button";
 import { Plus } from "@/components/icons";
-import Link from "next/link";
+import { FlowLink } from '@/components/ui/flow-link';
 import { Building } from "lucide-react";
 import { SecondaryHeader } from "@/components/ui/secondary-header";
 
@@ -66,7 +66,7 @@ export default async function BrandAccountsPage() {
                 </CardContent>
                 <CardContent className="pt-6 border-t">
                     <Button asChild>
-                        <Link href="/accounts/brand/create"><Plus className="mr-2 h-4 w-4" />Create New Brand</Link>
+                        <FlowLink href="/accounts/brand/create"><Plus className="mr-2 h-4 w-4" />Create New Brand</FlowLink>
                     </Button>
                 </CardContent>
             </Card>

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { FlowLink } from '@/components/ui/flow-link';
 import { getApplicationsPageData, type FlatAppItem } from '@/services/applications/form-actions';
 import { Button } from '@/components/ui/button';
 import { AppWindow, Building, BarChart, Share2, ChevronRight, type LucideIcon } from '@/components/icons';
@@ -18,7 +18,7 @@ function SingleList({ apps }: { apps: FlatAppItem[] }) {
   return (
     <div className="overflow-hidden rounded-2xl border bg-card">
       {apps.map((app) => (
-        <Link
+        <FlowLink
           key={`${app.source}:${app.id}`}
           href={`/data/applications/${app.id}`}
           className="group flex items-center justify-between gap-4 border-b px-4 py-4 transition-colors hover:bg-muted/40 last:border-b-0 sm:px-5"
@@ -38,7 +38,7 @@ function SingleList({ apps }: { apps: FlatAppItem[] }) {
             </div>
           </div>
           <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
-        </Link>
+        </FlowLink>
       ))}
     </div>
   );
@@ -58,7 +58,7 @@ export default async function ApplicationsPage() {
         </div>
         {canCreateApplication ? (
           <Button asChild>
-            <Link href="/data/applications/add">Create Application</Link>
+            <FlowLink href="/data/applications/add">Create Application</FlowLink>
           </Button>
         ) : null}
       </div>

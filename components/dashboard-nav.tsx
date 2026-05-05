@@ -1,6 +1,6 @@
 'use client';
 
-import Link from "next/link"
+import { FlowLink } from '@/components/ui/flow-link'
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import { cn } from "@/core/helpers/utils"
@@ -100,14 +100,14 @@ export function DashboardNav() {
                                 ? pathname === item.href || pathname === '/'
                                 : pathname.startsWith(item.href);
                             return (
-                                <Link
+                                <FlowLink
                                     key={item.href}
                                     href={item.href}
                                     data-active={isActive}
                                     className={cn(buttonVariants({ variant: "ghost", size: "default" }), "justify-start text-base md:text-sm")}
                                 >
                                     {item.label}
-                                </Link>
+                                </FlowLink>
                             )
                         })}
                     </div>

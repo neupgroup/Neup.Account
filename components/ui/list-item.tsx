@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
+import { FlowLink } from '@/components/ui/flow-link';
 import {
     KeyRound,
     ShieldCheck,
@@ -107,8 +107,8 @@ export function ListItem({ icon: Icon, iconName, title, description, href, isExt
   }
 
   return (
-    <Link href={href} className="block hover:bg-muted/50 transition-colors">
+    <FlowLink href={href} className="block hover:bg-muted/50 transition-colors">
       {linkContent}
-    </Link>
+    </FlowLink>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { FlowLink } from '@/components/ui/flow-link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState, useEffect, useTransition, Suspense } from 'react';
 import NProgress from 'nprogress';
@@ -173,9 +173,9 @@ function NeupIdStep() {
             </Button>
             <div className="mt-4 text-left text-sm">
               Don&apos;t have an Account?{' '}
-              <Link href={getSignupUrl()} className="underline text-primary">
+              <FlowLink href={getSignupUrl()} className="underline text-primary">
                 <span>Sign Up</span>
-              </Link>
+              </FlowLink>
             </div>
           </form>
         </CardContent>
@@ -417,9 +417,9 @@ function PasswordStep() {
               {isSubmitting ? <Loader2 className="animate-spin" /> : 'Sign In'}
             </Button>
             <div className="flex justify-between items-center text-sm">
-              <Link href={forgetUrl} className="underline text-primary">
+              <FlowLink href={forgetUrl} className="underline text-primary">
                 Forget Password
-              </Link>
+              </FlowLink>
               <Button variant="link" type="button" onClick={handleBack} className="text-primary p-0 h-auto" disabled={isSubmitting}>
                 Back
               </Button>

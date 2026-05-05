@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { FlowLink } from '@/components/ui/flow-link';
 import { PrimaryHeader } from '@/components/ui/primary-header';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChevronRight } from '@/components/icons';
@@ -20,7 +20,7 @@ export default async function AccessControlPage() {
       {groups.length > 0 ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {groups.map((group) => (
-            <Link key={group.id} href={`/access/${group.id}`} className="group block">
+            <FlowLink key={group.id} href={`/access/${group.id}`} className="group block">
               <Card className="h-full transition-colors group-hover:bg-muted/30">
                 <CardHeader>
                   <CardTitle className="flex items-center justify-between gap-3 text-base">
@@ -37,7 +37,7 @@ export default async function AccessControlPage() {
                   </p>
                 </CardContent>
               </Card>
-            </Link>
+            </FlowLink>
           ))}
         </div>
       ) : (

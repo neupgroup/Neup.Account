@@ -22,7 +22,7 @@ import { ListItem } from "@/components/ui/list-item"
 import { TertiaryHeader } from "@/components/ui/tertiary-header"
 import { PrimaryHeader } from "@/components/ui/primary-header"
 import NProgress from 'nprogress';
-import Link from "next/link"
+import { FlowLink } from '@/components/ui/flow-link'
 import { useSession } from "@/core/providers/session"
 import { redirectInApp } from "@/services/navigation";
 
@@ -228,7 +228,7 @@ export default function ManagePage() {
 
                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                         {visibleItems.map((item) => (
-                            <Link key={item.href} href={item.href}>
+                            <FlowLink key={item.href} href={item.href}>
                                 <Card className="h-full transition-all hover:border-primary/50 hover:bg-accent/50 group cursor-pointer">
                                     <CardHeader>
                                         <div className="flex items-center justify-between">
@@ -241,7 +241,7 @@ export default function ManagePage() {
                                         <CardDescription>{item.description}</CardDescription>
                                     </CardHeader>
                                 </Card>
-                            </Link>
+                            </FlowLink>
                         ))}
                     </div>
                 </div>

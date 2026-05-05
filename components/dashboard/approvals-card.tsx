@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { FlowLink } from '@/components/ui/flow-link';
 import { getNotifications } from '@/services/notifications';
 import { Badge } from '@/components/ui/badge';
 import { UserCheck } from '@/components/icons';
@@ -47,7 +47,7 @@ export async function ApprovalsCard() {
                                 </div>
                             </div>
                             <Button asChild variant="secondary" size="sm">
-                                <Link href={'/manage/notifications'}>Review</Link>
+                                <FlowLink href={'/manage/notifications'}>Review</FlowLink>
                             </Button>
                         </li>
                     ))}

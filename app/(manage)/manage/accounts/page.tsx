@@ -26,7 +26,7 @@ import { BackButton } from '@/components/ui/back-button';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { PrimaryHeader } from "@/components/ui/primary-header";
-import Link from 'next/link';
+import { FlowLink } from '@/components/ui/flow-link';
 import { useSearchParams } from 'next/navigation';
 import React from 'react';
 
@@ -195,9 +195,9 @@ function AccountsPageComponent() {
                                 accounts.map((acc) => (
                                     <TableRow key={acc.id}>
                                         <TableCell>
-                                            <Link href={`/manage/accounts/${acc.id}`} className="font-medium hover:underline text-primary">
+                                            <FlowLink href={`/manage/accounts/${acc.id}`} className="font-medium hover:underline text-primary">
                                                 {acc.name}
-                                            </Link>
+                                            </FlowLink>
                                             <p className="text-xs text-muted-foreground font-mono">{acc.id}</p>
                                         </TableCell>
                                         <TableCell>{acc.dateCreated}</TableCell>

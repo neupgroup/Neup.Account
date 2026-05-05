@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { FlowLink } from '@/components/ui/flow-link';
 import { redirect } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -55,7 +56,7 @@ export default async function AuthSignPage({ searchParams }: SignPageProps) {
         <CardContent className="space-y-3">
           {!hasActiveSession ? (
             <Button asChild className="w-full">
-              <Link href={startPageUrl}>Sign In or Create Account</Link>
+              <FlowLink href={startPageUrl}>Sign In or Create Account</FlowLink>
             </Button>
           ) : null}
 
@@ -81,7 +82,7 @@ export default async function AuthSignPage({ searchParams }: SignPageProps) {
               </div>
 
               <Button asChild className="w-full">
-                <Link href={profileNextUrl}>Next: Access</Link>
+                <FlowLink href={profileNextUrl}>Next: Access</FlowLink>
               </Button>
             </div>
           ) : null}
@@ -99,10 +100,10 @@ export default async function AuthSignPage({ searchParams }: SignPageProps) {
 
               <div className="grid grid-cols-2 gap-3">
                 <Button asChild variant="outline">
-                  <Link href={accessBackUrl}>Back</Link>
+                  <FlowLink href={accessBackUrl}>Back</FlowLink>
                 </Button>
                 <Button asChild>
-                  <Link href={accessNextUrl}>Next: Terms</Link>
+                  <FlowLink href={accessNextUrl}>Next: Terms</FlowLink>
                 </Button>
               </div>
               <Button asChild variant="outline" className="w-full">
@@ -119,7 +120,7 @@ export default async function AuthSignPage({ searchParams }: SignPageProps) {
 
               <div className="grid grid-cols-2 gap-3">
                 <Button asChild variant="outline">
-                  <Link href={termsBackUrl}>Back</Link>
+                  <FlowLink href={termsBackUrl}>Back</FlowLink>
                 </Button>
                 <Button asChild>
                   <a href={continueUrl}>Allow</a>

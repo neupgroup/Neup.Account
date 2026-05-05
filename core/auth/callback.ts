@@ -216,13 +216,19 @@ export function appendFlowParamsObject(path: string, flowParams: FlowParams): st
     return path;
   }
 
-  const separator = path.includes('?') ? '&' : '?';
-  const params = new URLSearchParams();
+  // Parse existing params to avoid duplicates
+  const [basePath, existingQuery] = path.split('?');
+  const existing = new URLSearchParams(existingQuery || '');
 
-  if (flowParams.backsTo) params.set('backsTo', flowParams.backsTo);
-  if (flowParams.steps) params.set('steps', flowParams.steps);
+  if (flowParams.backsTo && !existing.has('backsTo')) {
+    existing.set('backsTo', flowParams.backsTo);
+  }
+  if (flowParams.steps && !existing.has('steps')) {
+    existing.set('steps', flowParams.steps);
+  }
 
-  return `${path}${separator}${params.toString()}`;
+  const query = existing.toString();
+  return query ? `${basePath}?${query}` : basePath;
 }
 
 // Combines appendAuthCallbackContext and appendFlowParams for auth flows

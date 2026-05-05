@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ShieldCheck, UserCheck, Loader2, Ban } from '@/components/icons';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import Link from 'next/link';
+import { FlowLink } from '@/components/ui/flow-link';
 
 function VerificationSkeleton() {
     return (
@@ -68,9 +68,9 @@ function RequestCard({ request, onAction }: { request: VerificationRequest, onAc
         <Card>
             <CardHeader>
                 <CardTitle className="flex items-center justify-between">
-                  <Link href={`/manage/accounts/${request.accountId}`} className="hover:underline">
+                  <FlowLink href={`/manage/accounts/${request.accountId}`} className="hover:underline">
                     {request.fullName}
-                  </Link>
+                  </FlowLink>
                 </CardTitle>
                 <CardDescription>@{request.neupId}</CardDescription>
             </CardHeader>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useTransition } from 'react';
-import Link from 'next/link';
+import { FlowLink } from '@/components/ui/flow-link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
@@ -102,9 +102,9 @@ export default function DisplayNameRequestsPage() {
                                 requests.map(req => (
                                     <TableRow key={req.id}>
                                         <TableCell>
-                                             <Link href={`/manage/accounts/${req.accountId}`} className="font-medium text-primary hover:underline">
+                                             <FlowLink href={`/manage/accounts/${req.accountId}`} className="font-medium text-primary hover:underline">
                                                 {req.userFullName}
-                                             </Link>
+                                             </FlowLink>
                                         </TableCell>
                                         <TableCell className="font-medium">{req.requestedDisplayName}</TableCell>
                                         <TableCell>{req.createdAt}</TableCell>

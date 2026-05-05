@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { FlowLink } from '@/components/ui/flow-link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChevronRight, AlertTriangle, Loader2 } from '@/components/icons';
@@ -175,7 +175,7 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
               </div>
             )}
 
-            <Link
+            <FlowLink
               href={getUrlWithReturn("/auth/signin?step=neupid")}
               className="flex w-full items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
             >
@@ -184,8 +184,8 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
                 <p className="text-sm text-muted-foreground">Sign in with NeupID and continue using NeupID Group Products and Services.</p>
               </div>
               <ChevronRight className="h-5 w-5 text-muted-foreground" />
-            </Link>
-            <Link
+            </FlowLink>
+            <FlowLink
               href={getUrlWithReturn("/auth/signup?step=name")}
               className="flex w-full items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
             >
@@ -196,8 +196,8 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
                 </p>
               </div>
               <ChevronRight className="h-5 w-5 text-muted-foreground" />
-            </Link>
-            <Link
+            </FlowLink>
+            <FlowLink
               href={getUrlWithReturn('/auth/forget')}
               className="flex w-full items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
             >
@@ -208,7 +208,7 @@ export function StartPageComponent({ accounts, hasActiveSession, appName }: Star
                 </p>
               </div>
               <ChevronRight className="h-5 w-5 text-muted-foreground" />
-            </Link>
+            </FlowLink>
 
           </div>
         </CardContent>

@@ -2,7 +2,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { getConnectedApplications } from '@/services/applications/connected';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { FlowLink } from '@/components/ui/flow-link';
 import { AppWindow, ChevronRight } from '@/components/icons';
 
 
@@ -25,7 +25,7 @@ export async function AccessCard() {
                             <AppWindow className="h-5 w-5 mr-3 text-muted-foreground" />
                             <span className="text-sm font-medium flex-grow">{app.name}</span>
                             <Button variant="ghost" size="sm" asChild>
-                                <Link href={`/data/1/${app.id}`}>Manage</Link>
+                                <FlowLink href={`/data/1/${app.id}`}>Manage</FlowLink>
                             </Button>
                         </div>
                     ))}
@@ -34,13 +34,13 @@ export async function AccessCard() {
                             <AppWindow className="h-5 w-5 mr-3 text-muted-foreground" />
                             <span className="text-sm font-medium flex-grow">{app.name}</span>
                             <Button variant="ghost" size="sm" asChild>
-                                <Link href={`/data/3/${app.id}`}>Manage</Link>
+                                <FlowLink href={`/data/3/${app.id}`}>Manage</FlowLink>
                             </Button>
                         </div>
                     ))}
                  </div>
                  <Button variant="outline" className="w-full" asChild>
-                    <Link href="/data">View All Apps <ChevronRight className="ml-2 h-4 w-4" /></Link>
+                    <FlowLink href="/data">View All Apps <ChevronRight className="ml-2 h-4 w-4" /></FlowLink>
                 </Button>
             </CardContent>
         </Card>

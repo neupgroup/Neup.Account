@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { searchAll } from '@/services/search';
 import { Card, CardContent } from '@/components/ui/card';
 import { UserCircle, ShieldCheck } from 'lucide-react';
-import Link from 'next/link';
+import { FlowLink } from '@/components/ui/flow-link';
 import { Badge } from '@/components/ui/badge';
 import { BackButton } from '@/components/ui/back-button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -32,14 +32,14 @@ async function SearchResults({ query }: { query: string }) {
                         return (
                             <Card key={item.id}>
                                 <CardContent className="p-4">
-                                     <Link href={item.url} className="flex items-center gap-4 group">
+                                     <FlowLink href={item.url} className="flex items-center gap-4 group">
                                         <Icon className="h-8 w-8 text-muted-foreground flex-shrink-0" />
                                         <div className="flex-grow">
                                             <p className="font-semibold group-hover:underline">{item.title}</p>
                                             <p className="text-sm text-muted-foreground truncate">{item.description}</p>
                                         </div>
                                         <Badge variant="outline">{item.type}</Badge>
-                                    </Link>
+                                    </FlowLink>
                                 </CardContent>
                             </Card>
                         )

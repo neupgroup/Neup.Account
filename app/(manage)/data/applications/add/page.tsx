@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { FlowLink } from '@/components/ui/flow-link';
 import { notFound } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -19,7 +19,7 @@ export default async function AddApplicationPage() {
           <p className="text-muted-foreground">Connect an application to your NeupAccount access list.</p>
         </div>
         <Button variant="outline" asChild>
-          <Link href="/data/applications">Back to Applications</Link>
+          <FlowLink href="/data/applications">Back to Applications</FlowLink>
         </Button>
       </div>
 

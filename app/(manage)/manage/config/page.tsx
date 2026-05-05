@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { FlowLink } from '@/components/ui/flow-link';
 import { notFound } from 'next/navigation';
 import { CreditCard, Globe, ArrowRight, AppWindow } from '@/components/icons';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -44,7 +44,7 @@ export default async function ManageConfigPage() {
 
       <div className="grid gap-6 md:grid-cols-3">
         {configItems.map((item) => (
-          <Link key={item.href} href={item.href}>
+          <FlowLink key={item.href} href={item.href}>
             <Card className="h-full cursor-pointer transition-all hover:border-primary/50 hover:bg-accent/40">
               <CardHeader>
                 <div className="mb-3 flex items-center justify-between">
@@ -57,7 +57,7 @@ export default async function ManageConfigPage() {
                 <CardDescription>{item.description}</CardDescription>
               </CardHeader>
             </Card>
-          </Link>
+          </FlowLink>
         ))}
       </div>
     </div>

@@ -1,7 +1,7 @@
 
 'use client';
 
-import Link from 'next/link';
+import { FlowLink } from '@/components/ui/flow-link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/core/helpers/utils';
 import { buttonVariants } from '@/components/ui/button';
@@ -22,24 +22,24 @@ export function BrandNav({ brandId }: { brandId: string }) {
       {navItems.map((item) => {
         const isActive = pathname === item.href;
         return (
-          <Link
+          <FlowLink
             key={item.href}
             href={item.href}
             className={cn(buttonVariants({ variant: isActive ? 'secondary' : 'ghost' }), 'justify-start gap-2')}
           >
             <item.icon className="h-4 w-4" />
             {item.label}
-          </Link>
+          </FlowLink>
         );
       })}
        <Separator className="my-2" />
-       <Link
+       <FlowLink
             href="/accounts/brand"
             className={cn(buttonVariants({ variant: 'ghost' }), 'justify-start gap-2')}
           >
         <ArrowLeft className="h-4 w-4" />
         Back to Brands
-      </Link>
+      </FlowLink>
     </nav>
   );
 }

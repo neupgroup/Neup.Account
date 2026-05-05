@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { FlowLink } from '@/components/ui/flow-link';
 import {
     Card,
     CardContent,
@@ -68,7 +68,7 @@ export default async function DependentAccountsPage() {
                 </CardContent>
                 <CardContent className="pt-6 border-t">
                     <Button asChild>
-                        <Link href="/accounts/dependent/create"><Plus className="mr-2 h-4 w-4" />Create New Dependent</Link>
+                        <FlowLink href="/accounts/dependent/create"><Plus className="mr-2 h-4 w-4" />Create New Dependent</FlowLink>
                     </Button>
                 </CardContent>
             </Card>

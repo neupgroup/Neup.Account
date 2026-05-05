@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { getUserSessions } from '@/services/security/sessions';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { FlowLink } from '@/components/ui/flow-link';
 import { Laptop, ChevronRight } from '@/components/icons';
 
 
@@ -27,7 +27,7 @@ export async function SecurityCard() {
                     ))}
                  </div>
                  <Button variant="outline" className="w-full" asChild>
-                    <Link href="/security/devices">Manage All Devices <ChevronRight className="ml-2 h-4 w-4" /></Link>
+                    <FlowLink href="/security/devices">Manage All Devices <ChevronRight className="ml-2 h-4 w-4" /></FlowLink>
                 </Button>
             </CardContent>
         </Card>

@@ -2,7 +2,7 @@
 'use client';
 
 import { useEffect, useState, useTransition } from 'react';
-import Link from 'next/link';
+import { FlowLink } from '@/components/ui/flow-link';
 import {
   getDeletionRequests,
   approveAccountDeletion,
@@ -93,12 +93,12 @@ function DeletionRequestRow({
   return (
     <TableRow>
       <TableCell>
-        <Link
+      <FlowLink
           href={`/manage/accounts/${request.accountId}`}
           className="font-medium text-primary hover:underline"
         >
           {request.userFullName}
-        </Link>
+        </FlowLink>
         <p className="text-xs text-muted-foreground font-mono">
           {request.userNeupId}
         </p>

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { FlowLink } from '@/components/ui/flow-link';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle } from 'lucide-react';
 
@@ -10,11 +10,11 @@ export default function NotFound() {
         Page Not Found
       </h1>
       <p className="mt-4 text-muted-foreground">
-        Sorry, we couldn’t find the page you’re looking for. It might have been moved or
+        Sorry, we couldn't find the page you're looking for. It might have been moved or
         deleted.
       </p>
       <Button asChild className="mt-8">
-        <Link href="/">Go back home</Link>
+        <FlowLink href="/">Go back home</FlowLink>
       </Button>
     </div>
   );

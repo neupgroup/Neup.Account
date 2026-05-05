@@ -1,7 +1,7 @@
 
 "use client";
 
-import Link from 'next/link';
+import { FlowLink } from '@/components/ui/flow-link';
 import { useEffect, useTransition, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -88,9 +88,9 @@ export default function ForgetPage() {
           </form>
           <div className="mt-4 text-center text-sm">
             Remembered your NeupID?{" "}
-            <Link href="/auth/signin?step=neupid" className="underline text-primary">
+            <FlowLink href="/auth/signin?step=neupid" className="underline text-primary">
               Sign In
-            </Link>
+            </FlowLink>
           </div>
         </CardContent>
       </Card>
