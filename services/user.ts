@@ -161,120 +161,48 @@ export async function getUserNeupIdDetails(accountId?: string): Promise<{ id: st
 
 // --- Permissions ---
 
-// Resolves the full permission set for an account by combining the base role permissions
-// with any permit modifiers (+ to add, - to remove) stored in the permit table.
-// If the user is managing another account, only delegated permits are applied (no base role).
-export async function getUserPermissions(accountId?: string, appId?: string): Promise<string[]> {
+// Resolves account permissions by:
+// 1) finding role grants in authz_account_access_grant for targetAccountId + appId,
+// 2) loading denormalized capabilities from authz_role_capability for those roleIds.
+export async function getIndividualAccountPermission(accountId?: string): Promise<string[]> {
   const activeId = accountId || (await getActiveAccountId());
   if (!activeId) return [];
 
-  const personalId = await getPersonalAccountId();
-  // isManaging is true when the active account differs from the personal account
-  const isManaging = activeId !== personalId;
-
   try {
-    const account = await prisma.account.findUnique({
-      where: { id: activeId },
-      select: { accountType: true }
-    });
-    
-    if (!account) return [];
-
-    const baseRole = account.accountType === 'dependent' ? 'dependent.full' : 'independent.default';
-    let collectedPermissions = new Set<string>();
-
-    // Only apply the base role when not managing — managing context uses delegated permits only
-    if (!isManaging) {
-      const basePermissions = PERMISSION_SET[baseRole] || [];
-      basePermissions.forEach(p => collectedPermissions.add(p));
-    }
-
-    // Fetch the relevant permits depending on whether we're in a managing context
-    let permits: any[] = [];
-    if (isManaging && personalId) {
-      try {
-        permits = await prisma.permit.findMany({
-          where: {
-            accountId: personalId,
-            targetAccountId: activeId,
-            forSelf: false,
-            isRoot: false
-          }
-        });
-      } catch (error) {
-        // If the permits table doesn't exist (local/dev), treat as empty permits
-        await logError('database', error, `getUserPermissions — permit query failed for ${activeId}`);
-        permits = [];
-      }
-    } else {
-      try {
-        permits = await prisma.permit.findMany({
-          where: {
-            accountId: activeId,
-            OR: [
-              { forSelf: true },
-              { isRoot: true }
-            ]
-          }
-        });
-      } catch (error) {
-        // If the permits table doesn't exist (local/dev), treat as empty permits
-        await logError('database', error, `getUserPermissions — permit query failed for ${activeId}`);
-        permits = [];
-      }
-    }
-
-    // Apply permit entries — a trailing '+' adds, '-' removes, no modifier adds
-    permits.forEach((permit: any) => {
-      const entries: string[] = permit.permissions || [];
-      entries.forEach((entry: string) => {
-        let name = entry;
-        let modifier = '';
-
-        if (entry.endsWith('+')) {
-          name = entry.slice(0, -1);
-          modifier = '+';
-        } else if (entry.endsWith('-')) {
-          name = entry.slice(0, -1);
-          modifier = '-';
-        }
-
-        // A name can refer to a named role (resolved via PERMISSION_SET) or a single permission
-        const toApply = PERMISSION_SET[name] || [name];
-
-        if (modifier === '-') {
-          toApply.forEach(p => collectedPermissions.delete(p));
-        } else {
-          toApply.forEach(p => collectedPermissions.add(p));
-        }
-      });
+    const grants = await prisma.authzAccountAccessGrant.findMany({
+      where: {
+        targetAccountId: activeId,
+        appId: 'neupaccount',
+      },
+      select: { roleId: true },
     });
 
-    // If an appId is provided, also include any portfolio roles the account holds for that app
-    if (appId) {
-      const roleRows = await prisma.authzAccountAccessGrant.findMany({
-        where: {
-          targetAccountId: activeId,
-          portfolio: {
-            assets: {
-              some: {
-                assetId: appId,
-                assetType: { in: ['application', 'app'] },
-              },
-            },
-          },
-        },
-        select: { roleId: true },
-      });
-
-      roleRows.forEach((row) => {
-        collectedPermissions.add(row.roleId);
-      });
+    if (!grants.length) {
+      return [];
     }
 
-    return Array.from(collectedPermissions);
+    const roleIds = Array.from(new Set(grants.map((grant) => grant.roleId)));
+
+    const roleCapabilities = await prisma.authzRoleCapability.findMany({
+      where: {
+        roleId: { in: roleIds },
+        appId: 'neupaccount',
+      },
+      select: {
+        denormalizedCapability: true,
+      },
+    });
+
+    const capabilities = roleCapabilities.flatMap((row) => {
+      if (!Array.isArray(row.denormalizedCapability)) return [];
+
+      return row.denormalizedCapability
+        .filter((item): item is string => typeof item === 'string');
+    });
+
+    return Array.from(new Set(capabilities));
   } catch (error) {
-    await logError('database', error, `getUserPermissions for ${activeId}`);
+    await logError('database', error, `getIndividualAccountPermission — grant/capability query failed for ${activeId}`);
     return [];
   }
 }
@@ -282,13 +210,11 @@ export async function getUserPermissions(accountId?: string, appId?: string): Pr
 // Returns true if the active account has all of the required permissions.
 export async function checkPermissions(
   requiredPermissions: string[],
-  appId?: string
+  accountId?: string
 ): Promise<boolean> {
-  const accountId = await getActiveAccountId();
-  if (!accountId) return false;
   if (!requiredPermissions || requiredPermissions.length === 0) return true;
 
-  const userPermissions = await getUserPermissions(accountId, appId);
+  const userPermissions = await getIndividualAccountPermission(accountId);
   const permissionsSet = new Set(userPermissions);
 
   return requiredPermissions.every((p) => permissionsSet.has(p));

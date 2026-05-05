@@ -1,7 +1,7 @@
 // Static permission definitions for the Neup.Account permission system.
 // DEFAULT_PERMISSIONS is the baseline set granted to every regular account.
 // ROOT_PERMISSIONS extends the default set with admin-only capabilities.
-// These strings are stored in permit records and checked at runtime via getUserPermissions().
+// These strings are stored in authz_role_capability records and checked at runtime via getIndividualAccountPermission().
 
 export const DEFAULT_PERMIT_TYPE = 'default';
 

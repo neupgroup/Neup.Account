@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import { logError } from '@/core/helpers/logger';
 import { makeNotification } from '@/services/notifications';
-import { getUserPermissions, isRootUser } from '@/services/user';
+import { getIndividualAccountPermission, isRootUser } from '@/services/user';
 
 const EXTERNAL_LOGIN_PREFIX = 'external_app:';
 function externalLoginType(appId: string) {
@@ -14,7 +14,7 @@ function externalLoginType(appId: string) {
 async function resolveAccountGrant(accountId: string, appId: string): Promise<{ role: string; permissions: string[] }> {
   const [account, permissions, isRoot] = await Promise.all([
     prisma.account.findUnique({ where: { id: accountId }, select: { accountType: true } }),
-    getUserPermissions(accountId, appId),
+    getIndividualAccountPermission(accountId),
     isRootUser(accountId),
   ]);
 
