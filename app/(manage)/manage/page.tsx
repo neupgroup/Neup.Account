@@ -108,7 +108,7 @@ export default function ManagePage() {
         const searchTerm = searchQuery.trim();
         if (searchTerm) {
             NProgress.start();
-            redirectInApp(router, `/manage/list?q=${encodeURIComponent(searchTerm)}`);
+            redirectInApp(router, `/manage/accounts?q=${encodeURIComponent(searchTerm)}`);
         }
     }
     
@@ -213,22 +213,6 @@ export default function ManagePage() {
                                 <Search className="h-4 w-4" />
                             </Button>
                         </form>
-                    </CardContent>
-                </Card>
-            </div>
-             <div className="grid gap-4">
-                <TertiaryHeader
-                    title="List All Accounts"
-                    description="View a comprehensive, sortable list of all accounts in the system."
-                />
-                <Card>
-                    <CardContent className="p-2">
-                        <ListItem
-                            icon={List}
-                            title="List All Accounts"
-                            description="View, sort, and filter all accounts."
-                            href="/manage/list"
-                        />
                     </CardContent>
                 </Card>
             </div>
