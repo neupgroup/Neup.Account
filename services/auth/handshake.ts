@@ -74,15 +74,12 @@ export async function bridgeBuildGrantRedirect(input: {
     const session = await getActiveSession();
 
     if (!session) {
-      const backTo = pathname + (searchParams.toString() ? `?${searchParams.toString()}` : '');
-      const signInUrl = new URL('/auth/start', requestUrl);
-      signInUrl.searchParams.set('redirects', backTo);
-      searchParams.forEach((value, key) => {
-        if (key !== 'redirects') {
-          signInUrl.searchParams.set(key, value);
-        }
-      });
-      return { redirectTo: signInUrl.toString() };
+      // When user is not signed in, redirect to /auth/sign with authenticatesTo and appId
+      // /auth/sign will then redirect to signin/signup with backsTo parameter
+      const signPageUrl = new URL('/auth/sign', requestUrl);
+      signPageUrl.searchParams.set('authenticatesTo', authenticatesTo);
+      signPageUrl.searchParams.set('appId', appId);
+      return { redirectTo: signPageUrl.toString() };
     }
 
     const tempToken = crypto.randomBytes(32).toString('hex');

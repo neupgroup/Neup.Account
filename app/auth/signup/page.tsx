@@ -43,7 +43,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { countries } from "./countries";
 import { redirectInApp } from "@/services/navigation";
-import { appendAuthCallbackContext, hasAuthCallbackContext, shouldReturnToAuthStartForExternalAuthentication } from "@/core/auth/callback";
+import { appendAuthCallbackContext, hasAuthCallbackContext, shouldReturnToAuthStartForExternalAuthentication, getFlowParams } from "@/core/auth/callback";
 
 const SIGNUP_TIMEOUT_DESCRIPTION = 'Exceeded the time for SignUp.';
 
@@ -837,6 +837,14 @@ function TermsStep() {
         const result = await submitTermsStep(authRequestId, data);
         if (result.success) {
             sessionStorage.clear();
+            
+            // Check if backsTo exists - if so, use that as the redirect
+            const flowParams = getFlowParams(searchParams);
+            if (flowParams.backsTo) {
+                redirectInApp(router, flowParams.backsTo);
+                return;
+            }
+
             const redirects = searchParams.get('redirects');
             if (redirects) {
                 redirectInApp(router, redirects);

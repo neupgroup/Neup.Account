@@ -13,7 +13,7 @@ import { initializeAuthFlow } from '@/services/auth/AuthenticationFlow';
 import { verifyTotpFromPost } from '@/services/auth/totp';
 import { switchActiveAccountByNeupId } from '@/services/auth/switch';
 import { redirectInApp } from '@/core/helpers/link';
-import { appendAuthCallbackContext, appendRedirect, hasAuthCallbackContext, shouldReturnToAuthStartForExternalAuthentication } from '@/core/auth/callback';
+import { appendAuthCallbackContext, appendRedirect, hasAuthCallbackContext, shouldReturnToAuthStartForExternalAuthentication, getFlowParams, appendFlowParams } from '@/core/auth/callback';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -124,8 +124,10 @@ function NeupIdStep() {
   const getSignupUrl = () => {
     const params = new URLSearchParams();
     params.set('step', 'name');
-    const withContext = appendAuthCallbackContext(`/auth/signup?${params.toString()}`, searchParams);
-    return appendRedirect(withContext, redirects);
+    let withContext = appendAuthCallbackContext(`/auth/signup?${params.toString()}`, searchParams);
+    withContext = appendRedirect(withContext, redirects);
+    withContext = appendFlowParams(withContext, searchParams);
+    return withContext;
   };
 
   return (
@@ -299,6 +301,13 @@ function PasswordStep() {
         } else {
           sessionStorage.clear();
 
+          // Check if backsTo exists - if so, use that as the redirect
+          const flowParams = getFlowParams(searchParams);
+          if (flowParams.backsTo) {
+            redirectInApp(flowParams.backsTo, null, { hard: true });
+            return;
+          }
+
           if (shouldReturnToAuthStartForExternalAuthentication(searchParams)) {
             redirectInApp(appendAuthCallbackContext('/auth/start', searchParams), null, { hard: true });
             return;
@@ -468,6 +477,13 @@ function MfaStep() {
 
         if (result.success) {
           sessionStorage.clear();
+
+          // Check if backsTo exists - if so, use that as the redirect
+          const flowParams = getFlowParams(searchParams);
+          if (flowParams.backsTo) {
+            redirectInApp(flowParams.backsTo, router);
+            return;
+          }
 
           if (shouldReturnToAuthStartForExternalAuthentication(searchParams)) {
             redirectInApp(appendAuthCallbackContext('/auth/start', searchParams), router);

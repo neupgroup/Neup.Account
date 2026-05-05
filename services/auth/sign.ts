@@ -1,11 +1,6 @@
 import { getSessionCookies } from '@/core/helpers/cookies';
 import { getValidatedStoredAccounts } from '@/core/auth/session';
-import { getAppDisplayName } from '@/core/auth/callback';
-import {
-	buildAuthCallbackWithStatus,
-	buildAuthQuery,
-	getServerAuthContext,
-} from '@/core/auth/callback';
+import { getAppDisplayName, buildAuthQuery, getServerAuthContext, buildAuthPath, buildAuthCallbackWithStatus, getServerFlowParams } from '@/core/auth/callback';
 import prisma from '@/core/helpers/prisma';
 import { randomBytes } from 'crypto';
 import { getUserProfile } from '@/services/user';
@@ -237,6 +232,51 @@ export async function getAuthSignPageData(
 	const storedAccounts = await getValidatedStoredAccounts();
 	const { accountId, sessionId, sessionKey } = await getSessionCookies();
 	const hasActiveSession = Boolean(accountId && sessionId && sessionKey);
+
+	// If user is not signed in and authenticatesTo exists, redirect to signin with backsTo parameter
+	if (!hasActiveSession && context.authenticatesTo && context.appId) {
+		// Extract steps parameter if it exists
+		const stepsParam = getFirst(searchParams.steps);
+
+		// Build the current sign URL with all parameters
+		const signUrlParams = new URLSearchParams();
+		signUrlParams.set('authenticatesTo', context.authenticatesTo);
+		signUrlParams.set('appId', context.appId);
+		if (stepsParam) {
+			signUrlParams.set('steps', stepsParam);
+		}
+		const backsToUrl = `/auth/sign?${signUrlParams.toString()}`;
+
+		// Build signin URL with backsTo parameter
+		const signinUrl = new URLSearchParams();
+		signinUrl.set('backsTo', backsToUrl);
+		signinUrl.set('authenticatesTo', context.authenticatesTo);
+		signinUrl.set('appId', context.appId);
+		if (stepsParam) {
+			signinUrl.set('steps', stepsParam);
+		}
+
+		return {
+			redirectTo: `/auth/signin?${signinUrl.toString()}`,
+			context,
+			step,
+			displayAppName,
+			hasActiveSession,
+			startPageUrl: '/auth/start',
+			denyUrl: '/auth/start',
+			cancelUrl: '/auth/start',
+			continueUrl: '/auth/start',
+			stepTitleMap: { profile: 'Profile', access: 'Access', terms: 'Terms' },
+			accessItems: ['Name', 'Email', 'NeupID', 'Phone'],
+			termsText: 'By continuing, you agree to this application\'s terms and data usage rules.',
+			profileNextUrl: '/auth/start',
+			accessNextUrl: '/auth/start',
+			accessBackUrl: '/auth/start',
+			termsBackUrl: '/auth/start',
+			hasBuilderData: false,
+			application: applicationData,
+		};
+	}
 
 	const skipAccountCheck = getFirst(searchParams.skipAccountCheck) === '1';
 	if (storedAccounts.length >= 2 && !skipAccountCheck) {
