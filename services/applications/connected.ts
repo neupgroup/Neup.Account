@@ -20,7 +20,6 @@ type SignedApplication = {
   icon?: string;
   description: string;
   website?: string;
-  developer?: string;
   signedAt: Date;
 };
 
@@ -54,7 +53,6 @@ export async function getConnectedApplications(): Promise<ConnectedApplications>
           description: conn.application.description || '',
           icon: conn.application.icon as any || undefined,
           website: conn.application.website || undefined,
-          developer: conn.application.developer || undefined,
         }));
 
         return {

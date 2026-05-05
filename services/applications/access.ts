@@ -16,7 +16,6 @@ export type UserApplicationAccess = {
   name: string;
   description: string;
   website?: string;
-  developer?: string;
   connectionType: 'internal' | 'external' | 'both';
   permissions: string[];
   connectedOn: Date;

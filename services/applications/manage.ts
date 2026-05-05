@@ -372,7 +372,7 @@ export async function createManagedApplication(input: { name: string }) {
     return { success: false, error: 'Permission denied.' };
   }
 
-  const accountId = await getPersonalAccountId();
+  const accountId = await getActiveAccountId();
   if (!accountId) {
     return { success: false, error: 'Not signed in.' };
   }
@@ -474,6 +474,28 @@ export async function createManagedApplication(input: { name: string }) {
             roleId: 'application.owner',
             appId: createdApp.id,
             portfolioId: portfolio.id,
+          },
+        });
+      }
+
+      // Grant the creator asset-level ownership on the application asset.
+      const existingAssetGrant = await tx.authzAssetsAccessGrant.findFirst({
+        where: {
+          asset_id: appAsset.id,
+          account_id: accountId,
+          role_id: 'application.owner',
+        },
+      });
+
+      if (!existingAssetGrant) {
+        await tx.authzAssetsAccessGrant.create({
+          data: {
+            asset_id: appAsset.id,
+            account_id: accountId,
+            role_id: 'application.owner',
+            portfolio_id: portfolio.id,
+            app_id: createdApp.id,
+            asset_type: 'application',
           },
         });
       }
