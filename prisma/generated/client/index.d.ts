@@ -144,10 +144,10 @@ export type AuthzCapability = $Result.DefaultSelection<Prisma.$AuthzCapabilityPa
  */
 export type AuthzRole = $Result.DefaultSelection<Prisma.$AuthzRolePayload>
 /**
- * Model AuthzRoleCapabilityMap
+ * Model AuthzRoleCapability
  * 
  */
-export type AuthzRoleCapabilityMap = $Result.DefaultSelection<Prisma.$AuthzRoleCapabilityMapPayload>
+export type AuthzRoleCapability = $Result.DefaultSelection<Prisma.$AuthzRoleCapabilityPayload>
 /**
  * Model AuthzAccountAccessGrant
  * 
@@ -542,14 +542,14 @@ export class PrismaClient<
   get authzRole(): Prisma.AuthzRoleDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.authzRoleCapabilityMap`: Exposes CRUD operations for the **AuthzRoleCapabilityMap** model.
+   * `prisma.authzRoleCapability`: Exposes CRUD operations for the **AuthzRoleCapability** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more AuthzRoleCapabilityMaps
-    * const authzRoleCapabilityMaps = await prisma.authzRoleCapabilityMap.findMany()
+    * // Fetch zero or more AuthzRoleCapabilities
+    * const authzRoleCapabilities = await prisma.authzRoleCapability.findMany()
     * ```
     */
-  get authzRoleCapabilityMap(): Prisma.AuthzRoleCapabilityMapDelegate<ExtArgs, ClientOptions>;
+  get authzRoleCapability(): Prisma.AuthzRoleCapabilityDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.authzAccountAccessGrant`: Exposes CRUD operations for the **AuthzAccountAccessGrant** model.
@@ -1040,7 +1040,7 @@ export namespace Prisma {
     ApplicationPolicy: 'ApplicationPolicy',
     AuthzCapability: 'AuthzCapability',
     AuthzRole: 'AuthzRole',
-    AuthzRoleCapabilityMap: 'AuthzRoleCapabilityMap',
+    AuthzRoleCapability: 'AuthzRoleCapability',
     AuthzAccountAccessGrant: 'AuthzAccountAccessGrant',
     AuthzAssetsAccessGrant: 'AuthzAssetsAccessGrant',
     Permit: 'Permit'
@@ -1059,7 +1059,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "systemConfig" | "authnRequest" | "activity" | "notification" | "request" | "family" | "familyMember" | "verification" | "contact" | "neupId" | "authnMethod" | "authnSession" | "systemError" | "application" | "portfolio" | "portfolioAsset" | "portfolioMember" | "accountOwnership" | "applicationConnection" | "applicationBridge" | "applicationPolicy" | "authzCapability" | "authzRole" | "authzRoleCapabilityMap" | "authzAccountAccessGrant" | "authzAssetsAccessGrant" | "permit"
+      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "systemConfig" | "authnRequest" | "activity" | "notification" | "request" | "family" | "familyMember" | "verification" | "contact" | "neupId" | "authnMethod" | "authnSession" | "systemError" | "application" | "portfolio" | "portfolioAsset" | "portfolioMember" | "accountOwnership" | "applicationConnection" | "applicationBridge" | "applicationPolicy" | "authzCapability" | "authzRole" | "authzRoleCapability" | "authzAccountAccessGrant" | "authzAssetsAccessGrant" | "permit"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2987,77 +2987,77 @@ export namespace Prisma {
           }
         }
       }
-      AuthzRoleCapabilityMap: {
-        payload: Prisma.$AuthzRoleCapabilityMapPayload<ExtArgs>
-        fields: Prisma.AuthzRoleCapabilityMapFieldRefs
+      AuthzRoleCapability: {
+        payload: Prisma.$AuthzRoleCapabilityPayload<ExtArgs>
+        fields: Prisma.AuthzRoleCapabilityFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.AuthzRoleCapabilityMapFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityMapPayload> | null
+            args: Prisma.AuthzRoleCapabilityFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.AuthzRoleCapabilityMapFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityMapPayload>
+            args: Prisma.AuthzRoleCapabilityFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityPayload>
           }
           findFirst: {
-            args: Prisma.AuthzRoleCapabilityMapFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityMapPayload> | null
+            args: Prisma.AuthzRoleCapabilityFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.AuthzRoleCapabilityMapFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityMapPayload>
+            args: Prisma.AuthzRoleCapabilityFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityPayload>
           }
           findMany: {
-            args: Prisma.AuthzRoleCapabilityMapFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityMapPayload>[]
+            args: Prisma.AuthzRoleCapabilityFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityPayload>[]
           }
           create: {
-            args: Prisma.AuthzRoleCapabilityMapCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityMapPayload>
+            args: Prisma.AuthzRoleCapabilityCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityPayload>
           }
           createMany: {
-            args: Prisma.AuthzRoleCapabilityMapCreateManyArgs<ExtArgs>
+            args: Prisma.AuthzRoleCapabilityCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.AuthzRoleCapabilityMapCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityMapPayload>[]
+            args: Prisma.AuthzRoleCapabilityCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityPayload>[]
           }
           delete: {
-            args: Prisma.AuthzRoleCapabilityMapDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityMapPayload>
+            args: Prisma.AuthzRoleCapabilityDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityPayload>
           }
           update: {
-            args: Prisma.AuthzRoleCapabilityMapUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityMapPayload>
+            args: Prisma.AuthzRoleCapabilityUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityPayload>
           }
           deleteMany: {
-            args: Prisma.AuthzRoleCapabilityMapDeleteManyArgs<ExtArgs>
+            args: Prisma.AuthzRoleCapabilityDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.AuthzRoleCapabilityMapUpdateManyArgs<ExtArgs>
+            args: Prisma.AuthzRoleCapabilityUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.AuthzRoleCapabilityMapUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityMapPayload>[]
+            args: Prisma.AuthzRoleCapabilityUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityPayload>[]
           }
           upsert: {
-            args: Prisma.AuthzRoleCapabilityMapUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityMapPayload>
+            args: Prisma.AuthzRoleCapabilityUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AuthzRoleCapabilityPayload>
           }
           aggregate: {
-            args: Prisma.AuthzRoleCapabilityMapAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateAuthzRoleCapabilityMap>
+            args: Prisma.AuthzRoleCapabilityAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAuthzRoleCapability>
           }
           groupBy: {
-            args: Prisma.AuthzRoleCapabilityMapGroupByArgs<ExtArgs>
-            result: $Utils.Optional<AuthzRoleCapabilityMapGroupByOutputType>[]
+            args: Prisma.AuthzRoleCapabilityGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AuthzRoleCapabilityGroupByOutputType>[]
           }
           count: {
-            args: Prisma.AuthzRoleCapabilityMapCountArgs<ExtArgs>
-            result: $Utils.Optional<AuthzRoleCapabilityMapCountAggregateOutputType> | number
+            args: Prisma.AuthzRoleCapabilityCountArgs<ExtArgs>
+            result: $Utils.Optional<AuthzRoleCapabilityCountAggregateOutputType> | number
           }
         }
       }
@@ -3417,7 +3417,7 @@ export namespace Prisma {
     applicationPolicy?: ApplicationPolicyOmit
     authzCapability?: AuthzCapabilityOmit
     authzRole?: AuthzRoleOmit
-    authzRoleCapabilityMap?: AuthzRoleCapabilityMapOmit
+    authzRoleCapability?: AuthzRoleCapabilityOmit
     authzAccountAccessGrant?: AuthzAccountAccessGrantOmit
     authzAssetsAccessGrant?: AuthzAssetsAccessGrantOmit
     permit?: PermitOmit
@@ -3921,7 +3921,7 @@ export namespace Prisma {
    * AuthzCapabilityCountOutputType without action
    */
   export type AuthzCapabilityCountOutputTypeCountRoleMapsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthzRoleCapabilityMapWhereInput
+    where?: AuthzRoleCapabilityWhereInput
   }
 
 
@@ -3956,7 +3956,7 @@ export namespace Prisma {
    * AuthzRoleCountOutputType without action
    */
   export type AuthzRoleCountOutputTypeCountRoleMapsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthzRoleCapabilityMapWhereInput
+    where?: AuthzRoleCapabilityWhereInput
   }
 
   /**
@@ -30732,7 +30732,7 @@ export namespace Prisma {
     name: "AuthzCapability"
     objects: {
       application: Prisma.$ApplicationPayload<ExtArgs> | null
-      roleMaps: Prisma.$AuthzRoleCapabilityMapPayload<ExtArgs>[]
+      roleMaps: Prisma.$AuthzRoleCapabilityPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -31135,7 +31135,7 @@ export namespace Prisma {
   export interface Prisma__AuthzCapabilityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     application<T extends AuthzCapability$applicationArgs<ExtArgs> = {}>(args?: Subset<T, AuthzCapability$applicationArgs<ExtArgs>>): Prisma__ApplicationClient<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    roleMaps<T extends AuthzCapability$roleMapsArgs<ExtArgs> = {}>(args?: Subset<T, AuthzCapability$roleMapsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzRoleCapabilityMapPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    roleMaps<T extends AuthzCapability$roleMapsArgs<ExtArgs> = {}>(args?: Subset<T, AuthzCapability$roleMapsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzRoleCapabilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -31589,23 +31589,23 @@ export namespace Prisma {
    */
   export type AuthzCapability$roleMapsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthzRoleCapabilityMap
+     * Select specific fields to fetch from the AuthzRoleCapability
      */
-    select?: AuthzRoleCapabilityMapSelect<ExtArgs> | null
+    select?: AuthzRoleCapabilitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthzRoleCapabilityMap
+     * Omit specific fields from the AuthzRoleCapability
      */
-    omit?: AuthzRoleCapabilityMapOmit<ExtArgs> | null
+    omit?: AuthzRoleCapabilityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthzRoleCapabilityMapInclude<ExtArgs> | null
-    where?: AuthzRoleCapabilityMapWhereInput
-    orderBy?: AuthzRoleCapabilityMapOrderByWithRelationInput | AuthzRoleCapabilityMapOrderByWithRelationInput[]
-    cursor?: AuthzRoleCapabilityMapWhereUniqueInput
+    include?: AuthzRoleCapabilityInclude<ExtArgs> | null
+    where?: AuthzRoleCapabilityWhereInput
+    orderBy?: AuthzRoleCapabilityOrderByWithRelationInput | AuthzRoleCapabilityOrderByWithRelationInput[]
+    cursor?: AuthzRoleCapabilityWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: AuthzRoleCapabilityMapScalarFieldEnum | AuthzRoleCapabilityMapScalarFieldEnum[]
+    distinct?: AuthzRoleCapabilityScalarFieldEnum | AuthzRoleCapabilityScalarFieldEnum[]
   }
 
   /**
@@ -31850,7 +31850,7 @@ export namespace Prisma {
     name: "AuthzRole"
     objects: {
       application: Prisma.$ApplicationPayload<ExtArgs> | null
-      roleMaps: Prisma.$AuthzRoleCapabilityMapPayload<ExtArgs>[]
+      roleMaps: Prisma.$AuthzRoleCapabilityPayload<ExtArgs>[]
       grants: Prisma.$AuthzAccountAccessGrantPayload<ExtArgs>[]
       assetsGrants: Prisma.$AuthzAssetsAccessGrantPayload<ExtArgs>[]
     }
@@ -32256,7 +32256,7 @@ export namespace Prisma {
   export interface Prisma__AuthzRoleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     application<T extends AuthzRole$applicationArgs<ExtArgs> = {}>(args?: Subset<T, AuthzRole$applicationArgs<ExtArgs>>): Prisma__ApplicationClient<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    roleMaps<T extends AuthzRole$roleMapsArgs<ExtArgs> = {}>(args?: Subset<T, AuthzRole$roleMapsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzRoleCapabilityMapPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    roleMaps<T extends AuthzRole$roleMapsArgs<ExtArgs> = {}>(args?: Subset<T, AuthzRole$roleMapsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzRoleCapabilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     grants<T extends AuthzRole$grantsArgs<ExtArgs> = {}>(args?: Subset<T, AuthzRole$grantsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzAccountAccessGrantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     assetsGrants<T extends AuthzRole$assetsGrantsArgs<ExtArgs> = {}>(args?: Subset<T, AuthzRole$assetsGrantsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzAssetsAccessGrantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -32713,23 +32713,23 @@ export namespace Prisma {
    */
   export type AuthzRole$roleMapsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthzRoleCapabilityMap
+     * Select specific fields to fetch from the AuthzRoleCapability
      */
-    select?: AuthzRoleCapabilityMapSelect<ExtArgs> | null
+    select?: AuthzRoleCapabilitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthzRoleCapabilityMap
+     * Omit specific fields from the AuthzRoleCapability
      */
-    omit?: AuthzRoleCapabilityMapOmit<ExtArgs> | null
+    omit?: AuthzRoleCapabilityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthzRoleCapabilityMapInclude<ExtArgs> | null
-    where?: AuthzRoleCapabilityMapWhereInput
-    orderBy?: AuthzRoleCapabilityMapOrderByWithRelationInput | AuthzRoleCapabilityMapOrderByWithRelationInput[]
-    cursor?: AuthzRoleCapabilityMapWhereUniqueInput
+    include?: AuthzRoleCapabilityInclude<ExtArgs> | null
+    where?: AuthzRoleCapabilityWhereInput
+    orderBy?: AuthzRoleCapabilityOrderByWithRelationInput | AuthzRoleCapabilityOrderByWithRelationInput[]
+    cursor?: AuthzRoleCapabilityWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: AuthzRoleCapabilityMapScalarFieldEnum | AuthzRoleCapabilityMapScalarFieldEnum[]
+    distinct?: AuthzRoleCapabilityScalarFieldEnum | AuthzRoleCapabilityScalarFieldEnum[]
   }
 
   /**
@@ -32800,30 +32800,30 @@ export namespace Prisma {
 
 
   /**
-   * Model AuthzRoleCapabilityMap
+   * Model AuthzRoleCapability
    */
 
-  export type AggregateAuthzRoleCapabilityMap = {
-    _count: AuthzRoleCapabilityMapCountAggregateOutputType | null
-    _min: AuthzRoleCapabilityMapMinAggregateOutputType | null
-    _max: AuthzRoleCapabilityMapMaxAggregateOutputType | null
+  export type AggregateAuthzRoleCapability = {
+    _count: AuthzRoleCapabilityCountAggregateOutputType | null
+    _min: AuthzRoleCapabilityMinAggregateOutputType | null
+    _max: AuthzRoleCapabilityMaxAggregateOutputType | null
   }
 
-  export type AuthzRoleCapabilityMapMinAggregateOutputType = {
+  export type AuthzRoleCapabilityMinAggregateOutputType = {
     id: string | null
     roleId: string | null
     capabilityId: string | null
     scope: string | null
   }
 
-  export type AuthzRoleCapabilityMapMaxAggregateOutputType = {
+  export type AuthzRoleCapabilityMaxAggregateOutputType = {
     id: string | null
     roleId: string | null
     capabilityId: string | null
     scope: string | null
   }
 
-  export type AuthzRoleCapabilityMapCountAggregateOutputType = {
+  export type AuthzRoleCapabilityCountAggregateOutputType = {
     id: number
     roleId: number
     capabilityId: number
@@ -32833,21 +32833,21 @@ export namespace Prisma {
   }
 
 
-  export type AuthzRoleCapabilityMapMinAggregateInputType = {
+  export type AuthzRoleCapabilityMinAggregateInputType = {
     id?: true
     roleId?: true
     capabilityId?: true
     scope?: true
   }
 
-  export type AuthzRoleCapabilityMapMaxAggregateInputType = {
+  export type AuthzRoleCapabilityMaxAggregateInputType = {
     id?: true
     roleId?: true
     capabilityId?: true
     scope?: true
   }
 
-  export type AuthzRoleCapabilityMapCountAggregateInputType = {
+  export type AuthzRoleCapabilityCountAggregateInputType = {
     id?: true
     roleId?: true
     capabilityId?: true
@@ -32856,104 +32856,104 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type AuthzRoleCapabilityMapAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthzRoleCapabilityAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which AuthzRoleCapabilityMap to aggregate.
+     * Filter which AuthzRoleCapability to aggregate.
      */
-    where?: AuthzRoleCapabilityMapWhereInput
+    where?: AuthzRoleCapabilityWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of AuthzRoleCapabilityMaps to fetch.
+     * Determine the order of AuthzRoleCapabilities to fetch.
      */
-    orderBy?: AuthzRoleCapabilityMapOrderByWithRelationInput | AuthzRoleCapabilityMapOrderByWithRelationInput[]
+    orderBy?: AuthzRoleCapabilityOrderByWithRelationInput | AuthzRoleCapabilityOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: AuthzRoleCapabilityMapWhereUniqueInput
+    cursor?: AuthzRoleCapabilityWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` AuthzRoleCapabilityMaps from the position of the cursor.
+     * Take `±n` AuthzRoleCapabilities from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` AuthzRoleCapabilityMaps.
+     * Skip the first `n` AuthzRoleCapabilities.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned AuthzRoleCapabilityMaps
+     * Count returned AuthzRoleCapabilities
     **/
-    _count?: true | AuthzRoleCapabilityMapCountAggregateInputType
+    _count?: true | AuthzRoleCapabilityCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: AuthzRoleCapabilityMapMinAggregateInputType
+    _min?: AuthzRoleCapabilityMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: AuthzRoleCapabilityMapMaxAggregateInputType
+    _max?: AuthzRoleCapabilityMaxAggregateInputType
   }
 
-  export type GetAuthzRoleCapabilityMapAggregateType<T extends AuthzRoleCapabilityMapAggregateArgs> = {
-        [P in keyof T & keyof AggregateAuthzRoleCapabilityMap]: P extends '_count' | 'count'
+  export type GetAuthzRoleCapabilityAggregateType<T extends AuthzRoleCapabilityAggregateArgs> = {
+        [P in keyof T & keyof AggregateAuthzRoleCapability]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateAuthzRoleCapabilityMap[P]>
-      : GetScalarType<T[P], AggregateAuthzRoleCapabilityMap[P]>
+        : GetScalarType<T[P], AggregateAuthzRoleCapability[P]>
+      : GetScalarType<T[P], AggregateAuthzRoleCapability[P]>
   }
 
 
 
 
-  export type AuthzRoleCapabilityMapGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthzRoleCapabilityMapWhereInput
-    orderBy?: AuthzRoleCapabilityMapOrderByWithAggregationInput | AuthzRoleCapabilityMapOrderByWithAggregationInput[]
-    by: AuthzRoleCapabilityMapScalarFieldEnum[] | AuthzRoleCapabilityMapScalarFieldEnum
-    having?: AuthzRoleCapabilityMapScalarWhereWithAggregatesInput
+  export type AuthzRoleCapabilityGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AuthzRoleCapabilityWhereInput
+    orderBy?: AuthzRoleCapabilityOrderByWithAggregationInput | AuthzRoleCapabilityOrderByWithAggregationInput[]
+    by: AuthzRoleCapabilityScalarFieldEnum[] | AuthzRoleCapabilityScalarFieldEnum
+    having?: AuthzRoleCapabilityScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: AuthzRoleCapabilityMapCountAggregateInputType | true
-    _min?: AuthzRoleCapabilityMapMinAggregateInputType
-    _max?: AuthzRoleCapabilityMapMaxAggregateInputType
+    _count?: AuthzRoleCapabilityCountAggregateInputType | true
+    _min?: AuthzRoleCapabilityMinAggregateInputType
+    _max?: AuthzRoleCapabilityMaxAggregateInputType
   }
 
-  export type AuthzRoleCapabilityMapGroupByOutputType = {
+  export type AuthzRoleCapabilityGroupByOutputType = {
     id: string
     roleId: string
     capabilityId: string
     scope: string | null
     denormalizedCapability: JsonValue | null
-    _count: AuthzRoleCapabilityMapCountAggregateOutputType | null
-    _min: AuthzRoleCapabilityMapMinAggregateOutputType | null
-    _max: AuthzRoleCapabilityMapMaxAggregateOutputType | null
+    _count: AuthzRoleCapabilityCountAggregateOutputType | null
+    _min: AuthzRoleCapabilityMinAggregateOutputType | null
+    _max: AuthzRoleCapabilityMaxAggregateOutputType | null
   }
 
-  type GetAuthzRoleCapabilityMapGroupByPayload<T extends AuthzRoleCapabilityMapGroupByArgs> = Prisma.PrismaPromise<
+  type GetAuthzRoleCapabilityGroupByPayload<T extends AuthzRoleCapabilityGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<AuthzRoleCapabilityMapGroupByOutputType, T['by']> &
+      PickEnumerable<AuthzRoleCapabilityGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof AuthzRoleCapabilityMapGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof AuthzRoleCapabilityGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], AuthzRoleCapabilityMapGroupByOutputType[P]>
-            : GetScalarType<T[P], AuthzRoleCapabilityMapGroupByOutputType[P]>
+              : GetScalarType<T[P], AuthzRoleCapabilityGroupByOutputType[P]>
+            : GetScalarType<T[P], AuthzRoleCapabilityGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type AuthzRoleCapabilityMapSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type AuthzRoleCapabilitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     roleId?: boolean
     capabilityId?: boolean
@@ -32961,9 +32961,9 @@ export namespace Prisma {
     denormalizedCapability?: boolean
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
     capability?: boolean | AuthzCapabilityDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["authzRoleCapabilityMap"]>
+  }, ExtArgs["result"]["authzRoleCapability"]>
 
-  export type AuthzRoleCapabilityMapSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type AuthzRoleCapabilitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     roleId?: boolean
     capabilityId?: boolean
@@ -32971,9 +32971,9 @@ export namespace Prisma {
     denormalizedCapability?: boolean
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
     capability?: boolean | AuthzCapabilityDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["authzRoleCapabilityMap"]>
+  }, ExtArgs["result"]["authzRoleCapability"]>
 
-  export type AuthzRoleCapabilityMapSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type AuthzRoleCapabilitySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     roleId?: boolean
     capabilityId?: boolean
@@ -32981,9 +32981,9 @@ export namespace Prisma {
     denormalizedCapability?: boolean
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
     capability?: boolean | AuthzCapabilityDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["authzRoleCapabilityMap"]>
+  }, ExtArgs["result"]["authzRoleCapability"]>
 
-  export type AuthzRoleCapabilityMapSelectScalar = {
+  export type AuthzRoleCapabilitySelectScalar = {
     id?: boolean
     roleId?: boolean
     capabilityId?: boolean
@@ -32991,22 +32991,22 @@ export namespace Prisma {
     denormalizedCapability?: boolean
   }
 
-  export type AuthzRoleCapabilityMapOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "roleId" | "capabilityId" | "scope" | "denormalizedCapability", ExtArgs["result"]["authzRoleCapabilityMap"]>
-  export type AuthzRoleCapabilityMapInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthzRoleCapabilityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "roleId" | "capabilityId" | "scope" | "denormalizedCapability", ExtArgs["result"]["authzRoleCapability"]>
+  export type AuthzRoleCapabilityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
     capability?: boolean | AuthzCapabilityDefaultArgs<ExtArgs>
   }
-  export type AuthzRoleCapabilityMapIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthzRoleCapabilityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
     capability?: boolean | AuthzCapabilityDefaultArgs<ExtArgs>
   }
-  export type AuthzRoleCapabilityMapIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthzRoleCapabilityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
     capability?: boolean | AuthzCapabilityDefaultArgs<ExtArgs>
   }
 
-  export type $AuthzRoleCapabilityMapPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "AuthzRoleCapabilityMap"
+  export type $AuthzRoleCapabilityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AuthzRoleCapability"
     objects: {
       role: Prisma.$AuthzRolePayload<ExtArgs>
       capability: Prisma.$AuthzCapabilityPayload<ExtArgs>
@@ -33017,136 +33017,136 @@ export namespace Prisma {
       capabilityId: string
       scope: string | null
       denormalizedCapability: Prisma.JsonValue | null
-    }, ExtArgs["result"]["authzRoleCapabilityMap"]>
+    }, ExtArgs["result"]["authzRoleCapability"]>
     composites: {}
   }
 
-  type AuthzRoleCapabilityMapGetPayload<S extends boolean | null | undefined | AuthzRoleCapabilityMapDefaultArgs> = $Result.GetResult<Prisma.$AuthzRoleCapabilityMapPayload, S>
+  type AuthzRoleCapabilityGetPayload<S extends boolean | null | undefined | AuthzRoleCapabilityDefaultArgs> = $Result.GetResult<Prisma.$AuthzRoleCapabilityPayload, S>
 
-  type AuthzRoleCapabilityMapCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<AuthzRoleCapabilityMapFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: AuthzRoleCapabilityMapCountAggregateInputType | true
+  type AuthzRoleCapabilityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AuthzRoleCapabilityFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AuthzRoleCapabilityCountAggregateInputType | true
     }
 
-  export interface AuthzRoleCapabilityMapDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AuthzRoleCapabilityMap'], meta: { name: 'AuthzRoleCapabilityMap' } }
+  export interface AuthzRoleCapabilityDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AuthzRoleCapability'], meta: { name: 'AuthzRoleCapability' } }
     /**
-     * Find zero or one AuthzRoleCapabilityMap that matches the filter.
-     * @param {AuthzRoleCapabilityMapFindUniqueArgs} args - Arguments to find a AuthzRoleCapabilityMap
+     * Find zero or one AuthzRoleCapability that matches the filter.
+     * @param {AuthzRoleCapabilityFindUniqueArgs} args - Arguments to find a AuthzRoleCapability
      * @example
-     * // Get one AuthzRoleCapabilityMap
-     * const authzRoleCapabilityMap = await prisma.authzRoleCapabilityMap.findUnique({
+     * // Get one AuthzRoleCapability
+     * const authzRoleCapability = await prisma.authzRoleCapability.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends AuthzRoleCapabilityMapFindUniqueArgs>(args: SelectSubset<T, AuthzRoleCapabilityMapFindUniqueArgs<ExtArgs>>): Prisma__AuthzRoleCapabilityMapClient<$Result.GetResult<Prisma.$AuthzRoleCapabilityMapPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends AuthzRoleCapabilityFindUniqueArgs>(args: SelectSubset<T, AuthzRoleCapabilityFindUniqueArgs<ExtArgs>>): Prisma__AuthzRoleCapabilityClient<$Result.GetResult<Prisma.$AuthzRoleCapabilityPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one AuthzRoleCapabilityMap that matches the filter or throw an error with `error.code='P2025'`
+     * Find one AuthzRoleCapability that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {AuthzRoleCapabilityMapFindUniqueOrThrowArgs} args - Arguments to find a AuthzRoleCapabilityMap
+     * @param {AuthzRoleCapabilityFindUniqueOrThrowArgs} args - Arguments to find a AuthzRoleCapability
      * @example
-     * // Get one AuthzRoleCapabilityMap
-     * const authzRoleCapabilityMap = await prisma.authzRoleCapabilityMap.findUniqueOrThrow({
+     * // Get one AuthzRoleCapability
+     * const authzRoleCapability = await prisma.authzRoleCapability.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends AuthzRoleCapabilityMapFindUniqueOrThrowArgs>(args: SelectSubset<T, AuthzRoleCapabilityMapFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AuthzRoleCapabilityMapClient<$Result.GetResult<Prisma.$AuthzRoleCapabilityMapPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends AuthzRoleCapabilityFindUniqueOrThrowArgs>(args: SelectSubset<T, AuthzRoleCapabilityFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AuthzRoleCapabilityClient<$Result.GetResult<Prisma.$AuthzRoleCapabilityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first AuthzRoleCapabilityMap that matches the filter.
+     * Find the first AuthzRoleCapability that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthzRoleCapabilityMapFindFirstArgs} args - Arguments to find a AuthzRoleCapabilityMap
+     * @param {AuthzRoleCapabilityFindFirstArgs} args - Arguments to find a AuthzRoleCapability
      * @example
-     * // Get one AuthzRoleCapabilityMap
-     * const authzRoleCapabilityMap = await prisma.authzRoleCapabilityMap.findFirst({
+     * // Get one AuthzRoleCapability
+     * const authzRoleCapability = await prisma.authzRoleCapability.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends AuthzRoleCapabilityMapFindFirstArgs>(args?: SelectSubset<T, AuthzRoleCapabilityMapFindFirstArgs<ExtArgs>>): Prisma__AuthzRoleCapabilityMapClient<$Result.GetResult<Prisma.$AuthzRoleCapabilityMapPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends AuthzRoleCapabilityFindFirstArgs>(args?: SelectSubset<T, AuthzRoleCapabilityFindFirstArgs<ExtArgs>>): Prisma__AuthzRoleCapabilityClient<$Result.GetResult<Prisma.$AuthzRoleCapabilityPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first AuthzRoleCapabilityMap that matches the filter or
+     * Find the first AuthzRoleCapability that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthzRoleCapabilityMapFindFirstOrThrowArgs} args - Arguments to find a AuthzRoleCapabilityMap
+     * @param {AuthzRoleCapabilityFindFirstOrThrowArgs} args - Arguments to find a AuthzRoleCapability
      * @example
-     * // Get one AuthzRoleCapabilityMap
-     * const authzRoleCapabilityMap = await prisma.authzRoleCapabilityMap.findFirstOrThrow({
+     * // Get one AuthzRoleCapability
+     * const authzRoleCapability = await prisma.authzRoleCapability.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends AuthzRoleCapabilityMapFindFirstOrThrowArgs>(args?: SelectSubset<T, AuthzRoleCapabilityMapFindFirstOrThrowArgs<ExtArgs>>): Prisma__AuthzRoleCapabilityMapClient<$Result.GetResult<Prisma.$AuthzRoleCapabilityMapPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends AuthzRoleCapabilityFindFirstOrThrowArgs>(args?: SelectSubset<T, AuthzRoleCapabilityFindFirstOrThrowArgs<ExtArgs>>): Prisma__AuthzRoleCapabilityClient<$Result.GetResult<Prisma.$AuthzRoleCapabilityPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more AuthzRoleCapabilityMaps that matches the filter.
+     * Find zero or more AuthzRoleCapabilities that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthzRoleCapabilityMapFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {AuthzRoleCapabilityFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all AuthzRoleCapabilityMaps
-     * const authzRoleCapabilityMaps = await prisma.authzRoleCapabilityMap.findMany()
+     * // Get all AuthzRoleCapabilities
+     * const authzRoleCapabilities = await prisma.authzRoleCapability.findMany()
      * 
-     * // Get first 10 AuthzRoleCapabilityMaps
-     * const authzRoleCapabilityMaps = await prisma.authzRoleCapabilityMap.findMany({ take: 10 })
+     * // Get first 10 AuthzRoleCapabilities
+     * const authzRoleCapabilities = await prisma.authzRoleCapability.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const authzRoleCapabilityMapWithIdOnly = await prisma.authzRoleCapabilityMap.findMany({ select: { id: true } })
+     * const authzRoleCapabilityWithIdOnly = await prisma.authzRoleCapability.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends AuthzRoleCapabilityMapFindManyArgs>(args?: SelectSubset<T, AuthzRoleCapabilityMapFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzRoleCapabilityMapPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends AuthzRoleCapabilityFindManyArgs>(args?: SelectSubset<T, AuthzRoleCapabilityFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzRoleCapabilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a AuthzRoleCapabilityMap.
-     * @param {AuthzRoleCapabilityMapCreateArgs} args - Arguments to create a AuthzRoleCapabilityMap.
+     * Create a AuthzRoleCapability.
+     * @param {AuthzRoleCapabilityCreateArgs} args - Arguments to create a AuthzRoleCapability.
      * @example
-     * // Create one AuthzRoleCapabilityMap
-     * const AuthzRoleCapabilityMap = await prisma.authzRoleCapabilityMap.create({
+     * // Create one AuthzRoleCapability
+     * const AuthzRoleCapability = await prisma.authzRoleCapability.create({
      *   data: {
-     *     // ... data to create a AuthzRoleCapabilityMap
+     *     // ... data to create a AuthzRoleCapability
      *   }
      * })
      * 
      */
-    create<T extends AuthzRoleCapabilityMapCreateArgs>(args: SelectSubset<T, AuthzRoleCapabilityMapCreateArgs<ExtArgs>>): Prisma__AuthzRoleCapabilityMapClient<$Result.GetResult<Prisma.$AuthzRoleCapabilityMapPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends AuthzRoleCapabilityCreateArgs>(args: SelectSubset<T, AuthzRoleCapabilityCreateArgs<ExtArgs>>): Prisma__AuthzRoleCapabilityClient<$Result.GetResult<Prisma.$AuthzRoleCapabilityPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many AuthzRoleCapabilityMaps.
-     * @param {AuthzRoleCapabilityMapCreateManyArgs} args - Arguments to create many AuthzRoleCapabilityMaps.
+     * Create many AuthzRoleCapabilities.
+     * @param {AuthzRoleCapabilityCreateManyArgs} args - Arguments to create many AuthzRoleCapabilities.
      * @example
-     * // Create many AuthzRoleCapabilityMaps
-     * const authzRoleCapabilityMap = await prisma.authzRoleCapabilityMap.createMany({
+     * // Create many AuthzRoleCapabilities
+     * const authzRoleCapability = await prisma.authzRoleCapability.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends AuthzRoleCapabilityMapCreateManyArgs>(args?: SelectSubset<T, AuthzRoleCapabilityMapCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends AuthzRoleCapabilityCreateManyArgs>(args?: SelectSubset<T, AuthzRoleCapabilityCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many AuthzRoleCapabilityMaps and returns the data saved in the database.
-     * @param {AuthzRoleCapabilityMapCreateManyAndReturnArgs} args - Arguments to create many AuthzRoleCapabilityMaps.
+     * Create many AuthzRoleCapabilities and returns the data saved in the database.
+     * @param {AuthzRoleCapabilityCreateManyAndReturnArgs} args - Arguments to create many AuthzRoleCapabilities.
      * @example
-     * // Create many AuthzRoleCapabilityMaps
-     * const authzRoleCapabilityMap = await prisma.authzRoleCapabilityMap.createManyAndReturn({
+     * // Create many AuthzRoleCapabilities
+     * const authzRoleCapability = await prisma.authzRoleCapability.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many AuthzRoleCapabilityMaps and only return the `id`
-     * const authzRoleCapabilityMapWithIdOnly = await prisma.authzRoleCapabilityMap.createManyAndReturn({
+     * // Create many AuthzRoleCapabilities and only return the `id`
+     * const authzRoleCapabilityWithIdOnly = await prisma.authzRoleCapability.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -33156,28 +33156,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends AuthzRoleCapabilityMapCreateManyAndReturnArgs>(args?: SelectSubset<T, AuthzRoleCapabilityMapCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzRoleCapabilityMapPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends AuthzRoleCapabilityCreateManyAndReturnArgs>(args?: SelectSubset<T, AuthzRoleCapabilityCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzRoleCapabilityPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a AuthzRoleCapabilityMap.
-     * @param {AuthzRoleCapabilityMapDeleteArgs} args - Arguments to delete one AuthzRoleCapabilityMap.
+     * Delete a AuthzRoleCapability.
+     * @param {AuthzRoleCapabilityDeleteArgs} args - Arguments to delete one AuthzRoleCapability.
      * @example
-     * // Delete one AuthzRoleCapabilityMap
-     * const AuthzRoleCapabilityMap = await prisma.authzRoleCapabilityMap.delete({
+     * // Delete one AuthzRoleCapability
+     * const AuthzRoleCapability = await prisma.authzRoleCapability.delete({
      *   where: {
-     *     // ... filter to delete one AuthzRoleCapabilityMap
+     *     // ... filter to delete one AuthzRoleCapability
      *   }
      * })
      * 
      */
-    delete<T extends AuthzRoleCapabilityMapDeleteArgs>(args: SelectSubset<T, AuthzRoleCapabilityMapDeleteArgs<ExtArgs>>): Prisma__AuthzRoleCapabilityMapClient<$Result.GetResult<Prisma.$AuthzRoleCapabilityMapPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends AuthzRoleCapabilityDeleteArgs>(args: SelectSubset<T, AuthzRoleCapabilityDeleteArgs<ExtArgs>>): Prisma__AuthzRoleCapabilityClient<$Result.GetResult<Prisma.$AuthzRoleCapabilityPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one AuthzRoleCapabilityMap.
-     * @param {AuthzRoleCapabilityMapUpdateArgs} args - Arguments to update one AuthzRoleCapabilityMap.
+     * Update one AuthzRoleCapability.
+     * @param {AuthzRoleCapabilityUpdateArgs} args - Arguments to update one AuthzRoleCapability.
      * @example
-     * // Update one AuthzRoleCapabilityMap
-     * const authzRoleCapabilityMap = await prisma.authzRoleCapabilityMap.update({
+     * // Update one AuthzRoleCapability
+     * const authzRoleCapability = await prisma.authzRoleCapability.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -33187,30 +33187,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends AuthzRoleCapabilityMapUpdateArgs>(args: SelectSubset<T, AuthzRoleCapabilityMapUpdateArgs<ExtArgs>>): Prisma__AuthzRoleCapabilityMapClient<$Result.GetResult<Prisma.$AuthzRoleCapabilityMapPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends AuthzRoleCapabilityUpdateArgs>(args: SelectSubset<T, AuthzRoleCapabilityUpdateArgs<ExtArgs>>): Prisma__AuthzRoleCapabilityClient<$Result.GetResult<Prisma.$AuthzRoleCapabilityPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more AuthzRoleCapabilityMaps.
-     * @param {AuthzRoleCapabilityMapDeleteManyArgs} args - Arguments to filter AuthzRoleCapabilityMaps to delete.
+     * Delete zero or more AuthzRoleCapabilities.
+     * @param {AuthzRoleCapabilityDeleteManyArgs} args - Arguments to filter AuthzRoleCapabilities to delete.
      * @example
-     * // Delete a few AuthzRoleCapabilityMaps
-     * const { count } = await prisma.authzRoleCapabilityMap.deleteMany({
+     * // Delete a few AuthzRoleCapabilities
+     * const { count } = await prisma.authzRoleCapability.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends AuthzRoleCapabilityMapDeleteManyArgs>(args?: SelectSubset<T, AuthzRoleCapabilityMapDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends AuthzRoleCapabilityDeleteManyArgs>(args?: SelectSubset<T, AuthzRoleCapabilityDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more AuthzRoleCapabilityMaps.
+     * Update zero or more AuthzRoleCapabilities.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthzRoleCapabilityMapUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {AuthzRoleCapabilityUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many AuthzRoleCapabilityMaps
-     * const authzRoleCapabilityMap = await prisma.authzRoleCapabilityMap.updateMany({
+     * // Update many AuthzRoleCapabilities
+     * const authzRoleCapability = await prisma.authzRoleCapability.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -33220,14 +33220,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends AuthzRoleCapabilityMapUpdateManyArgs>(args: SelectSubset<T, AuthzRoleCapabilityMapUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends AuthzRoleCapabilityUpdateManyArgs>(args: SelectSubset<T, AuthzRoleCapabilityUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more AuthzRoleCapabilityMaps and returns the data updated in the database.
-     * @param {AuthzRoleCapabilityMapUpdateManyAndReturnArgs} args - Arguments to update many AuthzRoleCapabilityMaps.
+     * Update zero or more AuthzRoleCapabilities and returns the data updated in the database.
+     * @param {AuthzRoleCapabilityUpdateManyAndReturnArgs} args - Arguments to update many AuthzRoleCapabilities.
      * @example
-     * // Update many AuthzRoleCapabilityMaps
-     * const authzRoleCapabilityMap = await prisma.authzRoleCapabilityMap.updateManyAndReturn({
+     * // Update many AuthzRoleCapabilities
+     * const authzRoleCapability = await prisma.authzRoleCapability.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -33236,8 +33236,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more AuthzRoleCapabilityMaps and only return the `id`
-     * const authzRoleCapabilityMapWithIdOnly = await prisma.authzRoleCapabilityMap.updateManyAndReturn({
+     * // Update zero or more AuthzRoleCapabilities and only return the `id`
+     * const authzRoleCapabilityWithIdOnly = await prisma.authzRoleCapability.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -33250,56 +33250,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends AuthzRoleCapabilityMapUpdateManyAndReturnArgs>(args: SelectSubset<T, AuthzRoleCapabilityMapUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzRoleCapabilityMapPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends AuthzRoleCapabilityUpdateManyAndReturnArgs>(args: SelectSubset<T, AuthzRoleCapabilityUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzRoleCapabilityPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one AuthzRoleCapabilityMap.
-     * @param {AuthzRoleCapabilityMapUpsertArgs} args - Arguments to update or create a AuthzRoleCapabilityMap.
+     * Create or update one AuthzRoleCapability.
+     * @param {AuthzRoleCapabilityUpsertArgs} args - Arguments to update or create a AuthzRoleCapability.
      * @example
-     * // Update or create a AuthzRoleCapabilityMap
-     * const authzRoleCapabilityMap = await prisma.authzRoleCapabilityMap.upsert({
+     * // Update or create a AuthzRoleCapability
+     * const authzRoleCapability = await prisma.authzRoleCapability.upsert({
      *   create: {
-     *     // ... data to create a AuthzRoleCapabilityMap
+     *     // ... data to create a AuthzRoleCapability
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the AuthzRoleCapabilityMap we want to update
+     *     // ... the filter for the AuthzRoleCapability we want to update
      *   }
      * })
      */
-    upsert<T extends AuthzRoleCapabilityMapUpsertArgs>(args: SelectSubset<T, AuthzRoleCapabilityMapUpsertArgs<ExtArgs>>): Prisma__AuthzRoleCapabilityMapClient<$Result.GetResult<Prisma.$AuthzRoleCapabilityMapPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends AuthzRoleCapabilityUpsertArgs>(args: SelectSubset<T, AuthzRoleCapabilityUpsertArgs<ExtArgs>>): Prisma__AuthzRoleCapabilityClient<$Result.GetResult<Prisma.$AuthzRoleCapabilityPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of AuthzRoleCapabilityMaps.
+     * Count the number of AuthzRoleCapabilities.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthzRoleCapabilityMapCountArgs} args - Arguments to filter AuthzRoleCapabilityMaps to count.
+     * @param {AuthzRoleCapabilityCountArgs} args - Arguments to filter AuthzRoleCapabilities to count.
      * @example
-     * // Count the number of AuthzRoleCapabilityMaps
-     * const count = await prisma.authzRoleCapabilityMap.count({
+     * // Count the number of AuthzRoleCapabilities
+     * const count = await prisma.authzRoleCapability.count({
      *   where: {
-     *     // ... the filter for the AuthzRoleCapabilityMaps we want to count
+     *     // ... the filter for the AuthzRoleCapabilities we want to count
      *   }
      * })
     **/
-    count<T extends AuthzRoleCapabilityMapCountArgs>(
-      args?: Subset<T, AuthzRoleCapabilityMapCountArgs>,
+    count<T extends AuthzRoleCapabilityCountArgs>(
+      args?: Subset<T, AuthzRoleCapabilityCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], AuthzRoleCapabilityMapCountAggregateOutputType>
+          : GetScalarType<T['select'], AuthzRoleCapabilityCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a AuthzRoleCapabilityMap.
+     * Allows you to perform aggregations operations on a AuthzRoleCapability.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthzRoleCapabilityMapAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {AuthzRoleCapabilityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -33319,13 +33319,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends AuthzRoleCapabilityMapAggregateArgs>(args: Subset<T, AuthzRoleCapabilityMapAggregateArgs>): Prisma.PrismaPromise<GetAuthzRoleCapabilityMapAggregateType<T>>
+    aggregate<T extends AuthzRoleCapabilityAggregateArgs>(args: Subset<T, AuthzRoleCapabilityAggregateArgs>): Prisma.PrismaPromise<GetAuthzRoleCapabilityAggregateType<T>>
 
     /**
-     * Group by AuthzRoleCapabilityMap.
+     * Group by AuthzRoleCapability.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthzRoleCapabilityMapGroupByArgs} args - Group by arguments.
+     * @param {AuthzRoleCapabilityGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -33340,14 +33340,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends AuthzRoleCapabilityMapGroupByArgs,
+      T extends AuthzRoleCapabilityGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: AuthzRoleCapabilityMapGroupByArgs['orderBy'] }
-        : { orderBy?: AuthzRoleCapabilityMapGroupByArgs['orderBy'] },
+        ? { orderBy: AuthzRoleCapabilityGroupByArgs['orderBy'] }
+        : { orderBy?: AuthzRoleCapabilityGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -33396,20 +33396,20 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, AuthzRoleCapabilityMapGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAuthzRoleCapabilityMapGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, AuthzRoleCapabilityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAuthzRoleCapabilityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the AuthzRoleCapabilityMap model
+   * Fields of the AuthzRoleCapability model
    */
-  readonly fields: AuthzRoleCapabilityMapFieldRefs;
+  readonly fields: AuthzRoleCapabilityFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for AuthzRoleCapabilityMap.
+   * The delegate class that acts as a "Promise-like" for AuthzRoleCapability.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__AuthzRoleCapabilityMapClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__AuthzRoleCapabilityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     role<T extends AuthzRoleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AuthzRoleDefaultArgs<ExtArgs>>): Prisma__AuthzRoleClient<$Result.GetResult<Prisma.$AuthzRolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     capability<T extends AuthzCapabilityDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AuthzCapabilityDefaultArgs<ExtArgs>>): Prisma__AuthzCapabilityClient<$Result.GetResult<Prisma.$AuthzCapabilityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -33439,425 +33439,425 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the AuthzRoleCapabilityMap model
+   * Fields of the AuthzRoleCapability model
    */
-  interface AuthzRoleCapabilityMapFieldRefs {
-    readonly id: FieldRef<"AuthzRoleCapabilityMap", 'String'>
-    readonly roleId: FieldRef<"AuthzRoleCapabilityMap", 'String'>
-    readonly capabilityId: FieldRef<"AuthzRoleCapabilityMap", 'String'>
-    readonly scope: FieldRef<"AuthzRoleCapabilityMap", 'String'>
-    readonly denormalizedCapability: FieldRef<"AuthzRoleCapabilityMap", 'Json'>
+  interface AuthzRoleCapabilityFieldRefs {
+    readonly id: FieldRef<"AuthzRoleCapability", 'String'>
+    readonly roleId: FieldRef<"AuthzRoleCapability", 'String'>
+    readonly capabilityId: FieldRef<"AuthzRoleCapability", 'String'>
+    readonly scope: FieldRef<"AuthzRoleCapability", 'String'>
+    readonly denormalizedCapability: FieldRef<"AuthzRoleCapability", 'Json'>
   }
     
 
   // Custom InputTypes
   /**
-   * AuthzRoleCapabilityMap findUnique
+   * AuthzRoleCapability findUnique
    */
-  export type AuthzRoleCapabilityMapFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthzRoleCapabilityFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthzRoleCapabilityMap
+     * Select specific fields to fetch from the AuthzRoleCapability
      */
-    select?: AuthzRoleCapabilityMapSelect<ExtArgs> | null
+    select?: AuthzRoleCapabilitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthzRoleCapabilityMap
+     * Omit specific fields from the AuthzRoleCapability
      */
-    omit?: AuthzRoleCapabilityMapOmit<ExtArgs> | null
+    omit?: AuthzRoleCapabilityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthzRoleCapabilityMapInclude<ExtArgs> | null
+    include?: AuthzRoleCapabilityInclude<ExtArgs> | null
     /**
-     * Filter, which AuthzRoleCapabilityMap to fetch.
+     * Filter, which AuthzRoleCapability to fetch.
      */
-    where: AuthzRoleCapabilityMapWhereUniqueInput
+    where: AuthzRoleCapabilityWhereUniqueInput
   }
 
   /**
-   * AuthzRoleCapabilityMap findUniqueOrThrow
+   * AuthzRoleCapability findUniqueOrThrow
    */
-  export type AuthzRoleCapabilityMapFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthzRoleCapabilityFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthzRoleCapabilityMap
+     * Select specific fields to fetch from the AuthzRoleCapability
      */
-    select?: AuthzRoleCapabilityMapSelect<ExtArgs> | null
+    select?: AuthzRoleCapabilitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthzRoleCapabilityMap
+     * Omit specific fields from the AuthzRoleCapability
      */
-    omit?: AuthzRoleCapabilityMapOmit<ExtArgs> | null
+    omit?: AuthzRoleCapabilityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthzRoleCapabilityMapInclude<ExtArgs> | null
+    include?: AuthzRoleCapabilityInclude<ExtArgs> | null
     /**
-     * Filter, which AuthzRoleCapabilityMap to fetch.
+     * Filter, which AuthzRoleCapability to fetch.
      */
-    where: AuthzRoleCapabilityMapWhereUniqueInput
+    where: AuthzRoleCapabilityWhereUniqueInput
   }
 
   /**
-   * AuthzRoleCapabilityMap findFirst
+   * AuthzRoleCapability findFirst
    */
-  export type AuthzRoleCapabilityMapFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthzRoleCapabilityFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthzRoleCapabilityMap
+     * Select specific fields to fetch from the AuthzRoleCapability
      */
-    select?: AuthzRoleCapabilityMapSelect<ExtArgs> | null
+    select?: AuthzRoleCapabilitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthzRoleCapabilityMap
+     * Omit specific fields from the AuthzRoleCapability
      */
-    omit?: AuthzRoleCapabilityMapOmit<ExtArgs> | null
+    omit?: AuthzRoleCapabilityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthzRoleCapabilityMapInclude<ExtArgs> | null
+    include?: AuthzRoleCapabilityInclude<ExtArgs> | null
     /**
-     * Filter, which AuthzRoleCapabilityMap to fetch.
+     * Filter, which AuthzRoleCapability to fetch.
      */
-    where?: AuthzRoleCapabilityMapWhereInput
+    where?: AuthzRoleCapabilityWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of AuthzRoleCapabilityMaps to fetch.
+     * Determine the order of AuthzRoleCapabilities to fetch.
      */
-    orderBy?: AuthzRoleCapabilityMapOrderByWithRelationInput | AuthzRoleCapabilityMapOrderByWithRelationInput[]
+    orderBy?: AuthzRoleCapabilityOrderByWithRelationInput | AuthzRoleCapabilityOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for AuthzRoleCapabilityMaps.
+     * Sets the position for searching for AuthzRoleCapabilities.
      */
-    cursor?: AuthzRoleCapabilityMapWhereUniqueInput
+    cursor?: AuthzRoleCapabilityWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` AuthzRoleCapabilityMaps from the position of the cursor.
+     * Take `±n` AuthzRoleCapabilities from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` AuthzRoleCapabilityMaps.
+     * Skip the first `n` AuthzRoleCapabilities.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of AuthzRoleCapabilityMaps.
+     * Filter by unique combinations of AuthzRoleCapabilities.
      */
-    distinct?: AuthzRoleCapabilityMapScalarFieldEnum | AuthzRoleCapabilityMapScalarFieldEnum[]
+    distinct?: AuthzRoleCapabilityScalarFieldEnum | AuthzRoleCapabilityScalarFieldEnum[]
   }
 
   /**
-   * AuthzRoleCapabilityMap findFirstOrThrow
+   * AuthzRoleCapability findFirstOrThrow
    */
-  export type AuthzRoleCapabilityMapFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthzRoleCapabilityFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthzRoleCapabilityMap
+     * Select specific fields to fetch from the AuthzRoleCapability
      */
-    select?: AuthzRoleCapabilityMapSelect<ExtArgs> | null
+    select?: AuthzRoleCapabilitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthzRoleCapabilityMap
+     * Omit specific fields from the AuthzRoleCapability
      */
-    omit?: AuthzRoleCapabilityMapOmit<ExtArgs> | null
+    omit?: AuthzRoleCapabilityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthzRoleCapabilityMapInclude<ExtArgs> | null
+    include?: AuthzRoleCapabilityInclude<ExtArgs> | null
     /**
-     * Filter, which AuthzRoleCapabilityMap to fetch.
+     * Filter, which AuthzRoleCapability to fetch.
      */
-    where?: AuthzRoleCapabilityMapWhereInput
+    where?: AuthzRoleCapabilityWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of AuthzRoleCapabilityMaps to fetch.
+     * Determine the order of AuthzRoleCapabilities to fetch.
      */
-    orderBy?: AuthzRoleCapabilityMapOrderByWithRelationInput | AuthzRoleCapabilityMapOrderByWithRelationInput[]
+    orderBy?: AuthzRoleCapabilityOrderByWithRelationInput | AuthzRoleCapabilityOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for AuthzRoleCapabilityMaps.
+     * Sets the position for searching for AuthzRoleCapabilities.
      */
-    cursor?: AuthzRoleCapabilityMapWhereUniqueInput
+    cursor?: AuthzRoleCapabilityWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` AuthzRoleCapabilityMaps from the position of the cursor.
+     * Take `±n` AuthzRoleCapabilities from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` AuthzRoleCapabilityMaps.
+     * Skip the first `n` AuthzRoleCapabilities.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of AuthzRoleCapabilityMaps.
+     * Filter by unique combinations of AuthzRoleCapabilities.
      */
-    distinct?: AuthzRoleCapabilityMapScalarFieldEnum | AuthzRoleCapabilityMapScalarFieldEnum[]
+    distinct?: AuthzRoleCapabilityScalarFieldEnum | AuthzRoleCapabilityScalarFieldEnum[]
   }
 
   /**
-   * AuthzRoleCapabilityMap findMany
+   * AuthzRoleCapability findMany
    */
-  export type AuthzRoleCapabilityMapFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthzRoleCapabilityFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthzRoleCapabilityMap
+     * Select specific fields to fetch from the AuthzRoleCapability
      */
-    select?: AuthzRoleCapabilityMapSelect<ExtArgs> | null
+    select?: AuthzRoleCapabilitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthzRoleCapabilityMap
+     * Omit specific fields from the AuthzRoleCapability
      */
-    omit?: AuthzRoleCapabilityMapOmit<ExtArgs> | null
+    omit?: AuthzRoleCapabilityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthzRoleCapabilityMapInclude<ExtArgs> | null
+    include?: AuthzRoleCapabilityInclude<ExtArgs> | null
     /**
-     * Filter, which AuthzRoleCapabilityMaps to fetch.
+     * Filter, which AuthzRoleCapabilities to fetch.
      */
-    where?: AuthzRoleCapabilityMapWhereInput
+    where?: AuthzRoleCapabilityWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of AuthzRoleCapabilityMaps to fetch.
+     * Determine the order of AuthzRoleCapabilities to fetch.
      */
-    orderBy?: AuthzRoleCapabilityMapOrderByWithRelationInput | AuthzRoleCapabilityMapOrderByWithRelationInput[]
+    orderBy?: AuthzRoleCapabilityOrderByWithRelationInput | AuthzRoleCapabilityOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing AuthzRoleCapabilityMaps.
+     * Sets the position for listing AuthzRoleCapabilities.
      */
-    cursor?: AuthzRoleCapabilityMapWhereUniqueInput
+    cursor?: AuthzRoleCapabilityWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` AuthzRoleCapabilityMaps from the position of the cursor.
+     * Take `±n` AuthzRoleCapabilities from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` AuthzRoleCapabilityMaps.
+     * Skip the first `n` AuthzRoleCapabilities.
      */
     skip?: number
-    distinct?: AuthzRoleCapabilityMapScalarFieldEnum | AuthzRoleCapabilityMapScalarFieldEnum[]
+    distinct?: AuthzRoleCapabilityScalarFieldEnum | AuthzRoleCapabilityScalarFieldEnum[]
   }
 
   /**
-   * AuthzRoleCapabilityMap create
+   * AuthzRoleCapability create
    */
-  export type AuthzRoleCapabilityMapCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthzRoleCapabilityCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthzRoleCapabilityMap
+     * Select specific fields to fetch from the AuthzRoleCapability
      */
-    select?: AuthzRoleCapabilityMapSelect<ExtArgs> | null
+    select?: AuthzRoleCapabilitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthzRoleCapabilityMap
+     * Omit specific fields from the AuthzRoleCapability
      */
-    omit?: AuthzRoleCapabilityMapOmit<ExtArgs> | null
+    omit?: AuthzRoleCapabilityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthzRoleCapabilityMapInclude<ExtArgs> | null
+    include?: AuthzRoleCapabilityInclude<ExtArgs> | null
     /**
-     * The data needed to create a AuthzRoleCapabilityMap.
+     * The data needed to create a AuthzRoleCapability.
      */
-    data: XOR<AuthzRoleCapabilityMapCreateInput, AuthzRoleCapabilityMapUncheckedCreateInput>
+    data: XOR<AuthzRoleCapabilityCreateInput, AuthzRoleCapabilityUncheckedCreateInput>
   }
 
   /**
-   * AuthzRoleCapabilityMap createMany
+   * AuthzRoleCapability createMany
    */
-  export type AuthzRoleCapabilityMapCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthzRoleCapabilityCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many AuthzRoleCapabilityMaps.
+     * The data used to create many AuthzRoleCapabilities.
      */
-    data: AuthzRoleCapabilityMapCreateManyInput | AuthzRoleCapabilityMapCreateManyInput[]
+    data: AuthzRoleCapabilityCreateManyInput | AuthzRoleCapabilityCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * AuthzRoleCapabilityMap createManyAndReturn
+   * AuthzRoleCapability createManyAndReturn
    */
-  export type AuthzRoleCapabilityMapCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthzRoleCapabilityCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthzRoleCapabilityMap
+     * Select specific fields to fetch from the AuthzRoleCapability
      */
-    select?: AuthzRoleCapabilityMapSelectCreateManyAndReturn<ExtArgs> | null
+    select?: AuthzRoleCapabilitySelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthzRoleCapabilityMap
+     * Omit specific fields from the AuthzRoleCapability
      */
-    omit?: AuthzRoleCapabilityMapOmit<ExtArgs> | null
+    omit?: AuthzRoleCapabilityOmit<ExtArgs> | null
     /**
-     * The data used to create many AuthzRoleCapabilityMaps.
+     * The data used to create many AuthzRoleCapabilities.
      */
-    data: AuthzRoleCapabilityMapCreateManyInput | AuthzRoleCapabilityMapCreateManyInput[]
+    data: AuthzRoleCapabilityCreateManyInput | AuthzRoleCapabilityCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthzRoleCapabilityMapIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: AuthzRoleCapabilityIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * AuthzRoleCapabilityMap update
+   * AuthzRoleCapability update
    */
-  export type AuthzRoleCapabilityMapUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthzRoleCapabilityUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthzRoleCapabilityMap
+     * Select specific fields to fetch from the AuthzRoleCapability
      */
-    select?: AuthzRoleCapabilityMapSelect<ExtArgs> | null
+    select?: AuthzRoleCapabilitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthzRoleCapabilityMap
+     * Omit specific fields from the AuthzRoleCapability
      */
-    omit?: AuthzRoleCapabilityMapOmit<ExtArgs> | null
+    omit?: AuthzRoleCapabilityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthzRoleCapabilityMapInclude<ExtArgs> | null
+    include?: AuthzRoleCapabilityInclude<ExtArgs> | null
     /**
-     * The data needed to update a AuthzRoleCapabilityMap.
+     * The data needed to update a AuthzRoleCapability.
      */
-    data: XOR<AuthzRoleCapabilityMapUpdateInput, AuthzRoleCapabilityMapUncheckedUpdateInput>
+    data: XOR<AuthzRoleCapabilityUpdateInput, AuthzRoleCapabilityUncheckedUpdateInput>
     /**
-     * Choose, which AuthzRoleCapabilityMap to update.
+     * Choose, which AuthzRoleCapability to update.
      */
-    where: AuthzRoleCapabilityMapWhereUniqueInput
+    where: AuthzRoleCapabilityWhereUniqueInput
   }
 
   /**
-   * AuthzRoleCapabilityMap updateMany
+   * AuthzRoleCapability updateMany
    */
-  export type AuthzRoleCapabilityMapUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthzRoleCapabilityUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update AuthzRoleCapabilityMaps.
+     * The data used to update AuthzRoleCapabilities.
      */
-    data: XOR<AuthzRoleCapabilityMapUpdateManyMutationInput, AuthzRoleCapabilityMapUncheckedUpdateManyInput>
+    data: XOR<AuthzRoleCapabilityUpdateManyMutationInput, AuthzRoleCapabilityUncheckedUpdateManyInput>
     /**
-     * Filter which AuthzRoleCapabilityMaps to update
+     * Filter which AuthzRoleCapabilities to update
      */
-    where?: AuthzRoleCapabilityMapWhereInput
+    where?: AuthzRoleCapabilityWhereInput
     /**
-     * Limit how many AuthzRoleCapabilityMaps to update.
+     * Limit how many AuthzRoleCapabilities to update.
      */
     limit?: number
   }
 
   /**
-   * AuthzRoleCapabilityMap updateManyAndReturn
+   * AuthzRoleCapability updateManyAndReturn
    */
-  export type AuthzRoleCapabilityMapUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthzRoleCapabilityUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthzRoleCapabilityMap
+     * Select specific fields to fetch from the AuthzRoleCapability
      */
-    select?: AuthzRoleCapabilityMapSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: AuthzRoleCapabilitySelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthzRoleCapabilityMap
+     * Omit specific fields from the AuthzRoleCapability
      */
-    omit?: AuthzRoleCapabilityMapOmit<ExtArgs> | null
+    omit?: AuthzRoleCapabilityOmit<ExtArgs> | null
     /**
-     * The data used to update AuthzRoleCapabilityMaps.
+     * The data used to update AuthzRoleCapabilities.
      */
-    data: XOR<AuthzRoleCapabilityMapUpdateManyMutationInput, AuthzRoleCapabilityMapUncheckedUpdateManyInput>
+    data: XOR<AuthzRoleCapabilityUpdateManyMutationInput, AuthzRoleCapabilityUncheckedUpdateManyInput>
     /**
-     * Filter which AuthzRoleCapabilityMaps to update
+     * Filter which AuthzRoleCapabilities to update
      */
-    where?: AuthzRoleCapabilityMapWhereInput
+    where?: AuthzRoleCapabilityWhereInput
     /**
-     * Limit how many AuthzRoleCapabilityMaps to update.
+     * Limit how many AuthzRoleCapabilities to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthzRoleCapabilityMapIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: AuthzRoleCapabilityIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * AuthzRoleCapabilityMap upsert
+   * AuthzRoleCapability upsert
    */
-  export type AuthzRoleCapabilityMapUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthzRoleCapabilityUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthzRoleCapabilityMap
+     * Select specific fields to fetch from the AuthzRoleCapability
      */
-    select?: AuthzRoleCapabilityMapSelect<ExtArgs> | null
+    select?: AuthzRoleCapabilitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthzRoleCapabilityMap
+     * Omit specific fields from the AuthzRoleCapability
      */
-    omit?: AuthzRoleCapabilityMapOmit<ExtArgs> | null
+    omit?: AuthzRoleCapabilityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthzRoleCapabilityMapInclude<ExtArgs> | null
+    include?: AuthzRoleCapabilityInclude<ExtArgs> | null
     /**
-     * The filter to search for the AuthzRoleCapabilityMap to update in case it exists.
+     * The filter to search for the AuthzRoleCapability to update in case it exists.
      */
-    where: AuthzRoleCapabilityMapWhereUniqueInput
+    where: AuthzRoleCapabilityWhereUniqueInput
     /**
-     * In case the AuthzRoleCapabilityMap found by the `where` argument doesn't exist, create a new AuthzRoleCapabilityMap with this data.
+     * In case the AuthzRoleCapability found by the `where` argument doesn't exist, create a new AuthzRoleCapability with this data.
      */
-    create: XOR<AuthzRoleCapabilityMapCreateInput, AuthzRoleCapabilityMapUncheckedCreateInput>
+    create: XOR<AuthzRoleCapabilityCreateInput, AuthzRoleCapabilityUncheckedCreateInput>
     /**
-     * In case the AuthzRoleCapabilityMap was found with the provided `where` argument, update it with this data.
+     * In case the AuthzRoleCapability was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<AuthzRoleCapabilityMapUpdateInput, AuthzRoleCapabilityMapUncheckedUpdateInput>
+    update: XOR<AuthzRoleCapabilityUpdateInput, AuthzRoleCapabilityUncheckedUpdateInput>
   }
 
   /**
-   * AuthzRoleCapabilityMap delete
+   * AuthzRoleCapability delete
    */
-  export type AuthzRoleCapabilityMapDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthzRoleCapabilityDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthzRoleCapabilityMap
+     * Select specific fields to fetch from the AuthzRoleCapability
      */
-    select?: AuthzRoleCapabilityMapSelect<ExtArgs> | null
+    select?: AuthzRoleCapabilitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthzRoleCapabilityMap
+     * Omit specific fields from the AuthzRoleCapability
      */
-    omit?: AuthzRoleCapabilityMapOmit<ExtArgs> | null
+    omit?: AuthzRoleCapabilityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthzRoleCapabilityMapInclude<ExtArgs> | null
+    include?: AuthzRoleCapabilityInclude<ExtArgs> | null
     /**
-     * Filter which AuthzRoleCapabilityMap to delete.
+     * Filter which AuthzRoleCapability to delete.
      */
-    where: AuthzRoleCapabilityMapWhereUniqueInput
+    where: AuthzRoleCapabilityWhereUniqueInput
   }
 
   /**
-   * AuthzRoleCapabilityMap deleteMany
+   * AuthzRoleCapability deleteMany
    */
-  export type AuthzRoleCapabilityMapDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthzRoleCapabilityDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which AuthzRoleCapabilityMaps to delete
+     * Filter which AuthzRoleCapabilities to delete
      */
-    where?: AuthzRoleCapabilityMapWhereInput
+    where?: AuthzRoleCapabilityWhereInput
     /**
-     * Limit how many AuthzRoleCapabilityMaps to delete.
+     * Limit how many AuthzRoleCapabilities to delete.
      */
     limit?: number
   }
 
   /**
-   * AuthzRoleCapabilityMap without action
+   * AuthzRoleCapability without action
    */
-  export type AuthzRoleCapabilityMapDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AuthzRoleCapabilityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AuthzRoleCapabilityMap
+     * Select specific fields to fetch from the AuthzRoleCapability
      */
-    select?: AuthzRoleCapabilityMapSelect<ExtArgs> | null
+    select?: AuthzRoleCapabilitySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AuthzRoleCapabilityMap
+     * Omit specific fields from the AuthzRoleCapability
      */
-    omit?: AuthzRoleCapabilityMapOmit<ExtArgs> | null
+    omit?: AuthzRoleCapabilityOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AuthzRoleCapabilityMapInclude<ExtArgs> | null
+    include?: AuthzRoleCapabilityInclude<ExtArgs> | null
   }
 
 
@@ -37509,7 +37509,7 @@ export namespace Prisma {
   export type AuthzRoleScalarFieldEnum = (typeof AuthzRoleScalarFieldEnum)[keyof typeof AuthzRoleScalarFieldEnum]
 
 
-  export const AuthzRoleCapabilityMapScalarFieldEnum: {
+  export const AuthzRoleCapabilityScalarFieldEnum: {
     id: 'id',
     roleId: 'roleId',
     capabilityId: 'capabilityId',
@@ -37517,7 +37517,7 @@ export namespace Prisma {
     denormalizedCapability: 'denormalizedCapability'
   };
 
-  export type AuthzRoleCapabilityMapScalarFieldEnum = (typeof AuthzRoleCapabilityMapScalarFieldEnum)[keyof typeof AuthzRoleCapabilityMapScalarFieldEnum]
+  export type AuthzRoleCapabilityScalarFieldEnum = (typeof AuthzRoleCapabilityScalarFieldEnum)[keyof typeof AuthzRoleCapabilityScalarFieldEnum]
 
 
   export const AuthzAccountAccessGrantScalarFieldEnum: {
@@ -39275,7 +39275,7 @@ export namespace Prisma {
     appId?: StringNullableFilter<"AuthzCapability"> | string | null
     scope?: StringNullableFilter<"AuthzCapability"> | string | null
     application?: XOR<ApplicationNullableScalarRelationFilter, ApplicationWhereInput> | null
-    roleMaps?: AuthzRoleCapabilityMapListRelationFilter
+    roleMaps?: AuthzRoleCapabilityListRelationFilter
   }
 
   export type AuthzCapabilityOrderByWithRelationInput = {
@@ -39285,7 +39285,7 @@ export namespace Prisma {
     appId?: SortOrderInput | SortOrder
     scope?: SortOrderInput | SortOrder
     application?: ApplicationOrderByWithRelationInput
-    roleMaps?: AuthzRoleCapabilityMapOrderByRelationAggregateInput
+    roleMaps?: AuthzRoleCapabilityOrderByRelationAggregateInput
   }
 
   export type AuthzCapabilityWhereUniqueInput = Prisma.AtLeast<{
@@ -39298,7 +39298,7 @@ export namespace Prisma {
     appId?: StringNullableFilter<"AuthzCapability"> | string | null
     scope?: StringNullableFilter<"AuthzCapability"> | string | null
     application?: XOR<ApplicationNullableScalarRelationFilter, ApplicationWhereInput> | null
-    roleMaps?: AuthzRoleCapabilityMapListRelationFilter
+    roleMaps?: AuthzRoleCapabilityListRelationFilter
   }, "id">
 
   export type AuthzCapabilityOrderByWithAggregationInput = {
@@ -39334,7 +39334,7 @@ export namespace Prisma {
     appId?: StringNullableFilter<"AuthzRole"> | string | null
     scope?: StringNullableFilter<"AuthzRole"> | string | null
     application?: XOR<ApplicationNullableScalarRelationFilter, ApplicationWhereInput> | null
-    roleMaps?: AuthzRoleCapabilityMapListRelationFilter
+    roleMaps?: AuthzRoleCapabilityListRelationFilter
     grants?: AuthzAccountAccessGrantListRelationFilter
     assetsGrants?: AuthzAssetsAccessGrantListRelationFilter
   }
@@ -39347,7 +39347,7 @@ export namespace Prisma {
     appId?: SortOrderInput | SortOrder
     scope?: SortOrderInput | SortOrder
     application?: ApplicationOrderByWithRelationInput
-    roleMaps?: AuthzRoleCapabilityMapOrderByRelationAggregateInput
+    roleMaps?: AuthzRoleCapabilityOrderByRelationAggregateInput
     grants?: AuthzAccountAccessGrantOrderByRelationAggregateInput
     assetsGrants?: AuthzAssetsAccessGrantOrderByRelationAggregateInput
   }
@@ -39363,7 +39363,7 @@ export namespace Prisma {
     appId?: StringNullableFilter<"AuthzRole"> | string | null
     scope?: StringNullableFilter<"AuthzRole"> | string | null
     application?: XOR<ApplicationNullableScalarRelationFilter, ApplicationWhereInput> | null
-    roleMaps?: AuthzRoleCapabilityMapListRelationFilter
+    roleMaps?: AuthzRoleCapabilityListRelationFilter
     grants?: AuthzAccountAccessGrantListRelationFilter
     assetsGrants?: AuthzAssetsAccessGrantListRelationFilter
   }, "id">
@@ -39392,20 +39392,20 @@ export namespace Prisma {
     scope?: StringNullableWithAggregatesFilter<"AuthzRole"> | string | null
   }
 
-  export type AuthzRoleCapabilityMapWhereInput = {
-    AND?: AuthzRoleCapabilityMapWhereInput | AuthzRoleCapabilityMapWhereInput[]
-    OR?: AuthzRoleCapabilityMapWhereInput[]
-    NOT?: AuthzRoleCapabilityMapWhereInput | AuthzRoleCapabilityMapWhereInput[]
-    id?: StringFilter<"AuthzRoleCapabilityMap"> | string
-    roleId?: StringFilter<"AuthzRoleCapabilityMap"> | string
-    capabilityId?: StringFilter<"AuthzRoleCapabilityMap"> | string
-    scope?: StringNullableFilter<"AuthzRoleCapabilityMap"> | string | null
-    denormalizedCapability?: JsonNullableFilter<"AuthzRoleCapabilityMap">
+  export type AuthzRoleCapabilityWhereInput = {
+    AND?: AuthzRoleCapabilityWhereInput | AuthzRoleCapabilityWhereInput[]
+    OR?: AuthzRoleCapabilityWhereInput[]
+    NOT?: AuthzRoleCapabilityWhereInput | AuthzRoleCapabilityWhereInput[]
+    id?: StringFilter<"AuthzRoleCapability"> | string
+    roleId?: StringFilter<"AuthzRoleCapability"> | string
+    capabilityId?: StringFilter<"AuthzRoleCapability"> | string
+    scope?: StringNullableFilter<"AuthzRoleCapability"> | string | null
+    denormalizedCapability?: JsonNullableFilter<"AuthzRoleCapability">
     role?: XOR<AuthzRoleScalarRelationFilter, AuthzRoleWhereInput>
     capability?: XOR<AuthzCapabilityScalarRelationFilter, AuthzCapabilityWhereInput>
   }
 
-  export type AuthzRoleCapabilityMapOrderByWithRelationInput = {
+  export type AuthzRoleCapabilityOrderByWithRelationInput = {
     id?: SortOrder
     roleId?: SortOrder
     capabilityId?: SortOrder
@@ -39415,39 +39415,39 @@ export namespace Prisma {
     capability?: AuthzCapabilityOrderByWithRelationInput
   }
 
-  export type AuthzRoleCapabilityMapWhereUniqueInput = Prisma.AtLeast<{
+  export type AuthzRoleCapabilityWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: AuthzRoleCapabilityMapWhereInput | AuthzRoleCapabilityMapWhereInput[]
-    OR?: AuthzRoleCapabilityMapWhereInput[]
-    NOT?: AuthzRoleCapabilityMapWhereInput | AuthzRoleCapabilityMapWhereInput[]
-    roleId?: StringFilter<"AuthzRoleCapabilityMap"> | string
-    capabilityId?: StringFilter<"AuthzRoleCapabilityMap"> | string
-    scope?: StringNullableFilter<"AuthzRoleCapabilityMap"> | string | null
-    denormalizedCapability?: JsonNullableFilter<"AuthzRoleCapabilityMap">
+    AND?: AuthzRoleCapabilityWhereInput | AuthzRoleCapabilityWhereInput[]
+    OR?: AuthzRoleCapabilityWhereInput[]
+    NOT?: AuthzRoleCapabilityWhereInput | AuthzRoleCapabilityWhereInput[]
+    roleId?: StringFilter<"AuthzRoleCapability"> | string
+    capabilityId?: StringFilter<"AuthzRoleCapability"> | string
+    scope?: StringNullableFilter<"AuthzRoleCapability"> | string | null
+    denormalizedCapability?: JsonNullableFilter<"AuthzRoleCapability">
     role?: XOR<AuthzRoleScalarRelationFilter, AuthzRoleWhereInput>
     capability?: XOR<AuthzCapabilityScalarRelationFilter, AuthzCapabilityWhereInput>
   }, "id">
 
-  export type AuthzRoleCapabilityMapOrderByWithAggregationInput = {
+  export type AuthzRoleCapabilityOrderByWithAggregationInput = {
     id?: SortOrder
     roleId?: SortOrder
     capabilityId?: SortOrder
     scope?: SortOrderInput | SortOrder
     denormalizedCapability?: SortOrderInput | SortOrder
-    _count?: AuthzRoleCapabilityMapCountOrderByAggregateInput
-    _max?: AuthzRoleCapabilityMapMaxOrderByAggregateInput
-    _min?: AuthzRoleCapabilityMapMinOrderByAggregateInput
+    _count?: AuthzRoleCapabilityCountOrderByAggregateInput
+    _max?: AuthzRoleCapabilityMaxOrderByAggregateInput
+    _min?: AuthzRoleCapabilityMinOrderByAggregateInput
   }
 
-  export type AuthzRoleCapabilityMapScalarWhereWithAggregatesInput = {
-    AND?: AuthzRoleCapabilityMapScalarWhereWithAggregatesInput | AuthzRoleCapabilityMapScalarWhereWithAggregatesInput[]
-    OR?: AuthzRoleCapabilityMapScalarWhereWithAggregatesInput[]
-    NOT?: AuthzRoleCapabilityMapScalarWhereWithAggregatesInput | AuthzRoleCapabilityMapScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"AuthzRoleCapabilityMap"> | string
-    roleId?: StringWithAggregatesFilter<"AuthzRoleCapabilityMap"> | string
-    capabilityId?: StringWithAggregatesFilter<"AuthzRoleCapabilityMap"> | string
-    scope?: StringNullableWithAggregatesFilter<"AuthzRoleCapabilityMap"> | string | null
-    denormalizedCapability?: JsonNullableWithAggregatesFilter<"AuthzRoleCapabilityMap">
+  export type AuthzRoleCapabilityScalarWhereWithAggregatesInput = {
+    AND?: AuthzRoleCapabilityScalarWhereWithAggregatesInput | AuthzRoleCapabilityScalarWhereWithAggregatesInput[]
+    OR?: AuthzRoleCapabilityScalarWhereWithAggregatesInput[]
+    NOT?: AuthzRoleCapabilityScalarWhereWithAggregatesInput | AuthzRoleCapabilityScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AuthzRoleCapability"> | string
+    roleId?: StringWithAggregatesFilter<"AuthzRoleCapability"> | string
+    capabilityId?: StringWithAggregatesFilter<"AuthzRoleCapability"> | string
+    scope?: StringNullableWithAggregatesFilter<"AuthzRoleCapability"> | string | null
+    denormalizedCapability?: JsonNullableWithAggregatesFilter<"AuthzRoleCapability">
   }
 
   export type AuthzAccountAccessGrantWhereInput = {
@@ -41358,7 +41358,7 @@ export namespace Prisma {
     description?: string | null
     scope?: string | null
     application?: ApplicationCreateNestedOneWithoutAuthzCapabilitiesInput
-    roleMaps?: AuthzRoleCapabilityMapCreateNestedManyWithoutCapabilityInput
+    roleMaps?: AuthzRoleCapabilityCreateNestedManyWithoutCapabilityInput
   }
 
   export type AuthzCapabilityUncheckedCreateInput = {
@@ -41367,7 +41367,7 @@ export namespace Prisma {
     description?: string | null
     appId?: string | null
     scope?: string | null
-    roleMaps?: AuthzRoleCapabilityMapUncheckedCreateNestedManyWithoutCapabilityInput
+    roleMaps?: AuthzRoleCapabilityUncheckedCreateNestedManyWithoutCapabilityInput
   }
 
   export type AuthzCapabilityUpdateInput = {
@@ -41376,7 +41376,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     application?: ApplicationUpdateOneWithoutAuthzCapabilitiesNestedInput
-    roleMaps?: AuthzRoleCapabilityMapUpdateManyWithoutCapabilityNestedInput
+    roleMaps?: AuthzRoleCapabilityUpdateManyWithoutCapabilityNestedInput
   }
 
   export type AuthzCapabilityUncheckedUpdateInput = {
@@ -41385,7 +41385,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     appId?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
-    roleMaps?: AuthzRoleCapabilityMapUncheckedUpdateManyWithoutCapabilityNestedInput
+    roleMaps?: AuthzRoleCapabilityUncheckedUpdateManyWithoutCapabilityNestedInput
   }
 
   export type AuthzCapabilityCreateManyInput = {
@@ -41418,7 +41418,7 @@ export namespace Prisma {
     description?: string | null
     scope?: string | null
     application?: ApplicationCreateNestedOneWithoutAuthzRolesInput
-    roleMaps?: AuthzRoleCapabilityMapCreateNestedManyWithoutRoleInput
+    roleMaps?: AuthzRoleCapabilityCreateNestedManyWithoutRoleInput
     grants?: AuthzAccountAccessGrantCreateNestedManyWithoutRoleInput
     assetsGrants?: AuthzAssetsAccessGrantCreateNestedManyWithoutRoleInput
   }
@@ -41430,7 +41430,7 @@ export namespace Prisma {
     description?: string | null
     appId?: string | null
     scope?: string | null
-    roleMaps?: AuthzRoleCapabilityMapUncheckedCreateNestedManyWithoutRoleInput
+    roleMaps?: AuthzRoleCapabilityUncheckedCreateNestedManyWithoutRoleInput
     grants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutRoleInput
     assetsGrants?: AuthzAssetsAccessGrantUncheckedCreateNestedManyWithoutRoleInput
   }
@@ -41442,7 +41442,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     application?: ApplicationUpdateOneWithoutAuthzRolesNestedInput
-    roleMaps?: AuthzRoleCapabilityMapUpdateManyWithoutRoleNestedInput
+    roleMaps?: AuthzRoleCapabilityUpdateManyWithoutRoleNestedInput
     grants?: AuthzAccountAccessGrantUpdateManyWithoutRoleNestedInput
     assetsGrants?: AuthzAssetsAccessGrantUpdateManyWithoutRoleNestedInput
   }
@@ -41454,7 +41454,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     appId?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
-    roleMaps?: AuthzRoleCapabilityMapUncheckedUpdateManyWithoutRoleNestedInput
+    roleMaps?: AuthzRoleCapabilityUncheckedUpdateManyWithoutRoleNestedInput
     grants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutRoleNestedInput
     assetsGrants?: AuthzAssetsAccessGrantUncheckedUpdateManyWithoutRoleNestedInput
   }
@@ -41485,7 +41485,7 @@ export namespace Prisma {
     scope?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type AuthzRoleCapabilityMapCreateInput = {
+  export type AuthzRoleCapabilityCreateInput = {
     id?: string
     scope?: string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
@@ -41493,7 +41493,7 @@ export namespace Prisma {
     capability: AuthzCapabilityCreateNestedOneWithoutRoleMapsInput
   }
 
-  export type AuthzRoleCapabilityMapUncheckedCreateInput = {
+  export type AuthzRoleCapabilityUncheckedCreateInput = {
     id?: string
     roleId: string
     capabilityId: string
@@ -41501,7 +41501,7 @@ export namespace Prisma {
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AuthzRoleCapabilityMapUpdateInput = {
+  export type AuthzRoleCapabilityUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
@@ -41509,7 +41509,7 @@ export namespace Prisma {
     capability?: AuthzCapabilityUpdateOneRequiredWithoutRoleMapsNestedInput
   }
 
-  export type AuthzRoleCapabilityMapUncheckedUpdateInput = {
+  export type AuthzRoleCapabilityUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     capabilityId?: StringFieldUpdateOperationsInput | string
@@ -41517,7 +41517,7 @@ export namespace Prisma {
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AuthzRoleCapabilityMapCreateManyInput = {
+  export type AuthzRoleCapabilityCreateManyInput = {
     id?: string
     roleId: string
     capabilityId: string
@@ -41525,13 +41525,13 @@ export namespace Prisma {
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AuthzRoleCapabilityMapUpdateManyMutationInput = {
+  export type AuthzRoleCapabilityUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AuthzRoleCapabilityMapUncheckedUpdateManyInput = {
+  export type AuthzRoleCapabilityUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     capabilityId?: StringFieldUpdateOperationsInput | string
@@ -42871,13 +42871,13 @@ export namespace Prisma {
     isNot?: ApplicationWhereInput | null
   }
 
-  export type AuthzRoleCapabilityMapListRelationFilter = {
-    every?: AuthzRoleCapabilityMapWhereInput
-    some?: AuthzRoleCapabilityMapWhereInput
-    none?: AuthzRoleCapabilityMapWhereInput
+  export type AuthzRoleCapabilityListRelationFilter = {
+    every?: AuthzRoleCapabilityWhereInput
+    some?: AuthzRoleCapabilityWhereInput
+    none?: AuthzRoleCapabilityWhereInput
   }
 
-  export type AuthzRoleCapabilityMapOrderByRelationAggregateInput = {
+  export type AuthzRoleCapabilityOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -42948,7 +42948,7 @@ export namespace Prisma {
     isNot?: AuthzCapabilityWhereInput
   }
 
-  export type AuthzRoleCapabilityMapCountOrderByAggregateInput = {
+  export type AuthzRoleCapabilityCountOrderByAggregateInput = {
     id?: SortOrder
     roleId?: SortOrder
     capabilityId?: SortOrder
@@ -42956,14 +42956,14 @@ export namespace Prisma {
     denormalizedCapability?: SortOrder
   }
 
-  export type AuthzRoleCapabilityMapMaxOrderByAggregateInput = {
+  export type AuthzRoleCapabilityMaxOrderByAggregateInput = {
     id?: SortOrder
     roleId?: SortOrder
     capabilityId?: SortOrder
     scope?: SortOrder
   }
 
-  export type AuthzRoleCapabilityMapMinOrderByAggregateInput = {
+  export type AuthzRoleCapabilityMinOrderByAggregateInput = {
     id?: SortOrder
     roleId?: SortOrder
     capabilityId?: SortOrder
@@ -44823,18 +44823,18 @@ export namespace Prisma {
     connect?: ApplicationWhereUniqueInput
   }
 
-  export type AuthzRoleCapabilityMapCreateNestedManyWithoutCapabilityInput = {
-    create?: XOR<AuthzRoleCapabilityMapCreateWithoutCapabilityInput, AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput> | AuthzRoleCapabilityMapCreateWithoutCapabilityInput[] | AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput[]
-    connectOrCreate?: AuthzRoleCapabilityMapCreateOrConnectWithoutCapabilityInput | AuthzRoleCapabilityMapCreateOrConnectWithoutCapabilityInput[]
-    createMany?: AuthzRoleCapabilityMapCreateManyCapabilityInputEnvelope
-    connect?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
+  export type AuthzRoleCapabilityCreateNestedManyWithoutCapabilityInput = {
+    create?: XOR<AuthzRoleCapabilityCreateWithoutCapabilityInput, AuthzRoleCapabilityUncheckedCreateWithoutCapabilityInput> | AuthzRoleCapabilityCreateWithoutCapabilityInput[] | AuthzRoleCapabilityUncheckedCreateWithoutCapabilityInput[]
+    connectOrCreate?: AuthzRoleCapabilityCreateOrConnectWithoutCapabilityInput | AuthzRoleCapabilityCreateOrConnectWithoutCapabilityInput[]
+    createMany?: AuthzRoleCapabilityCreateManyCapabilityInputEnvelope
+    connect?: AuthzRoleCapabilityWhereUniqueInput | AuthzRoleCapabilityWhereUniqueInput[]
   }
 
-  export type AuthzRoleCapabilityMapUncheckedCreateNestedManyWithoutCapabilityInput = {
-    create?: XOR<AuthzRoleCapabilityMapCreateWithoutCapabilityInput, AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput> | AuthzRoleCapabilityMapCreateWithoutCapabilityInput[] | AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput[]
-    connectOrCreate?: AuthzRoleCapabilityMapCreateOrConnectWithoutCapabilityInput | AuthzRoleCapabilityMapCreateOrConnectWithoutCapabilityInput[]
-    createMany?: AuthzRoleCapabilityMapCreateManyCapabilityInputEnvelope
-    connect?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
+  export type AuthzRoleCapabilityUncheckedCreateNestedManyWithoutCapabilityInput = {
+    create?: XOR<AuthzRoleCapabilityCreateWithoutCapabilityInput, AuthzRoleCapabilityUncheckedCreateWithoutCapabilityInput> | AuthzRoleCapabilityCreateWithoutCapabilityInput[] | AuthzRoleCapabilityUncheckedCreateWithoutCapabilityInput[]
+    connectOrCreate?: AuthzRoleCapabilityCreateOrConnectWithoutCapabilityInput | AuthzRoleCapabilityCreateOrConnectWithoutCapabilityInput[]
+    createMany?: AuthzRoleCapabilityCreateManyCapabilityInputEnvelope
+    connect?: AuthzRoleCapabilityWhereUniqueInput | AuthzRoleCapabilityWhereUniqueInput[]
   }
 
   export type ApplicationUpdateOneWithoutAuthzCapabilitiesNestedInput = {
@@ -44847,32 +44847,32 @@ export namespace Prisma {
     update?: XOR<XOR<ApplicationUpdateToOneWithWhereWithoutAuthzCapabilitiesInput, ApplicationUpdateWithoutAuthzCapabilitiesInput>, ApplicationUncheckedUpdateWithoutAuthzCapabilitiesInput>
   }
 
-  export type AuthzRoleCapabilityMapUpdateManyWithoutCapabilityNestedInput = {
-    create?: XOR<AuthzRoleCapabilityMapCreateWithoutCapabilityInput, AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput> | AuthzRoleCapabilityMapCreateWithoutCapabilityInput[] | AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput[]
-    connectOrCreate?: AuthzRoleCapabilityMapCreateOrConnectWithoutCapabilityInput | AuthzRoleCapabilityMapCreateOrConnectWithoutCapabilityInput[]
-    upsert?: AuthzRoleCapabilityMapUpsertWithWhereUniqueWithoutCapabilityInput | AuthzRoleCapabilityMapUpsertWithWhereUniqueWithoutCapabilityInput[]
-    createMany?: AuthzRoleCapabilityMapCreateManyCapabilityInputEnvelope
-    set?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    disconnect?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    delete?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    connect?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    update?: AuthzRoleCapabilityMapUpdateWithWhereUniqueWithoutCapabilityInput | AuthzRoleCapabilityMapUpdateWithWhereUniqueWithoutCapabilityInput[]
-    updateMany?: AuthzRoleCapabilityMapUpdateManyWithWhereWithoutCapabilityInput | AuthzRoleCapabilityMapUpdateManyWithWhereWithoutCapabilityInput[]
-    deleteMany?: AuthzRoleCapabilityMapScalarWhereInput | AuthzRoleCapabilityMapScalarWhereInput[]
+  export type AuthzRoleCapabilityUpdateManyWithoutCapabilityNestedInput = {
+    create?: XOR<AuthzRoleCapabilityCreateWithoutCapabilityInput, AuthzRoleCapabilityUncheckedCreateWithoutCapabilityInput> | AuthzRoleCapabilityCreateWithoutCapabilityInput[] | AuthzRoleCapabilityUncheckedCreateWithoutCapabilityInput[]
+    connectOrCreate?: AuthzRoleCapabilityCreateOrConnectWithoutCapabilityInput | AuthzRoleCapabilityCreateOrConnectWithoutCapabilityInput[]
+    upsert?: AuthzRoleCapabilityUpsertWithWhereUniqueWithoutCapabilityInput | AuthzRoleCapabilityUpsertWithWhereUniqueWithoutCapabilityInput[]
+    createMany?: AuthzRoleCapabilityCreateManyCapabilityInputEnvelope
+    set?: AuthzRoleCapabilityWhereUniqueInput | AuthzRoleCapabilityWhereUniqueInput[]
+    disconnect?: AuthzRoleCapabilityWhereUniqueInput | AuthzRoleCapabilityWhereUniqueInput[]
+    delete?: AuthzRoleCapabilityWhereUniqueInput | AuthzRoleCapabilityWhereUniqueInput[]
+    connect?: AuthzRoleCapabilityWhereUniqueInput | AuthzRoleCapabilityWhereUniqueInput[]
+    update?: AuthzRoleCapabilityUpdateWithWhereUniqueWithoutCapabilityInput | AuthzRoleCapabilityUpdateWithWhereUniqueWithoutCapabilityInput[]
+    updateMany?: AuthzRoleCapabilityUpdateManyWithWhereWithoutCapabilityInput | AuthzRoleCapabilityUpdateManyWithWhereWithoutCapabilityInput[]
+    deleteMany?: AuthzRoleCapabilityScalarWhereInput | AuthzRoleCapabilityScalarWhereInput[]
   }
 
-  export type AuthzRoleCapabilityMapUncheckedUpdateManyWithoutCapabilityNestedInput = {
-    create?: XOR<AuthzRoleCapabilityMapCreateWithoutCapabilityInput, AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput> | AuthzRoleCapabilityMapCreateWithoutCapabilityInput[] | AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput[]
-    connectOrCreate?: AuthzRoleCapabilityMapCreateOrConnectWithoutCapabilityInput | AuthzRoleCapabilityMapCreateOrConnectWithoutCapabilityInput[]
-    upsert?: AuthzRoleCapabilityMapUpsertWithWhereUniqueWithoutCapabilityInput | AuthzRoleCapabilityMapUpsertWithWhereUniqueWithoutCapabilityInput[]
-    createMany?: AuthzRoleCapabilityMapCreateManyCapabilityInputEnvelope
-    set?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    disconnect?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    delete?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    connect?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    update?: AuthzRoleCapabilityMapUpdateWithWhereUniqueWithoutCapabilityInput | AuthzRoleCapabilityMapUpdateWithWhereUniqueWithoutCapabilityInput[]
-    updateMany?: AuthzRoleCapabilityMapUpdateManyWithWhereWithoutCapabilityInput | AuthzRoleCapabilityMapUpdateManyWithWhereWithoutCapabilityInput[]
-    deleteMany?: AuthzRoleCapabilityMapScalarWhereInput | AuthzRoleCapabilityMapScalarWhereInput[]
+  export type AuthzRoleCapabilityUncheckedUpdateManyWithoutCapabilityNestedInput = {
+    create?: XOR<AuthzRoleCapabilityCreateWithoutCapabilityInput, AuthzRoleCapabilityUncheckedCreateWithoutCapabilityInput> | AuthzRoleCapabilityCreateWithoutCapabilityInput[] | AuthzRoleCapabilityUncheckedCreateWithoutCapabilityInput[]
+    connectOrCreate?: AuthzRoleCapabilityCreateOrConnectWithoutCapabilityInput | AuthzRoleCapabilityCreateOrConnectWithoutCapabilityInput[]
+    upsert?: AuthzRoleCapabilityUpsertWithWhereUniqueWithoutCapabilityInput | AuthzRoleCapabilityUpsertWithWhereUniqueWithoutCapabilityInput[]
+    createMany?: AuthzRoleCapabilityCreateManyCapabilityInputEnvelope
+    set?: AuthzRoleCapabilityWhereUniqueInput | AuthzRoleCapabilityWhereUniqueInput[]
+    disconnect?: AuthzRoleCapabilityWhereUniqueInput | AuthzRoleCapabilityWhereUniqueInput[]
+    delete?: AuthzRoleCapabilityWhereUniqueInput | AuthzRoleCapabilityWhereUniqueInput[]
+    connect?: AuthzRoleCapabilityWhereUniqueInput | AuthzRoleCapabilityWhereUniqueInput[]
+    update?: AuthzRoleCapabilityUpdateWithWhereUniqueWithoutCapabilityInput | AuthzRoleCapabilityUpdateWithWhereUniqueWithoutCapabilityInput[]
+    updateMany?: AuthzRoleCapabilityUpdateManyWithWhereWithoutCapabilityInput | AuthzRoleCapabilityUpdateManyWithWhereWithoutCapabilityInput[]
+    deleteMany?: AuthzRoleCapabilityScalarWhereInput | AuthzRoleCapabilityScalarWhereInput[]
   }
 
   export type AuthzRoleCreatepermissionsInput = {
@@ -44885,11 +44885,11 @@ export namespace Prisma {
     connect?: ApplicationWhereUniqueInput
   }
 
-  export type AuthzRoleCapabilityMapCreateNestedManyWithoutRoleInput = {
-    create?: XOR<AuthzRoleCapabilityMapCreateWithoutRoleInput, AuthzRoleCapabilityMapUncheckedCreateWithoutRoleInput> | AuthzRoleCapabilityMapCreateWithoutRoleInput[] | AuthzRoleCapabilityMapUncheckedCreateWithoutRoleInput[]
-    connectOrCreate?: AuthzRoleCapabilityMapCreateOrConnectWithoutRoleInput | AuthzRoleCapabilityMapCreateOrConnectWithoutRoleInput[]
-    createMany?: AuthzRoleCapabilityMapCreateManyRoleInputEnvelope
-    connect?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
+  export type AuthzRoleCapabilityCreateNestedManyWithoutRoleInput = {
+    create?: XOR<AuthzRoleCapabilityCreateWithoutRoleInput, AuthzRoleCapabilityUncheckedCreateWithoutRoleInput> | AuthzRoleCapabilityCreateWithoutRoleInput[] | AuthzRoleCapabilityUncheckedCreateWithoutRoleInput[]
+    connectOrCreate?: AuthzRoleCapabilityCreateOrConnectWithoutRoleInput | AuthzRoleCapabilityCreateOrConnectWithoutRoleInput[]
+    createMany?: AuthzRoleCapabilityCreateManyRoleInputEnvelope
+    connect?: AuthzRoleCapabilityWhereUniqueInput | AuthzRoleCapabilityWhereUniqueInput[]
   }
 
   export type AuthzAccountAccessGrantCreateNestedManyWithoutRoleInput = {
@@ -44906,11 +44906,11 @@ export namespace Prisma {
     connect?: AuthzAssetsAccessGrantWhereUniqueInput | AuthzAssetsAccessGrantWhereUniqueInput[]
   }
 
-  export type AuthzRoleCapabilityMapUncheckedCreateNestedManyWithoutRoleInput = {
-    create?: XOR<AuthzRoleCapabilityMapCreateWithoutRoleInput, AuthzRoleCapabilityMapUncheckedCreateWithoutRoleInput> | AuthzRoleCapabilityMapCreateWithoutRoleInput[] | AuthzRoleCapabilityMapUncheckedCreateWithoutRoleInput[]
-    connectOrCreate?: AuthzRoleCapabilityMapCreateOrConnectWithoutRoleInput | AuthzRoleCapabilityMapCreateOrConnectWithoutRoleInput[]
-    createMany?: AuthzRoleCapabilityMapCreateManyRoleInputEnvelope
-    connect?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
+  export type AuthzRoleCapabilityUncheckedCreateNestedManyWithoutRoleInput = {
+    create?: XOR<AuthzRoleCapabilityCreateWithoutRoleInput, AuthzRoleCapabilityUncheckedCreateWithoutRoleInput> | AuthzRoleCapabilityCreateWithoutRoleInput[] | AuthzRoleCapabilityUncheckedCreateWithoutRoleInput[]
+    connectOrCreate?: AuthzRoleCapabilityCreateOrConnectWithoutRoleInput | AuthzRoleCapabilityCreateOrConnectWithoutRoleInput[]
+    createMany?: AuthzRoleCapabilityCreateManyRoleInputEnvelope
+    connect?: AuthzRoleCapabilityWhereUniqueInput | AuthzRoleCapabilityWhereUniqueInput[]
   }
 
   export type AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutRoleInput = {
@@ -44942,18 +44942,18 @@ export namespace Prisma {
     update?: XOR<XOR<ApplicationUpdateToOneWithWhereWithoutAuthzRolesInput, ApplicationUpdateWithoutAuthzRolesInput>, ApplicationUncheckedUpdateWithoutAuthzRolesInput>
   }
 
-  export type AuthzRoleCapabilityMapUpdateManyWithoutRoleNestedInput = {
-    create?: XOR<AuthzRoleCapabilityMapCreateWithoutRoleInput, AuthzRoleCapabilityMapUncheckedCreateWithoutRoleInput> | AuthzRoleCapabilityMapCreateWithoutRoleInput[] | AuthzRoleCapabilityMapUncheckedCreateWithoutRoleInput[]
-    connectOrCreate?: AuthzRoleCapabilityMapCreateOrConnectWithoutRoleInput | AuthzRoleCapabilityMapCreateOrConnectWithoutRoleInput[]
-    upsert?: AuthzRoleCapabilityMapUpsertWithWhereUniqueWithoutRoleInput | AuthzRoleCapabilityMapUpsertWithWhereUniqueWithoutRoleInput[]
-    createMany?: AuthzRoleCapabilityMapCreateManyRoleInputEnvelope
-    set?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    disconnect?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    delete?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    connect?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    update?: AuthzRoleCapabilityMapUpdateWithWhereUniqueWithoutRoleInput | AuthzRoleCapabilityMapUpdateWithWhereUniqueWithoutRoleInput[]
-    updateMany?: AuthzRoleCapabilityMapUpdateManyWithWhereWithoutRoleInput | AuthzRoleCapabilityMapUpdateManyWithWhereWithoutRoleInput[]
-    deleteMany?: AuthzRoleCapabilityMapScalarWhereInput | AuthzRoleCapabilityMapScalarWhereInput[]
+  export type AuthzRoleCapabilityUpdateManyWithoutRoleNestedInput = {
+    create?: XOR<AuthzRoleCapabilityCreateWithoutRoleInput, AuthzRoleCapabilityUncheckedCreateWithoutRoleInput> | AuthzRoleCapabilityCreateWithoutRoleInput[] | AuthzRoleCapabilityUncheckedCreateWithoutRoleInput[]
+    connectOrCreate?: AuthzRoleCapabilityCreateOrConnectWithoutRoleInput | AuthzRoleCapabilityCreateOrConnectWithoutRoleInput[]
+    upsert?: AuthzRoleCapabilityUpsertWithWhereUniqueWithoutRoleInput | AuthzRoleCapabilityUpsertWithWhereUniqueWithoutRoleInput[]
+    createMany?: AuthzRoleCapabilityCreateManyRoleInputEnvelope
+    set?: AuthzRoleCapabilityWhereUniqueInput | AuthzRoleCapabilityWhereUniqueInput[]
+    disconnect?: AuthzRoleCapabilityWhereUniqueInput | AuthzRoleCapabilityWhereUniqueInput[]
+    delete?: AuthzRoleCapabilityWhereUniqueInput | AuthzRoleCapabilityWhereUniqueInput[]
+    connect?: AuthzRoleCapabilityWhereUniqueInput | AuthzRoleCapabilityWhereUniqueInput[]
+    update?: AuthzRoleCapabilityUpdateWithWhereUniqueWithoutRoleInput | AuthzRoleCapabilityUpdateWithWhereUniqueWithoutRoleInput[]
+    updateMany?: AuthzRoleCapabilityUpdateManyWithWhereWithoutRoleInput | AuthzRoleCapabilityUpdateManyWithWhereWithoutRoleInput[]
+    deleteMany?: AuthzRoleCapabilityScalarWhereInput | AuthzRoleCapabilityScalarWhereInput[]
   }
 
   export type AuthzAccountAccessGrantUpdateManyWithoutRoleNestedInput = {
@@ -44984,18 +44984,18 @@ export namespace Prisma {
     deleteMany?: AuthzAssetsAccessGrantScalarWhereInput | AuthzAssetsAccessGrantScalarWhereInput[]
   }
 
-  export type AuthzRoleCapabilityMapUncheckedUpdateManyWithoutRoleNestedInput = {
-    create?: XOR<AuthzRoleCapabilityMapCreateWithoutRoleInput, AuthzRoleCapabilityMapUncheckedCreateWithoutRoleInput> | AuthzRoleCapabilityMapCreateWithoutRoleInput[] | AuthzRoleCapabilityMapUncheckedCreateWithoutRoleInput[]
-    connectOrCreate?: AuthzRoleCapabilityMapCreateOrConnectWithoutRoleInput | AuthzRoleCapabilityMapCreateOrConnectWithoutRoleInput[]
-    upsert?: AuthzRoleCapabilityMapUpsertWithWhereUniqueWithoutRoleInput | AuthzRoleCapabilityMapUpsertWithWhereUniqueWithoutRoleInput[]
-    createMany?: AuthzRoleCapabilityMapCreateManyRoleInputEnvelope
-    set?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    disconnect?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    delete?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    connect?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    update?: AuthzRoleCapabilityMapUpdateWithWhereUniqueWithoutRoleInput | AuthzRoleCapabilityMapUpdateWithWhereUniqueWithoutRoleInput[]
-    updateMany?: AuthzRoleCapabilityMapUpdateManyWithWhereWithoutRoleInput | AuthzRoleCapabilityMapUpdateManyWithWhereWithoutRoleInput[]
-    deleteMany?: AuthzRoleCapabilityMapScalarWhereInput | AuthzRoleCapabilityMapScalarWhereInput[]
+  export type AuthzRoleCapabilityUncheckedUpdateManyWithoutRoleNestedInput = {
+    create?: XOR<AuthzRoleCapabilityCreateWithoutRoleInput, AuthzRoleCapabilityUncheckedCreateWithoutRoleInput> | AuthzRoleCapabilityCreateWithoutRoleInput[] | AuthzRoleCapabilityUncheckedCreateWithoutRoleInput[]
+    connectOrCreate?: AuthzRoleCapabilityCreateOrConnectWithoutRoleInput | AuthzRoleCapabilityCreateOrConnectWithoutRoleInput[]
+    upsert?: AuthzRoleCapabilityUpsertWithWhereUniqueWithoutRoleInput | AuthzRoleCapabilityUpsertWithWhereUniqueWithoutRoleInput[]
+    createMany?: AuthzRoleCapabilityCreateManyRoleInputEnvelope
+    set?: AuthzRoleCapabilityWhereUniqueInput | AuthzRoleCapabilityWhereUniqueInput[]
+    disconnect?: AuthzRoleCapabilityWhereUniqueInput | AuthzRoleCapabilityWhereUniqueInput[]
+    delete?: AuthzRoleCapabilityWhereUniqueInput | AuthzRoleCapabilityWhereUniqueInput[]
+    connect?: AuthzRoleCapabilityWhereUniqueInput | AuthzRoleCapabilityWhereUniqueInput[]
+    update?: AuthzRoleCapabilityUpdateWithWhereUniqueWithoutRoleInput | AuthzRoleCapabilityUpdateWithWhereUniqueWithoutRoleInput[]
+    updateMany?: AuthzRoleCapabilityUpdateManyWithWhereWithoutRoleInput | AuthzRoleCapabilityUpdateManyWithWhereWithoutRoleInput[]
+    deleteMany?: AuthzRoleCapabilityScalarWhereInput | AuthzRoleCapabilityScalarWhereInput[]
   }
 
   export type AuthzAccountAccessGrantUncheckedUpdateManyWithoutRoleNestedInput = {
@@ -48611,7 +48611,7 @@ export namespace Prisma {
     name: string
     description?: string | null
     scope?: string | null
-    roleMaps?: AuthzRoleCapabilityMapCreateNestedManyWithoutCapabilityInput
+    roleMaps?: AuthzRoleCapabilityCreateNestedManyWithoutCapabilityInput
   }
 
   export type AuthzCapabilityUncheckedCreateWithoutApplicationInput = {
@@ -48619,7 +48619,7 @@ export namespace Prisma {
     name: string
     description?: string | null
     scope?: string | null
-    roleMaps?: AuthzRoleCapabilityMapUncheckedCreateNestedManyWithoutCapabilityInput
+    roleMaps?: AuthzRoleCapabilityUncheckedCreateNestedManyWithoutCapabilityInput
   }
 
   export type AuthzCapabilityCreateOrConnectWithoutApplicationInput = {
@@ -48638,7 +48638,7 @@ export namespace Prisma {
     permissions?: AuthzRoleCreatepermissionsInput | string[]
     description?: string | null
     scope?: string | null
-    roleMaps?: AuthzRoleCapabilityMapCreateNestedManyWithoutRoleInput
+    roleMaps?: AuthzRoleCapabilityCreateNestedManyWithoutRoleInput
     grants?: AuthzAccountAccessGrantCreateNestedManyWithoutRoleInput
     assetsGrants?: AuthzAssetsAccessGrantCreateNestedManyWithoutRoleInput
   }
@@ -48649,7 +48649,7 @@ export namespace Prisma {
     permissions?: AuthzRoleCreatepermissionsInput | string[]
     description?: string | null
     scope?: string | null
-    roleMaps?: AuthzRoleCapabilityMapUncheckedCreateNestedManyWithoutRoleInput
+    roleMaps?: AuthzRoleCapabilityUncheckedCreateNestedManyWithoutRoleInput
     grants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutRoleInput
     assetsGrants?: AuthzAssetsAccessGrantUncheckedCreateNestedManyWithoutRoleInput
   }
@@ -50066,27 +50066,27 @@ export namespace Prisma {
     create: XOR<ApplicationCreateWithoutAuthzCapabilitiesInput, ApplicationUncheckedCreateWithoutAuthzCapabilitiesInput>
   }
 
-  export type AuthzRoleCapabilityMapCreateWithoutCapabilityInput = {
+  export type AuthzRoleCapabilityCreateWithoutCapabilityInput = {
     id?: string
     scope?: string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
     role: AuthzRoleCreateNestedOneWithoutRoleMapsInput
   }
 
-  export type AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput = {
+  export type AuthzRoleCapabilityUncheckedCreateWithoutCapabilityInput = {
     id?: string
     roleId: string
     scope?: string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AuthzRoleCapabilityMapCreateOrConnectWithoutCapabilityInput = {
-    where: AuthzRoleCapabilityMapWhereUniqueInput
-    create: XOR<AuthzRoleCapabilityMapCreateWithoutCapabilityInput, AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput>
+  export type AuthzRoleCapabilityCreateOrConnectWithoutCapabilityInput = {
+    where: AuthzRoleCapabilityWhereUniqueInput
+    create: XOR<AuthzRoleCapabilityCreateWithoutCapabilityInput, AuthzRoleCapabilityUncheckedCreateWithoutCapabilityInput>
   }
 
-  export type AuthzRoleCapabilityMapCreateManyCapabilityInputEnvelope = {
-    data: AuthzRoleCapabilityMapCreateManyCapabilityInput | AuthzRoleCapabilityMapCreateManyCapabilityInput[]
+  export type AuthzRoleCapabilityCreateManyCapabilityInputEnvelope = {
+    data: AuthzRoleCapabilityCreateManyCapabilityInput | AuthzRoleCapabilityCreateManyCapabilityInput[]
     skipDuplicates?: boolean
   }
 
@@ -50141,31 +50141,31 @@ export namespace Prisma {
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
-  export type AuthzRoleCapabilityMapUpsertWithWhereUniqueWithoutCapabilityInput = {
-    where: AuthzRoleCapabilityMapWhereUniqueInput
-    update: XOR<AuthzRoleCapabilityMapUpdateWithoutCapabilityInput, AuthzRoleCapabilityMapUncheckedUpdateWithoutCapabilityInput>
-    create: XOR<AuthzRoleCapabilityMapCreateWithoutCapabilityInput, AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput>
+  export type AuthzRoleCapabilityUpsertWithWhereUniqueWithoutCapabilityInput = {
+    where: AuthzRoleCapabilityWhereUniqueInput
+    update: XOR<AuthzRoleCapabilityUpdateWithoutCapabilityInput, AuthzRoleCapabilityUncheckedUpdateWithoutCapabilityInput>
+    create: XOR<AuthzRoleCapabilityCreateWithoutCapabilityInput, AuthzRoleCapabilityUncheckedCreateWithoutCapabilityInput>
   }
 
-  export type AuthzRoleCapabilityMapUpdateWithWhereUniqueWithoutCapabilityInput = {
-    where: AuthzRoleCapabilityMapWhereUniqueInput
-    data: XOR<AuthzRoleCapabilityMapUpdateWithoutCapabilityInput, AuthzRoleCapabilityMapUncheckedUpdateWithoutCapabilityInput>
+  export type AuthzRoleCapabilityUpdateWithWhereUniqueWithoutCapabilityInput = {
+    where: AuthzRoleCapabilityWhereUniqueInput
+    data: XOR<AuthzRoleCapabilityUpdateWithoutCapabilityInput, AuthzRoleCapabilityUncheckedUpdateWithoutCapabilityInput>
   }
 
-  export type AuthzRoleCapabilityMapUpdateManyWithWhereWithoutCapabilityInput = {
-    where: AuthzRoleCapabilityMapScalarWhereInput
-    data: XOR<AuthzRoleCapabilityMapUpdateManyMutationInput, AuthzRoleCapabilityMapUncheckedUpdateManyWithoutCapabilityInput>
+  export type AuthzRoleCapabilityUpdateManyWithWhereWithoutCapabilityInput = {
+    where: AuthzRoleCapabilityScalarWhereInput
+    data: XOR<AuthzRoleCapabilityUpdateManyMutationInput, AuthzRoleCapabilityUncheckedUpdateManyWithoutCapabilityInput>
   }
 
-  export type AuthzRoleCapabilityMapScalarWhereInput = {
-    AND?: AuthzRoleCapabilityMapScalarWhereInput | AuthzRoleCapabilityMapScalarWhereInput[]
-    OR?: AuthzRoleCapabilityMapScalarWhereInput[]
-    NOT?: AuthzRoleCapabilityMapScalarWhereInput | AuthzRoleCapabilityMapScalarWhereInput[]
-    id?: StringFilter<"AuthzRoleCapabilityMap"> | string
-    roleId?: StringFilter<"AuthzRoleCapabilityMap"> | string
-    capabilityId?: StringFilter<"AuthzRoleCapabilityMap"> | string
-    scope?: StringNullableFilter<"AuthzRoleCapabilityMap"> | string | null
-    denormalizedCapability?: JsonNullableFilter<"AuthzRoleCapabilityMap">
+  export type AuthzRoleCapabilityScalarWhereInput = {
+    AND?: AuthzRoleCapabilityScalarWhereInput | AuthzRoleCapabilityScalarWhereInput[]
+    OR?: AuthzRoleCapabilityScalarWhereInput[]
+    NOT?: AuthzRoleCapabilityScalarWhereInput | AuthzRoleCapabilityScalarWhereInput[]
+    id?: StringFilter<"AuthzRoleCapability"> | string
+    roleId?: StringFilter<"AuthzRoleCapability"> | string
+    capabilityId?: StringFilter<"AuthzRoleCapability"> | string
+    scope?: StringNullableFilter<"AuthzRoleCapability"> | string | null
+    denormalizedCapability?: JsonNullableFilter<"AuthzRoleCapability">
   }
 
   export type ApplicationCreateWithoutAuthzRolesInput = {
@@ -50213,27 +50213,27 @@ export namespace Prisma {
     create: XOR<ApplicationCreateWithoutAuthzRolesInput, ApplicationUncheckedCreateWithoutAuthzRolesInput>
   }
 
-  export type AuthzRoleCapabilityMapCreateWithoutRoleInput = {
+  export type AuthzRoleCapabilityCreateWithoutRoleInput = {
     id?: string
     scope?: string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
     capability: AuthzCapabilityCreateNestedOneWithoutRoleMapsInput
   }
 
-  export type AuthzRoleCapabilityMapUncheckedCreateWithoutRoleInput = {
+  export type AuthzRoleCapabilityUncheckedCreateWithoutRoleInput = {
     id?: string
     capabilityId: string
     scope?: string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AuthzRoleCapabilityMapCreateOrConnectWithoutRoleInput = {
-    where: AuthzRoleCapabilityMapWhereUniqueInput
-    create: XOR<AuthzRoleCapabilityMapCreateWithoutRoleInput, AuthzRoleCapabilityMapUncheckedCreateWithoutRoleInput>
+  export type AuthzRoleCapabilityCreateOrConnectWithoutRoleInput = {
+    where: AuthzRoleCapabilityWhereUniqueInput
+    create: XOR<AuthzRoleCapabilityCreateWithoutRoleInput, AuthzRoleCapabilityUncheckedCreateWithoutRoleInput>
   }
 
-  export type AuthzRoleCapabilityMapCreateManyRoleInputEnvelope = {
-    data: AuthzRoleCapabilityMapCreateManyRoleInput | AuthzRoleCapabilityMapCreateManyRoleInput[]
+  export type AuthzRoleCapabilityCreateManyRoleInputEnvelope = {
+    data: AuthzRoleCapabilityCreateManyRoleInput | AuthzRoleCapabilityCreateManyRoleInput[]
     skipDuplicates?: boolean
   }
 
@@ -50338,20 +50338,20 @@ export namespace Prisma {
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
-  export type AuthzRoleCapabilityMapUpsertWithWhereUniqueWithoutRoleInput = {
-    where: AuthzRoleCapabilityMapWhereUniqueInput
-    update: XOR<AuthzRoleCapabilityMapUpdateWithoutRoleInput, AuthzRoleCapabilityMapUncheckedUpdateWithoutRoleInput>
-    create: XOR<AuthzRoleCapabilityMapCreateWithoutRoleInput, AuthzRoleCapabilityMapUncheckedCreateWithoutRoleInput>
+  export type AuthzRoleCapabilityUpsertWithWhereUniqueWithoutRoleInput = {
+    where: AuthzRoleCapabilityWhereUniqueInput
+    update: XOR<AuthzRoleCapabilityUpdateWithoutRoleInput, AuthzRoleCapabilityUncheckedUpdateWithoutRoleInput>
+    create: XOR<AuthzRoleCapabilityCreateWithoutRoleInput, AuthzRoleCapabilityUncheckedCreateWithoutRoleInput>
   }
 
-  export type AuthzRoleCapabilityMapUpdateWithWhereUniqueWithoutRoleInput = {
-    where: AuthzRoleCapabilityMapWhereUniqueInput
-    data: XOR<AuthzRoleCapabilityMapUpdateWithoutRoleInput, AuthzRoleCapabilityMapUncheckedUpdateWithoutRoleInput>
+  export type AuthzRoleCapabilityUpdateWithWhereUniqueWithoutRoleInput = {
+    where: AuthzRoleCapabilityWhereUniqueInput
+    data: XOR<AuthzRoleCapabilityUpdateWithoutRoleInput, AuthzRoleCapabilityUncheckedUpdateWithoutRoleInput>
   }
 
-  export type AuthzRoleCapabilityMapUpdateManyWithWhereWithoutRoleInput = {
-    where: AuthzRoleCapabilityMapScalarWhereInput
-    data: XOR<AuthzRoleCapabilityMapUpdateManyMutationInput, AuthzRoleCapabilityMapUncheckedUpdateManyWithoutRoleInput>
+  export type AuthzRoleCapabilityUpdateManyWithWhereWithoutRoleInput = {
+    where: AuthzRoleCapabilityScalarWhereInput
+    data: XOR<AuthzRoleCapabilityUpdateManyMutationInput, AuthzRoleCapabilityUncheckedUpdateManyWithoutRoleInput>
   }
 
   export type AuthzAccountAccessGrantUpsertWithWhereUniqueWithoutRoleInput = {
@@ -50639,7 +50639,7 @@ export namespace Prisma {
     description?: string | null
     scope?: string | null
     application?: ApplicationCreateNestedOneWithoutAuthzRolesInput
-    roleMaps?: AuthzRoleCapabilityMapCreateNestedManyWithoutRoleInput
+    roleMaps?: AuthzRoleCapabilityCreateNestedManyWithoutRoleInput
     assetsGrants?: AuthzAssetsAccessGrantCreateNestedManyWithoutRoleInput
   }
 
@@ -50650,7 +50650,7 @@ export namespace Prisma {
     description?: string | null
     appId?: string | null
     scope?: string | null
-    roleMaps?: AuthzRoleCapabilityMapUncheckedCreateNestedManyWithoutRoleInput
+    roleMaps?: AuthzRoleCapabilityUncheckedCreateNestedManyWithoutRoleInput
     assetsGrants?: AuthzAssetsAccessGrantUncheckedCreateNestedManyWithoutRoleInput
   }
 
@@ -50897,7 +50897,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     application?: ApplicationUpdateOneWithoutAuthzRolesNestedInput
-    roleMaps?: AuthzRoleCapabilityMapUpdateManyWithoutRoleNestedInput
+    roleMaps?: AuthzRoleCapabilityUpdateManyWithoutRoleNestedInput
     assetsGrants?: AuthzAssetsAccessGrantUpdateManyWithoutRoleNestedInput
   }
 
@@ -50908,7 +50908,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     appId?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
-    roleMaps?: AuthzRoleCapabilityMapUncheckedUpdateManyWithoutRoleNestedInput
+    roleMaps?: AuthzRoleCapabilityUncheckedUpdateManyWithoutRoleNestedInput
     assetsGrants?: AuthzAssetsAccessGrantUncheckedUpdateManyWithoutRoleNestedInput
   }
 
@@ -51091,7 +51091,7 @@ export namespace Prisma {
     description?: string | null
     scope?: string | null
     application?: ApplicationCreateNestedOneWithoutAuthzRolesInput
-    roleMaps?: AuthzRoleCapabilityMapCreateNestedManyWithoutRoleInput
+    roleMaps?: AuthzRoleCapabilityCreateNestedManyWithoutRoleInput
     grants?: AuthzAccountAccessGrantCreateNestedManyWithoutRoleInput
   }
 
@@ -51102,7 +51102,7 @@ export namespace Prisma {
     description?: string | null
     appId?: string | null
     scope?: string | null
-    roleMaps?: AuthzRoleCapabilityMapUncheckedCreateNestedManyWithoutRoleInput
+    roleMaps?: AuthzRoleCapabilityUncheckedCreateNestedManyWithoutRoleInput
     grants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutRoleInput
   }
 
@@ -51256,7 +51256,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     application?: ApplicationUpdateOneWithoutAuthzRolesNestedInput
-    roleMaps?: AuthzRoleCapabilityMapUpdateManyWithoutRoleNestedInput
+    roleMaps?: AuthzRoleCapabilityUpdateManyWithoutRoleNestedInput
     grants?: AuthzAccountAccessGrantUpdateManyWithoutRoleNestedInput
   }
 
@@ -51267,7 +51267,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     appId?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
-    roleMaps?: AuthzRoleCapabilityMapUncheckedUpdateManyWithoutRoleNestedInput
+    roleMaps?: AuthzRoleCapabilityUncheckedUpdateManyWithoutRoleNestedInput
     grants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutRoleNestedInput
   }
 
@@ -52434,7 +52434,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
-    roleMaps?: AuthzRoleCapabilityMapUpdateManyWithoutCapabilityNestedInput
+    roleMaps?: AuthzRoleCapabilityUpdateManyWithoutCapabilityNestedInput
   }
 
   export type AuthzCapabilityUncheckedUpdateWithoutApplicationInput = {
@@ -52442,7 +52442,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
-    roleMaps?: AuthzRoleCapabilityMapUncheckedUpdateManyWithoutCapabilityNestedInput
+    roleMaps?: AuthzRoleCapabilityUncheckedUpdateManyWithoutCapabilityNestedInput
   }
 
   export type AuthzCapabilityUncheckedUpdateManyWithoutApplicationInput = {
@@ -52458,7 +52458,7 @@ export namespace Prisma {
     permissions?: AuthzRoleUpdatepermissionsInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
-    roleMaps?: AuthzRoleCapabilityMapUpdateManyWithoutRoleNestedInput
+    roleMaps?: AuthzRoleCapabilityUpdateManyWithoutRoleNestedInput
     grants?: AuthzAccountAccessGrantUpdateManyWithoutRoleNestedInput
     assetsGrants?: AuthzAssetsAccessGrantUpdateManyWithoutRoleNestedInput
   }
@@ -52469,7 +52469,7 @@ export namespace Prisma {
     permissions?: AuthzRoleUpdatepermissionsInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
-    roleMaps?: AuthzRoleCapabilityMapUncheckedUpdateManyWithoutRoleNestedInput
+    roleMaps?: AuthzRoleCapabilityUncheckedUpdateManyWithoutRoleNestedInput
     grants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutRoleNestedInput
     assetsGrants?: AuthzAssetsAccessGrantUncheckedUpdateManyWithoutRoleNestedInput
   }
@@ -52648,35 +52648,35 @@ export namespace Prisma {
     portfolioId?: StringFieldUpdateOperationsInput | string
   }
 
-  export type AuthzRoleCapabilityMapCreateManyCapabilityInput = {
+  export type AuthzRoleCapabilityCreateManyCapabilityInput = {
     id?: string
     roleId: string
     scope?: string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AuthzRoleCapabilityMapUpdateWithoutCapabilityInput = {
+  export type AuthzRoleCapabilityUpdateWithoutCapabilityInput = {
     id?: StringFieldUpdateOperationsInput | string
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
     role?: AuthzRoleUpdateOneRequiredWithoutRoleMapsNestedInput
   }
 
-  export type AuthzRoleCapabilityMapUncheckedUpdateWithoutCapabilityInput = {
+  export type AuthzRoleCapabilityUncheckedUpdateWithoutCapabilityInput = {
     id?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AuthzRoleCapabilityMapUncheckedUpdateManyWithoutCapabilityInput = {
+  export type AuthzRoleCapabilityUncheckedUpdateManyWithoutCapabilityInput = {
     id?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AuthzRoleCapabilityMapCreateManyRoleInput = {
+  export type AuthzRoleCapabilityCreateManyRoleInput = {
     id?: string
     capabilityId: string
     scope?: string | null
@@ -52698,21 +52698,21 @@ export namespace Prisma {
     portfolioId: string
   }
 
-  export type AuthzRoleCapabilityMapUpdateWithoutRoleInput = {
+  export type AuthzRoleCapabilityUpdateWithoutRoleInput = {
     id?: StringFieldUpdateOperationsInput | string
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
     capability?: AuthzCapabilityUpdateOneRequiredWithoutRoleMapsNestedInput
   }
 
-  export type AuthzRoleCapabilityMapUncheckedUpdateWithoutRoleInput = {
+  export type AuthzRoleCapabilityUncheckedUpdateWithoutRoleInput = {
     id?: StringFieldUpdateOperationsInput | string
     capabilityId?: StringFieldUpdateOperationsInput | string
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     denormalizedCapability?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type AuthzRoleCapabilityMapUncheckedUpdateManyWithoutRoleInput = {
+  export type AuthzRoleCapabilityUncheckedUpdateManyWithoutRoleInput = {
     id?: StringFieldUpdateOperationsInput | string
     capabilityId?: StringFieldUpdateOperationsInput | string
     scope?: NullableStringFieldUpdateOperationsInput | string | null

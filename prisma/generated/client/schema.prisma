@@ -355,13 +355,13 @@ model ApplicationPolicy {
 }
 
 model AuthzCapability {
-  id          String                   @id @default(uuid())
+  id          String                @id @default(uuid())
   name        String
   description String?
-  appId       String?                  @map("app_id")
+  appId       String?               @map("app_id")
   scope       String?
-  application Application?             @relation(fields: [appId], references: [id])
-  roleMaps    AuthzRoleCapabilityMap[]
+  application Application?          @relation(fields: [appId], references: [id])
+  roleMaps    AuthzRoleCapability[]
 
   @@map("authz_capability")
 }
@@ -374,14 +374,14 @@ model AuthzRole {
   appId        String?                   @map("app_id")
   scope        String?
   application  Application?              @relation(fields: [appId], references: [id])
-  roleMaps     AuthzRoleCapabilityMap[]
+  roleMaps     AuthzRoleCapability[]
   grants       AuthzAccountAccessGrant[]
   assetsGrants AuthzAssetsAccessGrant[]
 
   @@map("authz_role")
 }
 
-model AuthzRoleCapabilityMap {
+model AuthzRoleCapability {
   id                     String          @id @default(uuid())
   roleId                 String          @map("role_id")
   capabilityId           String          @map("capability_id")
@@ -390,7 +390,7 @@ model AuthzRoleCapabilityMap {
   role                   AuthzRole       @relation(fields: [roleId], references: [id])
   capability             AuthzCapability @relation(fields: [capabilityId], references: [id])
 
-  @@map("authz_role_capability_map")
+  @@map("authz_role_capability")
 }
 
 model AuthzAccountAccessGrant {

@@ -362,7 +362,7 @@ exports.Prisma.AuthzRoleScalarFieldEnum = {
   scope: 'scope'
 };
 
-exports.Prisma.AuthzRoleCapabilityMapScalarFieldEnum = {
+exports.Prisma.AuthzRoleCapabilityScalarFieldEnum = {
   id: 'id',
   roleId: 'roleId',
   capabilityId: 'capabilityId',
@@ -457,7 +457,7 @@ exports.Prisma.ModelName = {
   ApplicationPolicy: 'ApplicationPolicy',
   AuthzCapability: 'AuthzCapability',
   AuthzRole: 'AuthzRole',
-  AuthzRoleCapabilityMap: 'AuthzRoleCapabilityMap',
+  AuthzRoleCapability: 'AuthzRoleCapability',
   AuthzAccountAccessGrant: 'AuthzAccountAccessGrant',
   AuthzAssetsAccessGrant: 'AuthzAssetsAccessGrant',
   Permit: 'Permit'
