@@ -382,14 +382,13 @@ model AuthzRole {
 }
 
 model AuthzRoleCapabilityMap {
-  id           String          @id @default(uuid())
-  roleId       String          @map("role_id")
-  capabilityId String          @map("capability_id")
-  capName      String?         @map("cap_name")
-  capDesc      String?         @map("cap_desc")
-  scope        String?
-  role         AuthzRole       @relation(fields: [roleId], references: [id])
-  capability   AuthzCapability @relation(fields: [capabilityId], references: [id])
+  id                     String          @id @default(uuid())
+  roleId                 String          @map("role_id")
+  capabilityId           String          @map("capability_id")
+  scope                  String?
+  denormalizedCapability Json?           @map("denormalized_capability")
+  role                   AuthzRole       @relation(fields: [roleId], references: [id])
+  capability             AuthzCapability @relation(fields: [capabilityId], references: [id])
 
   @@map("authz_role_capability_map")
 }

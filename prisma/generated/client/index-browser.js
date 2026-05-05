@@ -366,9 +366,8 @@ exports.Prisma.AuthzRoleCapabilityMapScalarFieldEnum = {
   id: 'id',
   roleId: 'roleId',
   capabilityId: 'capabilityId',
-  capName: 'capName',
-  capDesc: 'capDesc',
-  scope: 'scope'
+  scope: 'scope',
+  denormalizedCapability: 'denormalizedCapability'
 };
 
 exports.Prisma.AuthzAccountAccessGrantScalarFieldEnum = {
