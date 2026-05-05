@@ -71,7 +71,6 @@ export default async function AuthSignPage({ searchParams }: SignPageProps) {
                 <p className="text-sm font-medium">Application Builder Data</p>
                 {hasBuilderData ? (
                   <ul className="list-disc space-y-1 pl-6 text-sm text-muted-foreground">
-                    {application?.developer ? <li>Developer: {application.developer}</li> : null}
                     {application?.website ? <li>Website: {application.website}</li> : null}
                     {Array.isArray(application?.access) ? <li>Access fields configured: {application.access.length}</li> : null}
                     {Array.isArray(application?.policies) ? <li>Policies configured: {application.policies.length}</li> : null}

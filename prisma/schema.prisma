@@ -245,7 +245,6 @@ model Application {
   description    String?
   icon           String?
   website        String?
-  developer      String?
   appSecret      String?
   createdAt      DateTime                @default(now()) @map("created_at")
   endpoints      Json?

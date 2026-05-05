@@ -147,6 +147,11 @@ export const PERMISSION_SET: Record<string, string[]> = {
     "root.payment_config.view",
     "root.errors.view",
     "linked_accounts.brand.manager"
+  ],
+  "application.owner": [
+    "application.view",
+    "application.edit",
+    "application.delete"
   ]
 };
 
@@ -159,4 +164,5 @@ export const PERMISSION_METADATA: Record<string, { intended_for: string[] }> = {
   "independent.default": { intended_for: ["individual"] },
   "dependent.full": { intended_for: ["dependent"] },
   "root.full": { intended_for: ["individual"] },
+  "application.owner": { intended_for: ["application_creator"] },
 };

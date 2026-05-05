@@ -12,7 +12,6 @@ export type FlatAppItem = {
   name: string;
   slug?: string;
   icon?: string;
-  developer?: string;
   source: 'managed' | 'connected';
 };
 
@@ -27,7 +26,6 @@ export async function getApplicationsPageData() {
     id: app.id,
     name: app.name,
     icon: app.icon || undefined,
-    developer: app.developer || undefined,
     source: 'managed',
   }));
 
@@ -38,7 +36,6 @@ export async function getApplicationsPageData() {
       id: app.id,
       name: app.name,
       icon: app.icon || undefined,
-      developer: app.developer || undefined,
       source: 'connected',
     }));
 

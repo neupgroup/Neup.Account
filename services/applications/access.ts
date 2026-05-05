@@ -64,7 +64,6 @@ export async function getUserApplicationAccess(appId: string): Promise<UserAppli
       name: application.name,
       description: application.description || '',
       website: application.website || undefined,
-      developer: application.developer || undefined,
       connectionType,
       permissions,
       connectedOn,

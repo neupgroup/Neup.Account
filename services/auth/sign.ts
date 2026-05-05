@@ -71,7 +71,6 @@ export type AuthSignPageData = {
 		name: string;
 		description: string | null;
 		website: string | null;
-		developer: string | null;
 		access: unknown;
 		policies: unknown;
 	} | null;
@@ -216,7 +215,6 @@ export async function getAuthSignPageData(
 					name: true,
 					description: true,
 					website: true,
-					developer: true,
 					details: true,
 					policies: true,
 				},
@@ -229,7 +227,6 @@ export async function getAuthSignPageData(
 			name: application.name,
 			description: application.description,
 			website: application.website,
-			developer: application.developer,
 			access: normalizeAccess((application.details as Record<string, unknown> | null)?.access ?? []),
 			policies: normalizePolicies(application.policies),
 		}
@@ -314,7 +311,6 @@ export async function getAuthSignPageData(
 
 	const hasBuilderData = Boolean(
 			applicationData?.description?.trim() ||
-				applicationData?.developer?.trim() ||
 				applicationData?.website?.trim() ||
 				Array.isArray(applicationData?.access) ||
 				Array.isArray(applicationData?.policies)

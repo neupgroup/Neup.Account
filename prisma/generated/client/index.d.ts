@@ -21729,7 +21729,6 @@ export namespace Prisma {
     description: string | null
     icon: string | null
     website: string | null
-    developer: string | null
     appSecret: string | null
     createdAt: Date | null
     status: string | null
@@ -21742,7 +21741,6 @@ export namespace Prisma {
     description: string | null
     icon: string | null
     website: string | null
-    developer: string | null
     appSecret: string | null
     createdAt: Date | null
     status: string | null
@@ -21755,7 +21753,6 @@ export namespace Prisma {
     description: number
     icon: number
     website: number
-    developer: number
     appSecret: number
     createdAt: number
     endpoints: number
@@ -21772,7 +21769,6 @@ export namespace Prisma {
     description?: true
     icon?: true
     website?: true
-    developer?: true
     appSecret?: true
     createdAt?: true
     status?: true
@@ -21785,7 +21781,6 @@ export namespace Prisma {
     description?: true
     icon?: true
     website?: true
-    developer?: true
     appSecret?: true
     createdAt?: true
     status?: true
@@ -21798,7 +21793,6 @@ export namespace Prisma {
     description?: true
     icon?: true
     website?: true
-    developer?: true
     appSecret?: true
     createdAt?: true
     endpoints?: true
@@ -21886,7 +21880,6 @@ export namespace Prisma {
     description: string | null
     icon: string | null
     website: string | null
-    developer: string | null
     appSecret: string | null
     createdAt: Date
     endpoints: JsonValue | null
@@ -21918,7 +21911,6 @@ export namespace Prisma {
     description?: boolean
     icon?: boolean
     website?: boolean
-    developer?: boolean
     appSecret?: boolean
     createdAt?: boolean
     endpoints?: boolean
@@ -21940,7 +21932,6 @@ export namespace Prisma {
     description?: boolean
     icon?: boolean
     website?: boolean
-    developer?: boolean
     appSecret?: boolean
     createdAt?: boolean
     endpoints?: boolean
@@ -21955,7 +21946,6 @@ export namespace Prisma {
     description?: boolean
     icon?: boolean
     website?: boolean
-    developer?: boolean
     appSecret?: boolean
     createdAt?: boolean
     endpoints?: boolean
@@ -21970,7 +21960,6 @@ export namespace Prisma {
     description?: boolean
     icon?: boolean
     website?: boolean
-    developer?: boolean
     appSecret?: boolean
     createdAt?: boolean
     endpoints?: boolean
@@ -21979,7 +21968,7 @@ export namespace Prisma {
     details?: boolean
   }
 
-  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "icon" | "website" | "developer" | "appSecret" | "createdAt" | "endpoints" | "status" | "isInternal" | "details", ExtArgs["result"]["application"]>
+  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "icon" | "website" | "appSecret" | "createdAt" | "endpoints" | "status" | "isInternal" | "details", ExtArgs["result"]["application"]>
   export type ApplicationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     connections?: boolean | Application$connectionsArgs<ExtArgs>
     bridge?: boolean | Application$bridgeArgs<ExtArgs>
@@ -22008,7 +21997,6 @@ export namespace Prisma {
       description: string | null
       icon: string | null
       website: string | null
-      developer: string | null
       appSecret: string | null
       createdAt: Date
       endpoints: Prisma.JsonValue | null
@@ -22449,7 +22437,6 @@ export namespace Prisma {
     readonly description: FieldRef<"Application", 'String'>
     readonly icon: FieldRef<"Application", 'String'>
     readonly website: FieldRef<"Application", 'String'>
-    readonly developer: FieldRef<"Application", 'String'>
     readonly appSecret: FieldRef<"Application", 'String'>
     readonly createdAt: FieldRef<"Application", 'DateTime'>
     readonly endpoints: FieldRef<"Application", 'Json'>
@@ -37461,7 +37448,6 @@ export namespace Prisma {
     description: 'description',
     icon: 'icon',
     website: 'website',
-    developer: 'developer',
     appSecret: 'appSecret',
     createdAt: 'createdAt',
     endpoints: 'endpoints',
@@ -38836,7 +38822,6 @@ export namespace Prisma {
     description?: StringNullableFilter<"Application"> | string | null
     icon?: StringNullableFilter<"Application"> | string | null
     website?: StringNullableFilter<"Application"> | string | null
-    developer?: StringNullableFilter<"Application"> | string | null
     appSecret?: StringNullableFilter<"Application"> | string | null
     createdAt?: DateTimeFilter<"Application"> | Date | string
     endpoints?: JsonNullableFilter<"Application">
@@ -38857,7 +38842,6 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     icon?: SortOrderInput | SortOrder
     website?: SortOrderInput | SortOrder
-    developer?: SortOrderInput | SortOrder
     appSecret?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     endpoints?: SortOrderInput | SortOrder
@@ -38881,7 +38865,6 @@ export namespace Prisma {
     description?: StringNullableFilter<"Application"> | string | null
     icon?: StringNullableFilter<"Application"> | string | null
     website?: StringNullableFilter<"Application"> | string | null
-    developer?: StringNullableFilter<"Application"> | string | null
     appSecret?: StringNullableFilter<"Application"> | string | null
     createdAt?: DateTimeFilter<"Application"> | Date | string
     endpoints?: JsonNullableFilter<"Application">
@@ -38902,7 +38885,6 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     icon?: SortOrderInput | SortOrder
     website?: SortOrderInput | SortOrder
-    developer?: SortOrderInput | SortOrder
     appSecret?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     endpoints?: SortOrderInput | SortOrder
@@ -38923,7 +38905,6 @@ export namespace Prisma {
     description?: StringNullableWithAggregatesFilter<"Application"> | string | null
     icon?: StringNullableWithAggregatesFilter<"Application"> | string | null
     website?: StringNullableWithAggregatesFilter<"Application"> | string | null
-    developer?: StringNullableWithAggregatesFilter<"Application"> | string | null
     appSecret?: StringNullableWithAggregatesFilter<"Application"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Application"> | Date | string
     endpoints?: JsonNullableWithAggregatesFilter<"Application">
@@ -40920,7 +40901,6 @@ export namespace Prisma {
     description?: string | null
     icon?: string | null
     website?: string | null
-    developer?: string | null
     appSecret?: string | null
     createdAt?: Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -40941,7 +40921,6 @@ export namespace Prisma {
     description?: string | null
     icon?: string | null
     website?: string | null
-    developer?: string | null
     appSecret?: string | null
     createdAt?: Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -40962,7 +40941,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -40983,7 +40961,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -41004,7 +40981,6 @@ export namespace Prisma {
     description?: string | null
     icon?: string | null
     website?: string | null
-    developer?: string | null
     appSecret?: string | null
     createdAt?: Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -41019,7 +40995,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -41034,7 +41009,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -42748,7 +42722,6 @@ export namespace Prisma {
     description?: SortOrder
     icon?: SortOrder
     website?: SortOrder
-    developer?: SortOrder
     appSecret?: SortOrder
     createdAt?: SortOrder
     endpoints?: SortOrder
@@ -42763,7 +42736,6 @@ export namespace Prisma {
     description?: SortOrder
     icon?: SortOrder
     website?: SortOrder
-    developer?: SortOrder
     appSecret?: SortOrder
     createdAt?: SortOrder
     status?: SortOrder
@@ -42776,7 +42748,6 @@ export namespace Prisma {
     description?: SortOrder
     icon?: SortOrder
     website?: SortOrder
-    developer?: SortOrder
     appSecret?: SortOrder
     createdAt?: SortOrder
     status?: SortOrder
@@ -49780,7 +49751,6 @@ export namespace Prisma {
     description?: string | null
     icon?: string | null
     website?: string | null
-    developer?: string | null
     appSecret?: string | null
     createdAt?: Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -49800,7 +49770,6 @@ export namespace Prisma {
     description?: string | null
     icon?: string | null
     website?: string | null
-    developer?: string | null
     appSecret?: string | null
     createdAt?: Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -49911,7 +49880,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -49931,7 +49899,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -49951,7 +49918,6 @@ export namespace Prisma {
     description?: string | null
     icon?: string | null
     website?: string | null
-    developer?: string | null
     appSecret?: string | null
     createdAt?: Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -49971,7 +49937,6 @@ export namespace Prisma {
     description?: string | null
     icon?: string | null
     website?: string | null
-    developer?: string | null
     appSecret?: string | null
     createdAt?: Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -50007,7 +49972,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -50027,7 +49991,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -50047,7 +50010,6 @@ export namespace Prisma {
     description?: string | null
     icon?: string | null
     website?: string | null
-    developer?: string | null
     appSecret?: string | null
     createdAt?: Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -50067,7 +50029,6 @@ export namespace Prisma {
     description?: string | null
     icon?: string | null
     website?: string | null
-    developer?: string | null
     appSecret?: string | null
     createdAt?: Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -50103,7 +50064,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -50123,7 +50083,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -50143,7 +50102,6 @@ export namespace Prisma {
     description?: string | null
     icon?: string | null
     website?: string | null
-    developer?: string | null
     appSecret?: string | null
     createdAt?: Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -50163,7 +50121,6 @@ export namespace Prisma {
     description?: string | null
     icon?: string | null
     website?: string | null
-    developer?: string | null
     appSecret?: string | null
     createdAt?: Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -50227,7 +50184,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -50247,7 +50203,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -50296,7 +50251,6 @@ export namespace Prisma {
     description?: string | null
     icon?: string | null
     website?: string | null
-    developer?: string | null
     appSecret?: string | null
     createdAt?: Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -50316,7 +50270,6 @@ export namespace Prisma {
     description?: string | null
     icon?: string | null
     website?: string | null
-    developer?: string | null
     appSecret?: string | null
     createdAt?: Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -50434,7 +50387,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -50454,7 +50406,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -50789,7 +50740,6 @@ export namespace Prisma {
     description?: string | null
     icon?: string | null
     website?: string | null
-    developer?: string | null
     appSecret?: string | null
     createdAt?: Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -50809,7 +50759,6 @@ export namespace Prisma {
     description?: string | null
     icon?: string | null
     website?: string | null
-    developer?: string | null
     appSecret?: string | null
     createdAt?: Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -51051,7 +51000,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue
@@ -51071,7 +51019,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
     appSecret?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endpoints?: NullableJsonNullValueInput | InputJsonValue

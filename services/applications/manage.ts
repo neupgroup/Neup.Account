@@ -255,7 +255,6 @@ export type ApplicationDetailsForViewer = {
   name: string;
   description?: string;
   icon?: string;
-  developer?: string;
   configuredAccess: ApplicationAccessField[];
   accessedData: string[];
   hasUsedApp: boolean;
@@ -286,7 +285,6 @@ export async function getApplicationDetailsForViewer(appId: string): Promise<App
           name: true,
           description: true,
           icon: true,
-          developer: true,
           details: true,
           policies: true,
           endpoints: true,
@@ -318,7 +316,6 @@ export async function getApplicationDetailsForViewer(appId: string): Promise<App
       name: application.name,
       description: application.description || undefined,
       icon: application.icon || undefined,
-      developer: application.developer || undefined,
       configuredAccess,
       accessedData,
       hasUsedApp: appSessions.length > 0,
@@ -498,7 +495,7 @@ export async function createManagedApplication(input: { name: string }) {
 /**
  * Function getManagedApplications.
  */
-export async function getManagedApplications(): Promise<Array<{ id: string; name: string; slug?: string; icon?: string; developer?: string; createdAt: Date; hasSecretKey: boolean; status?: string }>> {
+export async function getManagedApplications(): Promise<Array<{ id: string; name: string; slug?: string; icon?: string; createdAt: Date; hasSecretKey: boolean; status?: string }>> {
   const accountId = await getActiveAccountId();
   if (!accountId) {
     return [];
@@ -514,7 +511,6 @@ export async function getManagedApplications(): Promise<Array<{ id: string; name
             id: true,
             name: true,
             icon: true,
-            developer: true,
             createdAt: true,
             appSecret: true,
             status: true,
@@ -583,7 +579,6 @@ export async function getManagedApplications(): Promise<Array<{ id: string; name
             id: true,
             name: true,
             icon: true,
-            developer: true,
             createdAt: true,
             appSecret: true,
             status: true,
@@ -600,7 +595,6 @@ export async function getManagedApplications(): Promise<Array<{ id: string; name
       id: application.id,
       name: application.name,
       icon: application.icon || undefined,
-      developer: application.developer || undefined,
       createdAt: application.createdAt,
       hasSecretKey: Boolean(application.appSecret),
       status: application.status || undefined,

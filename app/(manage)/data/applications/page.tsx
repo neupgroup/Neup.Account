@@ -33,7 +33,7 @@ function SingleList({ apps }: { apps: FlatAppItem[] }) {
             <div className="min-w-0">
               <p className="truncate text-base font-medium leading-6">{app.name}</p>
               <p className="truncate text-sm text-muted-foreground">
-                @{app.slug || app.id} | by {app.developer || 'Unknown publisher'}
+                @{app.slug || app.id}
               </p>
             </div>
           </div>

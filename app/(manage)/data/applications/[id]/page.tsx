@@ -83,7 +83,7 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
           <CardTitle>Builder</CardTitle>
         </CardHeader>
         <CardContent className="text-sm">
-          Company or individual: {details.developer || 'Not provided'}
+          Application ID: {details.id}
         </CardContent>
       </Card>
 

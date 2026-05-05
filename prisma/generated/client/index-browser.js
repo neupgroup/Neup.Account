@@ -282,7 +282,6 @@ exports.Prisma.ApplicationScalarFieldEnum = {
   description: 'description',
   icon: 'icon',
   website: 'website',
-  developer: 'developer',
   appSecret: 'appSecret',
   createdAt: 'createdAt',
   endpoints: 'endpoints',

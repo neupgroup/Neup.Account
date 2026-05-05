@@ -82,7 +82,6 @@ export async function getApplicationDetails(appId: string): Promise<Application 
             description: app.description || '',
             icon: app.icon as any || undefined,
             website: (app as any).website || undefined,
-            developer: app.developer || undefined,
           } as Application;
         }
         return null;
@@ -111,7 +110,6 @@ export async function getSignedApplications(): Promise<SignedApplicationsResult>
         icon: conn.application.icon || undefined,
         description: conn.application.description || '',
         website: conn.application.website || undefined,
-        developer: conn.application.developer || undefined,
         signedAt: conn.connectedAt,
       }))
       .sort((a, b) => b.signedAt.getTime() - a.signedAt.getTime());
