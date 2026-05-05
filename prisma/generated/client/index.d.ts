@@ -134,11 +134,6 @@ export type ApplicationBridge = $Result.DefaultSelection<Prisma.$ApplicationBrid
  */
 export type ApplicationPolicy = $Result.DefaultSelection<Prisma.$ApplicationPolicyPayload>
 /**
- * Model AuthzCapability
- * 
- */
-export type AuthzCapability = $Result.DefaultSelection<Prisma.$AuthzCapabilityPayload>
-/**
  * Model AuthzRole
  * 
  */
@@ -520,16 +515,6 @@ export class PrismaClient<
     * ```
     */
   get applicationPolicy(): Prisma.ApplicationPolicyDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.authzCapability`: Exposes CRUD operations for the **AuthzCapability** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more AuthzCapabilities
-    * const authzCapabilities = await prisma.authzCapability.findMany()
-    * ```
-    */
-  get authzCapability(): Prisma.AuthzCapabilityDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.authzRole`: Exposes CRUD operations for the **AuthzRole** model.
@@ -1038,7 +1023,6 @@ export namespace Prisma {
     ApplicationConnection: 'ApplicationConnection',
     ApplicationBridge: 'ApplicationBridge',
     ApplicationPolicy: 'ApplicationPolicy',
-    AuthzCapability: 'AuthzCapability',
     AuthzRole: 'AuthzRole',
     AuthzRoleCapabilityMap: 'AuthzRoleCapabilityMap',
     AuthzAccountAccessGrant: 'AuthzAccountAccessGrant',
@@ -1059,7 +1043,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "systemConfig" | "authnRequest" | "activity" | "notification" | "request" | "family" | "familyMember" | "verification" | "contact" | "neupId" | "authnMethod" | "authnSession" | "systemError" | "application" | "portfolio" | "portfolioAsset" | "portfolioMember" | "accountOwnership" | "applicationConnection" | "applicationBridge" | "applicationPolicy" | "authzCapability" | "authzRole" | "authzRoleCapabilityMap" | "authzAccountAccessGrant" | "authzAssetsAccessGrant" | "permit"
+      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "systemConfig" | "authnRequest" | "activity" | "notification" | "request" | "family" | "familyMember" | "verification" | "contact" | "neupId" | "authnMethod" | "authnSession" | "systemError" | "application" | "portfolio" | "portfolioAsset" | "portfolioMember" | "accountOwnership" | "applicationConnection" | "applicationBridge" | "applicationPolicy" | "authzRole" | "authzRoleCapabilityMap" | "authzAccountAccessGrant" | "authzAssetsAccessGrant" | "permit"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2839,80 +2823,6 @@ export namespace Prisma {
           }
         }
       }
-      AuthzCapability: {
-        payload: Prisma.$AuthzCapabilityPayload<ExtArgs>
-        fields: Prisma.AuthzCapabilityFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.AuthzCapabilityFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzCapabilityPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.AuthzCapabilityFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzCapabilityPayload>
-          }
-          findFirst: {
-            args: Prisma.AuthzCapabilityFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzCapabilityPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.AuthzCapabilityFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzCapabilityPayload>
-          }
-          findMany: {
-            args: Prisma.AuthzCapabilityFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzCapabilityPayload>[]
-          }
-          create: {
-            args: Prisma.AuthzCapabilityCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzCapabilityPayload>
-          }
-          createMany: {
-            args: Prisma.AuthzCapabilityCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.AuthzCapabilityCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzCapabilityPayload>[]
-          }
-          delete: {
-            args: Prisma.AuthzCapabilityDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzCapabilityPayload>
-          }
-          update: {
-            args: Prisma.AuthzCapabilityUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzCapabilityPayload>
-          }
-          deleteMany: {
-            args: Prisma.AuthzCapabilityDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.AuthzCapabilityUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.AuthzCapabilityUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzCapabilityPayload>[]
-          }
-          upsert: {
-            args: Prisma.AuthzCapabilityUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AuthzCapabilityPayload>
-          }
-          aggregate: {
-            args: Prisma.AuthzCapabilityAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateAuthzCapability>
-          }
-          groupBy: {
-            args: Prisma.AuthzCapabilityGroupByArgs<ExtArgs>
-            result: $Utils.Optional<AuthzCapabilityGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.AuthzCapabilityCountArgs<ExtArgs>
-            result: $Utils.Optional<AuthzCapabilityCountAggregateOutputType> | number
-          }
-        }
-      }
       AuthzRole: {
         payload: Prisma.$AuthzRolePayload<ExtArgs>
         fields: Prisma.AuthzRoleFieldRefs
@@ -3415,7 +3325,6 @@ export namespace Prisma {
     applicationConnection?: ApplicationConnectionOmit
     applicationBridge?: ApplicationBridgeOmit
     applicationPolicy?: ApplicationPolicyOmit
-    authzCapability?: AuthzCapabilityOmit
     authzRole?: AuthzRoleOmit
     authzRoleCapabilityMap?: AuthzRoleCapabilityMapOmit
     authzAccountAccessGrant?: AuthzAccountAccessGrantOmit
@@ -3737,7 +3646,6 @@ export namespace Prisma {
     connections: number
     bridge: number
     policies: number
-    authzCapabilities: number
     authzRoles: number
     authzAccountAccessGrants: number
   }
@@ -3746,7 +3654,6 @@ export namespace Prisma {
     connections?: boolean | ApplicationCountOutputTypeCountConnectionsArgs
     bridge?: boolean | ApplicationCountOutputTypeCountBridgeArgs
     policies?: boolean | ApplicationCountOutputTypeCountPoliciesArgs
-    authzCapabilities?: boolean | ApplicationCountOutputTypeCountAuthzCapabilitiesArgs
     authzRoles?: boolean | ApplicationCountOutputTypeCountAuthzRolesArgs
     authzAccountAccessGrants?: boolean | ApplicationCountOutputTypeCountAuthzAccountAccessGrantsArgs
   }
@@ -3781,13 +3688,6 @@ export namespace Prisma {
    */
   export type ApplicationCountOutputTypeCountPoliciesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ApplicationPolicyWhereInput
-  }
-
-  /**
-   * ApplicationCountOutputType without action
-   */
-  export type ApplicationCountOutputTypeCountAuthzCapabilitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthzCapabilityWhereInput
   }
 
   /**
@@ -3891,37 +3791,6 @@ export namespace Prisma {
    */
   export type PortfolioAssetCountOutputTypeCountAuthzAssetsAccessGrantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AuthzAssetsAccessGrantWhereInput
-  }
-
-
-  /**
-   * Count Type AuthzCapabilityCountOutputType
-   */
-
-  export type AuthzCapabilityCountOutputType = {
-    roleMaps: number
-  }
-
-  export type AuthzCapabilityCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    roleMaps?: boolean | AuthzCapabilityCountOutputTypeCountRoleMapsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * AuthzCapabilityCountOutputType without action
-   */
-  export type AuthzCapabilityCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthzCapabilityCountOutputType
-     */
-    select?: AuthzCapabilityCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * AuthzCapabilityCountOutputType without action
-   */
-  export type AuthzCapabilityCountOutputTypeCountRoleMapsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthzRoleCapabilityMapWhereInput
   }
 
 
@@ -21928,7 +21797,6 @@ export namespace Prisma {
     connections?: boolean | Application$connectionsArgs<ExtArgs>
     bridge?: boolean | Application$bridgeArgs<ExtArgs>
     policies?: boolean | Application$policiesArgs<ExtArgs>
-    authzCapabilities?: boolean | Application$authzCapabilitiesArgs<ExtArgs>
     authzRoles?: boolean | Application$authzRolesArgs<ExtArgs>
     authzAccountAccessGrants?: boolean | Application$authzAccountAccessGrantsArgs<ExtArgs>
     _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
@@ -21984,7 +21852,6 @@ export namespace Prisma {
     connections?: boolean | Application$connectionsArgs<ExtArgs>
     bridge?: boolean | Application$bridgeArgs<ExtArgs>
     policies?: boolean | Application$policiesArgs<ExtArgs>
-    authzCapabilities?: boolean | Application$authzCapabilitiesArgs<ExtArgs>
     authzRoles?: boolean | Application$authzRolesArgs<ExtArgs>
     authzAccountAccessGrants?: boolean | Application$authzAccountAccessGrantsArgs<ExtArgs>
     _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
@@ -21998,7 +21865,6 @@ export namespace Prisma {
       connections: Prisma.$ApplicationConnectionPayload<ExtArgs>[]
       bridge: Prisma.$ApplicationBridgePayload<ExtArgs>[]
       policies: Prisma.$ApplicationPolicyPayload<ExtArgs>[]
-      authzCapabilities: Prisma.$AuthzCapabilityPayload<ExtArgs>[]
       authzRoles: Prisma.$AuthzRolePayload<ExtArgs>[]
       authzAccountAccessGrants: Prisma.$AuthzAccountAccessGrantPayload<ExtArgs>[]
     }
@@ -22412,7 +22278,6 @@ export namespace Prisma {
     connections<T extends Application$connectionsArgs<ExtArgs> = {}>(args?: Subset<T, Application$connectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     bridge<T extends Application$bridgeArgs<ExtArgs> = {}>(args?: Subset<T, Application$bridgeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationBridgePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     policies<T extends Application$policiesArgs<ExtArgs> = {}>(args?: Subset<T, Application$policiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationPolicyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    authzCapabilities<T extends Application$authzCapabilitiesArgs<ExtArgs> = {}>(args?: Subset<T, Application$authzCapabilitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzCapabilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     authzRoles<T extends Application$authzRolesArgs<ExtArgs> = {}>(args?: Subset<T, Application$authzRolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     authzAccountAccessGrants<T extends Application$authzAccountAccessGrantsArgs<ExtArgs> = {}>(args?: Subset<T, Application$authzAccountAccessGrantsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzAccountAccessGrantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -22913,30 +22778,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ApplicationPolicyScalarFieldEnum | ApplicationPolicyScalarFieldEnum[]
-  }
-
-  /**
-   * Application.authzCapabilities
-   */
-  export type Application$authzCapabilitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthzCapability
-     */
-    select?: AuthzCapabilitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthzCapability
-     */
-    omit?: AuthzCapabilityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthzCapabilityInclude<ExtArgs> | null
-    where?: AuthzCapabilityWhereInput
-    orderBy?: AuthzCapabilityOrderByWithRelationInput | AuthzCapabilityOrderByWithRelationInput[]
-    cursor?: AuthzCapabilityWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AuthzCapabilityScalarFieldEnum | AuthzCapabilityScalarFieldEnum[]
   }
 
   /**
@@ -30521,1113 +30362,6 @@ export namespace Prisma {
 
 
   /**
-   * Model AuthzCapability
-   */
-
-  export type AggregateAuthzCapability = {
-    _count: AuthzCapabilityCountAggregateOutputType | null
-    _min: AuthzCapabilityMinAggregateOutputType | null
-    _max: AuthzCapabilityMaxAggregateOutputType | null
-  }
-
-  export type AuthzCapabilityMinAggregateOutputType = {
-    id: string | null
-    name: string | null
-    description: string | null
-    appId: string | null
-    scope: string | null
-  }
-
-  export type AuthzCapabilityMaxAggregateOutputType = {
-    id: string | null
-    name: string | null
-    description: string | null
-    appId: string | null
-    scope: string | null
-  }
-
-  export type AuthzCapabilityCountAggregateOutputType = {
-    id: number
-    name: number
-    description: number
-    appId: number
-    scope: number
-    _all: number
-  }
-
-
-  export type AuthzCapabilityMinAggregateInputType = {
-    id?: true
-    name?: true
-    description?: true
-    appId?: true
-    scope?: true
-  }
-
-  export type AuthzCapabilityMaxAggregateInputType = {
-    id?: true
-    name?: true
-    description?: true
-    appId?: true
-    scope?: true
-  }
-
-  export type AuthzCapabilityCountAggregateInputType = {
-    id?: true
-    name?: true
-    description?: true
-    appId?: true
-    scope?: true
-    _all?: true
-  }
-
-  export type AuthzCapabilityAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which AuthzCapability to aggregate.
-     */
-    where?: AuthzCapabilityWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AuthzCapabilities to fetch.
-     */
-    orderBy?: AuthzCapabilityOrderByWithRelationInput | AuthzCapabilityOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: AuthzCapabilityWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AuthzCapabilities from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AuthzCapabilities.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned AuthzCapabilities
-    **/
-    _count?: true | AuthzCapabilityCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: AuthzCapabilityMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: AuthzCapabilityMaxAggregateInputType
-  }
-
-  export type GetAuthzCapabilityAggregateType<T extends AuthzCapabilityAggregateArgs> = {
-        [P in keyof T & keyof AggregateAuthzCapability]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateAuthzCapability[P]>
-      : GetScalarType<T[P], AggregateAuthzCapability[P]>
-  }
-
-
-
-
-  export type AuthzCapabilityGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthzCapabilityWhereInput
-    orderBy?: AuthzCapabilityOrderByWithAggregationInput | AuthzCapabilityOrderByWithAggregationInput[]
-    by: AuthzCapabilityScalarFieldEnum[] | AuthzCapabilityScalarFieldEnum
-    having?: AuthzCapabilityScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: AuthzCapabilityCountAggregateInputType | true
-    _min?: AuthzCapabilityMinAggregateInputType
-    _max?: AuthzCapabilityMaxAggregateInputType
-  }
-
-  export type AuthzCapabilityGroupByOutputType = {
-    id: string
-    name: string
-    description: string | null
-    appId: string | null
-    scope: string | null
-    _count: AuthzCapabilityCountAggregateOutputType | null
-    _min: AuthzCapabilityMinAggregateOutputType | null
-    _max: AuthzCapabilityMaxAggregateOutputType | null
-  }
-
-  type GetAuthzCapabilityGroupByPayload<T extends AuthzCapabilityGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<AuthzCapabilityGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof AuthzCapabilityGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], AuthzCapabilityGroupByOutputType[P]>
-            : GetScalarType<T[P], AuthzCapabilityGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type AuthzCapabilitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    description?: boolean
-    appId?: boolean
-    scope?: boolean
-    application?: boolean | AuthzCapability$applicationArgs<ExtArgs>
-    roleMaps?: boolean | AuthzCapability$roleMapsArgs<ExtArgs>
-    _count?: boolean | AuthzCapabilityCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["authzCapability"]>
-
-  export type AuthzCapabilitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    description?: boolean
-    appId?: boolean
-    scope?: boolean
-    application?: boolean | AuthzCapability$applicationArgs<ExtArgs>
-  }, ExtArgs["result"]["authzCapability"]>
-
-  export type AuthzCapabilitySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    description?: boolean
-    appId?: boolean
-    scope?: boolean
-    application?: boolean | AuthzCapability$applicationArgs<ExtArgs>
-  }, ExtArgs["result"]["authzCapability"]>
-
-  export type AuthzCapabilitySelectScalar = {
-    id?: boolean
-    name?: boolean
-    description?: boolean
-    appId?: boolean
-    scope?: boolean
-  }
-
-  export type AuthzCapabilityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "appId" | "scope", ExtArgs["result"]["authzCapability"]>
-  export type AuthzCapabilityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    application?: boolean | AuthzCapability$applicationArgs<ExtArgs>
-    roleMaps?: boolean | AuthzCapability$roleMapsArgs<ExtArgs>
-    _count?: boolean | AuthzCapabilityCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type AuthzCapabilityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    application?: boolean | AuthzCapability$applicationArgs<ExtArgs>
-  }
-  export type AuthzCapabilityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    application?: boolean | AuthzCapability$applicationArgs<ExtArgs>
-  }
-
-  export type $AuthzCapabilityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "AuthzCapability"
-    objects: {
-      application: Prisma.$ApplicationPayload<ExtArgs> | null
-      roleMaps: Prisma.$AuthzRoleCapabilityMapPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      name: string
-      description: string | null
-      appId: string | null
-      scope: string | null
-    }, ExtArgs["result"]["authzCapability"]>
-    composites: {}
-  }
-
-  type AuthzCapabilityGetPayload<S extends boolean | null | undefined | AuthzCapabilityDefaultArgs> = $Result.GetResult<Prisma.$AuthzCapabilityPayload, S>
-
-  type AuthzCapabilityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<AuthzCapabilityFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: AuthzCapabilityCountAggregateInputType | true
-    }
-
-  export interface AuthzCapabilityDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AuthzCapability'], meta: { name: 'AuthzCapability' } }
-    /**
-     * Find zero or one AuthzCapability that matches the filter.
-     * @param {AuthzCapabilityFindUniqueArgs} args - Arguments to find a AuthzCapability
-     * @example
-     * // Get one AuthzCapability
-     * const authzCapability = await prisma.authzCapability.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends AuthzCapabilityFindUniqueArgs>(args: SelectSubset<T, AuthzCapabilityFindUniqueArgs<ExtArgs>>): Prisma__AuthzCapabilityClient<$Result.GetResult<Prisma.$AuthzCapabilityPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one AuthzCapability that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {AuthzCapabilityFindUniqueOrThrowArgs} args - Arguments to find a AuthzCapability
-     * @example
-     * // Get one AuthzCapability
-     * const authzCapability = await prisma.authzCapability.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends AuthzCapabilityFindUniqueOrThrowArgs>(args: SelectSubset<T, AuthzCapabilityFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AuthzCapabilityClient<$Result.GetResult<Prisma.$AuthzCapabilityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first AuthzCapability that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthzCapabilityFindFirstArgs} args - Arguments to find a AuthzCapability
-     * @example
-     * // Get one AuthzCapability
-     * const authzCapability = await prisma.authzCapability.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends AuthzCapabilityFindFirstArgs>(args?: SelectSubset<T, AuthzCapabilityFindFirstArgs<ExtArgs>>): Prisma__AuthzCapabilityClient<$Result.GetResult<Prisma.$AuthzCapabilityPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first AuthzCapability that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthzCapabilityFindFirstOrThrowArgs} args - Arguments to find a AuthzCapability
-     * @example
-     * // Get one AuthzCapability
-     * const authzCapability = await prisma.authzCapability.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends AuthzCapabilityFindFirstOrThrowArgs>(args?: SelectSubset<T, AuthzCapabilityFindFirstOrThrowArgs<ExtArgs>>): Prisma__AuthzCapabilityClient<$Result.GetResult<Prisma.$AuthzCapabilityPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more AuthzCapabilities that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthzCapabilityFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all AuthzCapabilities
-     * const authzCapabilities = await prisma.authzCapability.findMany()
-     * 
-     * // Get first 10 AuthzCapabilities
-     * const authzCapabilities = await prisma.authzCapability.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const authzCapabilityWithIdOnly = await prisma.authzCapability.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends AuthzCapabilityFindManyArgs>(args?: SelectSubset<T, AuthzCapabilityFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzCapabilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a AuthzCapability.
-     * @param {AuthzCapabilityCreateArgs} args - Arguments to create a AuthzCapability.
-     * @example
-     * // Create one AuthzCapability
-     * const AuthzCapability = await prisma.authzCapability.create({
-     *   data: {
-     *     // ... data to create a AuthzCapability
-     *   }
-     * })
-     * 
-     */
-    create<T extends AuthzCapabilityCreateArgs>(args: SelectSubset<T, AuthzCapabilityCreateArgs<ExtArgs>>): Prisma__AuthzCapabilityClient<$Result.GetResult<Prisma.$AuthzCapabilityPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many AuthzCapabilities.
-     * @param {AuthzCapabilityCreateManyArgs} args - Arguments to create many AuthzCapabilities.
-     * @example
-     * // Create many AuthzCapabilities
-     * const authzCapability = await prisma.authzCapability.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends AuthzCapabilityCreateManyArgs>(args?: SelectSubset<T, AuthzCapabilityCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many AuthzCapabilities and returns the data saved in the database.
-     * @param {AuthzCapabilityCreateManyAndReturnArgs} args - Arguments to create many AuthzCapabilities.
-     * @example
-     * // Create many AuthzCapabilities
-     * const authzCapability = await prisma.authzCapability.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many AuthzCapabilities and only return the `id`
-     * const authzCapabilityWithIdOnly = await prisma.authzCapability.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends AuthzCapabilityCreateManyAndReturnArgs>(args?: SelectSubset<T, AuthzCapabilityCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzCapabilityPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a AuthzCapability.
-     * @param {AuthzCapabilityDeleteArgs} args - Arguments to delete one AuthzCapability.
-     * @example
-     * // Delete one AuthzCapability
-     * const AuthzCapability = await prisma.authzCapability.delete({
-     *   where: {
-     *     // ... filter to delete one AuthzCapability
-     *   }
-     * })
-     * 
-     */
-    delete<T extends AuthzCapabilityDeleteArgs>(args: SelectSubset<T, AuthzCapabilityDeleteArgs<ExtArgs>>): Prisma__AuthzCapabilityClient<$Result.GetResult<Prisma.$AuthzCapabilityPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one AuthzCapability.
-     * @param {AuthzCapabilityUpdateArgs} args - Arguments to update one AuthzCapability.
-     * @example
-     * // Update one AuthzCapability
-     * const authzCapability = await prisma.authzCapability.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends AuthzCapabilityUpdateArgs>(args: SelectSubset<T, AuthzCapabilityUpdateArgs<ExtArgs>>): Prisma__AuthzCapabilityClient<$Result.GetResult<Prisma.$AuthzCapabilityPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more AuthzCapabilities.
-     * @param {AuthzCapabilityDeleteManyArgs} args - Arguments to filter AuthzCapabilities to delete.
-     * @example
-     * // Delete a few AuthzCapabilities
-     * const { count } = await prisma.authzCapability.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends AuthzCapabilityDeleteManyArgs>(args?: SelectSubset<T, AuthzCapabilityDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more AuthzCapabilities.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthzCapabilityUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many AuthzCapabilities
-     * const authzCapability = await prisma.authzCapability.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends AuthzCapabilityUpdateManyArgs>(args: SelectSubset<T, AuthzCapabilityUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more AuthzCapabilities and returns the data updated in the database.
-     * @param {AuthzCapabilityUpdateManyAndReturnArgs} args - Arguments to update many AuthzCapabilities.
-     * @example
-     * // Update many AuthzCapabilities
-     * const authzCapability = await prisma.authzCapability.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more AuthzCapabilities and only return the `id`
-     * const authzCapabilityWithIdOnly = await prisma.authzCapability.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends AuthzCapabilityUpdateManyAndReturnArgs>(args: SelectSubset<T, AuthzCapabilityUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzCapabilityPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one AuthzCapability.
-     * @param {AuthzCapabilityUpsertArgs} args - Arguments to update or create a AuthzCapability.
-     * @example
-     * // Update or create a AuthzCapability
-     * const authzCapability = await prisma.authzCapability.upsert({
-     *   create: {
-     *     // ... data to create a AuthzCapability
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the AuthzCapability we want to update
-     *   }
-     * })
-     */
-    upsert<T extends AuthzCapabilityUpsertArgs>(args: SelectSubset<T, AuthzCapabilityUpsertArgs<ExtArgs>>): Prisma__AuthzCapabilityClient<$Result.GetResult<Prisma.$AuthzCapabilityPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of AuthzCapabilities.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthzCapabilityCountArgs} args - Arguments to filter AuthzCapabilities to count.
-     * @example
-     * // Count the number of AuthzCapabilities
-     * const count = await prisma.authzCapability.count({
-     *   where: {
-     *     // ... the filter for the AuthzCapabilities we want to count
-     *   }
-     * })
-    **/
-    count<T extends AuthzCapabilityCountArgs>(
-      args?: Subset<T, AuthzCapabilityCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], AuthzCapabilityCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a AuthzCapability.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthzCapabilityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends AuthzCapabilityAggregateArgs>(args: Subset<T, AuthzCapabilityAggregateArgs>): Prisma.PrismaPromise<GetAuthzCapabilityAggregateType<T>>
-
-    /**
-     * Group by AuthzCapability.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AuthzCapabilityGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends AuthzCapabilityGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: AuthzCapabilityGroupByArgs['orderBy'] }
-        : { orderBy?: AuthzCapabilityGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, AuthzCapabilityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAuthzCapabilityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the AuthzCapability model
-   */
-  readonly fields: AuthzCapabilityFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for AuthzCapability.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__AuthzCapabilityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    application<T extends AuthzCapability$applicationArgs<ExtArgs> = {}>(args?: Subset<T, AuthzCapability$applicationArgs<ExtArgs>>): Prisma__ApplicationClient<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    roleMaps<T extends AuthzCapability$roleMapsArgs<ExtArgs> = {}>(args?: Subset<T, AuthzCapability$roleMapsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzRoleCapabilityMapPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the AuthzCapability model
-   */
-  interface AuthzCapabilityFieldRefs {
-    readonly id: FieldRef<"AuthzCapability", 'String'>
-    readonly name: FieldRef<"AuthzCapability", 'String'>
-    readonly description: FieldRef<"AuthzCapability", 'String'>
-    readonly appId: FieldRef<"AuthzCapability", 'String'>
-    readonly scope: FieldRef<"AuthzCapability", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * AuthzCapability findUnique
-   */
-  export type AuthzCapabilityFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthzCapability
-     */
-    select?: AuthzCapabilitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthzCapability
-     */
-    omit?: AuthzCapabilityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthzCapabilityInclude<ExtArgs> | null
-    /**
-     * Filter, which AuthzCapability to fetch.
-     */
-    where: AuthzCapabilityWhereUniqueInput
-  }
-
-  /**
-   * AuthzCapability findUniqueOrThrow
-   */
-  export type AuthzCapabilityFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthzCapability
-     */
-    select?: AuthzCapabilitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthzCapability
-     */
-    omit?: AuthzCapabilityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthzCapabilityInclude<ExtArgs> | null
-    /**
-     * Filter, which AuthzCapability to fetch.
-     */
-    where: AuthzCapabilityWhereUniqueInput
-  }
-
-  /**
-   * AuthzCapability findFirst
-   */
-  export type AuthzCapabilityFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthzCapability
-     */
-    select?: AuthzCapabilitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthzCapability
-     */
-    omit?: AuthzCapabilityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthzCapabilityInclude<ExtArgs> | null
-    /**
-     * Filter, which AuthzCapability to fetch.
-     */
-    where?: AuthzCapabilityWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AuthzCapabilities to fetch.
-     */
-    orderBy?: AuthzCapabilityOrderByWithRelationInput | AuthzCapabilityOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for AuthzCapabilities.
-     */
-    cursor?: AuthzCapabilityWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AuthzCapabilities from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AuthzCapabilities.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of AuthzCapabilities.
-     */
-    distinct?: AuthzCapabilityScalarFieldEnum | AuthzCapabilityScalarFieldEnum[]
-  }
-
-  /**
-   * AuthzCapability findFirstOrThrow
-   */
-  export type AuthzCapabilityFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthzCapability
-     */
-    select?: AuthzCapabilitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthzCapability
-     */
-    omit?: AuthzCapabilityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthzCapabilityInclude<ExtArgs> | null
-    /**
-     * Filter, which AuthzCapability to fetch.
-     */
-    where?: AuthzCapabilityWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AuthzCapabilities to fetch.
-     */
-    orderBy?: AuthzCapabilityOrderByWithRelationInput | AuthzCapabilityOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for AuthzCapabilities.
-     */
-    cursor?: AuthzCapabilityWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AuthzCapabilities from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AuthzCapabilities.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of AuthzCapabilities.
-     */
-    distinct?: AuthzCapabilityScalarFieldEnum | AuthzCapabilityScalarFieldEnum[]
-  }
-
-  /**
-   * AuthzCapability findMany
-   */
-  export type AuthzCapabilityFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthzCapability
-     */
-    select?: AuthzCapabilitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthzCapability
-     */
-    omit?: AuthzCapabilityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthzCapabilityInclude<ExtArgs> | null
-    /**
-     * Filter, which AuthzCapabilities to fetch.
-     */
-    where?: AuthzCapabilityWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AuthzCapabilities to fetch.
-     */
-    orderBy?: AuthzCapabilityOrderByWithRelationInput | AuthzCapabilityOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing AuthzCapabilities.
-     */
-    cursor?: AuthzCapabilityWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AuthzCapabilities from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AuthzCapabilities.
-     */
-    skip?: number
-    distinct?: AuthzCapabilityScalarFieldEnum | AuthzCapabilityScalarFieldEnum[]
-  }
-
-  /**
-   * AuthzCapability create
-   */
-  export type AuthzCapabilityCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthzCapability
-     */
-    select?: AuthzCapabilitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthzCapability
-     */
-    omit?: AuthzCapabilityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthzCapabilityInclude<ExtArgs> | null
-    /**
-     * The data needed to create a AuthzCapability.
-     */
-    data: XOR<AuthzCapabilityCreateInput, AuthzCapabilityUncheckedCreateInput>
-  }
-
-  /**
-   * AuthzCapability createMany
-   */
-  export type AuthzCapabilityCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many AuthzCapabilities.
-     */
-    data: AuthzCapabilityCreateManyInput | AuthzCapabilityCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * AuthzCapability createManyAndReturn
-   */
-  export type AuthzCapabilityCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthzCapability
-     */
-    select?: AuthzCapabilitySelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthzCapability
-     */
-    omit?: AuthzCapabilityOmit<ExtArgs> | null
-    /**
-     * The data used to create many AuthzCapabilities.
-     */
-    data: AuthzCapabilityCreateManyInput | AuthzCapabilityCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthzCapabilityIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * AuthzCapability update
-   */
-  export type AuthzCapabilityUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthzCapability
-     */
-    select?: AuthzCapabilitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthzCapability
-     */
-    omit?: AuthzCapabilityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthzCapabilityInclude<ExtArgs> | null
-    /**
-     * The data needed to update a AuthzCapability.
-     */
-    data: XOR<AuthzCapabilityUpdateInput, AuthzCapabilityUncheckedUpdateInput>
-    /**
-     * Choose, which AuthzCapability to update.
-     */
-    where: AuthzCapabilityWhereUniqueInput
-  }
-
-  /**
-   * AuthzCapability updateMany
-   */
-  export type AuthzCapabilityUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update AuthzCapabilities.
-     */
-    data: XOR<AuthzCapabilityUpdateManyMutationInput, AuthzCapabilityUncheckedUpdateManyInput>
-    /**
-     * Filter which AuthzCapabilities to update
-     */
-    where?: AuthzCapabilityWhereInput
-    /**
-     * Limit how many AuthzCapabilities to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * AuthzCapability updateManyAndReturn
-   */
-  export type AuthzCapabilityUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthzCapability
-     */
-    select?: AuthzCapabilitySelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthzCapability
-     */
-    omit?: AuthzCapabilityOmit<ExtArgs> | null
-    /**
-     * The data used to update AuthzCapabilities.
-     */
-    data: XOR<AuthzCapabilityUpdateManyMutationInput, AuthzCapabilityUncheckedUpdateManyInput>
-    /**
-     * Filter which AuthzCapabilities to update
-     */
-    where?: AuthzCapabilityWhereInput
-    /**
-     * Limit how many AuthzCapabilities to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthzCapabilityIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * AuthzCapability upsert
-   */
-  export type AuthzCapabilityUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthzCapability
-     */
-    select?: AuthzCapabilitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthzCapability
-     */
-    omit?: AuthzCapabilityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthzCapabilityInclude<ExtArgs> | null
-    /**
-     * The filter to search for the AuthzCapability to update in case it exists.
-     */
-    where: AuthzCapabilityWhereUniqueInput
-    /**
-     * In case the AuthzCapability found by the `where` argument doesn't exist, create a new AuthzCapability with this data.
-     */
-    create: XOR<AuthzCapabilityCreateInput, AuthzCapabilityUncheckedCreateInput>
-    /**
-     * In case the AuthzCapability was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<AuthzCapabilityUpdateInput, AuthzCapabilityUncheckedUpdateInput>
-  }
-
-  /**
-   * AuthzCapability delete
-   */
-  export type AuthzCapabilityDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthzCapability
-     */
-    select?: AuthzCapabilitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthzCapability
-     */
-    omit?: AuthzCapabilityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthzCapabilityInclude<ExtArgs> | null
-    /**
-     * Filter which AuthzCapability to delete.
-     */
-    where: AuthzCapabilityWhereUniqueInput
-  }
-
-  /**
-   * AuthzCapability deleteMany
-   */
-  export type AuthzCapabilityDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which AuthzCapabilities to delete
-     */
-    where?: AuthzCapabilityWhereInput
-    /**
-     * Limit how many AuthzCapabilities to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * AuthzCapability.application
-   */
-  export type AuthzCapability$applicationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Application
-     */
-    select?: ApplicationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Application
-     */
-    omit?: ApplicationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ApplicationInclude<ExtArgs> | null
-    where?: ApplicationWhereInput
-  }
-
-  /**
-   * AuthzCapability.roleMaps
-   */
-  export type AuthzCapability$roleMapsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthzRoleCapabilityMap
-     */
-    select?: AuthzRoleCapabilityMapSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthzRoleCapabilityMap
-     */
-    omit?: AuthzRoleCapabilityMapOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthzRoleCapabilityMapInclude<ExtArgs> | null
-    where?: AuthzRoleCapabilityMapWhereInput
-    orderBy?: AuthzRoleCapabilityMapOrderByWithRelationInput | AuthzRoleCapabilityMapOrderByWithRelationInput[]
-    cursor?: AuthzRoleCapabilityMapWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AuthzRoleCapabilityMapScalarFieldEnum | AuthzRoleCapabilityMapScalarFieldEnum[]
-  }
-
-  /**
-   * AuthzCapability without action
-   */
-  export type AuthzCapabilityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AuthzCapability
-     */
-    select?: AuthzCapabilitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AuthzCapability
-     */
-    omit?: AuthzCapabilityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AuthzCapabilityInclude<ExtArgs> | null
-  }
-
-
-  /**
    * Model AuthzRole
    */
 
@@ -32812,19 +31546,25 @@ export namespace Prisma {
   export type AuthzRoleCapabilityMapMinAggregateOutputType = {
     id: string | null
     roleId: string | null
-    capabilityId: string | null
+    capName: string | null
+    capDesc: string | null
+    scope: string | null
   }
 
   export type AuthzRoleCapabilityMapMaxAggregateOutputType = {
     id: string | null
     roleId: string | null
-    capabilityId: string | null
+    capName: string | null
+    capDesc: string | null
+    scope: string | null
   }
 
   export type AuthzRoleCapabilityMapCountAggregateOutputType = {
     id: number
     roleId: number
-    capabilityId: number
+    capName: number
+    capDesc: number
+    scope: number
     _all: number
   }
 
@@ -32832,19 +31572,25 @@ export namespace Prisma {
   export type AuthzRoleCapabilityMapMinAggregateInputType = {
     id?: true
     roleId?: true
-    capabilityId?: true
+    capName?: true
+    capDesc?: true
+    scope?: true
   }
 
   export type AuthzRoleCapabilityMapMaxAggregateInputType = {
     id?: true
     roleId?: true
-    capabilityId?: true
+    capName?: true
+    capDesc?: true
+    scope?: true
   }
 
   export type AuthzRoleCapabilityMapCountAggregateInputType = {
     id?: true
     roleId?: true
-    capabilityId?: true
+    capName?: true
+    capDesc?: true
+    scope?: true
     _all?: true
   }
 
@@ -32923,7 +31669,9 @@ export namespace Prisma {
   export type AuthzRoleCapabilityMapGroupByOutputType = {
     id: string
     roleId: string
-    capabilityId: string
+    capName: string
+    capDesc: string | null
+    scope: string | null
     _count: AuthzRoleCapabilityMapCountAggregateOutputType | null
     _min: AuthzRoleCapabilityMapMinAggregateOutputType | null
     _max: AuthzRoleCapabilityMapMaxAggregateOutputType | null
@@ -32946,57 +31694,60 @@ export namespace Prisma {
   export type AuthzRoleCapabilityMapSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     roleId?: boolean
-    capabilityId?: boolean
+    capName?: boolean
+    capDesc?: boolean
+    scope?: boolean
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
-    capability?: boolean | AuthzCapabilityDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["authzRoleCapabilityMap"]>
 
   export type AuthzRoleCapabilityMapSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     roleId?: boolean
-    capabilityId?: boolean
+    capName?: boolean
+    capDesc?: boolean
+    scope?: boolean
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
-    capability?: boolean | AuthzCapabilityDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["authzRoleCapabilityMap"]>
 
   export type AuthzRoleCapabilityMapSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     roleId?: boolean
-    capabilityId?: boolean
+    capName?: boolean
+    capDesc?: boolean
+    scope?: boolean
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
-    capability?: boolean | AuthzCapabilityDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["authzRoleCapabilityMap"]>
 
   export type AuthzRoleCapabilityMapSelectScalar = {
     id?: boolean
     roleId?: boolean
-    capabilityId?: boolean
+    capName?: boolean
+    capDesc?: boolean
+    scope?: boolean
   }
 
-  export type AuthzRoleCapabilityMapOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "roleId" | "capabilityId", ExtArgs["result"]["authzRoleCapabilityMap"]>
+  export type AuthzRoleCapabilityMapOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "roleId" | "capName" | "capDesc" | "scope", ExtArgs["result"]["authzRoleCapabilityMap"]>
   export type AuthzRoleCapabilityMapInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
-    capability?: boolean | AuthzCapabilityDefaultArgs<ExtArgs>
   }
   export type AuthzRoleCapabilityMapIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
-    capability?: boolean | AuthzCapabilityDefaultArgs<ExtArgs>
   }
   export type AuthzRoleCapabilityMapIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     role?: boolean | AuthzRoleDefaultArgs<ExtArgs>
-    capability?: boolean | AuthzCapabilityDefaultArgs<ExtArgs>
   }
 
   export type $AuthzRoleCapabilityMapPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "AuthzRoleCapabilityMap"
     objects: {
       role: Prisma.$AuthzRolePayload<ExtArgs>
-      capability: Prisma.$AuthzCapabilityPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       roleId: string
-      capabilityId: string
+      capName: string
+      capDesc: string | null
+      scope: string | null
     }, ExtArgs["result"]["authzRoleCapabilityMap"]>
     composites: {}
   }
@@ -33392,7 +32143,6 @@ export namespace Prisma {
   export interface Prisma__AuthzRoleCapabilityMapClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     role<T extends AuthzRoleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AuthzRoleDefaultArgs<ExtArgs>>): Prisma__AuthzRoleClient<$Result.GetResult<Prisma.$AuthzRolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    capability<T extends AuthzCapabilityDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AuthzCapabilityDefaultArgs<ExtArgs>>): Prisma__AuthzCapabilityClient<$Result.GetResult<Prisma.$AuthzCapabilityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -33424,7 +32174,9 @@ export namespace Prisma {
   interface AuthzRoleCapabilityMapFieldRefs {
     readonly id: FieldRef<"AuthzRoleCapabilityMap", 'String'>
     readonly roleId: FieldRef<"AuthzRoleCapabilityMap", 'String'>
-    readonly capabilityId: FieldRef<"AuthzRoleCapabilityMap", 'String'>
+    readonly capName: FieldRef<"AuthzRoleCapabilityMap", 'String'>
+    readonly capDesc: FieldRef<"AuthzRoleCapabilityMap", 'String'>
+    readonly scope: FieldRef<"AuthzRoleCapabilityMap", 'String'>
   }
     
 
@@ -37464,17 +36216,6 @@ export namespace Prisma {
   export type ApplicationPolicyScalarFieldEnum = (typeof ApplicationPolicyScalarFieldEnum)[keyof typeof ApplicationPolicyScalarFieldEnum]
 
 
-  export const AuthzCapabilityScalarFieldEnum: {
-    id: 'id',
-    name: 'name',
-    description: 'description',
-    appId: 'appId',
-    scope: 'scope'
-  };
-
-  export type AuthzCapabilityScalarFieldEnum = (typeof AuthzCapabilityScalarFieldEnum)[keyof typeof AuthzCapabilityScalarFieldEnum]
-
-
   export const AuthzRoleScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -37490,7 +36231,9 @@ export namespace Prisma {
   export const AuthzRoleCapabilityMapScalarFieldEnum: {
     id: 'id',
     roleId: 'roleId',
-    capabilityId: 'capabilityId'
+    capName: 'capName',
+    capDesc: 'capDesc',
+    scope: 'scope'
   };
 
   export type AuthzRoleCapabilityMapScalarFieldEnum = (typeof AuthzRoleCapabilityMapScalarFieldEnum)[keyof typeof AuthzRoleCapabilityMapScalarFieldEnum]
@@ -38757,7 +37500,6 @@ export namespace Prisma {
     connections?: ApplicationConnectionListRelationFilter
     bridge?: ApplicationBridgeListRelationFilter
     policies?: ApplicationPolicyListRelationFilter
-    authzCapabilities?: AuthzCapabilityListRelationFilter
     authzRoles?: AuthzRoleListRelationFilter
     authzAccountAccessGrants?: AuthzAccountAccessGrantListRelationFilter
   }
@@ -38778,7 +37520,6 @@ export namespace Prisma {
     connections?: ApplicationConnectionOrderByRelationAggregateInput
     bridge?: ApplicationBridgeOrderByRelationAggregateInput
     policies?: ApplicationPolicyOrderByRelationAggregateInput
-    authzCapabilities?: AuthzCapabilityOrderByRelationAggregateInput
     authzRoles?: AuthzRoleOrderByRelationAggregateInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantOrderByRelationAggregateInput
   }
@@ -38802,7 +37543,6 @@ export namespace Prisma {
     connections?: ApplicationConnectionListRelationFilter
     bridge?: ApplicationBridgeListRelationFilter
     policies?: ApplicationPolicyListRelationFilter
-    authzCapabilities?: AuthzCapabilityListRelationFilter
     authzRoles?: AuthzRoleListRelationFilter
     authzAccountAccessGrants?: AuthzAccountAccessGrantListRelationFilter
   }, "id">
@@ -39241,64 +37981,6 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"ApplicationPolicy"> | Date | string
   }
 
-  export type AuthzCapabilityWhereInput = {
-    AND?: AuthzCapabilityWhereInput | AuthzCapabilityWhereInput[]
-    OR?: AuthzCapabilityWhereInput[]
-    NOT?: AuthzCapabilityWhereInput | AuthzCapabilityWhereInput[]
-    id?: StringFilter<"AuthzCapability"> | string
-    name?: StringFilter<"AuthzCapability"> | string
-    description?: StringNullableFilter<"AuthzCapability"> | string | null
-    appId?: StringNullableFilter<"AuthzCapability"> | string | null
-    scope?: StringNullableFilter<"AuthzCapability"> | string | null
-    application?: XOR<ApplicationNullableScalarRelationFilter, ApplicationWhereInput> | null
-    roleMaps?: AuthzRoleCapabilityMapListRelationFilter
-  }
-
-  export type AuthzCapabilityOrderByWithRelationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    description?: SortOrderInput | SortOrder
-    appId?: SortOrderInput | SortOrder
-    scope?: SortOrderInput | SortOrder
-    application?: ApplicationOrderByWithRelationInput
-    roleMaps?: AuthzRoleCapabilityMapOrderByRelationAggregateInput
-  }
-
-  export type AuthzCapabilityWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: AuthzCapabilityWhereInput | AuthzCapabilityWhereInput[]
-    OR?: AuthzCapabilityWhereInput[]
-    NOT?: AuthzCapabilityWhereInput | AuthzCapabilityWhereInput[]
-    name?: StringFilter<"AuthzCapability"> | string
-    description?: StringNullableFilter<"AuthzCapability"> | string | null
-    appId?: StringNullableFilter<"AuthzCapability"> | string | null
-    scope?: StringNullableFilter<"AuthzCapability"> | string | null
-    application?: XOR<ApplicationNullableScalarRelationFilter, ApplicationWhereInput> | null
-    roleMaps?: AuthzRoleCapabilityMapListRelationFilter
-  }, "id">
-
-  export type AuthzCapabilityOrderByWithAggregationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    description?: SortOrderInput | SortOrder
-    appId?: SortOrderInput | SortOrder
-    scope?: SortOrderInput | SortOrder
-    _count?: AuthzCapabilityCountOrderByAggregateInput
-    _max?: AuthzCapabilityMaxOrderByAggregateInput
-    _min?: AuthzCapabilityMinOrderByAggregateInput
-  }
-
-  export type AuthzCapabilityScalarWhereWithAggregatesInput = {
-    AND?: AuthzCapabilityScalarWhereWithAggregatesInput | AuthzCapabilityScalarWhereWithAggregatesInput[]
-    OR?: AuthzCapabilityScalarWhereWithAggregatesInput[]
-    NOT?: AuthzCapabilityScalarWhereWithAggregatesInput | AuthzCapabilityScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"AuthzCapability"> | string
-    name?: StringWithAggregatesFilter<"AuthzCapability"> | string
-    description?: StringNullableWithAggregatesFilter<"AuthzCapability"> | string | null
-    appId?: StringNullableWithAggregatesFilter<"AuthzCapability"> | string | null
-    scope?: StringNullableWithAggregatesFilter<"AuthzCapability"> | string | null
-  }
-
   export type AuthzRoleWhereInput = {
     AND?: AuthzRoleWhereInput | AuthzRoleWhereInput[]
     OR?: AuthzRoleWhereInput[]
@@ -39374,17 +38056,19 @@ export namespace Prisma {
     NOT?: AuthzRoleCapabilityMapWhereInput | AuthzRoleCapabilityMapWhereInput[]
     id?: StringFilter<"AuthzRoleCapabilityMap"> | string
     roleId?: StringFilter<"AuthzRoleCapabilityMap"> | string
-    capabilityId?: StringFilter<"AuthzRoleCapabilityMap"> | string
+    capName?: StringFilter<"AuthzRoleCapabilityMap"> | string
+    capDesc?: StringNullableFilter<"AuthzRoleCapabilityMap"> | string | null
+    scope?: StringNullableFilter<"AuthzRoleCapabilityMap"> | string | null
     role?: XOR<AuthzRoleScalarRelationFilter, AuthzRoleWhereInput>
-    capability?: XOR<AuthzCapabilityScalarRelationFilter, AuthzCapabilityWhereInput>
   }
 
   export type AuthzRoleCapabilityMapOrderByWithRelationInput = {
     id?: SortOrder
     roleId?: SortOrder
-    capabilityId?: SortOrder
+    capName?: SortOrder
+    capDesc?: SortOrderInput | SortOrder
+    scope?: SortOrderInput | SortOrder
     role?: AuthzRoleOrderByWithRelationInput
-    capability?: AuthzCapabilityOrderByWithRelationInput
   }
 
   export type AuthzRoleCapabilityMapWhereUniqueInput = Prisma.AtLeast<{
@@ -39393,15 +38077,18 @@ export namespace Prisma {
     OR?: AuthzRoleCapabilityMapWhereInput[]
     NOT?: AuthzRoleCapabilityMapWhereInput | AuthzRoleCapabilityMapWhereInput[]
     roleId?: StringFilter<"AuthzRoleCapabilityMap"> | string
-    capabilityId?: StringFilter<"AuthzRoleCapabilityMap"> | string
+    capName?: StringFilter<"AuthzRoleCapabilityMap"> | string
+    capDesc?: StringNullableFilter<"AuthzRoleCapabilityMap"> | string | null
+    scope?: StringNullableFilter<"AuthzRoleCapabilityMap"> | string | null
     role?: XOR<AuthzRoleScalarRelationFilter, AuthzRoleWhereInput>
-    capability?: XOR<AuthzCapabilityScalarRelationFilter, AuthzCapabilityWhereInput>
   }, "id">
 
   export type AuthzRoleCapabilityMapOrderByWithAggregationInput = {
     id?: SortOrder
     roleId?: SortOrder
-    capabilityId?: SortOrder
+    capName?: SortOrder
+    capDesc?: SortOrderInput | SortOrder
+    scope?: SortOrderInput | SortOrder
     _count?: AuthzRoleCapabilityMapCountOrderByAggregateInput
     _max?: AuthzRoleCapabilityMapMaxOrderByAggregateInput
     _min?: AuthzRoleCapabilityMapMinOrderByAggregateInput
@@ -39413,7 +38100,9 @@ export namespace Prisma {
     NOT?: AuthzRoleCapabilityMapScalarWhereWithAggregatesInput | AuthzRoleCapabilityMapScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"AuthzRoleCapabilityMap"> | string
     roleId?: StringWithAggregatesFilter<"AuthzRoleCapabilityMap"> | string
-    capabilityId?: StringWithAggregatesFilter<"AuthzRoleCapabilityMap"> | string
+    capName?: StringWithAggregatesFilter<"AuthzRoleCapabilityMap"> | string
+    capDesc?: StringNullableWithAggregatesFilter<"AuthzRoleCapabilityMap"> | string | null
+    scope?: StringNullableWithAggregatesFilter<"AuthzRoleCapabilityMap"> | string | null
   }
 
   export type AuthzAccountAccessGrantWhereInput = {
@@ -40816,7 +39505,6 @@ export namespace Prisma {
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
-    authzCapabilities?: AuthzCapabilityCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutApplicationInput
   }
@@ -40837,7 +39525,6 @@ export namespace Prisma {
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
-    authzCapabilities?: AuthzCapabilityUncheckedCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleUncheckedCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutApplicationInput
   }
@@ -40858,7 +39545,6 @@ export namespace Prisma {
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
-    authzCapabilities?: AuthzCapabilityUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUpdateManyWithoutApplicationNestedInput
   }
@@ -40879,7 +39565,6 @@ export namespace Prisma {
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
-    authzCapabilities?: AuthzCapabilityUncheckedUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUncheckedUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutApplicationNestedInput
   }
@@ -41318,65 +40003,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type AuthzCapabilityCreateInput = {
-    id?: string
-    name: string
-    description?: string | null
-    scope?: string | null
-    application?: ApplicationCreateNestedOneWithoutAuthzCapabilitiesInput
-    roleMaps?: AuthzRoleCapabilityMapCreateNestedManyWithoutCapabilityInput
-  }
-
-  export type AuthzCapabilityUncheckedCreateInput = {
-    id?: string
-    name: string
-    description?: string | null
-    appId?: string | null
-    scope?: string | null
-    roleMaps?: AuthzRoleCapabilityMapUncheckedCreateNestedManyWithoutCapabilityInput
-  }
-
-  export type AuthzCapabilityUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    scope?: NullableStringFieldUpdateOperationsInput | string | null
-    application?: ApplicationUpdateOneWithoutAuthzCapabilitiesNestedInput
-    roleMaps?: AuthzRoleCapabilityMapUpdateManyWithoutCapabilityNestedInput
-  }
-
-  export type AuthzCapabilityUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    appId?: NullableStringFieldUpdateOperationsInput | string | null
-    scope?: NullableStringFieldUpdateOperationsInput | string | null
-    roleMaps?: AuthzRoleCapabilityMapUncheckedUpdateManyWithoutCapabilityNestedInput
-  }
-
-  export type AuthzCapabilityCreateManyInput = {
-    id?: string
-    name: string
-    description?: string | null
-    appId?: string | null
-    scope?: string | null
-  }
-
-  export type AuthzCapabilityUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    scope?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type AuthzCapabilityUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    appId?: NullableStringFieldUpdateOperationsInput | string | null
-    scope?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
   export type AuthzRoleCreateInput = {
     id?: string
     name: string
@@ -41453,42 +40079,57 @@ export namespace Prisma {
 
   export type AuthzRoleCapabilityMapCreateInput = {
     id?: string
+    capName: string
+    capDesc?: string | null
+    scope?: string | null
     role: AuthzRoleCreateNestedOneWithoutRoleMapsInput
-    capability: AuthzCapabilityCreateNestedOneWithoutRoleMapsInput
   }
 
   export type AuthzRoleCapabilityMapUncheckedCreateInput = {
     id?: string
     roleId: string
-    capabilityId: string
+    capName: string
+    capDesc?: string | null
+    scope?: string | null
   }
 
   export type AuthzRoleCapabilityMapUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    capName?: StringFieldUpdateOperationsInput | string
+    capDesc?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: NullableStringFieldUpdateOperationsInput | string | null
     role?: AuthzRoleUpdateOneRequiredWithoutRoleMapsNestedInput
-    capability?: AuthzCapabilityUpdateOneRequiredWithoutRoleMapsNestedInput
   }
 
   export type AuthzRoleCapabilityMapUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
-    capabilityId?: StringFieldUpdateOperationsInput | string
+    capName?: StringFieldUpdateOperationsInput | string
+    capDesc?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzRoleCapabilityMapCreateManyInput = {
     id?: string
     roleId: string
-    capabilityId: string
+    capName: string
+    capDesc?: string | null
+    scope?: string | null
   }
 
   export type AuthzRoleCapabilityMapUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    capName?: StringFieldUpdateOperationsInput | string
+    capDesc?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzRoleCapabilityMapUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
-    capabilityId?: StringFieldUpdateOperationsInput | string
+    capName?: StringFieldUpdateOperationsInput | string
+    capDesc?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzAccountAccessGrantCreateInput = {
@@ -42565,12 +41206,6 @@ export namespace Prisma {
     none?: ApplicationPolicyWhereInput
   }
 
-  export type AuthzCapabilityListRelationFilter = {
-    every?: AuthzCapabilityWhereInput
-    some?: AuthzCapabilityWhereInput
-    none?: AuthzCapabilityWhereInput
-  }
-
   export type AuthzRoleListRelationFilter = {
     every?: AuthzRoleWhereInput
     some?: AuthzRoleWhereInput
@@ -42582,10 +41217,6 @@ export namespace Prisma {
   }
 
   export type ApplicationPolicyOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type AuthzCapabilityOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -42818,6 +41449,14 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type ApplicationNullableScalarRelationFilter = {
     is?: ApplicationWhereInput | null
     isNot?: ApplicationWhereInput | null
@@ -42831,38 +41470,6 @@ export namespace Prisma {
 
   export type AuthzRoleCapabilityMapOrderByRelationAggregateInput = {
     _count?: SortOrder
-  }
-
-  export type AuthzCapabilityCountOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    appId?: SortOrder
-    scope?: SortOrder
-  }
-
-  export type AuthzCapabilityMaxOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    appId?: SortOrder
-    scope?: SortOrder
-  }
-
-  export type AuthzCapabilityMinOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    appId?: SortOrder
-    scope?: SortOrder
-  }
-
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
   }
 
   export type AuthzRoleCountOrderByAggregateInput = {
@@ -42895,27 +41502,28 @@ export namespace Prisma {
     isNot?: AuthzRoleWhereInput
   }
 
-  export type AuthzCapabilityScalarRelationFilter = {
-    is?: AuthzCapabilityWhereInput
-    isNot?: AuthzCapabilityWhereInput
-  }
-
   export type AuthzRoleCapabilityMapCountOrderByAggregateInput = {
     id?: SortOrder
     roleId?: SortOrder
-    capabilityId?: SortOrder
+    capName?: SortOrder
+    capDesc?: SortOrder
+    scope?: SortOrder
   }
 
   export type AuthzRoleCapabilityMapMaxOrderByAggregateInput = {
     id?: SortOrder
     roleId?: SortOrder
-    capabilityId?: SortOrder
+    capName?: SortOrder
+    capDesc?: SortOrder
+    scope?: SortOrder
   }
 
   export type AuthzRoleCapabilityMapMinOrderByAggregateInput = {
     id?: SortOrder
     roleId?: SortOrder
-    capabilityId?: SortOrder
+    capName?: SortOrder
+    capDesc?: SortOrder
+    scope?: SortOrder
   }
 
   export type PortfolioNullableScalarRelationFilter = {
@@ -44198,13 +42806,6 @@ export namespace Prisma {
     connect?: ApplicationPolicyWhereUniqueInput | ApplicationPolicyWhereUniqueInput[]
   }
 
-  export type AuthzCapabilityCreateNestedManyWithoutApplicationInput = {
-    create?: XOR<AuthzCapabilityCreateWithoutApplicationInput, AuthzCapabilityUncheckedCreateWithoutApplicationInput> | AuthzCapabilityCreateWithoutApplicationInput[] | AuthzCapabilityUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: AuthzCapabilityCreateOrConnectWithoutApplicationInput | AuthzCapabilityCreateOrConnectWithoutApplicationInput[]
-    createMany?: AuthzCapabilityCreateManyApplicationInputEnvelope
-    connect?: AuthzCapabilityWhereUniqueInput | AuthzCapabilityWhereUniqueInput[]
-  }
-
   export type AuthzRoleCreateNestedManyWithoutApplicationInput = {
     create?: XOR<AuthzRoleCreateWithoutApplicationInput, AuthzRoleUncheckedCreateWithoutApplicationInput> | AuthzRoleCreateWithoutApplicationInput[] | AuthzRoleUncheckedCreateWithoutApplicationInput[]
     connectOrCreate?: AuthzRoleCreateOrConnectWithoutApplicationInput | AuthzRoleCreateOrConnectWithoutApplicationInput[]
@@ -44238,13 +42839,6 @@ export namespace Prisma {
     connectOrCreate?: ApplicationPolicyCreateOrConnectWithoutApplicationInput | ApplicationPolicyCreateOrConnectWithoutApplicationInput[]
     createMany?: ApplicationPolicyCreateManyApplicationInputEnvelope
     connect?: ApplicationPolicyWhereUniqueInput | ApplicationPolicyWhereUniqueInput[]
-  }
-
-  export type AuthzCapabilityUncheckedCreateNestedManyWithoutApplicationInput = {
-    create?: XOR<AuthzCapabilityCreateWithoutApplicationInput, AuthzCapabilityUncheckedCreateWithoutApplicationInput> | AuthzCapabilityCreateWithoutApplicationInput[] | AuthzCapabilityUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: AuthzCapabilityCreateOrConnectWithoutApplicationInput | AuthzCapabilityCreateOrConnectWithoutApplicationInput[]
-    createMany?: AuthzCapabilityCreateManyApplicationInputEnvelope
-    connect?: AuthzCapabilityWhereUniqueInput | AuthzCapabilityWhereUniqueInput[]
   }
 
   export type AuthzRoleUncheckedCreateNestedManyWithoutApplicationInput = {
@@ -44301,20 +42895,6 @@ export namespace Prisma {
     update?: ApplicationPolicyUpdateWithWhereUniqueWithoutApplicationInput | ApplicationPolicyUpdateWithWhereUniqueWithoutApplicationInput[]
     updateMany?: ApplicationPolicyUpdateManyWithWhereWithoutApplicationInput | ApplicationPolicyUpdateManyWithWhereWithoutApplicationInput[]
     deleteMany?: ApplicationPolicyScalarWhereInput | ApplicationPolicyScalarWhereInput[]
-  }
-
-  export type AuthzCapabilityUpdateManyWithoutApplicationNestedInput = {
-    create?: XOR<AuthzCapabilityCreateWithoutApplicationInput, AuthzCapabilityUncheckedCreateWithoutApplicationInput> | AuthzCapabilityCreateWithoutApplicationInput[] | AuthzCapabilityUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: AuthzCapabilityCreateOrConnectWithoutApplicationInput | AuthzCapabilityCreateOrConnectWithoutApplicationInput[]
-    upsert?: AuthzCapabilityUpsertWithWhereUniqueWithoutApplicationInput | AuthzCapabilityUpsertWithWhereUniqueWithoutApplicationInput[]
-    createMany?: AuthzCapabilityCreateManyApplicationInputEnvelope
-    set?: AuthzCapabilityWhereUniqueInput | AuthzCapabilityWhereUniqueInput[]
-    disconnect?: AuthzCapabilityWhereUniqueInput | AuthzCapabilityWhereUniqueInput[]
-    delete?: AuthzCapabilityWhereUniqueInput | AuthzCapabilityWhereUniqueInput[]
-    connect?: AuthzCapabilityWhereUniqueInput | AuthzCapabilityWhereUniqueInput[]
-    update?: AuthzCapabilityUpdateWithWhereUniqueWithoutApplicationInput | AuthzCapabilityUpdateWithWhereUniqueWithoutApplicationInput[]
-    updateMany?: AuthzCapabilityUpdateManyWithWhereWithoutApplicationInput | AuthzCapabilityUpdateManyWithWhereWithoutApplicationInput[]
-    deleteMany?: AuthzCapabilityScalarWhereInput | AuthzCapabilityScalarWhereInput[]
   }
 
   export type AuthzRoleUpdateManyWithoutApplicationNestedInput = {
@@ -44385,20 +42965,6 @@ export namespace Prisma {
     update?: ApplicationPolicyUpdateWithWhereUniqueWithoutApplicationInput | ApplicationPolicyUpdateWithWhereUniqueWithoutApplicationInput[]
     updateMany?: ApplicationPolicyUpdateManyWithWhereWithoutApplicationInput | ApplicationPolicyUpdateManyWithWhereWithoutApplicationInput[]
     deleteMany?: ApplicationPolicyScalarWhereInput | ApplicationPolicyScalarWhereInput[]
-  }
-
-  export type AuthzCapabilityUncheckedUpdateManyWithoutApplicationNestedInput = {
-    create?: XOR<AuthzCapabilityCreateWithoutApplicationInput, AuthzCapabilityUncheckedCreateWithoutApplicationInput> | AuthzCapabilityCreateWithoutApplicationInput[] | AuthzCapabilityUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: AuthzCapabilityCreateOrConnectWithoutApplicationInput | AuthzCapabilityCreateOrConnectWithoutApplicationInput[]
-    upsert?: AuthzCapabilityUpsertWithWhereUniqueWithoutApplicationInput | AuthzCapabilityUpsertWithWhereUniqueWithoutApplicationInput[]
-    createMany?: AuthzCapabilityCreateManyApplicationInputEnvelope
-    set?: AuthzCapabilityWhereUniqueInput | AuthzCapabilityWhereUniqueInput[]
-    disconnect?: AuthzCapabilityWhereUniqueInput | AuthzCapabilityWhereUniqueInput[]
-    delete?: AuthzCapabilityWhereUniqueInput | AuthzCapabilityWhereUniqueInput[]
-    connect?: AuthzCapabilityWhereUniqueInput | AuthzCapabilityWhereUniqueInput[]
-    update?: AuthzCapabilityUpdateWithWhereUniqueWithoutApplicationInput | AuthzCapabilityUpdateWithWhereUniqueWithoutApplicationInput[]
-    updateMany?: AuthzCapabilityUpdateManyWithWhereWithoutApplicationInput | AuthzCapabilityUpdateManyWithWhereWithoutApplicationInput[]
-    deleteMany?: AuthzCapabilityScalarWhereInput | AuthzCapabilityScalarWhereInput[]
   }
 
   export type AuthzRoleUncheckedUpdateManyWithoutApplicationNestedInput = {
@@ -44765,64 +43331,6 @@ export namespace Prisma {
     update?: XOR<XOR<ApplicationUpdateToOneWithWhereWithoutPoliciesInput, ApplicationUpdateWithoutPoliciesInput>, ApplicationUncheckedUpdateWithoutPoliciesInput>
   }
 
-  export type ApplicationCreateNestedOneWithoutAuthzCapabilitiesInput = {
-    create?: XOR<ApplicationCreateWithoutAuthzCapabilitiesInput, ApplicationUncheckedCreateWithoutAuthzCapabilitiesInput>
-    connectOrCreate?: ApplicationCreateOrConnectWithoutAuthzCapabilitiesInput
-    connect?: ApplicationWhereUniqueInput
-  }
-
-  export type AuthzRoleCapabilityMapCreateNestedManyWithoutCapabilityInput = {
-    create?: XOR<AuthzRoleCapabilityMapCreateWithoutCapabilityInput, AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput> | AuthzRoleCapabilityMapCreateWithoutCapabilityInput[] | AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput[]
-    connectOrCreate?: AuthzRoleCapabilityMapCreateOrConnectWithoutCapabilityInput | AuthzRoleCapabilityMapCreateOrConnectWithoutCapabilityInput[]
-    createMany?: AuthzRoleCapabilityMapCreateManyCapabilityInputEnvelope
-    connect?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-  }
-
-  export type AuthzRoleCapabilityMapUncheckedCreateNestedManyWithoutCapabilityInput = {
-    create?: XOR<AuthzRoleCapabilityMapCreateWithoutCapabilityInput, AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput> | AuthzRoleCapabilityMapCreateWithoutCapabilityInput[] | AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput[]
-    connectOrCreate?: AuthzRoleCapabilityMapCreateOrConnectWithoutCapabilityInput | AuthzRoleCapabilityMapCreateOrConnectWithoutCapabilityInput[]
-    createMany?: AuthzRoleCapabilityMapCreateManyCapabilityInputEnvelope
-    connect?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-  }
-
-  export type ApplicationUpdateOneWithoutAuthzCapabilitiesNestedInput = {
-    create?: XOR<ApplicationCreateWithoutAuthzCapabilitiesInput, ApplicationUncheckedCreateWithoutAuthzCapabilitiesInput>
-    connectOrCreate?: ApplicationCreateOrConnectWithoutAuthzCapabilitiesInput
-    upsert?: ApplicationUpsertWithoutAuthzCapabilitiesInput
-    disconnect?: ApplicationWhereInput | boolean
-    delete?: ApplicationWhereInput | boolean
-    connect?: ApplicationWhereUniqueInput
-    update?: XOR<XOR<ApplicationUpdateToOneWithWhereWithoutAuthzCapabilitiesInput, ApplicationUpdateWithoutAuthzCapabilitiesInput>, ApplicationUncheckedUpdateWithoutAuthzCapabilitiesInput>
-  }
-
-  export type AuthzRoleCapabilityMapUpdateManyWithoutCapabilityNestedInput = {
-    create?: XOR<AuthzRoleCapabilityMapCreateWithoutCapabilityInput, AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput> | AuthzRoleCapabilityMapCreateWithoutCapabilityInput[] | AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput[]
-    connectOrCreate?: AuthzRoleCapabilityMapCreateOrConnectWithoutCapabilityInput | AuthzRoleCapabilityMapCreateOrConnectWithoutCapabilityInput[]
-    upsert?: AuthzRoleCapabilityMapUpsertWithWhereUniqueWithoutCapabilityInput | AuthzRoleCapabilityMapUpsertWithWhereUniqueWithoutCapabilityInput[]
-    createMany?: AuthzRoleCapabilityMapCreateManyCapabilityInputEnvelope
-    set?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    disconnect?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    delete?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    connect?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    update?: AuthzRoleCapabilityMapUpdateWithWhereUniqueWithoutCapabilityInput | AuthzRoleCapabilityMapUpdateWithWhereUniqueWithoutCapabilityInput[]
-    updateMany?: AuthzRoleCapabilityMapUpdateManyWithWhereWithoutCapabilityInput | AuthzRoleCapabilityMapUpdateManyWithWhereWithoutCapabilityInput[]
-    deleteMany?: AuthzRoleCapabilityMapScalarWhereInput | AuthzRoleCapabilityMapScalarWhereInput[]
-  }
-
-  export type AuthzRoleCapabilityMapUncheckedUpdateManyWithoutCapabilityNestedInput = {
-    create?: XOR<AuthzRoleCapabilityMapCreateWithoutCapabilityInput, AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput> | AuthzRoleCapabilityMapCreateWithoutCapabilityInput[] | AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput[]
-    connectOrCreate?: AuthzRoleCapabilityMapCreateOrConnectWithoutCapabilityInput | AuthzRoleCapabilityMapCreateOrConnectWithoutCapabilityInput[]
-    upsert?: AuthzRoleCapabilityMapUpsertWithWhereUniqueWithoutCapabilityInput | AuthzRoleCapabilityMapUpsertWithWhereUniqueWithoutCapabilityInput[]
-    createMany?: AuthzRoleCapabilityMapCreateManyCapabilityInputEnvelope
-    set?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    disconnect?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    delete?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    connect?: AuthzRoleCapabilityMapWhereUniqueInput | AuthzRoleCapabilityMapWhereUniqueInput[]
-    update?: AuthzRoleCapabilityMapUpdateWithWhereUniqueWithoutCapabilityInput | AuthzRoleCapabilityMapUpdateWithWhereUniqueWithoutCapabilityInput[]
-    updateMany?: AuthzRoleCapabilityMapUpdateManyWithWhereWithoutCapabilityInput | AuthzRoleCapabilityMapUpdateManyWithWhereWithoutCapabilityInput[]
-    deleteMany?: AuthzRoleCapabilityMapScalarWhereInput | AuthzRoleCapabilityMapScalarWhereInput[]
-  }
-
   export type AuthzRoleCreatepermissionsInput = {
     set: string[]
   }
@@ -44980,26 +43488,12 @@ export namespace Prisma {
     connect?: AuthzRoleWhereUniqueInput
   }
 
-  export type AuthzCapabilityCreateNestedOneWithoutRoleMapsInput = {
-    create?: XOR<AuthzCapabilityCreateWithoutRoleMapsInput, AuthzCapabilityUncheckedCreateWithoutRoleMapsInput>
-    connectOrCreate?: AuthzCapabilityCreateOrConnectWithoutRoleMapsInput
-    connect?: AuthzCapabilityWhereUniqueInput
-  }
-
   export type AuthzRoleUpdateOneRequiredWithoutRoleMapsNestedInput = {
     create?: XOR<AuthzRoleCreateWithoutRoleMapsInput, AuthzRoleUncheckedCreateWithoutRoleMapsInput>
     connectOrCreate?: AuthzRoleCreateOrConnectWithoutRoleMapsInput
     upsert?: AuthzRoleUpsertWithoutRoleMapsInput
     connect?: AuthzRoleWhereUniqueInput
     update?: XOR<XOR<AuthzRoleUpdateToOneWithWhereWithoutRoleMapsInput, AuthzRoleUpdateWithoutRoleMapsInput>, AuthzRoleUncheckedUpdateWithoutRoleMapsInput>
-  }
-
-  export type AuthzCapabilityUpdateOneRequiredWithoutRoleMapsNestedInput = {
-    create?: XOR<AuthzCapabilityCreateWithoutRoleMapsInput, AuthzCapabilityUncheckedCreateWithoutRoleMapsInput>
-    connectOrCreate?: AuthzCapabilityCreateOrConnectWithoutRoleMapsInput
-    upsert?: AuthzCapabilityUpsertWithoutRoleMapsInput
-    connect?: AuthzCapabilityWhereUniqueInput
-    update?: XOR<XOR<AuthzCapabilityUpdateToOneWithWhereWithoutRoleMapsInput, AuthzCapabilityUpdateWithoutRoleMapsInput>, AuthzCapabilityUncheckedUpdateWithoutRoleMapsInput>
   }
 
   export type AccountCreateNestedOneWithoutAuthzOwnedGrantsInput = {
@@ -48554,32 +47048,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type AuthzCapabilityCreateWithoutApplicationInput = {
-    id?: string
-    name: string
-    description?: string | null
-    scope?: string | null
-    roleMaps?: AuthzRoleCapabilityMapCreateNestedManyWithoutCapabilityInput
-  }
-
-  export type AuthzCapabilityUncheckedCreateWithoutApplicationInput = {
-    id?: string
-    name: string
-    description?: string | null
-    scope?: string | null
-    roleMaps?: AuthzRoleCapabilityMapUncheckedCreateNestedManyWithoutCapabilityInput
-  }
-
-  export type AuthzCapabilityCreateOrConnectWithoutApplicationInput = {
-    where: AuthzCapabilityWhereUniqueInput
-    create: XOR<AuthzCapabilityCreateWithoutApplicationInput, AuthzCapabilityUncheckedCreateWithoutApplicationInput>
-  }
-
-  export type AuthzCapabilityCreateManyApplicationInputEnvelope = {
-    data: AuthzCapabilityCreateManyApplicationInput | AuthzCapabilityCreateManyApplicationInput[]
-    skipDuplicates?: boolean
-  }
-
   export type AuthzRoleCreateWithoutApplicationInput = {
     id?: string
     name: string
@@ -48707,33 +47175,6 @@ export namespace Prisma {
     policyType?: StringFilter<"ApplicationPolicy"> | string
     policyValue?: JsonFilter<"ApplicationPolicy">
     createdAt?: DateTimeFilter<"ApplicationPolicy"> | Date | string
-  }
-
-  export type AuthzCapabilityUpsertWithWhereUniqueWithoutApplicationInput = {
-    where: AuthzCapabilityWhereUniqueInput
-    update: XOR<AuthzCapabilityUpdateWithoutApplicationInput, AuthzCapabilityUncheckedUpdateWithoutApplicationInput>
-    create: XOR<AuthzCapabilityCreateWithoutApplicationInput, AuthzCapabilityUncheckedCreateWithoutApplicationInput>
-  }
-
-  export type AuthzCapabilityUpdateWithWhereUniqueWithoutApplicationInput = {
-    where: AuthzCapabilityWhereUniqueInput
-    data: XOR<AuthzCapabilityUpdateWithoutApplicationInput, AuthzCapabilityUncheckedUpdateWithoutApplicationInput>
-  }
-
-  export type AuthzCapabilityUpdateManyWithWhereWithoutApplicationInput = {
-    where: AuthzCapabilityScalarWhereInput
-    data: XOR<AuthzCapabilityUpdateManyMutationInput, AuthzCapabilityUncheckedUpdateManyWithoutApplicationInput>
-  }
-
-  export type AuthzCapabilityScalarWhereInput = {
-    AND?: AuthzCapabilityScalarWhereInput | AuthzCapabilityScalarWhereInput[]
-    OR?: AuthzCapabilityScalarWhereInput[]
-    NOT?: AuthzCapabilityScalarWhereInput | AuthzCapabilityScalarWhereInput[]
-    id?: StringFilter<"AuthzCapability"> | string
-    name?: StringFilter<"AuthzCapability"> | string
-    description?: StringNullableFilter<"AuthzCapability"> | string | null
-    appId?: StringNullableFilter<"AuthzCapability"> | string | null
-    scope?: StringNullableFilter<"AuthzCapability"> | string | null
   }
 
   export type AuthzRoleUpsertWithWhereUniqueWithoutApplicationInput = {
@@ -49621,7 +48062,6 @@ export namespace Prisma {
     details?: NullableJsonNullValueInput | InputJsonValue
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
-    authzCapabilities?: AuthzCapabilityCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutApplicationInput
   }
@@ -49641,7 +48081,6 @@ export namespace Prisma {
     details?: NullableJsonNullValueInput | InputJsonValue
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
-    authzCapabilities?: AuthzCapabilityUncheckedCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleUncheckedCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutApplicationInput
   }
@@ -49752,7 +48191,6 @@ export namespace Prisma {
     details?: NullableJsonNullValueInput | InputJsonValue
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
-    authzCapabilities?: AuthzCapabilityUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUpdateManyWithoutApplicationNestedInput
   }
@@ -49772,7 +48210,6 @@ export namespace Prisma {
     details?: NullableJsonNullValueInput | InputJsonValue
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
-    authzCapabilities?: AuthzCapabilityUncheckedUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUncheckedUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutApplicationNestedInput
   }
@@ -49792,7 +48229,6 @@ export namespace Prisma {
     details?: NullableJsonNullValueInput | InputJsonValue
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
-    authzCapabilities?: AuthzCapabilityCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutApplicationInput
   }
@@ -49812,7 +48248,6 @@ export namespace Prisma {
     details?: NullableJsonNullValueInput | InputJsonValue
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
-    authzCapabilities?: AuthzCapabilityUncheckedCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleUncheckedCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutApplicationInput
   }
@@ -49848,7 +48283,6 @@ export namespace Prisma {
     details?: NullableJsonNullValueInput | InputJsonValue
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
-    authzCapabilities?: AuthzCapabilityUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUpdateManyWithoutApplicationNestedInput
   }
@@ -49868,7 +48302,6 @@ export namespace Prisma {
     details?: NullableJsonNullValueInput | InputJsonValue
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
-    authzCapabilities?: AuthzCapabilityUncheckedUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUncheckedUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutApplicationNestedInput
   }
@@ -49888,7 +48321,6 @@ export namespace Prisma {
     details?: NullableJsonNullValueInput | InputJsonValue
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
-    authzCapabilities?: AuthzCapabilityCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutApplicationInput
   }
@@ -49908,7 +48340,6 @@ export namespace Prisma {
     details?: NullableJsonNullValueInput | InputJsonValue
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
-    authzCapabilities?: AuthzCapabilityUncheckedCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleUncheckedCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutApplicationInput
   }
@@ -49944,7 +48375,6 @@ export namespace Prisma {
     details?: NullableJsonNullValueInput | InputJsonValue
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
-    authzCapabilities?: AuthzCapabilityUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUpdateManyWithoutApplicationNestedInput
   }
@@ -49964,150 +48394,8 @@ export namespace Prisma {
     details?: NullableJsonNullValueInput | InputJsonValue
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
-    authzCapabilities?: AuthzCapabilityUncheckedUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUncheckedUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutApplicationNestedInput
-  }
-
-  export type ApplicationCreateWithoutAuthzCapabilitiesInput = {
-    id: string
-    name: string
-    description?: string | null
-    icon?: string | null
-    website?: string | null
-    developer?: string | null
-    appSecret?: string | null
-    createdAt?: Date | string
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    status?: string
-    isInternal?: boolean
-    details?: NullableJsonNullValueInput | InputJsonValue
-    connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
-    bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
-    policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
-    authzRoles?: AuthzRoleCreateNestedManyWithoutApplicationInput
-    authzAccountAccessGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutApplicationInput
-  }
-
-  export type ApplicationUncheckedCreateWithoutAuthzCapabilitiesInput = {
-    id: string
-    name: string
-    description?: string | null
-    icon?: string | null
-    website?: string | null
-    developer?: string | null
-    appSecret?: string | null
-    createdAt?: Date | string
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    status?: string
-    isInternal?: boolean
-    details?: NullableJsonNullValueInput | InputJsonValue
-    connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
-    bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
-    policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
-    authzRoles?: AuthzRoleUncheckedCreateNestedManyWithoutApplicationInput
-    authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutApplicationInput
-  }
-
-  export type ApplicationCreateOrConnectWithoutAuthzCapabilitiesInput = {
-    where: ApplicationWhereUniqueInput
-    create: XOR<ApplicationCreateWithoutAuthzCapabilitiesInput, ApplicationUncheckedCreateWithoutAuthzCapabilitiesInput>
-  }
-
-  export type AuthzRoleCapabilityMapCreateWithoutCapabilityInput = {
-    id?: string
-    role: AuthzRoleCreateNestedOneWithoutRoleMapsInput
-  }
-
-  export type AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput = {
-    id?: string
-    roleId: string
-  }
-
-  export type AuthzRoleCapabilityMapCreateOrConnectWithoutCapabilityInput = {
-    where: AuthzRoleCapabilityMapWhereUniqueInput
-    create: XOR<AuthzRoleCapabilityMapCreateWithoutCapabilityInput, AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput>
-  }
-
-  export type AuthzRoleCapabilityMapCreateManyCapabilityInputEnvelope = {
-    data: AuthzRoleCapabilityMapCreateManyCapabilityInput | AuthzRoleCapabilityMapCreateManyCapabilityInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ApplicationUpsertWithoutAuthzCapabilitiesInput = {
-    update: XOR<ApplicationUpdateWithoutAuthzCapabilitiesInput, ApplicationUncheckedUpdateWithoutAuthzCapabilitiesInput>
-    create: XOR<ApplicationCreateWithoutAuthzCapabilitiesInput, ApplicationUncheckedCreateWithoutAuthzCapabilitiesInput>
-    where?: ApplicationWhereInput
-  }
-
-  export type ApplicationUpdateToOneWithWhereWithoutAuthzCapabilitiesInput = {
-    where?: ApplicationWhereInput
-    data: XOR<ApplicationUpdateWithoutAuthzCapabilitiesInput, ApplicationUncheckedUpdateWithoutAuthzCapabilitiesInput>
-  }
-
-  export type ApplicationUpdateWithoutAuthzCapabilitiesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
-    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    status?: StringFieldUpdateOperationsInput | string
-    isInternal?: BoolFieldUpdateOperationsInput | boolean
-    details?: NullableJsonNullValueInput | InputJsonValue
-    connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
-    bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
-    policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
-    authzRoles?: AuthzRoleUpdateManyWithoutApplicationNestedInput
-    authzAccountAccessGrants?: AuthzAccountAccessGrantUpdateManyWithoutApplicationNestedInput
-  }
-
-  export type ApplicationUncheckedUpdateWithoutAuthzCapabilitiesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    icon?: NullableStringFieldUpdateOperationsInput | string | null
-    website?: NullableStringFieldUpdateOperationsInput | string | null
-    developer?: NullableStringFieldUpdateOperationsInput | string | null
-    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endpoints?: NullableJsonNullValueInput | InputJsonValue
-    status?: StringFieldUpdateOperationsInput | string
-    isInternal?: BoolFieldUpdateOperationsInput | boolean
-    details?: NullableJsonNullValueInput | InputJsonValue
-    connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
-    bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
-    policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
-    authzRoles?: AuthzRoleUncheckedUpdateManyWithoutApplicationNestedInput
-    authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutApplicationNestedInput
-  }
-
-  export type AuthzRoleCapabilityMapUpsertWithWhereUniqueWithoutCapabilityInput = {
-    where: AuthzRoleCapabilityMapWhereUniqueInput
-    update: XOR<AuthzRoleCapabilityMapUpdateWithoutCapabilityInput, AuthzRoleCapabilityMapUncheckedUpdateWithoutCapabilityInput>
-    create: XOR<AuthzRoleCapabilityMapCreateWithoutCapabilityInput, AuthzRoleCapabilityMapUncheckedCreateWithoutCapabilityInput>
-  }
-
-  export type AuthzRoleCapabilityMapUpdateWithWhereUniqueWithoutCapabilityInput = {
-    where: AuthzRoleCapabilityMapWhereUniqueInput
-    data: XOR<AuthzRoleCapabilityMapUpdateWithoutCapabilityInput, AuthzRoleCapabilityMapUncheckedUpdateWithoutCapabilityInput>
-  }
-
-  export type AuthzRoleCapabilityMapUpdateManyWithWhereWithoutCapabilityInput = {
-    where: AuthzRoleCapabilityMapScalarWhereInput
-    data: XOR<AuthzRoleCapabilityMapUpdateManyMutationInput, AuthzRoleCapabilityMapUncheckedUpdateManyWithoutCapabilityInput>
-  }
-
-  export type AuthzRoleCapabilityMapScalarWhereInput = {
-    AND?: AuthzRoleCapabilityMapScalarWhereInput | AuthzRoleCapabilityMapScalarWhereInput[]
-    OR?: AuthzRoleCapabilityMapScalarWhereInput[]
-    NOT?: AuthzRoleCapabilityMapScalarWhereInput | AuthzRoleCapabilityMapScalarWhereInput[]
-    id?: StringFilter<"AuthzRoleCapabilityMap"> | string
-    roleId?: StringFilter<"AuthzRoleCapabilityMap"> | string
-    capabilityId?: StringFilter<"AuthzRoleCapabilityMap"> | string
   }
 
   export type ApplicationCreateWithoutAuthzRolesInput = {
@@ -50126,7 +48414,6 @@ export namespace Prisma {
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
-    authzCapabilities?: AuthzCapabilityCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutApplicationInput
   }
 
@@ -50146,7 +48433,6 @@ export namespace Prisma {
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
-    authzCapabilities?: AuthzCapabilityUncheckedCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutApplicationInput
   }
 
@@ -50157,12 +48443,16 @@ export namespace Prisma {
 
   export type AuthzRoleCapabilityMapCreateWithoutRoleInput = {
     id?: string
-    capability: AuthzCapabilityCreateNestedOneWithoutRoleMapsInput
+    capName: string
+    capDesc?: string | null
+    scope?: string | null
   }
 
   export type AuthzRoleCapabilityMapUncheckedCreateWithoutRoleInput = {
     id?: string
-    capabilityId: string
+    capName: string
+    capDesc?: string | null
+    scope?: string | null
   }
 
   export type AuthzRoleCapabilityMapCreateOrConnectWithoutRoleInput = {
@@ -50252,7 +48542,6 @@ export namespace Prisma {
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
-    authzCapabilities?: AuthzCapabilityUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUpdateManyWithoutApplicationNestedInput
   }
 
@@ -50272,7 +48561,6 @@ export namespace Prisma {
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
-    authzCapabilities?: AuthzCapabilityUncheckedUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
@@ -50290,6 +48578,17 @@ export namespace Prisma {
   export type AuthzRoleCapabilityMapUpdateManyWithWhereWithoutRoleInput = {
     where: AuthzRoleCapabilityMapScalarWhereInput
     data: XOR<AuthzRoleCapabilityMapUpdateManyMutationInput, AuthzRoleCapabilityMapUncheckedUpdateManyWithoutRoleInput>
+  }
+
+  export type AuthzRoleCapabilityMapScalarWhereInput = {
+    AND?: AuthzRoleCapabilityMapScalarWhereInput | AuthzRoleCapabilityMapScalarWhereInput[]
+    OR?: AuthzRoleCapabilityMapScalarWhereInput[]
+    NOT?: AuthzRoleCapabilityMapScalarWhereInput | AuthzRoleCapabilityMapScalarWhereInput[]
+    id?: StringFilter<"AuthzRoleCapabilityMap"> | string
+    roleId?: StringFilter<"AuthzRoleCapabilityMap"> | string
+    capName?: StringFilter<"AuthzRoleCapabilityMap"> | string
+    capDesc?: StringNullableFilter<"AuthzRoleCapabilityMap"> | string | null
+    scope?: StringNullableFilter<"AuthzRoleCapabilityMap"> | string | null
   }
 
   export type AuthzAccountAccessGrantUpsertWithWhereUniqueWithoutRoleInput = {
@@ -50351,27 +48650,6 @@ export namespace Prisma {
     create: XOR<AuthzRoleCreateWithoutRoleMapsInput, AuthzRoleUncheckedCreateWithoutRoleMapsInput>
   }
 
-  export type AuthzCapabilityCreateWithoutRoleMapsInput = {
-    id?: string
-    name: string
-    description?: string | null
-    scope?: string | null
-    application?: ApplicationCreateNestedOneWithoutAuthzCapabilitiesInput
-  }
-
-  export type AuthzCapabilityUncheckedCreateWithoutRoleMapsInput = {
-    id?: string
-    name: string
-    description?: string | null
-    appId?: string | null
-    scope?: string | null
-  }
-
-  export type AuthzCapabilityCreateOrConnectWithoutRoleMapsInput = {
-    where: AuthzCapabilityWhereUniqueInput
-    create: XOR<AuthzCapabilityCreateWithoutRoleMapsInput, AuthzCapabilityUncheckedCreateWithoutRoleMapsInput>
-  }
-
   export type AuthzRoleUpsertWithoutRoleMapsInput = {
     update: XOR<AuthzRoleUpdateWithoutRoleMapsInput, AuthzRoleUncheckedUpdateWithoutRoleMapsInput>
     create: XOR<AuthzRoleCreateWithoutRoleMapsInput, AuthzRoleUncheckedCreateWithoutRoleMapsInput>
@@ -50403,33 +48681,6 @@ export namespace Prisma {
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     grants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutRoleNestedInput
     assetsGrants?: AuthzAssetsAccessGrantUncheckedUpdateManyWithoutRoleNestedInput
-  }
-
-  export type AuthzCapabilityUpsertWithoutRoleMapsInput = {
-    update: XOR<AuthzCapabilityUpdateWithoutRoleMapsInput, AuthzCapabilityUncheckedUpdateWithoutRoleMapsInput>
-    create: XOR<AuthzCapabilityCreateWithoutRoleMapsInput, AuthzCapabilityUncheckedCreateWithoutRoleMapsInput>
-    where?: AuthzCapabilityWhereInput
-  }
-
-  export type AuthzCapabilityUpdateToOneWithWhereWithoutRoleMapsInput = {
-    where?: AuthzCapabilityWhereInput
-    data: XOR<AuthzCapabilityUpdateWithoutRoleMapsInput, AuthzCapabilityUncheckedUpdateWithoutRoleMapsInput>
-  }
-
-  export type AuthzCapabilityUpdateWithoutRoleMapsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    scope?: NullableStringFieldUpdateOperationsInput | string | null
-    application?: ApplicationUpdateOneWithoutAuthzCapabilitiesNestedInput
-  }
-
-  export type AuthzCapabilityUncheckedUpdateWithoutRoleMapsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    appId?: NullableStringFieldUpdateOperationsInput | string | null
-    scope?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AccountCreateWithoutAuthzOwnedGrantsInput = {
@@ -50613,7 +48864,6 @@ export namespace Prisma {
     connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
-    authzCapabilities?: AuthzCapabilityCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleCreateNestedManyWithoutApplicationInput
   }
 
@@ -50633,7 +48883,6 @@ export namespace Prisma {
     connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
     bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
     policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
-    authzCapabilities?: AuthzCapabilityUncheckedCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleUncheckedCreateNestedManyWithoutApplicationInput
   }
 
@@ -50877,7 +49126,6 @@ export namespace Prisma {
     connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
-    authzCapabilities?: AuthzCapabilityUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUpdateManyWithoutApplicationNestedInput
   }
 
@@ -50897,7 +49145,6 @@ export namespace Prisma {
     connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
     bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
     policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
-    authzCapabilities?: AuthzCapabilityUncheckedUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
@@ -52281,13 +50528,6 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
-  export type AuthzCapabilityCreateManyApplicationInput = {
-    id?: string
-    name: string
-    description?: string | null
-    scope?: string | null
-  }
-
   export type AuthzRoleCreateManyApplicationInput = {
     id?: string
     name: string
@@ -52365,29 +50605,6 @@ export namespace Prisma {
     policyType?: StringFieldUpdateOperationsInput | string
     policyValue?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AuthzCapabilityUpdateWithoutApplicationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    scope?: NullableStringFieldUpdateOperationsInput | string | null
-    roleMaps?: AuthzRoleCapabilityMapUpdateManyWithoutCapabilityNestedInput
-  }
-
-  export type AuthzCapabilityUncheckedUpdateWithoutApplicationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    scope?: NullableStringFieldUpdateOperationsInput | string | null
-    roleMaps?: AuthzRoleCapabilityMapUncheckedUpdateManyWithoutCapabilityNestedInput
-  }
-
-  export type AuthzCapabilityUncheckedUpdateManyWithoutApplicationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    scope?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzRoleUpdateWithoutApplicationInput = {
@@ -52586,29 +50803,11 @@ export namespace Prisma {
     portfolioId?: StringFieldUpdateOperationsInput | string
   }
 
-  export type AuthzRoleCapabilityMapCreateManyCapabilityInput = {
-    id?: string
-    roleId: string
-  }
-
-  export type AuthzRoleCapabilityMapUpdateWithoutCapabilityInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    role?: AuthzRoleUpdateOneRequiredWithoutRoleMapsNestedInput
-  }
-
-  export type AuthzRoleCapabilityMapUncheckedUpdateWithoutCapabilityInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    roleId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type AuthzRoleCapabilityMapUncheckedUpdateManyWithoutCapabilityInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    roleId?: StringFieldUpdateOperationsInput | string
-  }
-
   export type AuthzRoleCapabilityMapCreateManyRoleInput = {
     id?: string
-    capabilityId: string
+    capName: string
+    capDesc?: string | null
+    scope?: string | null
   }
 
   export type AuthzAccountAccessGrantCreateManyRoleInput = {
@@ -52628,17 +50827,23 @@ export namespace Prisma {
 
   export type AuthzRoleCapabilityMapUpdateWithoutRoleInput = {
     id?: StringFieldUpdateOperationsInput | string
-    capability?: AuthzCapabilityUpdateOneRequiredWithoutRoleMapsNestedInput
+    capName?: StringFieldUpdateOperationsInput | string
+    capDesc?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzRoleCapabilityMapUncheckedUpdateWithoutRoleInput = {
     id?: StringFieldUpdateOperationsInput | string
-    capabilityId?: StringFieldUpdateOperationsInput | string
+    capName?: StringFieldUpdateOperationsInput | string
+    capDesc?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzRoleCapabilityMapUncheckedUpdateManyWithoutRoleInput = {
     id?: StringFieldUpdateOperationsInput | string
-    capabilityId?: StringFieldUpdateOperationsInput | string
+    capName?: StringFieldUpdateOperationsInput | string
+    capDesc?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuthzAccountAccessGrantUpdateWithoutRoleInput = {

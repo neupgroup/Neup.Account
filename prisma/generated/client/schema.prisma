@@ -254,7 +254,6 @@ model Application {
   connections              ApplicationConnection[]
   bridge                   ApplicationBridge[]
   policies                 ApplicationPolicy[]
-  authzCapabilities        AuthzCapability[]
   authzRoles               AuthzRole[]
   authzAccountAccessGrants AuthzAccountAccessGrant[]
 
@@ -354,18 +353,6 @@ model ApplicationPolicy {
   @@map("application_policies")
 }
 
-model AuthzCapability {
-  id          String                   @id @default(uuid())
-  name        String
-  description String?
-  appId       String?                  @map("app_id")
-  scope       String?
-  application Application?             @relation(fields: [appId], references: [id])
-  roleMaps    AuthzRoleCapabilityMap[]
-
-  @@map("authz_capability")
-}
-
 model AuthzRole {
   id           String                    @id @default(uuid())
   name         String
@@ -382,11 +369,12 @@ model AuthzRole {
 }
 
 model AuthzRoleCapabilityMap {
-  id           String          @id @default(uuid())
-  roleId       String          @map("role_id")
-  capabilityId String          @map("capability_id")
-  role         AuthzRole       @relation(fields: [roleId], references: [id])
-  capability   AuthzCapability @relation(fields: [capabilityId], references: [id])
+  id      String    @id @default(uuid())
+  roleId  String    @map("role_id")
+  capName String    @map("cap_name")
+  capDesc String?   @map("cap_desc")
+  scope   String?
+  role    AuthzRole @relation(fields: [roleId], references: [id])
 
   @@map("authz_role_capability_map")
 }
