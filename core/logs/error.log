@@ -105,3 +105,235 @@ connect ENETUNREACH 3.7.23.153:5432
     at async getSiteLogoUrl (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1524:22)
     at async RootLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1632:21)
 --------------------------------------------------------------------------------
+[2026-05-05T09:41:56.895Z] [database] [auto] [getUserPermissions for d7169b8d-df72-4284-89fc-ed3f27950ac7] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getUserPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1217:23)
+    at async checkPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1292:29)
+    at async Promise.all (index 1)
+    at async HomePage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__f3afc42d._.js:769:52)
+--------------------------------------------------------------------------------
+[2026-05-05T09:41:56.899Z] [database] [auto] [getUserPermissions for d7169b8d-df72-4284-89fc-ed3f27950ac7] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getUserPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1217:23)
+    at async checkPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1292:29)
+    at async Promise.all (index 0)
+    at async HomePage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__f3afc42d._.js:769:52)
+--------------------------------------------------------------------------------
+[2026-05-05T09:41:56.988Z] [database] [auto] [getUserPermissions for d7169b8d-df72-4284-89fc-ed3f27950ac7] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getUserPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1217:23)
+    at async checkPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1292:29)
+    at async Promise.all (index 1)
+    at async HomePage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__f3afc42d._.js:769:52)
+--------------------------------------------------------------------------------
+[2026-05-05T09:41:56.988Z] [database] [auto] [getUserPermissions for d7169b8d-df72-4284-89fc-ed3f27950ac7] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getUserPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1217:23)
+    at async checkPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1292:29)
+    at async Promise.all (index 0)
+    at async HomePage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__f3afc42d._.js:769:52)
+--------------------------------------------------------------------------------
+[2026-05-05T09:42:20.183Z] [database] [auto] [getUserPermissions for d7169b8d-df72-4284-89fc-ed3f27950ac7] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getUserPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1217:23)
+    at async checkPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1292:29)
+    at async Promise.all (index 0)
+    at async HomePage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__f3afc42d._.js:769:52)
+--------------------------------------------------------------------------------
+[2026-05-05T09:42:20.518Z] [database] [auto] [getUserPermissions for d7169b8d-df72-4284-89fc-ed3f27950ac7] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getUserPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1217:23)
+    at async checkPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1292:29)
+    at async Promise.all (index 1)
+    at async HomePage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__f3afc42d._.js:769:52)
+--------------------------------------------------------------------------------
+[2026-05-05T09:42:21.860Z] [database] [auto] [getUserPermissions for d7169b8d-df72-4284-89fc-ed3f27950ac7] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getUserPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1217:23)
+    at async checkPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1292:29)
+    at async Promise.all (index 0)
+    at async HomePage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__f3afc42d._.js:769:52)
+--------------------------------------------------------------------------------
+[2026-05-05T09:42:22.177Z] [database] [auto] [getUserPermissions for d7169b8d-df72-4284-89fc-ed3f27950ac7] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getUserPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1217:23)
+    at async checkPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1292:29)
+    at async Promise.all (index 1)
+    at async HomePage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__f3afc42d._.js:769:52)
+--------------------------------------------------------------------------------
+[2026-05-05T09:43:21.356Z] [database] [auto] [getUserPermissions — permit query failed for d7169b8d-df72-4284-89fc-ed3f27950ac7] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getUserPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1224:27)
+    at async Promise.all (index 1)
+    at async checkSession (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_715438a9._.js:48:36)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_41c8e578._.js:2979:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_41c8e578._.js:3185:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_41c8e578._.js:3556:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-05-05T09:44:19.388Z] [database] [auto] [getUserPermissions — permit query failed for d7169b8d-df72-4284-89fc-ed3f27950ac7] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getUserPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1224:27)
+    at async checkPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1304:29)
+    at async Promise.all (index 0)
+    at async HomePage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__f3afc42d._.js:769:52)
+--------------------------------------------------------------------------------
+[2026-05-05T09:44:19.391Z] [database] [auto] [getUserPermissions — permit query failed for d7169b8d-df72-4284-89fc-ed3f27950ac7] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getUserPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1224:27)
+    at async checkPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1304:29)
+    at async Promise.all (index 1)
+    at async HomePage (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__f3afc42d._.js:769:52)
+--------------------------------------------------------------------------------
+[2026-05-05T09:44:22.317Z] [database] [auto] [getUserPermissions — permit query failed for d7169b8d-df72-4284-89fc-ed3f27950ac7] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getUserPermissions (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_8a7ad76a._.js:1224:27)
+    at async Promise.all (index 1)
+    at async checkSession (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_bc21fd3b._.js:48:36)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_6d8034ba._.js:7297:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_6d8034ba._.js:7503:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_6d8034ba._.js:7874:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------

@@ -42,19 +42,9 @@ export async function initializeAuthFlow(
 
         if (authRequest && authRequest.expiresAt > new Date()) {
             if (authRequest.type !== flowType) {
-                const expiresAt = new Date();
-                expiresAt.setMinutes(expiresAt.getMinutes() + AUTH_REQUEST_EXPIRATION_MINUTES);
-                
-                await prisma.authnRequest.update({
-                    where: { id: currentId },
-                    data: {
-                        type: flowType,
-                        status: 'pending',
-                        data: {},
-                        accountId: null,
-                        expiresAt: expiresAt,
-                    }
-                });
+                // If the existing auth request is for a different flow, create a new request
+                // so the client initializes a fresh session for the desired flow.
+                return createAuthRequest(flowType);
             }
             return currentId;
         }

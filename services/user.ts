@@ -192,24 +192,36 @@ export async function getUserPermissions(accountId?: string, appId?: string): Pr
     // Fetch the relevant permits depending on whether we're in a managing context
     let permits;
     if (isManaging && personalId) {
-      permits = await prisma.permit.findMany({
-        where: {
-          accountId: personalId,
-          targetAccountId: activeId,
-          forSelf: false,
-          isRoot: false
-        }
-      });
+      try {
+        permits = await prisma.permit.findMany({
+          where: {
+            accountId: personalId,
+            targetAccountId: activeId,
+            forSelf: false,
+            isRoot: false
+          }
+        });
+      } catch (error) {
+        // If the permits table doesn't exist (local/dev), treat as empty permits
+        await logError('database', error, `getUserPermissions — permit query failed for ${activeId}`);
+        permits = [];
+      }
     } else {
-      permits = await prisma.permit.findMany({
-        where: {
-          accountId: activeId,
-          OR: [
-            { forSelf: true },
-            { isRoot: true }
-          ]
-        }
-      });
+      try {
+        permits = await prisma.permit.findMany({
+          where: {
+            accountId: activeId,
+            OR: [
+              { forSelf: true },
+              { isRoot: true }
+            ]
+          }
+        });
+      } catch (error) {
+        // If the permits table doesn't exist (local/dev), treat as empty permits
+        await logError('database', error, `getUserPermissions — permit query failed for ${activeId}`);
+        permits = [];
+      }
     }
 
     // Apply permit entries — a trailing '+' adds, '-' removes, no modifier adds
