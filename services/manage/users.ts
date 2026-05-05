@@ -12,7 +12,7 @@ import crypto from 'crypto';
 import { z } from 'zod';
 import { createNotification } from '../notifications';
 import { setSessionCookies } from '@/core/helpers/cookies';
-import { warningReasons } from '@/app/(manage)/manage/[id]/forms';
+import { warningReasons } from '@/app/(manage)/manage/accounts/[id]/forms';
 import type { UserProfile } from '@/services/user';
 
 
@@ -167,7 +167,7 @@ export async function updateUserPermissions(accountId: string, newPermissionIds:
 
         const adminId = await getPersonalAccountId() ?? '';
         await logActivity(accountId, `Permissions updated by root user ${adminId}`, 'Success', undefined, adminId);
-        revalidatePath(`/manage/${accountId}/permissions`);
+        revalidatePath(`/manage/accounts/${accountId}/permissions`);
         return { success: true };
     } catch (e) {
         await logError('database', e, `updateUserPermissions: ${accountId}`);

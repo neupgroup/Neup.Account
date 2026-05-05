@@ -89,7 +89,7 @@ export default function RootUserContactPage() {
 
     return (
         <div className="space-y-8">
-            <BackButton href={`/manage/${params.id}/profile`} />
+            <BackButton href={`/manage/accounts/${params.id}/profile`} />
             <PrimaryHeader
                 title="Contact Information"
                 description={`Manage phone numbers and addresses for @${userNeupId}.`}

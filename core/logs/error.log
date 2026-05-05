@@ -1391,3 +1391,563 @@ Message: ReferenceError: hello is not defined
     at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
     at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
 --------------------------------------------------------------------------------
+[2026-05-05T20:16:57.209Z] [database] [auto] [getAllAccounts] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getAllAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_55c7da51._.js:151:41)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3002:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3208:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3579:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-05-05T20:16:57.482Z] [database] [auto] [getAllAccounts] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getAllAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_55c7da51._.js:151:41)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3002:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3208:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3579:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-05-05T20:17:11.860Z] [database] [auto] [getAllAccounts] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getAllAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_55c7da51._.js:151:41)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3002:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3208:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3579:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-05-05T20:17:12.099Z] [database] [auto] [getAllAccounts] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getAllAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_55c7da51._.js:151:41)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3002:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3208:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3579:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-05-05T20:17:25.330Z] [database] [auto] [getAllAccounts] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getAllAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_55c7da51._.js:151:41)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3002:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3208:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3579:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-05-05T20:17:25.390Z] [database] [auto] [getAllAccounts] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getAllAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_55c7da51._.js:151:41)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3002:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3208:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3579:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-05-05T20:17:41.729Z] [database] [auto] [getAllAccounts] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getAllAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_55c7da51._.js:151:41)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3002:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3208:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3579:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-05-05T20:17:41.793Z] [database] [auto] [getAllAccounts] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getAllAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_55c7da51._.js:151:41)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3002:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3208:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3579:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-05-05T20:17:53.616Z] [database] [auto] [getAllAccounts] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getAllAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_55c7da51._.js:151:41)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3002:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3208:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3579:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-05-05T20:17:53.708Z] [database] [auto] [getAllAccounts] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getAllAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_55c7da51._.js:151:41)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3002:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3208:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3579:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-05-05T20:22:11.880Z] [database] [auto] [getAllAccounts] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getAllAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_eeddd586._.js:151:41)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3002:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3208:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3579:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-05-05T20:22:11.889Z] [database] [auto] [getAllAccounts] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getAllAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_eeddd586._.js:151:41)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3002:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3208:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3579:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-05-05T20:22:20.978Z] [database] [auto] [getAllAccounts] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getAllAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_eeddd586._.js:151:41)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3002:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3208:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3579:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-05-05T20:22:21.293Z] [database] [auto] [getAllAccounts] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getAllAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_eeddd586._.js:151:41)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3002:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3208:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3579:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-05-05T20:22:23.741Z] [database] [auto] [getAllAccounts] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getAllAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_eeddd586._.js:151:41)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3002:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3208:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3579:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-05-05T20:22:23.884Z] [database] [auto] [getAllAccounts] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.permit.findMany()` invocation:
+
+
+The table `public.permit` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async Promise.all (index 1)
+    at async getAllAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_eeddd586._.js:151:41)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3002:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3208:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_next_dist_9c66043e._.js:3579:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------

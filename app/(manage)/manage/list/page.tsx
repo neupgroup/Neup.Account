@@ -27,7 +27,6 @@ import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React from 'react';
-import { redirectInApp } from '@/services/navigation';
 
 type SortKey = keyof AccountListItem | null;
 
@@ -76,7 +75,7 @@ function AccountsListPageComponent() {
         }
         newUrl.searchParams.set('dir', sortDirection);
 
-        redirectInApp(router, `${newUrl.pathname}${newUrl.search}`, { replace: true, scroll: false });
+        router.replace(`${newUrl.pathname}${newUrl.search}`, { scroll: false });
         fetchData();
     }, [page, debouncedFilter, sortKey, sortDirection, router, fetchData]);
 
@@ -158,7 +157,7 @@ function AccountsListPageComponent() {
                                 accounts.map((acc) => (
                                     <TableRow key={acc.id}>
                                         <TableCell>
-                                            <Link href={`/manage/${acc.id}`} className="font-medium hover:underline text-primary">
+                                            <Link href={`/manage/accounts/${acc.id}`} className="font-medium hover:underline text-primary">
                                                 {acc.name}
                                             </Link>
                                             <p className="text-xs text-muted-foreground font-mono">{acc.id}</p>

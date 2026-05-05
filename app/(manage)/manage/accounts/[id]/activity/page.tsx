@@ -16,7 +16,7 @@ export default function UserActivityPage() {
     
     return (
          <div className="grid gap-8">
-            <BackButton href={`/manage/${params.id}`} />
+            <BackButton href={`/manage/accounts/${params.id}`} />
             <div>
                 <h1 className="text-3xl font-bold tracking-tight">Account Activity</h1>
                 <p className="text-muted-foreground">

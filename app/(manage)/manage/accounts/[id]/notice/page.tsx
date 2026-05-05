@@ -2,7 +2,7 @@
 
 import { notFound } from "next/navigation";
 import { getUserDetails, getAccountDetails } from "@/services/manage/users";
-import { BlockServiceAccessForm, SendWarningForm } from "../forms";
+import { BlockServiceAccessForm, SendWarningForm } from "../../accounts/[id]/forms";
 import { BackButton } from "@/components/ui/back-button";
 import { PrimaryHeader } from "@/components/ui/primary-header";
 
@@ -19,7 +19,7 @@ export default async function UserNoticePage({ params }: { params: Promise<{ id:
     return (
         <div className="grid gap-8">
             <div className="space-y-4">
-                <BackButton href={`/manage/${id}`} />
+                <BackButton href={`/manage/accounts/${id}`} />
                  <PrimaryHeader
                     title="Manage Notices & Actions"
                     description={`Send warnings or apply administrative actions to @${userDetails.neupId}.`}

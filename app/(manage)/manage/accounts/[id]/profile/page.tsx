@@ -25,43 +25,43 @@ export default async function UserProfilePage({ params }: { params: Promise<{ id
       icon: UserCircle,
       title: "Display Information",
       description: "Update the user's public display name and photo.",
-      href: `/manage/${id}/profile/display`,
+      href: `/manage/accounts/${id}/profile/display`,
     },
     {
       icon: FileText,
       title: "Legal Name",
       description: "Manage the user's legal first, middle, and last name.",
-      href: `/manage/${id}/profile/name`,
+      href: `/manage/accounts/${id}/profile/name`,
     },
     {
       icon: HeartHandshake,
       title: "Demographics",
       description: "Update the user's date of birth and gender.",
-      href: `/manage/${id}/profile/demographics`,
+      href: `/manage/accounts/${id}/profile/demographics`,
     },
     {
       icon: AtSign,
       title: "NeupID",
       description: "Manage the user's unique NeupIDs.",
-      href: `/manage/${id}/profile/neupid`,
+      href: `/manage/accounts/${id}/profile/neupid`,
     },
     {
       icon: Contact,
       title: "Contact Information",
       description: "Manage the user's phone numbers and addresses.",
-      href: `/manage/${id}/profile/contact`,
+      href: `/manage/accounts/${id}/profile/contact`,
     },
     {
       icon: ShieldCheck,
       title: "KYC & Verification",
       description: "Submit or review documents to verify identity.",
-      href: `/manage/${id}/profile/documents`,
+      href: `/manage/accounts/${id}/profile/documents`,
     },
   ];
 
   return (
     <div className="grid gap-8">
-      <BackButton href={`/manage/${id}`} />
+      <BackButton href={`/manage/accounts/${id}`} />
       <PrimaryHeader
         title="Profile Information"
         description={`Manage profile details for @${userDetails.neupId}.`}

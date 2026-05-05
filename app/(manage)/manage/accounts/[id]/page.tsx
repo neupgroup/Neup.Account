@@ -15,19 +15,19 @@ const accountManagementFeatures = (accountId: string) => [
     icon: UserCircle,
     title: 'Profile Information',
     description: 'View and manage user profile details.',
-    href: `/manage/${accountId}/profile`,
+    href: `/manage/accounts/${accountId}/profile`,
   },
   {
     icon: ShieldCheck,
     title: 'Permissions',
     description: 'Assign or restrict permission sets for this user.',
-    href: `/manage/${accountId}/permissions`,
+    href: `/manage/accounts/${accountId}/permissions`,
   },
   {
     icon: History,
     title: 'Account Activity',
     description: 'View a log of recent actions performed on this account.',
-    href: `/manage/${accountId}/activity`,
+    href: `/manage/accounts/${accountId}/activity`,
   },
 ];
 
@@ -36,25 +36,25 @@ const adminActions = (accountId: string) => [
         icon: ShieldCheck,
         title: 'Verification',
         description: 'Manage the user\'s verified status.',
-        href: `/manage/${accountId}/verification`,
+        href: `/manage/accounts/${accountId}/verification`,
     },
     {
         icon: Ban,
         title: 'Bans & Warnings',
         description: 'Send warnings, block access, or take other admin actions.',
-        href: `/manage/${accountId}/notice`,
+        href: `/manage/accounts/${accountId}/notice`,
     },
     {
         icon: Trash2,
         title: 'Deletion',
         description: 'Manage the account deletion process.',
-        href: `/manage/${accountId}/deletion`,
+        href: `/manage/accounts/${accountId}/deletion`,
     },
     {
         icon: Gem,
         title: 'Neup.Pro',
         description: 'Activate or deactivate the user\'s Pro subscription.',
-        href: `/manage/${accountId}/pro`,
+        href: `/manage/accounts/${accountId}/pro`,
     }
 ]
 

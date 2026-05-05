@@ -14,7 +14,7 @@ export default async function UserProPage({ params }: { params: Promise<{ id: st
     return (
         <div className="grid gap-8">
             <div className="space-y-4">
-                <BackButton href={`/manage/${id}`} />
+                <BackButton href={`/manage/accounts/${id}`} />
                 <PrimaryHeader
                     title="Neup.Pro Management"
                     description={`Activate or deactivate the Neup.Pro subscription for @${userDetails.neupId}.`}

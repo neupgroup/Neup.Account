@@ -15,7 +15,7 @@ export default async function RootUserKycPage({ params }: { params: Promise<{ id
 
     return (
         <div className="grid gap-8">
-            <BackButton href={`/manage/${id}/profile`} />
+            <BackButton href={`/manage/accounts/${id}/profile`} />
             <PrimaryHeader
                 title="KYC & Verification"
                 description={`Review KYC status and submitted documents for @${userDetails.neupId}.`}

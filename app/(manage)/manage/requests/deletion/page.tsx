@@ -94,7 +94,7 @@ function DeletionRequestRow({
     <TableRow>
       <TableCell>
         <Link
-          href={`/manage/${request.accountId}`}
+          href={`/manage/accounts/${request.accountId}`}
           className="font-medium text-primary hover:underline"
         >
           {request.userFullName}

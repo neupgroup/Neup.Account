@@ -14,7 +14,7 @@ export default async function UserVerificationPage({ params }: { params: Promise
     return (
         <div className="grid gap-8">
             <div className="space-y-4">
-                <BackButton href={`/manage/${id}`} />
+                <BackButton href={`/manage/accounts/${id}`} />
                  <PrimaryHeader
                     title="Manage Verification"
                     description={`Grant or revoke verification for @${userDetails.neupId}.`}

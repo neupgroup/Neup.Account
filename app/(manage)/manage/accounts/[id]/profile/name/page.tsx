@@ -79,7 +79,7 @@ export default function RootUserNamePage() {
 
     return (
          <div className="space-y-8">
-            <BackButton href={`/manage/${params.id}/profile`} />
+            <BackButton href={`/manage/accounts/${params.id}/profile`} />
              <PrimaryHeader
                 title="Legal Name"
                 description={`Update the legal name for @${profile.neupIdPrimary}.`}
