@@ -165,7 +165,7 @@ function hasPermission(granted: Set<string>, required: string): boolean {
 async function resolveAuthenticatedAccount(input: { app: string; sid: string; skey: string }): Promise<ResolvedAuth | null> {
 	const now = new Date();
 
-	const externalSession = await prisma.authSession.findFirst({
+	const externalSession = await prisma.authnSession.findFirst({
 		where: {
 			id: input.sid,
 			loginType: externalLoginType(input.app),
@@ -192,7 +192,7 @@ async function resolveAuthenticatedAccount(input: { app: string; sid: string; sk
 		};
 	}
 
-	const internalSession = await prisma.authSession.findUnique({
+	const internalSession = await prisma.authnSession.findUnique({
 		where: { id: input.sid },
 		select: {
 			accountId: true,
@@ -234,7 +234,7 @@ async function resolvePermissionSet(input: {
 	const [appRecord, portfolios] = await Promise.all([
 		prisma.application.findUnique({
 			where: { id: input.app },
-			select: { id: true, ownerAccountId: true },
+			select: { id: true },
 		}),
 		prisma.portfolio.findMany({
 			where: {
@@ -264,13 +264,15 @@ async function resolvePermissionSet(input: {
 						details: true,
 					},
 				},
-				roles: {
-					where: { accountId: input.accountId },
-					select: {
-						roleId: true,
-					},
+				authzAccountAccessGrants: {
+					where: { targetAccountId: input.accountId },
+					select: { roleId: true },
 				},
 			},
+		}),
+		prisma.authzAccountAccessGrant.findMany({
+			where: { targetAccountId: input.accountId, appId: input.app },
+			select: { roleId: true },
 		}),
 	]);
 
@@ -279,13 +281,13 @@ async function resolvePermissionSet(input: {
 	}
 	const resolvedPermissions = new Set<string>();
 
-	if (appRecord.ownerAccountId === input.accountId) {
+	if (portfolios.some((portfolio) => portfolio.authzAccountAccessGrants?.some((grant) => grant.roleId === 'application.owner'))) {
 		resolvedPermissions.add('application.owner');
 		resolvedPermissions.add('owner');
 	}
 
 	for (const portfolio of portfolios) {
-		if (portfolio.members.length === 0 && portfolio.roles.length === 0) {
+		if (portfolio.members.length === 0 && portfolio.authzAccountAccessGrants.length === 0) {
 			continue;
 		}
 
@@ -316,9 +318,16 @@ async function resolvePermissionSet(input: {
 			resolvedPermissions.add('*');
 		}
 
-		for (const role of portfolio.roles) {
-			resolvedPermissions.add(normalizePermission(role.roleId));
+		for (const grant of portfolio.authzAccountAccessGrants) {
+			resolvedPermissions.add(normalizePermission(grant.roleId));
 		}
+	}
+
+	for (const grant of await prisma.authzAccountAccessGrant.findMany({
+		where: { targetAccountId: input.accountId, appId: input.app },
+		select: { roleId: true },
+	})) {
+		resolvedPermissions.add(normalizePermission(grant.roleId));
 	}
 
 	const matched = input.checkFor.filter((permission) => hasPermission(resolvedPermissions, permission));

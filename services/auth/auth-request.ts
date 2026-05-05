@@ -18,7 +18,7 @@ type GetAuthRequestOptions = {
 // Optionally validates the request type and restricts to specific allowed statuses.
 // Returns null if the request is missing, expired, terminal, or fails any constraint.
 export async function getAuthRequest(id: string, options: GetAuthRequestOptions = {}) {
-  const authRequest = await prisma.authRequest.findUnique({
+  const authRequest = await prisma.authnRequest.findUnique({
     where: { id },
   });
 
@@ -65,7 +65,7 @@ export async function validateAuthSessionRequest(requestId: string, flowType: Au
 export async function extendAuthRequest(id: string) {
   const expiresAt = new Date();
   expiresAt.setMinutes(expiresAt.getMinutes() + AUTH_REQUEST_EXPIRATION_MINUTES);
-  await prisma.authRequest.update({
+  await prisma.authnRequest.update({
     where: { id },
     data: { expiresAt },
   });

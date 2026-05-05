@@ -83,7 +83,7 @@ export async function validateExternalRequest(input: ValidateInput): Promise<Val
       return { success: false, error: 'Missing authentication parameters.', status: 400 };
     }
 
-    const session = await prisma.authSession.findUnique({
+    const session = await prisma.authnSession.findUnique({
       where: { id: internalSid },
     });
 
@@ -139,7 +139,7 @@ export async function validateExternalRequest(input: ValidateInput): Promise<Val
     return { success: false, error: 'Invalid application secret.', status: 401 };
   }
 
-  const request = await prisma.authRequest.findUnique({
+  const request = await prisma.authnRequest.findUnique({
     where: { id: key },
     select: { id: true, type: true, status: true, data: true, accountId: true, expiresAt: true },
   });
@@ -157,7 +157,7 @@ export async function validateExternalRequest(input: ValidateInput): Promise<Val
     return { success: false, error: 'Invalid or expired key.', status: 403 };
   }
 
-  await prisma.authRequest.update({
+  await prisma.authnRequest.update({
     where: { id: key },
     data: { status: 'used' },
   });

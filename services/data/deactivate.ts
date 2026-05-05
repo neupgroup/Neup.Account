@@ -35,7 +35,7 @@ export async function deactivateAccount(data: z.infer<typeof formSchema>, geoloc
   const { password } = validation.data;
 
   try {
-    const authData = await prisma.authMethod.findFirst({
+    const authData = await prisma.authnMethod.findFirst({
       where: {
         accountId,
         type: 'password',

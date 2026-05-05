@@ -60,7 +60,7 @@ export async function submitNeupId(data: z.infer<typeof neupIdSchema>) {
 
     const currentData = (request.data.data as SigninRequestData) || {};
     
-    await prisma.authRequest.update({
+    await prisma.authnRequest.update({
         where: { id: request.id },
         data: {
             data: {
@@ -120,7 +120,7 @@ export async function submitPasswordWithNeupId(data: { neupId: string; password:
     const account = await prisma.account.findUnique({ where: { id: accountId }, select: { status: true } });
     const isPendingDeletion = account?.status === 'pending_deletion';
 
-    const passwordRecord = await prisma.authMethod.findFirst({
+    const passwordRecord = await prisma.authnMethod.findFirst({
         where: { accountId, type: 'password', order: 'primary', status: 'active' },
         select: { value: true },
     });
@@ -134,7 +134,7 @@ export async function submitPasswordWithNeupId(data: { neupId: string; password:
         return { success: false, mfaRequired: false, error: 'Invalid credentials.' };
     }
 
-    await prisma.authRequest.update({
+    await prisma.authnRequest.update({
         where: { id: request.id },
         data: {
             data: { neupId, isPendingDeletion },
@@ -149,7 +149,7 @@ export async function submitPasswordWithNeupId(data: { neupId: string; password:
 
     const mfaEnabled = false;
     if (mfaEnabled) {
-        await prisma.authRequest.update({ where: { id: request.id }, data: { status: 'pending_mfa' } });
+        await prisma.authnRequest.update({ where: { id: request.id }, data: { status: 'pending_mfa' } });
         await extendAuthRequest(request.id);
         return { success: true, mfaRequired: true };
     }
@@ -159,7 +159,7 @@ export async function submitPasswordWithNeupId(data: { neupId: string; password:
         return { success: false, mfaRequired: false, error: sessionResult.error || 'Failed to create session.' };
     }
 
-    await prisma.authRequest.update({ where: { id: request.id }, data: { status: 'completed' } });
+    await prisma.authnRequest.update({ where: { id: request.id }, data: { status: 'completed' } });
     return { success: true, mfaRequired: false };
 }
 
@@ -184,7 +184,7 @@ export async function submitPassword(data: z.infer<typeof passwordSchema>): Prom
     const requestData = (request.data.data as SigninRequestData) || {};
     const isPendingDeletion = requestData.isPendingDeletion;
 
-    const passwordRecord = await prisma.authMethod.findFirst({
+    const passwordRecord = await prisma.authnMethod.findFirst({
         where: {
             accountId,
             type: 'password',
@@ -212,7 +212,7 @@ export async function submitPassword(data: z.infer<typeof passwordSchema>): Prom
 
     const mfaEnabled = false;
     if (mfaEnabled) {
-        await prisma.authRequest.update({
+        await prisma.authnRequest.update({
             where: { id: request.id },
             data: { status: 'pending_mfa' }
         });
@@ -228,7 +228,7 @@ export async function submitPassword(data: z.infer<typeof passwordSchema>): Prom
             return { success: false, mfaRequired: false, error: sessionResult.error || 'Failed to create session.' };
         }
 
-        await prisma.authRequest.update({
+        await prisma.authnRequest.update({
             where: { id: request.id },
             data: { status: 'completed' }
         });

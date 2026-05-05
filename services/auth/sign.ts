@@ -141,6 +141,35 @@ function normalizeAccess(access: unknown): string[] {
 
 
 /**
+ * Function normalizePolicies.
+ */
+function normalizePolicies(policies: unknown): Array<{ name: string; policy: string }> {
+	if (!Array.isArray(policies)) {
+		return [];
+	}
+
+	return policies
+		.map((policy) => {
+			if (!policy || typeof policy !== 'object') {
+				return null;
+			}
+
+			const record = policy as Record<string, unknown>;
+			const name = typeof record.policyType === 'string' ? record.policyType : typeof record.name === 'string' ? record.name : '';
+			const value = record.policyValue ?? record.policy;
+			const policyText = typeof value === 'string' ? value : JSON.stringify(value);
+
+			if (!name || !policyText || !policyText.trim()) {
+				return null;
+			}
+
+			return { name, policy: policyText.trim() };
+		})
+		.filter((entry): entry is { name: string; policy: string } => entry !== null);
+}
+
+
+/**
  * Function getTermsText.
  */
 function getTermsText(policies: unknown): string {
@@ -188,13 +217,25 @@ export async function getAuthSignPageData(
 					description: true,
 					website: true,
 					developer: true,
-					access: true,
+					details: true,
 					policies: true,
 				},
 		  })
 		: null;
 
-	const displayAppName = getAppDisplayName(application?.name);
+	const applicationData = application
+		? {
+			id: application.id,
+			name: application.name,
+			description: application.description,
+			website: application.website,
+			developer: application.developer,
+			access: normalizeAccess((application.details as Record<string, unknown> | null)?.access ?? []),
+			policies: normalizePolicies(application.policies),
+		}
+		: null;
+
+	const displayAppName = getAppDisplayName(applicationData?.name);
 
 	const storedAccounts = await getValidatedStoredAccounts();
 	const { accountId, sessionId, sessionKey } = await getSessionCookies();
@@ -224,7 +265,7 @@ export async function getAuthSignPageData(
 			accessBackUrl: '/auth/start',
 			termsBackUrl: '/auth/start',
 			hasBuilderData: false,
-			application,
+			application: applicationData,
 		};
 	}
 
@@ -247,7 +288,7 @@ export async function getAuthSignPageData(
 			accessBackUrl: '/auth/start',
 			termsBackUrl: '/auth/start',
 			hasBuilderData: false,
-			application,
+			application: applicationData,
 		};
 	}
 
@@ -263,8 +304,8 @@ export async function getAuthSignPageData(
 		terms: 'Terms',
 	};
 
-	const accessItems = normalizeAccess(application?.access);
-	const termsText = getTermsText(application?.policies);
+	const accessItems = normalizeAccess(applicationData?.access);
+	const termsText = getTermsText(applicationData?.policies);
 
 	const profileNextUrl = buildSignUrl(context, 'access');
 	const accessNextUrl = buildSignUrl(context, 'terms');
@@ -272,11 +313,11 @@ export async function getAuthSignPageData(
 	const termsBackUrl = buildSignUrl(context, 'access');
 
 	const hasBuilderData = Boolean(
-		application?.description?.trim() ||
-			application?.developer?.trim() ||
-			application?.website?.trim() ||
-			Array.isArray(application?.access) ||
-			Array.isArray(application?.policies)
+			applicationData?.description?.trim() ||
+				applicationData?.developer?.trim() ||
+				applicationData?.website?.trim() ||
+				Array.isArray(applicationData?.access) ||
+				Array.isArray(applicationData?.policies)
 	);
 
 	return {
@@ -296,7 +337,7 @@ export async function getAuthSignPageData(
 		accessBackUrl,
 		termsBackUrl,
 		hasBuilderData,
-		application,
+		application: applicationData,
 	};
 }
 
@@ -366,7 +407,7 @@ export async function bridgeSignIntoApplication(input: { appId?: string; appType
 				create: { accountId, appId },
 			});
 
-			await prisma.authSession.create({
+						await prisma.authnSession.create({
 				data: {
 					accountId,
 					ipAddress: 'Unknown IP',

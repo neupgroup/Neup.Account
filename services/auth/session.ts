@@ -135,7 +135,7 @@ export async function validateAuthSession(input: ValidateAuthSessionInput): Prom
 		return { status: 'invalid', reason: 'invalidSource' };
 	}
 
-	const session = await prisma.authSession.findUnique({
+	const session = await prisma.authnSession.findUnique({
 		where: { id: sid },
 		select: { accountId: true, key: true, validTill: true },
 	});
@@ -216,7 +216,7 @@ export async function expireSession(input: ExpireSessionInput): Promise<ExpireSe
 	}
 
 	try {
-		const session = await prisma.authSession.findUnique({
+		const session = await prisma.authnSession.findUnique({
 			where: { id: sid },
 			select: {
 				accountId: true,
@@ -232,7 +232,7 @@ export async function expireSession(input: ExpireSessionInput): Promise<ExpireSe
 			return { success: false, error: 'Invalid session.' };
 		}
 
-		await prisma.authSession.update({
+		await prisma.authnSession.update({
 			where: { id: sid },
 			data: {
 				validTill: new Date(),
@@ -315,7 +315,7 @@ export async function bridgeValidateAndRefreshSession(input: {
 	}
 
 	try {
-		const session = await prisma.authSession.findUnique({
+		const session = await prisma.authnSession.findUnique({
 			where: { id: sid },
 			include: { account: true },
 		});
@@ -337,7 +337,7 @@ export async function bridgeValidateAndRefreshSession(input: {
 		const newExpiry = new Date();
 		newExpiry.setDate(newExpiry.getDate() + 30);
 
-		const updatedSession = await prisma.authSession.update({
+		const updatedSession = await prisma.authnSession.update({
 			where: { id: sid },
 			data: {
 				validTill: newExpiry,
@@ -381,7 +381,7 @@ export async function bridgeInvalidateSession(input: {
 	}
 
 	try {
-		const session = await prisma.authSession.updateMany({
+		const session = await prisma.authnSession.updateMany({
 			where: {
 				id: sid,
 				accountId: aid,
@@ -420,7 +420,7 @@ export async function bridgeRefreshSessionExpiry(): Promise<{ status: number; bo
 		const newExpiresOn = new Date();
 		newExpiresOn.setDate(newExpiresOn.getDate() + 30);
 
-		await prisma.authSession.update({
+		await prisma.authnSession.update({
 			where: { id: session.sessionId },
 			data: { validTill: newExpiresOn },
 		});
@@ -446,7 +446,7 @@ export async function validateSession(input: ValidateSessionInput): Promise<Vali
 
 	try {
 		// 1. Verify the session exists and matches the provided values
-		const session = await prisma.authSession.findUnique({
+		const session = await prisma.authnSession.findUnique({
 			where: { id: sessionId },
 			select: {
 				accountId: true,

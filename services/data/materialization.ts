@@ -35,7 +35,7 @@ export async function scheduleMaterialization(data: z.infer<typeof formSchema>, 
     const { inactivityDays, password } = validation.data;
 
     try {
-        const authData = await prisma.authMethod.findFirst({
+        const authData = await prisma.authnMethod.findFirst({
             where: {
                 accountId,
                 type: 'password',

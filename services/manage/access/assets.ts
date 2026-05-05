@@ -40,7 +40,6 @@ type AccessAssetGroup = Prisma.PortfolioGetPayload<{
   include: {
     members: true;
     assets: true;
-    roles: true;
   };
 }>;
 
@@ -126,11 +125,6 @@ export async function getAccessAssetGroup(groupId: string): Promise<AccessAssetG
         assets: {
           orderBy: {
             assetId: 'asc',
-          },
-        },
-        roles: {
-          orderBy: {
-            roleId: 'asc',
           },
         },
       },

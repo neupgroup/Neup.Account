@@ -37,7 +37,7 @@ export async function requestAccountDeletion(data: z.infer<typeof formSchema>, g
   try {
     const [account, authData] = await Promise.all([
         prisma.account.findUnique({ where: { id: accountId } }),
-        prisma.authMethod.findFirst({
+        prisma.authnMethod.findFirst({
             where: {
                 accountId,
                 type: 'password',

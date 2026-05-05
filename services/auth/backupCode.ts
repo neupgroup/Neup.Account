@@ -86,7 +86,7 @@ export async function verifyBackupCode(input: VerifyBackupCodeInput): Promise<Ba
 	}
 
 	try {
-		const existing = await prisma.authMethod.findFirst({
+		const existing = await prisma.authnMethod.findFirst({
 			where: {
 				accountId,
 				type: AUTH_METHOD_BACKUP_TYPE,
@@ -110,7 +110,7 @@ export async function verifyBackupCode(input: VerifyBackupCodeInput): Promise<Ba
 			item.code === code ? { ...item, used: true } : item
 		);
 
-		await prisma.authMethod.update({
+		await prisma.authnMethod.update({
 			where: { id: existing.id },
 			data: { detail: writeBackupCodes(nextCodes) as any },
 		});
@@ -139,7 +139,7 @@ export async function generateBackupCode(): Promise<BackupCodeActionResult> {
 			used: false,
 		}));
 
-		await prisma.authMethod.upsert({
+		await prisma.authnMethod.upsert({
 			where: {
 				accountId_type_order: {
 					accountId,
@@ -188,7 +188,7 @@ export async function getBackupCode(): Promise<BackupCodeActionResult> {
 	if (!accountId) return { success: false, error: 'User not authenticated.' };
 
 	try {
-		const row = await prisma.authMethod.findFirst({
+		const row = await prisma.authnMethod.findFirst({
 			where: {
 				accountId,
 				type: AUTH_METHOD_BACKUP_TYPE,
@@ -221,7 +221,7 @@ export async function expireBackupCode(input: ExpireBackupCodeInput): Promise<Ba
 	}
 
 	try {
-		const existing = await prisma.authMethod.findFirst({
+		const existing = await prisma.authnMethod.findFirst({
 			where: {
 				accountId,
 				type: AUTH_METHOD_BACKUP_TYPE,
@@ -245,7 +245,7 @@ export async function expireBackupCode(input: ExpireBackupCodeInput): Promise<Ba
 			item.code === code ? { ...item, used: true } : item
 		);
 
-		await prisma.authMethod.update({
+		await prisma.authnMethod.update({
 			where: { id: existing.id },
 			data: { detail: writeBackupCodes(nextCodes) as any },
 		});

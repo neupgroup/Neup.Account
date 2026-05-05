@@ -93,13 +93,13 @@ export async function addTotp(input: AddTotpInput): Promise<TotpActionResult> {
 		const encryptedSecret = await encrypt(secret);
 
 		await prisma.$transaction([
-			prisma.authMethod.deleteMany({
+			prisma.authnMethod.deleteMany({
 				where: {
 					accountId,
 					type: AUTH_METHOD_TOTP_TYPE,
 				},
 			}),
-			prisma.authMethod.create({
+			prisma.authnMethod.create({
 				data: {
 					accountId,
 					type: AUTH_METHOD_TOTP_TYPE,
@@ -141,7 +141,7 @@ export async function revokeTotp(input: RevokeTotpInput): Promise<TotpActionResu
 	}
 
 	try {
-		const authDoc = await prisma.authMethod.findFirst({
+		const authDoc = await prisma.authnMethod.findFirst({
 			where: {
 				accountId,
 				type: 'password',
@@ -161,7 +161,7 @@ export async function revokeTotp(input: RevokeTotpInput): Promise<TotpActionResu
 			return { success: false, error: 'The password you entered is incorrect.' };
 		}
 
-		await prisma.authMethod.deleteMany({
+		await prisma.authnMethod.deleteMany({
 			where: {
 				accountId,
 				type: AUTH_METHOD_TOTP_TYPE,
@@ -195,7 +195,7 @@ export async function verifyTotp(input: VerifyTotpInput): Promise<TotpActionResu
 	}
 
 	try {
-		const totp = await prisma.authMethod.findFirst({
+		const totp = await prisma.authnMethod.findFirst({
 			where: {
 				accountId,
 				type: AUTH_METHOD_TOTP_TYPE,

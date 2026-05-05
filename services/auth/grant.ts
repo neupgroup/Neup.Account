@@ -46,7 +46,7 @@ export async function bridgeIssueGrant(input: {
     // expired, or never existed. We catch that and return 401.
     let request: { id: string; type: string; data: unknown; accountId: string | null; expiresAt: Date };
     try {
-      request = await prisma.authRequest.update({
+      request = await prisma.authnRequest.update({
         where: {
           id: tempToken,
           type: 'bridge_grant',
@@ -122,7 +122,7 @@ export async function bridgeIssueGrant(input: {
       },
     });
 
-    const externalSession = await prisma.authSession.create({
+    const externalSession = await prisma.authnSession.create({
       data: {
         accountId: request.accountId,
         ipAddress: 'bridge',
@@ -185,7 +185,7 @@ export async function bridgeRefreshGrant(input: {
   }
 
   try {
-    const appSession = await prisma.authSession.findFirst({
+    const appSession = await prisma.authnSession.findFirst({
       where: {
         id: sid,
         accountId: aid,
@@ -236,7 +236,7 @@ export async function bridgeRefreshGrant(input: {
 
     const newToken = jwt.sign(payload, application.appSecret);
 
-    await prisma.authSession.update({
+    await prisma.authnSession.update({
       where: { id: sid },
       data: {
         validTill: newSessionExpiresOn,
@@ -284,7 +284,7 @@ export async function bridgeCheckGrant(input: {
   }
 
   try {
-    const appSession = await prisma.authSession.findFirst({
+    const appSession = await prisma.authnSession.findFirst({
       where: {
         id: sid,
         accountId: aid,

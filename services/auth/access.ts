@@ -11,7 +11,7 @@ async function resolveSession(input: { aid?: string | null; sid?: string | null;
   const { aid, sid, skey } = input;
   if (!aid || !sid || !skey) return null;
 
-  return prisma.authSession.findFirst({
+  return prisma.authnSession.findFirst({
     where: {
       id: sid,
       accountId: aid,
@@ -67,17 +67,10 @@ export async function bridgeGetAuthAccess(input: {
           details: true,
         },
       }),
-      prisma.portfolioRole.findMany({
+      prisma.authzAccountAccessGrant.findMany({
         where: {
-          accountId: aid,
-          portfolio: {
-            assets: {
-              some: {
-                assetId: resolvedAppId,
-                assetType: { in: ['application', 'app'] },
-              },
-            },
-          },
+          targetAccountId: aid,
+          appId: resolvedAppId,
         },
         select: { roleId: true },
       }),
@@ -210,9 +203,9 @@ export async function bridgeUpdateAuthAccess(input: Record<string, any>): Promis
 
     await prisma.$transaction(async (tx) => {
       if (removeRoles.length > 0) {
-        await tx.portfolioRole.deleteMany({
+        await tx.authzAccountAccessGrant.deleteMany({
           where: {
-            accountId: recipientId,
+            targetAccountId: recipientId,
             portfolioId: portfolio.id,
             roleId: { in: removeRoles },
           },
@@ -220,18 +213,12 @@ export async function bridgeUpdateAuthAccess(input: Record<string, any>): Promis
       }
 
       for (const roleId of addRoles) {
-        await tx.portfolioRole.upsert({
-          where: {
-            accountId_portfolioId_roleId: {
-              accountId: recipientId,
-              portfolioId: portfolio.id,
-              roleId,
-            },
-          },
-          update: {},
-          create: {
-            accountId: recipientId,
+        await tx.authzAccountAccessGrant.create({
+          data: {
+            ownerAccountId: aid,
+            targetAccountId: recipientId,
             portfolioId: portfolio.id,
+            appId,
             roleId,
           },
         });

@@ -20,7 +20,7 @@ export async function verifyActiveSession(): Promise<SessionVerifyResult> {
     }
 
     try {
-        const session = await prisma.authSession.findUnique({
+        const session = await prisma.authnSession.findUnique({
             where: { id: sessionId },
             select: {
                 accountId: true,

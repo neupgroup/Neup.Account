@@ -94,7 +94,7 @@ export async function submitNameStep(authRequestId: string, data: z.infer<typeof
     nameLast
   };
 
-  await prisma.authRequest.update({
+  await prisma.authnRequest.update({
     where: { id: authRequestId },
     data: {
       data: newData,
@@ -144,7 +144,7 @@ export async function submitDemographicsStep(authRequestId: string, data: z.infe
     customGender: finalCustomGender ? sanitizeName(finalCustomGender) : null,
   };
 
-  await prisma.authRequest.update({
+  await prisma.authnRequest.update({
     where: { id: authRequestId },
     data: {
       data: newData,
@@ -182,7 +182,7 @@ export async function submitNationalityStep(authRequestId: string, data: z.infer
     nationality: validation.data.nationality,
   };
 
-  await prisma.authRequest.update({
+  await prisma.authnRequest.update({
     where: { id: authRequestId },
     data: {
       data: newData,
@@ -223,7 +223,7 @@ export async function submitContactStep(authRequestId: string, data: z.infer<typ
     phoneVerified: true,
   };
 
-  await prisma.authRequest.update({
+  await prisma.authnRequest.update({
     where: { id: authRequestId },
     data: {
       data: newData,
@@ -266,7 +266,7 @@ export async function submitOtpStep(authRequestId: string, data: z.infer<typeof 
     phoneVerified: true,
   };
 
-  await prisma.authRequest.update({
+  await prisma.authnRequest.update({
     where: { id: authRequestId },
     data: {
       data: newData,
@@ -313,7 +313,7 @@ export async function submitNeupIdStep(authRequestId: string, data: z.infer<type
     neupId: neupId,
   };
 
-  await prisma.authRequest.update({
+  await prisma.authnRequest.update({
     where: { id: authRequestId },
     data: {
       data: newData,
@@ -362,7 +362,7 @@ export async function submitPasswordStep(authRequestId: string, data: z.infer<ty
     password: hashedPassword,
   };
 
-  await prisma.authRequest.update({
+  await prisma.authnRequest.update({
     where: { id: authRequestId },
     data: {
       data: newData,
@@ -468,6 +468,7 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
         neupIds: {
           create: {
             id: neupId,
+            neupId,
             isPrimary: true,
           },
         },
@@ -501,20 +502,6 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
 
     const accountId = account.id;
 
-    if (isAdmin) {
-      // Create root permit entry for admin (legacy compatibility)
-      await prisma.permit.create({
-        data: {
-          accountId: accountId,
-          forSelf: false, 
-          isRoot: true,
-          permissions: [], // Permissions now handled via PERMISSION_SET in user.ts
-          restrictions: [],
-          createdOn: new Date(),
-        },
-      });
-    }
-
     await logActivity(
       accountId,
       'User Registration',
@@ -532,7 +519,7 @@ export async function submitTermsStep(authRequestId: string, data: z.infer<typeo
     }
 
     // Mark the auth request as completed
-    await prisma.authRequest.update({
+    await prisma.authnRequest.update({
         where: { id: authRequestId },
         data: { status: 'completed' }
     });

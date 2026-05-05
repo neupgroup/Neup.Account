@@ -192,7 +192,7 @@ export async function changePassword(input: ChangePasswordInput): Promise<Change
 	}
 
 	try {
-		const passwordRecord = await prisma.authMethod.findFirst({
+		const passwordRecord = await prisma.authnMethod.findFirst({
 			where: {
 				accountId,
 				type: 'password',
@@ -218,7 +218,7 @@ export async function changePassword(input: ChangePasswordInput): Promise<Change
 
 		const newHashedPassword = await bcrypt.hash(newPassword, 10);
 
-		await prisma.authMethod.updateMany({
+		await prisma.authnMethod.updateMany({
 			where: {
 				accountId,
 				type: 'password',

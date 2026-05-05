@@ -13,7 +13,7 @@ async function createAuthRequest(type: 'signup' | 'signin' | 'forgot_password') 
     const expiresAt = new Date();
     expiresAt.setMinutes(expiresAt.getMinutes() + AUTH_REQUEST_EXPIRATION_MINUTES);
 
-    await prisma.authRequest.create({
+    await prisma.authnRequest.create({
         data: {
             id: requestId,
             type: type,
@@ -36,7 +36,7 @@ export async function initializeAuthFlow(
     flowType: 'signup' | 'signin' | 'forgot_password'
 ): Promise<string> {
     if (currentId) {
-        const authRequest = await prisma.authRequest.findUnique({
+        const authRequest = await prisma.authnRequest.findUnique({
             where: { id: currentId }
         });
 
@@ -45,7 +45,7 @@ export async function initializeAuthFlow(
                 const expiresAt = new Date();
                 expiresAt.setMinutes(expiresAt.getMinutes() + AUTH_REQUEST_EXPIRATION_MINUTES);
                 
-                await prisma.authRequest.update({
+                await prisma.authnRequest.update({
                     where: { id: currentId },
                     data: {
                         type: flowType,

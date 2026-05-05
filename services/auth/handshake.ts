@@ -95,7 +95,7 @@ export async function bridgeBuildGrantRedirect(input: {
     const expiresAt = new Date();
     expiresAt.setMinutes(expiresAt.getMinutes() + 5);
 
-    await prisma.authRequest.create({
+    await prisma.authnRequest.create({
       data: {
         id: tempToken,
         type: 'bridge_grant',
