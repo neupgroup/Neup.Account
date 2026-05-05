@@ -190,7 +190,7 @@ export async function getUserPermissions(accountId?: string, appId?: string): Pr
     }
 
     // Fetch the relevant permits depending on whether we're in a managing context
-    let permits;
+    let permits: any[] = [];
     if (isManaging && personalId) {
       try {
         permits = await prisma.permit.findMany({
@@ -225,9 +225,9 @@ export async function getUserPermissions(accountId?: string, appId?: string): Pr
     }
 
     // Apply permit entries — a trailing '+' adds, '-' removes, no modifier adds
-    permits.forEach(permit => {
-      const entries = permit.permissions || [];
-      entries.forEach(entry => {
+    permits.forEach((permit: any) => {
+      const entries: string[] = permit.permissions || [];
+      entries.forEach((entry: string) => {
         let name = entry;
         let modifier = '';
 
