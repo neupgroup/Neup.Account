@@ -44,9 +44,9 @@ INSERT INTO "application" (
 -- ---------------------------------------------------------------------------
 
 INSERT INTO "authz_role" ("id", "name", "description", "app_id", "scope") VALUES
-  ('role-indiv-default-0000-000000000001', 'individual.default', 'Default permission set for individual accounts.',          'neup.account', 'default'),
-  ('role-indiv-root-00000-000000000002',   'individual.root',    'Admin-only permission set for root/admin accounts.',       'neup.account', 'root'),
-  ('role-app-owner-00000-000000000003',    'application.owner',  'Role for application creators and owners.',                'neup.account', 'creator')
+  ('individual-default-neup-account', 'individual.default', 'Default permission set for individual accounts.', 'neup.account', 'default'),
+  ('root-full-neup-account', 'individual.root', 'Full root permission set for root accounts.', 'neup.account', 'root'),
+  ('base-app-creator-neup-account', 'application.owner', 'Role for application creators and owners.', 'neup.account', 'creator')
 ON CONFLICT ("id") DO NOTHING;
 
 -- ---------------------------------------------------------------------------
@@ -122,7 +122,7 @@ INSERT INTO "authz_role_capability" (
 )
 SELECT
   'rcp-def-' || c."id",
-  'role-indiv-default-0000-000000000001',
+  'individual-default-neup-account',
   c."id",
   'default',
   'neup.account',
@@ -158,7 +158,7 @@ INSERT INTO "authz_role_capability" (
 )
 SELECT
   'rcp-root-' || c."id",
-  'role-indiv-root-00000-000000000002',
+  'root-full-neup-account',
   c."id",
   'root',
   'neup.account',
@@ -184,7 +184,7 @@ INSERT INTO "authz_role_capability" (
 )
 SELECT
   'rcp-appowner-' || c."id",
-  'role-app-owner-00000-000000000003',
+  'base-app-creator-neup-account',
   c."id",
   'creator',
   'neup.account',

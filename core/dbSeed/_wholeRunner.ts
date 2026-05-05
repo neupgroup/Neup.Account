@@ -27,8 +27,8 @@ if (!process.env.DATABASE_URL) {
 // ---------------------------------------------------------------------------
 
 const APP_ID             = 'neup.account';
-const ROLE_INDIV_DEFAULT = 'role-indiv-default-0000-000000000001';
-const ROLE_INDIV_ROOT    = 'role-indiv-root-00000-000000000002';
+const ROLE_INDIV_DEFAULT = 'individual-default-neup-account';
+const ROLE_INDIV_ROOT    = 'root-full-neup-account';
 
 // ---------------------------------------------------------------------------
 // Helpers
