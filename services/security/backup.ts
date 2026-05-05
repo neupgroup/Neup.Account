@@ -62,7 +62,7 @@ export async function getBackupCodes(): Promise<BackupCode[]> {
     if (!accountId) return [];
 
     try {
-        const row = await prisma.authMethod.findFirst({
+        const row = await prisma.authnMethod.findFirst({
             where: {
                 accountId,
                 type: AUTH_METHOD_BACKUP_TYPE,
@@ -99,7 +99,7 @@ export async function generateBackupCodes(): Promise<BackupCode[]> {
             used: false,
         }));
 
-        await prisma.authMethod.upsert({
+        await prisma.authnMethod.upsert({
             where: {
                 accountId_type_order: {
                     accountId,

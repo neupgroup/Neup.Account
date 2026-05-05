@@ -373,7 +373,7 @@ export async function impersonateUser(userId: string, neupId: string): Promise<{
         validTill.setDate(validTill.getDate() + 7);
         const sessionKey = crypto.randomUUID();
 
-        const newSession = await prisma.authSession.create({
+        const newSession = await prisma.authnSession.create({
             data: { accountId: userId, key: sessionKey, ipAddress, userAgent, validTill, lastLoggedIn: new Date(), loginType: 'Impersonation', deviceType: deviceTypeHeader },
         });
 
@@ -400,11 +400,11 @@ export async function deleteUserAccount(userId: string): Promise<{ success: bool
             prisma.neupId.deleteMany({ where: { accountId: userId } }),
             prisma.contact.deleteMany({ where: { accountId: userId } }),
             prisma.permit.deleteMany({ where: { OR: [{ accountId: userId }, { targetAccountId: userId }] } }),
-            prisma.authSession.deleteMany({ where: { accountId: userId } }),
+            prisma.authnSession.deleteMany({ where: { accountId: userId } }),
             prisma.activity.deleteMany({ where: { OR: [{ targetAccountId: userId }, { actorAccountId: userId }] } }),
             prisma.notification.deleteMany({ where: { accountId: userId } }),
             prisma.verification.deleteMany({ where: { accountId: userId } }),
-            prisma.authMethod.deleteMany({ where: { accountId: userId } }),
+            prisma.authnMethod.deleteMany({ where: { accountId: userId } }),
             prisma.account.delete({ where: { id: userId } }),
         ]);
 

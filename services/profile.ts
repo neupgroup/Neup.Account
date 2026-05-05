@@ -137,12 +137,12 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
                 if (data.customDisplayNameRequest) {
                      const requesterId = await getPersonalAccountId();
 
-                     await tx.authRequest.updateMany({
+                     await tx.authnRequest.updateMany({
                         where: { type: 'display_name_request', accountId, status: 'pending' },
                         data: { status: 'cancelled', data: { remarks: 'Superseded by new request.' } as any }
                      });
                      
-                     await tx.authRequest.create({
+                     await tx.authnRequest.create({
                         data: {
                             type: 'display_name_request',
                             accountId,
@@ -180,7 +180,7 @@ export async function updateUserProfile(accountId: string, data: Record<string, 
                 const requestedNeupId = data.newNeupIdRequest.toLowerCase();
                 const requesterId = await getPersonalAccountId();
 
-                await tx.authRequest.create({
+                await tx.authnRequest.create({
                     data: {
                         type: 'neupid_request',
                         accountId,
@@ -372,7 +372,7 @@ export async function bridgeGetProfile(input: {
     let isTempTokenAuth = false;
 
     if (headerAid && headerSid && headerSkey) {
-      const appSession = await prisma.authSession.findUnique({
+    const appSession = await prisma.authnSession.findUnique({
         where: { id: headerSid },
         select: { accountId: true, key: true, validTill: true },
       });
@@ -387,7 +387,7 @@ export async function bridgeGetProfile(input: {
         authenticatedAccountId = headerAid;
       }
     } else if (tempToken && appId) {
-      const request = await prisma.authRequest.findUnique({
+    const request = await prisma.authnRequest.findUnique({
         where: { id: tempToken },
         select: { type: true, status: true, data: true, accountId: true, expiresAt: true },
       });

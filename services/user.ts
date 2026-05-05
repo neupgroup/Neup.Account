@@ -240,7 +240,7 @@ export async function getUserPermissions(accountId?: string, appId?: string): Pr
 
     // If an appId is provided, also include any portfolio roles the account holds for that app
     if (appId) {
-      const roleRows = await prisma.portfolioRole.findMany({
+      const roleRows = await prisma.authzAccountAccessGrant.findMany({
         where: {
           accountId: activeId,
           portfolio: {

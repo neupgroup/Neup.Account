@@ -93,7 +93,7 @@ async function main() {
       });
     }
 
-    await prisma.authMethod.upsert({
+    await prisma.authnMethod.upsert({
       where: {
         accountId_type_order: {
           accountId,

@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 vi.mock('@/core/helpers/prisma', () => ({
     default: {
-        authRequest: { findUnique: vi.fn(), update: vi.fn() },
+        authnRequest: { findUnique: vi.fn(), update: vi.fn() },
         neupId: { findUnique: vi.fn() },
         account: { count: vi.fn(), create: vi.fn() },
         permit: { create: vi.fn() },
@@ -21,8 +21,8 @@ import {
     submitPasswordStep,
 } from '@/services/auth/signup/index';
 
-const mockFindUnique = prisma.authRequest.findUnique as ReturnType<typeof vi.fn>;
-const mockUpdate = prisma.authRequest.update as ReturnType<typeof vi.fn>;
+const mockFindUnique = prisma.authnRequest.findUnique as ReturnType<typeof vi.fn>;
+const mockUpdate = prisma.authnRequest.update as ReturnType<typeof vi.fn>;
 const mockNeupIdFindUnique = prisma.neupId.findUnique as ReturnType<typeof vi.fn>;
 
 const future = new Date(Date.now() + 60_000);
@@ -43,7 +43,7 @@ describe('submitNameStep', () => {
         mockFindUnique.mockResolvedValue(null);
         const result = await submitNameStep('req_1', { firstName: 'John', lastName: 'Doe' });
         expect(result.success).toBe(false);
-        expect(result.error).toMatch(/expired/i);
+        expect(result.error).toBe('Timeout Error: Exceeded the time for SignUp.');
     });
 
     it('returns success with valid name data', async () => {

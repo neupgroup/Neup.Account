@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 vi.mock('@/core/helpers/prisma', () => ({
     default: {
-        authSession: { findUnique: vi.fn() },
+        authnSession: { findUnique: vi.fn() },
     },
 }));
 
@@ -14,7 +14,7 @@ import prisma from '@/core/helpers/prisma';
 import { getSessionCookies } from '@/core/helpers/cookies';
 import { verifyActiveSession } from '@/services/auth/verify';
 
-const mockFindUnique = prisma.authSession.findUnique as ReturnType<typeof vi.fn>;
+const mockFindUnique = prisma.authnSession.findUnique as ReturnType<typeof vi.fn>;
 const mockGetSessionCookies = getSessionCookies as ReturnType<typeof vi.fn>;
 
 const future = new Date(Date.now() + 60_000);

@@ -57,7 +57,7 @@ export async function getTotpStatus(): Promise<{ isEnabled: boolean }> {
     const accountId = await getActiveAccountId();
     if (!accountId) return { isEnabled: false };
 
-    const totp = await prisma.authMethod.findFirst({
+    const totp = await prisma.authnMethod.findFirst({
         where: {
             accountId,
             type: AUTH_METHOD_TOTP_TYPE,
@@ -110,13 +110,13 @@ export async function verifyAndEnableTotp(data: z.infer<typeof totpEnableSchema>
         const encryptedSecret = await encrypt(secret);
         
         await prisma.$transaction([
-            prisma.authMethod.deleteMany({
+            prisma.authnMethod.deleteMany({
                 where: {
                     accountId,
                     type: AUTH_METHOD_TOTP_TYPE,
                 }
             }),
-            prisma.authMethod.create({
+            prisma.authnMethod.create({
                 data: {
                     accountId,
                     type: AUTH_METHOD_TOTP_TYPE,
@@ -158,7 +158,7 @@ export async function disableTotp(data: z.infer<typeof totpDisableSchema>): Prom
 
     try {
         // 1. Verify password
-        const authDoc = await prisma.authMethod.findFirst({
+        const authDoc = await prisma.authnMethod.findFirst({
             where: {
                 accountId,
                 type: 'password',
@@ -179,7 +179,7 @@ export async function disableTotp(data: z.infer<typeof totpDisableSchema>): Prom
         }
 
         // 2. Delete TOTP secret
-        await prisma.authMethod.deleteMany({
+        await prisma.authnMethod.deleteMany({
             where: {
                 accountId,
                 type: AUTH_METHOD_TOTP_TYPE,

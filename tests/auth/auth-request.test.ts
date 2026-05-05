@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 // Mock prisma before importing the module under test
 vi.mock('@/core/helpers/prisma', () => ({
     default: {
-        authRequest: {
+        authnRequest: {
             findUnique: vi.fn(),
             update: vi.fn(),
         },
@@ -13,7 +13,7 @@ vi.mock('@/core/helpers/prisma', () => ({
 import prisma from '@/core/helpers/prisma';
 import { getAuthRequest } from '@/services/auth/auth-request';
 
-const mockFindUnique = prisma.authRequest.findUnique as ReturnType<typeof vi.fn>;
+const mockFindUnique = prisma.authnRequest.findUnique as ReturnType<typeof vi.fn>;
 
 const future = new Date(Date.now() + 60_000);
 const past = new Date(Date.now() - 60_000);

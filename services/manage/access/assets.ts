@@ -327,7 +327,7 @@ export async function assignAssetMemberRole(input: {
       return { success: false, error: 'Member not found in this group.' };
     }
 
-    await prisma.portfolioRole.upsert({
+    await prisma.authzAccountAccessGrant.upsert({
       where: {
         accountId_portfolioId_roleId: {
           accountId: member.accountId,
