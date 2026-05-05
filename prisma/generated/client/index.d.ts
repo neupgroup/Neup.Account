@@ -31656,7 +31656,6 @@ export namespace Prisma {
   export type AuthzRoleCountAggregateOutputType = {
     id: number
     name: number
-    permissions: number
     description: number
     appId: number
     scope: number
@@ -31683,7 +31682,6 @@ export namespace Prisma {
   export type AuthzRoleCountAggregateInputType = {
     id?: true
     name?: true
-    permissions?: true
     description?: true
     appId?: true
     scope?: true
@@ -31765,7 +31763,6 @@ export namespace Prisma {
   export type AuthzRoleGroupByOutputType = {
     id: string
     name: string
-    permissions: string[]
     description: string | null
     appId: string | null
     scope: string | null
@@ -31791,7 +31788,6 @@ export namespace Prisma {
   export type AuthzRoleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    permissions?: boolean
     description?: boolean
     appId?: boolean
     scope?: boolean
@@ -31805,7 +31801,6 @@ export namespace Prisma {
   export type AuthzRoleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    permissions?: boolean
     description?: boolean
     appId?: boolean
     scope?: boolean
@@ -31815,7 +31810,6 @@ export namespace Prisma {
   export type AuthzRoleSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    permissions?: boolean
     description?: boolean
     appId?: boolean
     scope?: boolean
@@ -31825,13 +31819,12 @@ export namespace Prisma {
   export type AuthzRoleSelectScalar = {
     id?: boolean
     name?: boolean
-    permissions?: boolean
     description?: boolean
     appId?: boolean
     scope?: boolean
   }
 
-  export type AuthzRoleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "permissions" | "description" | "appId" | "scope", ExtArgs["result"]["authzRole"]>
+  export type AuthzRoleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "appId" | "scope", ExtArgs["result"]["authzRole"]>
   export type AuthzRoleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     application?: boolean | AuthzRole$applicationArgs<ExtArgs>
     roleMaps?: boolean | AuthzRole$roleMapsArgs<ExtArgs>
@@ -31857,7 +31850,6 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
-      permissions: string[]
       description: string | null
       appId: string | null
       scope: string | null
@@ -32290,7 +32282,6 @@ export namespace Prisma {
   interface AuthzRoleFieldRefs {
     readonly id: FieldRef<"AuthzRole", 'String'>
     readonly name: FieldRef<"AuthzRole", 'String'>
-    readonly permissions: FieldRef<"AuthzRole", 'String[]'>
     readonly description: FieldRef<"AuthzRole", 'String'>
     readonly appId: FieldRef<"AuthzRole", 'String'>
     readonly scope: FieldRef<"AuthzRole", 'String'>
@@ -37526,7 +37517,6 @@ export namespace Prisma {
   export const AuthzRoleScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    permissions: 'permissions',
     description: 'description',
     appId: 'appId',
     scope: 'scope'
@@ -39357,7 +39347,6 @@ export namespace Prisma {
     NOT?: AuthzRoleWhereInput | AuthzRoleWhereInput[]
     id?: StringFilter<"AuthzRole"> | string
     name?: StringFilter<"AuthzRole"> | string
-    permissions?: StringNullableListFilter<"AuthzRole">
     description?: StringNullableFilter<"AuthzRole"> | string | null
     appId?: StringNullableFilter<"AuthzRole"> | string | null
     scope?: StringNullableFilter<"AuthzRole"> | string | null
@@ -39370,7 +39359,6 @@ export namespace Prisma {
   export type AuthzRoleOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    permissions?: SortOrder
     description?: SortOrderInput | SortOrder
     appId?: SortOrderInput | SortOrder
     scope?: SortOrderInput | SortOrder
@@ -39386,7 +39374,6 @@ export namespace Prisma {
     OR?: AuthzRoleWhereInput[]
     NOT?: AuthzRoleWhereInput | AuthzRoleWhereInput[]
     name?: StringFilter<"AuthzRole"> | string
-    permissions?: StringNullableListFilter<"AuthzRole">
     description?: StringNullableFilter<"AuthzRole"> | string | null
     appId?: StringNullableFilter<"AuthzRole"> | string | null
     scope?: StringNullableFilter<"AuthzRole"> | string | null
@@ -39399,7 +39386,6 @@ export namespace Prisma {
   export type AuthzRoleOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    permissions?: SortOrder
     description?: SortOrderInput | SortOrder
     appId?: SortOrderInput | SortOrder
     scope?: SortOrderInput | SortOrder
@@ -39414,7 +39400,6 @@ export namespace Prisma {
     NOT?: AuthzRoleScalarWhereWithAggregatesInput | AuthzRoleScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"AuthzRole"> | string
     name?: StringWithAggregatesFilter<"AuthzRole"> | string
-    permissions?: StringNullableListFilter<"AuthzRole">
     description?: StringNullableWithAggregatesFilter<"AuthzRole"> | string | null
     appId?: StringNullableWithAggregatesFilter<"AuthzRole"> | string | null
     scope?: StringNullableWithAggregatesFilter<"AuthzRole"> | string | null
@@ -41452,7 +41437,6 @@ export namespace Prisma {
   export type AuthzRoleCreateInput = {
     id?: string
     name: string
-    permissions?: AuthzRoleCreatepermissionsInput | string[]
     description?: string | null
     scope?: string | null
     application?: ApplicationCreateNestedOneWithoutAuthzRolesInput
@@ -41464,7 +41448,6 @@ export namespace Prisma {
   export type AuthzRoleUncheckedCreateInput = {
     id?: string
     name: string
-    permissions?: AuthzRoleCreatepermissionsInput | string[]
     description?: string | null
     appId?: string | null
     scope?: string | null
@@ -41476,7 +41459,6 @@ export namespace Prisma {
   export type AuthzRoleUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    permissions?: AuthzRoleUpdatepermissionsInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     application?: ApplicationUpdateOneWithoutAuthzRolesNestedInput
@@ -41488,7 +41470,6 @@ export namespace Prisma {
   export type AuthzRoleUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    permissions?: AuthzRoleUpdatepermissionsInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
     appId?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41500,7 +41481,6 @@ export namespace Prisma {
   export type AuthzRoleCreateManyInput = {
     id?: string
     name: string
-    permissions?: AuthzRoleCreatepermissionsInput | string[]
     description?: string | null
     appId?: string | null
     scope?: string | null
@@ -41509,7 +41489,6 @@ export namespace Prisma {
   export type AuthzRoleUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    permissions?: AuthzRoleUpdatepermissionsInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -41517,7 +41496,6 @@ export namespace Prisma {
   export type AuthzRoleUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    permissions?: AuthzRoleUpdatepermissionsInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
     appId?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42957,18 +42935,9 @@ export namespace Prisma {
     scope?: SortOrder
   }
 
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
-  }
-
   export type AuthzRoleCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    permissions?: SortOrder
     description?: SortOrder
     appId?: SortOrder
     scope?: SortOrder
@@ -43087,6 +43056,14 @@ export namespace Prisma {
     targetAccountId?: SortOrder
     roleId?: SortOrder
     portfolioId?: SortOrder
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
   }
 
   export type PermitCountOrderByAggregateInput = {
@@ -44933,10 +44910,6 @@ export namespace Prisma {
     deleteMany?: AuthzRoleCapabilityScalarWhereInput | AuthzRoleCapabilityScalarWhereInput[]
   }
 
-  export type AuthzRoleCreatepermissionsInput = {
-    set: string[]
-  }
-
   export type ApplicationCreateNestedOneWithoutAuthzRolesInput = {
     create?: XOR<ApplicationCreateWithoutAuthzRolesInput, ApplicationUncheckedCreateWithoutAuthzRolesInput>
     connectOrCreate?: ApplicationCreateOrConnectWithoutAuthzRolesInput
@@ -44983,11 +44956,6 @@ export namespace Prisma {
     connectOrCreate?: AuthzAssetsAccessGrantCreateOrConnectWithoutRoleInput | AuthzAssetsAccessGrantCreateOrConnectWithoutRoleInput[]
     createMany?: AuthzAssetsAccessGrantCreateManyRoleInputEnvelope
     connect?: AuthzAssetsAccessGrantWhereUniqueInput | AuthzAssetsAccessGrantWhereUniqueInput[]
-  }
-
-  export type AuthzRoleUpdatepermissionsInput = {
-    set?: string[]
-    push?: string | string[]
   }
 
   export type ApplicationUpdateOneWithoutAuthzRolesNestedInput = {
@@ -48693,7 +48661,6 @@ export namespace Prisma {
   export type AuthzRoleCreateWithoutApplicationInput = {
     id?: string
     name: string
-    permissions?: AuthzRoleCreatepermissionsInput | string[]
     description?: string | null
     scope?: string | null
     roleMaps?: AuthzRoleCapabilityCreateNestedManyWithoutRoleInput
@@ -48704,7 +48671,6 @@ export namespace Prisma {
   export type AuthzRoleUncheckedCreateWithoutApplicationInput = {
     id?: string
     name: string
-    permissions?: AuthzRoleCreatepermissionsInput | string[]
     description?: string | null
     scope?: string | null
     roleMaps?: AuthzRoleCapabilityUncheckedCreateNestedManyWithoutRoleInput
@@ -48868,7 +48834,6 @@ export namespace Prisma {
     NOT?: AuthzRoleScalarWhereInput | AuthzRoleScalarWhereInput[]
     id?: StringFilter<"AuthzRole"> | string
     name?: StringFilter<"AuthzRole"> | string
-    permissions?: StringNullableListFilter<"AuthzRole">
     description?: StringNullableFilter<"AuthzRole"> | string | null
     appId?: StringNullableFilter<"AuthzRole"> | string | null
     scope?: StringNullableFilter<"AuthzRole"> | string | null
@@ -50457,7 +50422,6 @@ export namespace Prisma {
   export type AuthzRoleCreateWithoutRoleMapsInput = {
     id?: string
     name: string
-    permissions?: AuthzRoleCreatepermissionsInput | string[]
     description?: string | null
     scope?: string | null
     application?: ApplicationCreateNestedOneWithoutAuthzRolesInput
@@ -50468,7 +50432,6 @@ export namespace Prisma {
   export type AuthzRoleUncheckedCreateWithoutRoleMapsInput = {
     id?: string
     name: string
-    permissions?: AuthzRoleCreatepermissionsInput | string[]
     description?: string | null
     appId?: string | null
     scope?: string | null
@@ -50516,7 +50479,6 @@ export namespace Prisma {
   export type AuthzRoleUpdateWithoutRoleMapsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    permissions?: AuthzRoleUpdatepermissionsInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     application?: ApplicationUpdateOneWithoutAuthzRolesNestedInput
@@ -50527,7 +50489,6 @@ export namespace Prisma {
   export type AuthzRoleUncheckedUpdateWithoutRoleMapsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    permissions?: AuthzRoleUpdatepermissionsInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
     appId?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50703,7 +50664,6 @@ export namespace Prisma {
   export type AuthzRoleCreateWithoutGrantsInput = {
     id?: string
     name: string
-    permissions?: AuthzRoleCreatepermissionsInput | string[]
     description?: string | null
     scope?: string | null
     application?: ApplicationCreateNestedOneWithoutAuthzRolesInput
@@ -50714,7 +50674,6 @@ export namespace Prisma {
   export type AuthzRoleUncheckedCreateWithoutGrantsInput = {
     id?: string
     name: string
-    permissions?: AuthzRoleCreatepermissionsInput | string[]
     description?: string | null
     appId?: string | null
     scope?: string | null
@@ -50961,7 +50920,6 @@ export namespace Prisma {
   export type AuthzRoleUpdateWithoutGrantsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    permissions?: AuthzRoleUpdatepermissionsInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     application?: ApplicationUpdateOneWithoutAuthzRolesNestedInput
@@ -50972,7 +50930,6 @@ export namespace Prisma {
   export type AuthzRoleUncheckedUpdateWithoutGrantsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    permissions?: AuthzRoleUpdatepermissionsInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
     appId?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51155,7 +51112,6 @@ export namespace Prisma {
   export type AuthzRoleCreateWithoutAssetsGrantsInput = {
     id?: string
     name: string
-    permissions?: AuthzRoleCreatepermissionsInput | string[]
     description?: string | null
     scope?: string | null
     application?: ApplicationCreateNestedOneWithoutAuthzRolesInput
@@ -51166,7 +51122,6 @@ export namespace Prisma {
   export type AuthzRoleUncheckedCreateWithoutAssetsGrantsInput = {
     id?: string
     name: string
-    permissions?: AuthzRoleCreatepermissionsInput | string[]
     description?: string | null
     appId?: string | null
     scope?: string | null
@@ -51320,7 +51275,6 @@ export namespace Prisma {
   export type AuthzRoleUpdateWithoutAssetsGrantsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    permissions?: AuthzRoleUpdatepermissionsInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     application?: ApplicationUpdateOneWithoutAuthzRolesNestedInput
@@ -51331,7 +51285,6 @@ export namespace Prisma {
   export type AuthzRoleUncheckedUpdateWithoutAssetsGrantsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    permissions?: AuthzRoleUpdatepermissionsInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
     appId?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52421,7 +52374,6 @@ export namespace Prisma {
   export type AuthzRoleCreateManyApplicationInput = {
     id?: string
     name: string
-    permissions?: AuthzRoleCreatepermissionsInput | string[]
     description?: string | null
     scope?: string | null
   }
@@ -52523,7 +52475,6 @@ export namespace Prisma {
   export type AuthzRoleUpdateWithoutApplicationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    permissions?: AuthzRoleUpdatepermissionsInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     roleMaps?: AuthzRoleCapabilityUpdateManyWithoutRoleNestedInput
@@ -52534,7 +52485,6 @@ export namespace Prisma {
   export type AuthzRoleUncheckedUpdateWithoutApplicationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    permissions?: AuthzRoleUpdatepermissionsInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
     roleMaps?: AuthzRoleCapabilityUncheckedUpdateManyWithoutRoleNestedInput
@@ -52545,7 +52495,6 @@ export namespace Prisma {
   export type AuthzRoleUncheckedUpdateManyWithoutApplicationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    permissions?: AuthzRoleUpdatepermissionsInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: NullableStringFieldUpdateOperationsInput | string | null
   }

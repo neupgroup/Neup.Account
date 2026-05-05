@@ -356,7 +356,6 @@ exports.Prisma.AuthzCapabilityScalarFieldEnum = {
 exports.Prisma.AuthzRoleScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  permissions: 'permissions',
   description: 'description',
   appId: 'appId',
   scope: 'scope'
