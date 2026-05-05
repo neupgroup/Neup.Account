@@ -36,6 +36,8 @@ const assignRoleSchema = z.object({
   role: z.string().trim().min(1, 'Role is required.').max(120, 'Role is too long.'),
 });
 
+const ACCESS_APP_ID = 'neup.account';
+
 type AccessAssetGroup = Prisma.PortfolioGetPayload<{
   include: {
     members: true;
@@ -330,20 +332,22 @@ export async function assignAssetMemberRole(input: {
     // Find or create the asset access grant
     const existing = await prisma.authzAssetsAccessGrant.findFirst({
       where: {
-        assetId: parsed.data.asset,
-        targetAccountId: member.accountId,
-        roleId: parsed.data.role,
-        portfolioId: parsed.data.groupId,
+        asset_id: parsed.data.asset,
+        account_id: member.accountId,
+        role_id: parsed.data.role,
+        portfolio_id: parsed.data.groupId,
+        app_id: ACCESS_APP_ID,
       },
     });
 
     if (!existing) {
       await prisma.authzAssetsAccessGrant.create({
         data: {
-          assetId: parsed.data.asset,
-          targetAccountId: member.accountId,
-          roleId: parsed.data.role,
-          portfolioId: parsed.data.groupId,
+          asset_id: parsed.data.asset,
+          account_id: member.accountId,
+          role_id: parsed.data.role,
+          portfolio_id: parsed.data.groupId,
+          app_id: ACCESS_APP_ID,
         },
       });
     }

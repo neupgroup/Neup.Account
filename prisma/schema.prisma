@@ -421,20 +421,22 @@ model AuthzAccountAccessGrant {
 
 model AuthzAssetsAccessGrant {
   id             String   @id @default(uuid())
-  assetId        String   @map("assetId")
-  targetAccountId String  @map("target_account_id")
-  roleId         String   @map("role_id")
-  portfolioId    String   @map("portfolio_id")
+  asset_id       String   @map("asset_id")
+  account_id     String   @map("account_id")
+  role_id        String   @map("role_id")
+  portfolio_id   String?  @map("portfolio_id")
+  app_id         String   @map("app_id")
 
-  asset      PortfolioAsset @relation(fields: [assetId], references: [id], map: "authz_assets_access_grant_assetId_fkey")
-  target     Account        @relation(fields: [targetAccountId], references: [id], map: "authz_assets_access_grant_target_account_id_fkey")
-  role       AuthzRole      @relation(fields: [roleId], references: [id], map: "authz_assets_access_grant_role_id_fkey")
-  portfolio  Portfolio      @relation(fields: [portfolioId], references: [id], map: "authz_assets_access_grant_portfolio_id_fkey")
+  asset       PortfolioAsset @relation(fields: [asset_id], references: [id], map: "authz_assets_access_grant_asset_id_fkey")
+  account     Account        @relation(fields: [account_id], references: [id], map: "authz_assets_access_grant_account_id_fkey")
+  role        AuthzRole      @relation(fields: [role_id], references: [id], map: "authz_assets_access_grant_role_id_fkey")
+  portfolio   Portfolio?     @relation(fields: [portfolio_id], references: [id], map: "authz_assets_access_grant_portfolio_id_fkey")
 
-  @@index([assetId], map: "authz_assets_access_grant_asset_id_idx")
-  @@index([targetAccountId], map: "authz_assets_access_grant_target_account_id_idx")
-  @@index([roleId], map: "authz_assets_access_grant_role_id_idx")
-  @@index([portfolioId], map: "authz_assets_access_grant_portfolio_id_idx")
+  @@index([asset_id], map: "authz_assets_access_grant_asset_id_idx")
+  @@index([account_id], map: "authz_assets_access_grant_account_id_idx")
+  @@index([role_id], map: "authz_assets_access_grant_role_id_idx")
+  @@index([portfolio_id], map: "authz_assets_access_grant_portfolio_id_idx")
+  @@index([app_id], map: "authz_assets_access_grant_app_id_idx")
   @@map("authz_assets_access_grant")
 }
 
