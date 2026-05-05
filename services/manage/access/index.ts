@@ -225,6 +225,11 @@ export async function updatePermissions(permitId: string, newPermissionIds: stri
         return { success: false, error: "Not authenticated." };
     }
 
+    const canAdd = await checkPermissions(['security.third_party.add']);
+    if (!canAdd) {
+        return { success: false, error: 'Permission denied.' };
+    }
+
     try {
         const permit = await prisma.permit.findUnique({
           where: { id: permitId }
@@ -271,6 +276,11 @@ export async function grantAccessByNeupId(formData: FormData, geolocation?: stri
     const ownerAccountId = await getActiveAccountId();
     if (!ownerAccountId) {
         return { success: false, error: "Not authenticated." };
+    }
+
+    const canAdd = await checkPermissions(['security.third_party.add']);
+    if (!canAdd) {
+        return { success: false, error: 'Permission denied.' };
     }
 
     const validation = addAccessSchema.safeParse({ neupId: formData.get('neupId') });

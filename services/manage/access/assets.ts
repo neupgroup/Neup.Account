@@ -6,6 +6,7 @@ import prisma from '@/core/helpers/prisma';
 import { Prisma } from '../../../prisma/generated/client/client';
 import { getActiveAccountId } from '@/core/auth/verify';
 import { logError } from '@/core/helpers/logger';
+import { checkPermissions } from '@/services/user';
 
 const memberPattern = /^(account:)?[^\s:]+$/;
 
@@ -74,6 +75,9 @@ async function canAccessGroup(groupId: string, accountId: string): Promise<boole
  * Function getAccessAssetGroups.
  */
 export async function getAccessAssetGroups() {
+  const canView = await checkPermissions(['security.third_party.view']);
+  if (!canView) return [];
+
   const accountId = await getActiveAccountId();
   if (!accountId) return [];
 
@@ -142,6 +146,11 @@ export async function getAccessAssetGroup(groupId: string): Promise<AccessAssetG
  * Function createAssetGroup.
  */
 export async function createAssetGroup(input: { name: string; details?: string }) {
+  const canAdd = await checkPermissions(['security.third_party.add']);
+  if (!canAdd) {
+    return { success: false, error: 'Permission denied.' };
+  }
+
   const accountId = await getActiveAccountId();
   if (!accountId) {
     return { success: false, error: 'Not authenticated.' };

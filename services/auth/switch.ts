@@ -14,6 +14,8 @@ import {
 import type { StoredAccount } from '@/core/auth/session';
 import { getSessionCookies, setStoredAccountsCookie, clearSessionCookies } from '@/core/helpers/cookies';
 import { makeNotification } from '../notifications';
+import { checkPermissions } from '@/services/user';
+import { getPersonalAccountId } from '@/core/auth/verify';
 
 export async function getStoredAccounts(): Promise<StoredAccount[]> {
     return getValidatedStoredAccounts();
@@ -157,17 +159,33 @@ export async function removeStoredAccount(accountId: string): Promise<{ success:
  * Function switchToBrand.
  */
 export async function switchToBrand(brandId: string) {
+    const canSwitch = await checkPermissions(['linked_accounts.brand.view']);
+    if (!canSwitch) {
+        return { success: false, error: 'Permission denied.' };
+    }
+
+    // Verify the brand actually belongs to the personal account
+    const personalAccountId = await getPersonalAccountId();
+    if (!personalAccountId) {
+        return { success: false, error: 'Not authenticated.' };
+    }
+
+    const ownership = await prisma.accountOwnership.findFirst({
+        where: { parentId: personalAccountId, childrenId: brandId, type: 'brand' },
+        select: { id: true },
+    });
+    if (!ownership) {
+        return { success: false, error: 'Brand account not found or not owned by you.' };
+    }
+
     const result = await switchToBrandAction(brandId);
 
     if (result.success) {
-        const { accountId } = await getSessionCookies();
-        if (accountId) {
-            await makeNotification({
-                recipient_id: accountId,
-                action: 'informative.switch',
-                message: `You switched context to brand ${brandId}.`,
-            });
-        }
+        await makeNotification({
+            recipient_id: personalAccountId,
+            action: 'informative.switch',
+            message: `You switched context to brand ${brandId}.`,
+        });
     }
 
     return result;
@@ -178,17 +196,33 @@ export async function switchToBrand(brandId: string) {
  * Function switchToDependent.
  */
 export async function switchToDependent(dependentId: string) {
+    const canSwitch = await checkPermissions(['linked_accounts.dependent.view']);
+    if (!canSwitch) {
+        return { success: false, error: 'Permission denied.' };
+    }
+
+    // Verify the dependent actually belongs to the personal account
+    const personalAccountId = await getPersonalAccountId();
+    if (!personalAccountId) {
+        return { success: false, error: 'Not authenticated.' };
+    }
+
+    const ownership = await prisma.accountOwnership.findFirst({
+        where: { parentId: personalAccountId, childrenId: dependentId, type: 'dependent' },
+        select: { id: true },
+    });
+    if (!ownership) {
+        return { success: false, error: 'Dependent account not found or not owned by you.' };
+    }
+
     const result = await switchToDependentAction(dependentId);
 
     if (result.success) {
-        const { accountId } = await getSessionCookies();
-        if (accountId) {
-            await makeNotification({
-                recipient_id: accountId,
-                action: 'informative.switch',
-                message: `You switched context to dependent ${dependentId}.`,
-            });
-        }
+        await makeNotification({
+            recipient_id: personalAccountId,
+            action: 'informative.switch',
+            message: `You switched context to dependent ${dependentId}.`,
+        });
     }
 
     return result;
@@ -199,17 +233,28 @@ export async function switchToDependent(dependentId: string) {
  * Function switchToDelegated.
  */
 export async function switchToDelegated(accountId: string) {
+    const personalAccountId = await getPersonalAccountId();
+    if (!personalAccountId) {
+        return { success: false, error: 'Not authenticated.' };
+    }
+
+    // Verify a permit exists granting this account access to the delegated account
+    const permit = await prisma.permit.findFirst({
+        where: { accountId: personalAccountId, targetAccountId: accountId, forSelf: false },
+        select: { id: true },
+    });
+    if (!permit) {
+        return { success: false, error: 'No delegated access found for this account.' };
+    }
+
     const result = await switchToDelegatedAction(accountId);
 
     if (result.success) {
-        const { accountId: personalAccountId } = await getSessionCookies();
-        if (personalAccountId) {
-            await makeNotification({
-                recipient_id: personalAccountId,
-                action: 'informative.switch',
-                message: `You switched context to delegated account ${accountId}.`,
-            });
-        }
+        await makeNotification({
+            recipient_id: personalAccountId,
+            action: 'informative.switch',
+            message: `You switched context to delegated account ${accountId}.`,
+        });
     }
 
     return result;
