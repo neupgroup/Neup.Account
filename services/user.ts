@@ -1,12 +1,11 @@
-'use server';
+"use server";
 
 // Server-side user data layer. Fetches profile, contacts, NeupIDs, and permissions
 // for a given account. All functions fall back to the active account if no ID is passed.
 
-import prisma from '@/core/helpers/prisma';
-import { logError } from '@/core/helpers/logger';
-import { getActiveAccountId, getPersonalAccountId } from '@/core/auth/verify';
-
+import prisma from "@/core/helpers/prisma";
+import { logError } from "@/core/helpers/logger";
+import { getActiveAccountId, getPersonalAccountId } from "@/core/auth/verify";
 
 // --- Types ---
 
@@ -42,13 +41,12 @@ export type UserContacts = {
   otherLocation?: string;
 };
 
-
 // --- User Data Fetching ---
 
 // Fetches the full profile for an account, including individual and brand sub-profiles.
 // nameDisplay prefers the brand name if present, then falls back to account.displayName.
 export async function getUserProfile(
-  accountId?: string
+  accountId?: string,
 ): Promise<UserProfile | null> {
   const idToFetch = accountId || (await getActiveAccountId());
   if (!idToFetch) return null;
@@ -60,51 +58,55 @@ export async function getUserProfile(
         brandProfile: true,
       },
     });
-    
+
     if (account) {
       const serializedData: UserProfile = {
         nameFirst: account.individualProfile?.firstName || undefined,
         nameMiddle: account.individualProfile?.middleName || undefined,
         nameLast: account.individualProfile?.lastName || undefined,
-        nameDisplay: account.brandProfile?.brandName || account.displayName || undefined,
+        nameDisplay:
+          account.brandProfile?.brandName || account.displayName || undefined,
         displayName: account.displayName || undefined,
         accountPhoto: account.displayImage || undefined,
-        dateBirth: account.individualProfile?.dateOfBirth?.toISOString() || undefined,
+        dateBirth:
+          account.individualProfile?.dateOfBirth?.toISOString() || undefined,
         dateCreated: account.createdAt?.toISOString() || undefined,
         nationality: account.individualProfile?.countryOfResidence || undefined,
         isLegalEntity: account.brandProfile?.isLegalEntity || undefined,
         countryOfOrigin: account.brandProfile?.originCountry || undefined,
         verified: account.isVerified || undefined,
         accountType: account.accountType || undefined,
-        permit: 'default',
+        permit: "default",
         pro: false,
       };
 
       // Fall back to the default avatar if no photo is set
       if (!serializedData.accountPhoto) {
-        serializedData.accountPhoto = 'https://neupgroup.com/assets/user.png';
+        serializedData.accountPhoto = "https://neupgroup.com/assets/user.png";
       }
 
-      serializedData.accountType = account.accountType || 'individual';
+      serializedData.accountType = account.accountType || "individual";
 
       return serializedData;
     }
     return null;
   } catch (error) {
-    await logError('database', error, `getUserProfile: ${idToFetch}`);
+    await logError("database", error, `getUserProfile: ${idToFetch}`);
     return null;
   }
 }
 
 // Returns just the accountType string for an account.
-export async function getAccountType(accountId?: string): Promise<string | null> {
-    const profile = await getUserProfile(accountId);
-    return profile?.accountType || null;
+export async function getAccountType(
+  accountId?: string,
+): Promise<string | null> {
+  const profile = await getUserProfile(accountId);
+  return profile?.accountType || null;
 }
 
 // Fetches all contact entries for an account, keyed by contactType.
 export async function getUserContacts(
-  accountId?: string
+  accountId?: string,
 ): Promise<UserContacts> {
   const idToFetch = accountId || (await getActiveAccountId());
   if (!idToFetch) return {};
@@ -121,7 +123,7 @@ export async function getUserContacts(
     });
     return contacts;
   } catch (error) {
-    await logError('database', error, `getUserContacts: ${idToFetch}`);
+    await logError("database", error, `getUserContacts: ${idToFetch}`);
     return {};
   }
 }
@@ -136,34 +138,37 @@ export async function getUserNeupIds(accountId?: string): Promise<string[]> {
     });
     return neupIds.map((doc) => doc.id);
   } catch (error) {
-    await logError('database', error, `getUserNeupIds: ${idToFetch}`);
+    await logError("database", error, `getUserNeupIds: ${idToFetch}`);
     return [];
   }
 }
 
 // Returns NeupID strings with their isPrimary flag.
-export async function getUserNeupIdDetails(accountId?: string): Promise<{ id: string; isPrimary: boolean }[]> {
+export async function getUserNeupIdDetails(
+  accountId?: string,
+): Promise<{ id: string; isPrimary: boolean }[]> {
   const idToFetch = accountId || (await getActiveAccountId());
   if (!idToFetch) return [];
   try {
     const neupIds = await prisma.neupId.findMany({
       where: { accountId: idToFetch },
-      select: { id: true, isPrimary: true }
+      select: { id: true, isPrimary: true },
     });
     return neupIds;
   } catch (error) {
-    await logError('database', error, `getUserNeupIdDetails: ${idToFetch}`);
+    await logError("database", error, `getUserNeupIdDetails: ${idToFetch}`);
     return [];
   }
 }
-
 
 // --- Permissions ---
 
 // Resolves account permissions by:
 // 1) finding role grants in authz_account_access_grant for targetAccountId + appId,
 // 2) loading denormalized capabilities from authz_role_capability for those roleIds.
-export async function getAccountPermission(accountId?: string): Promise<string[]> {
+export async function getAccountPermission(
+  accountId?: string,
+): Promise<string[]> {
   const activeId = accountId || (await getActiveAccountId());
   if (!activeId) return [];
 
@@ -171,7 +176,7 @@ export async function getAccountPermission(accountId?: string): Promise<string[]
     const grants = await prisma.authzAccountAccessGrant.findMany({
       where: {
         targetAccountId: activeId,
-        appId: 'neup.account',
+        appId: "neup.account",
       },
       select: { roleId: true },
     });
@@ -185,23 +190,32 @@ export async function getAccountPermission(accountId?: string): Promise<string[]
     const roleCapabilities = await prisma.authzRoleCapability.findMany({
       where: {
         roleId: { in: roleIds },
-        appId: 'neup.account',
+        appId: "neup.account",
       },
       select: {
         denormalizedCapability: true,
       },
     });
 
-    const capabilities = roleCapabilities.flatMap((row) => {
-      if (!Array.isArray(row.denormalizedCapability)) return [];
+    const capabilities = [
+      ...new Set(
+        roleCapabilities.flatMap((row) => {
+          if (!Array.isArray(row.denormalizedCapability)) return [];
 
-      return row.denormalizedCapability
-        .filter((item): item is string => typeof item === 'string');
-    });
+          return row.denormalizedCapability.filter(
+            (item): item is string => typeof item === "string",
+          );
+        }),
+      ),
+    ];
 
     return Array.from(new Set(capabilities));
   } catch (error) {
-    await logError('database', error, `getAccountPermission — grant/capability query failed for ${activeId}`);
+    await logError(
+      "database",
+      error,
+      `getAccountPermission — grant/capability query failed for ${activeId}`,
+    );
     return [];
   }
 }
@@ -209,7 +223,7 @@ export async function getAccountPermission(accountId?: string): Promise<string[]
 // Returns true if the active account has all of the required permissions.
 export async function checkPermissions(
   requiredPermissions: string[],
-  accountId?: string
+  accountId?: string,
 ): Promise<boolean> {
   if (!requiredPermissions || requiredPermissions.length === 0) return true;
 
@@ -219,88 +233,98 @@ export async function checkPermissions(
   return requiredPermissions.every((p) => permissionsSet.has(p));
 }
 
-
 // --- Validation ---
 
 // Validates that a NeupID exists, is associated with a valid account,
 // and that the account is not blocked, deleted, or a brand/branch type.
-export async function validateNeupId(neupId: string): Promise<{ success: boolean; error?: string }> {
-    if (!neupId || neupId.length < 3) {
-        return { success: false, error: "NeupID must be at least 3 characters." };
+export async function validateNeupId(
+  neupId: string,
+): Promise<{ success: boolean; error?: string }> {
+  if (!neupId || neupId.length < 3) {
+    return { success: false, error: "NeupID must be at least 3 characters." };
+  }
+
+  try {
+    const neupIdDoc = await prisma.neupId.findUnique({
+      where: { id: neupId },
+      include: { account: true },
+    });
+
+    if (!neupIdDoc) {
+      return { success: false, error: "NeupID not found." };
     }
 
-    try {
-        const neupIdDoc = await prisma.neupId.findUnique({
-            where: { id: neupId },
-            include: { account: true }
-        });
+    const account = neupIdDoc.account;
 
-        if (!neupIdDoc) {
-            return { success: false, error: "NeupID not found." };
-        }
-
-        const account = neupIdDoc.account;
-
-        if (!account) {
-            return { success: false, error: "Associated account does not exist." };
-        }
-
-        // Brand and branch accounts cannot sign in directly
-        if (account.accountType === 'brand' || account.accountType === 'branch') {
-             return { success: false, error: "Brand accounts can't be signed in." };
-        }
-        
-        if (account.status === 'deletion_requested') {
-            return { success: false, error: "pending_deletion" };
-        }
-
-        if (account.status === 'blocked') {
-             const details = account.details as Record<string, any> | null;
-             const block = details?.block;
-             // Check for permanent block or a time-limited block that hasn't expired
-             if (block && (block.is_permanent || (block.until && new Date(block.until) > new Date()))) {
-                return { success: false, error: "This account has been blocked." };
-             }
-        }
-
-        return { success: true };
-
-    } catch(e) {
-        await logError('database', e, `validateNeupId for ${neupId}`);
-        return { success: false, error: 'An unexpected error occurred.' };
+    if (!account) {
+      return { success: false, error: "Associated account does not exist." };
     }
+
+    // Brand and branch accounts cannot sign in directly
+    if (account.accountType === "brand" || account.accountType === "branch") {
+      return { success: false, error: "Brand accounts can't be signed in." };
+    }
+
+    if (account.status === "deletion_requested") {
+      return { success: false, error: "pending_deletion" };
+    }
+
+    if (account.status === "blocked") {
+      const details = account.details as Record<string, any> | null;
+      const block = details?.block;
+      // Check for permanent block or a time-limited block that hasn't expired
+      if (
+        block &&
+        (block.is_permanent ||
+          (block.until && new Date(block.until) > new Date()))
+      ) {
+        return { success: false, error: "This account has been blocked." };
+      }
+    }
+
+    return { success: true };
+  } catch (e) {
+    await logError("database", e, `validateNeupId for ${neupId}`);
+    return { success: false, error: "An unexpected error occurred." };
+  }
 }
 
 // Returns whether a NeupID is available for registration.
-export async function checkNeupIdAvailability(neupId: string): Promise<{ available: boolean }> {
-    const lowerNeupId = neupId.toLowerCase();
-    if (!lowerNeupId || lowerNeupId.length < 3) {
-        return { available: false };
-    }
-    try {
-        const count = await prisma.neupId.count({
-            where: { id: lowerNeupId }
-        });
-        return { available: count === 0 };
-    } catch (error) {
-        await logError('database', error, `checkNeupIdAvailability: ${lowerNeupId}`);
-        return { available: false };
-    }
+export async function checkNeupIdAvailability(
+  neupId: string,
+): Promise<{ available: boolean }> {
+  const lowerNeupId = neupId.toLowerCase();
+  if (!lowerNeupId || lowerNeupId.length < 3) {
+    return { available: false };
+  }
+  try {
+    const count = await prisma.neupId.count({
+      where: { id: lowerNeupId },
+    });
+    return { available: count === 0 };
+  } catch (error) {
+    await logError(
+      "database",
+      error,
+      `checkNeupIdAvailability: ${lowerNeupId}`,
+    );
+    return { available: false };
+  }
 }
 
 // Returns true if the account has a root-level permit in the database.
 export async function isRootUser(accountId: string): Promise<boolean> {
-    if (!accountId) return false;
-    try {
-        const count = await prisma.permit.count({
-            where: {
-                accountId: accountId,
-                isRoot: true
-            }
-        });
-        return count > 0;
-    } catch (error) {
-        await logError('database', error, `isRootUser check for ${accountId}`);
-        return false;
-    }
+  if (!accountId) return false;
+  try {
+    const count = await prisma.permit.count({
+      where: {
+        accountId: accountId,
+        isRoot: true,
+      },
+    });
+    return count > 0;
+  } catch (error) {
+    await logError("database", error, `isRootUser check for ${accountId}`);
+    return false;
+  }
 }
