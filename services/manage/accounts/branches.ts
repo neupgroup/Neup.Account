@@ -103,11 +103,18 @@ export async function createBranchAccount(data: z.infer<typeof formSchema>, geol
                 }
             });
 
-            await tx.accountOwnership.create({
+            // Grant brand.owner on the branch to the personal account (same role as brand)
+            await tx.authzRole.upsert({
+                where: { id: 'brand-owner-neup-account' },
+                update: { name: 'brand.owner', scope: 'brand', appId: 'neup.account' },
+                create: { id: 'brand-owner-neup-account', name: 'brand.owner', scope: 'brand', appId: 'neup.account' },
+            });
+            await tx.authzAccountAccessGrant.create({
                 data: {
-                    parentId: parentBrandId,
-                    childrenId: branchAccountId,
-                    type: 'branch',
+                    ownerAccountId: branchAccountId,
+                    targetAccountId: personalAccountId,
+                    roleId: 'brand-owner-neup-account',
+                    appId: 'neup.account',
                 },
             });
 

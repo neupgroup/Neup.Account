@@ -80,6 +80,7 @@ const statusOrder: Record<UserAccess['status'], number> = {
 /**
  * Function getAccessList.
  * Returns only grants that are NOT associated with a portfolio.
+ * Multiple grants for the same account are merged into a single entry with all permissions combined.
  */
 export async function getAccessList(accountId: string): Promise<UserAccess[]> {
   try {
@@ -91,28 +92,45 @@ export async function getAccessList(accountId: string): Promise<UserAccess[]> {
       },
     });
 
+    // Group grants by targetAccountId, merging permissions
+    const grouped = new Map<string, { roleIds: string[]; isSelf: boolean }>();
+    for (const grant of grants) {
+      const existing = grouped.get(grant.targetAccountId);
+      if (existing) {
+        existing.roleIds.push(grant.roleId);
+      } else {
+        grouped.set(grant.targetAccountId, {
+          roleIds: [grant.roleId],
+          isSelf: grant.ownerAccountId === grant.targetAccountId,
+        });
+      }
+    }
+
+    // Resolve profiles for each unique account
     const accessList = await Promise.all(
-      grants.map(async (grant) => {
-        const userProfile = await getUserProfile(grant.targetAccountId);
+      Array.from(grouped.entries()).map(async ([targetAccountId, { roleIds, isSelf }]) => {
+        const userProfile = await getUserProfile(targetAccountId);
         if (!userProfile) return null;
 
+        // Use the grant id of the first grant as a stable key for linking to /access/[id]
+        const firstGrant = grants.find((g) => g.targetAccountId === targetAccountId);
+        if (!firstGrant) return null;
+
         return {
-          permitId: grant.id,
-          userId: grant.targetAccountId,
+          permitId: firstGrant.id,
+          userId: targetAccountId,
           displayName:
             userProfile.nameDisplay ||
-            `${userProfile.nameFirst} ${userProfile.nameLast}`.trim(),
+            `${userProfile.nameFirst ?? ''} ${userProfile.nameLast ?? ''}`.trim(),
           accountPhoto: userProfile.accountPhoto,
-          permissions: [grant.roleId],
+          permissions: roleIds,
           status: 'approved' as const,
-          isSelf: grant.ownerAccountId === grant.targetAccountId,
+          isSelf,
         };
       })
     );
 
-    const validUsers = accessList.filter((user): user is NonNullable<typeof user> => user !== null);
-
-    return validUsers;
+    return accessList.filter((u): u is NonNullable<typeof u> => u !== null);
 
   } catch (error) {
     await logError('database', error, `getAccessList for ${accountId}`);

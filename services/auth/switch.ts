@@ -170,8 +170,13 @@ export async function switchToBrand(brandId: string) {
         return { success: false, error: 'Not authenticated.' };
     }
 
-    const ownership = await prisma.accountOwnership.findFirst({
-        where: { parentId: personalAccountId, childrenId: brandId, type: 'brand' },
+    const ownership = await prisma.authzAccountAccessGrant.findFirst({
+        where: {
+            ownerAccountId: brandId,
+            targetAccountId: personalAccountId,
+            roleId: 'brand-owner-neup-account',
+            appId: 'neup.account',
+        },
         select: { id: true },
     });
     if (!ownership) {
@@ -207,8 +212,13 @@ export async function switchToDependent(dependentId: string) {
         return { success: false, error: 'Not authenticated.' };
     }
 
-    const ownership = await prisma.accountOwnership.findFirst({
-        where: { parentId: personalAccountId, childrenId: dependentId, type: 'dependent' },
+    const ownership = await prisma.authzAccountAccessGrant.findFirst({
+        where: {
+            ownerAccountId: dependentId,
+            targetAccountId: personalAccountId,
+            roleId: 'account.guardian',
+            appId: 'neup.account',
+        },
         select: { id: true },
     });
     if (!ownership) {

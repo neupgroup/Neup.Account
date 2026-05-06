@@ -1,5 +1,3 @@
-
-
 'use server';
 
 import prisma from '@/core/helpers/prisma';
@@ -20,6 +18,7 @@ export type AccountListItem = {
     name: string;
     dateCreated: string;
     accountType: string;
+    isRoot: boolean;
 };
 
 
@@ -47,7 +46,6 @@ export async function getUserStats(): Promise<UserStats> {
                 where: { createdAt: { gte: twentyFourHoursAgo } },
             }),
         ]);
-        // Placeholder for active users until a proper metric exists
         const activeUsers = Math.floor(totalUsers * 0.8);
         return { totalUsers, activeUsers, signedUpToday };
 
@@ -74,6 +72,7 @@ export async function getAllAccounts(
     }
 
     try {
+        // Fetch all accounts (one row per account — no joins, no duplicates)
         const accounts = await prisma.account.findMany({
             select: {
                 id: true,
@@ -83,55 +82,63 @@ export async function getAllAccounts(
             },
         });
 
-        let allAccounts: AccountListItem[] = accounts.map(a => ({
+        // Fetch the set of account IDs that hold a root-scoped role — single query
+        const rootGrants = await prisma.authzAccountAccessGrant.findMany({
+            where: {
+                appId: 'neup.account',
+                role: { scope: 'root' },
+            },
+            select: { targetAccountId: true },
+            distinct: ['targetAccountId'],
+        });
+        const rootAccountIds = new Set(rootGrants.map((g) => g.targetAccountId));
+
+        let allAccounts: AccountListItem[] = accounts.map((a) => ({
             id: a.id,
             name: a.displayName || 'Unnamed Account',
             dateCreated: (a.createdAt ?? new Date(0)).toISOString(),
             accountType: a.accountType || 'individual',
+            isRoot: rootAccountIds.has(a.id),
         }));
-        
+
         // Filter
         if (searchQuery) {
-            const lowercasedQuery = searchQuery.toLowerCase();
-            allAccounts = allAccounts.filter(acc =>
-                acc.name.toLowerCase().includes(lowercasedQuery) ||
-                acc.id.toLowerCase().includes(lowercasedQuery) ||
-                acc.accountType.toLowerCase().includes(lowercasedQuery)
+            const q = searchQuery.toLowerCase();
+            allAccounts = allAccounts.filter((acc) =>
+                acc.name.toLowerCase().includes(q) ||
+                acc.id.toLowerCase().includes(q) ||
+                acc.accountType.toLowerCase().includes(q)
             );
         }
 
         // Sort
         allAccounts.sort((a, b) => {
-            const aValue = a[sortKey];
-            const bValue = b[sortKey];
-            
-            if (aValue === null || aValue === undefined) return 1;
-            if (bValue === null || bValue === undefined) return -1;
-            
+            const aVal = a[sortKey];
+            const bVal = b[sortKey];
+
+            if (aVal === null || aVal === undefined) return 1;
+            if (bVal === null || bVal === undefined) return -1;
+
             if (sortKey === 'dateCreated') {
-                const dateA = new Date(aValue as string).getTime();
-                const dateB = new Date(bValue as string).getTime();
-                if (dateA < dateB) return sortDirection === 'asc' ? -1 : 1;
-                if (dateA > dateB) return sortDirection === 'asc' ? 1 : -1;
-                return 0;
+                const diff = new Date(aVal as string).getTime() - new Date(bVal as string).getTime();
+                return sortDirection === 'asc' ? diff : -diff;
             }
-            
-            if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
-            if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+
+            if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1;
+            if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1;
             return 0;
         });
 
         // Paginate
         const startIndex = (page - 1) * pageSize;
-        const endIndex = page * pageSize;
-        const paginatedAccounts = allAccounts.slice(startIndex, endIndex);
+        const paginatedAccounts = allAccounts.slice(startIndex, startIndex + pageSize);
 
         return {
-            accounts: paginatedAccounts.map(acc => ({
+            accounts: paginatedAccounts.map((acc) => ({
                 ...acc,
-                dateCreated: new Date(acc.dateCreated).toLocaleDateString()
+                dateCreated: new Date(acc.dateCreated).toLocaleDateString(),
             })),
-            hasNextPage: endIndex < allAccounts.length,
+            hasNextPage: startIndex + pageSize < allAccounts.length,
         };
 
     } catch (error) {

@@ -36,37 +36,28 @@ export async function getDependentAccounts(): Promise<DependentAccount[]> {
     }
 
     try {
-        const ownerships = await prisma.accountOwnership.findMany({
+        // Find dependent accounts where the personal account holds account.guardian
+        const grants = await prisma.authzAccountAccessGrant.findMany({
             where: {
-                parentId: personalAccountId,
-                type: 'dependent',
+                targetAccountId: personalAccountId,
+                roleId: 'account.guardian',
+                appId: 'neup.account',
             },
-            select: {
-                childrenId: true,
-            },
+            select: { ownerAccountId: true },
         });
-        
-        if (ownerships.length === 0) {
-            return [];
-        }
 
-        const dependentAccountIds = ownerships.map((ownership) => ownership.childrenId);
+        if (grants.length === 0) return [];
 
-        if (dependentAccountIds.length === 0) {
-            return [];
-        }
+        const dependentAccountIds = grants.map((g) => g.ownerAccountId);
 
-        // Fetch account details for only those that are dependent accounts
         const dependentAccountsData = await prisma.account.findMany({
             where: {
                 id: { in: dependentAccountIds },
-                accountType: 'dependent'
-            }
+                accountType: 'dependent',
+            },
         });
-        
-        if (dependentAccountsData.length === 0) {
-            return [];
-        }
+
+        if (dependentAccountsData.length === 0) return [];
         
         const dependentAccounts = await Promise.all(
             dependentAccountsData.map(async (account) => {
@@ -169,14 +160,6 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
         
         const dependentAccountId = account.id;
 
-        await prisma.accountOwnership.create({
-            data: {
-                parentId: guardianAccountId,
-                childrenId: dependentAccountId,
-                type: 'dependent',
-            }
-        });
-        
         // Ensure delegation roles exist
         await prisma.authzRole.upsert({
             where: { id: 'account.guardian' },
