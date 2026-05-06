@@ -31,6 +31,18 @@ export type GetAccountsResponse = {
     hasNextPage: boolean;
 };
 
+/**
+ * Type AccountBasics.
+ */
+export type AccountBasics = {
+    id: string;
+    displayName: string | null;
+    displayImage: string | null;
+    status: string | null;
+    isVerified: boolean;
+    accountType: string;
+};
+
 
 /**
  * Function getUserStats.
@@ -57,13 +69,13 @@ export async function getUserStats(): Promise<UserStats> {
 
 
 /**
- * Function getAccessableAccount.
+ * Function getAccessableAccountIds.
  *
  * Returns a deduplicated array of account IDs that the given accountId
  * has access to — i.e. all unique ownerAccountIds from authz_account_access_grant
  * where targetAccountId = accountId and app_id = 'neup.account'.
  */
-export async function getAccessableAccount(accountId: string): Promise<string[]> {
+export async function getAccessableAccountIds(accountId: string): Promise<string[]> {
     try {
         const grants = await prisma.authzAccountAccessGrant.findMany({
             where: {
@@ -76,7 +88,35 @@ export async function getAccessableAccount(accountId: string): Promise<string[]>
 
         return grants.map((g) => g.ownerAccountId);
     } catch (error) {
-        await logError('database', error, `getAccessableAccount:${accountId}`);
+        await logError('database', error, `getAccessableAccountIds:${accountId}`);
+        return [];
+    }
+}
+
+
+/**
+ * Function getAccessableAccounts.
+ *
+ * Calls getAccessableAccountIds, then fetches basic details for each unique
+ * account via getAccountBasics. Returns AccountBasics[] — one entry per account,
+ * deduplicated by id.
+ */
+export async function getAccessableAccounts(accountId: string): Promise<AccountBasics[]> {
+    try {
+        const ids = await getAccessableAccountIds(accountId);
+        if (ids.length === 0) return [];
+
+        const results = await Promise.all(ids.map((id) => getAccountBasics(id)));
+
+        // Filter nulls and deduplicate by id
+        const seen = new Set<string>();
+        return results.filter((a): a is AccountBasics => {
+            if (!a || seen.has(a.id)) return false;
+            seen.add(a.id);
+            return true;
+        });
+    } catch (error) {
+        await logError('database', error, `getAccessableAccounts:${accountId}`);
         return [];
     }
 }
@@ -85,12 +125,12 @@ export async function getAccessableAccount(accountId: string): Promise<string[]>
 /**
  * Function getAccessableBrandAccounts.
  *
- * Calls getAccessableAccount, then filters to only accounts whose
- * accountType is 'brand' or 'branch'. Returns an array of account detail objects.
+ * Calls getAccessableAccountIds, then filters to only accounts whose
+ * accountType is 'brand' or 'branch'. Returns AccountBasics[] deduplicated by id.
  */
 export async function getAccessableBrandAccounts(accountId: string): Promise<AccountBasics[]> {
     try {
-        const ids = await getAccessableAccount(accountId);
+        const ids = await getAccessableAccountIds(accountId);
         if (ids.length === 0) return [];
 
         const brandAccounts = await prisma.account.findMany({
@@ -108,36 +148,27 @@ export async function getAccessableBrandAccounts(accountId: string): Promise<Acc
             },
         });
 
+        const seen = new Set<string>();
         return brandAccounts
-            .filter((a, index, self) => self.findIndex((b) => b.id === a.id) === index)
+            .filter((a) => {
+                if (seen.has(a.id)) return false;
+                seen.add(a.id);
+                return true;
+            })
             .map((a) => ({
-            id: a.id,
-            displayName: a.displayName,
-            displayImage: a.displayImage,
-            status: a.status,
-            isVerified: a.isVerified,
-            accountType: a.accountType,
-        }));
+                id: a.id,
+                displayName: a.displayName,
+                displayImage: a.displayImage,
+                status: a.status,
+                isVerified: a.isVerified,
+                accountType: a.accountType,
+            }));
     } catch (error) {
         await logError('database', error, `getAccessableBrandAccounts:${accountId}`);
         return [];
     }
 }
 
-
-
-
-/**
- * Type AccountBasics.
- */
-export type AccountBasics = {
-    id: string;
-    displayName: string | null;
-    displayImage: string | null;
-    status: string | null;
-    isVerified: boolean;
-    accountType: string;
-};
 
 /**
  * Function getAccountBasics.

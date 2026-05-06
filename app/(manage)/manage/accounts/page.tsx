@@ -12,7 +12,7 @@ import {
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Search, Ban } from "@/components/icons";
-import { getAccessableAccount } from '@/services/manage/accounts';
+import { getAccessableAccountIds } from '@/services/manage/accounts';
 import { checkPermissions } from '@/services/user';
 import { getActiveAccountId } from '@/core/auth/verify';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -45,7 +45,7 @@ function AccountsPageInner() {
         startTransition(async () => {
             const accountId = await getActiveAccountId();
             if (!accountId) return;
-            const ids = await getAccessableAccount(accountId);
+            const ids = await getAccessableAccountIds(accountId);
             setAccountIds(ids);
         });
     }, [permissionState]);
