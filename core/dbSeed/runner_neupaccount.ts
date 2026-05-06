@@ -34,7 +34,7 @@ const APP_ID = 'neup.account';
 // Stable role IDs — must match what is inserted in the SQL below.
 const ROLE_INDIV_DEFAULT = 'individual-default-neup-account';
 const ROLE_INDIV_ROOT    = 'root-full-neup-account';
-const ROLE_APP_OWNER     = 'base-app-creator-neup-account';
+const ROLE_APP_OWNER     = 'application.owner';
 const ROLE_BRAND_OWNER   = 'brand-owner-neup-account';
 
 // Fill in an existing account ID to skip account creation and grant roles
@@ -73,7 +73,7 @@ INSERT INTO "application" (
 INSERT INTO "authz_role" ("id", "name", "description", "app_id", "scope") VALUES
   ('${ROLE_INDIV_DEFAULT}', 'individual.default', 'Default permission set for individual accounts.',  '${APP_ID}', 'default'),
   ('${ROLE_INDIV_ROOT}',    'individual.root',    'Admin-only permission set for root accounts.',     '${APP_ID}', 'root'),
-  ('${ROLE_APP_OWNER}',     'application.owner',  'Role for application creators and owners.',        '${APP_ID}', 'creator')
+  ('${ROLE_APP_OWNER}',     'application.owner',  'Full ownership role for applications.',            '${APP_ID}', 'application')
 ON CONFLICT ("id") DO NOTHING;
 
 -- 3a. Capabilities — individual.default
@@ -179,9 +179,9 @@ ON CONFLICT ("id") DO NOTHING;
 
 -- 3c. Capabilities — application.owner
 INSERT INTO "authz_capability" ("id", "name", "app_id", "scope") VALUES
-  ('cap-appowner-application-view',    'application.view',    '${APP_ID}', 'creator'),
-  ('cap-appowner-application-edit',    'application.edit',    '${APP_ID}', 'creator'),
-  ('cap-appowner-application-delete',  'application.delete',  '${APP_ID}', 'creator')
+  ('cap-appowner-application-view',    'application.view',    '${APP_ID}', 'application'),
+  ('cap-appowner-application-edit',    'application.edit',    '${APP_ID}', 'application'),
+  ('cap-appowner-application-delete',  'application.delete',  '${APP_ID}', 'application')
 ON CONFLICT ("id") DO NOTHING;
 
 INSERT INTO "authz_role_capability" (
@@ -191,13 +191,13 @@ SELECT
   'rcp-appowner-' || c."id",
   '${ROLE_APP_OWNER}',
   c."id",
-  'creator',
+  'application',
   '${APP_ID}',
   'application.owner',
   '["application.view","application.edit","application.delete"]'::jsonb
 FROM "authz_capability" c
 WHERE c."app_id" = '${APP_ID}'
-  AND c."scope"  = 'creator'
+  AND c."scope"  = 'application'
 ON CONFLICT ("id") DO NOTHING;
 
 -- 3d. Role — brand.owner
@@ -236,6 +236,42 @@ SELECT
 FROM "authz_capability" c
 WHERE c."app_id" = '${APP_ID}'
   AND c."scope"  = 'brand'
+ON CONFLICT ("id") DO NOTHING;
+
+-- 3e. Role — branch.owner (same scope as brand so the role picker shows it for branch_account assets)
+INSERT INTO "authz_role" ("id", "name", "description", "app_id", "scope") VALUES
+  ('branch-owner-neup-account', 'branch.owner', 'Full ownership role for branch accounts.', '${APP_ID}', 'brand')
+ON CONFLICT ("id") DO NOTHING;
+
+INSERT INTO "authz_capability" ("id", "name", "app_id", "scope") VALUES
+  ('cap-branch-profile-view',    'branch.profile.view',   '${APP_ID}', 'brand'),
+  ('cap-branch-profile-edit',    'branch.profile.edit',   '${APP_ID}', 'brand'),
+  ('cap-branch-settings-view',   'branch.settings.view',  '${APP_ID}', 'brand'),
+  ('cap-branch-settings-edit',   'branch.settings.edit',  '${APP_ID}', 'brand'),
+  ('cap-branch-members-view',    'branch.members.view',   '${APP_ID}', 'brand'),
+  ('cap-branch-members-manage',  'branch.members.manage', '${APP_ID}', 'brand'),
+  ('cap-branch-delete',          'branch.delete',         '${APP_ID}', 'brand')
+ON CONFLICT ("id") DO NOTHING;
+
+INSERT INTO "authz_role_capability" (
+  "id", "role_id", "capability_id", "scope", "app_id", "role_name", "denormalized_capability"
+)
+SELECT
+  'rcp-branchowner-' || c."id",
+  'branch-owner-neup-account',
+  c."id",
+  'brand',
+  '${APP_ID}',
+  'branch.owner',
+  '["branch.profile.view","branch.profile.edit","branch.settings.view","branch.settings.edit","branch.members.view","branch.members.manage","branch.delete"]'::jsonb
+FROM "authz_capability" c
+WHERE c."app_id" = '${APP_ID}'
+  AND c."id" IN (
+    'cap-branch-profile-view','cap-branch-profile-edit',
+    'cap-branch-settings-view','cap-branch-settings-edit',
+    'cap-branch-members-view','cap-branch-members-manage',
+    'cap-branch-delete'
+  )
 ON CONFLICT ("id") DO NOTHING;
 
 COMMIT;

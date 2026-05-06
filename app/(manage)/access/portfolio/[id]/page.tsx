@@ -2,12 +2,13 @@ import { notFound } from 'next/navigation';
 import { BackButton } from '@/components/ui/back-button';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Database, KeyRound, Shield, UserCircle, Users, X } from '@/components/icons';
+import { Database, KeyRound, Shield, UserCircle, Users, X, UserPlus } from '@/components/icons';
 import {
   addAssetToGroupFromForm,
   addMemberToAssetGroupFromForm,
   assignRoleToAssetMemberFromForm,
   removeAssetFromGroupFromForm,
+  bulkAssignPermissionsFromForm,
 } from '@/services/manage/access/actions';
 import { getAccessAssetGroup } from '@/services/manage/access/assets';
 import { resolveAssetNames } from '@/services/manage/access/asset-resolvers';
@@ -15,6 +16,8 @@ import { getUserProfile } from '@/services/user';
 import { AddMemberForm } from './add-member-form';
 import { AddAssetForm } from './add-asset-form';
 import { RoleAssignForm } from './role-assign-form';
+import { AssignPermissionsWizard } from './assign-permissions-wizard';
+import { FlowLink } from '@/components/ui/flow-link';
 
 type PageProps = {
   params: Promise<{ id: string }>;
@@ -60,6 +63,7 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
   const addAssetAction = addAssetToGroupFromForm.bind(null, id);
   const removeAssetAction = removeAssetFromGroupFromForm.bind(null, id);
   const assignRoleAction = assignRoleToAssetMemberFromForm.bind(null, id);
+  const bulkAssignAction = bulkAssignPermissionsFromForm.bind(null, id);
 
   const roleRows = (Array.isArray((group as { roles?: unknown }).roles)
     ? (group as { roles?: unknown[] }).roles
@@ -153,8 +157,11 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
             group.assets.map((asset) => {
               const resolved = assetNameMap[asset.id];
               return (
-                <div key={asset.id} className="flex items-center justify-between gap-4 px-4 py-3">
-                  <div className="flex items-center gap-3 min-w-0">
+                <div key={asset.id} className="flex items-center justify-between gap-4 px-4 py-3 hover:bg-muted/20 transition-colors">
+                  <FlowLink
+                    href={`/access/portfolio/${id}/asset/${asset.id}`}
+                    className="flex items-center gap-3 min-w-0 flex-1"
+                  >
                     <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted">
                       <Database className="h-3.5 w-3.5 text-muted-foreground" />
                     </span>
@@ -164,7 +171,7 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
                         {resolved?.subtitle ?? asset.assetType}
                       </p>
                     </div>
-                  </div>
+                  </FlowLink>
                   <div className="flex shrink-0 items-center gap-2">
                     <Badge variant="outline" className="text-xs">{asset.assetType}</Badge>
                     {/* Remove asset — moves it back to the caller's personal portfolio */}
@@ -190,6 +197,26 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
               No assets added yet.
             </div>
           )}
+        </div>
+      </section>
+
+      {/* ── Assign Permissions (Wizard) ──────────────────────────────────── */}
+      <section className="grid gap-3">
+        <div className="flex items-center gap-2">
+          <UserPlus className="h-4 w-4 text-muted-foreground" />
+          <h2 className="font-semibold">Assign Permissions</h2>
+        </div>
+
+        <div className="overflow-hidden rounded-lg border">
+          <AssignPermissionsWizard
+            action={bulkAssignAction}
+            members={group.members.map((m) => ({
+              id: m.id,
+              accountId: m.accountId,
+              displayName: nameMap[m.accountId] ?? m.accountId,
+            }))}
+            existingAssetIds={existingAssetIds}
+          />
         </div>
       </section>
 

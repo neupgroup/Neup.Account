@@ -501,7 +501,7 @@ export async function assignAssetMemberRole(input: {
 
 
 /**
- * Type AssetRole — a role available for a specific asset.
+ * Type AssetRole — a role available for a specific asset type.
  */
 export type AssetRole = {
   id: string;
@@ -509,12 +509,22 @@ export type AssetRole = {
   description?: string;
 };
 
+// Maps portfolioAsset.assetType values to the authzRole.scope used in the seeder.
+const ASSET_TYPE_TO_ROLE_SCOPE: Record<string, string> = {
+  application:     'application',
+  app:             'application',
+  brand_account:   'brand',
+  branch_account:  'brand',
+};
+
 /**
  * Function getRolesForAsset.
  *
- * Given a portfolioAsset row ID, resolves the underlying asset and returns
- * all AuthzRole rows scoped to that asset's application ID.
- * Returns an empty array for non-application asset types.
+ * Given a portfolioAsset row ID, resolves the asset type and returns all
+ * AuthzRole rows whose scope matches that asset type within neup.account.
+ *
+ * Roles are scoped by asset TYPE, not by the specific asset instance —
+ * e.g. all application assets share the same set of application-scoped roles.
  */
 export async function getRolesForAsset(portfolioAssetId: string): Promise<AssetRole[]> {
   if (!portfolioAssetId) return [];
@@ -522,18 +532,21 @@ export async function getRolesForAsset(portfolioAssetId: string): Promise<AssetR
   try {
     const assetRow = await prisma.portfolioAsset.findUnique({
       where: { id: portfolioAssetId },
-      select: { assetId: true, assetType: true },
+      select: { assetType: true },
     });
 
     if (!assetRow) return [];
 
     const type = assetRow.assetType.trim().toLowerCase();
-    const isApplication = type === 'application' || type === 'app';
+    const roleScope = ASSET_TYPE_TO_ROLE_SCOPE[type];
 
-    if (!isApplication) return [];
+    if (!roleScope) return [];
 
     const roles = await prisma.authzRole.findMany({
-      where: { appId: assetRow.assetId },
+      where: {
+        appId: 'neup.account',
+        scope: roleScope,
+      },
       select: { id: true, name: true, description: true },
       orderBy: { name: 'asc' },
     });
@@ -545,6 +558,247 @@ export async function getRolesForAsset(portfolioAssetId: string): Promise<AssetR
     }));
   } catch (error) {
     await logError('database', error, `getRolesForAsset:${portfolioAssetId}`);
+    return [];
+  }
+}
+
+
+/**
+ * Function getRolesForAssetType.
+ *
+ * Returns all AuthzRole rows for a given asset type string (e.g. 'application', 'brand_account').
+ * Used by the permission wizard to show available roles before assets are added to the portfolio.
+ */
+export async function getRolesForAssetType(assetType: string): Promise<AssetRole[]> {
+  if (!assetType) return [];
+
+  try {
+    const type = assetType.trim().toLowerCase();
+    const roleScope = ASSET_TYPE_TO_ROLE_SCOPE[type];
+
+    if (!roleScope) return [];
+
+    const roles = await prisma.authzRole.findMany({
+      where: {
+        appId: 'neup.account',
+        scope: roleScope,
+      },
+      select: { id: true, name: true, description: true },
+      orderBy: { name: 'asc' },
+    });
+
+    return roles.map((r) => ({
+      id: r.id,
+      name: r.name,
+      description: r.description ?? undefined,
+    }));
+  } catch (error) {
+    await logError('database', error, `getRolesForAssetType:${assetType}`);
+    return [];
+  }
+}
+
+
+/**
+ * Function bulkAssignAssetRoles.
+ *
+ * Assigns multiple roles to a member across multiple assets in a single operation.
+ * Used by the permission wizard after the user confirms their selections.
+ */
+export async function bulkAssignAssetRoles(input: {
+  groupId: string;
+  memberId: string;
+  assetIds: string[];
+  assetType: string;
+  roleIds: string[];
+}): Promise<{ success: boolean; error?: string; assigned?: number }> {
+  const accountId = await getActiveAccountId();
+  if (!accountId) {
+    return { success: false, error: 'Not authenticated.' };
+  }
+
+  if (!input.groupId || !input.memberId || !input.assetIds.length || !input.roleIds.length) {
+    return { success: false, error: 'Missing required fields.' };
+  }
+
+  try {
+    const allowed = await canAccessGroup(input.groupId, accountId);
+    if (!allowed) {
+      return { success: false, error: 'Permission denied.' };
+    }
+
+    const member = await prisma.portfolioMember.findFirst({
+      where: {
+        id: input.memberId,
+        portfolioId: input.groupId,
+      },
+      select: { id: true, accountId: true },
+    });
+
+    if (!member) {
+      return { success: false, error: 'Member not found in this group.' };
+    }
+
+    // First, ensure all assets are in the portfolio
+    const existingAssets = await prisma.portfolioAsset.findMany({
+      where: {
+        portfolioId: input.groupId,
+        assetId: { in: input.assetIds },
+      },
+      select: { id: true, assetId: true },
+    });
+
+    const existingAssetIdMap = new Map(existingAssets.map((a) => [a.assetId, a.id]));
+    const portfolioAssetIds: string[] = [];
+
+    await prisma.$transaction(async (tx) => {
+      // Add missing assets to the portfolio (only if they don't exist)
+      for (const assetId of input.assetIds) {
+        if (existingAssetIdMap.has(assetId)) {
+          portfolioAssetIds.push(existingAssetIdMap.get(assetId)!);
+        } else {
+          const created = await tx.portfolioAsset.create({
+            data: {
+              portfolioId: input.groupId,
+              assetId,
+              assetType: input.assetType,
+            },
+            select: { id: true },
+          });
+          portfolioAssetIds.push(created.id);
+        }
+      }
+
+      // For each asset, update the grants: remove old roles, add new roles
+      for (const portfolioAssetId of portfolioAssetIds) {
+        // Remove all existing grants for this member on this asset in this portfolio
+        await tx.authzAssetsAccessGrant.deleteMany({
+          where: {
+            asset_id: portfolioAssetId,
+            account_id: member.accountId,
+            portfolio_id: input.groupId,
+            app_id: ACCESS_APP_ID,
+          },
+        });
+
+        // Add the new role grants
+        for (const roleId of input.roleIds) {
+          await tx.authzAssetsAccessGrant.create({
+            data: {
+              asset_id: portfolioAssetId,
+              account_id: member.accountId,
+              role_id: roleId,
+              portfolio_id: input.groupId,
+              app_id: ACCESS_APP_ID,
+            },
+          });
+        }
+      }
+    });
+
+    const totalAssigned = portfolioAssetIds.length * input.roleIds.length;
+
+    revalidatePath('/access');
+    revalidatePath(`/access/portfolio/${input.groupId}`);
+    return { success: true, assigned: totalAssigned };
+  } catch (error) {
+    await logError('database', error, `bulkAssignAssetRoles:${input.groupId}`);
+    return { success: false, error: 'Failed to assign permissions.' };
+  }
+}
+
+
+/**
+ * Type MemberAssetGrant - represents existing grants for a member on an asset.
+ */
+export type MemberAssetGrant = {
+  portfolioAssetId: string;
+  assetId: string;
+  assetName: string;
+  assetType: string;
+  roleIds: string[];
+};
+
+/**
+ * Function getMemberAssetGrants.
+ *
+ * Returns all assets in the portfolio that the given member has access to,
+ * along with the roles they hold on each asset.
+ */
+export async function getMemberAssetGrants(
+  groupId: string,
+  memberId: string,
+): Promise<MemberAssetGrant[]> {
+  const accountId = await getActiveAccountId();
+  if (!accountId) return [];
+
+  try {
+    const allowed = await canAccessGroup(groupId, accountId);
+    if (!allowed) return [];
+
+    const member = await prisma.portfolioMember.findFirst({
+      where: {
+        id: memberId,
+        portfolioId: groupId,
+      },
+      select: { id: true, accountId: true },
+    });
+
+    if (!member) return [];
+
+    // Get all grants for this member in this portfolio
+    const grants = await prisma.authzAssetsAccessGrant.findMany({
+      where: {
+        account_id: member.accountId,
+        portfolio_id: groupId,
+        app_id: ACCESS_APP_ID,
+      },
+      select: {
+        asset_id: true,
+        role_id: true,
+        asset: {
+          select: {
+            id: true,
+            assetId: true,
+            assetType: true,
+          },
+        },
+      },
+    });
+
+    // Group by asset
+    const assetMap = new Map<string, { portfolioAssetId: string; assetId: string; assetType: string; roleIds: string[] }>();
+
+    for (const grant of grants) {
+      const key = grant.asset_id;
+      if (!assetMap.has(key)) {
+        assetMap.set(key, {
+          portfolioAssetId: grant.asset.id,
+          assetId: grant.asset.assetId,
+          assetType: grant.asset.assetType,
+          roleIds: [],
+        });
+      }
+      assetMap.get(key)!.roleIds.push(grant.role_id);
+    }
+
+    // Resolve asset names
+    const results = await Promise.all(
+      Array.from(assetMap.values()).map(async (item) => {
+        const resolved = await resolveAssetName(item.assetId, item.assetType);
+        return {
+          portfolioAssetId: item.portfolioAssetId,
+          assetId: item.assetId,
+          assetName: resolved.name,
+          assetType: item.assetType,
+          roleIds: item.roleIds,
+        };
+      })
+    );
+
+    return results;
+  } catch (error) {
+    await logError('database', error, `getMemberAssetGrants:${groupId}:${memberId}`);
     return [];
   }
 }

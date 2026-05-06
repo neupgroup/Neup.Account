@@ -347,9 +347,9 @@ export async function createManagedApplication(input: { name: string }) {
       // Ensure the application.owner role and its capabilities exist before creating grants.
       // This makes createManagedApplication self-contained regardless of seed state.
       const capabilities = [
-        { id: 'application.view', name: 'application.view', description: 'View application details and settings.' },
-        { id: 'application.edit', name: 'application.edit', description: 'Edit application details, secrets, access fields, policies, and endpoints.' },
-        { id: 'application.delete', name: 'application.delete', description: 'Delete or deactivate an application.' },
+        { id: 'cap-appowner-application-view',   name: 'application.view',   description: 'View application details and settings.' },
+        { id: 'cap-appowner-application-edit',   name: 'application.edit',   description: 'Edit application details, secrets, access fields, policies, and endpoints.' },
+        { id: 'cap-appowner-application-delete', name: 'application.delete', description: 'Delete or deactivate an application.' },
       ];
       for (const cap of capabilities) {
         await tx.authzCapability.upsert({
@@ -371,7 +371,6 @@ export async function createManagedApplication(input: { name: string }) {
           create: { id: mapId, roleId: 'application.owner', capabilityId: cap.id, appId: 'neup.account', roleName: 'application.owner', denormalizedCapability: [cap.name] },
         });
       }
-
       const createdApp = await tx.application.create({
         data: {
           id: randomUUID(),

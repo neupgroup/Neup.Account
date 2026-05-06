@@ -28,19 +28,19 @@ const APP_ID = 'neup.account';
 // ---------------------------------------------------------------------------
 const CAPABILITIES = [
   {
-    id: 'application.view',
+    id: 'cap-appowner-application-view',
     name: 'application.view',
     description: 'View application details and settings.',
     scope: 'application',
   },
   {
-    id: 'application.edit',
+    id: 'cap-appowner-application-edit',
     name: 'application.edit',
     description: 'Edit application details, secrets, access fields, policies, and endpoints.',
     scope: 'application',
   },
   {
-    id: 'application.delete',
+    id: 'cap-appowner-application-delete',
     name: 'application.delete',
     description: 'Delete or deactivate an application.',
     scope: 'application',

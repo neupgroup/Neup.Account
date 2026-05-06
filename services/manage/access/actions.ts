@@ -1,7 +1,7 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { addAssetGroupMember, addAssetToGroup, assignAssetMemberRole, removeAssetFromGroup } from '@/services/manage/access/assets';
+import { addAssetGroupMember, addAssetToGroup, assignAssetMemberRole, removeAssetFromGroup, bulkAssignAssetRoles } from '@/services/manage/access/assets';
 
 /**
  * Function addMemberToAssetGroupFromForm.
@@ -59,6 +59,28 @@ export async function assignRoleToAssetMemberFromForm(groupId: string, formData:
     assetMember: String(formData.get('assetMember') || ''),
     asset: String(formData.get('asset') || ''),
     role: String(formData.get('role') || ''),
+  });
+
+  redirect(`/access/portfolio/${groupId}`);
+}
+
+
+/**
+ * Function bulkAssignPermissionsFromForm.
+ *
+ * Handles the wizard form submission — assigns multiple roles to a member
+ * across multiple assets.
+ */
+export async function bulkAssignPermissionsFromForm(groupId: string, formData: FormData) {
+  const assetIdsRaw = String(formData.get('assetIds') || '');
+  const roleIdsRaw = String(formData.get('roleIds') || '');
+
+  await bulkAssignAssetRoles({
+    groupId,
+    memberId: String(formData.get('memberId') || ''),
+    assetIds: assetIdsRaw.split(',').filter(Boolean),
+    assetType: String(formData.get('assetType') || ''),
+    roleIds: roleIdsRaw.split(',').filter(Boolean),
   });
 
   redirect(`/access/portfolio/${groupId}`);
