@@ -48,6 +48,8 @@ export type AuthSignPageData = {
 	context: AuthSignContext;
 	step: AuthSignStep;
 	displayAppName: string;
+	appIcon: string | null;
+	userDisplayName: string;
 	hasActiveSession: boolean;
 	startPageUrl: string;
 	denyUrl: string;
@@ -55,6 +57,7 @@ export type AuthSignPageData = {
 	continueUrl: string;
 	stepTitleMap: Record<AuthSignStep, string>;
 	accessItems: string[];
+	policies: Array<{ name: string; policy: string }>;
 	termsText: string;
 	profileNextUrl: string;
 	accessNextUrl: string;
@@ -210,6 +213,7 @@ export async function getAuthSignPageData(
 					name: true,
 					description: true,
 					website: true,
+					icon: true,
 					details: true,
 					policies: true,
 				},
@@ -228,10 +232,20 @@ export async function getAuthSignPageData(
 		: null;
 
 	const displayAppName = getAppDisplayName(applicationData?.name);
+	const appIcon = application?.icon ?? null;
 
 	const storedAccounts = await getValidatedStoredAccounts();
 	const { accountId, sessionId, sessionKey } = await getSessionCookies();
 	const hasActiveSession = Boolean(accountId && sessionId && sessionKey);
+
+	// Resolve the signed-in user's display name
+	let userDisplayName = 'there';
+	if (hasActiveSession && accountId) {
+		const profile = await getUserProfile(accountId);
+		userDisplayName = profile?.nameDisplay
+			|| (profile?.nameFirst ? profile.nameFirst : null)
+			|| 'there';
+	}
 
 	// If user is not signed in and authenticatesTo exists, redirect to signin with backsTo parameter
 	if (!hasActiveSession && context.authenticatesTo && context.appId) {
@@ -261,6 +275,8 @@ export async function getAuthSignPageData(
 			context,
 			step,
 			displayAppName,
+			appIcon,
+			userDisplayName,
 			hasActiveSession,
 			startPageUrl: '/auth/start',
 			denyUrl: '/auth/start',
@@ -268,6 +284,7 @@ export async function getAuthSignPageData(
 			continueUrl: '/auth/start',
 			stepTitleMap: { profile: 'Profile', access: 'Access', terms: 'Terms' },
 			accessItems: ['Name', 'Email', 'NeupID', 'Phone'],
+			policies: [],
 			termsText: 'By continuing, you agree to this application\'s terms and data usage rules.',
 			profileNextUrl: '/auth/start',
 			accessNextUrl: '/auth/start',
@@ -289,6 +306,8 @@ export async function getAuthSignPageData(
 			context,
 			step,
 			displayAppName,
+			appIcon,
+			userDisplayName,
 			hasActiveSession,
 			startPageUrl: '/auth/start',
 			denyUrl: '/auth/start',
@@ -296,6 +315,7 @@ export async function getAuthSignPageData(
 			continueUrl: '/auth/start',
 			stepTitleMap: { profile: 'Profile', access: 'Access', terms: 'Terms' },
 			accessItems: ['Name', 'Email', 'NeupID', 'Phone'],
+			policies: [],
 			termsText: 'By continuing, you agree to this application\'s terms and data usage rules.',
 			profileNextUrl: '/auth/start',
 			accessNextUrl: '/auth/start',
@@ -312,6 +332,8 @@ export async function getAuthSignPageData(
 			context,
 			step,
 			displayAppName,
+			appIcon,
+			userDisplayName,
 			hasActiveSession,
 			startPageUrl: '/auth/start',
 			denyUrl: '/auth/start',
@@ -319,6 +341,7 @@ export async function getAuthSignPageData(
 			continueUrl: '/auth/start',
 			stepTitleMap: { profile: 'Profile', access: 'Access', terms: 'Terms' },
 			accessItems: ['Name', 'Email', 'NeupID', 'Phone'],
+			policies: [],
 			termsText: 'By continuing, you agree to this application\'s terms and data usage rules.',
 			profileNextUrl: '/auth/start',
 			accessNextUrl: '/auth/start',
@@ -342,6 +365,7 @@ export async function getAuthSignPageData(
 	};
 
 	const accessItems = normalizeAccess(applicationData?.access);
+	const policies = normalizePolicies(applicationData?.policies) as Array<{ name: string; policy: string }>;
 	const termsText = getTermsText(applicationData?.policies);
 
 	const profileNextUrl = buildSignUrl(context, 'access');
@@ -360,6 +384,8 @@ export async function getAuthSignPageData(
 		context,
 		step,
 		displayAppName,
+		appIcon,
+		userDisplayName,
 		hasActiveSession,
 		startPageUrl,
 		denyUrl,
@@ -367,6 +393,7 @@ export async function getAuthSignPageData(
 		continueUrl,
 		stepTitleMap,
 		accessItems,
+		policies,
 		termsText,
 		profileNextUrl,
 		accessNextUrl,
