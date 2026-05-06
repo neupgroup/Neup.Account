@@ -10,9 +10,10 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Search, Ban } from "@/components/icons";
-import { getAccessableAccountIds } from '@/services/manage/accounts';
+import { getAccessableAccounts, type AccountBasics } from '@/services/manage/accounts';
 import { checkPermissions } from '@/services/user';
 import { getActiveAccountId } from '@/core/auth/verify';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -24,14 +25,13 @@ import { useSearchParams } from 'next/navigation';
 
 function AccountsPageInner() {
     const [permissionState, setPermissionState] = useState<'loading' | 'granted' | 'denied'>('loading');
-    const [accountIds, setAccountIds] = useState<string[]>([]);
+    const [accounts, setAccounts] = useState<AccountBasics[]>([]);
     const [filter, setFilter] = useState('');
     const [loading, startTransition] = useTransition();
     const searchParams = useSearchParams();
 
     useEffect(() => {
-        const q = searchParams.get('q') || '';
-        setFilter(q);
+        setFilter(searchParams.get('q') || '');
     }, [searchParams]);
 
     useEffect(() => {
@@ -45,14 +45,18 @@ function AccountsPageInner() {
         startTransition(async () => {
             const accountId = await getActiveAccountId();
             if (!accountId) return;
-            const ids = await getAccessableAccountIds(accountId);
-            setAccountIds(ids);
+            const result = await getAccessableAccounts(accountId);
+            setAccounts(result);
         });
     }, [permissionState]);
 
     const filtered = filter
-        ? accountIds.filter((id) => id.toLowerCase().includes(filter.toLowerCase()))
-        : accountIds;
+        ? accounts.filter((a) =>
+              a.id.toLowerCase().includes(filter.toLowerCase()) ||
+              (a.displayName ?? '').toLowerCase().includes(filter.toLowerCase()) ||
+              a.accountType.toLowerCase().includes(filter.toLowerCase()),
+          )
+        : accounts;
 
     if (permissionState === 'loading') {
         return (
@@ -85,7 +89,7 @@ function AccountsPageInner() {
                 <p className="text-muted-foreground">
                     {filter
                         ? `Search results for "${filter}"`
-                        : `${accountIds.length} accessible account${accountIds.length !== 1 ? 's' : ''}`}
+                        : `${accounts.length} accessible account${accounts.length !== 1 ? 's' : ''}`}
                 </p>
             </div>
 
@@ -94,7 +98,7 @@ function AccountsPageInner() {
                     <div className="relative">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                         <Input
-                            placeholder="Filter by account ID..."
+                            placeholder="Filter by name, ID, or type..."
                             value={filter}
                             onChange={(e) => setFilter(e.target.value)}
                             className="pl-10"
@@ -105,32 +109,49 @@ function AccountsPageInner() {
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead>Account ID</TableHead>
+                                <TableHead>Name</TableHead>
+                                <TableHead>Type</TableHead>
+                                <TableHead>Status</TableHead>
+                                <TableHead>Verified</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {loading ? (
                                 Array.from({ length: 8 }, (_, i) => (
                                     <TableRow key={`skeleton-${i}`}>
-                                        <TableCell><Skeleton className="h-6 w-full" /></TableCell>
+                                        <TableCell colSpan={4}><Skeleton className="h-6 w-full" /></TableCell>
                                     </TableRow>
                                 ))
                             ) : filtered.length > 0 ? (
-                                filtered.map((id) => (
-                                    <TableRow key={id}>
+                                filtered.map((acc) => (
+                                    <TableRow key={acc.id}>
                                         <TableCell>
                                             <FlowLink
-                                                href={`/manage/accounts/${id}`}
-                                                className="font-mono text-sm hover:underline text-primary"
+                                                href={`/manage/accounts/${acc.id}`}
+                                                className="font-medium hover:underline text-primary"
                                             >
-                                                {id}
+                                                {acc.displayName || 'Unnamed Account'}
                                             </FlowLink>
+                                            <p className="text-xs text-muted-foreground font-mono">{acc.id}</p>
+                                        </TableCell>
+                                        <TableCell>
+                                            <Badge variant="outline">{acc.accountType}</Badge>
+                                        </TableCell>
+                                        <TableCell>
+                                            <span className="text-sm text-muted-foreground">{acc.status ?? '—'}</span>
+                                        </TableCell>
+                                        <TableCell>
+                                            {acc.isVerified ? (
+                                                <Badge variant="secondary">Verified</Badge>
+                                            ) : (
+                                                <span className="text-xs text-muted-foreground">No</span>
+                                            )}
                                         </TableCell>
                                     </TableRow>
                                 ))
                             ) : (
                                 <TableRow>
-                                    <TableCell className="h-24 text-center text-muted-foreground">
+                                    <TableCell colSpan={4} className="h-24 text-center text-muted-foreground">
                                         No accessible accounts found.
                                     </TableCell>
                                 </TableRow>

@@ -80,7 +80,7 @@ export default async function AccountsPage() {
             <CardContent className="p-0 divide-y">
               {accountsToShow.length > 0 ? (
                 accountsToShow.map((acc: any) => (
-                  <AccountListItem key={acc.accountId} account={acc} />
+                  <AccountListItem key={acc.aid} account={acc} />
                 ))
               ) : (
                 <div className="p-4 text-center text-muted-foreground text-sm">

@@ -42,9 +42,13 @@ export async function getAccessibleAccounts(): Promise<AccessibleAccount[]> {
             },
         });
 
+        const seen = new Set<string>();
         const accounts = grants.map((grant) => {
             const ownerAccount = grant.owner;
             if (!ownerAccount) return null;
+            // Skip duplicate grants for the same owner account
+            if (seen.has(ownerAccount.id)) return null;
+            seen.add(ownerAccount.id);
 
             const neupId = ownerAccount.neupIds[0]?.id || 'unknown';
             const displayName = ownerAccount.displayName || 'Unnamed Account';
