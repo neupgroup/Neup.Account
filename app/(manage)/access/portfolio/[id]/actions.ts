@@ -153,13 +153,25 @@ export type AssetType = 'brand_account' | 'branch_account' | 'application';
 
 export async function getSelectableAssets(
   type: AssetType,
+  excludeAssetIds?: string[],
 ): Promise<SelectableAsset[]> {
+  let assets: SelectableAsset[];
   switch (type) {
     case 'brand_account':
-      return getBrandAssets();
+      assets = await getBrandAssets();
+      break;
     case 'branch_account':
-      return getBranchAssets();
+      assets = await getBranchAssets();
+      break;
     case 'application':
-      return getApplicationAssets();
+      assets = await getApplicationAssets();
+      break;
   }
+
+  if (excludeAssetIds && excludeAssetIds.length > 0) {
+    const excluded = new Set(excludeAssetIds);
+    return assets.filter((a) => !excluded.has(a.assetId));
+  }
+
+  return assets;
 }

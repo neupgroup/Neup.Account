@@ -286,6 +286,19 @@ export async function addAssetToGroup(input: { groupId: string; asset: string; t
       return { success: false, error: 'Permission denied.' };
     }
 
+    // Prevent duplicate assets in the same portfolio
+    const existing = await prisma.portfolioAsset.findFirst({
+      where: {
+        portfolioId: parsed.data.groupId,
+        assetId: parsed.data.asset,
+      },
+      select: { id: true },
+    });
+
+    if (existing) {
+      return { success: false, error: 'This asset is already in the portfolio.' };
+    }
+
     await prisma.portfolioAsset.create({
       data: {
         portfolioId: parsed.data.groupId,
@@ -303,6 +316,117 @@ export async function addAssetToGroup(input: { groupId: string; asset: string; t
   } catch (error) {
     await logError('database', error, `addAssetToGroup:${input.groupId}`);
     return { success: false, error: 'Failed to add asset.' };
+  }
+}
+
+
+/**
+ * Function removeAssetFromGroup.
+ *
+ * Removes an asset from a portfolio and cleans up all access grants scoped to
+ * that asset within the portfolio. The asset is then re-attached to a personal
+ * portfolio owned solely by the caller so it is not lost.
+ */
+export async function removeAssetFromGroup(input: { groupId: string; portfolioAssetId: string }) {
+  const accountId = await getActiveAccountId();
+  if (!accountId) {
+    return { success: false, error: 'Not authenticated.' };
+  }
+
+  if (!input.groupId || !input.portfolioAssetId) {
+    return { success: false, error: 'Missing required fields.' };
+  }
+
+  try {
+    const allowed = await canAccessGroup(input.groupId, accountId);
+    if (!allowed) {
+      return { success: false, error: 'Permission denied.' };
+    }
+
+    // Load the asset row so we know assetId and assetType for re-attachment
+    const assetRow = await prisma.portfolioAsset.findFirst({
+      where: {
+        id: input.portfolioAssetId,
+        portfolioId: input.groupId,
+      },
+      select: { id: true, assetId: true, assetType: true },
+    });
+
+    if (!assetRow) {
+      return { success: false, error: 'Asset not found in this portfolio.' };
+    }
+
+    await prisma.$transaction(async (tx) => {
+      // 1. Remove all access grants scoped to this asset in this portfolio
+      await tx.authzAssetsAccessGrant.deleteMany({
+        where: {
+          asset_id: assetRow.id,
+          portfolio_id: input.groupId,
+        },
+      });
+
+      // 2. Remove the asset from the portfolio
+      await tx.portfolioAsset.delete({
+        where: { id: assetRow.id },
+      });
+
+      // 3. Re-attach the asset to the caller's personal portfolio.
+      //    Find or create a personal portfolio owned solely by this account.
+      let personalPortfolio = await tx.portfolio.findFirst({
+        where: {
+          members: {
+            every: { accountId },
+            some: { accountId },
+          },
+        },
+        select: { id: true },
+      });
+
+      if (!personalPortfolio) {
+        personalPortfolio = await tx.portfolio.create({
+          data: {
+            name: 'My Assets',
+            description: 'Personal asset portfolio.',
+            members: {
+              create: {
+                accountId,
+                details: {
+                  isPermanent: true,
+                  hasFullAccess: true,
+                },
+              },
+            },
+          },
+          select: { id: true },
+        });
+      }
+
+      // Only add if not already present in the personal portfolio
+      const alreadyInPersonal = await tx.portfolioAsset.findFirst({
+        where: {
+          portfolioId: personalPortfolio.id,
+          assetId: assetRow.assetId,
+        },
+        select: { id: true },
+      });
+
+      if (!alreadyInPersonal) {
+        await tx.portfolioAsset.create({
+          data: {
+            portfolioId: personalPortfolio.id,
+            assetId: assetRow.assetId,
+            assetType: assetRow.assetType,
+          },
+        });
+      }
+    });
+
+    revalidatePath('/access');
+    revalidatePath(`/access/portfolio/${input.groupId}`);
+    return { success: true };
+  } catch (error) {
+    await logError('database', error, `removeAssetFromGroup:${input.groupId}:${input.portfolioAssetId}`);
+    return { success: false, error: 'Failed to remove asset.' };
   }
 }
 

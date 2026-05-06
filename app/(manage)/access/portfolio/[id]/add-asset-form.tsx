@@ -25,8 +25,11 @@ const ASSET_TYPES: { type: AssetType; label: string; icon: React.ReactNode }[] =
 
 export function AddAssetForm({
   action,
+  existingAssetIds = [],
 }: {
   action: (formData: FormData) => Promise<void>;
+  /** Asset IDs already in this portfolio — used to filter the picker list. */
+  existingAssetIds?: string[];
 }) {
   const [step, setStep] = useState<"type" | "pick">("type");
   const [selectedType, setSelectedType] = useState<AssetType | null>(null);
@@ -40,9 +43,9 @@ export function AddAssetForm({
     setLoadError(null);
     setAssets([]);
     startTransition(async () => {
-      const result = await getSelectableAssets(type);
+      const result = await getSelectableAssets(type, existingAssetIds);
       if (result.length === 0) {
-        setLoadError("No assets found for this type.");
+        setLoadError("No assets available for this type.");
       }
       setAssets(result);
       setStep("pick");
@@ -106,10 +109,7 @@ export function AddAssetForm({
             <p className="text-sm text-muted-foreground py-1">{loadError}</p>
           ) : selectedAsset ? (
             /* Confirmed selection — show chip + submit */
-            <form
-              action={action}
-              className="grid gap-3"
-            >
+            <form action={action} className="grid gap-3">
               <input type="hidden" name="asset" value={selectedAsset.assetId} />
               <input type="hidden" name="type" value={selectedAsset.assetType} />
 

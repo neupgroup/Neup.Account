@@ -1,7 +1,7 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { addAssetGroupMember, addAssetToGroup, assignAssetMemberRole } from '@/services/manage/access/assets';
+import { addAssetGroupMember, addAssetToGroup, assignAssetMemberRole, removeAssetFromGroup } from '@/services/manage/access/assets';
 
 /**
  * Function addMemberToAssetGroupFromForm.
@@ -28,6 +28,22 @@ export async function addAssetToGroupFromForm(groupId: string, formData: FormDat
     asset: String(formData.get('asset') || ''),
     type: String(formData.get('type') || ''),
     details: String(formData.get('details') || ''),
+  });
+
+  redirect(`/access/portfolio/${groupId}`);
+}
+
+
+/**
+ * Function removeAssetFromGroupFromForm.
+ *
+ * Removes an asset from the portfolio and moves it back to the caller's
+ * personal portfolio.
+ */
+export async function removeAssetFromGroupFromForm(groupId: string, formData: FormData) {
+  await removeAssetFromGroup({
+    groupId,
+    portfolioAssetId: String(formData.get('portfolioAssetId') || ''),
   });
 
   redirect(`/access/portfolio/${groupId}`);

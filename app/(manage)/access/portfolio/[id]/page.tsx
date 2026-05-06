@@ -3,11 +3,13 @@ import { BackButton } from '@/components/ui/back-button';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';import { Database, Key, KeyRound, Shield, UserCircle, Users } from '@/components/icons';
+import { Label } from '@/components/ui/label';
+import { Database, Key, KeyRound, Shield, UserCircle, Users, X } from '@/components/icons';
 import {
   addAssetToGroupFromForm,
   addMemberToAssetGroupFromForm,
   assignRoleToAssetMemberFromForm,
+  removeAssetFromGroupFromForm,
 } from '@/services/manage/access/actions';
 import { getAccessAssetGroup } from '@/services/manage/access/assets';
 import { resolveAssetNames } from '@/services/manage/access/asset-resolvers';
@@ -57,11 +59,15 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
 
   const addMemberAction = addMemberToAssetGroupFromForm.bind(null, id);
   const addAssetAction = addAssetToGroupFromForm.bind(null, id);
+  const removeAssetAction = removeAssetFromGroupFromForm.bind(null, id);
   const assignRoleAction = assignRoleToAssetMemberFromForm.bind(null, id);
 
   const roleRows = (Array.isArray((group as { roles?: unknown }).roles)
     ? (group as { roles?: unknown[] }).roles
     : []) as Array<{ id: string; accountId: string; roleId: string }>;
+
+  // IDs already in this portfolio — passed to the add form to filter duplicates
+  const existingAssetIds = group.assets.map((a) => a.assetId);
 
   return (
     <div className="grid gap-8">
@@ -142,7 +148,7 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
         </div>
 
         <div className="overflow-hidden rounded-lg border divide-y">
-          <AddAssetForm action={addAssetAction} />
+          <AddAssetForm action={addAssetAction} existingAssetIds={existingAssetIds} />
 
           {group.assets.length > 0 ? (
             group.assets.map((asset) => {
@@ -160,7 +166,22 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
                       </p>
                     </div>
                   </div>
-                  <Badge variant="outline" className="shrink-0 text-xs">{asset.assetType}</Badge>
+                  <div className="flex shrink-0 items-center gap-2">
+                    <Badge variant="outline" className="text-xs">{asset.assetType}</Badge>
+                    {/* Remove asset — moves it back to the caller's personal portfolio */}
+                    <form action={removeAssetAction}>
+                      <input type="hidden" name="portfolioAssetId" value={asset.id} />
+                      <Button
+                        type="submit"
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7 text-muted-foreground hover:text-destructive"
+                        aria-label={`Remove ${resolved?.name ?? asset.assetId} from portfolio`}
+                      >
+                        <X className="h-3.5 w-3.5" />
+                      </Button>
+                    </form>
+                  </div>
                 </div>
               );
             })
