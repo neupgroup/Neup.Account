@@ -46,6 +46,13 @@ export type AccountBasics = {
 };
 
 /**
+ * Type AccountBasicsWithCapabilities - extends AccountBasics with capabilities array.
+ */
+export type AccountBasicsWithCapabilities = AccountBasics & {
+    capabilities: string[];
+};
+
+/**
  * Type AccessibleAccount - extends StoredAccount with display fields.
  */
 export type AccessibleAccount = StoredAccount & {
@@ -281,5 +288,244 @@ export async function getAccountBasics(accountId: string): Promise<AccountBasics
     } catch (error) {
         await logError('database', error, `getAccountBasics:${accountId}`);
         return null;
+    }
+}
+
+
+/**
+ * Function getCapabilitiesForAccountPair.
+ *
+ * Returns the deduplicated list of capabilities that `accessorId` holds
+ * on `ownerAccountId`, by joining authzAccountAccessGrant → authzRoleCapability.
+ */
+async function getCapabilitiesForAccountPair(
+    accessorId: string,
+    ownerAccountId: string,
+): Promise<string[]> {
+    try {
+        const grants = await prisma.authzAccountAccessGrant.findMany({
+            where: {
+                targetAccountId: accessorId,
+                ownerAccountId,
+                appId: 'neup.account',
+            },
+            select: { roleId: true },
+        });
+
+        if (grants.length === 0) return [];
+
+        const roleIds = Array.from(new Set(grants.map((g) => g.roleId)));
+
+        const roleCapabilities = await prisma.authzRoleCapability.findMany({
+            where: {
+                roleId: { in: roleIds },
+                appId: 'neup.account',
+            },
+            select: { denormalizedCapability: true },
+        });
+
+        const capabilities = roleCapabilities.flatMap((row) => {
+            if (!Array.isArray(row.denormalizedCapability)) return [];
+            return row.denormalizedCapability.filter(
+                (item): item is string => typeof item === 'string',
+            );
+        });
+
+        return Array.from(new Set(capabilities));
+    } catch (error) {
+        await logError('database', error, `getCapabilitiesForAccountPair:${accessorId}:${ownerAccountId}`);
+        return [];
+    }
+}
+
+
+/**
+ * Function getAccessableAccountsWithCapabilities.
+ *
+ * Like getAccessableAccounts, but each entry also includes the capabilities
+ * the caller holds on that specific account.
+ */
+export async function getAccessableAccountsWithCapabilities(
+    accountId: string,
+): Promise<AccountBasicsWithCapabilities[]> {
+    try {
+        const ids = await getAccessableAccountIds(accountId);
+        if (ids.length === 0) return [];
+
+        const [accountRows, allGrants] = await Promise.all([
+            prisma.account.findMany({
+                where: { id: { in: ids } },
+                select: {
+                    id: true,
+                    displayName: true,
+                    displayImage: true,
+                    status: true,
+                    isVerified: true,
+                    accountType: true,
+                },
+            }),
+            // Fetch all grants for this accessor across all owner accounts in one query
+            prisma.authzAccountAccessGrant.findMany({
+                where: {
+                    targetAccountId: accountId,
+                    ownerAccountId: { in: ids },
+                    appId: 'neup.account',
+                },
+                select: { ownerAccountId: true, roleId: true },
+            }),
+        ]);
+
+        // Collect all unique roleIds so we can batch-fetch capabilities
+        const allRoleIds = Array.from(new Set(allGrants.map((g) => g.roleId)));
+
+        const roleCapabilityRows = allRoleIds.length > 0
+            ? await prisma.authzRoleCapability.findMany({
+                where: {
+                    roleId: { in: allRoleIds },
+                    appId: 'neup.account',
+                },
+                select: { roleId: true, denormalizedCapability: true },
+            })
+            : [];
+
+        // Build roleId → capabilities map
+        const roleCapMap = new Map<string, string[]>();
+        for (const row of roleCapabilityRows) {
+            if (!Array.isArray(row.denormalizedCapability)) continue;
+            const caps = row.denormalizedCapability.filter(
+                (c): c is string => typeof c === 'string',
+            );
+            roleCapMap.set(row.roleId, caps);
+        }
+
+        // Build ownerAccountId → capabilities map
+        const ownerCapMap = new Map<string, Set<string>>();
+        for (const grant of allGrants) {
+            if (!ownerCapMap.has(grant.ownerAccountId)) {
+                ownerCapMap.set(grant.ownerAccountId, new Set());
+            }
+            const caps = roleCapMap.get(grant.roleId) ?? [];
+            for (const cap of caps) {
+                ownerCapMap.get(grant.ownerAccountId)!.add(cap);
+            }
+        }
+
+        const seen = new Set<string>();
+        return accountRows
+            .filter((a) => {
+                if (seen.has(a.id)) return false;
+                seen.add(a.id);
+                return true;
+            })
+            .map((a) => ({
+                id: a.id,
+                displayName: a.displayName,
+                displayImage: a.displayImage,
+                status: a.status,
+                isVerified: a.isVerified,
+                accountType: a.accountType,
+                capabilities: Array.from(ownerCapMap.get(a.id) ?? []),
+            }));
+    } catch (error) {
+        await logError('database', error, `getAccessableAccountsWithCapabilities:${accountId}`);
+        return [];
+    }
+}
+
+
+/**
+ * Function getAccessableBrandAccountsWithCapabilities.
+ *
+ * Like getAccessableBrandAccounts, but each entry also includes the capabilities
+ * the caller holds on that specific brand/branch account.
+ */
+export async function getAccessableBrandAccountsWithCapabilities(
+    accountId: string,
+): Promise<AccountBasicsWithCapabilities[]> {
+    try {
+        const ids = await getAccessableAccountIds(accountId);
+        if (ids.length === 0) return [];
+
+        const [brandRows, allGrants] = await Promise.all([
+            prisma.account.findMany({
+                where: {
+                    id: { in: ids },
+                    accountType: { in: ['brand', 'branch'] },
+                },
+                select: {
+                    id: true,
+                    displayName: true,
+                    displayImage: true,
+                    status: true,
+                    isVerified: true,
+                    accountType: true,
+                },
+            }),
+            prisma.authzAccountAccessGrant.findMany({
+                where: {
+                    targetAccountId: accountId,
+                    ownerAccountId: { in: ids },
+                    appId: 'neup.account',
+                },
+                select: { ownerAccountId: true, roleId: true },
+            }),
+        ]);
+
+        const brandIds = new Set(brandRows.map((b) => b.id));
+
+        // Only keep grants for brand/branch accounts
+        const relevantGrants = allGrants.filter((g) => brandIds.has(g.ownerAccountId));
+
+        const allRoleIds = Array.from(new Set(relevantGrants.map((g) => g.roleId)));
+
+        const roleCapabilityRows = allRoleIds.length > 0
+            ? await prisma.authzRoleCapability.findMany({
+                where: {
+                    roleId: { in: allRoleIds },
+                    appId: 'neup.account',
+                },
+                select: { roleId: true, denormalizedCapability: true },
+            })
+            : [];
+
+        const roleCapMap = new Map<string, string[]>();
+        for (const row of roleCapabilityRows) {
+            if (!Array.isArray(row.denormalizedCapability)) continue;
+            const caps = row.denormalizedCapability.filter(
+                (c): c is string => typeof c === 'string',
+            );
+            roleCapMap.set(row.roleId, caps);
+        }
+
+        const ownerCapMap = new Map<string, Set<string>>();
+        for (const grant of relevantGrants) {
+            if (!ownerCapMap.has(grant.ownerAccountId)) {
+                ownerCapMap.set(grant.ownerAccountId, new Set());
+            }
+            const caps = roleCapMap.get(grant.roleId) ?? [];
+            for (const cap of caps) {
+                ownerCapMap.get(grant.ownerAccountId)!.add(cap);
+            }
+        }
+
+        const seen = new Set<string>();
+        return brandRows
+            .filter((a) => {
+                if (seen.has(a.id)) return false;
+                seen.add(a.id);
+                return true;
+            })
+            .map((a) => ({
+                id: a.id,
+                displayName: a.displayName,
+                displayImage: a.displayImage,
+                status: a.status,
+                isVerified: a.isVerified,
+                accountType: a.accountType,
+                capabilities: Array.from(ownerCapMap.get(a.id) ?? []),
+            }));
+    } catch (error) {
+        await logError('database', error, `getAccessableBrandAccountsWithCapabilities:${accountId}`);
+        return [];
     }
 }
