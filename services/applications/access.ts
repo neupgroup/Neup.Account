@@ -97,35 +97,6 @@ export async function addUserApplicationAccess(input: { appId: string; permissio
         create: { accountId, appId },
       });
 
-      let portfolio = await tx.portfolio.findFirst({
-        where: {
-          assets: {
-            some: {
-              assetId: appId,
-              assetType: { in: ['application', 'app'] },
-            },
-          },
-        },
-        select: { id: true },
-      });
-
-      if (!portfolio) {
-        portfolio = await tx.portfolio.create({
-          data: {
-            name: `App Portfolio ${appId}`,
-            description: 'Auto-generated app portfolio for access management.',
-            assets: {
-              create: {
-                assetId: appId,
-                assetType: 'application',
-                details: { primaryPortfolio: true },
-              },
-            },
-          },
-          select: { id: true },
-        });
-      }
-
       await tx.authzAccountAccessGrant.deleteMany({
         where: { targetAccountId: accountId, appId },
       });
@@ -136,7 +107,6 @@ export async function addUserApplicationAccess(input: { appId: string; permissio
             ownerAccountId: accountId,
             targetAccountId: accountId,
             appId,
-            portfolioId: portfolio.id,
             roleId,
           })),
           skipDuplicates: true,
@@ -170,35 +140,6 @@ export async function updateUserApplicationPermissions(input: { appId: string; p
 
   try {
     await prisma.$transaction(async (tx) => {
-      let portfolio = await tx.portfolio.findFirst({
-        where: {
-          assets: {
-            some: {
-              assetId: appId,
-              assetType: { in: ['application', 'app'] },
-            },
-          },
-        },
-        select: { id: true },
-      });
-
-      if (!portfolio) {
-        portfolio = await tx.portfolio.create({
-          data: {
-            name: `App Portfolio ${appId}`,
-            description: 'Auto-generated app portfolio for access management.',
-            assets: {
-              create: {
-                assetId: appId,
-                assetType: 'application',
-                details: { primaryPortfolio: true },
-              },
-            },
-          },
-          select: { id: true },
-        });
-      }
-
       await tx.authzAccountAccessGrant.deleteMany({
         where: { targetAccountId: accountId, appId },
       });
@@ -209,7 +150,6 @@ export async function updateUserApplicationPermissions(input: { appId: string; p
             ownerAccountId: accountId,
             targetAccountId: accountId,
             appId,
-            portfolioId: portfolio.id,
             roleId,
           })),
           skipDuplicates: true,

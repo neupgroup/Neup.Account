@@ -6,7 +6,7 @@ import prisma from '@/core/helpers/prisma';
 import { Prisma } from '../../../prisma/generated/client/client';
 import { getActiveAccountId } from '@/core/auth/verify';
 import { logError } from '@/core/helpers/logger';
-import { checkPermissions } from '@/services/user';
+import { checkPermissions, getAccountType } from '@/services/user';
 
 const memberPattern = /^(account:)?[^\s:]+$/;
 
@@ -154,6 +154,12 @@ export async function createAssetGroup(input: { name: string; details?: string }
   const accountId = await getActiveAccountId();
   if (!accountId) {
     return { success: false, error: 'Not authenticated.' };
+  }
+
+  // Portfolios can only be created by individual accounts.
+  const accountType = await getAccountType(accountId);
+  if (accountType !== 'individual') {
+    return { success: false, error: 'Only individual accounts can create portfolios.' };
   }
 
   const parsed = createAssetGroupSchema.safeParse(input);

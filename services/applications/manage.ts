@@ -55,7 +55,6 @@ const updateApplicationStatusSchema = z.object({
   status: z.enum(['development', 'active', 'rejected', 'blocked']),
 });
 
-const applicationAssetTypes = ['app', 'application'];
 const viewRoleKeys = new Set(['application.view', 'app.view', 'application.edit', 'app.edit', 'application.manage', 'app.manage', 'manage', '*']);
 const editRoleKeys = new Set(['application.edit', 'app.edit', 'application.manage', 'app.manage', 'manage', '*']);
 const ownerRoleKeys = new Set(['application.owner', 'app.owner', 'owner', '*']);
@@ -150,52 +149,18 @@ function normalizeEndpoints(value: unknown): ApplicationEndpointConfig {
  */
 async function resolveApplicationAccessForAccount(accountId: string, appId: string): Promise<{ canView: boolean; canEdit: boolean }> {
   try {
-    const [roleRows, memberRows] = await Promise.all([
-      prisma.authzAccountAccessGrant.findMany({
-        where: {
-          targetAccountId: accountId,
-          appId,
-        },
-        select: {
-          roleId: true,
-        },
-      }),
-      prisma.portfolioMember.findMany({
-        where: {
-          accountId,
-          portfolio: {
-            assets: {
-              some: {
-                assetId: appId,
-                assetType: { in: applicationAssetTypes },
-              },
-            },
-          },
-        },
-        select: {
-          details: true,
-        },
-      }),
-    ]);
-
-    if (roleRows.length === 0 && memberRows.length === 0) {
-      return { canView: false, canEdit: false };
-    }
-
-    const hasFullAccess = memberRows.some((row) => {
-      const details = (row.details ?? null) as Record<string, unknown> | null;
-      if (!details || typeof details !== 'object') return false;
-      const isPermanent = details.isPermanent === true;
-      const removesOnRaw = details.removesOn;
-      const removesOn = typeof removesOnRaw === 'string' || removesOnRaw instanceof Date
-        ? new Date(removesOnRaw as string | Date)
-        : null;
-      const stillValid = isPermanent || (removesOn instanceof Date && !Number.isNaN(removesOn.getTime()) && removesOn > new Date());
-      return stillValid && details.hasFullAccess === true;
+    const roleRows = await prisma.authzAccountAccessGrant.findMany({
+      where: {
+        targetAccountId: accountId,
+        appId,
+      },
+      select: {
+        roleId: true,
+      },
     });
 
-    if (hasFullAccess) {
-      return { canView: true, canEdit: true };
+    if (roleRows.length === 0) {
+      return { canView: false, canEdit: false };
     }
 
     const normalizedRoles = new Set(roleRows.map((row) => row.roleId.trim().toLowerCase()));
@@ -419,78 +384,13 @@ export async function createManagedApplication(input: { name: string }) {
         },
       });
 
-      let portfolio = await tx.portfolio.findFirst({
-        where: {
-          members: {
-            some: {
-              accountId,
-            },
-          },
-        },
-        select: { id: true },
-      });
-
-      if (!portfolio) {
-        portfolio = await tx.portfolio.create({
-          data: {
-            name: 'My Portfolio',
-            description: 'Default portfolio for your owned applications.',
-          },
-          select: { id: true },
-        });
-      }
-
-      await tx.portfolioMember.upsert({
-        where: {
-          portfolioId_accountId: {
-            portfolioId: portfolio.id,
-            accountId,
-          },
-        },
-        update: {
-          details: {
-            isPermanent: true,
-            hasFullAccess: true,
-          },
-        },
-        create: {
-          portfolioId: portfolio.id,
-          accountId,
-          details: {
-            isPermanent: true,
-            hasFullAccess: true,
-          },
-        },
-      });
-
-      let appAsset = await tx.portfolioAsset.findFirst({
-        where: {
-          portfolioId: portfolio.id,
-          assetId: createdApp.id,
-          assetType: 'application',
-        },
-        select: { id: true },
-      });
-
-      if (!appAsset) {
-        appAsset = await tx.portfolioAsset.create({
-          data: {
-            portfolioId: portfolio.id,
-            assetId: createdApp.id,
-            assetType: 'application',
-            details: { primaryPortfolio: true },
-          },
-          select: { id: true },
-        });
-      }
-
+      // Grant the creator ownership directly — no portfolio needed for applications.
       const existingGrant = await tx.authzAccountAccessGrant.findFirst({
         where: {
           ownerAccountId: accountId,
           targetAccountId: accountId,
           roleId: 'application.owner',
           appId: createdApp.id,
-          portfolioId: portfolio.id,
         },
       });
 
@@ -501,39 +401,14 @@ export async function createManagedApplication(input: { name: string }) {
             targetAccountId: accountId,
             roleId: 'application.owner',
             appId: createdApp.id,
-            portfolioId: portfolio.id,
           },
         });
       }
 
-      // Grant the creator asset-level ownership on the application asset.
-      const existingAssetGrant = await tx.authzAssetsAccessGrant.findFirst({
-        where: {
-          asset_id: appAsset.id,
-          account_id: accountId,
-          role_id: 'application.owner',
-        },
-      });
-
-      if (!existingAssetGrant) {
-        await tx.authzAssetsAccessGrant.create({
-          data: {
-            asset_id: appAsset.id,
-            account_id: accountId,
-            role_id: 'application.owner',
-            portfolio_id: portfolio.id,
-            app_id: createdApp.id,
-            asset_type: 'application',
-          },
-        });
-      }
-
-      return { id: createdApp.id, groupId: portfolio.id };
+      return { id: createdApp.id };
     });
 
     revalidatePath('/data/applications');
-    revalidatePath('/access');
-    revalidatePath(`/access/${application.groupId}`);
     return { success: true, appId: application.id };
   } catch (error) {
     await logError('database', error, 'createManagedApplication');
@@ -570,52 +445,18 @@ export async function getManagedApplications(): Promise<Array<{ id: string; name
     });
 
     const ownedApplications = ownedRows.map((r) => r.application);
-
     const ownedIds = new Set(ownedApplications.map((app) => app.id));
 
-    const [roleRows, memberRows] = await Promise.all([
-      prisma.authzAccountAccessGrant.findMany({
-        where: { targetAccountId: accountId },
-        select: { roleId: true, appId: true },
-      }),
-      prisma.portfolioMember.findMany({
-        where: {
-          accountId,
-          portfolio: {
-            assets: {
-              some: {
-                assetType: { in: applicationAssetTypes },
-              },
-            },
-          },
-        },
-        select: {
-          details: true,
-          portfolio: {
-            select: {
-              assets: {
-                where: { assetType: { in: applicationAssetTypes } },
-                select: { assetId: true },
-              },
-            },
-          },
-        },
-      }),
-    ]);
+    const roleRows = await prisma.authzAccountAccessGrant.findMany({
+      where: { targetAccountId: accountId },
+      select: { roleId: true, appId: true },
+    });
 
     const permittedViewAppIds = new Set<string>();
     for (const row of roleRows) {
       const normalizedRole = row.roleId.trim().toLowerCase();
       if (viewRoleKeys.has(normalizedRole) && row.appId) {
         permittedViewAppIds.add(row.appId);
-      }
-    }
-
-    for (const row of memberRows) {
-      const details = (row.details ?? null) as Record<string, unknown> | null;
-      const hasFullAccess = Boolean(details && typeof details === 'object' && details.hasFullAccess === true);
-      if (hasFullAccess) {
-        row.portfolio.assets.forEach((asset) => permittedViewAppIds.add(asset.assetId));
       }
     }
 

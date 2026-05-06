@@ -47,34 +47,13 @@ export async function bridgeGetAuthAccess(input: {
 
     const resolvedAppId = appId || 'neup.account';
 
-    const [teamInfo, roleRows] = await Promise.all([
-      prisma.portfolioMember.findMany({
-        where: {
-          accountId: aid,
-          portfolio: {
-            assets: {
-              some: {
-                assetId: resolvedAppId,
-                assetType: { in: ['application', 'app'] },
-              },
-            },
-          },
-        },
-        select: {
-          id: true,
-          portfolioId: true,
-          accountId: true,
-          details: true,
-        },
-      }),
-      prisma.authzAccountAccessGrant.findMany({
-        where: {
-          targetAccountId: aid,
-          appId: resolvedAppId,
-        },
-        select: { roleId: true },
-      }),
-    ]);
+    const roleRows = await prisma.authzAccountAccessGrant.findMany({
+      where: {
+        targetAccountId: aid,
+        appId: resolvedAppId,
+      },
+      select: { roleId: true },
+    });
 
     const permissions = Array.from(new Set(roleRows.map((row) => row.roleId)));
 
@@ -86,7 +65,7 @@ export async function bridgeGetAuthAccess(input: {
         appId: resolvedAppId,
         isInternal: isInternalApp(resolvedAppId),
         role: 'user',
-        teams: teamInfo,
+        teams: [],
         permissions,
         assetPermissions: [],
         resourcePermissions: [],
@@ -113,59 +92,35 @@ export async function bridgeCreateAuthAccess(input: Record<string, any>): Promis
 
     const appId = appIdOverride || 'neup.account';
 
-    await prisma.$transaction(async (tx) => {
-      let portfolio = await tx.portfolio.findFirst({
-        where: {
-          assets: {
-            some: {
-              assetId: appId,
-              assetType: { in: ['application', 'app'] },
-            },
-          },
-        },
-        select: { id: true },
-      });
-
-      if (!portfolio) {
-        portfolio = await tx.portfolio.create({
-          data: {
-            name: `App Portfolio ${appId}`,
-            description: 'Auto-generated app portfolio for access management.',
-            assets: {
-              create: {
-                assetId: appId,
-                assetType: 'application',
-                details: { primaryPortfolio: true },
-              },
-            },
-          },
-          select: { id: true },
-        });
-      }
-
-      await tx.portfolioMember.upsert({
-        where: {
-          portfolioId_accountId: {
-            portfolioId: portfolio.id,
-            accountId: recipientId,
-          },
-        },
-        update: {
-          details: {
-            isPermanent: !!isPermanent,
-          },
-        },
-        create: {
-          portfolioId: portfolio.id,
-          accountId: recipientId,
-          details: {
-            isPermanent: !!isPermanent,
-          },
-        },
-      });
+    // Ensure the access.member role exists
+    await prisma.authzRole.upsert({
+      where: { id: 'access.member' },
+      update: { name: 'access.member', scope: 'account', appId: 'neup.account' },
+      create: { id: 'access.member', name: 'access.member', scope: 'account', appId: 'neup.account' },
     });
 
-    return { status: 200, body: { success: true, message: 'User added to portfolio.' } };
+    // Grant access directly without a portfolio
+    const existing = await prisma.authzAccountAccessGrant.findFirst({
+      where: {
+        ownerAccountId: aid,
+        targetAccountId: recipientId,
+        appId,
+        roleId: 'access.member',
+      },
+    });
+
+    if (!existing) {
+      await prisma.authzAccountAccessGrant.create({
+        data: {
+          ownerAccountId: aid,
+          targetAccountId: recipientId,
+          appId,
+          roleId: 'access.member',
+        },
+      });
+    }
+
+    return { status: 200, body: { success: true, message: 'Access granted.' } };
   } catch (error) {
     await logError('auth', error, 'bridge_create_auth_access');
     return { status: 500, body: { error: 'internal_server_error' } };
@@ -182,22 +137,6 @@ export async function bridgeUpdateAuthAccess(input: Record<string, any>): Promis
     const appId = appIdOverride || 'neup.account';
     const recipientId = targetId || aid;
 
-    const portfolio = await prisma.portfolio.findFirst({
-      where: {
-        assets: {
-          some: {
-            assetId: appId,
-            assetType: { in: ['application', 'app'] },
-          },
-        },
-      },
-      select: { id: true },
-    });
-
-    if (!portfolio) {
-      return { status: 404, body: { error: 'portfolio_not_found' } };
-    }
-
     const addRoles = Array.isArray(add) ? add : add ? [add] : [];
     const removeRoles = Array.isArray(remove) ? remove : remove ? [remove] : [];
 
@@ -206,22 +145,26 @@ export async function bridgeUpdateAuthAccess(input: Record<string, any>): Promis
         await tx.authzAccountAccessGrant.deleteMany({
           where: {
             targetAccountId: recipientId,
-            portfolioId: portfolio.id,
+            appId,
             roleId: { in: removeRoles },
           },
         });
       }
 
       for (const roleId of addRoles) {
-        await tx.authzAccountAccessGrant.create({
-          data: {
-            ownerAccountId: aid,
-            targetAccountId: recipientId,
-            portfolioId: portfolio.id,
-            appId,
-            roleId,
-          },
+        const exists = await tx.authzAccountAccessGrant.findFirst({
+          where: { ownerAccountId: aid, targetAccountId: recipientId, appId, roleId },
         });
+        if (!exists) {
+          await tx.authzAccountAccessGrant.create({
+            data: {
+              ownerAccountId: aid,
+              targetAccountId: recipientId,
+              appId,
+              roleId,
+            },
+          });
+        }
       }
     });
 
