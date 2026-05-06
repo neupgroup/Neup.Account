@@ -210,6 +210,7 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
         <div className="overflow-hidden rounded-lg border">
           <AssignPermissionsWizard
             action={bulkAssignAction}
+            groupId={id}
             members={group.members.map((m) => ({
               id: m.id,
               accountId: m.accountId,

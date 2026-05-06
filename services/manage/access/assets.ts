@@ -7,6 +7,7 @@ import { Prisma } from '../../../prisma/generated/client/client';
 import { getActiveAccountId } from '@/core/auth/verify';
 import { logError } from '@/core/helpers/logger';
 import { checkPermissions, getAccountType } from '@/services/user';
+import { resolveAssetName } from '@/services/manage/access/asset-resolvers';
 
 const memberPattern = /^(account:)?[^\s:]+$/;
 
