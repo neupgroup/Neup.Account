@@ -19,8 +19,9 @@ export type AccountListItem = {
     dateCreated: string;
     accountType: string;
     isRoot: boolean;
+    roles: string[];
+    capabilities: string[];
 };
-
 
 /**
  * Type GetAccountsResponse.
@@ -48,7 +49,6 @@ export async function getUserStats(): Promise<UserStats> {
         ]);
         const activeUsers = Math.floor(totalUsers * 0.8);
         return { totalUsers, activeUsers, signedUpToday };
-
     } catch (error) {
         await logError('database', error, 'getUserStats');
         return { totalUsers: 0, activeUsers: 0, signedUpToday: 0 };
@@ -57,92 +57,119 @@ export async function getUserStats(): Promise<UserStats> {
 
 
 /**
- * Function getAllAccounts.
+ * Function getAccessableAccount.
+ *
+ * Returns a deduplicated array of account IDs that the given accountId
+ * has access to — i.e. all unique ownerAccountIds from authz_account_access_grant
+ * where targetAccountId = accountId and app_id = 'neup.account'.
  */
-export async function getAllAccounts(
-  searchQuery: string,
-  page: number,
-  pageSize: number,
-  sortKey: keyof AccountListItem,
-  sortDirection: 'asc' | 'desc'
-): Promise<GetAccountsResponse> {
-    const canView = await checkPermissions(['root.account.view']);
-    if (!canView) {
-        return { accounts: [], hasNextPage: false };
-    }
-
+export async function getAccessableAccount(accountId: string): Promise<string[]> {
     try {
-        // Fetch all accounts (one row per account — no joins, no duplicates)
-        const accounts = await prisma.account.findMany({
+        const grants = await prisma.authzAccountAccessGrant.findMany({
+            where: {
+                targetAccountId: accountId,
+                appId: 'neup.account',
+            },
+            select: { ownerAccountId: true },
+            distinct: ['ownerAccountId'],
+        });
+
+        return grants.map((g) => g.ownerAccountId);
+    } catch (error) {
+        await logError('database', error, `getAccessableAccount:${accountId}`);
+        return [];
+    }
+}
+
+
+/**
+ * Function getAccessableBrandAccounts.
+ *
+ * Calls getAccessableAccount, then filters to only accounts whose
+ * accountType is 'brand' or 'branch'. Returns an array of account detail objects.
+ */
+export async function getAccessableBrandAccounts(accountId: string): Promise<AccountBasics[]> {
+    try {
+        const ids = await getAccessableAccount(accountId);
+        if (ids.length === 0) return [];
+
+        const brandAccounts = await prisma.account.findMany({
+            where: {
+                id: { in: ids },
+                accountType: { in: ['brand', 'branch'] },
+            },
             select: {
                 id: true,
                 displayName: true,
-                createdAt: true,
+                displayImage: true,
+                status: true,
+                isVerified: true,
                 accountType: true,
             },
         });
 
-        // Fetch the set of account IDs that hold a root-scoped role — single query
-        const rootGrants = await prisma.authzAccountAccessGrant.findMany({
-            where: {
-                appId: 'neup.account',
-                role: { scope: 'root' },
-            },
-            select: { targetAccountId: true },
-            distinct: ['targetAccountId'],
-        });
-        const rootAccountIds = new Set(rootGrants.map((g) => g.targetAccountId));
-
-        let allAccounts: AccountListItem[] = accounts.map((a) => ({
+        return brandAccounts
+            .filter((a, index, self) => self.findIndex((b) => b.id === a.id) === index)
+            .map((a) => ({
             id: a.id,
-            name: a.displayName || 'Unnamed Account',
-            dateCreated: (a.createdAt ?? new Date(0)).toISOString(),
-            accountType: a.accountType || 'individual',
-            isRoot: rootAccountIds.has(a.id),
+            displayName: a.displayName,
+            displayImage: a.displayImage,
+            status: a.status,
+            isVerified: a.isVerified,
+            accountType: a.accountType,
         }));
+    } catch (error) {
+        await logError('database', error, `getAccessableBrandAccounts:${accountId}`);
+        return [];
+    }
+}
 
-        // Filter
-        if (searchQuery) {
-            const q = searchQuery.toLowerCase();
-            allAccounts = allAccounts.filter((acc) =>
-                acc.name.toLowerCase().includes(q) ||
-                acc.id.toLowerCase().includes(q) ||
-                acc.accountType.toLowerCase().includes(q)
-            );
-        }
 
-        // Sort
-        allAccounts.sort((a, b) => {
-            const aVal = a[sortKey];
-            const bVal = b[sortKey];
 
-            if (aVal === null || aVal === undefined) return 1;
-            if (bVal === null || bVal === undefined) return -1;
 
-            if (sortKey === 'dateCreated') {
-                const diff = new Date(aVal as string).getTime() - new Date(bVal as string).getTime();
-                return sortDirection === 'asc' ? diff : -diff;
-            }
+/**
+ * Type AccountBasics.
+ */
+export type AccountBasics = {
+    id: string;
+    displayName: string | null;
+    displayImage: string | null;
+    status: string | null;
+    isVerified: boolean;
+    accountType: string;
+};
 
-            if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1;
-            if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1;
-            return 0;
+/**
+ * Function getAccountBasics.
+ *
+ * Returns basic account information for a given accountId.
+ */
+export async function getAccountBasics(accountId: string): Promise<AccountBasics | null> {
+    try {
+        const account = await prisma.account.findUnique({
+            where: { id: accountId },
+            select: {
+                id: true,
+                displayName: true,
+                displayImage: true,
+                status: true,
+                isVerified: true,
+                accountType: true,
+            },
         });
 
-        // Paginate
-        const startIndex = (page - 1) * pageSize;
-        const paginatedAccounts = allAccounts.slice(startIndex, startIndex + pageSize);
+        if (!account) return null;
 
         return {
-            accounts: paginatedAccounts.map((acc) => ({
-                ...acc,
-                dateCreated: new Date(acc.dateCreated).toLocaleDateString(),
-            })),
-            hasNextPage: startIndex + pageSize < allAccounts.length,
+            id: account.id,
+            displayName: account.displayName,
+            displayImage: account.displayImage,
+            status: account.status,
+            isVerified: account.isVerified,
+            accountType: account.accountType,
         };
-
     } catch (error) {
-        await logError('database', error, 'getAllAccounts');
-        return { accounts: [], hasNextPage: false };
+        await logError('database', error, `getAccountBasics:${accountId}`);
+        return null;
     }
 }
