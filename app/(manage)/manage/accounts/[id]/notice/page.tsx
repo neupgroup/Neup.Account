@@ -2,7 +2,7 @@
 
 import { notFound } from "next/navigation";
 import { getUserDetails, getAccountDetails } from "@/services/manage/users";
-import { BlockServiceAccessForm, SendWarningForm } from "../../accounts/[id]/forms";
+import { BlockServiceAccessForm, SendWarningForm } from "../forms";
 import { BackButton } from "@/components/ui/back-button";
 import { PrimaryHeader } from "@/components/ui/primary-header";
 

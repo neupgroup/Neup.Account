@@ -8,10 +8,11 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { appendFlowParamsObject, getFlowParams } from '@/core/auth/callback';
 import type { ComponentProps } from 'react';
+import { Suspense } from 'react';
 
 type FlowLinkProps = ComponentProps<typeof Link>;
 
-export function FlowLink({ href, ...props }: FlowLinkProps) {
+function FlowLinkInner({ href, ...props }: FlowLinkProps) {
   const searchParams = useSearchParams();
   const flowParams = getFlowParams(searchParams);
 
@@ -19,4 +20,12 @@ export function FlowLink({ href, ...props }: FlowLinkProps) {
   const finalHref = appendFlowParamsObject(hrefString, flowParams);
 
   return <Link href={finalHref} {...props} />;
+}
+
+export function FlowLink({ href, ...props }: FlowLinkProps) {
+  return (
+    <Suspense fallback={<Link href={href} {...props} />}>
+      <FlowLinkInner href={href} {...props} />
+    </Suspense>
+  );
 }
