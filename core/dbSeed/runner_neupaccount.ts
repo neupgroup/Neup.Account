@@ -35,6 +35,7 @@ const APP_ID = 'neup.account';
 const ROLE_INDIV_DEFAULT = 'individual-default-neup-account';
 const ROLE_INDIV_ROOT    = 'root-full-neup-account';
 const ROLE_APP_OWNER     = 'base-app-creator-neup-account';
+const ROLE_BRAND_OWNER   = 'brand-owner-neup-account';
 
 // Fill in an existing account ID to skip account creation and grant roles
 // directly to that account. Leave empty to create a new master account
@@ -197,6 +198,44 @@ SELECT
 FROM "authz_capability" c
 WHERE c."app_id" = '${APP_ID}'
   AND c."scope"  = 'creator'
+ON CONFLICT ("id") DO NOTHING;
+
+-- 3d. Role — brand.owner
+INSERT INTO "authz_role" ("id", "name", "description", "app_id", "scope") VALUES
+  ('brand-owner-neup-account', 'brand.owner', 'Full ownership role for brand accounts.', '${APP_ID}', 'brand')
+ON CONFLICT ("id") DO NOTHING;
+
+INSERT INTO "authz_capability" ("id", "name", "app_id", "scope") VALUES
+  ('cap-brand-profile-view',      'brand.profile.view',            '${APP_ID}', 'brand'),
+  ('cap-brand-profile-edit',      'brand.profile.edit',            '${APP_ID}', 'brand'),
+  ('cap-brand-settings-view',     'brand.settings.view',           '${APP_ID}', 'brand'),
+  ('cap-brand-settings-edit',     'brand.settings.edit',           '${APP_ID}', 'brand'),
+  ('cap-brand-members-view',      'brand.members.view',            '${APP_ID}', 'brand'),
+  ('cap-brand-members-manage',    'brand.members.manage',          '${APP_ID}', 'brand'),
+  ('cap-brand-branches-view',     'linked_accounts.brand.view',    '${APP_ID}', 'brand'),
+  ('cap-brand-branches-manage',   'linked_accounts.brand.manage',  '${APP_ID}', 'brand'),
+  ('cap-brand-branches-manager',  'linked_accounts.brand.manager', '${APP_ID}', 'brand'),
+  ('cap-brand-kyc-view',          'brand.kyc.view',                '${APP_ID}', 'brand'),
+  ('cap-brand-kyc-submit',        'brand.kyc.submit',              '${APP_ID}', 'brand'),
+  ('cap-brand-platforms-view',    'brand.platforms.view',          '${APP_ID}', 'brand'),
+  ('cap-brand-platforms-manage',  'brand.platforms.manage',        '${APP_ID}', 'brand'),
+  ('cap-brand-delete',            'brand.delete',                  '${APP_ID}', 'brand')
+ON CONFLICT ("id") DO NOTHING;
+
+INSERT INTO "authz_role_capability" (
+  "id", "role_id", "capability_id", "scope", "app_id", "role_name", "denormalized_capability"
+)
+SELECT
+  'rcp-brandowner-' || c."id",
+  'brand-owner-neup-account',
+  c."id",
+  'brand',
+  '${APP_ID}',
+  'brand.owner',
+  '["brand.profile.view","brand.profile.edit","brand.settings.view","brand.settings.edit","brand.members.view","brand.members.manage","linked_accounts.brand.view","linked_accounts.brand.manage","linked_accounts.brand.manager","brand.kyc.view","brand.kyc.submit","brand.platforms.view","brand.platforms.manage","brand.delete"]'::jsonb
+FROM "authz_capability" c
+WHERE c."app_id" = '${APP_ID}'
+  AND c."scope"  = 'brand'
 ON CONFLICT ("id") DO NOTHING;
 
 COMMIT;

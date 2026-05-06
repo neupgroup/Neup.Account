@@ -11,6 +11,8 @@ import { revalidatePath } from 'next/cache';
 import { brandCreationSchema } from '@/services/manage/accounts/schema';
 import { logActivity } from '@/services/log-actions';
 
+const BRAND_OWNER_ROLE_ID = 'brand-owner-neup-account';
+
 export type BrandAccount = {
     id: string;
     name: string;
@@ -20,66 +22,52 @@ export type BrandAccount = {
 
 /**
  * Function getBrandAccounts.
+ * Returns all brand accounts where the personal account holds the brand.owner role.
  */
 export async function getBrandAccounts(): Promise<BrandAccount[]> {
     const canView = await checkPermissions(['linked_accounts.brand.view']);
     if (!canView) return [];
-    
+
     const personalAccountId = await getPersonalAccountId();
-    if (!personalAccountId) {
-        return [];
-    }
+    if (!personalAccountId) return [];
 
     try {
-        const ownerships = await prisma.accountOwnership.findMany({
+        const grants = await prisma.authzAccountAccessGrant.findMany({
             where: {
-                parentId: personalAccountId,
-                type: 'brand',
+                targetAccountId: personalAccountId,
+                roleId: BRAND_OWNER_ROLE_ID,
+                appId: 'neup.account',
             },
-            select: {
-                childrenId: true,
-            },
+            select: { ownerAccountId: true },
         });
-        
-        if (ownerships.length === 0) {
-            return [];
-        }
 
-        const managedAccountIds = ownerships.map((ownership) => ownership.childrenId);
+        if (grants.length === 0) return [];
 
-        if (managedAccountIds.length === 0) {
-            return [];
-        }
+        const brandAccountIds = grants.map((g) => g.ownerAccountId);
 
         const brandAccountsData = await prisma.account.findMany({
             where: {
-                id: { in: managedAccountIds },
-                accountType: 'brand'
-            }
+                id: { in: brandAccountIds },
+                accountType: 'brand',
+            },
         });
 
-        if (brandAccountsData.length === 0) {
-            return [];
-        }
+        if (brandAccountsData.length === 0) return [];
 
         const brandAccounts = await Promise.all(
             brandAccountsData.map(async (account) => {
-                const brandAccountId = account.id;
-                // We can use the account data directly or call getUserProfile if it adds more logic
-                const profile = await getUserProfile(brandAccountId);
-
+                const profile = await getUserProfile(account.id);
                 if (!profile) return null;
-
                 return {
-                    id: brandAccountId,
+                    id: account.id,
                     name: profile.nameDisplay || 'Unnamed Brand',
                     logoUrl: profile.accountPhoto,
-                    plan: "Business" // Placeholder for plan
+                    plan: 'Business',
                 };
             })
         );
-        
-        return brandAccounts.filter((account): account is NonNullable<typeof account> => account !== null);
+
+        return brandAccounts.filter((a): a is NonNullable<typeof a> => a !== null);
 
     } catch (error) {
         await logError('database', error, 'getBrandAccounts');
@@ -90,21 +78,22 @@ export async function getBrandAccounts(): Promise<BrandAccount[]> {
 
 /**
  * Function createBrandAccount.
+ * Creates the account, neupId, brand profile, optional contact, then grants brand.owner to the creator.
  */
 export async function createBrandAccount(data: z.infer<typeof brandCreationSchema>, geolocation?: string) {
     const canCreate = await checkPermissions(['linked_accounts.brand.create']);
     if (!canCreate) {
-        return { success: false, error: "You do not have permission to create a brand account." };
+        return { success: false, error: 'You do not have permission to create a brand account.' };
     }
-    
+
     const creatorAccountId = await getPersonalAccountId();
     if (!creatorAccountId) {
-        return { success: false, error: "User not authenticated." };
+        return { success: false, error: 'User not authenticated.' };
     }
 
     const validation = brandCreationSchema.safeParse(data);
     if (!validation.success) {
-        return { success: false, error: "Invalid data provided.", details: validation.error.flatten() };
+        return { success: false, error: 'Invalid data provided.', details: validation.error.flatten() };
     }
 
     const { nameBrand, nameLegal, registrationId, headOfficeLocation, servingAreas } = validation.data;
@@ -112,17 +101,14 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
     const ipAddress = (await headers()).get('x-forwarded-for') || 'Unknown IP';
 
     try {
-        const existingNeupId = await prisma.neupId.findUnique({
-            where: { id: neupId }
-        });
-        
+        const existingNeupId = await prisma.neupId.findUnique({ where: { id: neupId } });
         if (existingNeupId) {
             return { success: false, error: 'This NeupID is already taken.' };
         }
 
-        // Transaction to create everything
         await prisma.$transaction(async (tx) => {
-             const account = await tx.account.create({
+            // 1. Account row
+            const account = await tx.account.create({
                 data: {
                     accountType: 'brand',
                     status: 'active',
@@ -133,52 +119,57 @@ export async function createBrandAccount(data: z.infer<typeof brandCreationSchem
                         nameLegal: nameLegal || null,
                         registrationId: registrationId || null,
                     },
-                    
-                    neupIds: {
-                        create: {
-                            id: neupId,
-                            neupId: neupId,
-                            isPrimary: true
-                        }
-                    },
-                    
-                    contacts: headOfficeLocation ? {
-                        create: {
-                            contactType: 'headOfficeLocation',
-                            value: headOfficeLocation
-                        }
-                    } : undefined,
-
-                    brandProfile: {
-                        create: {
-                            brandName: nameBrand,
-                            isLegalEntity: Boolean(nameLegal || registrationId),
-                            originCountry: servingAreas || null,
-                        }
-                    },
-                }
+                },
             });
 
-            await tx.accountOwnership.create({
+            // 2. NeupID
+            await tx.neupId.create({
                 data: {
-                    parentId: creatorAccountId,
-                    childrenId: account.id,
-                    type: 'brand',
-                }
+                    id: neupId,
+                    neupId: neupId,
+                    accountId: account.id,
+                    isPrimary: true,
+                },
             });
 
-            await tx.permit.create({
+            // 3. Brand profile (account_meta__brand)
+            await tx.accountTypeBrand.create({
                 data: {
-                    accountId: creatorAccountId,
-                    targetAccountId: account.id,
-                    forSelf: false,
-                    isRoot: false,
-                    permissions: ['independent.default'], // Founder gets default management permissions
-                    restrictions: []
-                }
+                    accountId: account.id,
+                    brandName: nameBrand,
+                    isLegalEntity: Boolean(nameLegal || registrationId),
+                    originCountry: servingAreas || null,
+                },
+            });
+
+            // 4. Head office contact (optional)
+            if (headOfficeLocation) {
+                await tx.contact.create({
+                    data: {
+                        accountId: account.id,
+                        contactType: 'headOfficeLocation',
+                        value: headOfficeLocation,
+                    },
+                });
+            }
+
+            // 5. Grant brand.owner to the creator
+            await tx.authzRole.upsert({
+                where: { id: BRAND_OWNER_ROLE_ID },
+                update: { name: 'brand.owner', scope: 'brand', appId: 'neup.account' },
+                create: { id: BRAND_OWNER_ROLE_ID, name: 'brand.owner', scope: 'brand', appId: 'neup.account' },
+            });
+
+            await tx.authzAccountAccessGrant.create({
+                data: {
+                    ownerAccountId: account.id,
+                    targetAccountId: creatorAccountId,
+                    roleId: BRAND_OWNER_ROLE_ID,
+                    appId: 'neup.account',
+                },
             });
         });
-        
+
         await logActivity(creatorAccountId, `Created Brand Account: ${neupId}`, 'Success', ipAddress, undefined, geolocation);
         revalidatePath('/accounts/brand');
 

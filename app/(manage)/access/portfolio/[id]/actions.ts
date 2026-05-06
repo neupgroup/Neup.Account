@@ -62,12 +62,16 @@ async function getBrandAssets(): Promise<SelectableAsset[]> {
     const personalAccountId = await getPersonalAccountId();
     if (!personalAccountId) return [];
 
-    const ownerships = await prisma.accountOwnership.findMany({
-      where: { parentId: personalAccountId, type: 'brand' },
-      select: { childrenId: true },
+    const grants = await prisma.authzAccountAccessGrant.findMany({
+      where: {
+        targetAccountId: personalAccountId,
+        roleId: 'brand-owner-neup-account',
+        appId: 'neup.account',
+      },
+      select: { ownerAccountId: true },
     });
 
-    const ids = ownerships.map((o) => o.childrenId);
+    const ids = grants.map((g) => g.ownerAccountId);
     if (ids.length === 0) return [];
 
     const accounts = await prisma.account.findMany({
@@ -94,20 +98,19 @@ async function getBranchAssets(): Promise<SelectableAsset[]> {
     const activeAccountId = await getActiveAccountId();
     if (!activeAccountId) return [];
 
-    const ownerships = await prisma.accountOwnership.findMany({
-      where: { parentId: activeAccountId, type: 'branch' },
-      select: { childrenId: true },
-    });
-
-    const ids = ownerships.map((o) => o.childrenId);
-    if (ids.length === 0) return [];
-
-    const accounts = await prisma.account.findMany({
-      where: { id: { in: ids } },
+    // Branches are owned by the active brand account — find them via AccountOwnership
+    // which maps parentId (brand) → childrenId (branch). Fall back to empty if table missing.
+    const branches = await prisma.account.findMany({
+      where: {
+        accountType: 'branch',
+        parentOwnerships: {
+          some: { parentId: activeAccountId },
+        },
+      },
       include: { neupIds: { where: { isPrimary: true }, select: { id: true } } },
     });
 
-    return accounts.map((a) => ({
+    return branches.map((a) => ({
       assetId: a.id,
       name: a.displayName || 'Unnamed Branch',
       assetType: 'branch_account',
