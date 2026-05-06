@@ -2,9 +2,7 @@ import { notFound } from 'next/navigation';
 import { BackButton } from '@/components/ui/back-button';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Database, Key, KeyRound, Shield, UserCircle, Users, X } from '@/components/icons';
+import { Database, KeyRound, Shield, UserCircle, Users, X } from '@/components/icons';
 import {
   addAssetToGroupFromForm,
   addMemberToAssetGroupFromForm,
@@ -16,6 +14,7 @@ import { resolveAssetNames } from '@/services/manage/access/asset-resolvers';
 import { getUserProfile } from '@/services/user';
 import { AddMemberForm } from './add-member-form';
 import { AddAssetForm } from './add-asset-form';
+import { RoleAssignForm } from './role-assign-form';
 
 type PageProps = {
   params: Promise<{ id: string }>;
@@ -202,55 +201,18 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
         </div>
 
         <div className="overflow-hidden rounded-lg border divide-y">
-          <form action={assignRoleAction} className="px-4 py-3 grid gap-3 sm:grid-cols-3">
-            <div>
-              <Label htmlFor="assetMember" className="sr-only">Account</Label>
-              <select
-                id="assetMember"
-                name="assetMember"
-                aria-label="Select account"
-                className="h-8 w-full rounded-md border bg-background px-3 text-sm"
-                required
-              >
-                <option value="">Account</option>
-                {group.members.map((member) => (
-                  <option key={member.id} value={member.id}>
-                    {nameMap[member.accountId] ?? member.accountId}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <Label htmlFor="asset" className="sr-only">Asset</Label>
-              <select
-                id="asset"
-                name="asset"
-                aria-label="Select asset"
-                className="h-8 w-full rounded-md border bg-background px-3 text-sm"
-                required
-              >
-                <option value="">Asset</option>
-                {group.assets.map((asset) => (
-                  <option key={asset.id} value={asset.id}>
-                    {assetNameMap[asset.id]?.name ?? asset.assetId}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="flex gap-2">
-              <Input
-                id="role"
-                name="role"
-                placeholder="Role (e.g. manager.read)"
-                required
-                className="h-8 text-sm"
-              />
-              <Button type="submit" size="sm" className="shrink-0 gap-1.5">
-                <Key className="h-3.5 w-3.5" />
-                Set
-              </Button>
-            </div>
-          </form>
+          <RoleAssignForm
+            action={assignRoleAction}
+            members={group.members.map((m) => ({
+              id: m.id,
+              accountId: m.accountId,
+              displayName: nameMap[m.accountId] ?? m.accountId,
+            }))}
+            assets={group.assets.map((a) => ({
+              id: a.id,
+              label: assetNameMap[a.id]?.name ?? a.assetId,
+            }))}
+          />
 
           {group.members.length > 0 && roleRows.length > 0 ? (
             group.members

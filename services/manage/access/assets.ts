@@ -498,3 +498,53 @@ export async function assignAssetMemberRole(input: {
     return { success: false, error: 'Failed to assign role.' };
   }
 }
+
+
+/**
+ * Type AssetRole — a role available for a specific asset.
+ */
+export type AssetRole = {
+  id: string;
+  name: string;
+  description?: string;
+};
+
+/**
+ * Function getRolesForAsset.
+ *
+ * Given a portfolioAsset row ID, resolves the underlying asset and returns
+ * all AuthzRole rows scoped to that asset's application ID.
+ * Returns an empty array for non-application asset types.
+ */
+export async function getRolesForAsset(portfolioAssetId: string): Promise<AssetRole[]> {
+  if (!portfolioAssetId) return [];
+
+  try {
+    const assetRow = await prisma.portfolioAsset.findUnique({
+      where: { id: portfolioAssetId },
+      select: { assetId: true, assetType: true },
+    });
+
+    if (!assetRow) return [];
+
+    const type = assetRow.assetType.trim().toLowerCase();
+    const isApplication = type === 'application' || type === 'app';
+
+    if (!isApplication) return [];
+
+    const roles = await prisma.authzRole.findMany({
+      where: { appId: assetRow.assetId },
+      select: { id: true, name: true, description: true },
+      orderBy: { name: 'asc' },
+    });
+
+    return roles.map((r) => ({
+      id: r.id,
+      name: r.name,
+      description: r.description ?? undefined,
+    }));
+  } catch (error) {
+    await logError('database', error, `getRolesForAsset:${portfolioAssetId}`);
+    return [];
+  }
+}
