@@ -2,7 +2,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import React from 'react';
 import { getActiveAccountId } from '@/core/auth/verify';
 import { notFound } from 'next/navigation';
-import { getAccessibleAccounts } from '@/services/manage/accounts/accessible';
+import { getAccessibleAccounts } from '@/services/manage/accounts';
 import { authCookies } from '@/core/helpers/cookies';
 import { ListItem } from '@/components/ui/list-item';
 import { SecondaryHeader } from '@/components/ui/secondary-header';
