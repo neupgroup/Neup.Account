@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -12,9 +11,6 @@ import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import {
@@ -100,7 +96,7 @@ export default function CreateBrandPage() {
 
             if (result.success) {
                 toast({ title: "Success", description: "Brand Account created successfully!", className: "bg-accent text-accent-foreground" });
-                redirectInApp(router, '/accounts/brand');
+                redirectInApp(router, '/accounts');
             } else {
                 toast({
                     variant: "destructive",
@@ -129,7 +125,7 @@ export default function CreateBrandPage() {
 
     return (
         <div className="grid gap-8">
-             <BackButton href="/accounts/brand" />
+            <BackButton href="/accounts" />
             <div>
                 <h1 className="text-3xl font-bold tracking-tight">Create a Brand Account</h1>
                 <p className="text-muted-foreground">
@@ -244,7 +240,6 @@ export default function CreateBrandPage() {
                             </CardContent>
                         </Card>
                     </div>
-
 
                     <div className="flex justify-end">
                         <Button type="submit" disabled={isSubmitting || neupIdStatus === 'checking'}>

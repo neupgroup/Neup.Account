@@ -23,7 +23,7 @@ const LinkAndCreateFeatures = () => (
       icon={Building}
       title="Create Brand Account"
       description="Set up a new profile for a business or organization."
-      href="/accounts/brand/create"
+      href="/accounts/create?type=brand"
     />
     <ListItem
       icon={UserPlus}
