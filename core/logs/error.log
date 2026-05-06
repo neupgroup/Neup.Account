@@ -2347,3 +2347,75 @@ Foreign key constraint violated on the constraint: `authz_account_access_grant_r
     at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
     at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
 --------------------------------------------------------------------------------
+[2026-05-06T05:02:23.581Z] [database] [auto] [getAccountPermission — grant/capability query failed for d7169b8d-df72-4284-89fc-ed3f27950ac7] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.authzRoleCapability.findMany()` invocation:
+
+
+Operation has timed out
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getAccountPermission (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_cff218a6._.js:1021:34)
+    at async Promise.all (index 1)
+    at async checkSession (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_56dac3b5._.js:48:36)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_4cdc8b69._.js:7321:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_4cdc8b69._.js:7527:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_4cdc8b69._.js:7898:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------
+[2026-05-06T05:03:14.453Z] [database] [auto] [getUserProfile: d7169b8d-df72-4284-89fc-ed3f27950ac7] [IP: ::1] [Account: d7169b8d-df72-4284-89fc-ed3f27950ac7] [Signature: dd3627f713f1e0a24105e2d262bb282d]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.account.findUnique()` invocation:
+
+
+Operation has timed out
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async getUserProfile (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_cff218a6._.js:905:25)
+    at async Promise.all (index 0)
+    at async checkSession (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_56dac3b5._.js:48:36)
+    at async executeActionAndPrepareForRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:3803)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:36:1109
+    at async handleAction (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:34:23616)
+    at async renderToHTMLOrFlightImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:41:42130)
+    at async doRender (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_4cdc8b69._.js:7321:28)
+    at async AppPageRouteModule.handleResponse (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:43:64241)
+    at async handleResponse (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_4cdc8b69._.js:7527:32)
+    at async Module.handler (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/node_modules_4cdc8b69._.js:7898:20)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1442:9)
+    at async DevServer.renderPageComponent (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1494:24)
+    at async DevServer.renderToResponseImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1544:32)
+    at async DevServer.pipeImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:1038:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/next-server.js:395:17)
+    at async DevServer.handleRequestImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/base-server.js:929:17)
+    at async /Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:387:20
+    at async Span.traceAsyncFn (/Users/neupkishor/Code/neup.account/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/dev/next-dev-server.js:383:24)
+    at async invokeRender (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:248:21)
+    at async handleRequest (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:447:24)
+    at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
+    at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
+--------------------------------------------------------------------------------

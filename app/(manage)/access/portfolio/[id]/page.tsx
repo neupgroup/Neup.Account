@@ -11,6 +11,7 @@ import {
   assignRoleToAssetMemberFromForm,
 } from '@/services/manage/access/actions';
 import { getAccessAssetGroup } from '@/services/manage/access/assets';
+import { resolveAssetNames } from '@/services/manage/access/asset-resolvers';
 import { getUserProfile } from '@/services/user';
 import { AddMemberForm } from './add-member-form';
 
@@ -41,6 +42,9 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
   const nameMap = Object.fromEntries(
     memberProfiles.map((p) => [p.accountId, p.name])
   );
+
+  // Resolve display names for all assets in parallel
+  const assetNameMap = await resolveAssetNames(group.assets);
 
   const getMemberDetails = (value: unknown) => {
     const d = value && typeof value === 'object' ? (value as Record<string, unknown>) : {};
@@ -151,20 +155,25 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
           </form>
 
           {group.assets.length > 0 ? (
-            group.assets.map((asset) => (
-              <div key={asset.id} className="flex items-center justify-between gap-4 px-4 py-3">
-                <div className="flex items-center gap-3 min-w-0">
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted">
-                    <Database className="h-3.5 w-3.5 text-muted-foreground" />
-                  </span>
-                  <div className="min-w-0">
-                    <p className="text-sm font-medium truncate font-mono">{asset.assetId}</p>
-                    <p className="text-xs text-muted-foreground">{asset.assetType}</p>
+            group.assets.map((asset) => {
+              const resolved = assetNameMap[asset.id];
+              return (
+                <div key={asset.id} className="flex items-center justify-between gap-4 px-4 py-3">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-muted">
+                      <Database className="h-3.5 w-3.5 text-muted-foreground" />
+                    </span>
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium truncate">{resolved?.name ?? asset.assetId}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {resolved?.subtitle ?? asset.assetType}
+                      </p>
+                    </div>
                   </div>
+                  <Badge variant="outline" className="shrink-0 text-xs">{asset.assetType}</Badge>
                 </div>
-                <Badge variant="outline" className="shrink-0 text-xs">{asset.assetType}</Badge>
-              </div>
-            ))
+              );
+            })
           ) : (
             <div className="flex items-center gap-3 px-4 py-3 text-sm text-muted-foreground">
               <Database className="h-4 w-4 shrink-0" />
@@ -212,7 +221,7 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
                 <option value="">Asset</option>
                 {group.assets.map((asset) => (
                   <option key={asset.id} value={asset.id}>
-                    {asset.assetId}
+                    {assetNameMap[asset.id]?.name ?? asset.assetId}
                   </option>
                 ))}
               </select>
