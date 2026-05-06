@@ -45,7 +45,7 @@ export function CreateAssetGroupCard() {
       setOpen(false);
       setName('');
       setDetails('');
-      router.push(`/access/${result.id}`);
+      router.push(`/access/portfolio/${result.id}`);
       router.refresh();
     });
   };

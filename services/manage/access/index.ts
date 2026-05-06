@@ -78,6 +78,7 @@ const statusOrder: Record<UserAccess['status'], number> = {
 
 /**
  * Function getAccessList.
+ * Returns only grants that are NOT associated with a portfolio.
  */
 export async function getAccessList(accountId: string): Promise<UserAccess[]> {
   try {
@@ -85,6 +86,7 @@ export async function getAccessList(accountId: string): Promise<UserAccess[]> {
       where: {
         ownerAccountId: accountId,
         appId: 'neup.account',
+        portfolioId: null,
       },
     });
 

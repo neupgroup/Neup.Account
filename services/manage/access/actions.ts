@@ -15,7 +15,7 @@ export async function addMemberToAssetGroupFromForm(groupId: string, formData: F
     hasFullPermit: formData.get('hasFullPermit') === 'on',
   });
 
-  redirect(`/access/${groupId}`);
+  redirect(`/access/portfolio/${groupId}`);
 }
 
 
@@ -30,7 +30,7 @@ export async function addAssetToGroupFromForm(groupId: string, formData: FormDat
     details: String(formData.get('details') || ''),
   });
 
-  redirect(`/access/${groupId}`);
+  redirect(`/access/portfolio/${groupId}`);
 }
 
 
@@ -45,5 +45,5 @@ export async function assignRoleToAssetMemberFromForm(groupId: string, formData:
     role: String(formData.get('role') || ''),
   });
 
-  redirect(`/access/${groupId}`);
+  redirect(`/access/portfolio/${groupId}`);
 }
