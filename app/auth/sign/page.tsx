@@ -67,7 +67,7 @@ export default async function AuthSignPage({ searchParams }: SignPageProps) {
     return (
       <div className="flex min-h-screen items-start justify-center bg-card md:bg-background md:items-center">
         <Card className="mx-auto max-w-lg w-full border-0 shadow-none md:border md:shadow-sm">
-          <CardHeader className="pb-6 pt-8 px-8">
+          <CardHeader>
             <AppIdentity icon={appIcon} name={displayAppName} />
             <div className="pt-4 space-y-1">
               <CardTitle className="text-2xl font-headline">Sign in to continue</CardTitle>
@@ -77,7 +77,7 @@ export default async function AuthSignPage({ searchParams }: SignPageProps) {
               </CardDescription>
             </div>
           </CardHeader>
-          <CardContent className="px-8 pb-8">
+          <CardContent>
             <Button asChild className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
               <FlowLink href={startPageUrl}>Sign In or Create Account</FlowLink>
             </Button>
@@ -92,7 +92,7 @@ export default async function AuthSignPage({ searchParams }: SignPageProps) {
     return (
       <div className="flex min-h-screen items-start justify-center bg-card md:bg-background md:items-center">
         <Card className="mx-auto max-w-lg w-full border-0 shadow-none md:border md:shadow-sm">
-          <CardHeader className="pb-6 pt-8 px-8">
+          <CardHeader>
             <AppIdentity icon={appIcon} name={displayAppName} />
             <div className="pt-4 space-y-1">
               <CardTitle className="text-2xl font-headline">
@@ -104,8 +104,8 @@ export default async function AuthSignPage({ searchParams }: SignPageProps) {
               </CardDescription>
             </div>
           </CardHeader>
-          <CardContent className="px-8 pb-8">
-            <div className="grid grid-cols-2 gap-3 pt-4">
+          <CardContent>
+            <div className="grid grid-cols-2 gap-3 mt-6">
               <Button asChild variant="outline" className="w-full">
                 <a href={cancelUrl}>Cancel</a>
               </Button>
@@ -124,7 +124,7 @@ export default async function AuthSignPage({ searchParams }: SignPageProps) {
     return (
       <div className="flex min-h-screen items-start justify-center bg-card md:bg-background md:items-center">
         <Card className="mx-auto max-w-lg w-full border-0 shadow-none md:border md:shadow-sm">
-          <CardHeader className="pb-6 pt-8 px-8">
+          <CardHeader>
             <AppIdentity icon={appIcon} name={displayAppName} />
             <div className="pt-4 space-y-1">
               <CardTitle className="text-2xl font-headline">Data Access</CardTitle>
@@ -134,7 +134,7 @@ export default async function AuthSignPage({ searchParams }: SignPageProps) {
               </CardDescription>
             </div>
           </CardHeader>
-          <CardContent className="px-8 pb-8 grid gap-4">
+          <CardContent className="grid gap-4">
             <ul className="rounded-lg border divide-y overflow-hidden">
               {accessItems.map((item) => (
                 <li key={item} className="flex items-center gap-3 px-4 py-2.5 text-sm">
@@ -143,7 +143,7 @@ export default async function AuthSignPage({ searchParams }: SignPageProps) {
                 </li>
               ))}
             </ul>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3 mt-2">
               <Button asChild variant="outline" className="w-full">
                 <FlowLink href={accessBackUrl}>Back</FlowLink>
               </Button>
@@ -164,7 +164,7 @@ export default async function AuthSignPage({ searchParams }: SignPageProps) {
     return (
       <div className="flex min-h-screen items-start justify-center bg-card md:bg-background md:items-center">
         <Card className="mx-auto max-w-lg w-full border-0 shadow-none md:border md:shadow-sm">
-          <CardHeader className="pb-6 pt-8 px-8">
+          <CardHeader>
             <AppIdentity icon={appIcon} name={displayAppName} />
             <div className="pt-4 space-y-1">
               <CardTitle className="text-2xl font-headline">Terms &amp; Conditions</CardTitle>
@@ -174,7 +174,7 @@ export default async function AuthSignPage({ searchParams }: SignPageProps) {
               </CardDescription>
             </div>
           </CardHeader>
-          <CardContent className="px-8 pb-8 grid gap-4">
+          <CardContent className="grid gap-4">
             <div className="max-h-60 overflow-y-auto rounded-lg border divide-y">
               {hasPolicies ? (
                 policies.map((p) => (
@@ -193,7 +193,7 @@ export default async function AuthSignPage({ searchParams }: SignPageProps) {
                 </div>
               )}
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3 mt-2">
               <Button asChild variant="outline" className="w-full">
                 <FlowLink href={termsBackUrl}>Back</FlowLink>
               </Button>
