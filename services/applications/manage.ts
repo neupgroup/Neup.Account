@@ -379,6 +379,34 @@ export async function createManagedApplication(input: { name: string }) {
 
   try {
     const application = await prisma.$transaction(async (tx) => {
+      // Ensure the application.owner role and its capabilities exist before creating grants.
+      // This makes createManagedApplication self-contained regardless of seed state.
+      const capabilities = [
+        { id: 'application.view', name: 'application.view', description: 'View application details and settings.' },
+        { id: 'application.edit', name: 'application.edit', description: 'Edit application details, secrets, access fields, policies, and endpoints.' },
+        { id: 'application.delete', name: 'application.delete', description: 'Delete or deactivate an application.' },
+      ];
+      for (const cap of capabilities) {
+        await tx.authzCapability.upsert({
+          where: { id: cap.id },
+          update: { name: cap.name, description: cap.description, appId: 'neup.account', scope: 'application' },
+          create: { id: cap.id, name: cap.name, description: cap.description, appId: 'neup.account', scope: 'application' },
+        });
+      }
+      await tx.authzRole.upsert({
+        where: { id: 'application.owner' },
+        update: { name: 'application.owner', description: 'Full ownership of an application.', appId: 'neup.account', scope: 'application' },
+        create: { id: 'application.owner', name: 'application.owner', description: 'Full ownership of an application.', appId: 'neup.account', scope: 'application' },
+      });
+      for (const cap of capabilities) {
+        const mapId = `application.owner::${cap.id}`;
+        await tx.authzRoleCapability.upsert({
+          where: { id: mapId },
+          update: { roleId: 'application.owner', capabilityId: cap.id, appId: 'neup.account', roleName: 'application.owner', denormalizedCapability: [cap.name] },
+          create: { id: mapId, roleId: 'application.owner', capabilityId: cap.id, appId: 'neup.account', roleName: 'application.owner', denormalizedCapability: [cap.name] },
+        });
+      }
+
       const createdApp = await tx.application.create({
         data: {
           id: randomUUID(),

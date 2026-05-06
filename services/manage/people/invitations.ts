@@ -121,14 +121,18 @@ export async function acceptRequest(requestId: string, notificationId: string): 
                 }
 
             } else if (request.action === 'access_invitation') {
-                await tx.permit.create({
+                // Ensure the account.delegate role exists
+                await tx.authzRole.upsert({
+                    where: { id: 'account.delegate' },
+                    update: { name: 'account.delegate', scope: 'account', appId: 'neup.account' },
+                    create: { id: 'account.delegate', name: 'account.delegate', scope: 'account', appId: 'neup.account' },
+                });
+                await tx.authzAccountAccessGrant.create({
                     data: {
-                        accountId: inviteeId,
-                        targetAccountId: request.senderId,
-                        permissions: ['independent.default'],
-                        forSelf: false,
-                        isRoot: false,
-                        restrictions: []
+                        ownerAccountId: request.senderId,
+                        targetAccountId: inviteeId,
+                        roleId: 'account.delegate',
+                        appId: 'neup.account',
                     }
                 });
             }

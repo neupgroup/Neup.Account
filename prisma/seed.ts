@@ -119,24 +119,20 @@ async function main() {
   }
 
   if (accountId) {
-    const existingRootPermit = await prisma.permit.findFirst({
-      where: { accountId, isRoot: true, forSelf: false },
+    // Upsert the account.root role and grant it to the seed account.
+    // This replaces the legacy permit-based root grant.
+    await prisma.authzRole.upsert({
+      where: { id: 'account.root' },
+      update: { name: 'account.root', scope: 'root', appId: 'neup.account' },
+      create: { id: 'account.root', name: 'account.root', scope: 'root', appId: 'neup.account' },
     });
 
-    if (!existingRootPermit) {
-      await prisma.permit.create({
-        data: {
-          accountId,
-          forSelf: false,
-          isRoot: true,
-          permissions: ROOT_PERMISSIONS,
-          restrictions: [],
-        },
-      });
-    } else {
-      await prisma.permit.update({
-        where: { id: existingRootPermit.id },
-        data: { permissions: ROOT_PERMISSIONS, restrictions: [] },
+    const existingGrant = await prisma.authzAccountAccessGrant.findFirst({
+      where: { ownerAccountId: accountId, targetAccountId: accountId, roleId: 'account.root', appId: 'neup.account' },
+    });
+    if (!existingGrant) {
+      await prisma.authzAccountAccessGrant.create({
+        data: { ownerAccountId: accountId, targetAccountId: accountId, roleId: 'account.root', appId: 'neup.account' },
       });
     }
   }

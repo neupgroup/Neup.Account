@@ -238,12 +238,12 @@ export async function switchToDelegated(accountId: string) {
         return { success: false, error: 'Not authenticated.' };
     }
 
-    // Verify a permit exists granting this account access to the delegated account
-    const permit = await prisma.permit.findFirst({
-        where: { accountId: personalAccountId, targetAccountId: accountId, forSelf: false },
+    // Verify a grant exists giving this account access to the delegated account
+    const grant = await prisma.authzAccountAccessGrant.findFirst({
+        where: { ownerAccountId: accountId, targetAccountId: personalAccountId, appId: 'neup.account' },
         select: { id: true },
     });
-    if (!permit) {
+    if (!grant) {
         return { success: false, error: 'No delegated access found for this account.' };
     }
 

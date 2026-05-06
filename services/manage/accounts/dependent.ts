@@ -177,27 +177,35 @@ export async function createDependentAccount(data: z.infer<typeof dependentFormS
             }
         });
         
-        // Grant management permission to the guardian
-        await prisma.permit.create({
+        // Ensure delegation roles exist
+        await prisma.authzRole.upsert({
+            where: { id: 'account.guardian' },
+            update: { name: 'account.guardian', scope: 'account', appId: 'neup.account' },
+            create: { id: 'account.guardian', name: 'account.guardian', scope: 'account', appId: 'neup.account' },
+        });
+        await prisma.authzRole.upsert({
+            where: { id: 'account.dependent' },
+            update: { name: 'account.dependent', scope: 'account', appId: 'neup.account' },
+            create: { id: 'account.dependent', name: 'account.dependent', scope: 'account', appId: 'neup.account' },
+        });
+
+        // Grant guardian access to manage the dependent account
+        await prisma.authzAccountAccessGrant.create({
             data: {
-                accountId: guardianAccountId,
-                targetAccountId: dependentAccountId,
-                forSelf: false,
-                isRoot: false,
-                permissions: ['independent.default'], // Guardian gets default independent permissions over dependent
-                restrictions: []
+                ownerAccountId: dependentAccountId,
+                targetAccountId: guardianAccountId,
+                roleId: 'account.guardian',
+                appId: 'neup.account',
             }
         });
-        
-        // Grant self-permissions to the dependent account
-        await prisma.permit.create({
+
+        // Grant the dependent account access to itself
+        await prisma.authzAccountAccessGrant.create({
             data: {
-                accountId: dependentAccountId,
+                ownerAccountId: dependentAccountId,
                 targetAccountId: dependentAccountId,
-                forSelf: true,
-                isRoot: false,
-                permissions: ['dependent.full'], // Dependent gets full dependent permissions for self
-                restrictions: []
+                roleId: 'account.dependent',
+                appId: 'neup.account',
             }
         });
         

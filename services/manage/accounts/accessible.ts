@@ -24,47 +24,46 @@ export async function getAccessibleAccounts(): Promise<AccessibleAccount[]> {
     if (!personalAccountId) return [];
 
     try {
-        const permits = await prisma.permit.findMany({
+        // Query authzAccountAccessGrant: ownerAccountId is the account being managed,
+        // targetAccountId is the account that has been granted access (the accessor).
+        const grants = await prisma.authzAccountAccessGrant.findMany({
             where: {
-                accountId: personalAccountId,
-                forSelf: false,
-                // We want all permits, regardless of account type
+                targetAccountId: personalAccountId,
+                appId: 'neup.account',
             },
             include: {
-                targetAccount: {
+                owner: {
                     include: {
                         neupIds: {
-                            where: { isPrimary: true }
-                        }
-                    }
-                }
-            }
+                            where: { isPrimary: true },
+                        },
+                    },
+                },
+            },
         });
 
-        const accounts = await Promise.all(permits.map(async (permit) => {
-            const targetAccount = permit.targetAccount;
-            if (!targetAccount) return null;
+        const accounts = grants.map((grant) => {
+            const ownerAccount = grant.owner;
+            if (!ownerAccount) return null;
 
-            const neupId = targetAccount.neupIds[0]?.id || 'unknown';
-            
-            // Determine display name
-            const displayName = targetAccount.displayName || 'Unnamed Account';
+            const neupId = ownerAccount.neupIds[0]?.id || 'unknown';
+            const displayName = ownerAccount.displayName || 'Unnamed Account';
 
             const accessibleAccount: AccessibleAccount = {
-                aid: targetAccount.id,
+                aid: ownerAccount.id,
                 def: 0,
                 sid: '',
                 skey: '',
-                neupId: neupId,
+                neupId,
                 active: false,
-                isBrand: targetAccount.accountType === 'brand',
-                isDependent: targetAccount.accountType === 'dependent',
-                accountType: targetAccount.accountType,
-                displayName: displayName,
-                displayPhoto: targetAccount.displayImage || undefined,
+                isBrand: ownerAccount.accountType === 'brand',
+                isDependent: ownerAccount.accountType === 'dependent',
+                accountType: ownerAccount.accountType,
+                displayName,
+                displayPhoto: ownerAccount.displayImage || undefined,
             };
             return accessibleAccount;
-        }));
+        });
 
         return accounts.filter((acc): acc is AccessibleAccount => acc !== null);
 

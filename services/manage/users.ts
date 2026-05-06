@@ -121,47 +121,59 @@ export async function getUserDashboardStats(accountId: string): Promise<UserDash
     };
 }
 
-// Returns the resolved permission and restriction sets for an account's self-permit.
+// Returns the resolved permission and restriction sets for an account.
+// Reads from authzAccountAccessGrant + authzRoleCapability — the same path as checkPermissions().
 export async function getPermissions(accountId: string): Promise<UserPermissions> {
-    const permit = await prisma.permit.findFirst({
-        where: { accountId, forSelf: true },
-        select: { permissions: true, restrictions: true },
-    });
-    if (!permit) return { assignedPermissions: [], restrictedPermissions: [], allPermissions: [] };
-
-    const permissionIds = permit.permissions || [];
-    const restrictionIds = permit.restrictions || [];
-    const allPermissions = new Set<string>(permissionIds);
-    restrictionIds.forEach(p => allPermissions.delete(p));
-
+    const { getAccountPermission } = await import('@/services/user');
+    const allPermissions = await getAccountPermission(accountId);
     return {
-        assignedPermissions: permissionIds,
-        restrictedPermissions: restrictionIds,
-        allPermissions: Array.from(allPermissions),
+        assignedPermissions: allPermissions,
+        restrictedPermissions: [],
+        allPermissions,
     };
 }
 
 
 // --- Write ---
 
-// Updates the permission and restriction sets on an account's self-permit.
+// Updates the permission set for an account by writing to authzAccountAccessGrant + authzRoleCapability.
+// Uses a per-account custom role so the result is immediately visible to checkPermissions().
 export async function updateUserPermissions(accountId: string, newPermissionIds: string[], newRestrictionIds: string[]): Promise<{ success: boolean; error?: string }> {
     const canUpdate = await checkPermissions(['root.permission.edit']);
     if (!canUpdate) return { success: false, error: 'Permission denied.' };
 
     try {
-        const existing = await prisma.permit.findFirst({
-            where: { accountId, forSelf: true },
-            select: { id: true },
+        const roleId = `account.custom.${accountId}`;
+
+        // Upsert the custom role
+        await prisma.authzRole.upsert({
+            where: { id: roleId },
+            update: { name: roleId, scope: 'account', appId: 'neup.account' },
+            create: { id: roleId, name: roleId, scope: 'account', appId: 'neup.account' },
         });
-        if (!existing) {
-            await prisma.permit.create({
-                data: { accountId, targetAccountId: accountId, forSelf: true, isRoot: false, permissions: newPermissionIds, restrictions: newRestrictionIds },
+
+        // Effective permissions = assigned minus restricted
+        const effectivePermissions = newPermissionIds.filter(p => !newRestrictionIds.includes(p));
+
+        // Upsert the role-capability map with the denormalized capability array
+        const mapId = `${roleId}::capabilities`;
+        if (effectivePermissions.length > 0) {
+            await prisma.authzRoleCapability.upsert({
+                where: { id: mapId },
+                update: { roleId, appId: 'neup.account', roleName: roleId, denormalizedCapability: effectivePermissions },
+                create: { id: mapId, roleId, capabilityId: effectivePermissions[0], appId: 'neup.account', roleName: roleId, denormalizedCapability: effectivePermissions },
             });
         } else {
-            await prisma.permit.update({
-                where: { id: existing.id },
-                data: { permissions: newPermissionIds, restrictions: newRestrictionIds },
+            await prisma.authzRoleCapability.deleteMany({ where: { roleId } });
+        }
+
+        // Upsert the grant linking the account to its custom role
+        const existingGrant = await prisma.authzAccountAccessGrant.findFirst({
+            where: { ownerAccountId: accountId, targetAccountId: accountId, roleId, appId: 'neup.account' },
+        });
+        if (!existingGrant) {
+            await prisma.authzAccountAccessGrant.create({
+                data: { ownerAccountId: accountId, targetAccountId: accountId, roleId, appId: 'neup.account' },
             });
         }
 

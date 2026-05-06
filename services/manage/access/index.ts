@@ -81,27 +81,26 @@ const statusOrder: Record<UserAccess['status'], number> = {
  */
 export async function getAccessList(accountId: string): Promise<UserAccess[]> {
   try {
-    const permits = await prisma.permit.findMany({
+    const grants = await prisma.authzAccountAccessGrant.findMany({
       where: {
-        targetAccountId: accountId,
-        forSelf: false,
-        isRoot: false
-      }
+        ownerAccountId: accountId,
+        appId: 'neup.account',
+      },
     });
 
     const accessList = await Promise.all(
-      permits.map(async (permit: any) => {
-        const userProfile = await getUserProfile(permit.accountId);
+      grants.map(async (grant) => {
+        const userProfile = await getUserProfile(grant.targetAccountId);
         if (!userProfile) return null;
 
         return {
-          permitId: permit.id,
-          userId: permit.accountId,
+          permitId: grant.id,
+          userId: grant.targetAccountId,
           displayName:
             userProfile.nameDisplay ||
             `${userProfile.nameFirst} ${userProfile.nameLast}`.trim(),
           accountPhoto: userProfile.accountPhoto,
-          permissions: permit.permissions || [],
+          permissions: [grant.roleId],
           status: 'approved' as const,
         };
       })
@@ -123,18 +122,20 @@ export async function getAccessList(accountId: string): Promise<UserAccess[]> {
  */
 export async function getAccessDetails(permitId: string): Promise<AccessDetails | null> {
     try {
-        const permit = await prisma.permit.findUnique({
+        const grant = await prisma.authzAccountAccessGrant.findUnique({
           where: { id: permitId }
         });
 
-        if (!permit) {
+        if (!grant) {
             return null;
         }
-        
+
+        // In authzAccountAccessGrant: ownerAccountId = the account being managed (grantedBy),
+        // targetAccountId = the accessor who was granted access (grantedTo).
         const [grantedToProfile, grantedByProfile, grantedToNeupIds] = await Promise.all([
-            getUserProfile(permit.accountId), // The user who has access
-            getUserProfile(permit.targetAccountId!),   // The account being accessed
-            getUserNeupIds(permit.accountId)
+            getUserProfile(grant.targetAccountId),
+            getUserProfile(grant.ownerAccountId),
+            getUserNeupIds(grant.targetAccountId),
         ]);
 
         if (!grantedToProfile || !grantedByProfile) {
@@ -142,19 +143,19 @@ export async function getAccessDetails(permitId: string): Promise<AccessDetails 
         }
 
         return {
-            permitId: permit.id,
+            permitId: grant.id,
             grantedTo: {
-                id: permit.accountId,
+                id: grant.targetAccountId,
                 name: grantedToProfile.nameDisplay || `${grantedToProfile.nameFirst} ${grantedToProfile.nameLast}`.trim(),
-                neupId: grantedToNeupIds[0] || 'N/A'
+                neupId: grantedToNeupIds[0] || 'N/A',
             },
             grantedBy: {
-                id: permit.targetAccountId!,
-                name: grantedByProfile.nameDisplay || `${grantedByProfile.nameFirst} ${grantedByProfile.nameLast}`.trim()
+                id: grant.ownerAccountId,
+                name: grantedByProfile.nameDisplay || `${grantedByProfile.nameFirst} ${grantedByProfile.nameLast}`.trim(),
             },
-            grantedOn: permit.createdAt.toLocaleString(),
-            permissions: permit.permissions || []
-        }
+            grantedOn: new Date().toLocaleString(), // authzAccountAccessGrant has no createdAt; use current as fallback
+            permissions: [grant.roleId],
+        };
 
     } catch (error) {
         await logError('database', error, `getAccessDetails for ${permitId}`);
@@ -173,16 +174,16 @@ export async function removeAccess(permitId: string, geolocation?: string): Prom
     }
     
     try {
-        const permit = await prisma.permit.findUnique({
+        const grant = await prisma.authzAccountAccessGrant.findUnique({
           where: { id: permitId }
         });
 
-        if (!permit || permit.targetAccountId !== currentAccountId) {
+        if (!grant || grant.ownerAccountId !== currentAccountId) {
             return { success: false, error: "Permission denied or grant not found." };
         }
         
-        const removedUserId = permit.accountId;
-        await prisma.permit.delete({
+        const removedUserId = grant.targetAccountId;
+        await prisma.authzAccountAccessGrant.delete({
           where: { id: permitId }
         });
 
@@ -231,11 +232,11 @@ export async function updatePermissions(permitId: string, newPermissionIds: stri
     }
 
     try {
-        const permit = await prisma.permit.findUnique({
+        const grant = await prisma.authzAccountAccessGrant.findUnique({
           where: { id: permitId }
         });
 
-        if (!permit || permit.targetAccountId !== currentAccountId) {
+        if (!grant || grant.ownerAccountId !== currentAccountId) {
             return { success: false, error: "Permission denied or grant not found." };
         }
 
@@ -243,19 +244,23 @@ export async function updatePermissions(permitId: string, newPermissionIds: stri
         const userResolvedPermissions = await getAccountPermission(currentAccountId);
         const userResolvedPermSet = new Set(userResolvedPermissions);
 
-        // Ensure the user has every permission they are trying to grant
         const isAllowed = newPermissionIds.every(p => userResolvedPermSet.has(p));
-
         if (!isAllowed) {
             return { success: false, error: "You are trying to grant permissions you do not possess." };
         }
         // --- End Check ---
-        
-        const targetUserId = permit.accountId;
-        await prisma.permit.update({
-          where: { id: permitId },
-          data: { permissions: newPermissionIds }
-        });
+
+        const targetUserId = grant.targetAccountId;
+
+        if (newPermissionIds.length === 0) {
+            await prisma.authzAccountAccessGrant.delete({ where: { id: permitId } });
+        } else {
+            // The new model stores a single roleId per grant; use the first permission as the role.
+            await prisma.authzAccountAccessGrant.update({
+              where: { id: permitId },
+              data: { roleId: newPermissionIds[0] },
+            });
+        }
         
         await logActivity(currentAccountId, `Updated permissions for user ${targetUserId}`, 'Success', undefined, undefined, geolocation);
         revalidatePath('/manage/access');
@@ -312,10 +317,11 @@ export async function grantAccessByNeupId(formData: FormData, geolocation?: stri
 
 
         // Check if already added
-        const alreadyExists = await prisma.permit.findFirst({
+        const alreadyExists = await prisma.authzAccountAccessGrant.findFirst({
           where: {
-            targetAccountId: ownerAccountId,
-            accountId: targetAccountId
+            ownerAccountId: ownerAccountId,
+            targetAccountId: targetAccountId,
+            appId: 'neup.account',
           }
         });
 

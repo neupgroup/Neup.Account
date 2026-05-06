@@ -34,27 +34,24 @@ async function main() {
   const account = await prisma.account.findUnique({ where: { id: accountId }, select: { id: true, displayName: true } });
   if (!account) throw new Error(`Account "${accountId}" not found.`);
 
-  const existing = await prisma.permit.findFirst({
-    where: { accountId, isRoot: true, forSelf: false },
+  // Upsert the account.root role and grant it to the account.
+  // This replaces the legacy permit-based root grant.
+  await prisma.authzRole.upsert({
+    where: { id: 'account.root' },
+    update: { name: 'account.root', scope: 'root', appId: 'neup.account' },
+    create: { id: 'account.root', name: 'account.root', scope: 'root', appId: 'neup.account' },
   });
 
-  if (!existing) {
-    await prisma.permit.create({
-      data: {
-        accountId,
-        forSelf: false,
-        isRoot: true,
-        permissions: ROOT_PERMISSIONS,
-        restrictions: [],
-      },
+  const existingGrant = await prisma.authzAccountAccessGrant.findFirst({
+    where: { ownerAccountId: accountId, targetAccountId: accountId, roleId: 'account.root', appId: 'neup.account' },
+  });
+  if (!existingGrant) {
+    await prisma.authzAccountAccessGrant.create({
+      data: { ownerAccountId: accountId, targetAccountId: accountId, roleId: 'account.root', appId: 'neup.account' },
     });
-    console.log(`Root permit created for account "${account.displayName}" (${accountId}).`);
+    console.log(`Root grant created for account "${account.displayName}" (${accountId}).`);
   } else {
-    await prisma.permit.update({
-      where: { id: existing.id },
-      data: { permissions: ROOT_PERMISSIONS, restrictions: [] },
-    });
-    console.log(`Root permit updated for account "${account.displayName}" (${accountId}).`);
+    console.log(`Root grant already exists for account "${account.displayName}" (${accountId}).`);
   }
 }
 
