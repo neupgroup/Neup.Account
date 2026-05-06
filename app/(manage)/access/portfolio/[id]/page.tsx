@@ -20,9 +20,7 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
   const { id } = await params;
   const group = await getAccessAssetGroup(id);
 
-  if (!group) {
-    notFound();
-  }
+  if (!group) notFound();
 
   const getMemberDetails = (value: unknown) => {
     const details = value && typeof value === 'object' ? (value as Record<string, unknown>) : {};
@@ -43,7 +41,7 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
 
   return (
     <div className="grid gap-6">
-      <BackButton href="/access/portfolio" />
+      <BackButton href="/access" />
 
       <div>
         <h1 className="text-3xl font-bold tracking-tight">{group.name}</h1>

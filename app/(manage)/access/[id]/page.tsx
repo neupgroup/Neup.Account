@@ -17,9 +17,7 @@ export default async function AccessDetailPage({ params }: PageProps) {
     getMasterPermissions(),
   ]);
 
-  if (!details) {
-    notFound();
-  }
+  if (!details) notFound();
 
   return (
     <div className="grid gap-6">

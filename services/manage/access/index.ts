@@ -20,6 +20,7 @@ export type UserAccess = {
   accountPhoto?: string;
   permissions: string[];
   status: 'pending' | 'approved' | 'rejected';
+  isSelf: boolean;
 };
 
 export type AccessDetails = {
@@ -104,6 +105,7 @@ export async function getAccessList(accountId: string): Promise<UserAccess[]> {
           accountPhoto: userProfile.accountPhoto,
           permissions: [grant.roleId],
           status: 'approved' as const,
+          isSelf: grant.ownerAccountId === grant.targetAccountId,
         };
       })
     );
