@@ -3,8 +3,7 @@ import { BackButton } from '@/components/ui/back-button';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Database, Key, KeyRound, Plus, Shield, UserCircle, Users } from '@/components/icons';
+import { Label } from '@/components/ui/label';import { Database, Key, KeyRound, Shield, UserCircle, Users } from '@/components/icons';
 import {
   addAssetToGroupFromForm,
   addMemberToAssetGroupFromForm,
@@ -14,6 +13,7 @@ import { getAccessAssetGroup } from '@/services/manage/access/assets';
 import { resolveAssetNames } from '@/services/manage/access/asset-resolvers';
 import { getUserProfile } from '@/services/user';
 import { AddMemberForm } from './add-member-form';
+import { AddAssetForm } from './add-asset-form';
 
 type PageProps = {
   params: Promise<{ id: string }>;
@@ -142,17 +142,7 @@ export default async function PortfolioDetailPage({ params }: PageProps) {
         </div>
 
         <div className="overflow-hidden rounded-lg border divide-y">
-          <form action={addAssetAction} className="px-4 py-3 grid gap-3 sm:grid-cols-3">
-            <Input name="asset" placeholder="Asset ID" required className="h-8 text-sm" />
-            <Input name="type" placeholder="Type (e.g. app, account)" required className="h-8 text-sm" />
-            <Input name="details" placeholder="Note (optional)" className="h-8 text-sm" />
-            <div className="sm:col-span-3 flex justify-end">
-              <Button type="submit" size="sm" className="gap-1.5">
-                <Plus className="h-3.5 w-3.5" />
-                Add Asset
-              </Button>
-            </div>
-          </form>
+          <AddAssetForm action={addAssetAction} />
 
           {group.assets.length > 0 ? (
             group.assets.map((asset) => {
