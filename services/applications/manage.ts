@@ -55,8 +55,8 @@ const updateApplicationStatusSchema = z.object({
   status: z.enum(['development', 'active', 'rejected', 'blocked']),
 });
 
-const viewRoleKeys = new Set(['application.view', 'app.view', 'application.edit', 'app.edit', 'application.manage', 'app.manage', 'manage', '*']);
-const editRoleKeys = new Set(['application.edit', 'app.edit', 'application.manage', 'app.manage', 'manage', '*']);
+const viewRoleKeys = new Set(['application.owner', 'application.view', 'app.view', 'application.edit', 'app.edit', 'application.manage', 'app.manage', 'manage', '*']);
+const editRoleKeys = new Set(['application.owner', 'application.edit', 'app.edit', 'application.manage', 'app.manage', 'manage', '*']);
 const ownerRoleKeys = new Set(['application.owner', 'app.owner', 'owner', '*']);
 
 /**
