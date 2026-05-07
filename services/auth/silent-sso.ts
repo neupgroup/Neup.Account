@@ -2,7 +2,7 @@ import prisma from '@/core/helpers/prisma';
 import { logError } from '@/core/helpers/logger';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
-import type { Identity } from '@/prisma/generated/client';
+import type { Identity, IdentityTrack } from '@/prisma/generated/client';
 
 // ---------------------------------------------------------------------------
 // Rate limiting
@@ -71,61 +71,69 @@ export async function validateSilentSsoOrigin(
 }
 
 // ---------------------------------------------------------------------------
+// Identity track resolution
+// ---------------------------------------------------------------------------
+
+/**
+ * Resolves or creates an IdentityTrack for a given trackId cookie value.
+ * If trackId is provided and exists, returns it.
+ * If trackId is provided but doesn't exist (stale cookie), creates a new one.
+ * If trackId is null, creates a new IdentityTrack.
+ * Optionally links the track to an accountId when the user is authenticated.
+ */
+export async function resolveOrCreateIdentityTrack(
+  trackId: string | null,
+  accountId: string | null
+): Promise<IdentityTrack> {
+  // Try to find an existing track by id
+  if (trackId) {
+    const existing = await prisma.identityTrack.findUnique({ where: { id: trackId } });
+    if (existing) {
+      // If the user is now authenticated and the track isn't linked yet, link it
+      if (accountId && !existing.accountId) {
+        return prisma.identityTrack.update({
+          where: { id: trackId },
+          data: { accountId },
+        });
+      }
+      return existing;
+    }
+  }
+
+  // Create a new track
+  return prisma.identityTrack.create({
+    data: { accountId },
+  });
+}
+
+// ---------------------------------------------------------------------------
 // Identity resolution
 // ---------------------------------------------------------------------------
 
 /**
- * Looks up an existing Identity for (accountId, appId) or creates one.
+ * Looks up an existing Identity for (trackId, appId) or creates one.
  * Sets validTill = now + 4 weeks, refreshesOn = now + 1 hour.
- * Updates sessionId to the current session on each call.
  */
 export async function resolveOrCreateIdentity(
-  accountId: string | null,
-  appId: string,
-  sessionId: string | null
+  trackId: string,
+  appId: string
 ): Promise<Identity> {
   const now = new Date();
-  const refreshesOn = new Date(now.getTime() + 3_600_000); // +1 hour
+  const refreshesOn = new Date(now.getTime() + 3_600_000);       // +1 hour
   const validTill = new Date(now.getTime() + 4 * 7 * 24 * 3_600_000); // +4 weeks
 
-  // When accountId is null, we cannot use the unique constraint (accountId, appId)
-  // reliably for upsert, so fall back to findFirst + create.
-  if (accountId === null) {
-    const existing = await prisma.identity.findFirst({
-      where: { accountId: null, appId },
-    });
-
-    if (existing) {
-      return prisma.identity.update({
-        where: { id: existing.id },
-        data: { sessionId },
-      });
-    }
-
-    return prisma.identity.create({
-      data: {
-        accountId: null,
-        appId,
-        sessionId,
-        originatedOn: now,
-        refreshesOn,
-        validTill,
-      },
-    });
-  }
-
   return prisma.identity.upsert({
-    where: { accountId_appId: { accountId, appId } },
+    where: { trackId_appId: { trackId, appId } },
     create: {
-      accountId,
+      trackId,
       appId,
-      sessionId,
       originatedOn: now,
       refreshesOn,
       validTill,
+      details: [],
     },
     update: {
-      sessionId,
+      // Keep originatedOn, refreshesOn, validTill unchanged on subsequent visits
     },
   });
 }
@@ -136,8 +144,10 @@ export async function resolveOrCreateIdentity(
 
 /**
  * Signs a JWT with the application's appSecret (HS256).
- * Payload: { ssid, sid, originated_on, refreshes_on, expires_on }
+ * Payload: { ssid, originated_on, refreshes_on, expires_on }
  * No exp claim — the expires_on field is the canonical expiry.
+ * sid is intentionally omitted — the track cookie (tid) on neupgroup.com
+ * carries the session linkage; apps only receive the opaque ssid.
  */
 export async function signIdentityJwt(identity: Identity, appId: string): Promise<string> {
   const application = await prisma.application.findUnique({
@@ -151,7 +161,6 @@ export async function signIdentityJwt(identity: Identity, appId: string): Promis
 
   const payload = {
     ssid: identity.id,
-    sid: identity.sessionId ?? null,
     originated_on: identity.originatedOn.toISOString(),
     refreshes_on: identity.refreshesOn.toISOString(),
     expires_on: identity.validTill.toISOString(),
@@ -170,8 +179,8 @@ export async function signIdentityJwt(identity: Identity, appId: string): Promis
  */
 export async function issueSilentAuthCode(
   accountId: string,
+  trackId: string,
   appId: string,
-  sessionId: string,
   codeChallenge?: string,
   codeChallengeMethod?: string
 ): Promise<{ code: string; identity: Identity }> {
@@ -184,7 +193,7 @@ export async function issueSilentAuthCode(
       status: 'pending',
       data: {
         appId,
-        sessionId,
+        trackId,
         ...(codeChallenge
           ? {
               codeChallenge,
@@ -197,7 +206,7 @@ export async function issueSilentAuthCode(
     },
   });
 
-  const identity = await resolveOrCreateIdentity(accountId, appId, sessionId);
+  const identity = await resolveOrCreateIdentity(trackId, appId);
 
   return { code, identity };
 }

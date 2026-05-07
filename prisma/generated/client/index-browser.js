@@ -401,14 +401,19 @@ exports.Prisma.PermitScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.IdentityTrackScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId'
+};
+
 exports.Prisma.IdentityScalarFieldEnum = {
   id: 'id',
-  accountId: 'accountId',
+  trackId: 'trackId',
   appId: 'appId',
-  sessionId: 'sessionId',
   originatedOn: 'originatedOn',
   refreshesOn: 'refreshesOn',
-  validTill: 'validTill'
+  validTill: 'validTill',
+  details: 'details'
 };
 
 exports.Prisma.SortOrder = {
@@ -473,6 +478,7 @@ exports.Prisma.ModelName = {
   AuthzAccountAccessGrant: 'AuthzAccountAccessGrant',
   AuthzAssetsAccessGrant: 'AuthzAssetsAccessGrant',
   Permit: 'Permit',
+  IdentityTrack: 'IdentityTrack',
   Identity: 'Identity'
 };
 

@@ -1,10 +1,12 @@
 import { NextRequest } from 'next/server';
+import { cookies } from 'next/headers';
 import { getSessionCookies } from '@/core/helpers/cookies';
 import prisma from '@/core/helpers/prisma';
 import { logError } from '@/core/helpers/logger';
 import {
   checkRateLimit,
   validateSilentSsoOrigin,
+  resolveOrCreateIdentityTrack,
   issueSilentAuthCode,
   signIdentityJwt,
 } from '@/services/auth/silent-sso';
@@ -124,10 +126,46 @@ export async function GET(request: NextRequest): Promise<Response> {
   const targetOrigin = new URL(origin).origin;
 
   // -------------------------------------------------------------------------
-  // 4. Session validation
+  // 4. Read tid cookie (identity track) and session cookies
   // -------------------------------------------------------------------------
+  const cookieStore = await cookies();
+  const tidCookie = cookieStore.get('tid')?.value ?? null;
+
   const { accountId, sessionId, sessionKey } = await getSessionCookies();
 
+  // -------------------------------------------------------------------------
+  // 5. Resolve or create the IdentityTrack
+  //    - tid cookie is the stable cross-session tracker on neupgroup.com
+  //    - If the user is authenticated, link the track to their accountId
+  // -------------------------------------------------------------------------
+  let track;
+  try {
+    track = await resolveOrCreateIdentityTrack(
+      tidCookie,
+      accountId || null
+    );
+  } catch (error) {
+    await logError('auth', error, 'whoisthis_resolve_track');
+    return buildHtmlResponse(
+      { type: 'neupid:silent_auth', authenticated: false, reason: 'session_invalid' },
+      targetOrigin
+    );
+  }
+
+  // Set/refresh the tid cookie — HttpOnly, SameSite=Lax, 1 year
+  const tidExpiry = new Date();
+  tidExpiry.setFullYear(tidExpiry.getFullYear() + 1);
+  cookieStore.set('tid', track.id, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'lax',
+    path: '/',
+    expires: tidExpiry,
+  });
+
+  // -------------------------------------------------------------------------
+  // 6. If no authenticated session, return unauthenticated (but tid is set)
+  // -------------------------------------------------------------------------
   if (!accountId || !sessionId || !sessionKey) {
     return buildHtmlResponse(
       { type: 'neupid:silent_auth', authenticated: false, reason: 'no_session' },
@@ -136,7 +174,7 @@ export async function GET(request: NextRequest): Promise<Response> {
   }
 
   // -------------------------------------------------------------------------
-  // 5. Validate session against the database
+  // 7. Validate session against the database
   // -------------------------------------------------------------------------
   try {
     const session = await prisma.authnSession.findUnique({
@@ -165,20 +203,20 @@ export async function GET(request: NextRequest): Promise<Response> {
   }
 
   // -------------------------------------------------------------------------
-  // 6. Read PKCE params from query string
+  // 8. Read PKCE params from query string
   // -------------------------------------------------------------------------
   const { searchParams } = new URL(request.url);
   const codeChallenge = searchParams.get('codeChallenge') ?? undefined;
   const codeChallengeMethod = searchParams.get('codeChallengeMethod') ?? undefined;
 
   // -------------------------------------------------------------------------
-  // 7. Issue silent auth code and sign identity JWT
+  // 9. Issue silent auth code and sign identity JWT
   // -------------------------------------------------------------------------
   try {
     const { code, identity } = await issueSilentAuthCode(
       accountId,
+      track.id,
       appId,
-      sessionId,
       codeChallenge,
       codeChallengeMethod
     );

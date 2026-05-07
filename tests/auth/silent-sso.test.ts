@@ -52,7 +52,7 @@ describe('Property 1: JWT round-trip preserves ssid', () => {
       fc.asyncProperty(
         fc.record({
           id: fc.string({ minLength: 1 }),
-          sessionId: fc.option(fc.string({ minLength: 1 }), { nil: null }),
+          trackId: fc.string({ minLength: 1 }),
           originatedOn: validDate,
           refreshesOn: validDate,
           validTill: validDate,
@@ -65,7 +65,6 @@ describe('Property 1: JWT round-trip preserves ssid', () => {
           const decoded = jwt.decode(token) as Record<string, unknown>;
 
           expect(decoded.ssid).toBe(identity.id);
-          expect(decoded.sid).toBe(identity.sessionId ?? null);
           expect(decoded.originated_on).toBe(identity.originatedOn.toISOString());
           expect(decoded.refreshes_on).toBe(identity.refreshesOn.toISOString());
           expect(decoded.expires_on).toBe(identity.validTill.toISOString());
@@ -102,7 +101,7 @@ describe('Property 2: Identity temporal invariants', () => {
             validTill,
           });
 
-          const identity = await resolveOrCreateIdentity('acc', 'app', null);
+          const identity = await resolveOrCreateIdentity('acc', 'app');
 
           // validTill ≈ originatedOn + 4 weeks (within 1 second tolerance)
           expect(
@@ -193,8 +192,8 @@ describe('Property 4: Identity idempotency (stable ssid)', () => {
 
           mockIdentityUpsert.mockResolvedValue(stableRecord);
 
-          const first = await resolveOrCreateIdentity(accountId, appId, null);
-          const second = await resolveOrCreateIdentity(accountId, appId, null);
+          const first = await resolveOrCreateIdentity(accountId, appId);
+          const second = await resolveOrCreateIdentity(accountId, appId);
 
           expect(first.id).toBe(second.id);
         }
@@ -334,12 +333,12 @@ describe('Property 7: Rate limit enforcement', () => {
 // ---------------------------------------------------------------------------
 describe('Property 8: JWT payload contains no session credentials', () => {
   it('JWT payload has only expected fields and does not contain the raw appSecret', async () => {
-    const validDate = fc.date({ min: new Date('2000-01-01'), max: new Date('2100-01-01') });
+    const validDate = fc.integer({ min: new Date('2000-01-01').getTime(), max: new Date('2100-01-01').getTime() }).map(ms => new Date(ms));
     await fc.assert(
       fc.asyncProperty(
         fc.record({
           id: fc.string({ minLength: 1 }),
-          sessionId: fc.option(fc.string({ minLength: 1 }), { nil: null }),
+          trackId: fc.string({ minLength: 1 }),
           originatedOn: validDate,
           refreshesOn: validDate,
           validTill: validDate,
@@ -356,6 +355,7 @@ describe('Property 8: JWT payload contains no session credentials', () => {
 
           // Forbidden fields must not be present
           expect(payloadKeys).not.toContain('sessionKey');
+          expect(payloadKeys).not.toContain('sid');
           expect(payloadKeys).not.toContain('key');
           expect(payloadKeys).not.toContain('password');
 
@@ -364,7 +364,7 @@ describe('Property 8: JWT payload contains no session credentials', () => {
           expect(payloadValues).not.toContain(appSecret);
 
           // Only expected keys should be present (jwt adds 'iat' automatically)
-          const allowedKeys = new Set(['ssid', 'sid', 'originated_on', 'refreshes_on', 'expires_on', 'iat']);
+          const allowedKeys = new Set(['ssid', 'originated_on', 'refreshes_on', 'expires_on', 'iat']);
           for (const key of payloadKeys) {
             expect(allowedKeys.has(key)).toBe(true);
           }

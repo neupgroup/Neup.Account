@@ -39,7 +39,7 @@ model Account {
   sentRequests      Request[]               @relation("SentRequests")
   errorLogs         SystemError[]
   verifications     Verification[]
-  identities        Identity[]
+  identityTracks    IdentityTrack[]
 
   @@map("account")
 }
@@ -223,7 +223,6 @@ model AuthnSession {
   geolocation  String?
   deviceType   String?
   account      Account   @relation(fields: [accountId], references: [id], map: "sessions_accountId_fkey")
-  identities   Identity[]
 
   @@map("authn_session")
 }
@@ -463,19 +462,28 @@ model Permit {
   @@map("permit")
 }
 
+model IdentityTrack {
+  id        String   @id @default(cuid())
+  accountId String?  @map("account_id")
+
+  account    Account?   @relation(fields: [accountId], references: [id])
+  identities Identity[]
+
+  @@map("identity_track")
+}
+
 model Identity {
   id           String   @id @default(cuid())
-  accountId    String?  @map("account_id")
+  trackId      String   @map("track_id")
   appId        String   @map("app_id")
-  sessionId    String?  @map("session_id")
   originatedOn DateTime @default(now()) @map("originated_on")
   refreshesOn  DateTime @map("refreshes_on")
   validTill    DateTime @map("valid_till")
+  details      Json     @default("[]") @map("details")
 
-  account     Account?      @relation(fields: [accountId], references: [id])
+  track       IdentityTrack @relation(fields: [trackId], references: [id])
   application Application   @relation(fields: [appId], references: [id])
-  session     AuthnSession? @relation(fields: [sessionId], references: [id])
 
-  @@unique([accountId, appId])
+  @@unique([trackId, appId])
   @@map("identity")
 }
