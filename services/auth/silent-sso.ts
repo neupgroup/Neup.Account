@@ -142,14 +142,25 @@ export async function resolveOrCreateIdentity(
 // JWT signing
 // ---------------------------------------------------------------------------
 
+export type IdentityDetail = { key: string; value: string };
+
 /**
  * Signs a JWT with the application's appSecret (HS256).
- * Payload: { ssid, originated_on, refreshes_on, expires_on }
- * No exp claim — the expires_on field is the canonical expiry.
- * sid is intentionally omitted — the track cookie (tid) on neupgroup.com
- * carries the session linkage; apps only receive the opaque ssid.
+ *
+ * Payload: { ssid, expires_on, refreshes_on, details }
+ *
+ * `details` is an array of { key, value } pairs computed fresh at request
+ * time from the user's account data. It is included in the JWT so apps
+ * receive it via postMessage, but it is never stored in the Identity table
+ * or in any cookie.
+ *
+ * When the user is unauthenticated, details is an empty array.
  */
-export async function signIdentityJwt(identity: Identity, appId: string): Promise<string> {
+export async function signIdentityJwt(
+  identity: Identity,
+  appId: string,
+  details: IdentityDetail[] = []
+): Promise<string> {
   const application = await prisma.application.findUnique({
     where: { id: appId },
     select: { appSecret: true },
@@ -161,12 +172,85 @@ export async function signIdentityJwt(identity: Identity, appId: string): Promis
 
   const payload = {
     ssid: identity.id,
-    originated_on: identity.originatedOn.toISOString(),
-    refreshes_on: identity.refreshesOn.toISOString(),
     expires_on: identity.validTill.toISOString(),
+    refreshes_on: identity.refreshesOn.toISOString(),
+    details,
   };
 
   return jwt.sign(payload, application.appSecret, { algorithm: 'HS256' });
+}
+
+// ---------------------------------------------------------------------------
+// Account details builder
+// ---------------------------------------------------------------------------
+
+/**
+ * Builds the details array from a user's account data.
+ * Only called when the user is authenticated.
+ *
+ * Produces entries like:
+ *   { key: 'name.display',    value: 'Jane Smith' }
+ *   { key: 'contact.email',   value: 'jane@example.com' }
+ *   { key: 'contact.phone',   value: '+1234567890' }
+ *   { key: 'account.type',    value: 'individual' }
+ *   { key: 'account.verified', value: 'true' }
+ */
+export async function buildIdentityDetails(accountId: string): Promise<IdentityDetail[]> {
+  try {
+    const account = await prisma.account.findUnique({
+      where: { id: accountId },
+      select: {
+        displayName: true,
+        accountType: true,
+        isVerified: true,
+        individualProfile: { select: { firstName: true, lastName: true } },
+        brandProfile: { select: { brandName: true } },
+        contacts: { select: { contactType: true, value: true } },
+      },
+    });
+
+    if (!account) return [];
+
+    const details: IdentityDetail[] = [];
+
+    // Display name
+    const displayName =
+      account.brandProfile?.brandName ||
+      account.displayName ||
+      [account.individualProfile?.firstName, account.individualProfile?.lastName]
+        .filter(Boolean)
+        .join(' ') ||
+      null;
+
+    if (displayName) {
+      details.push({ key: 'name.display', value: displayName });
+    }
+
+    // First / last name (individual accounts only)
+    if (account.individualProfile?.firstName) {
+      details.push({ key: 'name.first', value: account.individualProfile.firstName });
+    }
+    if (account.individualProfile?.lastName) {
+      details.push({ key: 'name.last', value: account.individualProfile.lastName });
+    }
+
+    // Account metadata
+    if (account.accountType) {
+      details.push({ key: 'account.type', value: account.accountType });
+    }
+    details.push({ key: 'account.verified', value: String(account.isVerified ?? false) });
+
+    // Contacts — one entry per contact record
+    for (const contact of account.contacts) {
+      const key = `contact.${contact.contactType.toLowerCase()}`;
+      details.push({ key, value: contact.value });
+    }
+
+    return details;
+  } catch (error) {
+    await logError('auth', error, 'build_identity_details');
+    return [];
+  }
 }
 
 // ---------------------------------------------------------------------------

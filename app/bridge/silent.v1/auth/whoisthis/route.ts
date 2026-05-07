@@ -7,22 +7,17 @@ import {
   checkRateLimit,
   validateSilentSsoOrigin,
   resolveOrCreateIdentityTrack,
+  resolveOrCreateIdentity,
   issueSilentAuthCode,
   signIdentityJwt,
+  buildIdentityDetails,
 } from '@/services/auth/silent-sso';
 
 export const dynamic = 'force-dynamic';
 
 /**
  * Builds an HTML response that dispatches a postMessage to the parent window.
- *
- * The payload is injected as a data attribute on a <div> element, and an
- * inline <script> reads it and calls window.parent.postMessage. This approach
- * avoids inline JSON in script tags (XSS-safe via attribute encoding).
- *
- * @param payload  - The postMessage payload object.
- * @param targetOrigin - The exact registered origin to target. Use "*" only
- *                       when the origin is unknown (unregistered origin case).
+ * The payload is injected as a data attribute and read by an inline script.
  */
 function buildHtmlResponse(payload: object, targetOrigin: string): Response {
   const payloadJson = JSON.stringify(payload)
@@ -63,17 +58,26 @@ function buildHtmlResponse(payload: object, targetOrigin: string): Response {
 /**
  * GET /bridge/silent.v1/auth/whoisthis
  *
- * Iframe-embeddable endpoint for silent SSO. Reads the session cookie,
- * validates the requesting origin, and dispatches a postMessage to the
- * parent window with either a signed JWT + auth code (success) or a
- * typed failure reason.
+ * Always issues a signed JWT with an ssid — regardless of whether the user
+ * is logged in or not. The `authenticated` flag in the postMessage payload
+ * tells the app whether the person is identified (has a linked account) or
+ * anonymous (tracked but unknown).
  *
- * Always returns HTTP 200 — failures are communicated via the postMessage
- * payload, not via HTTP status codes, so the iframe always loads.
+ * Logged in:
+ *   - IdentityTrack is linked to the accountId
+ *   - authenticated: true
+ *   - token: { ssid, expires_on, refreshes_on }
+ *   - code: short-lived auth code for server-to-server exchange
  *
- * Query params:
- *   codeChallenge?       - PKCE S256 challenge
- *   codeChallengeMethod? - Must be "S256" if provided
+ * Not logged in:
+ *   - IdentityTrack has no accountId (anonymous)
+ *   - authenticated: false
+ *   - token: { ssid, expires_on, refreshes_on }
+ *   - no code (nothing to exchange server-side)
+ *
+ * The tid cookie on neupgroup.com ties the IdentityTrack across all visits,
+ * so the same ssid is returned for the same person on the same app — even
+ * before they ever create an account.
  */
 export async function GET(request: NextRequest): Promise<Response> {
   // -------------------------------------------------------------------------
@@ -121,12 +125,11 @@ export async function GET(request: NextRequest): Promise<Response> {
     );
   }
 
-  // From this point on we know the exact registered origin, so we can use it
-  // as the postMessage targetOrigin (never "*").
+  // From this point on we know the exact registered origin.
   const targetOrigin = new URL(origin).origin;
 
   // -------------------------------------------------------------------------
-  // 4. Read tid cookie (identity track) and session cookies
+  // 4. Read tid cookie and session cookies
   // -------------------------------------------------------------------------
   const cookieStore = await cookies();
   const tidCookie = cookieStore.get('tid')?.value ?? null;
@@ -134,20 +137,45 @@ export async function GET(request: NextRequest): Promise<Response> {
   const { accountId, sessionId, sessionKey } = await getSessionCookies();
 
   // -------------------------------------------------------------------------
-  // 5. Resolve or create the IdentityTrack
-  //    - tid cookie is the stable cross-session tracker on neupgroup.com
-  //    - If the user is authenticated, link the track to their accountId
+  // 5. Check if the session is valid (determines authenticated: true/false)
+  //    We do this before resolving the track so we know whether to link it.
+  // -------------------------------------------------------------------------
+  let isAuthenticated = false;
+
+  if (accountId && sessionId && sessionKey) {
+    try {
+      const session = await prisma.authnSession.findUnique({
+        where: { id: sessionId },
+        select: { accountId: true, key: true, validTill: true },
+      });
+
+      isAuthenticated =
+        !!session &&
+        session.accountId === accountId &&
+        session.key === sessionKey &&
+        !!session.validTill &&
+        session.validTill > new Date();
+    } catch (error) {
+      await logError('auth', error, 'whoisthis_session_check');
+      // Treat as unauthenticated — still issue an anonymous ssid below
+    }
+  }
+
+  // -------------------------------------------------------------------------
+  // 6. Resolve or create the IdentityTrack
+  //    - Linked to accountId when authenticated, null when anonymous
+  //    - tid cookie persists this track across all future visits
   // -------------------------------------------------------------------------
   let track;
   try {
     track = await resolveOrCreateIdentityTrack(
       tidCookie,
-      accountId || null
+      isAuthenticated ? (accountId || null) : null
     );
   } catch (error) {
     await logError('auth', error, 'whoisthis_resolve_track');
     return buildHtmlResponse(
-      { type: 'neupid:silent_auth', authenticated: false, reason: 'session_invalid' },
+      { type: 'neupid:silent_auth', authenticated: false, reason: 'internal_error' },
       targetOrigin
     );
   }
@@ -164,74 +192,75 @@ export async function GET(request: NextRequest): Promise<Response> {
   });
 
   // -------------------------------------------------------------------------
-  // 6. If no authenticated session, return unauthenticated (but tid is set)
+  // 7. Resolve or create the Identity for this (track, app) pair
+  //    This always happens — authenticated or not.
   // -------------------------------------------------------------------------
-  if (!accountId || !sessionId || !sessionKey) {
+  let identity;
+  try {
+    identity = await resolveOrCreateIdentity(track.id, appId);
+  } catch (error) {
+    await logError('auth', error, 'whoisthis_resolve_identity');
     return buildHtmlResponse(
-      { type: 'neupid:silent_auth', authenticated: false, reason: 'no_session' },
+      { type: 'neupid:silent_auth', authenticated: false, reason: 'internal_error' },
       targetOrigin
     );
   }
 
   // -------------------------------------------------------------------------
-  // 7. Validate session against the database
+  // 8. Sign the identity JWT (always issued, authenticated or not)
+  //    details is populated from account data when authenticated, empty otherwise
   // -------------------------------------------------------------------------
-  try {
-    const session = await prisma.authnSession.findUnique({
-      where: { id: sessionId },
-      select: { accountId: true, key: true, validTill: true },
-    });
+  const details = isAuthenticated && accountId
+    ? await buildIdentityDetails(accountId)
+    : [];
 
-    if (
-      !session ||
-      session.accountId !== accountId ||
-      session.key !== sessionKey ||
-      !session.validTill ||
-      session.validTill <= new Date()
-    ) {
+  let token: string;
+  try {
+    token = await signIdentityJwt(identity, appId, details);
+  } catch (error) {
+    await logError('auth', error, 'whoisthis_sign_jwt');
+    return buildHtmlResponse(
+      { type: 'neupid:silent_auth', authenticated: false, reason: 'internal_error' },
+      targetOrigin
+    );
+  }
+
+  // -------------------------------------------------------------------------
+  // 9. If authenticated, also issue a short-lived code for server exchange
+  // -------------------------------------------------------------------------
+  if (isAuthenticated && accountId && sessionId) {
+    const { searchParams } = new URL(request.url);
+    const codeChallenge = searchParams.get('codeChallenge') ?? undefined;
+    const codeChallengeMethod = searchParams.get('codeChallengeMethod') ?? undefined;
+
+    try {
+      const { code } = await issueSilentAuthCode(
+        accountId,
+        track.id,
+        appId,
+        codeChallenge,
+        codeChallengeMethod
+      );
+
       return buildHtmlResponse(
-        { type: 'neupid:silent_auth', authenticated: false, reason: 'session_invalid' },
+        { type: 'neupid:silent_auth', authenticated: true, token, code },
+        targetOrigin
+      );
+    } catch (error) {
+      await logError('auth', error, 'whoisthis_issue_code');
+      // Fall through — still return the JWT without a code
+      return buildHtmlResponse(
+        { type: 'neupid:silent_auth', authenticated: true, token },
         targetOrigin
       );
     }
-  } catch (error) {
-    await logError('auth', error, 'whoisthis_session_check');
-    return buildHtmlResponse(
-      { type: 'neupid:silent_auth', authenticated: false, reason: 'session_invalid' },
-      targetOrigin
-    );
   }
 
   // -------------------------------------------------------------------------
-  // 8. Read PKCE params from query string
+  // 10. Unauthenticated — return JWT with authenticated: false, no code
   // -------------------------------------------------------------------------
-  const { searchParams } = new URL(request.url);
-  const codeChallenge = searchParams.get('codeChallenge') ?? undefined;
-  const codeChallengeMethod = searchParams.get('codeChallengeMethod') ?? undefined;
-
-  // -------------------------------------------------------------------------
-  // 9. Issue silent auth code and sign identity JWT
-  // -------------------------------------------------------------------------
-  try {
-    const { code, identity } = await issueSilentAuthCode(
-      accountId,
-      track.id,
-      appId,
-      codeChallenge,
-      codeChallengeMethod
-    );
-
-    const token = await signIdentityJwt(identity, appId);
-
-    return buildHtmlResponse(
-      { type: 'neupid:silent_auth', authenticated: true, token, code },
-      targetOrigin
-    );
-  } catch (error) {
-    await logError('auth', error, 'whoisthis_issue_code');
-    return buildHtmlResponse(
-      { type: 'neupid:silent_auth', authenticated: false, reason: 'session_invalid' },
-      targetOrigin
-    );
-  }
+  return buildHtmlResponse(
+    { type: 'neupid:silent_auth', authenticated: false, token },
+    targetOrigin
+  );
 }

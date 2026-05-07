@@ -65,9 +65,9 @@ describe('Property 1: JWT round-trip preserves ssid', () => {
           const decoded = jwt.decode(token) as Record<string, unknown>;
 
           expect(decoded.ssid).toBe(identity.id);
-          expect(decoded.originated_on).toBe(identity.originatedOn.toISOString());
-          expect(decoded.refreshes_on).toBe(identity.refreshesOn.toISOString());
           expect(decoded.expires_on).toBe(identity.validTill.toISOString());
+          expect(decoded.refreshes_on).toBe(identity.refreshesOn.toISOString());
+          expect(Array.isArray(decoded.details)).toBe(true);
         }
       ),
       { numRuns: 100 }
@@ -364,7 +364,7 @@ describe('Property 8: JWT payload contains no session credentials', () => {
           expect(payloadValues).not.toContain(appSecret);
 
           // Only expected keys should be present (jwt adds 'iat' automatically)
-          const allowedKeys = new Set(['ssid', 'originated_on', 'refreshes_on', 'expires_on', 'iat']);
+          const allowedKeys = new Set(['ssid', 'expires_on', 'refreshes_on', 'details', 'iat']);
           for (const key of payloadKeys) {
             expect(allowedKeys.has(key)).toBe(true);
           }
