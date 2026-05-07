@@ -163,6 +163,11 @@ export type AuthzAssetsAccessGrant = $Result.DefaultSelection<Prisma.$AuthzAsset
  * 
  */
 export type Permit = $Result.DefaultSelection<Prisma.$PermitPayload>
+/**
+ * Model Identity
+ * 
+ */
+export type Identity = $Result.DefaultSelection<Prisma.$IdentityPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -580,6 +585,16 @@ export class PrismaClient<
     * ```
     */
   get permit(): Prisma.PermitDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.identity`: Exposes CRUD operations for the **Identity** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Identities
+    * const identities = await prisma.identity.findMany()
+    * ```
+    */
+  get identity(): Prisma.IdentityDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1043,7 +1058,8 @@ export namespace Prisma {
     AuthzRoleCapability: 'AuthzRoleCapability',
     AuthzAccountAccessGrant: 'AuthzAccountAccessGrant',
     AuthzAssetsAccessGrant: 'AuthzAssetsAccessGrant',
-    Permit: 'Permit'
+    Permit: 'Permit',
+    Identity: 'Identity'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1059,7 +1075,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "systemConfig" | "authnRequest" | "activity" | "notification" | "request" | "family" | "familyMember" | "verification" | "contact" | "neupId" | "authnMethod" | "authnSession" | "systemError" | "application" | "portfolio" | "portfolioAsset" | "portfolioMember" | "accountOwnership" | "applicationConnection" | "applicationBridge" | "applicationPolicy" | "authzCapability" | "authzRole" | "authzRoleCapability" | "authzAccountAccessGrant" | "authzAssetsAccessGrant" | "permit"
+      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "systemConfig" | "authnRequest" | "activity" | "notification" | "request" | "family" | "familyMember" | "verification" | "contact" | "neupId" | "authnMethod" | "authnSession" | "systemError" | "application" | "portfolio" | "portfolioAsset" | "portfolioMember" | "accountOwnership" | "applicationConnection" | "applicationBridge" | "applicationPolicy" | "authzCapability" | "authzRole" | "authzRoleCapability" | "authzAccountAccessGrant" | "authzAssetsAccessGrant" | "permit" | "identity"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3283,6 +3299,80 @@ export namespace Prisma {
           }
         }
       }
+      Identity: {
+        payload: Prisma.$IdentityPayload<ExtArgs>
+        fields: Prisma.IdentityFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.IdentityFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.IdentityFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload>
+          }
+          findFirst: {
+            args: Prisma.IdentityFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.IdentityFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload>
+          }
+          findMany: {
+            args: Prisma.IdentityFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload>[]
+          }
+          create: {
+            args: Prisma.IdentityCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload>
+          }
+          createMany: {
+            args: Prisma.IdentityCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.IdentityCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload>[]
+          }
+          delete: {
+            args: Prisma.IdentityDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload>
+          }
+          update: {
+            args: Prisma.IdentityUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload>
+          }
+          deleteMany: {
+            args: Prisma.IdentityDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.IdentityUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.IdentityUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload>[]
+          }
+          upsert: {
+            args: Prisma.IdentityUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdentityPayload>
+          }
+          aggregate: {
+            args: Prisma.IdentityAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateIdentity>
+          }
+          groupBy: {
+            args: Prisma.IdentityGroupByArgs<ExtArgs>
+            result: $Utils.Optional<IdentityGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.IdentityCountArgs<ExtArgs>
+            result: $Utils.Optional<IdentityCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3421,6 +3511,7 @@ export namespace Prisma {
     authzAccountAccessGrant?: AuthzAccountAccessGrantOmit
     authzAssetsAccessGrant?: AuthzAssetsAccessGrantOmit
     permit?: PermitOmit
+    identity?: IdentityOmit
   }
 
   /* Types for Logging */
@@ -3521,6 +3612,7 @@ export namespace Prisma {
     sentRequests: number
     errorLogs: number
     verifications: number
+    identities: number
   }
 
   export type AccountCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3544,6 +3636,7 @@ export namespace Prisma {
     sentRequests?: boolean | AccountCountOutputTypeCountSentRequestsArgs
     errorLogs?: boolean | AccountCountOutputTypeCountErrorLogsArgs
     verifications?: boolean | AccountCountOutputTypeCountVerificationsArgs
+    identities?: boolean | AccountCountOutputTypeCountIdentitiesArgs
   }
 
   // Custom InputTypes
@@ -3697,6 +3790,13 @@ export namespace Prisma {
     where?: VerificationWhereInput
   }
 
+  /**
+   * AccountCountOutputType without action
+   */
+  export type AccountCountOutputTypeCountIdentitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IdentityWhereInput
+  }
+
 
   /**
    * Count Type FamilyCountOutputType
@@ -3730,6 +3830,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type AuthnSessionCountOutputType
+   */
+
+  export type AuthnSessionCountOutputType = {
+    identities: number
+  }
+
+  export type AuthnSessionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    identities?: boolean | AuthnSessionCountOutputTypeCountIdentitiesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AuthnSessionCountOutputType without action
+   */
+  export type AuthnSessionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuthnSessionCountOutputType
+     */
+    select?: AuthnSessionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AuthnSessionCountOutputType without action
+   */
+  export type AuthnSessionCountOutputTypeCountIdentitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IdentityWhereInput
+  }
+
+
+  /**
    * Count Type ApplicationCountOutputType
    */
 
@@ -3740,6 +3871,7 @@ export namespace Prisma {
     authzCapabilities: number
     authzRoles: number
     authzAccountAccessGrants: number
+    identities: number
   }
 
   export type ApplicationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3749,6 +3881,7 @@ export namespace Prisma {
     authzCapabilities?: boolean | ApplicationCountOutputTypeCountAuthzCapabilitiesArgs
     authzRoles?: boolean | ApplicationCountOutputTypeCountAuthzRolesArgs
     authzAccountAccessGrants?: boolean | ApplicationCountOutputTypeCountAuthzAccountAccessGrantsArgs
+    identities?: boolean | ApplicationCountOutputTypeCountIdentitiesArgs
   }
 
   // Custom InputTypes
@@ -3802,6 +3935,13 @@ export namespace Prisma {
    */
   export type ApplicationCountOutputTypeCountAuthzAccountAccessGrantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AuthzAccountAccessGrantWhereInput
+  }
+
+  /**
+   * ApplicationCountOutputType without action
+   */
+  export type ApplicationCountOutputTypeCountIdentitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IdentityWhereInput
   }
 
 
@@ -4184,6 +4324,7 @@ export namespace Prisma {
     sentRequests?: boolean | Account$sentRequestsArgs<ExtArgs>
     errorLogs?: boolean | Account$errorLogsArgs<ExtArgs>
     verifications?: boolean | Account$verificationsArgs<ExtArgs>
+    identities?: boolean | Account$identitiesArgs<ExtArgs>
     _count?: boolean | AccountCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["account"]>
 
@@ -4244,6 +4385,7 @@ export namespace Prisma {
     sentRequests?: boolean | Account$sentRequestsArgs<ExtArgs>
     errorLogs?: boolean | Account$errorLogsArgs<ExtArgs>
     verifications?: boolean | Account$verificationsArgs<ExtArgs>
+    identities?: boolean | Account$identitiesArgs<ExtArgs>
     _count?: boolean | AccountCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AccountIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -4274,6 +4416,7 @@ export namespace Prisma {
       sentRequests: Prisma.$RequestPayload<ExtArgs>[]
       errorLogs: Prisma.$SystemErrorPayload<ExtArgs>[]
       verifications: Prisma.$VerificationPayload<ExtArgs>[]
+      identities: Prisma.$IdentityPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4700,6 +4843,7 @@ export namespace Prisma {
     sentRequests<T extends Account$sentRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Account$sentRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     errorLogs<T extends Account$errorLogsArgs<ExtArgs> = {}>(args?: Subset<T, Account$errorLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemErrorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     verifications<T extends Account$verificationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$verificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VerificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    identities<T extends Account$identitiesArgs<ExtArgs> = {}>(args?: Subset<T, Account$identitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5640,6 +5784,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: VerificationScalarFieldEnum | VerificationScalarFieldEnum[]
+  }
+
+  /**
+   * Account.identities
+   */
+  export type Account$identitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Identity
+     */
+    select?: IdentitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Identity
+     */
+    omit?: IdentityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityInclude<ExtArgs> | null
+    where?: IdentityWhereInput
+    orderBy?: IdentityOrderByWithRelationInput | IdentityOrderByWithRelationInput[]
+    cursor?: IdentityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: IdentityScalarFieldEnum | IdentityScalarFieldEnum[]
   }
 
   /**
@@ -19692,6 +19860,8 @@ export namespace Prisma {
     geolocation?: boolean
     deviceType?: boolean
     account?: boolean | AccountDefaultArgs<ExtArgs>
+    identities?: boolean | AuthnSession$identitiesArgs<ExtArgs>
+    _count?: boolean | AuthnSessionCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["authnSession"]>
 
   export type AuthnSessionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -19738,6 +19908,8 @@ export namespace Prisma {
   export type AuthnSessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "key" | "ipAddress" | "userAgent" | "validTill" | "lastLoggedIn" | "loginType" | "geolocation" | "deviceType", ExtArgs["result"]["authnSession"]>
   export type AuthnSessionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
+    identities?: boolean | AuthnSession$identitiesArgs<ExtArgs>
+    _count?: boolean | AuthnSessionCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AuthnSessionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     account?: boolean | AccountDefaultArgs<ExtArgs>
@@ -19750,6 +19922,7 @@ export namespace Prisma {
     name: "AuthnSession"
     objects: {
       account: Prisma.$AccountPayload<ExtArgs>
+      identities: Prisma.$IdentityPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -20157,6 +20330,7 @@ export namespace Prisma {
   export interface Prisma__AuthnSessionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     account<T extends AccountDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountDefaultArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    identities<T extends AuthnSession$identitiesArgs<ExtArgs> = {}>(args?: Subset<T, AuthnSession$identitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -20589,6 +20763,30 @@ export namespace Prisma {
      * Limit how many AuthnSessions to delete.
      */
     limit?: number
+  }
+
+  /**
+   * AuthnSession.identities
+   */
+  export type AuthnSession$identitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Identity
+     */
+    select?: IdentitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Identity
+     */
+    omit?: IdentityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityInclude<ExtArgs> | null
+    where?: IdentityWhereInput
+    orderBy?: IdentityOrderByWithRelationInput | IdentityOrderByWithRelationInput[]
+    cursor?: IdentityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: IdentityScalarFieldEnum | IdentityScalarFieldEnum[]
   }
 
   /**
@@ -21923,6 +22121,7 @@ export namespace Prisma {
     authzCapabilities?: boolean | Application$authzCapabilitiesArgs<ExtArgs>
     authzRoles?: boolean | Application$authzRolesArgs<ExtArgs>
     authzAccountAccessGrants?: boolean | Application$authzAccountAccessGrantsArgs<ExtArgs>
+    identities?: boolean | Application$identitiesArgs<ExtArgs>
     _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
 
@@ -21976,6 +22175,7 @@ export namespace Prisma {
     authzCapabilities?: boolean | Application$authzCapabilitiesArgs<ExtArgs>
     authzRoles?: boolean | Application$authzRolesArgs<ExtArgs>
     authzAccountAccessGrants?: boolean | Application$authzAccountAccessGrantsArgs<ExtArgs>
+    identities?: boolean | Application$identitiesArgs<ExtArgs>
     _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ApplicationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -21990,6 +22190,7 @@ export namespace Prisma {
       authzCapabilities: Prisma.$AuthzCapabilityPayload<ExtArgs>[]
       authzRoles: Prisma.$AuthzRolePayload<ExtArgs>[]
       authzAccountAccessGrants: Prisma.$AuthzAccountAccessGrantPayload<ExtArgs>[]
+      identities: Prisma.$IdentityPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -22403,6 +22604,7 @@ export namespace Prisma {
     authzCapabilities<T extends Application$authzCapabilitiesArgs<ExtArgs> = {}>(args?: Subset<T, Application$authzCapabilitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzCapabilityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     authzRoles<T extends Application$authzRolesArgs<ExtArgs> = {}>(args?: Subset<T, Application$authzRolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzRolePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     authzAccountAccessGrants<T extends Application$authzAccountAccessGrantsArgs<ExtArgs> = {}>(args?: Subset<T, Application$authzAccountAccessGrantsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthzAccountAccessGrantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    identities<T extends Application$identitiesArgs<ExtArgs> = {}>(args?: Subset<T, Application$identitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -22972,6 +23174,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AuthzAccountAccessGrantScalarFieldEnum | AuthzAccountAccessGrantScalarFieldEnum[]
+  }
+
+  /**
+   * Application.identities
+   */
+  export type Application$identitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Identity
+     */
+    select?: IdentitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Identity
+     */
+    omit?: IdentityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityInclude<ExtArgs> | null
+    where?: IdentityWhereInput
+    orderBy?: IdentityOrderByWithRelationInput | IdentityOrderByWithRelationInput[]
+    cursor?: IdentityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: IdentityScalarFieldEnum | IdentityScalarFieldEnum[]
   }
 
   /**
@@ -37225,6 +37451,1144 @@ export namespace Prisma {
 
 
   /**
+   * Model Identity
+   */
+
+  export type AggregateIdentity = {
+    _count: IdentityCountAggregateOutputType | null
+    _min: IdentityMinAggregateOutputType | null
+    _max: IdentityMaxAggregateOutputType | null
+  }
+
+  export type IdentityMinAggregateOutputType = {
+    id: string | null
+    accountId: string | null
+    appId: string | null
+    sessionId: string | null
+    originatedOn: Date | null
+    refreshesOn: Date | null
+    validTill: Date | null
+  }
+
+  export type IdentityMaxAggregateOutputType = {
+    id: string | null
+    accountId: string | null
+    appId: string | null
+    sessionId: string | null
+    originatedOn: Date | null
+    refreshesOn: Date | null
+    validTill: Date | null
+  }
+
+  export type IdentityCountAggregateOutputType = {
+    id: number
+    accountId: number
+    appId: number
+    sessionId: number
+    originatedOn: number
+    refreshesOn: number
+    validTill: number
+    _all: number
+  }
+
+
+  export type IdentityMinAggregateInputType = {
+    id?: true
+    accountId?: true
+    appId?: true
+    sessionId?: true
+    originatedOn?: true
+    refreshesOn?: true
+    validTill?: true
+  }
+
+  export type IdentityMaxAggregateInputType = {
+    id?: true
+    accountId?: true
+    appId?: true
+    sessionId?: true
+    originatedOn?: true
+    refreshesOn?: true
+    validTill?: true
+  }
+
+  export type IdentityCountAggregateInputType = {
+    id?: true
+    accountId?: true
+    appId?: true
+    sessionId?: true
+    originatedOn?: true
+    refreshesOn?: true
+    validTill?: true
+    _all?: true
+  }
+
+  export type IdentityAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Identity to aggregate.
+     */
+    where?: IdentityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Identities to fetch.
+     */
+    orderBy?: IdentityOrderByWithRelationInput | IdentityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: IdentityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Identities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Identities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Identities
+    **/
+    _count?: true | IdentityCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: IdentityMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: IdentityMaxAggregateInputType
+  }
+
+  export type GetIdentityAggregateType<T extends IdentityAggregateArgs> = {
+        [P in keyof T & keyof AggregateIdentity]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateIdentity[P]>
+      : GetScalarType<T[P], AggregateIdentity[P]>
+  }
+
+
+
+
+  export type IdentityGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IdentityWhereInput
+    orderBy?: IdentityOrderByWithAggregationInput | IdentityOrderByWithAggregationInput[]
+    by: IdentityScalarFieldEnum[] | IdentityScalarFieldEnum
+    having?: IdentityScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: IdentityCountAggregateInputType | true
+    _min?: IdentityMinAggregateInputType
+    _max?: IdentityMaxAggregateInputType
+  }
+
+  export type IdentityGroupByOutputType = {
+    id: string
+    accountId: string | null
+    appId: string
+    sessionId: string | null
+    originatedOn: Date
+    refreshesOn: Date
+    validTill: Date
+    _count: IdentityCountAggregateOutputType | null
+    _min: IdentityMinAggregateOutputType | null
+    _max: IdentityMaxAggregateOutputType | null
+  }
+
+  type GetIdentityGroupByPayload<T extends IdentityGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<IdentityGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof IdentityGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], IdentityGroupByOutputType[P]>
+            : GetScalarType<T[P], IdentityGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type IdentitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    accountId?: boolean
+    appId?: boolean
+    sessionId?: boolean
+    originatedOn?: boolean
+    refreshesOn?: boolean
+    validTill?: boolean
+    account?: boolean | Identity$accountArgs<ExtArgs>
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    session?: boolean | Identity$sessionArgs<ExtArgs>
+  }, ExtArgs["result"]["identity"]>
+
+  export type IdentitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    accountId?: boolean
+    appId?: boolean
+    sessionId?: boolean
+    originatedOn?: boolean
+    refreshesOn?: boolean
+    validTill?: boolean
+    account?: boolean | Identity$accountArgs<ExtArgs>
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    session?: boolean | Identity$sessionArgs<ExtArgs>
+  }, ExtArgs["result"]["identity"]>
+
+  export type IdentitySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    accountId?: boolean
+    appId?: boolean
+    sessionId?: boolean
+    originatedOn?: boolean
+    refreshesOn?: boolean
+    validTill?: boolean
+    account?: boolean | Identity$accountArgs<ExtArgs>
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    session?: boolean | Identity$sessionArgs<ExtArgs>
+  }, ExtArgs["result"]["identity"]>
+
+  export type IdentitySelectScalar = {
+    id?: boolean
+    accountId?: boolean
+    appId?: boolean
+    sessionId?: boolean
+    originatedOn?: boolean
+    refreshesOn?: boolean
+    validTill?: boolean
+  }
+
+  export type IdentityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId" | "appId" | "sessionId" | "originatedOn" | "refreshesOn" | "validTill", ExtArgs["result"]["identity"]>
+  export type IdentityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    account?: boolean | Identity$accountArgs<ExtArgs>
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    session?: boolean | Identity$sessionArgs<ExtArgs>
+  }
+  export type IdentityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    account?: boolean | Identity$accountArgs<ExtArgs>
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    session?: boolean | Identity$sessionArgs<ExtArgs>
+  }
+  export type IdentityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    account?: boolean | Identity$accountArgs<ExtArgs>
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    session?: boolean | Identity$sessionArgs<ExtArgs>
+  }
+
+  export type $IdentityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Identity"
+    objects: {
+      account: Prisma.$AccountPayload<ExtArgs> | null
+      application: Prisma.$ApplicationPayload<ExtArgs>
+      session: Prisma.$AuthnSessionPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      accountId: string | null
+      appId: string
+      sessionId: string | null
+      originatedOn: Date
+      refreshesOn: Date
+      validTill: Date
+    }, ExtArgs["result"]["identity"]>
+    composites: {}
+  }
+
+  type IdentityGetPayload<S extends boolean | null | undefined | IdentityDefaultArgs> = $Result.GetResult<Prisma.$IdentityPayload, S>
+
+  type IdentityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<IdentityFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: IdentityCountAggregateInputType | true
+    }
+
+  export interface IdentityDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Identity'], meta: { name: 'Identity' } }
+    /**
+     * Find zero or one Identity that matches the filter.
+     * @param {IdentityFindUniqueArgs} args - Arguments to find a Identity
+     * @example
+     * // Get one Identity
+     * const identity = await prisma.identity.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends IdentityFindUniqueArgs>(args: SelectSubset<T, IdentityFindUniqueArgs<ExtArgs>>): Prisma__IdentityClient<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Identity that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {IdentityFindUniqueOrThrowArgs} args - Arguments to find a Identity
+     * @example
+     * // Get one Identity
+     * const identity = await prisma.identity.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends IdentityFindUniqueOrThrowArgs>(args: SelectSubset<T, IdentityFindUniqueOrThrowArgs<ExtArgs>>): Prisma__IdentityClient<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Identity that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdentityFindFirstArgs} args - Arguments to find a Identity
+     * @example
+     * // Get one Identity
+     * const identity = await prisma.identity.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends IdentityFindFirstArgs>(args?: SelectSubset<T, IdentityFindFirstArgs<ExtArgs>>): Prisma__IdentityClient<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Identity that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdentityFindFirstOrThrowArgs} args - Arguments to find a Identity
+     * @example
+     * // Get one Identity
+     * const identity = await prisma.identity.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends IdentityFindFirstOrThrowArgs>(args?: SelectSubset<T, IdentityFindFirstOrThrowArgs<ExtArgs>>): Prisma__IdentityClient<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Identities that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdentityFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Identities
+     * const identities = await prisma.identity.findMany()
+     * 
+     * // Get first 10 Identities
+     * const identities = await prisma.identity.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const identityWithIdOnly = await prisma.identity.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends IdentityFindManyArgs>(args?: SelectSubset<T, IdentityFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Identity.
+     * @param {IdentityCreateArgs} args - Arguments to create a Identity.
+     * @example
+     * // Create one Identity
+     * const Identity = await prisma.identity.create({
+     *   data: {
+     *     // ... data to create a Identity
+     *   }
+     * })
+     * 
+     */
+    create<T extends IdentityCreateArgs>(args: SelectSubset<T, IdentityCreateArgs<ExtArgs>>): Prisma__IdentityClient<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Identities.
+     * @param {IdentityCreateManyArgs} args - Arguments to create many Identities.
+     * @example
+     * // Create many Identities
+     * const identity = await prisma.identity.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends IdentityCreateManyArgs>(args?: SelectSubset<T, IdentityCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Identities and returns the data saved in the database.
+     * @param {IdentityCreateManyAndReturnArgs} args - Arguments to create many Identities.
+     * @example
+     * // Create many Identities
+     * const identity = await prisma.identity.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Identities and only return the `id`
+     * const identityWithIdOnly = await prisma.identity.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends IdentityCreateManyAndReturnArgs>(args?: SelectSubset<T, IdentityCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Identity.
+     * @param {IdentityDeleteArgs} args - Arguments to delete one Identity.
+     * @example
+     * // Delete one Identity
+     * const Identity = await prisma.identity.delete({
+     *   where: {
+     *     // ... filter to delete one Identity
+     *   }
+     * })
+     * 
+     */
+    delete<T extends IdentityDeleteArgs>(args: SelectSubset<T, IdentityDeleteArgs<ExtArgs>>): Prisma__IdentityClient<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Identity.
+     * @param {IdentityUpdateArgs} args - Arguments to update one Identity.
+     * @example
+     * // Update one Identity
+     * const identity = await prisma.identity.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends IdentityUpdateArgs>(args: SelectSubset<T, IdentityUpdateArgs<ExtArgs>>): Prisma__IdentityClient<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Identities.
+     * @param {IdentityDeleteManyArgs} args - Arguments to filter Identities to delete.
+     * @example
+     * // Delete a few Identities
+     * const { count } = await prisma.identity.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends IdentityDeleteManyArgs>(args?: SelectSubset<T, IdentityDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Identities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdentityUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Identities
+     * const identity = await prisma.identity.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends IdentityUpdateManyArgs>(args: SelectSubset<T, IdentityUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Identities and returns the data updated in the database.
+     * @param {IdentityUpdateManyAndReturnArgs} args - Arguments to update many Identities.
+     * @example
+     * // Update many Identities
+     * const identity = await prisma.identity.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Identities and only return the `id`
+     * const identityWithIdOnly = await prisma.identity.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends IdentityUpdateManyAndReturnArgs>(args: SelectSubset<T, IdentityUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Identity.
+     * @param {IdentityUpsertArgs} args - Arguments to update or create a Identity.
+     * @example
+     * // Update or create a Identity
+     * const identity = await prisma.identity.upsert({
+     *   create: {
+     *     // ... data to create a Identity
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Identity we want to update
+     *   }
+     * })
+     */
+    upsert<T extends IdentityUpsertArgs>(args: SelectSubset<T, IdentityUpsertArgs<ExtArgs>>): Prisma__IdentityClient<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Identities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdentityCountArgs} args - Arguments to filter Identities to count.
+     * @example
+     * // Count the number of Identities
+     * const count = await prisma.identity.count({
+     *   where: {
+     *     // ... the filter for the Identities we want to count
+     *   }
+     * })
+    **/
+    count<T extends IdentityCountArgs>(
+      args?: Subset<T, IdentityCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], IdentityCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Identity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdentityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends IdentityAggregateArgs>(args: Subset<T, IdentityAggregateArgs>): Prisma.PrismaPromise<GetIdentityAggregateType<T>>
+
+    /**
+     * Group by Identity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdentityGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends IdentityGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: IdentityGroupByArgs['orderBy'] }
+        : { orderBy?: IdentityGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, IdentityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIdentityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Identity model
+   */
+  readonly fields: IdentityFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Identity.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__IdentityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    account<T extends Identity$accountArgs<ExtArgs> = {}>(args?: Subset<T, Identity$accountArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    application<T extends ApplicationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationDefaultArgs<ExtArgs>>): Prisma__ApplicationClient<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    session<T extends Identity$sessionArgs<ExtArgs> = {}>(args?: Subset<T, Identity$sessionArgs<ExtArgs>>): Prisma__AuthnSessionClient<$Result.GetResult<Prisma.$AuthnSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Identity model
+   */
+  interface IdentityFieldRefs {
+    readonly id: FieldRef<"Identity", 'String'>
+    readonly accountId: FieldRef<"Identity", 'String'>
+    readonly appId: FieldRef<"Identity", 'String'>
+    readonly sessionId: FieldRef<"Identity", 'String'>
+    readonly originatedOn: FieldRef<"Identity", 'DateTime'>
+    readonly refreshesOn: FieldRef<"Identity", 'DateTime'>
+    readonly validTill: FieldRef<"Identity", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Identity findUnique
+   */
+  export type IdentityFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Identity
+     */
+    select?: IdentitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Identity
+     */
+    omit?: IdentityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityInclude<ExtArgs> | null
+    /**
+     * Filter, which Identity to fetch.
+     */
+    where: IdentityWhereUniqueInput
+  }
+
+  /**
+   * Identity findUniqueOrThrow
+   */
+  export type IdentityFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Identity
+     */
+    select?: IdentitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Identity
+     */
+    omit?: IdentityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityInclude<ExtArgs> | null
+    /**
+     * Filter, which Identity to fetch.
+     */
+    where: IdentityWhereUniqueInput
+  }
+
+  /**
+   * Identity findFirst
+   */
+  export type IdentityFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Identity
+     */
+    select?: IdentitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Identity
+     */
+    omit?: IdentityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityInclude<ExtArgs> | null
+    /**
+     * Filter, which Identity to fetch.
+     */
+    where?: IdentityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Identities to fetch.
+     */
+    orderBy?: IdentityOrderByWithRelationInput | IdentityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Identities.
+     */
+    cursor?: IdentityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Identities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Identities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Identities.
+     */
+    distinct?: IdentityScalarFieldEnum | IdentityScalarFieldEnum[]
+  }
+
+  /**
+   * Identity findFirstOrThrow
+   */
+  export type IdentityFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Identity
+     */
+    select?: IdentitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Identity
+     */
+    omit?: IdentityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityInclude<ExtArgs> | null
+    /**
+     * Filter, which Identity to fetch.
+     */
+    where?: IdentityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Identities to fetch.
+     */
+    orderBy?: IdentityOrderByWithRelationInput | IdentityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Identities.
+     */
+    cursor?: IdentityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Identities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Identities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Identities.
+     */
+    distinct?: IdentityScalarFieldEnum | IdentityScalarFieldEnum[]
+  }
+
+  /**
+   * Identity findMany
+   */
+  export type IdentityFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Identity
+     */
+    select?: IdentitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Identity
+     */
+    omit?: IdentityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityInclude<ExtArgs> | null
+    /**
+     * Filter, which Identities to fetch.
+     */
+    where?: IdentityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Identities to fetch.
+     */
+    orderBy?: IdentityOrderByWithRelationInput | IdentityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Identities.
+     */
+    cursor?: IdentityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Identities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Identities.
+     */
+    skip?: number
+    distinct?: IdentityScalarFieldEnum | IdentityScalarFieldEnum[]
+  }
+
+  /**
+   * Identity create
+   */
+  export type IdentityCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Identity
+     */
+    select?: IdentitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Identity
+     */
+    omit?: IdentityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Identity.
+     */
+    data: XOR<IdentityCreateInput, IdentityUncheckedCreateInput>
+  }
+
+  /**
+   * Identity createMany
+   */
+  export type IdentityCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Identities.
+     */
+    data: IdentityCreateManyInput | IdentityCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Identity createManyAndReturn
+   */
+  export type IdentityCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Identity
+     */
+    select?: IdentitySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Identity
+     */
+    omit?: IdentityOmit<ExtArgs> | null
+    /**
+     * The data used to create many Identities.
+     */
+    data: IdentityCreateManyInput | IdentityCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Identity update
+   */
+  export type IdentityUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Identity
+     */
+    select?: IdentitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Identity
+     */
+    omit?: IdentityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Identity.
+     */
+    data: XOR<IdentityUpdateInput, IdentityUncheckedUpdateInput>
+    /**
+     * Choose, which Identity to update.
+     */
+    where: IdentityWhereUniqueInput
+  }
+
+  /**
+   * Identity updateMany
+   */
+  export type IdentityUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Identities.
+     */
+    data: XOR<IdentityUpdateManyMutationInput, IdentityUncheckedUpdateManyInput>
+    /**
+     * Filter which Identities to update
+     */
+    where?: IdentityWhereInput
+    /**
+     * Limit how many Identities to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Identity updateManyAndReturn
+   */
+  export type IdentityUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Identity
+     */
+    select?: IdentitySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Identity
+     */
+    omit?: IdentityOmit<ExtArgs> | null
+    /**
+     * The data used to update Identities.
+     */
+    data: XOR<IdentityUpdateManyMutationInput, IdentityUncheckedUpdateManyInput>
+    /**
+     * Filter which Identities to update
+     */
+    where?: IdentityWhereInput
+    /**
+     * Limit how many Identities to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Identity upsert
+   */
+  export type IdentityUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Identity
+     */
+    select?: IdentitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Identity
+     */
+    omit?: IdentityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Identity to update in case it exists.
+     */
+    where: IdentityWhereUniqueInput
+    /**
+     * In case the Identity found by the `where` argument doesn't exist, create a new Identity with this data.
+     */
+    create: XOR<IdentityCreateInput, IdentityUncheckedCreateInput>
+    /**
+     * In case the Identity was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<IdentityUpdateInput, IdentityUncheckedUpdateInput>
+  }
+
+  /**
+   * Identity delete
+   */
+  export type IdentityDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Identity
+     */
+    select?: IdentitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Identity
+     */
+    omit?: IdentityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityInclude<ExtArgs> | null
+    /**
+     * Filter which Identity to delete.
+     */
+    where: IdentityWhereUniqueInput
+  }
+
+  /**
+   * Identity deleteMany
+   */
+  export type IdentityDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Identities to delete
+     */
+    where?: IdentityWhereInput
+    /**
+     * Limit how many Identities to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Identity.account
+   */
+  export type Identity$accountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Account
+     */
+    select?: AccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Account
+     */
+    omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    where?: AccountWhereInput
+  }
+
+  /**
+   * Identity.session
+   */
+  export type Identity$sessionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuthnSession
+     */
+    select?: AuthnSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuthnSession
+     */
+    omit?: AuthnSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuthnSessionInclude<ExtArgs> | null
+    where?: AuthnSessionWhereInput
+  }
+
+  /**
+   * Identity without action
+   */
+  export type IdentityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Identity
+     */
+    select?: IdentitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Identity
+     */
+    omit?: IdentityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdentityInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -37609,6 +38973,19 @@ export namespace Prisma {
   export type PermitScalarFieldEnum = (typeof PermitScalarFieldEnum)[keyof typeof PermitScalarFieldEnum]
 
 
+  export const IdentityScalarFieldEnum: {
+    id: 'id',
+    accountId: 'accountId',
+    appId: 'appId',
+    sessionId: 'sessionId',
+    originatedOn: 'originatedOn',
+    refreshesOn: 'refreshesOn',
+    validTill: 'validTill'
+  };
+
+  export type IdentityScalarFieldEnum = (typeof IdentityScalarFieldEnum)[keyof typeof IdentityScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -37762,6 +39139,7 @@ export namespace Prisma {
     sentRequests?: RequestListRelationFilter
     errorLogs?: SystemErrorListRelationFilter
     verifications?: VerificationListRelationFilter
+    identities?: IdentityListRelationFilter
   }
 
   export type AccountOrderByWithRelationInput = {
@@ -37795,6 +39173,7 @@ export namespace Prisma {
     sentRequests?: RequestOrderByRelationAggregateInput
     errorLogs?: SystemErrorOrderByRelationAggregateInput
     verifications?: VerificationOrderByRelationAggregateInput
+    identities?: IdentityOrderByRelationAggregateInput
   }
 
   export type AccountWhereUniqueInput = Prisma.AtLeast<{
@@ -37831,6 +39210,7 @@ export namespace Prisma {
     sentRequests?: RequestListRelationFilter
     errorLogs?: SystemErrorListRelationFilter
     verifications?: VerificationListRelationFilter
+    identities?: IdentityListRelationFilter
   }, "id">
 
   export type AccountOrderByWithAggregationInput = {
@@ -38683,6 +40063,7 @@ export namespace Prisma {
     geolocation?: StringNullableFilter<"AuthnSession"> | string | null
     deviceType?: StringNullableFilter<"AuthnSession"> | string | null
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
+    identities?: IdentityListRelationFilter
   }
 
   export type AuthnSessionOrderByWithRelationInput = {
@@ -38697,6 +40078,7 @@ export namespace Prisma {
     geolocation?: SortOrderInput | SortOrder
     deviceType?: SortOrderInput | SortOrder
     account?: AccountOrderByWithRelationInput
+    identities?: IdentityOrderByRelationAggregateInput
   }
 
   export type AuthnSessionWhereUniqueInput = Prisma.AtLeast<{
@@ -38714,6 +40096,7 @@ export namespace Prisma {
     geolocation?: StringNullableFilter<"AuthnSession"> | string | null
     deviceType?: StringNullableFilter<"AuthnSession"> | string | null
     account?: XOR<AccountScalarRelationFilter, AccountWhereInput>
+    identities?: IdentityListRelationFilter
   }, "id">
 
   export type AuthnSessionOrderByWithAggregationInput = {
@@ -38834,6 +40217,7 @@ export namespace Prisma {
     authzCapabilities?: AuthzCapabilityListRelationFilter
     authzRoles?: AuthzRoleListRelationFilter
     authzAccountAccessGrants?: AuthzAccountAccessGrantListRelationFilter
+    identities?: IdentityListRelationFilter
   }
 
   export type ApplicationOrderByWithRelationInput = {
@@ -38854,6 +40238,7 @@ export namespace Prisma {
     authzCapabilities?: AuthzCapabilityOrderByRelationAggregateInput
     authzRoles?: AuthzRoleOrderByRelationAggregateInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantOrderByRelationAggregateInput
+    identities?: IdentityOrderByRelationAggregateInput
   }
 
   export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
@@ -38877,6 +40262,7 @@ export namespace Prisma {
     authzCapabilities?: AuthzCapabilityListRelationFilter
     authzRoles?: AuthzRoleListRelationFilter
     authzAccountAccessGrants?: AuthzAccountAccessGrantListRelationFilter
+    identities?: IdentityListRelationFilter
   }, "id">
 
   export type ApplicationOrderByWithAggregationInput = {
@@ -39725,6 +41111,78 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Permit"> | Date | string
   }
 
+  export type IdentityWhereInput = {
+    AND?: IdentityWhereInput | IdentityWhereInput[]
+    OR?: IdentityWhereInput[]
+    NOT?: IdentityWhereInput | IdentityWhereInput[]
+    id?: StringFilter<"Identity"> | string
+    accountId?: StringNullableFilter<"Identity"> | string | null
+    appId?: StringFilter<"Identity"> | string
+    sessionId?: StringNullableFilter<"Identity"> | string | null
+    originatedOn?: DateTimeFilter<"Identity"> | Date | string
+    refreshesOn?: DateTimeFilter<"Identity"> | Date | string
+    validTill?: DateTimeFilter<"Identity"> | Date | string
+    account?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
+    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
+    session?: XOR<AuthnSessionNullableScalarRelationFilter, AuthnSessionWhereInput> | null
+  }
+
+  export type IdentityOrderByWithRelationInput = {
+    id?: SortOrder
+    accountId?: SortOrderInput | SortOrder
+    appId?: SortOrder
+    sessionId?: SortOrderInput | SortOrder
+    originatedOn?: SortOrder
+    refreshesOn?: SortOrder
+    validTill?: SortOrder
+    account?: AccountOrderByWithRelationInput
+    application?: ApplicationOrderByWithRelationInput
+    session?: AuthnSessionOrderByWithRelationInput
+  }
+
+  export type IdentityWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    accountId_appId?: IdentityAccountIdAppIdCompoundUniqueInput
+    AND?: IdentityWhereInput | IdentityWhereInput[]
+    OR?: IdentityWhereInput[]
+    NOT?: IdentityWhereInput | IdentityWhereInput[]
+    accountId?: StringNullableFilter<"Identity"> | string | null
+    appId?: StringFilter<"Identity"> | string
+    sessionId?: StringNullableFilter<"Identity"> | string | null
+    originatedOn?: DateTimeFilter<"Identity"> | Date | string
+    refreshesOn?: DateTimeFilter<"Identity"> | Date | string
+    validTill?: DateTimeFilter<"Identity"> | Date | string
+    account?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
+    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
+    session?: XOR<AuthnSessionNullableScalarRelationFilter, AuthnSessionWhereInput> | null
+  }, "id" | "accountId_appId">
+
+  export type IdentityOrderByWithAggregationInput = {
+    id?: SortOrder
+    accountId?: SortOrderInput | SortOrder
+    appId?: SortOrder
+    sessionId?: SortOrderInput | SortOrder
+    originatedOn?: SortOrder
+    refreshesOn?: SortOrder
+    validTill?: SortOrder
+    _count?: IdentityCountOrderByAggregateInput
+    _max?: IdentityMaxOrderByAggregateInput
+    _min?: IdentityMinOrderByAggregateInput
+  }
+
+  export type IdentityScalarWhereWithAggregatesInput = {
+    AND?: IdentityScalarWhereWithAggregatesInput | IdentityScalarWhereWithAggregatesInput[]
+    OR?: IdentityScalarWhereWithAggregatesInput[]
+    NOT?: IdentityScalarWhereWithAggregatesInput | IdentityScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Identity"> | string
+    accountId?: StringNullableWithAggregatesFilter<"Identity"> | string | null
+    appId?: StringWithAggregatesFilter<"Identity"> | string
+    sessionId?: StringNullableWithAggregatesFilter<"Identity"> | string | null
+    originatedOn?: DateTimeWithAggregatesFilter<"Identity"> | Date | string
+    refreshesOn?: DateTimeWithAggregatesFilter<"Identity"> | Date | string
+    validTill?: DateTimeWithAggregatesFilter<"Identity"> | Date | string
+  }
+
   export type AccountCreateInput = {
     id?: string
     displayName?: string | null
@@ -39756,6 +41214,7 @@ export namespace Prisma {
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateInput = {
@@ -39789,6 +41248,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUpdateInput = {
@@ -39822,6 +41282,7 @@ export namespace Prisma {
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateInput = {
@@ -39855,6 +41316,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateManyInput = {
@@ -40747,6 +42209,7 @@ export namespace Prisma {
     geolocation?: string | null
     deviceType?: string | null
     account: AccountCreateNestedOneWithoutSessionsInput
+    identities?: IdentityCreateNestedManyWithoutSessionInput
   }
 
   export type AuthnSessionUncheckedCreateInput = {
@@ -40760,6 +42223,7 @@ export namespace Prisma {
     loginType: string
     geolocation?: string | null
     deviceType?: string | null
+    identities?: IdentityUncheckedCreateNestedManyWithoutSessionInput
   }
 
   export type AuthnSessionUpdateInput = {
@@ -40773,6 +42237,7 @@ export namespace Prisma {
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
     deviceType?: NullableStringFieldUpdateOperationsInput | string | null
     account?: AccountUpdateOneRequiredWithoutSessionsNestedInput
+    identities?: IdentityUpdateManyWithoutSessionNestedInput
   }
 
   export type AuthnSessionUncheckedUpdateInput = {
@@ -40786,6 +42251,7 @@ export namespace Prisma {
     loginType?: StringFieldUpdateOperationsInput | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
     deviceType?: NullableStringFieldUpdateOperationsInput | string | null
+    identities?: IdentityUncheckedUpdateManyWithoutSessionNestedInput
   }
 
   export type AuthnSessionCreateManyInput = {
@@ -40913,6 +42379,7 @@ export namespace Prisma {
     authzCapabilities?: AuthzCapabilityCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutApplicationInput
+    identities?: IdentityCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateInput = {
@@ -40933,6 +42400,7 @@ export namespace Prisma {
     authzCapabilities?: AuthzCapabilityUncheckedCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleUncheckedCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutApplicationInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUpdateInput = {
@@ -40953,6 +42421,7 @@ export namespace Prisma {
     authzCapabilities?: AuthzCapabilityUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUpdateManyWithoutApplicationNestedInput
+    identities?: IdentityUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateInput = {
@@ -40973,6 +42442,7 @@ export namespace Prisma {
     authzCapabilities?: AuthzCapabilityUncheckedUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUncheckedUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutApplicationNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationCreateManyInput = {
@@ -41806,6 +43276,73 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type IdentityCreateInput = {
+    id?: string
+    originatedOn?: Date | string
+    refreshesOn: Date | string
+    validTill: Date | string
+    account?: AccountCreateNestedOneWithoutIdentitiesInput
+    application: ApplicationCreateNestedOneWithoutIdentitiesInput
+    session?: AuthnSessionCreateNestedOneWithoutIdentitiesInput
+  }
+
+  export type IdentityUncheckedCreateInput = {
+    id?: string
+    accountId?: string | null
+    appId: string
+    sessionId?: string | null
+    originatedOn?: Date | string
+    refreshesOn: Date | string
+    validTill: Date | string
+  }
+
+  export type IdentityUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    originatedOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshesOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    validTill?: DateTimeFieldUpdateOperationsInput | Date | string
+    account?: AccountUpdateOneWithoutIdentitiesNestedInput
+    application?: ApplicationUpdateOneRequiredWithoutIdentitiesNestedInput
+    session?: AuthnSessionUpdateOneWithoutIdentitiesNestedInput
+  }
+
+  export type IdentityUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountId?: NullableStringFieldUpdateOperationsInput | string | null
+    appId?: StringFieldUpdateOperationsInput | string
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    originatedOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshesOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    validTill?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IdentityCreateManyInput = {
+    id?: string
+    accountId?: string | null
+    appId: string
+    sessionId?: string | null
+    originatedOn?: Date | string
+    refreshesOn: Date | string
+    validTill: Date | string
+  }
+
+  export type IdentityUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    originatedOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshesOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    validTill?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IdentityUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountId?: NullableStringFieldUpdateOperationsInput | string | null
+    appId?: StringFieldUpdateOperationsInput | string
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    originatedOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshesOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    validTill?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -41975,6 +43512,12 @@ export namespace Prisma {
     none?: SystemErrorWhereInput
   }
 
+  export type IdentityListRelationFilter = {
+    every?: IdentityWhereInput
+    some?: IdentityWhereInput
+    none?: IdentityWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -42037,6 +43580,10 @@ export namespace Prisma {
   }
 
   export type SystemErrorOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type IdentityOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -43146,6 +44693,46 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type AuthnSessionNullableScalarRelationFilter = {
+    is?: AuthnSessionWhereInput | null
+    isNot?: AuthnSessionWhereInput | null
+  }
+
+  export type IdentityAccountIdAppIdCompoundUniqueInput = {
+    accountId: string
+    appId: string
+  }
+
+  export type IdentityCountOrderByAggregateInput = {
+    id?: SortOrder
+    accountId?: SortOrder
+    appId?: SortOrder
+    sessionId?: SortOrder
+    originatedOn?: SortOrder
+    refreshesOn?: SortOrder
+    validTill?: SortOrder
+  }
+
+  export type IdentityMaxOrderByAggregateInput = {
+    id?: SortOrder
+    accountId?: SortOrder
+    appId?: SortOrder
+    sessionId?: SortOrder
+    originatedOn?: SortOrder
+    refreshesOn?: SortOrder
+    validTill?: SortOrder
+  }
+
+  export type IdentityMinOrderByAggregateInput = {
+    id?: SortOrder
+    accountId?: SortOrder
+    appId?: SortOrder
+    sessionId?: SortOrder
+    originatedOn?: SortOrder
+    refreshesOn?: SortOrder
+    validTill?: SortOrder
+  }
+
   export type AccountTypeBrandCreateNestedOneWithoutAccountInput = {
     create?: XOR<AccountTypeBrandCreateWithoutAccountInput, AccountTypeBrandUncheckedCreateWithoutAccountInput>
     connectOrCreate?: AccountTypeBrandCreateOrConnectWithoutAccountInput
@@ -43298,6 +44885,13 @@ export namespace Prisma {
     connect?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
   }
 
+  export type IdentityCreateNestedManyWithoutAccountInput = {
+    create?: XOR<IdentityCreateWithoutAccountInput, IdentityUncheckedCreateWithoutAccountInput> | IdentityCreateWithoutAccountInput[] | IdentityUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: IdentityCreateOrConnectWithoutAccountInput | IdentityCreateOrConnectWithoutAccountInput[]
+    createMany?: IdentityCreateManyAccountInputEnvelope
+    connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+  }
+
   export type AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput = {
     create?: XOR<AccountTypeBrandCreateWithoutAccountInput, AccountTypeBrandUncheckedCreateWithoutAccountInput>
     connectOrCreate?: AccountTypeBrandCreateOrConnectWithoutAccountInput
@@ -43448,6 +45042,13 @@ export namespace Prisma {
     connectOrCreate?: VerificationCreateOrConnectWithoutAccountInput | VerificationCreateOrConnectWithoutAccountInput[]
     createMany?: VerificationCreateManyAccountInputEnvelope
     connect?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
+  }
+
+  export type IdentityUncheckedCreateNestedManyWithoutAccountInput = {
+    create?: XOR<IdentityCreateWithoutAccountInput, IdentityUncheckedCreateWithoutAccountInput> | IdentityCreateWithoutAccountInput[] | IdentityUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: IdentityCreateOrConnectWithoutAccountInput | IdentityCreateOrConnectWithoutAccountInput[]
+    createMany?: IdentityCreateManyAccountInputEnvelope
+    connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -43766,6 +45367,20 @@ export namespace Prisma {
     deleteMany?: VerificationScalarWhereInput | VerificationScalarWhereInput[]
   }
 
+  export type IdentityUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<IdentityCreateWithoutAccountInput, IdentityUncheckedCreateWithoutAccountInput> | IdentityCreateWithoutAccountInput[] | IdentityUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: IdentityCreateOrConnectWithoutAccountInput | IdentityCreateOrConnectWithoutAccountInput[]
+    upsert?: IdentityUpsertWithWhereUniqueWithoutAccountInput | IdentityUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: IdentityCreateManyAccountInputEnvelope
+    set?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    disconnect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    delete?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    update?: IdentityUpdateWithWhereUniqueWithoutAccountInput | IdentityUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: IdentityUpdateManyWithWhereWithoutAccountInput | IdentityUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: IdentityScalarWhereInput | IdentityScalarWhereInput[]
+  }
+
   export type AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput = {
     create?: XOR<AccountTypeBrandCreateWithoutAccountInput, AccountTypeBrandUncheckedCreateWithoutAccountInput>
     connectOrCreate?: AccountTypeBrandCreateOrConnectWithoutAccountInput
@@ -44066,6 +45681,20 @@ export namespace Prisma {
     deleteMany?: VerificationScalarWhereInput | VerificationScalarWhereInput[]
   }
 
+  export type IdentityUncheckedUpdateManyWithoutAccountNestedInput = {
+    create?: XOR<IdentityCreateWithoutAccountInput, IdentityUncheckedCreateWithoutAccountInput> | IdentityCreateWithoutAccountInput[] | IdentityUncheckedCreateWithoutAccountInput[]
+    connectOrCreate?: IdentityCreateOrConnectWithoutAccountInput | IdentityCreateOrConnectWithoutAccountInput[]
+    upsert?: IdentityUpsertWithWhereUniqueWithoutAccountInput | IdentityUpsertWithWhereUniqueWithoutAccountInput[]
+    createMany?: IdentityCreateManyAccountInputEnvelope
+    set?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    disconnect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    delete?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    update?: IdentityUpdateWithWhereUniqueWithoutAccountInput | IdentityUpdateWithWhereUniqueWithoutAccountInput[]
+    updateMany?: IdentityUpdateManyWithWhereWithoutAccountInput | IdentityUpdateManyWithWhereWithoutAccountInput[]
+    deleteMany?: IdentityScalarWhereInput | IdentityScalarWhereInput[]
+  }
+
   export type AccountCreateNestedOneWithoutIndividualProfileInput = {
     create?: XOR<AccountCreateWithoutIndividualProfileInput, AccountUncheckedCreateWithoutIndividualProfileInput>
     connectOrCreate?: AccountCreateOrConnectWithoutIndividualProfileInput
@@ -44288,12 +45917,54 @@ export namespace Prisma {
     connect?: AccountWhereUniqueInput
   }
 
+  export type IdentityCreateNestedManyWithoutSessionInput = {
+    create?: XOR<IdentityCreateWithoutSessionInput, IdentityUncheckedCreateWithoutSessionInput> | IdentityCreateWithoutSessionInput[] | IdentityUncheckedCreateWithoutSessionInput[]
+    connectOrCreate?: IdentityCreateOrConnectWithoutSessionInput | IdentityCreateOrConnectWithoutSessionInput[]
+    createMany?: IdentityCreateManySessionInputEnvelope
+    connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+  }
+
+  export type IdentityUncheckedCreateNestedManyWithoutSessionInput = {
+    create?: XOR<IdentityCreateWithoutSessionInput, IdentityUncheckedCreateWithoutSessionInput> | IdentityCreateWithoutSessionInput[] | IdentityUncheckedCreateWithoutSessionInput[]
+    connectOrCreate?: IdentityCreateOrConnectWithoutSessionInput | IdentityCreateOrConnectWithoutSessionInput[]
+    createMany?: IdentityCreateManySessionInputEnvelope
+    connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+  }
+
   export type AccountUpdateOneRequiredWithoutSessionsNestedInput = {
     create?: XOR<AccountCreateWithoutSessionsInput, AccountUncheckedCreateWithoutSessionsInput>
     connectOrCreate?: AccountCreateOrConnectWithoutSessionsInput
     upsert?: AccountUpsertWithoutSessionsInput
     connect?: AccountWhereUniqueInput
     update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutSessionsInput, AccountUpdateWithoutSessionsInput>, AccountUncheckedUpdateWithoutSessionsInput>
+  }
+
+  export type IdentityUpdateManyWithoutSessionNestedInput = {
+    create?: XOR<IdentityCreateWithoutSessionInput, IdentityUncheckedCreateWithoutSessionInput> | IdentityCreateWithoutSessionInput[] | IdentityUncheckedCreateWithoutSessionInput[]
+    connectOrCreate?: IdentityCreateOrConnectWithoutSessionInput | IdentityCreateOrConnectWithoutSessionInput[]
+    upsert?: IdentityUpsertWithWhereUniqueWithoutSessionInput | IdentityUpsertWithWhereUniqueWithoutSessionInput[]
+    createMany?: IdentityCreateManySessionInputEnvelope
+    set?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    disconnect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    delete?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    update?: IdentityUpdateWithWhereUniqueWithoutSessionInput | IdentityUpdateWithWhereUniqueWithoutSessionInput[]
+    updateMany?: IdentityUpdateManyWithWhereWithoutSessionInput | IdentityUpdateManyWithWhereWithoutSessionInput[]
+    deleteMany?: IdentityScalarWhereInput | IdentityScalarWhereInput[]
+  }
+
+  export type IdentityUncheckedUpdateManyWithoutSessionNestedInput = {
+    create?: XOR<IdentityCreateWithoutSessionInput, IdentityUncheckedCreateWithoutSessionInput> | IdentityCreateWithoutSessionInput[] | IdentityUncheckedCreateWithoutSessionInput[]
+    connectOrCreate?: IdentityCreateOrConnectWithoutSessionInput | IdentityCreateOrConnectWithoutSessionInput[]
+    upsert?: IdentityUpsertWithWhereUniqueWithoutSessionInput | IdentityUpsertWithWhereUniqueWithoutSessionInput[]
+    createMany?: IdentityCreateManySessionInputEnvelope
+    set?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    disconnect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    delete?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    update?: IdentityUpdateWithWhereUniqueWithoutSessionInput | IdentityUpdateWithWhereUniqueWithoutSessionInput[]
+    updateMany?: IdentityUpdateManyWithWhereWithoutSessionInput | IdentityUpdateManyWithWhereWithoutSessionInput[]
+    deleteMany?: IdentityScalarWhereInput | IdentityScalarWhereInput[]
   }
 
   export type AccountCreateNestedOneWithoutErrorLogsInput = {
@@ -44354,6 +46025,13 @@ export namespace Prisma {
     connect?: AuthzAccountAccessGrantWhereUniqueInput | AuthzAccountAccessGrantWhereUniqueInput[]
   }
 
+  export type IdentityCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<IdentityCreateWithoutApplicationInput, IdentityUncheckedCreateWithoutApplicationInput> | IdentityCreateWithoutApplicationInput[] | IdentityUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: IdentityCreateOrConnectWithoutApplicationInput | IdentityCreateOrConnectWithoutApplicationInput[]
+    createMany?: IdentityCreateManyApplicationInputEnvelope
+    connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+  }
+
   export type ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput = {
     create?: XOR<ApplicationConnectionCreateWithoutApplicationInput, ApplicationConnectionUncheckedCreateWithoutApplicationInput> | ApplicationConnectionCreateWithoutApplicationInput[] | ApplicationConnectionUncheckedCreateWithoutApplicationInput[]
     connectOrCreate?: ApplicationConnectionCreateOrConnectWithoutApplicationInput | ApplicationConnectionCreateOrConnectWithoutApplicationInput[]
@@ -44394,6 +46072,13 @@ export namespace Prisma {
     connectOrCreate?: AuthzAccountAccessGrantCreateOrConnectWithoutApplicationInput | AuthzAccountAccessGrantCreateOrConnectWithoutApplicationInput[]
     createMany?: AuthzAccountAccessGrantCreateManyApplicationInputEnvelope
     connect?: AuthzAccountAccessGrantWhereUniqueInput | AuthzAccountAccessGrantWhereUniqueInput[]
+  }
+
+  export type IdentityUncheckedCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<IdentityCreateWithoutApplicationInput, IdentityUncheckedCreateWithoutApplicationInput> | IdentityCreateWithoutApplicationInput[] | IdentityUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: IdentityCreateOrConnectWithoutApplicationInput | IdentityCreateOrConnectWithoutApplicationInput[]
+    createMany?: IdentityCreateManyApplicationInputEnvelope
+    connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
   }
 
   export type ApplicationConnectionUpdateManyWithoutApplicationNestedInput = {
@@ -44480,6 +46165,20 @@ export namespace Prisma {
     deleteMany?: AuthzAccountAccessGrantScalarWhereInput | AuthzAccountAccessGrantScalarWhereInput[]
   }
 
+  export type IdentityUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<IdentityCreateWithoutApplicationInput, IdentityUncheckedCreateWithoutApplicationInput> | IdentityCreateWithoutApplicationInput[] | IdentityUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: IdentityCreateOrConnectWithoutApplicationInput | IdentityCreateOrConnectWithoutApplicationInput[]
+    upsert?: IdentityUpsertWithWhereUniqueWithoutApplicationInput | IdentityUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: IdentityCreateManyApplicationInputEnvelope
+    set?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    disconnect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    delete?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    update?: IdentityUpdateWithWhereUniqueWithoutApplicationInput | IdentityUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: IdentityUpdateManyWithWhereWithoutApplicationInput | IdentityUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: IdentityScalarWhereInput | IdentityScalarWhereInput[]
+  }
+
   export type ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput = {
     create?: XOR<ApplicationConnectionCreateWithoutApplicationInput, ApplicationConnectionUncheckedCreateWithoutApplicationInput> | ApplicationConnectionCreateWithoutApplicationInput[] | ApplicationConnectionUncheckedCreateWithoutApplicationInput[]
     connectOrCreate?: ApplicationConnectionCreateOrConnectWithoutApplicationInput | ApplicationConnectionCreateOrConnectWithoutApplicationInput[]
@@ -44562,6 +46261,20 @@ export namespace Prisma {
     update?: AuthzAccountAccessGrantUpdateWithWhereUniqueWithoutApplicationInput | AuthzAccountAccessGrantUpdateWithWhereUniqueWithoutApplicationInput[]
     updateMany?: AuthzAccountAccessGrantUpdateManyWithWhereWithoutApplicationInput | AuthzAccountAccessGrantUpdateManyWithWhereWithoutApplicationInput[]
     deleteMany?: AuthzAccountAccessGrantScalarWhereInput | AuthzAccountAccessGrantScalarWhereInput[]
+  }
+
+  export type IdentityUncheckedUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<IdentityCreateWithoutApplicationInput, IdentityUncheckedCreateWithoutApplicationInput> | IdentityCreateWithoutApplicationInput[] | IdentityUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: IdentityCreateOrConnectWithoutApplicationInput | IdentityCreateOrConnectWithoutApplicationInput[]
+    upsert?: IdentityUpsertWithWhereUniqueWithoutApplicationInput | IdentityUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: IdentityCreateManyApplicationInputEnvelope
+    set?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    disconnect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    delete?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
+    update?: IdentityUpdateWithWhereUniqueWithoutApplicationInput | IdentityUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: IdentityUpdateManyWithWhereWithoutApplicationInput | IdentityUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: IdentityScalarWhereInput | IdentityScalarWhereInput[]
   }
 
   export type PortfolioAssetCreateNestedManyWithoutPortfolioInput = {
@@ -45304,6 +47017,52 @@ export namespace Prisma {
     update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutPermitTargetsInput, AccountUpdateWithoutPermitTargetsInput>, AccountUncheckedUpdateWithoutPermitTargetsInput>
   }
 
+  export type AccountCreateNestedOneWithoutIdentitiesInput = {
+    create?: XOR<AccountCreateWithoutIdentitiesInput, AccountUncheckedCreateWithoutIdentitiesInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutIdentitiesInput
+    connect?: AccountWhereUniqueInput
+  }
+
+  export type ApplicationCreateNestedOneWithoutIdentitiesInput = {
+    create?: XOR<ApplicationCreateWithoutIdentitiesInput, ApplicationUncheckedCreateWithoutIdentitiesInput>
+    connectOrCreate?: ApplicationCreateOrConnectWithoutIdentitiesInput
+    connect?: ApplicationWhereUniqueInput
+  }
+
+  export type AuthnSessionCreateNestedOneWithoutIdentitiesInput = {
+    create?: XOR<AuthnSessionCreateWithoutIdentitiesInput, AuthnSessionUncheckedCreateWithoutIdentitiesInput>
+    connectOrCreate?: AuthnSessionCreateOrConnectWithoutIdentitiesInput
+    connect?: AuthnSessionWhereUniqueInput
+  }
+
+  export type AccountUpdateOneWithoutIdentitiesNestedInput = {
+    create?: XOR<AccountCreateWithoutIdentitiesInput, AccountUncheckedCreateWithoutIdentitiesInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutIdentitiesInput
+    upsert?: AccountUpsertWithoutIdentitiesInput
+    disconnect?: AccountWhereInput | boolean
+    delete?: AccountWhereInput | boolean
+    connect?: AccountWhereUniqueInput
+    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutIdentitiesInput, AccountUpdateWithoutIdentitiesInput>, AccountUncheckedUpdateWithoutIdentitiesInput>
+  }
+
+  export type ApplicationUpdateOneRequiredWithoutIdentitiesNestedInput = {
+    create?: XOR<ApplicationCreateWithoutIdentitiesInput, ApplicationUncheckedCreateWithoutIdentitiesInput>
+    connectOrCreate?: ApplicationCreateOrConnectWithoutIdentitiesInput
+    upsert?: ApplicationUpsertWithoutIdentitiesInput
+    connect?: ApplicationWhereUniqueInput
+    update?: XOR<XOR<ApplicationUpdateToOneWithWhereWithoutIdentitiesInput, ApplicationUpdateWithoutIdentitiesInput>, ApplicationUncheckedUpdateWithoutIdentitiesInput>
+  }
+
+  export type AuthnSessionUpdateOneWithoutIdentitiesNestedInput = {
+    create?: XOR<AuthnSessionCreateWithoutIdentitiesInput, AuthnSessionUncheckedCreateWithoutIdentitiesInput>
+    connectOrCreate?: AuthnSessionCreateOrConnectWithoutIdentitiesInput
+    upsert?: AuthnSessionUpsertWithoutIdentitiesInput
+    disconnect?: AuthnSessionWhereInput | boolean
+    delete?: AuthnSessionWhereInput | boolean
+    connect?: AuthnSessionWhereUniqueInput
+    update?: XOR<XOR<AuthnSessionUpdateToOneWithWhereWithoutIdentitiesInput, AuthnSessionUpdateWithoutIdentitiesInput>, AuthnSessionUncheckedUpdateWithoutIdentitiesInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -45601,6 +47360,7 @@ export namespace Prisma {
     loginType: string
     geolocation?: string | null
     deviceType?: string | null
+    identities?: IdentityCreateNestedManyWithoutSessionInput
   }
 
   export type AuthnSessionUncheckedCreateWithoutAccountInput = {
@@ -45613,6 +47373,7 @@ export namespace Prisma {
     loginType: string
     geolocation?: string | null
     deviceType?: string | null
+    identities?: IdentityUncheckedCreateNestedManyWithoutSessionInput
   }
 
   export type AuthnSessionCreateOrConnectWithoutAccountInput = {
@@ -46096,6 +47857,34 @@ export namespace Prisma {
 
   export type VerificationCreateManyAccountInputEnvelope = {
     data: VerificationCreateManyAccountInput | VerificationCreateManyAccountInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type IdentityCreateWithoutAccountInput = {
+    id?: string
+    originatedOn?: Date | string
+    refreshesOn: Date | string
+    validTill: Date | string
+    application: ApplicationCreateNestedOneWithoutIdentitiesInput
+    session?: AuthnSessionCreateNestedOneWithoutIdentitiesInput
+  }
+
+  export type IdentityUncheckedCreateWithoutAccountInput = {
+    id?: string
+    appId: string
+    sessionId?: string | null
+    originatedOn?: Date | string
+    refreshesOn: Date | string
+    validTill: Date | string
+  }
+
+  export type IdentityCreateOrConnectWithoutAccountInput = {
+    where: IdentityWhereUniqueInput
+    create: XOR<IdentityCreateWithoutAccountInput, IdentityUncheckedCreateWithoutAccountInput>
+  }
+
+  export type IdentityCreateManyAccountInputEnvelope = {
+    data: IdentityCreateManyAccountInput | IdentityCreateManyAccountInput[]
     skipDuplicates?: boolean
   }
 
@@ -46666,6 +48455,35 @@ export namespace Prisma {
     data: XOR<VerificationUpdateManyMutationInput, VerificationUncheckedUpdateManyWithoutAccountInput>
   }
 
+  export type IdentityUpsertWithWhereUniqueWithoutAccountInput = {
+    where: IdentityWhereUniqueInput
+    update: XOR<IdentityUpdateWithoutAccountInput, IdentityUncheckedUpdateWithoutAccountInput>
+    create: XOR<IdentityCreateWithoutAccountInput, IdentityUncheckedCreateWithoutAccountInput>
+  }
+
+  export type IdentityUpdateWithWhereUniqueWithoutAccountInput = {
+    where: IdentityWhereUniqueInput
+    data: XOR<IdentityUpdateWithoutAccountInput, IdentityUncheckedUpdateWithoutAccountInput>
+  }
+
+  export type IdentityUpdateManyWithWhereWithoutAccountInput = {
+    where: IdentityScalarWhereInput
+    data: XOR<IdentityUpdateManyMutationInput, IdentityUncheckedUpdateManyWithoutAccountInput>
+  }
+
+  export type IdentityScalarWhereInput = {
+    AND?: IdentityScalarWhereInput | IdentityScalarWhereInput[]
+    OR?: IdentityScalarWhereInput[]
+    NOT?: IdentityScalarWhereInput | IdentityScalarWhereInput[]
+    id?: StringFilter<"Identity"> | string
+    accountId?: StringNullableFilter<"Identity"> | string | null
+    appId?: StringFilter<"Identity"> | string
+    sessionId?: StringNullableFilter<"Identity"> | string | null
+    originatedOn?: DateTimeFilter<"Identity"> | Date | string
+    refreshesOn?: DateTimeFilter<"Identity"> | Date | string
+    validTill?: DateTimeFilter<"Identity"> | Date | string
+  }
+
   export type AccountCreateWithoutIndividualProfileInput = {
     id?: string
     displayName?: string | null
@@ -46696,6 +48514,7 @@ export namespace Prisma {
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutIndividualProfileInput = {
@@ -46728,6 +48547,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutIndividualProfileInput = {
@@ -46776,6 +48596,7 @@ export namespace Prisma {
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutIndividualProfileInput = {
@@ -46808,6 +48629,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutBrandProfileInput = {
@@ -46840,6 +48662,7 @@ export namespace Prisma {
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutBrandProfileInput = {
@@ -46872,6 +48695,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutBrandProfileInput = {
@@ -46920,6 +48744,7 @@ export namespace Prisma {
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutBrandProfileInput = {
@@ -46952,6 +48777,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutNotificationsInput = {
@@ -46984,6 +48810,7 @@ export namespace Prisma {
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutNotificationsInput = {
@@ -47016,6 +48843,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutNotificationsInput = {
@@ -47064,6 +48892,7 @@ export namespace Prisma {
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutNotificationsInput = {
@@ -47096,6 +48925,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutReceivedRequestsInput = {
@@ -47128,6 +48958,7 @@ export namespace Prisma {
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutReceivedRequestsInput = {
@@ -47160,6 +48991,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutReceivedRequestsInput = {
@@ -47197,6 +49029,7 @@ export namespace Prisma {
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutSentRequestsInput = {
@@ -47229,6 +49062,7 @@ export namespace Prisma {
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutSentRequestsInput = {
@@ -47277,6 +49111,7 @@ export namespace Prisma {
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutReceivedRequestsInput = {
@@ -47309,6 +49144,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUpsertWithoutSentRequestsInput = {
@@ -47352,6 +49188,7 @@ export namespace Prisma {
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutSentRequestsInput = {
@@ -47384,6 +49221,7 @@ export namespace Prisma {
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type FamilyMemberCreateWithoutFamilyInput = {
@@ -47471,6 +49309,7 @@ export namespace Prisma {
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutFamilyMembersInput = {
@@ -47503,6 +49342,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutFamilyMembersInput = {
@@ -47574,6 +49414,7 @@ export namespace Prisma {
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutFamilyMembersInput = {
@@ -47606,6 +49447,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutVerificationsInput = {
@@ -47638,6 +49480,7 @@ export namespace Prisma {
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutVerificationsInput = {
@@ -47670,6 +49513,7 @@ export namespace Prisma {
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutVerificationsInput = {
@@ -47707,6 +49551,7 @@ export namespace Prisma {
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutVerificationActionsInput = {
@@ -47739,6 +49584,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutVerificationActionsInput = {
@@ -47787,6 +49633,7 @@ export namespace Prisma {
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutVerificationsInput = {
@@ -47819,6 +49666,7 @@ export namespace Prisma {
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUpsertWithoutVerificationActionsInput = {
@@ -47862,6 +49710,7 @@ export namespace Prisma {
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutVerificationActionsInput = {
@@ -47894,6 +49743,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutContactsInput = {
@@ -47926,6 +49776,7 @@ export namespace Prisma {
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutContactsInput = {
@@ -47958,6 +49809,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutContactsInput = {
@@ -48006,6 +49858,7 @@ export namespace Prisma {
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutContactsInput = {
@@ -48038,6 +49891,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutNeupIdsInput = {
@@ -48070,6 +49924,7 @@ export namespace Prisma {
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutNeupIdsInput = {
@@ -48102,6 +49957,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutNeupIdsInput = {
@@ -48150,6 +50006,7 @@ export namespace Prisma {
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutNeupIdsInput = {
@@ -48182,6 +50039,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutAuthMethodsInput = {
@@ -48214,6 +50072,7 @@ export namespace Prisma {
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutAuthMethodsInput = {
@@ -48246,6 +50105,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutAuthMethodsInput = {
@@ -48294,6 +50154,7 @@ export namespace Prisma {
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutAuthMethodsInput = {
@@ -48326,6 +50187,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutSessionsInput = {
@@ -48358,6 +50220,7 @@ export namespace Prisma {
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutSessionsInput = {
@@ -48390,11 +50253,40 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutSessionsInput = {
     where: AccountWhereUniqueInput
     create: XOR<AccountCreateWithoutSessionsInput, AccountUncheckedCreateWithoutSessionsInput>
+  }
+
+  export type IdentityCreateWithoutSessionInput = {
+    id?: string
+    originatedOn?: Date | string
+    refreshesOn: Date | string
+    validTill: Date | string
+    account?: AccountCreateNestedOneWithoutIdentitiesInput
+    application: ApplicationCreateNestedOneWithoutIdentitiesInput
+  }
+
+  export type IdentityUncheckedCreateWithoutSessionInput = {
+    id?: string
+    accountId?: string | null
+    appId: string
+    originatedOn?: Date | string
+    refreshesOn: Date | string
+    validTill: Date | string
+  }
+
+  export type IdentityCreateOrConnectWithoutSessionInput = {
+    where: IdentityWhereUniqueInput
+    create: XOR<IdentityCreateWithoutSessionInput, IdentityUncheckedCreateWithoutSessionInput>
+  }
+
+  export type IdentityCreateManySessionInputEnvelope = {
+    data: IdentityCreateManySessionInput | IdentityCreateManySessionInput[]
+    skipDuplicates?: boolean
   }
 
   export type AccountUpsertWithoutSessionsInput = {
@@ -48438,6 +50330,7 @@ export namespace Prisma {
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutSessionsInput = {
@@ -48470,6 +50363,23 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
+  }
+
+  export type IdentityUpsertWithWhereUniqueWithoutSessionInput = {
+    where: IdentityWhereUniqueInput
+    update: XOR<IdentityUpdateWithoutSessionInput, IdentityUncheckedUpdateWithoutSessionInput>
+    create: XOR<IdentityCreateWithoutSessionInput, IdentityUncheckedCreateWithoutSessionInput>
+  }
+
+  export type IdentityUpdateWithWhereUniqueWithoutSessionInput = {
+    where: IdentityWhereUniqueInput
+    data: XOR<IdentityUpdateWithoutSessionInput, IdentityUncheckedUpdateWithoutSessionInput>
+  }
+
+  export type IdentityUpdateManyWithWhereWithoutSessionInput = {
+    where: IdentityScalarWhereInput
+    data: XOR<IdentityUpdateManyMutationInput, IdentityUncheckedUpdateManyWithoutSessionInput>
   }
 
   export type AccountCreateWithoutErrorLogsInput = {
@@ -48502,6 +50412,7 @@ export namespace Prisma {
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutErrorLogsInput = {
@@ -48534,6 +50445,7 @@ export namespace Prisma {
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutErrorLogsInput = {
@@ -48582,6 +50494,7 @@ export namespace Prisma {
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutErrorLogsInput = {
@@ -48614,6 +50527,7 @@ export namespace Prisma {
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type ApplicationConnectionCreateWithoutApplicationInput = {
@@ -48770,6 +50684,34 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type IdentityCreateWithoutApplicationInput = {
+    id?: string
+    originatedOn?: Date | string
+    refreshesOn: Date | string
+    validTill: Date | string
+    account?: AccountCreateNestedOneWithoutIdentitiesInput
+    session?: AuthnSessionCreateNestedOneWithoutIdentitiesInput
+  }
+
+  export type IdentityUncheckedCreateWithoutApplicationInput = {
+    id?: string
+    accountId?: string | null
+    sessionId?: string | null
+    originatedOn?: Date | string
+    refreshesOn: Date | string
+    validTill: Date | string
+  }
+
+  export type IdentityCreateOrConnectWithoutApplicationInput = {
+    where: IdentityWhereUniqueInput
+    create: XOR<IdentityCreateWithoutApplicationInput, IdentityUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type IdentityCreateManyApplicationInputEnvelope = {
+    data: IdentityCreateManyApplicationInput | IdentityCreateManyApplicationInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ApplicationConnectionUpsertWithWhereUniqueWithoutApplicationInput = {
     where: ApplicationConnectionWhereUniqueInput
     update: XOR<ApplicationConnectionUpdateWithoutApplicationInput, ApplicationConnectionUncheckedUpdateWithoutApplicationInput>
@@ -48909,6 +50851,22 @@ export namespace Prisma {
   export type AuthzAccountAccessGrantUpdateManyWithWhereWithoutApplicationInput = {
     where: AuthzAccountAccessGrantScalarWhereInput
     data: XOR<AuthzAccountAccessGrantUpdateManyMutationInput, AuthzAccountAccessGrantUncheckedUpdateManyWithoutApplicationInput>
+  }
+
+  export type IdentityUpsertWithWhereUniqueWithoutApplicationInput = {
+    where: IdentityWhereUniqueInput
+    update: XOR<IdentityUpdateWithoutApplicationInput, IdentityUncheckedUpdateWithoutApplicationInput>
+    create: XOR<IdentityCreateWithoutApplicationInput, IdentityUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type IdentityUpdateWithWhereUniqueWithoutApplicationInput = {
+    where: IdentityWhereUniqueInput
+    data: XOR<IdentityUpdateWithoutApplicationInput, IdentityUncheckedUpdateWithoutApplicationInput>
+  }
+
+  export type IdentityUpdateManyWithWhereWithoutApplicationInput = {
+    where: IdentityScalarWhereInput
+    data: XOR<IdentityUpdateManyMutationInput, IdentityUncheckedUpdateManyWithoutApplicationInput>
   }
 
   export type PortfolioAssetCreateWithoutPortfolioInput = {
@@ -49218,6 +51176,7 @@ export namespace Prisma {
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutPortfolioMembersInput = {
@@ -49250,6 +51209,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutPortfolioMembersInput = {
@@ -49323,6 +51283,7 @@ export namespace Prisma {
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutPortfolioMembersInput = {
@@ -49355,6 +51316,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type PortfolioUpsertWithoutMembersInput = {
@@ -49418,6 +51380,7 @@ export namespace Prisma {
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutChildOwnershipsInput = {
@@ -49450,6 +51413,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutChildOwnershipsInput = {
@@ -49487,6 +51451,7 @@ export namespace Prisma {
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutParentOwnershipsInput = {
@@ -49519,6 +51484,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutParentOwnershipsInput = {
@@ -49567,6 +51533,7 @@ export namespace Prisma {
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutChildOwnershipsInput = {
@@ -49599,6 +51566,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUpsertWithoutParentOwnershipsInput = {
@@ -49642,6 +51610,7 @@ export namespace Prisma {
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutParentOwnershipsInput = {
@@ -49674,6 +51643,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutAppConnectionsInput = {
@@ -49706,6 +51676,7 @@ export namespace Prisma {
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutAppConnectionsInput = {
@@ -49738,6 +51709,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutAppConnectionsInput = {
@@ -49762,6 +51734,7 @@ export namespace Prisma {
     authzCapabilities?: AuthzCapabilityCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutApplicationInput
+    identities?: IdentityCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutConnectionsInput = {
@@ -49781,6 +51754,7 @@ export namespace Prisma {
     authzCapabilities?: AuthzCapabilityUncheckedCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleUncheckedCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutApplicationInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutConnectionsInput = {
@@ -49829,6 +51803,7 @@ export namespace Prisma {
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutAppConnectionsInput = {
@@ -49861,6 +51836,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type ApplicationUpsertWithoutConnectionsInput = {
@@ -49891,6 +51867,7 @@ export namespace Prisma {
     authzCapabilities?: AuthzCapabilityUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUpdateManyWithoutApplicationNestedInput
+    identities?: IdentityUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutConnectionsInput = {
@@ -49910,6 +51887,7 @@ export namespace Prisma {
     authzCapabilities?: AuthzCapabilityUncheckedUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUncheckedUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutApplicationNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationCreateWithoutBridgeInput = {
@@ -49929,6 +51907,7 @@ export namespace Prisma {
     authzCapabilities?: AuthzCapabilityCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutApplicationInput
+    identities?: IdentityCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutBridgeInput = {
@@ -49948,6 +51927,7 @@ export namespace Prisma {
     authzCapabilities?: AuthzCapabilityUncheckedCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleUncheckedCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutApplicationInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutBridgeInput = {
@@ -49983,6 +51963,7 @@ export namespace Prisma {
     authzCapabilities?: AuthzCapabilityUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUpdateManyWithoutApplicationNestedInput
+    identities?: IdentityUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutBridgeInput = {
@@ -50002,6 +51983,7 @@ export namespace Prisma {
     authzCapabilities?: AuthzCapabilityUncheckedUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUncheckedUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutApplicationNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationCreateWithoutPoliciesInput = {
@@ -50021,6 +52003,7 @@ export namespace Prisma {
     authzCapabilities?: AuthzCapabilityCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutApplicationInput
+    identities?: IdentityCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutPoliciesInput = {
@@ -50040,6 +52023,7 @@ export namespace Prisma {
     authzCapabilities?: AuthzCapabilityUncheckedCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleUncheckedCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutApplicationInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutPoliciesInput = {
@@ -50075,6 +52059,7 @@ export namespace Prisma {
     authzCapabilities?: AuthzCapabilityUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUpdateManyWithoutApplicationNestedInput
+    identities?: IdentityUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutPoliciesInput = {
@@ -50094,6 +52079,7 @@ export namespace Prisma {
     authzCapabilities?: AuthzCapabilityUncheckedUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUncheckedUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutApplicationNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationCreateWithoutAuthzCapabilitiesInput = {
@@ -50113,6 +52099,7 @@ export namespace Prisma {
     policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutApplicationInput
+    identities?: IdentityCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutAuthzCapabilitiesInput = {
@@ -50132,6 +52119,7 @@ export namespace Prisma {
     policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleUncheckedCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutApplicationInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutAuthzCapabilitiesInput = {
@@ -50195,6 +52183,7 @@ export namespace Prisma {
     policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUpdateManyWithoutApplicationNestedInput
+    identities?: IdentityUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutAuthzCapabilitiesInput = {
@@ -50214,6 +52203,7 @@ export namespace Prisma {
     policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUncheckedUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutApplicationNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type AuthzRoleCapabilityUpsertWithWhereUniqueWithoutCapabilityInput = {
@@ -50262,6 +52252,7 @@ export namespace Prisma {
     policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
     authzCapabilities?: AuthzCapabilityCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutApplicationInput
+    identities?: IdentityCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutAuthzRolesInput = {
@@ -50281,6 +52272,7 @@ export namespace Prisma {
     policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
     authzCapabilities?: AuthzCapabilityUncheckedCreateNestedManyWithoutApplicationInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutApplicationInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutAuthzRolesInput = {
@@ -50398,6 +52390,7 @@ export namespace Prisma {
     policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
     authzCapabilities?: AuthzCapabilityUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUpdateManyWithoutApplicationNestedInput
+    identities?: IdentityUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutAuthzRolesInput = {
@@ -50417,6 +52410,7 @@ export namespace Prisma {
     policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
     authzCapabilities?: AuthzCapabilityUncheckedUpdateManyWithoutApplicationNestedInput
     authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutApplicationNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type AuthzRoleCapabilityUpsertWithWhereUniqueWithoutRoleInput = {
@@ -50601,6 +52595,7 @@ export namespace Prisma {
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutAuthzOwnedGrantsInput = {
@@ -50633,6 +52628,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutAuthzOwnedGrantsInput = {
@@ -50670,6 +52666,7 @@ export namespace Prisma {
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutAuthzTargetGrantsInput = {
@@ -50702,6 +52699,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutAuthzTargetGrantsInput = {
@@ -50751,6 +52749,7 @@ export namespace Prisma {
     policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
     authzCapabilities?: AuthzCapabilityCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleCreateNestedManyWithoutApplicationInput
+    identities?: IdentityCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutAuthzAccountAccessGrantsInput = {
@@ -50770,6 +52769,7 @@ export namespace Prisma {
     policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
     authzCapabilities?: AuthzCapabilityUncheckedCreateNestedManyWithoutApplicationInput
     authzRoles?: AuthzRoleUncheckedCreateNestedManyWithoutApplicationInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutAuthzAccountAccessGrantsInput = {
@@ -50843,6 +52843,7 @@ export namespace Prisma {
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutAuthzOwnedGrantsInput = {
@@ -50875,6 +52876,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUpsertWithoutAuthzTargetGrantsInput = {
@@ -50918,6 +52920,7 @@ export namespace Prisma {
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutAuthzTargetGrantsInput = {
@@ -50950,6 +52953,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AuthzRoleUpsertWithoutGrantsInput = {
@@ -51011,6 +53015,7 @@ export namespace Prisma {
     policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
     authzCapabilities?: AuthzCapabilityUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUpdateManyWithoutApplicationNestedInput
+    identities?: IdentityUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutAuthzAccountAccessGrantsInput = {
@@ -51030,6 +53035,7 @@ export namespace Prisma {
     policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
     authzCapabilities?: AuthzCapabilityUncheckedUpdateManyWithoutApplicationNestedInput
     authzRoles?: AuthzRoleUncheckedUpdateManyWithoutApplicationNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type PortfolioUpsertWithoutAuthzAccountAccessGrantsInput = {
@@ -51114,6 +53120,7 @@ export namespace Prisma {
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutAuthzAssetsAccessGrantsInput = {
@@ -51146,6 +53153,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutAuthzAssetsAccessGrantsInput = {
@@ -51271,6 +53279,7 @@ export namespace Prisma {
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutAuthzAssetsAccessGrantsInput = {
@@ -51303,6 +53312,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AuthzRoleUpsertWithoutAssetsGrantsInput = {
@@ -51397,6 +53407,7 @@ export namespace Prisma {
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutPermitsInput = {
@@ -51429,6 +53440,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutPermitsInput = {
@@ -51466,6 +53478,7 @@ export namespace Prisma {
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
+    identities?: IdentityCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutPermitTargetsInput = {
@@ -51498,6 +53511,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+    identities?: IdentityUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutPermitTargetsInput = {
@@ -51546,6 +53560,7 @@ export namespace Prisma {
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutPermitsInput = {
@@ -51578,6 +53593,7 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUpsertWithoutPermitTargetsInput = {
@@ -51621,6 +53637,7 @@ export namespace Prisma {
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutPermitTargetsInput = {
@@ -51653,6 +53670,319 @@ export namespace Prisma {
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+    identities?: IdentityUncheckedUpdateManyWithoutAccountNestedInput
+  }
+
+  export type AccountCreateWithoutIdentitiesInput = {
+    id?: string
+    displayName?: string | null
+    accountType?: string
+    displayImage?: string | null
+    status?: string | null
+    isVerified?: boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    authMethods?: AuthnMethodCreateNestedManyWithoutAccountInput
+    sessions?: AuthnSessionCreateNestedManyWithoutAccountInput
+    contacts?: ContactCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    familyMembers?: FamilyMemberCreateNestedManyWithoutMemberInput
+    verificationActions?: VerificationCreateNestedManyWithoutDoneByAccountInput
+    authzOwnedGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutOwnerInput
+    authzTargetGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutTargetInput
+    authzAssetsAccessGrants?: AuthzAssetsAccessGrantCreateNestedManyWithoutAccountInput
+    permits?: PermitCreateNestedManyWithoutAccountInput
+    permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
+  }
+
+  export type AccountUncheckedCreateWithoutIdentitiesInput = {
+    id?: string
+    displayName?: string | null
+    accountType?: string
+    displayImage?: string | null
+    status?: string | null
+    isVerified?: boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    authMethods?: AuthnMethodUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthnSessionUncheckedCreateNestedManyWithoutAccountInput
+    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    familyMembers?: FamilyMemberUncheckedCreateNestedManyWithoutMemberInput
+    verificationActions?: VerificationUncheckedCreateNestedManyWithoutDoneByAccountInput
+    authzOwnedGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutOwnerInput
+    authzTargetGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutTargetInput
+    authzAssetsAccessGrants?: AuthzAssetsAccessGrantUncheckedCreateNestedManyWithoutAccountInput
+    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
+    permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+  }
+
+  export type AccountCreateOrConnectWithoutIdentitiesInput = {
+    where: AccountWhereUniqueInput
+    create: XOR<AccountCreateWithoutIdentitiesInput, AccountUncheckedCreateWithoutIdentitiesInput>
+  }
+
+  export type ApplicationCreateWithoutIdentitiesInput = {
+    id: string
+    name: string
+    description?: string | null
+    icon?: string | null
+    website?: string | null
+    appSecret?: string | null
+    createdAt?: Date | string
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    isInternal?: boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    connections?: ApplicationConnectionCreateNestedManyWithoutApplicationInput
+    bridge?: ApplicationBridgeCreateNestedManyWithoutApplicationInput
+    policies?: ApplicationPolicyCreateNestedManyWithoutApplicationInput
+    authzCapabilities?: AuthzCapabilityCreateNestedManyWithoutApplicationInput
+    authzRoles?: AuthzRoleCreateNestedManyWithoutApplicationInput
+    authzAccountAccessGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationUncheckedCreateWithoutIdentitiesInput = {
+    id: string
+    name: string
+    description?: string | null
+    icon?: string | null
+    website?: string | null
+    appSecret?: string | null
+    createdAt?: Date | string
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    status?: string
+    isInternal?: boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    connections?: ApplicationConnectionUncheckedCreateNestedManyWithoutApplicationInput
+    bridge?: ApplicationBridgeUncheckedCreateNestedManyWithoutApplicationInput
+    policies?: ApplicationPolicyUncheckedCreateNestedManyWithoutApplicationInput
+    authzCapabilities?: AuthzCapabilityUncheckedCreateNestedManyWithoutApplicationInput
+    authzRoles?: AuthzRoleUncheckedCreateNestedManyWithoutApplicationInput
+    authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationCreateOrConnectWithoutIdentitiesInput = {
+    where: ApplicationWhereUniqueInput
+    create: XOR<ApplicationCreateWithoutIdentitiesInput, ApplicationUncheckedCreateWithoutIdentitiesInput>
+  }
+
+  export type AuthnSessionCreateWithoutIdentitiesInput = {
+    id?: string
+    key?: string | null
+    ipAddress: string
+    userAgent: string
+    validTill?: Date | string | null
+    lastLoggedIn: Date | string
+    loginType: string
+    geolocation?: string | null
+    deviceType?: string | null
+    account: AccountCreateNestedOneWithoutSessionsInput
+  }
+
+  export type AuthnSessionUncheckedCreateWithoutIdentitiesInput = {
+    id?: string
+    accountId: string
+    key?: string | null
+    ipAddress: string
+    userAgent: string
+    validTill?: Date | string | null
+    lastLoggedIn: Date | string
+    loginType: string
+    geolocation?: string | null
+    deviceType?: string | null
+  }
+
+  export type AuthnSessionCreateOrConnectWithoutIdentitiesInput = {
+    where: AuthnSessionWhereUniqueInput
+    create: XOR<AuthnSessionCreateWithoutIdentitiesInput, AuthnSessionUncheckedCreateWithoutIdentitiesInput>
+  }
+
+  export type AccountUpsertWithoutIdentitiesInput = {
+    update: XOR<AccountUpdateWithoutIdentitiesInput, AccountUncheckedUpdateWithoutIdentitiesInput>
+    create: XOR<AccountCreateWithoutIdentitiesInput, AccountUncheckedCreateWithoutIdentitiesInput>
+    where?: AccountWhereInput
+  }
+
+  export type AccountUpdateToOneWithWhereWithoutIdentitiesInput = {
+    where?: AccountWhereInput
+    data: XOR<AccountUpdateWithoutIdentitiesInput, AccountUncheckedUpdateWithoutIdentitiesInput>
+  }
+
+  export type AccountUpdateWithoutIdentitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountType?: StringFieldUpdateOperationsInput | string
+    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthnMethodUpdateManyWithoutAccountNestedInput
+    sessions?: AuthnSessionUpdateManyWithoutAccountNestedInput
+    contacts?: ContactUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    familyMembers?: FamilyMemberUpdateManyWithoutMemberNestedInput
+    verificationActions?: VerificationUpdateManyWithoutDoneByAccountNestedInput
+    authzOwnedGrants?: AuthzAccountAccessGrantUpdateManyWithoutOwnerNestedInput
+    authzTargetGrants?: AuthzAccountAccessGrantUpdateManyWithoutTargetNestedInput
+    authzAssetsAccessGrants?: AuthzAssetsAccessGrantUpdateManyWithoutAccountNestedInput
+    permits?: PermitUpdateManyWithoutAccountNestedInput
+    permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
+  }
+
+  export type AccountUncheckedUpdateWithoutIdentitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountType?: StringFieldUpdateOperationsInput | string
+    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthnMethodUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthnSessionUncheckedUpdateManyWithoutAccountNestedInput
+    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    familyMembers?: FamilyMemberUncheckedUpdateManyWithoutMemberNestedInput
+    verificationActions?: VerificationUncheckedUpdateManyWithoutDoneByAccountNestedInput
+    authzOwnedGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutOwnerNestedInput
+    authzTargetGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutTargetNestedInput
+    authzAssetsAccessGrants?: AuthzAssetsAccessGrantUncheckedUpdateManyWithoutAccountNestedInput
+    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
+    permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  }
+
+  export type ApplicationUpsertWithoutIdentitiesInput = {
+    update: XOR<ApplicationUpdateWithoutIdentitiesInput, ApplicationUncheckedUpdateWithoutIdentitiesInput>
+    create: XOR<ApplicationCreateWithoutIdentitiesInput, ApplicationUncheckedCreateWithoutIdentitiesInput>
+    where?: ApplicationWhereInput
+  }
+
+  export type ApplicationUpdateToOneWithWhereWithoutIdentitiesInput = {
+    where?: ApplicationWhereInput
+    data: XOR<ApplicationUpdateWithoutIdentitiesInput, ApplicationUncheckedUpdateWithoutIdentitiesInput>
+  }
+
+  export type ApplicationUpdateWithoutIdentitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    connections?: ApplicationConnectionUpdateManyWithoutApplicationNestedInput
+    bridge?: ApplicationBridgeUpdateManyWithoutApplicationNestedInput
+    policies?: ApplicationPolicyUpdateManyWithoutApplicationNestedInput
+    authzCapabilities?: AuthzCapabilityUpdateManyWithoutApplicationNestedInput
+    authzRoles?: AuthzRoleUpdateManyWithoutApplicationNestedInput
+    authzAccountAccessGrants?: AuthzAccountAccessGrantUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationUncheckedUpdateWithoutIdentitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    appSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endpoints?: NullableJsonNullValueInput | InputJsonValue
+    status?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    connections?: ApplicationConnectionUncheckedUpdateManyWithoutApplicationNestedInput
+    bridge?: ApplicationBridgeUncheckedUpdateManyWithoutApplicationNestedInput
+    policies?: ApplicationPolicyUncheckedUpdateManyWithoutApplicationNestedInput
+    authzCapabilities?: AuthzCapabilityUncheckedUpdateManyWithoutApplicationNestedInput
+    authzRoles?: AuthzRoleUncheckedUpdateManyWithoutApplicationNestedInput
+    authzAccountAccessGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type AuthnSessionUpsertWithoutIdentitiesInput = {
+    update: XOR<AuthnSessionUpdateWithoutIdentitiesInput, AuthnSessionUncheckedUpdateWithoutIdentitiesInput>
+    create: XOR<AuthnSessionCreateWithoutIdentitiesInput, AuthnSessionUncheckedCreateWithoutIdentitiesInput>
+    where?: AuthnSessionWhereInput
+  }
+
+  export type AuthnSessionUpdateToOneWithWhereWithoutIdentitiesInput = {
+    where?: AuthnSessionWhereInput
+    data: XOR<AuthnSessionUpdateWithoutIdentitiesInput, AuthnSessionUncheckedUpdateWithoutIdentitiesInput>
+  }
+
+  export type AuthnSessionUpdateWithoutIdentitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: NullableStringFieldUpdateOperationsInput | string | null
+    ipAddress?: StringFieldUpdateOperationsInput | string
+    userAgent?: StringFieldUpdateOperationsInput | string
+    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
+    loginType?: StringFieldUpdateOperationsInput | string
+    geolocation?: NullableStringFieldUpdateOperationsInput | string | null
+    deviceType?: NullableStringFieldUpdateOperationsInput | string | null
+    account?: AccountUpdateOneRequiredWithoutSessionsNestedInput
+  }
+
+  export type AuthnSessionUncheckedUpdateWithoutIdentitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    key?: NullableStringFieldUpdateOperationsInput | string | null
+    ipAddress?: StringFieldUpdateOperationsInput | string
+    userAgent?: StringFieldUpdateOperationsInput | string
+    validTill?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoggedIn?: DateTimeFieldUpdateOperationsInput | Date | string
+    loginType?: StringFieldUpdateOperationsInput | string
+    geolocation?: NullableStringFieldUpdateOperationsInput | string | null
+    deviceType?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ApplicationConnectionCreateManyAccountInput = {
@@ -51834,6 +54164,15 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type IdentityCreateManyAccountInput = {
+    id?: string
+    appId: string
+    sessionId?: string | null
+    originatedOn?: Date | string
+    refreshesOn: Date | string
+    validTill: Date | string
+  }
+
   export type ApplicationConnectionUpdateWithoutAccountInput = {
     id?: StringFieldUpdateOperationsInput | string
     connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -51889,6 +54228,7 @@ export namespace Prisma {
     loginType?: StringFieldUpdateOperationsInput | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
     deviceType?: NullableStringFieldUpdateOperationsInput | string | null
+    identities?: IdentityUpdateManyWithoutSessionNestedInput
   }
 
   export type AuthnSessionUncheckedUpdateWithoutAccountInput = {
@@ -51901,6 +54241,7 @@ export namespace Prisma {
     loginType?: StringFieldUpdateOperationsInput | string
     geolocation?: NullableStringFieldUpdateOperationsInput | string | null
     deviceType?: NullableStringFieldUpdateOperationsInput | string | null
+    identities?: IdentityUncheckedUpdateManyWithoutSessionNestedInput
   }
 
   export type AuthnSessionUncheckedUpdateManyWithoutAccountInput = {
@@ -52371,6 +54712,33 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type IdentityUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    originatedOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshesOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    validTill?: DateTimeFieldUpdateOperationsInput | Date | string
+    application?: ApplicationUpdateOneRequiredWithoutIdentitiesNestedInput
+    session?: AuthnSessionUpdateOneWithoutIdentitiesNestedInput
+  }
+
+  export type IdentityUncheckedUpdateWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    appId?: StringFieldUpdateOperationsInput | string
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    originatedOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshesOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    validTill?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IdentityUncheckedUpdateManyWithoutAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    appId?: StringFieldUpdateOperationsInput | string
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    originatedOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshesOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    validTill?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type FamilyMemberCreateManyFamilyInput = {
     id?: string
     memberId: string
@@ -52393,6 +54761,42 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     memberId?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type IdentityCreateManySessionInput = {
+    id?: string
+    accountId?: string | null
+    appId: string
+    originatedOn?: Date | string
+    refreshesOn: Date | string
+    validTill: Date | string
+  }
+
+  export type IdentityUpdateWithoutSessionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    originatedOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshesOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    validTill?: DateTimeFieldUpdateOperationsInput | Date | string
+    account?: AccountUpdateOneWithoutIdentitiesNestedInput
+    application?: ApplicationUpdateOneRequiredWithoutIdentitiesNestedInput
+  }
+
+  export type IdentityUncheckedUpdateWithoutSessionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountId?: NullableStringFieldUpdateOperationsInput | string | null
+    appId?: StringFieldUpdateOperationsInput | string
+    originatedOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshesOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    validTill?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IdentityUncheckedUpdateManyWithoutSessionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountId?: NullableStringFieldUpdateOperationsInput | string | null
+    appId?: StringFieldUpdateOperationsInput | string
+    originatedOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshesOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    validTill?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ApplicationConnectionCreateManyApplicationInput = {
@@ -52436,6 +54840,15 @@ export namespace Prisma {
     targetAccountId: string
     roleId: string
     portfolioId?: string | null
+  }
+
+  export type IdentityCreateManyApplicationInput = {
+    id?: string
+    accountId?: string | null
+    sessionId?: string | null
+    originatedOn?: Date | string
+    refreshesOn: Date | string
+    validTill: Date | string
   }
 
   export type ApplicationConnectionUpdateWithoutApplicationInput = {
@@ -52573,6 +54986,33 @@ export namespace Prisma {
     targetAccountId?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     portfolioId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type IdentityUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    originatedOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshesOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    validTill?: DateTimeFieldUpdateOperationsInput | Date | string
+    account?: AccountUpdateOneWithoutIdentitiesNestedInput
+    session?: AuthnSessionUpdateOneWithoutIdentitiesNestedInput
+  }
+
+  export type IdentityUncheckedUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountId?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    originatedOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshesOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    validTill?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IdentityUncheckedUpdateManyWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountId?: NullableStringFieldUpdateOperationsInput | string | null
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    originatedOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    refreshesOn?: DateTimeFieldUpdateOperationsInput | Date | string
+    validTill?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PortfolioAssetCreateManyPortfolioInput = {

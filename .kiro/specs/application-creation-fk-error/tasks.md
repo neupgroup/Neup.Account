@@ -15,7 +15,7 @@
   - Mark task complete when test is written, run, and failure is documented
   - _Requirements: 1.1, 1.2, 1.3_
 
-- [~] 2. Write preservation property tests (BEFORE implementing fix)
+- [ ] 2. Write preservation property tests (BEFORE implementing fix)
   - **Property 2: Preservation** - Existing `createManagedApplication` Behavior Unchanged
   - **IMPORTANT**: Follow observation-first methodology
   - Observe behavior on UNFIXED code for non-buggy inputs (cases where `application.owner` role already exists in `authz_role`)
@@ -32,7 +32,7 @@
   - Mark task complete when tests are written, run, and passing on unfixed code
   - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5_
 
-- [~] 3. Fix `createManagedApplication` — upsert role and capabilities inside transaction
+- [ ] 3. Fix `createManagedApplication` — upsert role and capabilities inside transaction
 
   - [ ] 3.1 Implement the fix in `services/applications/manage.ts`
     - Inside the `prisma.$transaction` callback, before any grant inserts, add upserts for:
@@ -61,7 +61,7 @@
     - **EXPECTED OUTCOME**: Tests PASS (confirms no regressions in validation, permission-denied, and idempotency paths)
     - Confirm all tests still pass after fix (no regressions)
 
-- [~] 4. Migrate `services/manage/accounts/accessible.ts` — replace `permit` with `authzAccountAccessGrant`
+- [ ] 4. Migrate `services/manage/accounts/accessible.ts` — replace `permit` with `authzAccountAccessGrant`
 
   - [ ] 4.1 Update `getAccessibleAccounts` in `services/manage/accounts/accessible.ts`
     - Replace `prisma.permit.findMany({ where: { accountId: personalAccountId, forSelf: false } })` with `prisma.authzAccountAccessGrant.findMany({ where: { ownerAccountId: personalAccountId }, include: { target: { include: { neupIds: { where: { isPrimary: true } } } } } })`
@@ -69,7 +69,7 @@
     - Remove the `permit` import dependency from this file
     - _Requirements: 2.4_
 
-- [~] 5. Migrate `services/auth/switch.ts` — replace `permit` check with `authzAccountAccessGrant`
+- [ ] 5. Migrate `services/auth/switch.ts` — replace `permit` check with `authzAccountAccessGrant`
 
   - [ ] 5.1 Update `switchToDelegated` in `services/auth/switch.ts`
     - Replace `prisma.permit.findFirst({ where: { accountId: personalAccountId, targetAccountId: accountId, forSelf: false } })` with `prisma.authzAccountAccessGrant.findFirst({ where: { ownerAccountId: personalAccountId, targetAccountId: accountId } })`
@@ -77,7 +77,7 @@
     - Ensure the null-check logic is preserved (if no grant found, deny the switch)
     - _Requirements: 2.5_
 
-- [~] 6. Migrate `services/manage/access/index.ts` — replace all `permit` CRUD
+- [ ] 6. Migrate `services/manage/access/index.ts` — replace all `permit` CRUD
 
   - [ ] 6.1 Update `getAccessList` in `services/manage/access/index.ts`
     - Replace `prisma.permit.findMany({ where: { targetAccountId: accountId, forSelf: false, isRoot: false } })` with `prisma.authzAccountAccessGrant.findMany({ where: { ownerAccountId: accountId } })`
@@ -106,7 +106,7 @@
     - Replace `prisma.permit.create` with `prisma.authzAccountAccessGrant.create({ data: { ownerAccountId: ..., targetAccountId: ..., roleId: 'account.delegate', appId: 'neup.account' } })`
     - _Requirements: 2.10_
 
-- [~] 7. Migrate `services/manage/people/invitations.ts` — replace `permit.create` in `acceptRequest`
+- [ ] 7. Migrate `services/manage/people/invitations.ts` — replace `permit.create` in `acceptRequest`
 
   - [ ] 7.1 Update the `access_invitation` branch of `acceptRequest` in `services/manage/people/invitations.ts`
     - Before creating the grant, upsert the `account.delegate` role in `authzRole` with `appId: 'neup.account'`, `scope: 'account'`
@@ -114,7 +114,7 @@
     - Leave the `family_invitation` branch and all other `acceptRequest` logic unchanged
     - _Requirements: 2.11_
 
-- [~] 8. Migrate `services/manage/accounts/dependent.ts` — replace `permit.create` calls
+- [ ] 8. Migrate `services/manage/accounts/dependent.ts` — replace `permit.create` calls
 
   - [ ] 8.1 Update `createDependentAccount` in `services/manage/accounts/dependent.ts`
     - Before creating grants, upsert two roles in `authzRole`:
@@ -124,7 +124,7 @@
     - Replace the second `prisma.permit.create` (dependent self-grant) with `prisma.authzAccountAccessGrant.create({ data: { ownerAccountId: dependentAccountId, targetAccountId: dependentAccountId, roleId: 'account.dependent', appId: 'neup.account' } })`
     - _Requirements: 2.12_
 
-- [~] 9. Migrate `services/manage/users.ts` — replace `getPermissions` / `updateUserPermissions`
+- [ ] 9. Migrate `services/manage/users.ts` — replace `getPermissions` / `updateUserPermissions`
 
   - [ ] 9.1 Update `getPermissions` in `services/manage/users.ts`
     - Replace `prisma.permit.findFirst({ where: { accountId, forSelf: true } })` with a call to `getAccountPermission(accountId)` (already available from `services/user.ts`)
@@ -142,7 +142,7 @@
     - Keep `prisma.permit.deleteMany` in `deleteUserAccount` as-is for backward compatibility during the transition period
     - _Requirements: 3.8_
 
-- [~] 10. Migrate `prisma/seed.ts` and `prisma/grant-root.ts` — replace root `permit` with authz grants
+- [ ] 10. Migrate `prisma/seed.ts` and `prisma/grant-root.ts` — replace root `permit` with authz grants
 
   - [ ] 10.1 Update `prisma/seed.ts`
     - Remove the `prisma.permit.findFirst` / `prisma.permit.create` / `prisma.permit.update` block for the root permit
@@ -160,7 +160,7 @@
     - Keep the argument parsing and account lookup logic unchanged
     - _Requirements: 2.13, 2.14_
 
-- [~] 11. Checkpoint — Ensure all tests pass
+- [ ] 11. Checkpoint — Ensure all tests pass
   - Re-run the full test suite (unit, property-based, and integration tests)
   - Verify Property 1 (bug condition exploration test) passes — `createManagedApplication` succeeds without a pre-seeded role
   - Verify Property 2 (preservation tests) passes — validation errors, permission-denied paths, and idempotency behavior are unchanged

@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   getApplicationDetailsForViewer,
+  getSilentSsoOrigins,
 } from '@/services/applications/manage';
 import { deleteManagedApplicationFromDetailsPage } from '@/services/applications/form-actions';
 import { AppWindow, Building, BarChart, Share2, ExternalLink, type LucideIcon } from '@/components/icons';
@@ -54,6 +55,8 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
   const Icon = iconFor(details.icon);
 
   const deleteAction = deleteManagedApplicationFromDetailsPage.bind(null, id);
+
+  const silentSsoOrigins = details.canDelete ? await getSilentSsoOrigins(id) : [];
 
   const accessItems = details.hasUsedApp
     ? details.accessedData
@@ -200,6 +203,25 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
           </div>
         </CardContent>
       </Card>
+
+      {details.canDelete ? (
+        <Card>
+          <CardHeader>
+            <CardTitle>Silent SSO Origins</CardTitle>
+            <CardDescription>
+              Trusted origins allowed to silently authenticate users via the NeupID iframe bridge.
+              {silentSsoOrigins.length > 0
+                ? ` ${silentSsoOrigins.length} origin${silentSsoOrigins.length === 1 ? '' : 's'} registered.`
+                : ' No origins registered yet.'}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button variant="outline" asChild>
+              <Link href={`/data/applications/${id}/silent-sso-origins`}>Manage Origins</Link>
+            </Button>
+          </CardContent>
+        </Card>
+      ) : null}
 
       {details.canDelete ? (
         <Card className="border-destructive">

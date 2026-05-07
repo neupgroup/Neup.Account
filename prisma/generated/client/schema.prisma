@@ -39,6 +39,7 @@ model Account {
   sentRequests     Request[]      @relation("SentRequests")
   errorLogs        SystemError[]
   verifications    Verification[]
+  identities       Identity[]
 
   @@map("account")
 }
@@ -210,7 +211,7 @@ model AuthnMethod {
 }
 
 model AuthnSession {
-  id           String    @id(map: "sessions_pkey") @default(uuid())
+  id           String     @id(map: "sessions_pkey") @default(uuid())
   accountId    String
   key          String?
   ipAddress    String
@@ -220,7 +221,8 @@ model AuthnSession {
   loginType    String
   geolocation  String?
   deviceType   String?
-  account      Account   @relation(fields: [accountId], references: [id], map: "sessions_accountId_fkey")
+  account      Account    @relation(fields: [accountId], references: [id], map: "sessions_accountId_fkey")
+  identities   Identity[]
 
   @@map("authn_session")
 }
@@ -256,6 +258,7 @@ model Application {
   authzCapabilities        AuthzCapability[]
   authzRoles               AuthzRole[]
   authzAccountAccessGrants AuthzAccountAccessGrant[]
+  identities               Identity[]
 
   @@map("application")
 }
@@ -454,4 +457,21 @@ model Permit {
   @@index([accountId], map: "permit_account_id_idx")
   @@index([targetAccountId], map: "permit_target_account_id_idx")
   @@map("permit")
+}
+
+model Identity {
+  id           String   @id @default(cuid())
+  accountId    String?  @map("account_id")
+  appId        String   @map("app_id")
+  sessionId    String?  @map("session_id")
+  originatedOn DateTime @default(now()) @map("originated_on")
+  refreshesOn  DateTime @map("refreshes_on")
+  validTill    DateTime @map("valid_till")
+
+  account     Account?      @relation(fields: [accountId], references: [id])
+  application Application   @relation(fields: [appId], references: [id])
+  session     AuthnSession? @relation(fields: [sessionId], references: [id])
+
+  @@unique([accountId, appId])
+  @@map("identity")
 }

@@ -819,3 +819,113 @@ export async function getAppDetails(appId: string): Promise<Application | null> 
         return null;
     }
 }
+
+// ---------------------------------------------------------------------------
+// Silent SSO Origins
+// ---------------------------------------------------------------------------
+
+/**
+ * Returns all registered silentSsoOrigin entries for an application.
+ */
+export async function getSilentSsoOrigins(
+  appId: string
+): Promise<Array<{ id: string; value: string }>> {
+  const accountId = await getActiveAccountId();
+  if (!accountId) return [];
+
+  try {
+    const authorization = await getApplicationAuthorization(accountId, appId);
+    if (!authorization.exists || !authorization.canView) return [];
+
+    const records = await prisma.applicationBridge.findMany({
+      where: { appId, type: 'silentSsoOrigin' },
+      select: { id: true, value: true },
+      orderBy: { createdAt: 'asc' },
+    });
+
+    return records;
+  } catch (error) {
+    await logError('database', error, `getSilentSsoOrigins:${appId}`);
+    return [];
+  }
+}
+
+/**
+ * Adds a new silentSsoOrigin entry for an application.
+ * The origin must be a valid HTTPS URL.
+ */
+export async function addSilentSsoOrigin(input: {
+  appId: string;
+  origin: string;
+}): Promise<{ success: boolean; error?: string }> {
+  const accountId = await getActiveAccountId();
+  if (!accountId) return { success: false, error: 'Not signed in.' };
+
+  // Validate origin is a valid HTTPS URL
+  let parsedOrigin: URL;
+  try {
+    parsedOrigin = new URL(input.origin);
+  } catch {
+    return { success: false, error: 'Invalid URL.' };
+  }
+
+  if (parsedOrigin.protocol !== 'https:') {
+    return { success: false, error: 'Origin must use HTTPS.' };
+  }
+
+  // Normalize to scheme + host only
+  const normalizedOrigin = parsedOrigin.origin;
+
+  try {
+    const authorization = await getApplicationAuthorization(accountId, input.appId);
+    if (!authorization.exists) return { success: false, error: 'Application not found.' };
+    if (!authorization.canEdit) return { success: false, error: 'Permission denied.' };
+
+    // Prevent duplicates
+    const existing = await prisma.applicationBridge.findFirst({
+      where: { appId: input.appId, type: 'silentSsoOrigin', value: normalizedOrigin },
+    });
+    if (existing) return { success: false, error: 'This origin is already registered.' };
+
+    await prisma.applicationBridge.create({
+      data: {
+        appId: input.appId,
+        type: 'silentSsoOrigin',
+        value: normalizedOrigin,
+      },
+    });
+
+    revalidatePath(`/data/applications/${input.appId}`);
+    return { success: true };
+  } catch (error) {
+    await logError('database', error, `addSilentSsoOrigin:${input.appId}`);
+    return { success: false, error: 'Failed to add origin.' };
+  }
+}
+
+/**
+ * Removes a silentSsoOrigin entry for an application.
+ */
+export async function removeSilentSsoOrigin(input: {
+  appId: string;
+  bridgeId: string;
+}): Promise<{ success: boolean; error?: string }> {
+  const accountId = await getActiveAccountId();
+  if (!accountId) return { success: false, error: 'Not signed in.' };
+
+  try {
+    const authorization = await getApplicationAuthorization(accountId, input.appId);
+    if (!authorization.exists) return { success: false, error: 'Application not found.' };
+    if (!authorization.canEdit) return { success: false, error: 'Permission denied.' };
+
+    await prisma.applicationBridge.deleteMany({
+      where: { id: input.bridgeId, appId: input.appId, type: 'silentSsoOrigin' },
+    });
+
+    revalidatePath(`/data/applications/${input.appId}`);
+    return { success: true };
+  } catch (error) {
+    await logError('database', error, `removeSilentSsoOrigin:${input.appId}`);
+    return { success: false, error: 'Failed to remove origin.' };
+  }
+}
