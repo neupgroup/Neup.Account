@@ -47,7 +47,7 @@ beforeEach(() => vi.clearAllMocks());
 // ---------------------------------------------------------------------------
 describe('Property 1: JWT round-trip preserves ssid', () => {
   it('decoded JWT payload matches all identity fields', async () => {
-    const validDate = fc.date({ min: new Date('2000-01-01'), max: new Date('2100-01-01') });
+    const validDate = fc.integer({ min: new Date('2000-01-01').getTime(), max: new Date('2100-01-01').getTime() }).map(ms => new Date(ms));
     await fc.assert(
       fc.asyncProperty(
         fc.record({

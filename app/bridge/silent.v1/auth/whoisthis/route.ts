@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import { getSessionCookies } from '@/core/helpers/cookies';
 import prisma from '@/core/helpers/prisma';
 import { logError } from '@/core/helpers/logger';
+import { resolveCookies } from '@/services/auth/resolveCookies';
 import {
   checkRateLimit,
   validateSilentSsoOrigin,
@@ -75,7 +76,7 @@ function buildHtmlResponse(payload: object, targetOrigin: string): Response {
  *   - token: { ssid, expires_on, refreshes_on }
  *   - no code (nothing to exchange server-side)
  *
- * The tid cookie on neupgroup.com ties the IdentityTrack across all visits,
+ * The track cookie on neupgroup.com ties the IdentityTrack across all visits,
  * so the same ssid is returned for the same person on the same app — even
  * before they ever create an account.
  */
@@ -129,11 +130,8 @@ export async function GET(request: NextRequest): Promise<Response> {
   const targetOrigin = new URL(origin).origin;
 
   // -------------------------------------------------------------------------
-  // 4. Read tid cookie and session cookies
+  // 4. Read session cookies (track cookie resolved in step 6)
   // -------------------------------------------------------------------------
-  const cookieStore = await cookies();
-  const tidCookie = cookieStore.get('tid')?.value ?? null;
-
   const { accountId, sessionId, sessionKey } = await getSessionCookies();
 
   // -------------------------------------------------------------------------
@@ -162,16 +160,26 @@ export async function GET(request: NextRequest): Promise<Response> {
   }
 
   // -------------------------------------------------------------------------
-  // 6. Resolve or create the IdentityTrack
+  // 6. Resolve or create the IdentityTrack, set the track cookie
   //    - Linked to accountId when authenticated, null when anonymous
-  //    - tid cookie persists this track across all future visits
   // -------------------------------------------------------------------------
+  await resolveCookies(isAuthenticated ? (accountId || null) : null);
+
+  // Read the track cookie that resolveCookies just set
+  const cookieStore = await cookies();
+  const trackId = cookieStore.get('track')?.value ?? null;
+
+  if (!trackId) {
+    return buildHtmlResponse(
+      { type: 'neupid:silent_auth', authenticated: false, reason: 'internal_error' },
+      targetOrigin
+    );
+  }
+
+  // Resolve the IdentityTrack record from the DB using the cookie value
   let track;
   try {
-    track = await resolveOrCreateIdentityTrack(
-      tidCookie,
-      isAuthenticated ? (accountId || null) : null
-    );
+    track = await resolveOrCreateIdentityTrack(trackId, isAuthenticated ? (accountId || null) : null);
   } catch (error) {
     await logError('auth', error, 'whoisthis_resolve_track');
     return buildHtmlResponse(
@@ -179,17 +187,6 @@ export async function GET(request: NextRequest): Promise<Response> {
       targetOrigin
     );
   }
-
-  // Set/refresh the tid cookie — HttpOnly, SameSite=Lax, 1 year
-  const tidExpiry = new Date();
-  tidExpiry.setFullYear(tidExpiry.getFullYear() + 1);
-  cookieStore.set('tid', track.id, {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'lax',
-    path: '/',
-    expires: tidExpiry,
-  });
 
   // -------------------------------------------------------------------------
   // 7. Resolve or create the Identity for this (track, app) pair
