@@ -39,9 +39,8 @@ function payloadToStoredAccount(p: AccountTokenPayload): StoredAccount {
     aid: p.aid,
     sid: p.sid,
     skey: p.skey,
-    def: 1, // always 1 — it's the only account
-    nid: p.nid ?? '',
-    neupId: p.nid ?? '',
+    def: 1,
+    ...(p.nid ? { nid: p.nid, neupId: p.nid } : {}),
     guest: p.guest,
   };
 }
@@ -106,13 +105,11 @@ export async function setAccount(
   skey: string,
   nid: string
 ): Promise<void> {
-  const payload: AccountTokenPayload = {
-    aid,
-    sid,
-    skey,
-    nid,
-    guest: nid ? undefined : 1,
-  };
+  const isGuest = !nid;
+
+  const payload: AccountTokenPayload = isGuest
+    ? { aid, sid, skey, guest: 1 }           // no nid key at all
+    : { aid, sid, skey, nid };               // nid present, no guest key
 
   const token = await signAccountToken(payload);
 

@@ -18,8 +18,8 @@ export type AccountTokenPayload = {
   aid: string;
   sid: string;
   skey: string;
-  nid: string;
-  guest?: 1;    // only present on guest accounts (nid === '')
+  nid?: string;   // omitted entirely for guest accounts
+  guest?: 1;      // only present on guest accounts
 };
 
 // ---------------------------------------------------------------------------

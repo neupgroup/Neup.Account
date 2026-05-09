@@ -148,13 +148,12 @@ export class AuthCookiesHelper extends Singleton {
         if (!active) return;
 
         const { signAccountToken } = await import('@/core/auth/accountToken');
-        const token = await signAccountToken({
-            aid: active.aid,
-            sid: active.sid ?? '',
-            skey: active.skey ?? '',
-            nid: active.nid ?? active.neupId ?? '',
-            guest: (!active.nid && !active.neupId) ? 1 : undefined,
-        });
+        const isGuest = !active.nid && !active.neupId;
+        const token = await signAccountToken(
+          isGuest
+            ? { aid: active.aid, sid: active.sid ?? '', skey: active.skey ?? '', guest: 1 }
+            : { aid: active.aid, sid: active.sid ?? '', skey: active.skey ?? '', nid: active.nid ?? active.neupId ?? '' }
+        );
         const cookieStore = await this.getStore();
         cookieStore.set('auth_account', token, LONG_LIVED_COOKIE_OPTIONS);
     }

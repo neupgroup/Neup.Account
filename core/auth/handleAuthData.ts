@@ -49,7 +49,7 @@ export async function handleAuthData(request: NextRequest): Promise<AuthDataResu
 
   const { aid, sid, skey, nid } = payload;
 
-  // Condition 3: Guest account (no nid)
+  // Condition 3: Guest account (no nid field)
   if (!nid) {
     return { outcome: 'redirect', reason: 'guest_account' };
   }
