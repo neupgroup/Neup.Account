@@ -134,17 +134,20 @@ function redirectToStart(request: NextRequest, pathname: string) {
   return NextResponse.redirect(url);
 }
 
+
 // ---------------------------------------------------------------------------
-// Proxy — exported as `middleware` so Next.js picks it up from this file
+// Main Proxy Function
 // ---------------------------------------------------------------------------
 
-export async function proxy(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // 1. Prepare headers.
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set('x-next-pathname', pathname);
 
-  // 1. HTTPS enforcement
+
+  // 2. HTTPS enforcement
   const proto = request.headers.get('x-forwarded-proto');
   const isSecure = proto === 'https' || request.nextUrl.protocol === 'https:';
   if (!isSecure && pathname !== '/auth/unsecure') {
@@ -156,21 +159,24 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL('/auth/blocked', request.url));
   }
 
-  // 3. Static assets — always pass through
+  // 4. Exclusions (Static assets, etc.)
+  // These are usually handled by the matcher, but explicit check is good safety.
   if (
     pathname.startsWith('/_next') ||
     pathname === '/favicon.ico' ||
     pathname.startsWith('/.well-known')
   ) {
-    return NextResponse.next({ request: { headers: requestHeaders } });
+    return NextResponse.next({
+        request: { headers: requestHeaders }
+    });
   }
 
-  // 4. Auth pages and bridge routes — always pass through
+  // 5. Auth pages and bridge routes — always pass through
   if (pathname.startsWith('/auth') || pathname.startsWith('/bridge')) {
     return NextResponse.next({ request: { headers: requestHeaders } });
   }
 
-  // 5. All other protected routes — verify auth_account JWT
+  // 6. All other protected routes — verify auth_account JWT
   const raw = request.cookies.get('auth_account')?.value;
 
   if (!raw) {
