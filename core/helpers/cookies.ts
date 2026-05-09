@@ -83,23 +83,31 @@ export class AuthCookiesHelper extends Singleton {
     }
 
     public async getSessionCookies() {
-        const parsedAccounts = await this.getJson<unknown[]>('auth_acc', []);
-        const allAccounts = Array.isArray(parsedAccounts)
-            ? parsedAccounts
-                .map((account: any) => {
-                    const aid = account?.aid || account?.accountId;
-                    if (!aid) return null;
-                    return {
-                        aid,
-                        sid: account?.sid || account?.sessionId,
-                        skey: account?.skey || account?.sessionKey,
-                        def: account?.def === 1 ? 1 : 0,
-                        nid: account?.nid || account?.neupId || '',
-                        neupId: account?.nid || account?.neupId || '',
-                    } as StoredAccount;
-                })
-                .filter(Boolean) as StoredAccount[]
-            : [];
+        const raw = await this.get('auth_acc');
+        const allAccounts: StoredAccount[] = [];
+
+        if (raw) {
+            try {
+                const { deserializeAccountTokens, verifyAccountToken } = await import('@/core/auth/accountToken');
+                const tokens = deserializeAccountTokens(raw);
+                for (const token of tokens) {
+                    const payload = await verifyAccountToken(token);
+                    if (payload) {
+                        allAccounts.push({
+                            aid: payload.aid,
+                            sid: payload.sid,
+                            skey: payload.skey,
+                            def: payload.def ?? 0,
+                            nid: payload.nid ?? '',
+                            neupId: payload.nid ?? '',
+                            guest: payload.guest,
+                        } as StoredAccount);
+                    }
+                }
+            } catch {
+                // Malformed cookie — return empty
+            }
+        }
 
         const active = allAccounts.find(a => a.def === 1);
         const aid = active?.aid || '';
@@ -131,39 +139,31 @@ export class AuthCookiesHelper extends Singleton {
             throw new Error('Missing session values for cookie set.');
         }
 
-        const existing = await this.getJson<unknown[]>('auth_acc', []);
-        const accounts = Array.isArray(existing) ? existing : [];
-
-        const others = accounts
-            .map((a: any) => ({ ...a, def: 0 }))
-            .filter((a: any) => (a?.aid || a?.accountId) !== aid);
-
-        const existingEntry = accounts.find((a: any) => (a?.aid || a?.accountId) === aid) as any;
-
-        const current = {
-            aid,
-            sid,
-            skey,
-            def: 1,
-            nid: existingEntry?.nid || '',
-        };
-
-        await this.setJson('auth_acc', [...others, current], {
-            ...COOKIE_OPTIONS,
-            expires,
-        });
+        // Use the accounts module to write signed tokens
+        const { addAccount } = await import('@/core/auth/accounts');
+        // Fetch existing nid for this account if it exists
+        const existing = await this.getSessionCookies();
+        const existingEntry = existing.allAccounts.find((a: StoredAccount) => a.aid === aid);
+        const nid = existingEntry?.nid || '';
+        await addAccount(aid, sid, skey, nid);
     }
 
     public async setStoredAccountsCookie(accounts: StoredAccount[]) {
-        const normalized = accounts.map((a) => ({
-            aid: a.aid,
-            sid: a.sid,
-            skey: a.skey,
-            def: a.def ?? 0,
-            nid: a.nid || a.neupId || '',
-        }));
-
-        await this.setJson('auth_acc', normalized, LONG_LIVED_COOKIE_OPTIONS);
+        const { signAccountToken, serializeAccountTokens } = await import('@/core/auth/accountToken');
+        const tokens: string[] = [];
+        for (const a of accounts) {
+            const token = await signAccountToken({
+                aid: a.aid,
+                sid: a.sid ?? '',
+                skey: a.skey ?? '',
+                nid: a.nid ?? a.neupId ?? '',
+                def: a.def === 1 ? 1 : undefined,
+                guest: (!a.nid && !a.neupId) ? 1 : undefined,
+            });
+            tokens.push(token);
+        }
+        const cookieStore = await this.getStore();
+        cookieStore.set('auth_acc', serializeAccountTokens(tokens), LONG_LIVED_COOKIE_OPTIONS);
     }
 
     public async setManagingCookie(accountId: string) {

@@ -2525,3 +2525,93 @@ Message: Error: Cookies can only be modified in a Server Action or Route Handler
     at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
     at async AuthLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__a50d3bdc._.js:615:5)
 --------------------------------------------------------------------------------
+[2026-05-09T18:22:40.066Z] [auth] [auto] [resolve_guest_account] [IP: ::1] [Account: null] [Signature: dc335224ced8380b924832fed5505285]
+Message: Error: Cookies can only be modified in a Server Action or Route Handler. Read more: https://nextjs.org/docs/app/api-reference/functions/cookies#options
+    at Proxy.callable (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:32:18685)
+    at CookieProvider.setCookieRaw (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:130:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async writeAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:398:5)
+    at async addAccount (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:418:5)
+    at async resolveGuestAccount (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:588:9)
+    at async AuthLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:645:5)
+--------------------------------------------------------------------------------
+[2026-05-09T18:22:40.097Z] [auth] [auto] [resolve_guest_account] [IP: ::1] [Account: null] [Signature: dc335224ced8380b924832fed5505285]
+Message: Error: Cookies can only be modified in a Server Action or Route Handler. Read more: https://nextjs.org/docs/app/api-reference/functions/cookies#options
+    at Proxy.callable (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:32:18685)
+    at CookieProvider.setCookieRaw (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:130:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async writeAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:398:5)
+    at async addAccount (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:418:5)
+    at async resolveGuestAccount (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:588:9)
+    at async AuthLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:645:5)
+--------------------------------------------------------------------------------
+[2026-05-09T18:22:43.287Z] [auth] [auto] [resolve_guest_account] [IP: ::1] [Account: null] [Signature: dc335224ced8380b924832fed5505285]
+Message: Error: Cookies can only be modified in a Server Action or Route Handler. Read more: https://nextjs.org/docs/app/api-reference/functions/cookies#options
+    at Proxy.callable (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:32:18685)
+    at CookieProvider.setCookieRaw (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:130:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async writeAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:398:5)
+    at async addAccount (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:418:5)
+    at async resolveGuestAccount (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:588:9)
+    at async AuthLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:645:5)
+--------------------------------------------------------------------------------
+[2026-05-09T18:22:44.613Z] [auth] [auto] [resolve_guest_account] [IP: ::1] [Account: null] [Signature: dc335224ced8380b924832fed5505285]
+Message: Error: Cookies can only be modified in a Server Action or Route Handler. Read more: https://nextjs.org/docs/app/api-reference/functions/cookies#options
+    at Proxy.callable (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:32:18685)
+    at CookieProvider.setCookieRaw (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:130:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async writeAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:398:5)
+    at async addAccount (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:418:5)
+    at async resolveGuestAccount (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:588:9)
+    at async AuthLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:645:5)
+--------------------------------------------------------------------------------
+[2026-05-09T18:22:52.499Z] [auth] [auto] [resolve_guest_account] [IP: ::1] [Account: null] [Signature: dc335224ced8380b924832fed5505285]
+Message: Error: Cookies can only be modified in a Server Action or Route Handler. Read more: https://nextjs.org/docs/app/api-reference/functions/cookies#options
+    at Proxy.callable (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:32:18685)
+    at CookieProvider.setCookieRaw (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:130:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async writeAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:398:5)
+    at async addAccount (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:418:5)
+    at async resolveGuestAccount (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:588:9)
+    at async AuthLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:645:5)
+--------------------------------------------------------------------------------
+[2026-05-09T18:23:16.424Z] [auth] [auto] [resolve_guest_account] [IP: ::1] [Account: null] [Signature: dc335224ced8380b924832fed5505285]
+Message: Error: Cookies can only be modified in a Server Action or Route Handler. Read more: https://nextjs.org/docs/app/api-reference/functions/cookies#options
+    at Proxy.callable (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:32:18685)
+    at CookieProvider.setCookieRaw (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:130:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async writeAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:398:5)
+    at async addAccount (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:418:5)
+    at async resolveGuestAccount (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:588:9)
+    at async AuthLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:645:5)
+--------------------------------------------------------------------------------
+[2026-05-09T18:23:29.633Z] [auth] [auto] [resolve_guest_account] [IP: ::1] [Account: null] [Signature: dc335224ced8380b924832fed5505285]
+Message: Error: Cookies can only be modified in a Server Action or Route Handler. Read more: https://nextjs.org/docs/app/api-reference/functions/cookies#options
+    at Proxy.callable (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:32:18685)
+    at CookieProvider.setCookieRaw (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:130:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async writeAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:398:5)
+    at async addAccount (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:418:5)
+    at async resolveGuestAccount (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:588:9)
+    at async AuthLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:645:5)
+--------------------------------------------------------------------------------
+[2026-05-09T18:23:51.542Z] [auth] [auto] [resolve_guest_account] [IP: ::1] [Account: null] [Signature: dc335224ced8380b924832fed5505285]
+Message: Error: Cookies can only be modified in a Server Action or Route Handler. Read more: https://nextjs.org/docs/app/api-reference/functions/cookies#options
+    at Proxy.callable (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:32:18685)
+    at CookieProvider.setCookieRaw (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:130:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async writeAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:398:5)
+    at async addAccount (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:418:5)
+    at async resolveGuestAccount (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:588:9)
+    at async AuthLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:645:5)
+--------------------------------------------------------------------------------
+[2026-05-09T18:23:52.060Z] [auth] [auto] [resolve_guest_account] [IP: ::1] [Account: null] [Signature: dc335224ced8380b924832fed5505285]
+Message: Error: Cookies can only be modified in a Server Action or Route Handler. Read more: https://nextjs.org/docs/app/api-reference/functions/cookies#options
+    at Proxy.callable (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:32:18685)
+    at CookieProvider.setCookieRaw (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:130:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async writeAccounts (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:398:5)
+    at async addAccount (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:418:5)
+    at async resolveGuestAccount (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:588:9)
+    at async AuthLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/_87c81e5f._.js:645:5)
+--------------------------------------------------------------------------------

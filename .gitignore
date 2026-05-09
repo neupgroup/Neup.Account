@@ -53,3 +53,7 @@ certificates
 # Error Logs
 /core/logs/error.log
 
+
+# RSA key pair for auth_acc JWT signing
+app.private.key
+app.public.key

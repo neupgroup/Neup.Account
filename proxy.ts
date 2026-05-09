@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { handleAuthData } from '@/core/auth/handleAuthData';
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -9,8 +10,6 @@ export function proxy(request: NextRequest) {
   requestHeaders.set('x-next-pathname', pathname);
 
   // 2. Security Check
-  // If the request is over HTTP (not HTTPS), redirect to /auth/unsecure.
-  // Allow /auth/unsecure itself to avoid infinite loops.
   const proto = request.headers.get('x-forwarded-proto');
   const isSecure = proto === 'https' || request.nextUrl.protocol === 'https:';
   if (!isSecure && pathname !== '/auth/unsecure') {
@@ -18,13 +17,11 @@ export function proxy(request: NextRequest) {
   }
 
   // 3. Device Block Check
-  // If the user is blocked, redirect them to /auth/blocked immediately.
-  // We must allow access to /auth/blocked itself to avoid infinite loops.
   if (request.cookies.has('device_block') && pathname !== '/auth/blocked') {
     return NextResponse.redirect(new URL('/auth/blocked', request.url));
   }
 
-  // 4. Exclusions (Static assets, etc.)
+  // 4. Static assets — always pass through
   if (
     pathname.startsWith('/_next') ||
     pathname === '/favicon.ico' ||
@@ -33,9 +30,9 @@ export function proxy(request: NextRequest) {
     return NextResponse.next({ request: { headers: requestHeaders } });
   }
 
-  // 5. Public Routes (Bridge, Auth pages)
-  // These paths are entry points — they create the auth_acc cookie and do
-  // not require it to already exist.
+  // 5. Entry points — /auth/* and /bridge/* do not require an existing account.
+  //    /auth/start is where guest accounts are created.
+  //    /bridge/* routes handle their own auth (handshake, silent SSO, API).
   if (
     pathname.startsWith('/bridge') ||
     pathname.startsWith('/auth')
@@ -43,40 +40,39 @@ export function proxy(request: NextRequest) {
     return NextResponse.next({ request: { headers: requestHeaders } });
   }
 
-  // 6. Auth Check
-  // Parse auth_acc and look for an entry with def === 1 that has aid, sid, skey.
-  // Guest accounts (no nid) are valid here — they pass this check.
-  const authAccRaw = request.cookies.get('auth_acc')?.value;
-  let hasActiveSession = false;
-  if (authAccRaw) {
-    try {
-      const accounts = JSON.parse(authAccRaw);
-      hasActiveSession =
-        Array.isArray(accounts) &&
-        accounts.length > 0 &&
-        accounts.some(
-          (a: any) => a?.def === 1 && a?.aid && a?.sid && a?.skey
-        );
-    } catch { /* invalid cookie, treat as no session */ }
-  }
+  // 6. Auth gate — all other paths go through handleAuthData
+  const authResult = handleAuthData(request);
 
-  if (!hasActiveSession) {
-    const url = request.nextUrl.clone();
-    url.pathname = '/auth/start';
-    if (pathname !== '/') {
-      const backTo = pathname + request.nextUrl.search;
-      url.searchParams.set('redirects', backTo);
-      request.nextUrl.searchParams.forEach((value, key) => {
-        if (key !== 'redirects') {
-          url.searchParams.set(key, value);
-        }
-      });
+  switch (authResult.outcome) {
+    case 'create_guest': {
+      // No account at all — send to /auth/start to create a guest account
+      const url = request.nextUrl.clone();
+      url.pathname = '/auth/start';
+      if (pathname !== '/') {
+        url.searchParams.set('redirects', pathname + request.nextUrl.search);
+      }
+      return NextResponse.redirect(url);
     }
-    return NextResponse.redirect(url);
-  }
 
-  // 7. Continue
-  return NextResponse.next({ request: { headers: requestHeaders } });
+    case 'redirect': {
+      // Guest account or invalid session — cannot access protected pages
+      const url = request.nextUrl.clone();
+      url.pathname = '/auth/start';
+      if (pathname !== '/') {
+        const backTo = pathname + request.nextUrl.search;
+        url.searchParams.set('redirects', backTo);
+        request.nextUrl.searchParams.forEach((value, key) => {
+          if (key !== 'redirects') url.searchParams.set(key, value);
+        });
+      }
+      return NextResponse.redirect(url);
+    }
+
+    case 'permit': {
+      // Permanent account with valid session — let through
+      return NextResponse.next({ request: { headers: requestHeaders } });
+    }
+  }
 }
 
 export const config = {

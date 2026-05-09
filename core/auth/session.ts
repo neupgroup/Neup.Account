@@ -29,6 +29,7 @@ export type StoredAccount = {
   def: 0 | 1;
   nid?: string;
   neupId?: string; // legacy compat — kept so callers that read neupId still work
+  guest?: 1;       // only present on guest accounts (accountType = 'guest', no nid)
   isBrand?: boolean;
   isUnknown?: boolean;
   // legacy aliases — kept for backward compat with callers that use the old field names
