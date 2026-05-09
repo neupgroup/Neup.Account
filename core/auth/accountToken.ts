@@ -19,7 +19,6 @@ export type AccountTokenPayload = {
   sid: string;
   skey: string;
   nid: string;
-  def?: 1;      // only present on the active account
   guest?: 1;    // only present on guest accounts (nid === '')
 };
 
@@ -161,28 +160,27 @@ export async function verifyAccountToken(token: string): Promise<AccountTokenPay
 }
 
 // ---------------------------------------------------------------------------
-// Cookie serialization
+// Cookie serialization — single token
 // ---------------------------------------------------------------------------
 
 /**
- * Serializes an array of account tokens into the auth_acc cookie value.
- * Format: JSON array of JWT strings — ["jwt1", "jwt2", ...]
+ * The auth_account cookie stores a single JWT string directly.
+ * No array wrapping needed.
  */
-export function serializeAccountTokens(tokens: string[]): string {
-  return JSON.stringify(tokens);
+export function serializeAccountToken(token: string): string {
+  return token;
 }
 
-/**
- * Deserializes the auth_acc cookie value into an array of JWT strings.
- */
+export function deserializeAccountToken(raw: string): string {
+  return raw.trim();
+}
+
+// Keep array variants for backward compat during migration
+export function serializeAccountTokens(tokens: string[]): string {
+  return tokens[0] ?? '';
+}
+
 export function deserializeAccountTokens(raw: string): string[] {
-  try {
-    const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed) && parsed.every(t => typeof t === 'string')) {
-      return parsed;
-    }
-    return [];
-  } catch {
-    return [];
-  }
+  const t = raw.trim();
+  return t ? [t] : [];
 }

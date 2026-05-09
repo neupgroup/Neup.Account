@@ -1,5 +1,6 @@
 import React from 'react';
 import { StartPageComponent } from './start-page-component';
+import { GuestAccountInitializer } from './guest-initializer';
 import { getAuthStartPageData } from '@/services/auth/start';
 
 type StartPageProps = {
@@ -12,6 +13,10 @@ export default async function StartPage({ searchParams }: StartPageProps) {
   
   return (
     <React.Suspense fallback={<div>Loading...</div>}>
+      {/* Creates a guest account in auth_acc if none exists.
+          Must be a client component + Server Action — cookies cannot be
+          set from Server Components or layouts. */}
+      <GuestAccountInitializer />
       <StartPageComponent
         accounts={pageData.accounts}
         hasActiveSession={pageData.hasActiveSession}

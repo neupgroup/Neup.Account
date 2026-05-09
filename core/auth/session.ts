@@ -94,28 +94,11 @@ export async function createAndSetSession(
       },
     });
 
-    const { allAccounts: existingAccounts } = await getSessionCookies();
-
     const neupIds = await getUserNeupIds(accountId);
     const primaryNeupId = neupIds[0];
 
-    const newStoredAccount: StoredAccount = {
-      aid: accountId,
-      sid: session.id,
-      skey: sessionKey,
-      def: 1,
-      nid: primaryNeupId,
-      neupId: primaryNeupId,
-    };
-    
-    // Mark all others as def:0, remove previous session for this accountId, add new one
-    const filteredAccounts = existingAccounts
-      .map((acc: StoredAccount) => ({ ...acc, def: 0 as const }))
-      .filter((acc: StoredAccount) => acc.aid !== accountId);
-
-    const allAccounts = [...filteredAccounts, newStoredAccount];
-    
-    await setStoredAccountsCookie(allAccounts);
+    const { setAccount } = await import('@/core/auth/accounts');
+    await setAccount(accountId, session.id, sessionKey, primaryNeupId ?? '');
 
   } catch (error) {
     await logError('auth', error, `createAndSetSession for ${accountId}`);

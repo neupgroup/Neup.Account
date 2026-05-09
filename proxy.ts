@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { handleAuthData } from '@/core/auth/handleAuthData';
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // 1. Prepare Headers
@@ -31,8 +31,6 @@ export function proxy(request: NextRequest) {
   }
 
   // 5. Entry points — /auth/* and /bridge/* do not require an existing account.
-  //    /auth/start is where guest accounts are created.
-  //    /bridge/* routes handle their own auth (handshake, silent SSO, API).
   if (
     pathname.startsWith('/bridge') ||
     pathname.startsWith('/auth')
@@ -40,12 +38,11 @@ export function proxy(request: NextRequest) {
     return NextResponse.next({ request: { headers: requestHeaders } });
   }
 
-  // 6. Auth gate — all other paths go through handleAuthData
-  const authResult = handleAuthData(request);
+  // 6. Auth gate — verify the auth_account JWT and decide
+  const authResult = await handleAuthData(request);
 
   switch (authResult.outcome) {
     case 'create_guest': {
-      // No account at all — send to /auth/start to create a guest account
       const url = request.nextUrl.clone();
       url.pathname = '/auth/start';
       if (pathname !== '/') {
@@ -55,7 +52,6 @@ export function proxy(request: NextRequest) {
     }
 
     case 'redirect': {
-      // Guest account or invalid session — cannot access protected pages
       const url = request.nextUrl.clone();
       url.pathname = '/auth/start';
       if (pathname !== '/') {
@@ -69,7 +65,6 @@ export function proxy(request: NextRequest) {
     }
 
     case 'permit': {
-      // Permanent account with valid session — let through
       return NextResponse.next({ request: { headers: requestHeaders } });
     }
   }
