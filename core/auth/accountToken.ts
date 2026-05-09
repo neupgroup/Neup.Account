@@ -3,15 +3,14 @@
  *
  * Each account entry in auth_acc is a signed JWT (RS256).
  *
- * Private key (app.private.key) — signs tokens on write (server-side only).
- * Public key  (app.public.key)  — verifies tokens on read (Node.js + Edge).
+ * Private key — signs tokens on write (server-side only).
+ * Public key  — verifies tokens on read (Node.js + Edge).
  *
- * Keys are loaded from the filesystem at:
- *   {project_root}/app.private.key
- *   {project_root}/app.public.key
+ * Keys are loaded from env vars:
+ *   AUTH_PRIVATE_KEY — PEM with literal \n for newlines
+ *   AUTH_PUBLIC_KEY  — PEM with literal \n for newlines
  *
- * Falls back to unsigned base64url JSON if keys cannot be loaded
- * (e.g. Edge runtime without filesystem access — use env vars there).
+ * Falls back to unsigned base64url JSON if keys are not set (dev only).
  */
 
 export type AccountTokenPayload = {
@@ -23,34 +22,22 @@ export type AccountTokenPayload = {
 };
 
 // ---------------------------------------------------------------------------
-// Key loading
+// Key loading — from env vars AUTH_PRIVATE_KEY / AUTH_PUBLIC_KEY
 // ---------------------------------------------------------------------------
 
-let _privateKey: string | null = null;
-let _publicKey: string | null = null;
-
-async function loadPrivateKey(): Promise<string | null> {
-  if (_privateKey !== null) return _privateKey;
-  try {
-    const { readFileSync } = await import('fs');
-    const { join } = await import('path');
-    _privateKey = readFileSync(join(process.cwd(), 'app.private.key'), 'utf8');
-    return _privateKey;
-  } catch {
-    return null;
-  }
+function normalizePem(pem: string): string {
+  // Handle literal \n from .env files
+  return pem.replace(/\\n/g, '\n');
 }
 
-async function loadPublicKey(): Promise<string | null> {
-  if (_publicKey !== null) return _publicKey;
-  try {
-    const { readFileSync } = await import('fs');
-    const { join } = await import('path');
-    _publicKey = readFileSync(join(process.cwd(), 'app.public.key'), 'utf8');
-    return _publicKey;
-  } catch {
-    return null;
-  }
+function loadPrivateKey(): string | null {
+  const key = process.env.AUTH_PRIVATE_KEY;
+  return key ? normalizePem(key) : null;
+}
+
+function loadPublicKey(): string | null {
+  const key = process.env.AUTH_PUBLIC_KEY;
+  return key ? normalizePem(key) : null;
 }
 
 // ---------------------------------------------------------------------------
@@ -81,7 +68,7 @@ function base64urlDecode(str: string): string {
  * Falls back to unsigned base64url JSON if the key file is not available.
  */
 export async function signAccountToken(payload: AccountTokenPayload): Promise<string> {
-  const privateKey = await loadPrivateKey();
+  const privateKey = loadPrivateKey();
 
   if (!privateKey) {
     // Fallback: plain base64url JSON (dev without key files)
@@ -129,7 +116,7 @@ export async function verifyAccountToken(token: string): Promise<AccountTokenPay
     }
   }
 
-  const publicKey = await loadPublicKey();
+  const publicKey = loadPublicKey();
 
   if (!publicKey) {
     // No public key — decode without verification (dev fallback)
