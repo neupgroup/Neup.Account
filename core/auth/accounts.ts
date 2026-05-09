@@ -1,6 +1,6 @@
 'use server';
 
-// Provides direct read/write access to the auth_accounts cookie array.
+// Provides direct read/write access to the auth_acc cookie array.
 // These are thin, focused functions — they do not validate sessions against the DB.
 // Use getValidatedStoredAccounts() from session.ts if you need DB validation.
 
@@ -14,7 +14,7 @@ const ACCOUNTS_COOKIE_EXPIRY = () => {
     return d;
 };
 
-// Shared cookie options for the auth_accounts array
+// Shared cookie options for the auth_acc array
 const ACCOUNTS_COOKIE_OPTIONS = {
     httpOnly: true,
     secure: true,
@@ -22,10 +22,10 @@ const ACCOUNTS_COOKIE_OPTIONS = {
     path: '/',
 };
 
-// Reads and parses the auth_accounts cookie, normalizing legacy field names.
+// Reads and parses the auth_acc cookie, normalizing legacy field names.
 // Returns an empty array if the cookie is missing or malformed.
 export async function getAccounts(): Promise<StoredAccount[]> {
-    const raw = await cookieProvider.getCookie('auth_accounts');
+    const raw = await cookieProvider.getCookie('auth_acc');
     if (!raw) return [];
 
     try {
@@ -74,7 +74,7 @@ export async function getEffectiveAccountId(): Promise<string | null> {
     return active?.aid ?? null;
 }
 
-// Adds a new account to the auth_accounts cookie and marks it as active (def: 1).
+// Adds a new account to the auth_acc cookie and marks it as active (def: 1).
 // Demotes all other accounts to def: 0 and removes any previous entry for the same aid.
 export async function addAccount(aid: string, sid: string, skey: string, nid: string): Promise<void> {
     const existing = await getAccounts();
@@ -85,7 +85,7 @@ export async function addAccount(aid: string, sid: string, skey: string, nid: st
 
     const newAccount: StoredAccount = { aid, sid, skey, def: 1, nid, neupId: nid };
 
-    await cookieProvider.setCookieRaw('auth_accounts', JSON.stringify([...others, newAccount]), {
+    await cookieProvider.setCookieRaw('auth_acc', JSON.stringify([...others, newAccount]), {
         ...ACCOUNTS_COOKIE_OPTIONS,
         expires: ACCOUNTS_COOKIE_EXPIRY(),
     });
@@ -103,7 +103,7 @@ export async function updateDefaultAccount(identifier: string | number): Promise
         return { ...a, def: (isTarget ? 1 : 0) as 0 | 1 };
     });
 
-    await cookieProvider.setCookieRaw('auth_accounts', JSON.stringify(updated), {
+    await cookieProvider.setCookieRaw('auth_acc', JSON.stringify(updated), {
         ...ACCOUNTS_COOKIE_OPTIONS,
         expires: ACCOUNTS_COOKIE_EXPIRY(),
     });
@@ -116,7 +116,7 @@ export async function cleanAccounts(): Promise<void> {
 
     const cleaned = existing.filter(a => a.aid && a.sid && a.skey);
 
-    await cookieProvider.setCookieRaw('auth_accounts', JSON.stringify(cleaned), {
+    await cookieProvider.setCookieRaw('auth_acc', JSON.stringify(cleaned), {
         ...ACCOUNTS_COOKIE_OPTIONS,
         expires: ACCOUNTS_COOKIE_EXPIRY(),
     });

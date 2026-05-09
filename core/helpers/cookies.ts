@@ -83,7 +83,7 @@ export class AuthCookiesHelper extends Singleton {
     }
 
     public async getSessionCookies() {
-        const parsedAccounts = await this.getJson<unknown[]>('auth_accounts', []);
+        const parsedAccounts = await this.getJson<unknown[]>('auth_acc', []);
         const allAccounts = Array.isArray(parsedAccounts)
             ? parsedAccounts
                 .map((account: any) => {
@@ -131,7 +131,7 @@ export class AuthCookiesHelper extends Singleton {
             throw new Error('Missing session values for cookie set.');
         }
 
-        const existing = await this.getJson<unknown[]>('auth_accounts', []);
+        const existing = await this.getJson<unknown[]>('auth_acc', []);
         const accounts = Array.isArray(existing) ? existing : [];
 
         const others = accounts
@@ -148,7 +148,7 @@ export class AuthCookiesHelper extends Singleton {
             nid: existingEntry?.nid || '',
         };
 
-        await this.setJson('auth_accounts', [...others, current], {
+        await this.setJson('auth_acc', [...others, current], {
             ...COOKIE_OPTIONS,
             expires,
         });
@@ -163,7 +163,7 @@ export class AuthCookiesHelper extends Singleton {
             nid: a.nid || a.neupId || '',
         }));
 
-        await this.setJson('auth_accounts', normalized, LONG_LIVED_COOKIE_OPTIONS);
+        await this.setJson('auth_acc', normalized, LONG_LIVED_COOKIE_OPTIONS);
     }
 
     public async setManagingCookie(accountId: string) {
@@ -178,7 +178,7 @@ export class AuthCookiesHelper extends Singleton {
 
     public async clearSessionCookies() {
         // Mark the active account as def:0 and strip its session keys
-        const existing = await this.getJson<unknown[]>('auth_accounts', []);
+        const existing = await this.getJson<unknown[]>('auth_acc', []);
         if (Array.isArray(existing) && existing.length > 0) {
             const updated = existing.map((a: any) => {
                 if (a?.def === 1) {
@@ -187,7 +187,7 @@ export class AuthCookiesHelper extends Singleton {
                 }
                 return a;
             });
-            await this.setJson('auth_accounts', updated, LONG_LIVED_COOKIE_OPTIONS);
+            await this.setJson('auth_acc', updated, LONG_LIVED_COOKIE_OPTIONS);
         }
 
         await this.del('managing');

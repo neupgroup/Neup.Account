@@ -6,6 +6,7 @@ import { headers } from 'next/headers';
 import { logError } from '@/core/helpers/logger';
 import { getSessionCookies, clearSessionCookies, setStoredAccountsCookie } from '@/core/helpers/cookies';
 import { expireSession } from './session';
+import { rotateGuestAccountOnLogout } from './guestAccount';
 
 const EXTERNAL_LOGIN_PREFIX = 'external_app:';
 function externalLoginType(appId: string) {
@@ -53,7 +54,10 @@ export async function logoutActiveSession() {
             await logError('database', error, 'logoutActiveSession:updateDoc');
         }
     }
-    
+
+    // Expire the current guest account and issue a new anonymous one
+    await rotateGuestAccountOnLogout();
+
     await clearSessionCookies();
 }
 

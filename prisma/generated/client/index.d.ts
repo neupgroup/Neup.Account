@@ -164,13 +164,10 @@ export type AuthzAssetsAccessGrant = $Result.DefaultSelection<Prisma.$AuthzAsset
  */
 export type Permit = $Result.DefaultSelection<Prisma.$PermitPayload>
 /**
- * Model IdentityTrack
- * 
- */
-export type IdentityTrack = $Result.DefaultSelection<Prisma.$IdentityTrackPayload>
-/**
  * Model Identity
- * 
+ * Stores per-app identity records keyed by guest account ID.
+ * trackId holds the guest account ID (from the guest_acc cookie) as the
+ * stable device identifier. This is the ssid issued to third-party apps.
  */
 export type Identity = $Result.DefaultSelection<Prisma.$IdentityPayload>
 
@@ -590,16 +587,6 @@ export class PrismaClient<
     * ```
     */
   get permit(): Prisma.PermitDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.identityTrack`: Exposes CRUD operations for the **IdentityTrack** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more IdentityTracks
-    * const identityTracks = await prisma.identityTrack.findMany()
-    * ```
-    */
-  get identityTrack(): Prisma.IdentityTrackDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.identity`: Exposes CRUD operations for the **Identity** model.
@@ -1074,7 +1061,6 @@ export namespace Prisma {
     AuthzAccountAccessGrant: 'AuthzAccountAccessGrant',
     AuthzAssetsAccessGrant: 'AuthzAssetsAccessGrant',
     Permit: 'Permit',
-    IdentityTrack: 'IdentityTrack',
     Identity: 'Identity'
   };
 
@@ -1091,7 +1077,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "systemConfig" | "authnRequest" | "activity" | "notification" | "request" | "family" | "familyMember" | "verification" | "contact" | "neupId" | "authnMethod" | "authnSession" | "systemError" | "application" | "portfolio" | "portfolioAsset" | "portfolioMember" | "accountOwnership" | "applicationConnection" | "applicationBridge" | "applicationPolicy" | "authzCapability" | "authzRole" | "authzRoleCapability" | "authzAccountAccessGrant" | "authzAssetsAccessGrant" | "permit" | "identityTrack" | "identity"
+      modelProps: "account" | "accountTypeIndividual" | "accountTypeBrand" | "systemConfig" | "authnRequest" | "activity" | "notification" | "request" | "family" | "familyMember" | "verification" | "contact" | "neupId" | "authnMethod" | "authnSession" | "systemError" | "application" | "portfolio" | "portfolioAsset" | "portfolioMember" | "accountOwnership" | "applicationConnection" | "applicationBridge" | "applicationPolicy" | "authzCapability" | "authzRole" | "authzRoleCapability" | "authzAccountAccessGrant" | "authzAssetsAccessGrant" | "permit" | "identity"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3315,80 +3301,6 @@ export namespace Prisma {
           }
         }
       }
-      IdentityTrack: {
-        payload: Prisma.$IdentityTrackPayload<ExtArgs>
-        fields: Prisma.IdentityTrackFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.IdentityTrackFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityTrackPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.IdentityTrackFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityTrackPayload>
-          }
-          findFirst: {
-            args: Prisma.IdentityTrackFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityTrackPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.IdentityTrackFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityTrackPayload>
-          }
-          findMany: {
-            args: Prisma.IdentityTrackFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityTrackPayload>[]
-          }
-          create: {
-            args: Prisma.IdentityTrackCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityTrackPayload>
-          }
-          createMany: {
-            args: Prisma.IdentityTrackCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.IdentityTrackCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityTrackPayload>[]
-          }
-          delete: {
-            args: Prisma.IdentityTrackDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityTrackPayload>
-          }
-          update: {
-            args: Prisma.IdentityTrackUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityTrackPayload>
-          }
-          deleteMany: {
-            args: Prisma.IdentityTrackDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.IdentityTrackUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.IdentityTrackUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityTrackPayload>[]
-          }
-          upsert: {
-            args: Prisma.IdentityTrackUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$IdentityTrackPayload>
-          }
-          aggregate: {
-            args: Prisma.IdentityTrackAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateIdentityTrack>
-          }
-          groupBy: {
-            args: Prisma.IdentityTrackGroupByArgs<ExtArgs>
-            result: $Utils.Optional<IdentityTrackGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.IdentityTrackCountArgs<ExtArgs>
-            result: $Utils.Optional<IdentityTrackCountAggregateOutputType> | number
-          }
-        }
-      }
       Identity: {
         payload: Prisma.$IdentityPayload<ExtArgs>
         fields: Prisma.IdentityFieldRefs
@@ -3601,7 +3513,6 @@ export namespace Prisma {
     authzAccountAccessGrant?: AuthzAccountAccessGrantOmit
     authzAssetsAccessGrant?: AuthzAssetsAccessGrantOmit
     permit?: PermitOmit
-    identityTrack?: IdentityTrackOmit
     identity?: IdentityOmit
   }
 
@@ -3699,11 +3610,11 @@ export namespace Prisma {
     permitTargets: number
     parentOwnerships: number
     childOwnerships: number
+    linkedFrom: number
     receivedRequests: number
     sentRequests: number
     errorLogs: number
     verifications: number
-    identityTracks: number
   }
 
   export type AccountCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3723,11 +3634,11 @@ export namespace Prisma {
     permitTargets?: boolean | AccountCountOutputTypeCountPermitTargetsArgs
     parentOwnerships?: boolean | AccountCountOutputTypeCountParentOwnershipsArgs
     childOwnerships?: boolean | AccountCountOutputTypeCountChildOwnershipsArgs
+    linkedFrom?: boolean | AccountCountOutputTypeCountLinkedFromArgs
     receivedRequests?: boolean | AccountCountOutputTypeCountReceivedRequestsArgs
     sentRequests?: boolean | AccountCountOutputTypeCountSentRequestsArgs
     errorLogs?: boolean | AccountCountOutputTypeCountErrorLogsArgs
     verifications?: boolean | AccountCountOutputTypeCountVerificationsArgs
-    identityTracks?: boolean | AccountCountOutputTypeCountIdentityTracksArgs
   }
 
   // Custom InputTypes
@@ -3856,6 +3767,13 @@ export namespace Prisma {
   /**
    * AccountCountOutputType without action
    */
+  export type AccountCountOutputTypeCountLinkedFromArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AccountWhereInput
+  }
+
+  /**
+   * AccountCountOutputType without action
+   */
   export type AccountCountOutputTypeCountReceivedRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: RequestWhereInput
   }
@@ -3879,13 +3797,6 @@ export namespace Prisma {
    */
   export type AccountCountOutputTypeCountVerificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: VerificationWhereInput
-  }
-
-  /**
-   * AccountCountOutputType without action
-   */
-  export type AccountCountOutputTypeCountIdentityTracksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: IdentityTrackWhereInput
   }
 
 
@@ -4175,37 +4086,6 @@ export namespace Prisma {
 
 
   /**
-   * Count Type IdentityTrackCountOutputType
-   */
-
-  export type IdentityTrackCountOutputType = {
-    identities: number
-  }
-
-  export type IdentityTrackCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    identities?: boolean | IdentityTrackCountOutputTypeCountIdentitiesArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * IdentityTrackCountOutputType without action
-   */
-  export type IdentityTrackCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the IdentityTrackCountOutputType
-     */
-    select?: IdentityTrackCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * IdentityTrackCountOutputType without action
-   */
-  export type IdentityTrackCountOutputTypeCountIdentitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: IdentityWhereInput
-  }
-
-
-  /**
    * Models
    */
 
@@ -4227,6 +4107,7 @@ export namespace Prisma {
     status: string | null
     isVerified: boolean | null
     createdAt: Date | null
+    linkedAccountId: string | null
   }
 
   export type AccountMaxAggregateOutputType = {
@@ -4237,6 +4118,7 @@ export namespace Prisma {
     status: string | null
     isVerified: boolean | null
     createdAt: Date | null
+    linkedAccountId: string | null
   }
 
   export type AccountCountAggregateOutputType = {
@@ -4248,6 +4130,7 @@ export namespace Prisma {
     isVerified: number
     details: number
     createdAt: number
+    linkedAccountId: number
     _all: number
   }
 
@@ -4260,6 +4143,7 @@ export namespace Prisma {
     status?: true
     isVerified?: true
     createdAt?: true
+    linkedAccountId?: true
   }
 
   export type AccountMaxAggregateInputType = {
@@ -4270,6 +4154,7 @@ export namespace Prisma {
     status?: true
     isVerified?: true
     createdAt?: true
+    linkedAccountId?: true
   }
 
   export type AccountCountAggregateInputType = {
@@ -4281,6 +4166,7 @@ export namespace Prisma {
     isVerified?: true
     details?: true
     createdAt?: true
+    linkedAccountId?: true
     _all?: true
   }
 
@@ -4365,6 +4251,7 @@ export namespace Prisma {
     isVerified: boolean
     details: JsonValue | null
     createdAt: Date
+    linkedAccountId: string | null
     _count: AccountCountAggregateOutputType | null
     _min: AccountMinAggregateOutputType | null
     _max: AccountMaxAggregateOutputType | null
@@ -4393,6 +4280,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: boolean
     createdAt?: boolean
+    linkedAccountId?: boolean
     brandProfile?: boolean | Account$brandProfileArgs<ExtArgs>
     individualProfile?: boolean | Account$individualProfileArgs<ExtArgs>
     appConnections?: boolean | Account$appConnectionsArgs<ExtArgs>
@@ -4411,11 +4299,12 @@ export namespace Prisma {
     permitTargets?: boolean | Account$permitTargetsArgs<ExtArgs>
     parentOwnerships?: boolean | Account$parentOwnershipsArgs<ExtArgs>
     childOwnerships?: boolean | Account$childOwnershipsArgs<ExtArgs>
+    linkedAccount?: boolean | Account$linkedAccountArgs<ExtArgs>
+    linkedFrom?: boolean | Account$linkedFromArgs<ExtArgs>
     receivedRequests?: boolean | Account$receivedRequestsArgs<ExtArgs>
     sentRequests?: boolean | Account$sentRequestsArgs<ExtArgs>
     errorLogs?: boolean | Account$errorLogsArgs<ExtArgs>
     verifications?: boolean | Account$verificationsArgs<ExtArgs>
-    identityTracks?: boolean | Account$identityTracksArgs<ExtArgs>
     _count?: boolean | AccountCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["account"]>
 
@@ -4428,6 +4317,8 @@ export namespace Prisma {
     isVerified?: boolean
     details?: boolean
     createdAt?: boolean
+    linkedAccountId?: boolean
+    linkedAccount?: boolean | Account$linkedAccountArgs<ExtArgs>
   }, ExtArgs["result"]["account"]>
 
   export type AccountSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4439,6 +4330,8 @@ export namespace Prisma {
     isVerified?: boolean
     details?: boolean
     createdAt?: boolean
+    linkedAccountId?: boolean
+    linkedAccount?: boolean | Account$linkedAccountArgs<ExtArgs>
   }, ExtArgs["result"]["account"]>
 
   export type AccountSelectScalar = {
@@ -4450,9 +4343,10 @@ export namespace Prisma {
     isVerified?: boolean
     details?: boolean
     createdAt?: boolean
+    linkedAccountId?: boolean
   }
 
-  export type AccountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "displayName" | "accountType" | "displayImage" | "status" | "isVerified" | "details" | "createdAt", ExtArgs["result"]["account"]>
+  export type AccountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "displayName" | "accountType" | "displayImage" | "status" | "isVerified" | "details" | "createdAt" | "linkedAccountId", ExtArgs["result"]["account"]>
   export type AccountInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     brandProfile?: boolean | Account$brandProfileArgs<ExtArgs>
     individualProfile?: boolean | Account$individualProfileArgs<ExtArgs>
@@ -4472,15 +4366,20 @@ export namespace Prisma {
     permitTargets?: boolean | Account$permitTargetsArgs<ExtArgs>
     parentOwnerships?: boolean | Account$parentOwnershipsArgs<ExtArgs>
     childOwnerships?: boolean | Account$childOwnershipsArgs<ExtArgs>
+    linkedAccount?: boolean | Account$linkedAccountArgs<ExtArgs>
+    linkedFrom?: boolean | Account$linkedFromArgs<ExtArgs>
     receivedRequests?: boolean | Account$receivedRequestsArgs<ExtArgs>
     sentRequests?: boolean | Account$sentRequestsArgs<ExtArgs>
     errorLogs?: boolean | Account$errorLogsArgs<ExtArgs>
     verifications?: boolean | Account$verificationsArgs<ExtArgs>
-    identityTracks?: boolean | Account$identityTracksArgs<ExtArgs>
     _count?: boolean | AccountCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type AccountIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type AccountIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type AccountIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    linkedAccount?: boolean | Account$linkedAccountArgs<ExtArgs>
+  }
+  export type AccountIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    linkedAccount?: boolean | Account$linkedAccountArgs<ExtArgs>
+  }
 
   export type $AccountPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Account"
@@ -4503,11 +4402,12 @@ export namespace Prisma {
       permitTargets: Prisma.$PermitPayload<ExtArgs>[]
       parentOwnerships: Prisma.$AccountOwnershipPayload<ExtArgs>[]
       childOwnerships: Prisma.$AccountOwnershipPayload<ExtArgs>[]
+      linkedAccount: Prisma.$AccountPayload<ExtArgs> | null
+      linkedFrom: Prisma.$AccountPayload<ExtArgs>[]
       receivedRequests: Prisma.$RequestPayload<ExtArgs>[]
       sentRequests: Prisma.$RequestPayload<ExtArgs>[]
       errorLogs: Prisma.$SystemErrorPayload<ExtArgs>[]
       verifications: Prisma.$VerificationPayload<ExtArgs>[]
-      identityTracks: Prisma.$IdentityTrackPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4518,6 +4418,7 @@ export namespace Prisma {
       isVerified: boolean
       details: Prisma.JsonValue | null
       createdAt: Date
+      linkedAccountId: string | null
     }, ExtArgs["result"]["account"]>
     composites: {}
   }
@@ -4930,11 +4831,12 @@ export namespace Prisma {
     permitTargets<T extends Account$permitTargetsArgs<ExtArgs> = {}>(args?: Subset<T, Account$permitTargetsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PermitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     parentOwnerships<T extends Account$parentOwnershipsArgs<ExtArgs> = {}>(args?: Subset<T, Account$parentOwnershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountOwnershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     childOwnerships<T extends Account$childOwnershipsArgs<ExtArgs> = {}>(args?: Subset<T, Account$childOwnershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountOwnershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    linkedAccount<T extends Account$linkedAccountArgs<ExtArgs> = {}>(args?: Subset<T, Account$linkedAccountArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    linkedFrom<T extends Account$linkedFromArgs<ExtArgs> = {}>(args?: Subset<T, Account$linkedFromArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     receivedRequests<T extends Account$receivedRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Account$receivedRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sentRequests<T extends Account$sentRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Account$sentRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     errorLogs<T extends Account$errorLogsArgs<ExtArgs> = {}>(args?: Subset<T, Account$errorLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemErrorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     verifications<T extends Account$verificationsArgs<ExtArgs> = {}>(args?: Subset<T, Account$verificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VerificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    identityTracks<T extends Account$identityTracksArgs<ExtArgs> = {}>(args?: Subset<T, Account$identityTracksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityTrackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4972,6 +4874,7 @@ export namespace Prisma {
     readonly isVerified: FieldRef<"Account", 'Boolean'>
     readonly details: FieldRef<"Account", 'Json'>
     readonly createdAt: FieldRef<"Account", 'DateTime'>
+    readonly linkedAccountId: FieldRef<"Account", 'String'>
   }
     
 
@@ -5221,6 +5124,10 @@ export namespace Prisma {
      */
     data: AccountCreateManyInput | AccountCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -5291,6 +5198,10 @@ export namespace Prisma {
      * Limit how many Accounts to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -5782,6 +5693,49 @@ export namespace Prisma {
   }
 
   /**
+   * Account.linkedAccount
+   */
+  export type Account$linkedAccountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Account
+     */
+    select?: AccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Account
+     */
+    omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    where?: AccountWhereInput
+  }
+
+  /**
+   * Account.linkedFrom
+   */
+  export type Account$linkedFromArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Account
+     */
+    select?: AccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Account
+     */
+    omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    where?: AccountWhereInput
+    orderBy?: AccountOrderByWithRelationInput | AccountOrderByWithRelationInput[]
+    cursor?: AccountWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AccountScalarFieldEnum | AccountScalarFieldEnum[]
+  }
+
+  /**
    * Account.receivedRequests
    */
   export type Account$receivedRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5875,30 +5829,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: VerificationScalarFieldEnum | VerificationScalarFieldEnum[]
-  }
-
-  /**
-   * Account.identityTracks
-   */
-  export type Account$identityTracksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the IdentityTrack
-     */
-    select?: IdentityTrackSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the IdentityTrack
-     */
-    omit?: IdentityTrackOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: IdentityTrackInclude<ExtArgs> | null
-    where?: IdentityTrackWhereInput
-    orderBy?: IdentityTrackOrderByWithRelationInput | IdentityTrackOrderByWithRelationInput[]
-    cursor?: IdentityTrackWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: IdentityTrackScalarFieldEnum | IdentityTrackScalarFieldEnum[]
   }
 
   /**
@@ -37512,1074 +37442,6 @@ export namespace Prisma {
 
 
   /**
-   * Model IdentityTrack
-   */
-
-  export type AggregateIdentityTrack = {
-    _count: IdentityTrackCountAggregateOutputType | null
-    _min: IdentityTrackMinAggregateOutputType | null
-    _max: IdentityTrackMaxAggregateOutputType | null
-  }
-
-  export type IdentityTrackMinAggregateOutputType = {
-    id: string | null
-    accountId: string | null
-  }
-
-  export type IdentityTrackMaxAggregateOutputType = {
-    id: string | null
-    accountId: string | null
-  }
-
-  export type IdentityTrackCountAggregateOutputType = {
-    id: number
-    accountId: number
-    _all: number
-  }
-
-
-  export type IdentityTrackMinAggregateInputType = {
-    id?: true
-    accountId?: true
-  }
-
-  export type IdentityTrackMaxAggregateInputType = {
-    id?: true
-    accountId?: true
-  }
-
-  export type IdentityTrackCountAggregateInputType = {
-    id?: true
-    accountId?: true
-    _all?: true
-  }
-
-  export type IdentityTrackAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which IdentityTrack to aggregate.
-     */
-    where?: IdentityTrackWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of IdentityTracks to fetch.
-     */
-    orderBy?: IdentityTrackOrderByWithRelationInput | IdentityTrackOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: IdentityTrackWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` IdentityTracks from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` IdentityTracks.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned IdentityTracks
-    **/
-    _count?: true | IdentityTrackCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: IdentityTrackMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: IdentityTrackMaxAggregateInputType
-  }
-
-  export type GetIdentityTrackAggregateType<T extends IdentityTrackAggregateArgs> = {
-        [P in keyof T & keyof AggregateIdentityTrack]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateIdentityTrack[P]>
-      : GetScalarType<T[P], AggregateIdentityTrack[P]>
-  }
-
-
-
-
-  export type IdentityTrackGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: IdentityTrackWhereInput
-    orderBy?: IdentityTrackOrderByWithAggregationInput | IdentityTrackOrderByWithAggregationInput[]
-    by: IdentityTrackScalarFieldEnum[] | IdentityTrackScalarFieldEnum
-    having?: IdentityTrackScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: IdentityTrackCountAggregateInputType | true
-    _min?: IdentityTrackMinAggregateInputType
-    _max?: IdentityTrackMaxAggregateInputType
-  }
-
-  export type IdentityTrackGroupByOutputType = {
-    id: string
-    accountId: string | null
-    _count: IdentityTrackCountAggregateOutputType | null
-    _min: IdentityTrackMinAggregateOutputType | null
-    _max: IdentityTrackMaxAggregateOutputType | null
-  }
-
-  type GetIdentityTrackGroupByPayload<T extends IdentityTrackGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<IdentityTrackGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof IdentityTrackGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], IdentityTrackGroupByOutputType[P]>
-            : GetScalarType<T[P], IdentityTrackGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type IdentityTrackSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    account?: boolean | IdentityTrack$accountArgs<ExtArgs>
-    identities?: boolean | IdentityTrack$identitiesArgs<ExtArgs>
-    _count?: boolean | IdentityTrackCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["identityTrack"]>
-
-  export type IdentityTrackSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    account?: boolean | IdentityTrack$accountArgs<ExtArgs>
-  }, ExtArgs["result"]["identityTrack"]>
-
-  export type IdentityTrackSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    accountId?: boolean
-    account?: boolean | IdentityTrack$accountArgs<ExtArgs>
-  }, ExtArgs["result"]["identityTrack"]>
-
-  export type IdentityTrackSelectScalar = {
-    id?: boolean
-    accountId?: boolean
-  }
-
-  export type IdentityTrackOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountId", ExtArgs["result"]["identityTrack"]>
-  export type IdentityTrackInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | IdentityTrack$accountArgs<ExtArgs>
-    identities?: boolean | IdentityTrack$identitiesArgs<ExtArgs>
-    _count?: boolean | IdentityTrackCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type IdentityTrackIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | IdentityTrack$accountArgs<ExtArgs>
-  }
-  export type IdentityTrackIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    account?: boolean | IdentityTrack$accountArgs<ExtArgs>
-  }
-
-  export type $IdentityTrackPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "IdentityTrack"
-    objects: {
-      account: Prisma.$AccountPayload<ExtArgs> | null
-      identities: Prisma.$IdentityPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      accountId: string | null
-    }, ExtArgs["result"]["identityTrack"]>
-    composites: {}
-  }
-
-  type IdentityTrackGetPayload<S extends boolean | null | undefined | IdentityTrackDefaultArgs> = $Result.GetResult<Prisma.$IdentityTrackPayload, S>
-
-  type IdentityTrackCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<IdentityTrackFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: IdentityTrackCountAggregateInputType | true
-    }
-
-  export interface IdentityTrackDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['IdentityTrack'], meta: { name: 'IdentityTrack' } }
-    /**
-     * Find zero or one IdentityTrack that matches the filter.
-     * @param {IdentityTrackFindUniqueArgs} args - Arguments to find a IdentityTrack
-     * @example
-     * // Get one IdentityTrack
-     * const identityTrack = await prisma.identityTrack.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends IdentityTrackFindUniqueArgs>(args: SelectSubset<T, IdentityTrackFindUniqueArgs<ExtArgs>>): Prisma__IdentityTrackClient<$Result.GetResult<Prisma.$IdentityTrackPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one IdentityTrack that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {IdentityTrackFindUniqueOrThrowArgs} args - Arguments to find a IdentityTrack
-     * @example
-     * // Get one IdentityTrack
-     * const identityTrack = await prisma.identityTrack.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends IdentityTrackFindUniqueOrThrowArgs>(args: SelectSubset<T, IdentityTrackFindUniqueOrThrowArgs<ExtArgs>>): Prisma__IdentityTrackClient<$Result.GetResult<Prisma.$IdentityTrackPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first IdentityTrack that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {IdentityTrackFindFirstArgs} args - Arguments to find a IdentityTrack
-     * @example
-     * // Get one IdentityTrack
-     * const identityTrack = await prisma.identityTrack.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends IdentityTrackFindFirstArgs>(args?: SelectSubset<T, IdentityTrackFindFirstArgs<ExtArgs>>): Prisma__IdentityTrackClient<$Result.GetResult<Prisma.$IdentityTrackPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first IdentityTrack that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {IdentityTrackFindFirstOrThrowArgs} args - Arguments to find a IdentityTrack
-     * @example
-     * // Get one IdentityTrack
-     * const identityTrack = await prisma.identityTrack.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends IdentityTrackFindFirstOrThrowArgs>(args?: SelectSubset<T, IdentityTrackFindFirstOrThrowArgs<ExtArgs>>): Prisma__IdentityTrackClient<$Result.GetResult<Prisma.$IdentityTrackPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more IdentityTracks that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {IdentityTrackFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all IdentityTracks
-     * const identityTracks = await prisma.identityTrack.findMany()
-     * 
-     * // Get first 10 IdentityTracks
-     * const identityTracks = await prisma.identityTrack.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const identityTrackWithIdOnly = await prisma.identityTrack.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends IdentityTrackFindManyArgs>(args?: SelectSubset<T, IdentityTrackFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityTrackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a IdentityTrack.
-     * @param {IdentityTrackCreateArgs} args - Arguments to create a IdentityTrack.
-     * @example
-     * // Create one IdentityTrack
-     * const IdentityTrack = await prisma.identityTrack.create({
-     *   data: {
-     *     // ... data to create a IdentityTrack
-     *   }
-     * })
-     * 
-     */
-    create<T extends IdentityTrackCreateArgs>(args: SelectSubset<T, IdentityTrackCreateArgs<ExtArgs>>): Prisma__IdentityTrackClient<$Result.GetResult<Prisma.$IdentityTrackPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many IdentityTracks.
-     * @param {IdentityTrackCreateManyArgs} args - Arguments to create many IdentityTracks.
-     * @example
-     * // Create many IdentityTracks
-     * const identityTrack = await prisma.identityTrack.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends IdentityTrackCreateManyArgs>(args?: SelectSubset<T, IdentityTrackCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many IdentityTracks and returns the data saved in the database.
-     * @param {IdentityTrackCreateManyAndReturnArgs} args - Arguments to create many IdentityTracks.
-     * @example
-     * // Create many IdentityTracks
-     * const identityTrack = await prisma.identityTrack.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many IdentityTracks and only return the `id`
-     * const identityTrackWithIdOnly = await prisma.identityTrack.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends IdentityTrackCreateManyAndReturnArgs>(args?: SelectSubset<T, IdentityTrackCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityTrackPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a IdentityTrack.
-     * @param {IdentityTrackDeleteArgs} args - Arguments to delete one IdentityTrack.
-     * @example
-     * // Delete one IdentityTrack
-     * const IdentityTrack = await prisma.identityTrack.delete({
-     *   where: {
-     *     // ... filter to delete one IdentityTrack
-     *   }
-     * })
-     * 
-     */
-    delete<T extends IdentityTrackDeleteArgs>(args: SelectSubset<T, IdentityTrackDeleteArgs<ExtArgs>>): Prisma__IdentityTrackClient<$Result.GetResult<Prisma.$IdentityTrackPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one IdentityTrack.
-     * @param {IdentityTrackUpdateArgs} args - Arguments to update one IdentityTrack.
-     * @example
-     * // Update one IdentityTrack
-     * const identityTrack = await prisma.identityTrack.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends IdentityTrackUpdateArgs>(args: SelectSubset<T, IdentityTrackUpdateArgs<ExtArgs>>): Prisma__IdentityTrackClient<$Result.GetResult<Prisma.$IdentityTrackPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more IdentityTracks.
-     * @param {IdentityTrackDeleteManyArgs} args - Arguments to filter IdentityTracks to delete.
-     * @example
-     * // Delete a few IdentityTracks
-     * const { count } = await prisma.identityTrack.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends IdentityTrackDeleteManyArgs>(args?: SelectSubset<T, IdentityTrackDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more IdentityTracks.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {IdentityTrackUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many IdentityTracks
-     * const identityTrack = await prisma.identityTrack.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends IdentityTrackUpdateManyArgs>(args: SelectSubset<T, IdentityTrackUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more IdentityTracks and returns the data updated in the database.
-     * @param {IdentityTrackUpdateManyAndReturnArgs} args - Arguments to update many IdentityTracks.
-     * @example
-     * // Update many IdentityTracks
-     * const identityTrack = await prisma.identityTrack.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more IdentityTracks and only return the `id`
-     * const identityTrackWithIdOnly = await prisma.identityTrack.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends IdentityTrackUpdateManyAndReturnArgs>(args: SelectSubset<T, IdentityTrackUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityTrackPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one IdentityTrack.
-     * @param {IdentityTrackUpsertArgs} args - Arguments to update or create a IdentityTrack.
-     * @example
-     * // Update or create a IdentityTrack
-     * const identityTrack = await prisma.identityTrack.upsert({
-     *   create: {
-     *     // ... data to create a IdentityTrack
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the IdentityTrack we want to update
-     *   }
-     * })
-     */
-    upsert<T extends IdentityTrackUpsertArgs>(args: SelectSubset<T, IdentityTrackUpsertArgs<ExtArgs>>): Prisma__IdentityTrackClient<$Result.GetResult<Prisma.$IdentityTrackPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of IdentityTracks.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {IdentityTrackCountArgs} args - Arguments to filter IdentityTracks to count.
-     * @example
-     * // Count the number of IdentityTracks
-     * const count = await prisma.identityTrack.count({
-     *   where: {
-     *     // ... the filter for the IdentityTracks we want to count
-     *   }
-     * })
-    **/
-    count<T extends IdentityTrackCountArgs>(
-      args?: Subset<T, IdentityTrackCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], IdentityTrackCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a IdentityTrack.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {IdentityTrackAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends IdentityTrackAggregateArgs>(args: Subset<T, IdentityTrackAggregateArgs>): Prisma.PrismaPromise<GetIdentityTrackAggregateType<T>>
-
-    /**
-     * Group by IdentityTrack.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {IdentityTrackGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends IdentityTrackGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: IdentityTrackGroupByArgs['orderBy'] }
-        : { orderBy?: IdentityTrackGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, IdentityTrackGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIdentityTrackGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the IdentityTrack model
-   */
-  readonly fields: IdentityTrackFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for IdentityTrack.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__IdentityTrackClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    account<T extends IdentityTrack$accountArgs<ExtArgs> = {}>(args?: Subset<T, IdentityTrack$accountArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    identities<T extends IdentityTrack$identitiesArgs<ExtArgs> = {}>(args?: Subset<T, IdentityTrack$identitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdentityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the IdentityTrack model
-   */
-  interface IdentityTrackFieldRefs {
-    readonly id: FieldRef<"IdentityTrack", 'String'>
-    readonly accountId: FieldRef<"IdentityTrack", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * IdentityTrack findUnique
-   */
-  export type IdentityTrackFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the IdentityTrack
-     */
-    select?: IdentityTrackSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the IdentityTrack
-     */
-    omit?: IdentityTrackOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: IdentityTrackInclude<ExtArgs> | null
-    /**
-     * Filter, which IdentityTrack to fetch.
-     */
-    where: IdentityTrackWhereUniqueInput
-  }
-
-  /**
-   * IdentityTrack findUniqueOrThrow
-   */
-  export type IdentityTrackFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the IdentityTrack
-     */
-    select?: IdentityTrackSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the IdentityTrack
-     */
-    omit?: IdentityTrackOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: IdentityTrackInclude<ExtArgs> | null
-    /**
-     * Filter, which IdentityTrack to fetch.
-     */
-    where: IdentityTrackWhereUniqueInput
-  }
-
-  /**
-   * IdentityTrack findFirst
-   */
-  export type IdentityTrackFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the IdentityTrack
-     */
-    select?: IdentityTrackSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the IdentityTrack
-     */
-    omit?: IdentityTrackOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: IdentityTrackInclude<ExtArgs> | null
-    /**
-     * Filter, which IdentityTrack to fetch.
-     */
-    where?: IdentityTrackWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of IdentityTracks to fetch.
-     */
-    orderBy?: IdentityTrackOrderByWithRelationInput | IdentityTrackOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for IdentityTracks.
-     */
-    cursor?: IdentityTrackWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` IdentityTracks from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` IdentityTracks.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of IdentityTracks.
-     */
-    distinct?: IdentityTrackScalarFieldEnum | IdentityTrackScalarFieldEnum[]
-  }
-
-  /**
-   * IdentityTrack findFirstOrThrow
-   */
-  export type IdentityTrackFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the IdentityTrack
-     */
-    select?: IdentityTrackSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the IdentityTrack
-     */
-    omit?: IdentityTrackOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: IdentityTrackInclude<ExtArgs> | null
-    /**
-     * Filter, which IdentityTrack to fetch.
-     */
-    where?: IdentityTrackWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of IdentityTracks to fetch.
-     */
-    orderBy?: IdentityTrackOrderByWithRelationInput | IdentityTrackOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for IdentityTracks.
-     */
-    cursor?: IdentityTrackWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` IdentityTracks from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` IdentityTracks.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of IdentityTracks.
-     */
-    distinct?: IdentityTrackScalarFieldEnum | IdentityTrackScalarFieldEnum[]
-  }
-
-  /**
-   * IdentityTrack findMany
-   */
-  export type IdentityTrackFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the IdentityTrack
-     */
-    select?: IdentityTrackSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the IdentityTrack
-     */
-    omit?: IdentityTrackOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: IdentityTrackInclude<ExtArgs> | null
-    /**
-     * Filter, which IdentityTracks to fetch.
-     */
-    where?: IdentityTrackWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of IdentityTracks to fetch.
-     */
-    orderBy?: IdentityTrackOrderByWithRelationInput | IdentityTrackOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing IdentityTracks.
-     */
-    cursor?: IdentityTrackWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` IdentityTracks from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` IdentityTracks.
-     */
-    skip?: number
-    distinct?: IdentityTrackScalarFieldEnum | IdentityTrackScalarFieldEnum[]
-  }
-
-  /**
-   * IdentityTrack create
-   */
-  export type IdentityTrackCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the IdentityTrack
-     */
-    select?: IdentityTrackSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the IdentityTrack
-     */
-    omit?: IdentityTrackOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: IdentityTrackInclude<ExtArgs> | null
-    /**
-     * The data needed to create a IdentityTrack.
-     */
-    data?: XOR<IdentityTrackCreateInput, IdentityTrackUncheckedCreateInput>
-  }
-
-  /**
-   * IdentityTrack createMany
-   */
-  export type IdentityTrackCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many IdentityTracks.
-     */
-    data: IdentityTrackCreateManyInput | IdentityTrackCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * IdentityTrack createManyAndReturn
-   */
-  export type IdentityTrackCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the IdentityTrack
-     */
-    select?: IdentityTrackSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the IdentityTrack
-     */
-    omit?: IdentityTrackOmit<ExtArgs> | null
-    /**
-     * The data used to create many IdentityTracks.
-     */
-    data: IdentityTrackCreateManyInput | IdentityTrackCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: IdentityTrackIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * IdentityTrack update
-   */
-  export type IdentityTrackUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the IdentityTrack
-     */
-    select?: IdentityTrackSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the IdentityTrack
-     */
-    omit?: IdentityTrackOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: IdentityTrackInclude<ExtArgs> | null
-    /**
-     * The data needed to update a IdentityTrack.
-     */
-    data: XOR<IdentityTrackUpdateInput, IdentityTrackUncheckedUpdateInput>
-    /**
-     * Choose, which IdentityTrack to update.
-     */
-    where: IdentityTrackWhereUniqueInput
-  }
-
-  /**
-   * IdentityTrack updateMany
-   */
-  export type IdentityTrackUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update IdentityTracks.
-     */
-    data: XOR<IdentityTrackUpdateManyMutationInput, IdentityTrackUncheckedUpdateManyInput>
-    /**
-     * Filter which IdentityTracks to update
-     */
-    where?: IdentityTrackWhereInput
-    /**
-     * Limit how many IdentityTracks to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * IdentityTrack updateManyAndReturn
-   */
-  export type IdentityTrackUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the IdentityTrack
-     */
-    select?: IdentityTrackSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the IdentityTrack
-     */
-    omit?: IdentityTrackOmit<ExtArgs> | null
-    /**
-     * The data used to update IdentityTracks.
-     */
-    data: XOR<IdentityTrackUpdateManyMutationInput, IdentityTrackUncheckedUpdateManyInput>
-    /**
-     * Filter which IdentityTracks to update
-     */
-    where?: IdentityTrackWhereInput
-    /**
-     * Limit how many IdentityTracks to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: IdentityTrackIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * IdentityTrack upsert
-   */
-  export type IdentityTrackUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the IdentityTrack
-     */
-    select?: IdentityTrackSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the IdentityTrack
-     */
-    omit?: IdentityTrackOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: IdentityTrackInclude<ExtArgs> | null
-    /**
-     * The filter to search for the IdentityTrack to update in case it exists.
-     */
-    where: IdentityTrackWhereUniqueInput
-    /**
-     * In case the IdentityTrack found by the `where` argument doesn't exist, create a new IdentityTrack with this data.
-     */
-    create: XOR<IdentityTrackCreateInput, IdentityTrackUncheckedCreateInput>
-    /**
-     * In case the IdentityTrack was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<IdentityTrackUpdateInput, IdentityTrackUncheckedUpdateInput>
-  }
-
-  /**
-   * IdentityTrack delete
-   */
-  export type IdentityTrackDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the IdentityTrack
-     */
-    select?: IdentityTrackSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the IdentityTrack
-     */
-    omit?: IdentityTrackOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: IdentityTrackInclude<ExtArgs> | null
-    /**
-     * Filter which IdentityTrack to delete.
-     */
-    where: IdentityTrackWhereUniqueInput
-  }
-
-  /**
-   * IdentityTrack deleteMany
-   */
-  export type IdentityTrackDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which IdentityTracks to delete
-     */
-    where?: IdentityTrackWhereInput
-    /**
-     * Limit how many IdentityTracks to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * IdentityTrack.account
-   */
-  export type IdentityTrack$accountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Account
-     */
-    select?: AccountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Account
-     */
-    omit?: AccountOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountInclude<ExtArgs> | null
-    where?: AccountWhereInput
-  }
-
-  /**
-   * IdentityTrack.identities
-   */
-  export type IdentityTrack$identitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Identity
-     */
-    select?: IdentitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Identity
-     */
-    omit?: IdentityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: IdentityInclude<ExtArgs> | null
-    where?: IdentityWhereInput
-    orderBy?: IdentityOrderByWithRelationInput | IdentityOrderByWithRelationInput[]
-    cursor?: IdentityWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: IdentityScalarFieldEnum | IdentityScalarFieldEnum[]
-  }
-
-  /**
-   * IdentityTrack without action
-   */
-  export type IdentityTrackDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the IdentityTrack
-     */
-    select?: IdentityTrackSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the IdentityTrack
-     */
-    omit?: IdentityTrackOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: IdentityTrackInclude<ExtArgs> | null
-  }
-
-
-  /**
    * Model Identity
    */
 
@@ -38755,7 +37617,6 @@ export namespace Prisma {
     refreshesOn?: boolean
     validTill?: boolean
     details?: boolean
-    track?: boolean | IdentityTrackDefaultArgs<ExtArgs>
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["identity"]>
 
@@ -38767,7 +37628,6 @@ export namespace Prisma {
     refreshesOn?: boolean
     validTill?: boolean
     details?: boolean
-    track?: boolean | IdentityTrackDefaultArgs<ExtArgs>
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["identity"]>
 
@@ -38779,7 +37639,6 @@ export namespace Prisma {
     refreshesOn?: boolean
     validTill?: boolean
     details?: boolean
-    track?: boolean | IdentityTrackDefaultArgs<ExtArgs>
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["identity"]>
 
@@ -38795,22 +37654,18 @@ export namespace Prisma {
 
   export type IdentityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "trackId" | "appId" | "originatedOn" | "refreshesOn" | "validTill" | "details", ExtArgs["result"]["identity"]>
   export type IdentityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    track?: boolean | IdentityTrackDefaultArgs<ExtArgs>
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
   }
   export type IdentityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    track?: boolean | IdentityTrackDefaultArgs<ExtArgs>
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
   }
   export type IdentityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    track?: boolean | IdentityTrackDefaultArgs<ExtArgs>
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
   }
 
   export type $IdentityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Identity"
     objects: {
-      track: Prisma.$IdentityTrackPayload<ExtArgs>
       application: Prisma.$ApplicationPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -39215,7 +38070,6 @@ export namespace Prisma {
    */
   export interface Prisma__IdentityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    track<T extends IdentityTrackDefaultArgs<ExtArgs> = {}>(args?: Subset<T, IdentityTrackDefaultArgs<ExtArgs>>): Prisma__IdentityTrackClient<$Result.GetResult<Prisma.$IdentityTrackPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     application<T extends ApplicationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationDefaultArgs<ExtArgs>>): Prisma__ApplicationClient<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -39689,7 +38543,8 @@ export namespace Prisma {
     status: 'status',
     isVerified: 'isVerified',
     details: 'details',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    linkedAccountId: 'linkedAccountId'
   };
 
   export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
@@ -40052,14 +38907,6 @@ export namespace Prisma {
   export type PermitScalarFieldEnum = (typeof PermitScalarFieldEnum)[keyof typeof PermitScalarFieldEnum]
 
 
-  export const IdentityTrackScalarFieldEnum: {
-    id: 'id',
-    accountId: 'accountId'
-  };
-
-  export type IdentityTrackScalarFieldEnum = (typeof IdentityTrackScalarFieldEnum)[keyof typeof IdentityTrackScalarFieldEnum]
-
-
   export const IdentityScalarFieldEnum: {
     id: 'id',
     trackId: 'trackId',
@@ -40204,6 +39051,7 @@ export namespace Prisma {
     isVerified?: BoolFilter<"Account"> | boolean
     details?: JsonNullableFilter<"Account">
     createdAt?: DateTimeFilter<"Account"> | Date | string
+    linkedAccountId?: StringNullableFilter<"Account"> | string | null
     brandProfile?: XOR<AccountTypeBrandNullableScalarRelationFilter, AccountTypeBrandWhereInput> | null
     individualProfile?: XOR<AccountTypeIndividualNullableScalarRelationFilter, AccountTypeIndividualWhereInput> | null
     appConnections?: ApplicationConnectionListRelationFilter
@@ -40222,11 +39070,12 @@ export namespace Prisma {
     permitTargets?: PermitListRelationFilter
     parentOwnerships?: AccountOwnershipListRelationFilter
     childOwnerships?: AccountOwnershipListRelationFilter
+    linkedAccount?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
+    linkedFrom?: AccountListRelationFilter
     receivedRequests?: RequestListRelationFilter
     sentRequests?: RequestListRelationFilter
     errorLogs?: SystemErrorListRelationFilter
     verifications?: VerificationListRelationFilter
-    identityTracks?: IdentityTrackListRelationFilter
   }
 
   export type AccountOrderByWithRelationInput = {
@@ -40238,6 +39087,7 @@ export namespace Prisma {
     isVerified?: SortOrder
     details?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    linkedAccountId?: SortOrderInput | SortOrder
     brandProfile?: AccountTypeBrandOrderByWithRelationInput
     individualProfile?: AccountTypeIndividualOrderByWithRelationInput
     appConnections?: ApplicationConnectionOrderByRelationAggregateInput
@@ -40256,11 +39106,12 @@ export namespace Prisma {
     permitTargets?: PermitOrderByRelationAggregateInput
     parentOwnerships?: AccountOwnershipOrderByRelationAggregateInput
     childOwnerships?: AccountOwnershipOrderByRelationAggregateInput
+    linkedAccount?: AccountOrderByWithRelationInput
+    linkedFrom?: AccountOrderByRelationAggregateInput
     receivedRequests?: RequestOrderByRelationAggregateInput
     sentRequests?: RequestOrderByRelationAggregateInput
     errorLogs?: SystemErrorOrderByRelationAggregateInput
     verifications?: VerificationOrderByRelationAggregateInput
-    identityTracks?: IdentityTrackOrderByRelationAggregateInput
   }
 
   export type AccountWhereUniqueInput = Prisma.AtLeast<{
@@ -40275,6 +39126,7 @@ export namespace Prisma {
     isVerified?: BoolFilter<"Account"> | boolean
     details?: JsonNullableFilter<"Account">
     createdAt?: DateTimeFilter<"Account"> | Date | string
+    linkedAccountId?: StringNullableFilter<"Account"> | string | null
     brandProfile?: XOR<AccountTypeBrandNullableScalarRelationFilter, AccountTypeBrandWhereInput> | null
     individualProfile?: XOR<AccountTypeIndividualNullableScalarRelationFilter, AccountTypeIndividualWhereInput> | null
     appConnections?: ApplicationConnectionListRelationFilter
@@ -40293,11 +39145,12 @@ export namespace Prisma {
     permitTargets?: PermitListRelationFilter
     parentOwnerships?: AccountOwnershipListRelationFilter
     childOwnerships?: AccountOwnershipListRelationFilter
+    linkedAccount?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
+    linkedFrom?: AccountListRelationFilter
     receivedRequests?: RequestListRelationFilter
     sentRequests?: RequestListRelationFilter
     errorLogs?: SystemErrorListRelationFilter
     verifications?: VerificationListRelationFilter
-    identityTracks?: IdentityTrackListRelationFilter
   }, "id">
 
   export type AccountOrderByWithAggregationInput = {
@@ -40309,6 +39162,7 @@ export namespace Prisma {
     isVerified?: SortOrder
     details?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    linkedAccountId?: SortOrderInput | SortOrder
     _count?: AccountCountOrderByAggregateInput
     _max?: AccountMaxOrderByAggregateInput
     _min?: AccountMinOrderByAggregateInput
@@ -40326,6 +39180,7 @@ export namespace Prisma {
     isVerified?: BoolWithAggregatesFilter<"Account"> | boolean
     details?: JsonNullableWithAggregatesFilter<"Account">
     createdAt?: DateTimeWithAggregatesFilter<"Account"> | Date | string
+    linkedAccountId?: StringNullableWithAggregatesFilter<"Account"> | string | null
   }
 
   export type AccountTypeIndividualWhereInput = {
@@ -42195,49 +41050,6 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Permit"> | Date | string
   }
 
-  export type IdentityTrackWhereInput = {
-    AND?: IdentityTrackWhereInput | IdentityTrackWhereInput[]
-    OR?: IdentityTrackWhereInput[]
-    NOT?: IdentityTrackWhereInput | IdentityTrackWhereInput[]
-    id?: StringFilter<"IdentityTrack"> | string
-    accountId?: StringNullableFilter<"IdentityTrack"> | string | null
-    account?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
-    identities?: IdentityListRelationFilter
-  }
-
-  export type IdentityTrackOrderByWithRelationInput = {
-    id?: SortOrder
-    accountId?: SortOrderInput | SortOrder
-    account?: AccountOrderByWithRelationInput
-    identities?: IdentityOrderByRelationAggregateInput
-  }
-
-  export type IdentityTrackWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: IdentityTrackWhereInput | IdentityTrackWhereInput[]
-    OR?: IdentityTrackWhereInput[]
-    NOT?: IdentityTrackWhereInput | IdentityTrackWhereInput[]
-    accountId?: StringNullableFilter<"IdentityTrack"> | string | null
-    account?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
-    identities?: IdentityListRelationFilter
-  }, "id">
-
-  export type IdentityTrackOrderByWithAggregationInput = {
-    id?: SortOrder
-    accountId?: SortOrderInput | SortOrder
-    _count?: IdentityTrackCountOrderByAggregateInput
-    _max?: IdentityTrackMaxOrderByAggregateInput
-    _min?: IdentityTrackMinOrderByAggregateInput
-  }
-
-  export type IdentityTrackScalarWhereWithAggregatesInput = {
-    AND?: IdentityTrackScalarWhereWithAggregatesInput | IdentityTrackScalarWhereWithAggregatesInput[]
-    OR?: IdentityTrackScalarWhereWithAggregatesInput[]
-    NOT?: IdentityTrackScalarWhereWithAggregatesInput | IdentityTrackScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"IdentityTrack"> | string
-    accountId?: StringNullableWithAggregatesFilter<"IdentityTrack"> | string | null
-  }
-
   export type IdentityWhereInput = {
     AND?: IdentityWhereInput | IdentityWhereInput[]
     OR?: IdentityWhereInput[]
@@ -42249,7 +41061,6 @@ export namespace Prisma {
     refreshesOn?: DateTimeFilter<"Identity"> | Date | string
     validTill?: DateTimeFilter<"Identity"> | Date | string
     details?: JsonFilter<"Identity">
-    track?: XOR<IdentityTrackScalarRelationFilter, IdentityTrackWhereInput>
     application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
   }
 
@@ -42261,7 +41072,6 @@ export namespace Prisma {
     refreshesOn?: SortOrder
     validTill?: SortOrder
     details?: SortOrder
-    track?: IdentityTrackOrderByWithRelationInput
     application?: ApplicationOrderByWithRelationInput
   }
 
@@ -42277,7 +41087,6 @@ export namespace Prisma {
     refreshesOn?: DateTimeFilter<"Identity"> | Date | string
     validTill?: DateTimeFilter<"Identity"> | Date | string
     details?: JsonFilter<"Identity">
-    track?: XOR<IdentityTrackScalarRelationFilter, IdentityTrackWhereInput>
     application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
   }, "id" | "trackId_appId">
 
@@ -42334,11 +41143,12 @@ export namespace Prisma {
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateInput = {
@@ -42350,6 +41160,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -42368,11 +41179,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUpdateInput = {
@@ -42402,11 +41213,12 @@ export namespace Prisma {
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateInput = {
@@ -42418,6 +41230,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -42436,11 +41249,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateManyInput = {
@@ -42452,6 +41265,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
   }
 
   export type AccountUpdateManyMutationInput = {
@@ -42474,6 +41288,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AccountTypeIndividualCreateInput = {
@@ -44396,51 +43211,13 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type IdentityTrackCreateInput = {
-    id?: string
-    account?: AccountCreateNestedOneWithoutIdentityTracksInput
-    identities?: IdentityCreateNestedManyWithoutTrackInput
-  }
-
-  export type IdentityTrackUncheckedCreateInput = {
-    id?: string
-    accountId?: string | null
-    identities?: IdentityUncheckedCreateNestedManyWithoutTrackInput
-  }
-
-  export type IdentityTrackUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    account?: AccountUpdateOneWithoutIdentityTracksNestedInput
-    identities?: IdentityUpdateManyWithoutTrackNestedInput
-  }
-
-  export type IdentityTrackUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: NullableStringFieldUpdateOperationsInput | string | null
-    identities?: IdentityUncheckedUpdateManyWithoutTrackNestedInput
-  }
-
-  export type IdentityTrackCreateManyInput = {
-    id?: string
-    accountId?: string | null
-  }
-
-  export type IdentityTrackUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type IdentityTrackUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
   export type IdentityCreateInput = {
     id?: string
+    trackId: string
     originatedOn?: Date | string
     refreshesOn: Date | string
     validTill: Date | string
     details?: JsonNullValueInput | InputJsonValue
-    track: IdentityTrackCreateNestedOneWithoutIdentitiesInput
     application: ApplicationCreateNestedOneWithoutIdentitiesInput
   }
 
@@ -44456,11 +43233,11 @@ export namespace Prisma {
 
   export type IdentityUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    trackId?: StringFieldUpdateOperationsInput | string
     originatedOn?: DateTimeFieldUpdateOperationsInput | Date | string
     refreshesOn?: DateTimeFieldUpdateOperationsInput | Date | string
     validTill?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: JsonNullValueInput | InputJsonValue
-    track?: IdentityTrackUpdateOneRequiredWithoutIdentitiesNestedInput
     application?: ApplicationUpdateOneRequiredWithoutIdentitiesNestedInput
   }
 
@@ -44486,6 +43263,7 @@ export namespace Prisma {
 
   export type IdentityUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    trackId?: StringFieldUpdateOperationsInput | string
     originatedOn?: DateTimeFieldUpdateOperationsInput | Date | string
     refreshesOn?: DateTimeFieldUpdateOperationsInput | Date | string
     validTill?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -44659,6 +43437,17 @@ export namespace Prisma {
     none?: AccountOwnershipWhereInput
   }
 
+  export type AccountNullableScalarRelationFilter = {
+    is?: AccountWhereInput | null
+    isNot?: AccountWhereInput | null
+  }
+
+  export type AccountListRelationFilter = {
+    every?: AccountWhereInput
+    some?: AccountWhereInput
+    none?: AccountWhereInput
+  }
+
   export type RequestListRelationFilter = {
     every?: RequestWhereInput
     some?: RequestWhereInput
@@ -44669,12 +43458,6 @@ export namespace Prisma {
     every?: SystemErrorWhereInput
     some?: SystemErrorWhereInput
     none?: SystemErrorWhereInput
-  }
-
-  export type IdentityTrackListRelationFilter = {
-    every?: IdentityTrackWhereInput
-    some?: IdentityTrackWhereInput
-    none?: IdentityTrackWhereInput
   }
 
   export type SortOrderInput = {
@@ -44734,15 +43517,15 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type AccountOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type RequestOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type SystemErrorOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type IdentityTrackOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -44755,6 +43538,7 @@ export namespace Prisma {
     isVerified?: SortOrder
     details?: SortOrder
     createdAt?: SortOrder
+    linkedAccountId?: SortOrder
   }
 
   export type AccountMaxOrderByAggregateInput = {
@@ -44765,6 +43549,7 @@ export namespace Prisma {
     status?: SortOrder
     isVerified?: SortOrder
     createdAt?: SortOrder
+    linkedAccountId?: SortOrder
   }
 
   export type AccountMinOrderByAggregateInput = {
@@ -44775,6 +43560,7 @@ export namespace Prisma {
     status?: SortOrder
     isVerified?: SortOrder
     createdAt?: SortOrder
+    linkedAccountId?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -45191,11 +43977,6 @@ export namespace Prisma {
     familyId?: SortOrder
     memberId?: SortOrder
     role?: SortOrder
-  }
-
-  export type AccountNullableScalarRelationFilter = {
-    is?: AccountWhereInput | null
-    isNot?: AccountWhereInput | null
   }
 
   export type VerificationCountOrderByAggregateInput = {
@@ -45862,26 +44643,6 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type IdentityTrackCountOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-  }
-
-  export type IdentityTrackMaxOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-  }
-
-  export type IdentityTrackMinOrderByAggregateInput = {
-    id?: SortOrder
-    accountId?: SortOrder
-  }
-
-  export type IdentityTrackScalarRelationFilter = {
-    is?: IdentityTrackWhereInput
-    isNot?: IdentityTrackWhereInput
-  }
-
   export type IdentityTrackIdAppIdCompoundUniqueInput = {
     trackId: string
     appId: string
@@ -46039,6 +44800,19 @@ export namespace Prisma {
     connect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
   }
 
+  export type AccountCreateNestedOneWithoutLinkedFromInput = {
+    create?: XOR<AccountCreateWithoutLinkedFromInput, AccountUncheckedCreateWithoutLinkedFromInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutLinkedFromInput
+    connect?: AccountWhereUniqueInput
+  }
+
+  export type AccountCreateNestedManyWithoutLinkedAccountInput = {
+    create?: XOR<AccountCreateWithoutLinkedAccountInput, AccountUncheckedCreateWithoutLinkedAccountInput> | AccountCreateWithoutLinkedAccountInput[] | AccountUncheckedCreateWithoutLinkedAccountInput[]
+    connectOrCreate?: AccountCreateOrConnectWithoutLinkedAccountInput | AccountCreateOrConnectWithoutLinkedAccountInput[]
+    createMany?: AccountCreateManyLinkedAccountInputEnvelope
+    connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+  }
+
   export type RequestCreateNestedManyWithoutRecipientInput = {
     create?: XOR<RequestCreateWithoutRecipientInput, RequestUncheckedCreateWithoutRecipientInput> | RequestCreateWithoutRecipientInput[] | RequestUncheckedCreateWithoutRecipientInput[]
     connectOrCreate?: RequestCreateOrConnectWithoutRecipientInput | RequestCreateOrConnectWithoutRecipientInput[]
@@ -46065,13 +44839,6 @@ export namespace Prisma {
     connectOrCreate?: VerificationCreateOrConnectWithoutAccountInput | VerificationCreateOrConnectWithoutAccountInput[]
     createMany?: VerificationCreateManyAccountInputEnvelope
     connect?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
-  }
-
-  export type IdentityTrackCreateNestedManyWithoutAccountInput = {
-    create?: XOR<IdentityTrackCreateWithoutAccountInput, IdentityTrackUncheckedCreateWithoutAccountInput> | IdentityTrackCreateWithoutAccountInput[] | IdentityTrackUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: IdentityTrackCreateOrConnectWithoutAccountInput | IdentityTrackCreateOrConnectWithoutAccountInput[]
-    createMany?: IdentityTrackCreateManyAccountInputEnvelope
-    connect?: IdentityTrackWhereUniqueInput | IdentityTrackWhereUniqueInput[]
   }
 
   export type AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput = {
@@ -46198,6 +44965,13 @@ export namespace Prisma {
     connect?: AccountOwnershipWhereUniqueInput | AccountOwnershipWhereUniqueInput[]
   }
 
+  export type AccountUncheckedCreateNestedManyWithoutLinkedAccountInput = {
+    create?: XOR<AccountCreateWithoutLinkedAccountInput, AccountUncheckedCreateWithoutLinkedAccountInput> | AccountCreateWithoutLinkedAccountInput[] | AccountUncheckedCreateWithoutLinkedAccountInput[]
+    connectOrCreate?: AccountCreateOrConnectWithoutLinkedAccountInput | AccountCreateOrConnectWithoutLinkedAccountInput[]
+    createMany?: AccountCreateManyLinkedAccountInputEnvelope
+    connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+  }
+
   export type RequestUncheckedCreateNestedManyWithoutRecipientInput = {
     create?: XOR<RequestCreateWithoutRecipientInput, RequestUncheckedCreateWithoutRecipientInput> | RequestCreateWithoutRecipientInput[] | RequestUncheckedCreateWithoutRecipientInput[]
     connectOrCreate?: RequestCreateOrConnectWithoutRecipientInput | RequestCreateOrConnectWithoutRecipientInput[]
@@ -46224,13 +44998,6 @@ export namespace Prisma {
     connectOrCreate?: VerificationCreateOrConnectWithoutAccountInput | VerificationCreateOrConnectWithoutAccountInput[]
     createMany?: VerificationCreateManyAccountInputEnvelope
     connect?: VerificationWhereUniqueInput | VerificationWhereUniqueInput[]
-  }
-
-  export type IdentityTrackUncheckedCreateNestedManyWithoutAccountInput = {
-    create?: XOR<IdentityTrackCreateWithoutAccountInput, IdentityTrackUncheckedCreateWithoutAccountInput> | IdentityTrackCreateWithoutAccountInput[] | IdentityTrackUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: IdentityTrackCreateOrConnectWithoutAccountInput | IdentityTrackCreateOrConnectWithoutAccountInput[]
-    createMany?: IdentityTrackCreateManyAccountInputEnvelope
-    connect?: IdentityTrackWhereUniqueInput | IdentityTrackWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -46493,6 +45260,30 @@ export namespace Prisma {
     deleteMany?: AccountOwnershipScalarWhereInput | AccountOwnershipScalarWhereInput[]
   }
 
+  export type AccountUpdateOneWithoutLinkedFromNestedInput = {
+    create?: XOR<AccountCreateWithoutLinkedFromInput, AccountUncheckedCreateWithoutLinkedFromInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutLinkedFromInput
+    upsert?: AccountUpsertWithoutLinkedFromInput
+    disconnect?: AccountWhereInput | boolean
+    delete?: AccountWhereInput | boolean
+    connect?: AccountWhereUniqueInput
+    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutLinkedFromInput, AccountUpdateWithoutLinkedFromInput>, AccountUncheckedUpdateWithoutLinkedFromInput>
+  }
+
+  export type AccountUpdateManyWithoutLinkedAccountNestedInput = {
+    create?: XOR<AccountCreateWithoutLinkedAccountInput, AccountUncheckedCreateWithoutLinkedAccountInput> | AccountCreateWithoutLinkedAccountInput[] | AccountUncheckedCreateWithoutLinkedAccountInput[]
+    connectOrCreate?: AccountCreateOrConnectWithoutLinkedAccountInput | AccountCreateOrConnectWithoutLinkedAccountInput[]
+    upsert?: AccountUpsertWithWhereUniqueWithoutLinkedAccountInput | AccountUpsertWithWhereUniqueWithoutLinkedAccountInput[]
+    createMany?: AccountCreateManyLinkedAccountInputEnvelope
+    set?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+    disconnect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+    delete?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+    connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+    update?: AccountUpdateWithWhereUniqueWithoutLinkedAccountInput | AccountUpdateWithWhereUniqueWithoutLinkedAccountInput[]
+    updateMany?: AccountUpdateManyWithWhereWithoutLinkedAccountInput | AccountUpdateManyWithWhereWithoutLinkedAccountInput[]
+    deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[]
+  }
+
   export type RequestUpdateManyWithoutRecipientNestedInput = {
     create?: XOR<RequestCreateWithoutRecipientInput, RequestUncheckedCreateWithoutRecipientInput> | RequestCreateWithoutRecipientInput[] | RequestUncheckedCreateWithoutRecipientInput[]
     connectOrCreate?: RequestCreateOrConnectWithoutRecipientInput | RequestCreateOrConnectWithoutRecipientInput[]
@@ -46547,20 +45338,6 @@ export namespace Prisma {
     update?: VerificationUpdateWithWhereUniqueWithoutAccountInput | VerificationUpdateWithWhereUniqueWithoutAccountInput[]
     updateMany?: VerificationUpdateManyWithWhereWithoutAccountInput | VerificationUpdateManyWithWhereWithoutAccountInput[]
     deleteMany?: VerificationScalarWhereInput | VerificationScalarWhereInput[]
-  }
-
-  export type IdentityTrackUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<IdentityTrackCreateWithoutAccountInput, IdentityTrackUncheckedCreateWithoutAccountInput> | IdentityTrackCreateWithoutAccountInput[] | IdentityTrackUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: IdentityTrackCreateOrConnectWithoutAccountInput | IdentityTrackCreateOrConnectWithoutAccountInput[]
-    upsert?: IdentityTrackUpsertWithWhereUniqueWithoutAccountInput | IdentityTrackUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: IdentityTrackCreateManyAccountInputEnvelope
-    set?: IdentityTrackWhereUniqueInput | IdentityTrackWhereUniqueInput[]
-    disconnect?: IdentityTrackWhereUniqueInput | IdentityTrackWhereUniqueInput[]
-    delete?: IdentityTrackWhereUniqueInput | IdentityTrackWhereUniqueInput[]
-    connect?: IdentityTrackWhereUniqueInput | IdentityTrackWhereUniqueInput[]
-    update?: IdentityTrackUpdateWithWhereUniqueWithoutAccountInput | IdentityTrackUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: IdentityTrackUpdateManyWithWhereWithoutAccountInput | IdentityTrackUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: IdentityTrackScalarWhereInput | IdentityTrackScalarWhereInput[]
   }
 
   export type AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput = {
@@ -46807,6 +45584,20 @@ export namespace Prisma {
     deleteMany?: AccountOwnershipScalarWhereInput | AccountOwnershipScalarWhereInput[]
   }
 
+  export type AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput = {
+    create?: XOR<AccountCreateWithoutLinkedAccountInput, AccountUncheckedCreateWithoutLinkedAccountInput> | AccountCreateWithoutLinkedAccountInput[] | AccountUncheckedCreateWithoutLinkedAccountInput[]
+    connectOrCreate?: AccountCreateOrConnectWithoutLinkedAccountInput | AccountCreateOrConnectWithoutLinkedAccountInput[]
+    upsert?: AccountUpsertWithWhereUniqueWithoutLinkedAccountInput | AccountUpsertWithWhereUniqueWithoutLinkedAccountInput[]
+    createMany?: AccountCreateManyLinkedAccountInputEnvelope
+    set?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+    disconnect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+    delete?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+    connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+    update?: AccountUpdateWithWhereUniqueWithoutLinkedAccountInput | AccountUpdateWithWhereUniqueWithoutLinkedAccountInput[]
+    updateMany?: AccountUpdateManyWithWhereWithoutLinkedAccountInput | AccountUpdateManyWithWhereWithoutLinkedAccountInput[]
+    deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[]
+  }
+
   export type RequestUncheckedUpdateManyWithoutRecipientNestedInput = {
     create?: XOR<RequestCreateWithoutRecipientInput, RequestUncheckedCreateWithoutRecipientInput> | RequestCreateWithoutRecipientInput[] | RequestUncheckedCreateWithoutRecipientInput[]
     connectOrCreate?: RequestCreateOrConnectWithoutRecipientInput | RequestCreateOrConnectWithoutRecipientInput[]
@@ -46861,20 +45652,6 @@ export namespace Prisma {
     update?: VerificationUpdateWithWhereUniqueWithoutAccountInput | VerificationUpdateWithWhereUniqueWithoutAccountInput[]
     updateMany?: VerificationUpdateManyWithWhereWithoutAccountInput | VerificationUpdateManyWithWhereWithoutAccountInput[]
     deleteMany?: VerificationScalarWhereInput | VerificationScalarWhereInput[]
-  }
-
-  export type IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput = {
-    create?: XOR<IdentityTrackCreateWithoutAccountInput, IdentityTrackUncheckedCreateWithoutAccountInput> | IdentityTrackCreateWithoutAccountInput[] | IdentityTrackUncheckedCreateWithoutAccountInput[]
-    connectOrCreate?: IdentityTrackCreateOrConnectWithoutAccountInput | IdentityTrackCreateOrConnectWithoutAccountInput[]
-    upsert?: IdentityTrackUpsertWithWhereUniqueWithoutAccountInput | IdentityTrackUpsertWithWhereUniqueWithoutAccountInput[]
-    createMany?: IdentityTrackCreateManyAccountInputEnvelope
-    set?: IdentityTrackWhereUniqueInput | IdentityTrackWhereUniqueInput[]
-    disconnect?: IdentityTrackWhereUniqueInput | IdentityTrackWhereUniqueInput[]
-    delete?: IdentityTrackWhereUniqueInput | IdentityTrackWhereUniqueInput[]
-    connect?: IdentityTrackWhereUniqueInput | IdentityTrackWhereUniqueInput[]
-    update?: IdentityTrackUpdateWithWhereUniqueWithoutAccountInput | IdentityTrackUpdateWithWhereUniqueWithoutAccountInput[]
-    updateMany?: IdentityTrackUpdateManyWithWhereWithoutAccountInput | IdentityTrackUpdateManyWithWhereWithoutAccountInput[]
-    deleteMany?: IdentityTrackScalarWhereInput | IdentityTrackScalarWhereInput[]
   }
 
   export type AccountCreateNestedOneWithoutIndividualProfileInput = {
@@ -48157,82 +46934,10 @@ export namespace Prisma {
     update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutPermitTargetsInput, AccountUpdateWithoutPermitTargetsInput>, AccountUncheckedUpdateWithoutPermitTargetsInput>
   }
 
-  export type AccountCreateNestedOneWithoutIdentityTracksInput = {
-    create?: XOR<AccountCreateWithoutIdentityTracksInput, AccountUncheckedCreateWithoutIdentityTracksInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutIdentityTracksInput
-    connect?: AccountWhereUniqueInput
-  }
-
-  export type IdentityCreateNestedManyWithoutTrackInput = {
-    create?: XOR<IdentityCreateWithoutTrackInput, IdentityUncheckedCreateWithoutTrackInput> | IdentityCreateWithoutTrackInput[] | IdentityUncheckedCreateWithoutTrackInput[]
-    connectOrCreate?: IdentityCreateOrConnectWithoutTrackInput | IdentityCreateOrConnectWithoutTrackInput[]
-    createMany?: IdentityCreateManyTrackInputEnvelope
-    connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
-  }
-
-  export type IdentityUncheckedCreateNestedManyWithoutTrackInput = {
-    create?: XOR<IdentityCreateWithoutTrackInput, IdentityUncheckedCreateWithoutTrackInput> | IdentityCreateWithoutTrackInput[] | IdentityUncheckedCreateWithoutTrackInput[]
-    connectOrCreate?: IdentityCreateOrConnectWithoutTrackInput | IdentityCreateOrConnectWithoutTrackInput[]
-    createMany?: IdentityCreateManyTrackInputEnvelope
-    connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
-  }
-
-  export type AccountUpdateOneWithoutIdentityTracksNestedInput = {
-    create?: XOR<AccountCreateWithoutIdentityTracksInput, AccountUncheckedCreateWithoutIdentityTracksInput>
-    connectOrCreate?: AccountCreateOrConnectWithoutIdentityTracksInput
-    upsert?: AccountUpsertWithoutIdentityTracksInput
-    disconnect?: AccountWhereInput | boolean
-    delete?: AccountWhereInput | boolean
-    connect?: AccountWhereUniqueInput
-    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutIdentityTracksInput, AccountUpdateWithoutIdentityTracksInput>, AccountUncheckedUpdateWithoutIdentityTracksInput>
-  }
-
-  export type IdentityUpdateManyWithoutTrackNestedInput = {
-    create?: XOR<IdentityCreateWithoutTrackInput, IdentityUncheckedCreateWithoutTrackInput> | IdentityCreateWithoutTrackInput[] | IdentityUncheckedCreateWithoutTrackInput[]
-    connectOrCreate?: IdentityCreateOrConnectWithoutTrackInput | IdentityCreateOrConnectWithoutTrackInput[]
-    upsert?: IdentityUpsertWithWhereUniqueWithoutTrackInput | IdentityUpsertWithWhereUniqueWithoutTrackInput[]
-    createMany?: IdentityCreateManyTrackInputEnvelope
-    set?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
-    disconnect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
-    delete?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
-    connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
-    update?: IdentityUpdateWithWhereUniqueWithoutTrackInput | IdentityUpdateWithWhereUniqueWithoutTrackInput[]
-    updateMany?: IdentityUpdateManyWithWhereWithoutTrackInput | IdentityUpdateManyWithWhereWithoutTrackInput[]
-    deleteMany?: IdentityScalarWhereInput | IdentityScalarWhereInput[]
-  }
-
-  export type IdentityUncheckedUpdateManyWithoutTrackNestedInput = {
-    create?: XOR<IdentityCreateWithoutTrackInput, IdentityUncheckedCreateWithoutTrackInput> | IdentityCreateWithoutTrackInput[] | IdentityUncheckedCreateWithoutTrackInput[]
-    connectOrCreate?: IdentityCreateOrConnectWithoutTrackInput | IdentityCreateOrConnectWithoutTrackInput[]
-    upsert?: IdentityUpsertWithWhereUniqueWithoutTrackInput | IdentityUpsertWithWhereUniqueWithoutTrackInput[]
-    createMany?: IdentityCreateManyTrackInputEnvelope
-    set?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
-    disconnect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
-    delete?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
-    connect?: IdentityWhereUniqueInput | IdentityWhereUniqueInput[]
-    update?: IdentityUpdateWithWhereUniqueWithoutTrackInput | IdentityUpdateWithWhereUniqueWithoutTrackInput[]
-    updateMany?: IdentityUpdateManyWithWhereWithoutTrackInput | IdentityUpdateManyWithWhereWithoutTrackInput[]
-    deleteMany?: IdentityScalarWhereInput | IdentityScalarWhereInput[]
-  }
-
-  export type IdentityTrackCreateNestedOneWithoutIdentitiesInput = {
-    create?: XOR<IdentityTrackCreateWithoutIdentitiesInput, IdentityTrackUncheckedCreateWithoutIdentitiesInput>
-    connectOrCreate?: IdentityTrackCreateOrConnectWithoutIdentitiesInput
-    connect?: IdentityTrackWhereUniqueInput
-  }
-
   export type ApplicationCreateNestedOneWithoutIdentitiesInput = {
     create?: XOR<ApplicationCreateWithoutIdentitiesInput, ApplicationUncheckedCreateWithoutIdentitiesInput>
     connectOrCreate?: ApplicationCreateOrConnectWithoutIdentitiesInput
     connect?: ApplicationWhereUniqueInput
-  }
-
-  export type IdentityTrackUpdateOneRequiredWithoutIdentitiesNestedInput = {
-    create?: XOR<IdentityTrackCreateWithoutIdentitiesInput, IdentityTrackUncheckedCreateWithoutIdentitiesInput>
-    connectOrCreate?: IdentityTrackCreateOrConnectWithoutIdentitiesInput
-    upsert?: IdentityTrackUpsertWithoutIdentitiesInput
-    connect?: IdentityTrackWhereUniqueInput
-    update?: XOR<XOR<IdentityTrackUpdateToOneWithWhereWithoutIdentitiesInput, IdentityTrackUpdateWithoutIdentitiesInput>, IdentityTrackUncheckedUpdateWithoutIdentitiesInput>
   }
 
   export type ApplicationUpdateOneRequiredWithoutIdentitiesNestedInput = {
@@ -48914,6 +47619,157 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type AccountCreateWithoutLinkedFromInput = {
+    id?: string
+    displayName?: string | null
+    accountType?: string
+    displayImage?: string | null
+    status?: string | null
+    isVerified?: boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    authMethods?: AuthnMethodCreateNestedManyWithoutAccountInput
+    sessions?: AuthnSessionCreateNestedManyWithoutAccountInput
+    contacts?: ContactCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    familyMembers?: FamilyMemberCreateNestedManyWithoutMemberInput
+    verificationActions?: VerificationCreateNestedManyWithoutDoneByAccountInput
+    authzOwnedGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutOwnerInput
+    authzTargetGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutTargetInput
+    authzAssetsAccessGrants?: AuthzAssetsAccessGrantCreateNestedManyWithoutAccountInput
+    permits?: PermitCreateNestedManyWithoutAccountInput
+    permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
+  }
+
+  export type AccountUncheckedCreateWithoutLinkedFromInput = {
+    id?: string
+    displayName?: string | null
+    accountType?: string
+    displayImage?: string | null
+    status?: string | null
+    isVerified?: boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    linkedAccountId?: string | null
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    authMethods?: AuthnMethodUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthnSessionUncheckedCreateNestedManyWithoutAccountInput
+    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    familyMembers?: FamilyMemberUncheckedCreateNestedManyWithoutMemberInput
+    verificationActions?: VerificationUncheckedCreateNestedManyWithoutDoneByAccountInput
+    authzOwnedGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutOwnerInput
+    authzTargetGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutTargetInput
+    authzAssetsAccessGrants?: AuthzAssetsAccessGrantUncheckedCreateNestedManyWithoutAccountInput
+    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
+    permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+  }
+
+  export type AccountCreateOrConnectWithoutLinkedFromInput = {
+    where: AccountWhereUniqueInput
+    create: XOR<AccountCreateWithoutLinkedFromInput, AccountUncheckedCreateWithoutLinkedFromInput>
+  }
+
+  export type AccountCreateWithoutLinkedAccountInput = {
+    id?: string
+    displayName?: string | null
+    accountType?: string
+    displayImage?: string | null
+    status?: string | null
+    isVerified?: boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
+    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
+    authMethods?: AuthnMethodCreateNestedManyWithoutAccountInput
+    sessions?: AuthnSessionCreateNestedManyWithoutAccountInput
+    contacts?: ContactCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
+    notifications?: NotificationCreateNestedManyWithoutAccountInput
+    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
+    familyMembers?: FamilyMemberCreateNestedManyWithoutMemberInput
+    verificationActions?: VerificationCreateNestedManyWithoutDoneByAccountInput
+    authzOwnedGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutOwnerInput
+    authzTargetGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutTargetInput
+    authzAssetsAccessGrants?: AuthzAssetsAccessGrantCreateNestedManyWithoutAccountInput
+    permits?: PermitCreateNestedManyWithoutAccountInput
+    permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
+    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
+    childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
+    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
+    verifications?: VerificationCreateNestedManyWithoutAccountInput
+  }
+
+  export type AccountUncheckedCreateWithoutLinkedAccountInput = {
+    id?: string
+    displayName?: string | null
+    accountType?: string
+    displayImage?: string | null
+    status?: string | null
+    isVerified?: boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
+    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
+    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
+    authMethods?: AuthnMethodUncheckedCreateNestedManyWithoutAccountInput
+    sessions?: AuthnSessionUncheckedCreateNestedManyWithoutAccountInput
+    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
+    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
+    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
+    familyMembers?: FamilyMemberUncheckedCreateNestedManyWithoutMemberInput
+    verificationActions?: VerificationUncheckedCreateNestedManyWithoutDoneByAccountInput
+    authzOwnedGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutOwnerInput
+    authzTargetGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutTargetInput
+    authzAssetsAccessGrants?: AuthzAssetsAccessGrantUncheckedCreateNestedManyWithoutAccountInput
+    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
+    permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
+    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
+    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
+    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
+    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
+    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
+    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
+  }
+
+  export type AccountCreateOrConnectWithoutLinkedAccountInput = {
+    where: AccountWhereUniqueInput
+    create: XOR<AccountCreateWithoutLinkedAccountInput, AccountUncheckedCreateWithoutLinkedAccountInput>
+  }
+
+  export type AccountCreateManyLinkedAccountInputEnvelope = {
+    data: AccountCreateManyLinkedAccountInput | AccountCreateManyLinkedAccountInput[]
+    skipDuplicates?: boolean
+  }
+
   export type RequestCreateWithoutRecipientInput = {
     id?: string
     status?: string
@@ -49035,26 +47891,6 @@ export namespace Prisma {
 
   export type VerificationCreateManyAccountInputEnvelope = {
     data: VerificationCreateManyAccountInput | VerificationCreateManyAccountInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type IdentityTrackCreateWithoutAccountInput = {
-    id?: string
-    identities?: IdentityCreateNestedManyWithoutTrackInput
-  }
-
-  export type IdentityTrackUncheckedCreateWithoutAccountInput = {
-    id?: string
-    identities?: IdentityUncheckedCreateNestedManyWithoutTrackInput
-  }
-
-  export type IdentityTrackCreateOrConnectWithoutAccountInput = {
-    where: IdentityTrackWhereUniqueInput
-    create: XOR<IdentityTrackCreateWithoutAccountInput, IdentityTrackUncheckedCreateWithoutAccountInput>
-  }
-
-  export type IdentityTrackCreateManyAccountInputEnvelope = {
-    data: IdentityTrackCreateManyAccountInput | IdentityTrackCreateManyAccountInput[]
     skipDuplicates?: boolean
   }
 
@@ -49533,6 +48369,116 @@ export namespace Prisma {
     data: XOR<AccountOwnershipUpdateManyMutationInput, AccountOwnershipUncheckedUpdateManyWithoutParentInput>
   }
 
+  export type AccountUpsertWithoutLinkedFromInput = {
+    update: XOR<AccountUpdateWithoutLinkedFromInput, AccountUncheckedUpdateWithoutLinkedFromInput>
+    create: XOR<AccountCreateWithoutLinkedFromInput, AccountUncheckedCreateWithoutLinkedFromInput>
+    where?: AccountWhereInput
+  }
+
+  export type AccountUpdateToOneWithWhereWithoutLinkedFromInput = {
+    where?: AccountWhereInput
+    data: XOR<AccountUpdateWithoutLinkedFromInput, AccountUncheckedUpdateWithoutLinkedFromInput>
+  }
+
+  export type AccountUpdateWithoutLinkedFromInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountType?: StringFieldUpdateOperationsInput | string
+    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthnMethodUpdateManyWithoutAccountNestedInput
+    sessions?: AuthnSessionUpdateManyWithoutAccountNestedInput
+    contacts?: ContactUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    familyMembers?: FamilyMemberUpdateManyWithoutMemberNestedInput
+    verificationActions?: VerificationUpdateManyWithoutDoneByAccountNestedInput
+    authzOwnedGrants?: AuthzAccountAccessGrantUpdateManyWithoutOwnerNestedInput
+    authzTargetGrants?: AuthzAccountAccessGrantUpdateManyWithoutTargetNestedInput
+    authzAssetsAccessGrants?: AuthzAssetsAccessGrantUpdateManyWithoutAccountNestedInput
+    permits?: PermitUpdateManyWithoutAccountNestedInput
+    permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
+  }
+
+  export type AccountUncheckedUpdateWithoutLinkedFromInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountType?: StringFieldUpdateOperationsInput | string
+    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthnMethodUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthnSessionUncheckedUpdateManyWithoutAccountNestedInput
+    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    familyMembers?: FamilyMemberUncheckedUpdateManyWithoutMemberNestedInput
+    verificationActions?: VerificationUncheckedUpdateManyWithoutDoneByAccountNestedInput
+    authzOwnedGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutOwnerNestedInput
+    authzTargetGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutTargetNestedInput
+    authzAssetsAccessGrants?: AuthzAssetsAccessGrantUncheckedUpdateManyWithoutAccountNestedInput
+    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
+    permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  }
+
+  export type AccountUpsertWithWhereUniqueWithoutLinkedAccountInput = {
+    where: AccountWhereUniqueInput
+    update: XOR<AccountUpdateWithoutLinkedAccountInput, AccountUncheckedUpdateWithoutLinkedAccountInput>
+    create: XOR<AccountCreateWithoutLinkedAccountInput, AccountUncheckedCreateWithoutLinkedAccountInput>
+  }
+
+  export type AccountUpdateWithWhereUniqueWithoutLinkedAccountInput = {
+    where: AccountWhereUniqueInput
+    data: XOR<AccountUpdateWithoutLinkedAccountInput, AccountUncheckedUpdateWithoutLinkedAccountInput>
+  }
+
+  export type AccountUpdateManyWithWhereWithoutLinkedAccountInput = {
+    where: AccountScalarWhereInput
+    data: XOR<AccountUpdateManyMutationInput, AccountUncheckedUpdateManyWithoutLinkedAccountInput>
+  }
+
+  export type AccountScalarWhereInput = {
+    AND?: AccountScalarWhereInput | AccountScalarWhereInput[]
+    OR?: AccountScalarWhereInput[]
+    NOT?: AccountScalarWhereInput | AccountScalarWhereInput[]
+    id?: StringFilter<"Account"> | string
+    displayName?: StringNullableFilter<"Account"> | string | null
+    accountType?: StringFilter<"Account"> | string
+    displayImage?: StringNullableFilter<"Account"> | string | null
+    status?: StringNullableFilter<"Account"> | string | null
+    isVerified?: BoolFilter<"Account"> | boolean
+    details?: JsonNullableFilter<"Account">
+    createdAt?: DateTimeFilter<"Account"> | Date | string
+    linkedAccountId?: StringNullableFilter<"Account"> | string | null
+  }
+
   export type RequestUpsertWithWhereUniqueWithoutRecipientInput = {
     where: RequestWhereUniqueInput
     update: XOR<RequestUpdateWithoutRecipientInput, RequestUncheckedUpdateWithoutRecipientInput>
@@ -49625,30 +48571,6 @@ export namespace Prisma {
     data: XOR<VerificationUpdateManyMutationInput, VerificationUncheckedUpdateManyWithoutAccountInput>
   }
 
-  export type IdentityTrackUpsertWithWhereUniqueWithoutAccountInput = {
-    where: IdentityTrackWhereUniqueInput
-    update: XOR<IdentityTrackUpdateWithoutAccountInput, IdentityTrackUncheckedUpdateWithoutAccountInput>
-    create: XOR<IdentityTrackCreateWithoutAccountInput, IdentityTrackUncheckedCreateWithoutAccountInput>
-  }
-
-  export type IdentityTrackUpdateWithWhereUniqueWithoutAccountInput = {
-    where: IdentityTrackWhereUniqueInput
-    data: XOR<IdentityTrackUpdateWithoutAccountInput, IdentityTrackUncheckedUpdateWithoutAccountInput>
-  }
-
-  export type IdentityTrackUpdateManyWithWhereWithoutAccountInput = {
-    where: IdentityTrackScalarWhereInput
-    data: XOR<IdentityTrackUpdateManyMutationInput, IdentityTrackUncheckedUpdateManyWithoutAccountInput>
-  }
-
-  export type IdentityTrackScalarWhereInput = {
-    AND?: IdentityTrackScalarWhereInput | IdentityTrackScalarWhereInput[]
-    OR?: IdentityTrackScalarWhereInput[]
-    NOT?: IdentityTrackScalarWhereInput | IdentityTrackScalarWhereInput[]
-    id?: StringFilter<"IdentityTrack"> | string
-    accountId?: StringNullableFilter<"IdentityTrack"> | string | null
-  }
-
   export type AccountCreateWithoutIndividualProfileInput = {
     id?: string
     displayName?: string | null
@@ -49675,11 +48597,12 @@ export namespace Prisma {
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutIndividualProfileInput = {
@@ -49691,6 +48614,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
     authMethods?: AuthnMethodUncheckedCreateNestedManyWithoutAccountInput
@@ -49708,11 +48632,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutIndividualProfileInput = {
@@ -49757,11 +48681,12 @@ export namespace Prisma {
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutIndividualProfileInput = {
@@ -49773,6 +48698,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
     authMethods?: AuthnMethodUncheckedUpdateManyWithoutAccountNestedInput
@@ -49790,11 +48716,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutBrandProfileInput = {
@@ -49823,11 +48749,12 @@ export namespace Prisma {
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutBrandProfileInput = {
@@ -49839,6 +48766,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
     authMethods?: AuthnMethodUncheckedCreateNestedManyWithoutAccountInput
@@ -49856,11 +48784,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutBrandProfileInput = {
@@ -49905,11 +48833,12 @@ export namespace Prisma {
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutBrandProfileInput = {
@@ -49921,6 +48850,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
     authMethods?: AuthnMethodUncheckedUpdateManyWithoutAccountNestedInput
@@ -49938,11 +48868,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutNotificationsInput = {
@@ -49971,11 +48901,12 @@ export namespace Prisma {
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutNotificationsInput = {
@@ -49987,6 +48918,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -50004,11 +48936,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutNotificationsInput = {
@@ -50053,11 +48985,12 @@ export namespace Prisma {
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutNotificationsInput = {
@@ -50069,6 +49002,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -50086,11 +49020,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutReceivedRequestsInput = {
@@ -50120,10 +49054,11 @@ export namespace Prisma {
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutReceivedRequestsInput = {
@@ -50135,6 +49070,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -50153,10 +49089,10 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutReceivedRequestsInput = {
@@ -50191,10 +49127,11 @@ export namespace Prisma {
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutSentRequestsInput = {
@@ -50206,6 +49143,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -50224,10 +49162,10 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutSentRequestsInput = {
@@ -50273,10 +49211,11 @@ export namespace Prisma {
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutReceivedRequestsInput = {
@@ -50288,6 +49227,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -50306,10 +49246,10 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUpsertWithoutSentRequestsInput = {
@@ -50350,10 +49290,11 @@ export namespace Prisma {
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutSentRequestsInput = {
@@ -50365,6 +49306,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -50383,10 +49325,10 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type FamilyMemberCreateWithoutFamilyInput = {
@@ -50470,11 +49412,12 @@ export namespace Prisma {
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutFamilyMembersInput = {
@@ -50486,6 +49429,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -50503,11 +49447,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutFamilyMembersInput = {
@@ -50575,11 +49519,12 @@ export namespace Prisma {
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutFamilyMembersInput = {
@@ -50591,6 +49536,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -50608,11 +49554,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutVerificationsInput = {
@@ -50642,10 +49588,11 @@ export namespace Prisma {
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutVerificationsInput = {
@@ -50657,6 +49604,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -50675,10 +49623,10 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutVerificationsInput = {
@@ -50712,11 +49660,12 @@ export namespace Prisma {
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutVerificationActionsInput = {
@@ -50728,6 +49677,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -50745,11 +49695,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutVerificationActionsInput = {
@@ -50795,10 +49745,11 @@ export namespace Prisma {
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutVerificationsInput = {
@@ -50810,6 +49761,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -50828,10 +49780,10 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUpsertWithoutVerificationActionsInput = {
@@ -50871,11 +49823,12 @@ export namespace Prisma {
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutVerificationActionsInput = {
@@ -50887,6 +49840,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -50904,11 +49858,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutContactsInput = {
@@ -50937,11 +49891,12 @@ export namespace Prisma {
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutContactsInput = {
@@ -50953,6 +49908,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -50970,11 +49926,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutContactsInput = {
@@ -51019,11 +49975,12 @@ export namespace Prisma {
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutContactsInput = {
@@ -51035,6 +49992,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -51052,11 +50010,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutNeupIdsInput = {
@@ -51085,11 +50043,12 @@ export namespace Prisma {
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutNeupIdsInput = {
@@ -51101,6 +50060,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -51118,11 +50078,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutNeupIdsInput = {
@@ -51167,11 +50127,12 @@ export namespace Prisma {
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutNeupIdsInput = {
@@ -51183,6 +50144,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -51200,11 +50162,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutAuthMethodsInput = {
@@ -51233,11 +50195,12 @@ export namespace Prisma {
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutAuthMethodsInput = {
@@ -51249,6 +50212,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -51266,11 +50230,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutAuthMethodsInput = {
@@ -51315,11 +50279,12 @@ export namespace Prisma {
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutAuthMethodsInput = {
@@ -51331,6 +50296,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -51348,11 +50314,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutSessionsInput = {
@@ -51381,11 +50347,12 @@ export namespace Prisma {
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutSessionsInput = {
@@ -51397,6 +50364,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -51414,11 +50382,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutSessionsInput = {
@@ -51463,11 +50431,12 @@ export namespace Prisma {
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutSessionsInput = {
@@ -51479,6 +50448,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -51496,11 +50466,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutErrorLogsInput = {
@@ -51530,10 +50500,11 @@ export namespace Prisma {
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutErrorLogsInput = {
@@ -51545,6 +50516,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -51563,10 +50535,10 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutErrorLogsInput = {
@@ -51612,10 +50584,11 @@ export namespace Prisma {
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutErrorLogsInput = {
@@ -51627,6 +50600,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -51645,10 +50619,10 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type ApplicationConnectionCreateWithoutApplicationInput = {
@@ -51807,11 +50781,11 @@ export namespace Prisma {
 
   export type IdentityCreateWithoutApplicationInput = {
     id?: string
+    trackId: string
     originatedOn?: Date | string
     refreshesOn: Date | string
     validTill: Date | string
     details?: JsonNullValueInput | InputJsonValue
-    track: IdentityTrackCreateNestedOneWithoutIdentitiesInput
   }
 
   export type IdentityUncheckedCreateWithoutApplicationInput = {
@@ -52306,11 +51280,12 @@ export namespace Prisma {
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutPortfolioMembersInput = {
@@ -52322,6 +51297,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -52339,11 +51315,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutPortfolioMembersInput = {
@@ -52413,11 +51389,12 @@ export namespace Prisma {
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutPortfolioMembersInput = {
@@ -52429,6 +51406,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -52446,11 +51424,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type PortfolioUpsertWithoutMembersInput = {
@@ -52510,11 +51488,12 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutChildOwnershipsInput = {
@@ -52526,6 +51505,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -52543,11 +51523,11 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutChildOwnershipsInput = {
@@ -52581,11 +51561,12 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutParentOwnershipsInput = {
@@ -52597,6 +51578,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -52614,11 +51596,11 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutParentOwnershipsInput = {
@@ -52663,11 +51645,12 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutChildOwnershipsInput = {
@@ -52679,6 +51662,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -52696,11 +51680,11 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUpsertWithoutParentOwnershipsInput = {
@@ -52740,11 +51724,12 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutParentOwnershipsInput = {
@@ -52756,6 +51741,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -52773,11 +51759,11 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountCreateWithoutAppConnectionsInput = {
@@ -52806,11 +51792,12 @@ export namespace Prisma {
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutAppConnectionsInput = {
@@ -52822,6 +51809,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     authMethods?: AuthnMethodUncheckedCreateNestedManyWithoutAccountInput
@@ -52839,11 +51827,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutAppConnectionsInput = {
@@ -52933,11 +51921,12 @@ export namespace Prisma {
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutAppConnectionsInput = {
@@ -52949,6 +51938,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     authMethods?: AuthnMethodUncheckedUpdateManyWithoutAccountNestedInput
@@ -52966,11 +51956,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type ApplicationUpsertWithoutConnectionsInput = {
@@ -53725,11 +52715,12 @@ export namespace Prisma {
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutAuthzOwnedGrantsInput = {
@@ -53741,6 +52732,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -53758,11 +52750,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutAuthzOwnedGrantsInput = {
@@ -53796,11 +52788,12 @@ export namespace Prisma {
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutAuthzTargetGrantsInput = {
@@ -53812,6 +52805,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -53829,11 +52823,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutAuthzTargetGrantsInput = {
@@ -53973,11 +52967,12 @@ export namespace Prisma {
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutAuthzOwnedGrantsInput = {
@@ -53989,6 +52984,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -54006,11 +53002,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUpsertWithoutAuthzTargetGrantsInput = {
@@ -54050,11 +53046,12 @@ export namespace Prisma {
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutAuthzTargetGrantsInput = {
@@ -54066,6 +53063,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -54083,11 +53081,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AuthzRoleUpsertWithoutGrantsInput = {
@@ -54250,11 +53248,12 @@ export namespace Prisma {
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutAuthzAssetsAccessGrantsInput = {
@@ -54266,6 +53265,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -54283,11 +53283,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutAuthzAssetsAccessGrantsInput = {
@@ -54409,11 +53409,12 @@ export namespace Prisma {
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutAuthzAssetsAccessGrantsInput = {
@@ -54425,6 +53426,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -54442,11 +53444,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AuthzRoleUpsertWithoutAssetsGrantsInput = {
@@ -54537,11 +53539,12 @@ export namespace Prisma {
     permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutPermitsInput = {
@@ -54553,6 +53556,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -54570,11 +53574,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutPermitsInput = {
@@ -54608,11 +53612,12 @@ export namespace Prisma {
     permits?: PermitCreateNestedManyWithoutAccountInput
     parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
+    linkedAccount?: AccountCreateNestedOneWithoutLinkedFromInput
+    linkedFrom?: AccountCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
     verifications?: VerificationCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackCreateNestedManyWithoutAccountInput
   }
 
   export type AccountUncheckedCreateWithoutPermitTargetsInput = {
@@ -54624,6 +53629,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -54641,11 +53647,11 @@ export namespace Prisma {
     permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
     parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
     childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
+    linkedFrom?: AccountUncheckedCreateNestedManyWithoutLinkedAccountInput
     receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
     sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
     errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
     verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-    identityTracks?: IdentityTrackUncheckedCreateNestedManyWithoutAccountInput
   }
 
   export type AccountCreateOrConnectWithoutPermitTargetsInput = {
@@ -54690,11 +53696,12 @@ export namespace Prisma {
     permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutPermitsInput = {
@@ -54706,6 +53713,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -54723,11 +53731,11 @@ export namespace Prisma {
     permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUpsertWithoutPermitTargetsInput = {
@@ -54767,11 +53775,12 @@ export namespace Prisma {
     permits?: PermitUpdateManyWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedAccount?: AccountUpdateOneWithoutLinkedFromNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUpdateManyWithoutAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutPermitTargetsInput = {
@@ -54783,6 +53792,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -54800,218 +53810,11 @@ export namespace Prisma {
     permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
     parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
     childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
     receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
     sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
     errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
     verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-    identityTracks?: IdentityTrackUncheckedUpdateManyWithoutAccountNestedInput
-  }
-
-  export type AccountCreateWithoutIdentityTracksInput = {
-    id?: string
-    displayName?: string | null
-    accountType?: string
-    displayImage?: string | null
-    status?: string | null
-    isVerified?: boolean
-    details?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
-    individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
-    appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
-    authMethods?: AuthnMethodCreateNestedManyWithoutAccountInput
-    sessions?: AuthnSessionCreateNestedManyWithoutAccountInput
-    contacts?: ContactCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdCreateNestedManyWithoutAccountInput
-    notifications?: NotificationCreateNestedManyWithoutAccountInput
-    portfolioMembers?: PortfolioMemberCreateNestedManyWithoutAccountInput
-    familyMembers?: FamilyMemberCreateNestedManyWithoutMemberInput
-    verificationActions?: VerificationCreateNestedManyWithoutDoneByAccountInput
-    authzOwnedGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutOwnerInput
-    authzTargetGrants?: AuthzAccountAccessGrantCreateNestedManyWithoutTargetInput
-    authzAssetsAccessGrants?: AuthzAssetsAccessGrantCreateNestedManyWithoutAccountInput
-    permits?: PermitCreateNestedManyWithoutAccountInput
-    permitTargets?: PermitCreateNestedManyWithoutTargetAccountInput
-    parentOwnerships?: AccountOwnershipCreateNestedManyWithoutChildrenInput
-    childOwnerships?: AccountOwnershipCreateNestedManyWithoutParentInput
-    receivedRequests?: RequestCreateNestedManyWithoutRecipientInput
-    sentRequests?: RequestCreateNestedManyWithoutSenderInput
-    errorLogs?: SystemErrorCreateNestedManyWithoutAccountInput
-    verifications?: VerificationCreateNestedManyWithoutAccountInput
-  }
-
-  export type AccountUncheckedCreateWithoutIdentityTracksInput = {
-    id?: string
-    displayName?: string | null
-    accountType?: string
-    displayImage?: string | null
-    status?: string | null
-    isVerified?: boolean
-    details?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
-    individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
-    appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
-    authMethods?: AuthnMethodUncheckedCreateNestedManyWithoutAccountInput
-    sessions?: AuthnSessionUncheckedCreateNestedManyWithoutAccountInput
-    contacts?: ContactUncheckedCreateNestedManyWithoutAccountInput
-    neupIds?: NeupIdUncheckedCreateNestedManyWithoutAccountInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutAccountInput
-    portfolioMembers?: PortfolioMemberUncheckedCreateNestedManyWithoutAccountInput
-    familyMembers?: FamilyMemberUncheckedCreateNestedManyWithoutMemberInput
-    verificationActions?: VerificationUncheckedCreateNestedManyWithoutDoneByAccountInput
-    authzOwnedGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutOwnerInput
-    authzTargetGrants?: AuthzAccountAccessGrantUncheckedCreateNestedManyWithoutTargetInput
-    authzAssetsAccessGrants?: AuthzAssetsAccessGrantUncheckedCreateNestedManyWithoutAccountInput
-    permits?: PermitUncheckedCreateNestedManyWithoutAccountInput
-    permitTargets?: PermitUncheckedCreateNestedManyWithoutTargetAccountInput
-    parentOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutChildrenInput
-    childOwnerships?: AccountOwnershipUncheckedCreateNestedManyWithoutParentInput
-    receivedRequests?: RequestUncheckedCreateNestedManyWithoutRecipientInput
-    sentRequests?: RequestUncheckedCreateNestedManyWithoutSenderInput
-    errorLogs?: SystemErrorUncheckedCreateNestedManyWithoutAccountInput
-    verifications?: VerificationUncheckedCreateNestedManyWithoutAccountInput
-  }
-
-  export type AccountCreateOrConnectWithoutIdentityTracksInput = {
-    where: AccountWhereUniqueInput
-    create: XOR<AccountCreateWithoutIdentityTracksInput, AccountUncheckedCreateWithoutIdentityTracksInput>
-  }
-
-  export type IdentityCreateWithoutTrackInput = {
-    id?: string
-    originatedOn?: Date | string
-    refreshesOn: Date | string
-    validTill: Date | string
-    details?: JsonNullValueInput | InputJsonValue
-    application: ApplicationCreateNestedOneWithoutIdentitiesInput
-  }
-
-  export type IdentityUncheckedCreateWithoutTrackInput = {
-    id?: string
-    appId: string
-    originatedOn?: Date | string
-    refreshesOn: Date | string
-    validTill: Date | string
-    details?: JsonNullValueInput | InputJsonValue
-  }
-
-  export type IdentityCreateOrConnectWithoutTrackInput = {
-    where: IdentityWhereUniqueInput
-    create: XOR<IdentityCreateWithoutTrackInput, IdentityUncheckedCreateWithoutTrackInput>
-  }
-
-  export type IdentityCreateManyTrackInputEnvelope = {
-    data: IdentityCreateManyTrackInput | IdentityCreateManyTrackInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type AccountUpsertWithoutIdentityTracksInput = {
-    update: XOR<AccountUpdateWithoutIdentityTracksInput, AccountUncheckedUpdateWithoutIdentityTracksInput>
-    create: XOR<AccountCreateWithoutIdentityTracksInput, AccountUncheckedCreateWithoutIdentityTracksInput>
-    where?: AccountWhereInput
-  }
-
-  export type AccountUpdateToOneWithWhereWithoutIdentityTracksInput = {
-    where?: AccountWhereInput
-    data: XOR<AccountUpdateWithoutIdentityTracksInput, AccountUncheckedUpdateWithoutIdentityTracksInput>
-  }
-
-  export type AccountUpdateWithoutIdentityTracksInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    details?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
-    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
-    authMethods?: AuthnMethodUpdateManyWithoutAccountNestedInput
-    sessions?: AuthnSessionUpdateManyWithoutAccountNestedInput
-    contacts?: ContactUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
-    notifications?: NotificationUpdateManyWithoutAccountNestedInput
-    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
-    familyMembers?: FamilyMemberUpdateManyWithoutMemberNestedInput
-    verificationActions?: VerificationUpdateManyWithoutDoneByAccountNestedInput
-    authzOwnedGrants?: AuthzAccountAccessGrantUpdateManyWithoutOwnerNestedInput
-    authzTargetGrants?: AuthzAccountAccessGrantUpdateManyWithoutTargetNestedInput
-    authzAssetsAccessGrants?: AuthzAssetsAccessGrantUpdateManyWithoutAccountNestedInput
-    permits?: PermitUpdateManyWithoutAccountNestedInput
-    permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
-    parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
-    childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
-    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
-    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
-    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUpdateManyWithoutAccountNestedInput
-  }
-
-  export type AccountUncheckedUpdateWithoutIdentityTracksInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    displayName?: NullableStringFieldUpdateOperationsInput | string | null
-    accountType?: StringFieldUpdateOperationsInput | string
-    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    details?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
-    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
-    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
-    authMethods?: AuthnMethodUncheckedUpdateManyWithoutAccountNestedInput
-    sessions?: AuthnSessionUncheckedUpdateManyWithoutAccountNestedInput
-    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
-    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
-    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
-    familyMembers?: FamilyMemberUncheckedUpdateManyWithoutMemberNestedInput
-    verificationActions?: VerificationUncheckedUpdateManyWithoutDoneByAccountNestedInput
-    authzOwnedGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutOwnerNestedInput
-    authzTargetGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutTargetNestedInput
-    authzAssetsAccessGrants?: AuthzAssetsAccessGrantUncheckedUpdateManyWithoutAccountNestedInput
-    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
-    permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
-    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
-    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
-    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
-    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
-    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
-    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
-  }
-
-  export type IdentityUpsertWithWhereUniqueWithoutTrackInput = {
-    where: IdentityWhereUniqueInput
-    update: XOR<IdentityUpdateWithoutTrackInput, IdentityUncheckedUpdateWithoutTrackInput>
-    create: XOR<IdentityCreateWithoutTrackInput, IdentityUncheckedCreateWithoutTrackInput>
-  }
-
-  export type IdentityUpdateWithWhereUniqueWithoutTrackInput = {
-    where: IdentityWhereUniqueInput
-    data: XOR<IdentityUpdateWithoutTrackInput, IdentityUncheckedUpdateWithoutTrackInput>
-  }
-
-  export type IdentityUpdateManyWithWhereWithoutTrackInput = {
-    where: IdentityScalarWhereInput
-    data: XOR<IdentityUpdateManyMutationInput, IdentityUncheckedUpdateManyWithoutTrackInput>
-  }
-
-  export type IdentityTrackCreateWithoutIdentitiesInput = {
-    id?: string
-    account?: AccountCreateNestedOneWithoutIdentityTracksInput
-  }
-
-  export type IdentityTrackUncheckedCreateWithoutIdentitiesInput = {
-    id?: string
-    accountId?: string | null
-  }
-
-  export type IdentityTrackCreateOrConnectWithoutIdentitiesInput = {
-    where: IdentityTrackWhereUniqueInput
-    create: XOR<IdentityTrackCreateWithoutIdentitiesInput, IdentityTrackUncheckedCreateWithoutIdentitiesInput>
   }
 
   export type ApplicationCreateWithoutIdentitiesInput = {
@@ -55057,27 +53860,6 @@ export namespace Prisma {
   export type ApplicationCreateOrConnectWithoutIdentitiesInput = {
     where: ApplicationWhereUniqueInput
     create: XOR<ApplicationCreateWithoutIdentitiesInput, ApplicationUncheckedCreateWithoutIdentitiesInput>
-  }
-
-  export type IdentityTrackUpsertWithoutIdentitiesInput = {
-    update: XOR<IdentityTrackUpdateWithoutIdentitiesInput, IdentityTrackUncheckedUpdateWithoutIdentitiesInput>
-    create: XOR<IdentityTrackCreateWithoutIdentitiesInput, IdentityTrackUncheckedCreateWithoutIdentitiesInput>
-    where?: IdentityTrackWhereInput
-  }
-
-  export type IdentityTrackUpdateToOneWithWhereWithoutIdentitiesInput = {
-    where?: IdentityTrackWhereInput
-    data: XOR<IdentityTrackUpdateWithoutIdentitiesInput, IdentityTrackUncheckedUpdateWithoutIdentitiesInput>
-  }
-
-  export type IdentityTrackUpdateWithoutIdentitiesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    account?: AccountUpdateOneWithoutIdentityTracksNestedInput
-  }
-
-  export type IdentityTrackUncheckedUpdateWithoutIdentitiesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    accountId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ApplicationUpsertWithoutIdentitiesInput = {
@@ -55268,6 +54050,17 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type AccountCreateManyLinkedAccountInput = {
+    id?: string
+    displayName?: string | null
+    accountType?: string
+    displayImage?: string | null
+    status?: string | null
+    isVerified?: boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
   export type RequestCreateManyRecipientInput = {
     id?: string
     senderId: string
@@ -55308,10 +54101,6 @@ export namespace Prisma {
     doneAt?: Date | string
     previously?: string | null
     createdAt?: Date | string
-  }
-
-  export type IdentityTrackCreateManyAccountInput = {
-    id?: string
   }
 
   export type ApplicationConnectionUpdateWithoutAccountInput = {
@@ -55725,6 +54514,85 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type AccountUpdateWithoutLinkedAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountType?: StringFieldUpdateOperationsInput | string
+    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthnMethodUpdateManyWithoutAccountNestedInput
+    sessions?: AuthnSessionUpdateManyWithoutAccountNestedInput
+    contacts?: ContactUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUpdateManyWithoutAccountNestedInput
+    portfolioMembers?: PortfolioMemberUpdateManyWithoutAccountNestedInput
+    familyMembers?: FamilyMemberUpdateManyWithoutMemberNestedInput
+    verificationActions?: VerificationUpdateManyWithoutDoneByAccountNestedInput
+    authzOwnedGrants?: AuthzAccountAccessGrantUpdateManyWithoutOwnerNestedInput
+    authzTargetGrants?: AuthzAccountAccessGrantUpdateManyWithoutTargetNestedInput
+    authzAssetsAccessGrants?: AuthzAssetsAccessGrantUpdateManyWithoutAccountNestedInput
+    permits?: PermitUpdateManyWithoutAccountNestedInput
+    permitTargets?: PermitUpdateManyWithoutTargetAccountNestedInput
+    parentOwnerships?: AccountOwnershipUpdateManyWithoutChildrenNestedInput
+    childOwnerships?: AccountOwnershipUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUpdateManyWithoutLinkedAccountNestedInput
+    receivedRequests?: RequestUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUpdateManyWithoutAccountNestedInput
+  }
+
+  export type AccountUncheckedUpdateWithoutLinkedAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountType?: StringFieldUpdateOperationsInput | string
+    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
+    individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
+    appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
+    authMethods?: AuthnMethodUncheckedUpdateManyWithoutAccountNestedInput
+    sessions?: AuthnSessionUncheckedUpdateManyWithoutAccountNestedInput
+    contacts?: ContactUncheckedUpdateManyWithoutAccountNestedInput
+    neupIds?: NeupIdUncheckedUpdateManyWithoutAccountNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutAccountNestedInput
+    portfolioMembers?: PortfolioMemberUncheckedUpdateManyWithoutAccountNestedInput
+    familyMembers?: FamilyMemberUncheckedUpdateManyWithoutMemberNestedInput
+    verificationActions?: VerificationUncheckedUpdateManyWithoutDoneByAccountNestedInput
+    authzOwnedGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutOwnerNestedInput
+    authzTargetGrants?: AuthzAccountAccessGrantUncheckedUpdateManyWithoutTargetNestedInput
+    authzAssetsAccessGrants?: AuthzAssetsAccessGrantUncheckedUpdateManyWithoutAccountNestedInput
+    permits?: PermitUncheckedUpdateManyWithoutAccountNestedInput
+    permitTargets?: PermitUncheckedUpdateManyWithoutTargetAccountNestedInput
+    parentOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutChildrenNestedInput
+    childOwnerships?: AccountOwnershipUncheckedUpdateManyWithoutParentNestedInput
+    linkedFrom?: AccountUncheckedUpdateManyWithoutLinkedAccountNestedInput
+    receivedRequests?: RequestUncheckedUpdateManyWithoutRecipientNestedInput
+    sentRequests?: RequestUncheckedUpdateManyWithoutSenderNestedInput
+    errorLogs?: SystemErrorUncheckedUpdateManyWithoutAccountNestedInput
+    verifications?: VerificationUncheckedUpdateManyWithoutAccountNestedInput
+  }
+
+  export type AccountUncheckedUpdateManyWithoutLinkedAccountInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    accountType?: StringFieldUpdateOperationsInput | string
+    displayImage?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    details?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type RequestUpdateWithoutRecipientInput = {
     id?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -55849,20 +54717,6 @@ export namespace Prisma {
     doneAt?: DateTimeFieldUpdateOperationsInput | Date | string
     previously?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type IdentityTrackUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    identities?: IdentityUpdateManyWithoutTrackNestedInput
-  }
-
-  export type IdentityTrackUncheckedUpdateWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    identities?: IdentityUncheckedUpdateManyWithoutTrackNestedInput
-  }
-
-  export type IdentityTrackUncheckedUpdateManyWithoutAccountInput = {
-    id?: StringFieldUpdateOperationsInput | string
   }
 
   export type FamilyMemberCreateManyFamilyInput = {
@@ -56080,11 +54934,11 @@ export namespace Prisma {
 
   export type IdentityUpdateWithoutApplicationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    trackId?: StringFieldUpdateOperationsInput | string
     originatedOn?: DateTimeFieldUpdateOperationsInput | Date | string
     refreshesOn?: DateTimeFieldUpdateOperationsInput | Date | string
     validTill?: DateTimeFieldUpdateOperationsInput | Date | string
     details?: JsonNullValueInput | InputJsonValue
-    track?: IdentityTrackUpdateOneRequiredWithoutIdentitiesNestedInput
   }
 
   export type IdentityUncheckedUpdateWithoutApplicationInput = {
@@ -56401,42 +55255,6 @@ export namespace Prisma {
     portfolio_id?: NullableStringFieldUpdateOperationsInput | string | null
     app_id?: StringFieldUpdateOperationsInput | string
     asset_type?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type IdentityCreateManyTrackInput = {
-    id?: string
-    appId: string
-    originatedOn?: Date | string
-    refreshesOn: Date | string
-    validTill: Date | string
-    details?: JsonNullValueInput | InputJsonValue
-  }
-
-  export type IdentityUpdateWithoutTrackInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    originatedOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    refreshesOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    validTill?: DateTimeFieldUpdateOperationsInput | Date | string
-    details?: JsonNullValueInput | InputJsonValue
-    application?: ApplicationUpdateOneRequiredWithoutIdentitiesNestedInput
-  }
-
-  export type IdentityUncheckedUpdateWithoutTrackInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
-    originatedOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    refreshesOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    validTill?: DateTimeFieldUpdateOperationsInput | Date | string
-    details?: JsonNullValueInput | InputJsonValue
-  }
-
-  export type IdentityUncheckedUpdateManyWithoutTrackInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    appId?: StringFieldUpdateOperationsInput | string
-    originatedOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    refreshesOn?: DateTimeFieldUpdateOperationsInput | Date | string
-    validTill?: DateTimeFieldUpdateOperationsInput | Date | string
-    details?: JsonNullValueInput | InputJsonValue
   }
 
 

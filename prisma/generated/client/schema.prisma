@@ -8,14 +8,16 @@ datasource db {
 }
 
 model Account {
-  id                      String                    @id(map: "accounts_pkey") @default(uuid())
-  displayName             String?
-  accountType             String                    @default("individual")
-  displayImage            String?
-  status                  String?
-  isVerified              Boolean                   @default(false)
-  details                 Json?
-  createdAt               DateTime                  @default(now())
+  id              String   @id(map: "accounts_pkey") @default(uuid())
+  displayName     String?
+  accountType     String   @default("individual")
+  displayImage    String?
+  status          String?
+  isVerified      Boolean  @default(false)
+  details         Json?
+  createdAt       DateTime @default(now())
+  linkedAccountId String?  @map("linked_account_id")
+
   brandProfile            AccountTypeBrand?
   individualProfile       AccountTypeIndividual?
   appConnections          ApplicationConnection[]
@@ -34,12 +36,13 @@ model Account {
   permitTargets           Permit[]                  @relation("PermitTarget")
   parentOwnerships        AccountOwnership[]        @relation("ChildAccount")
   childOwnerships         AccountOwnership[]        @relation("ParentAccount")
+  linkedAccount           Account?                  @relation("LinkedAccount", fields: [linkedAccountId], references: [id])
+  linkedFrom              Account[]                 @relation("LinkedAccount")
 
-  receivedRequests Request[]       @relation("ReceivedRequests")
-  sentRequests     Request[]       @relation("SentRequests")
+  receivedRequests Request[]      @relation("ReceivedRequests")
+  sentRequests     Request[]      @relation("SentRequests")
   errorLogs        SystemError[]
   verifications    Verification[]
-  identityTracks   IdentityTrack[]
 
   @@map("account")
 }
@@ -458,16 +461,9 @@ model Permit {
   @@map("permit")
 }
 
-model IdentityTrack {
-  id        String  @id @default(cuid())
-  accountId String? @map("account_id")
-
-  account    Account?   @relation(fields: [accountId], references: [id])
-  identities Identity[]
-
-  @@map("identity_track")
-}
-
+/// Stores per-app identity records keyed by guest account ID.
+/// trackId holds the guest account ID (from the guest_acc cookie) as the
+/// stable device identifier. This is the ssid issued to third-party apps.
 model Identity {
   id           String   @id @default(cuid())
   trackId      String   @map("track_id")
@@ -477,8 +473,7 @@ model Identity {
   validTill    DateTime @map("valid_till")
   details      Json     @default("[]") @map("details")
 
-  track       IdentityTrack @relation(fields: [trackId], references: [id])
-  application Application   @relation(fields: [appId], references: [id])
+  application Application @relation(fields: [appId], references: [id])
 
   @@unique([trackId, appId])
   @@map("identity")

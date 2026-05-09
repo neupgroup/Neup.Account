@@ -2,7 +2,7 @@ import prisma from '@/core/helpers/prisma';
 import { logError } from '@/core/helpers/logger';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
-import type { Identity, IdentityTrack } from '@/prisma/generated/client';
+import type { Identity } from '@/prisma/generated/client';
 
 // ---------------------------------------------------------------------------
 // Rate limiting
@@ -71,70 +71,34 @@ export async function validateSilentSsoOrigin(
 }
 
 // ---------------------------------------------------------------------------
-// Identity track resolution
+// Identity resolution (guest account based)
 // ---------------------------------------------------------------------------
 
 /**
- * Resolves or creates an IdentityTrack for a given trackId cookie value.
- * If trackId is provided and exists, returns it.
- * If trackId is provided but doesn't exist (stale cookie), creates a new one.
- * If trackId is null, creates a new IdentityTrack.
- * Optionally links the track to an accountId when the user is authenticated.
- */
-export async function resolveOrCreateIdentityTrack(
-  trackId: string | null,
-  accountId: string | null
-): Promise<IdentityTrack> {
-  // Try to find an existing track by id
-  if (trackId) {
-    const existing = await prisma.identityTrack.findUnique({ where: { id: trackId } });
-    if (existing) {
-      // If the user is now authenticated and the track isn't linked yet, link it
-      if (accountId && !existing.accountId) {
-        return prisma.identityTrack.update({
-          where: { id: trackId },
-          data: { accountId },
-        });
-      }
-      return existing;
-    }
-  }
-
-  // Create a new track
-  return prisma.identityTrack.create({
-    data: { accountId },
-  });
-}
-
-// ---------------------------------------------------------------------------
-// Identity resolution
-// ---------------------------------------------------------------------------
-
-/**
- * Looks up an existing Identity for (trackId, appId) or creates one.
+ * Looks up an existing Identity for (guestAccountId, appId) or creates one.
+ * The guest account ID (from the guest_acc cookie) replaces the old trackId.
  * Sets validTill = now + 4 weeks, refreshesOn = now + 1 hour.
  */
 export async function resolveOrCreateIdentity(
-  trackId: string,
+  guestAccountId: string,
   appId: string
 ): Promise<Identity> {
   const now = new Date();
-  const refreshesOn = new Date(now.getTime() + 3_600_000);       // +1 hour
-  const validTill = new Date(now.getTime() + 4 * 7 * 24 * 3_600_000); // +4 weeks
+  const refreshesOn = new Date(now.getTime() + 3_600_000);
+  const validTill = new Date(now.getTime() + 4 * 7 * 24 * 3_600_000);
 
+  // Identity.trackId now stores the guest account ID as the stable device identifier
   return prisma.identity.upsert({
-    where: { trackId_appId: { trackId, appId } },
+    where: { trackId_appId: { trackId: guestAccountId, appId } },
     create: {
-      trackId,
+      trackId: guestAccountId,
       appId,
       originatedOn: now,
       refreshesOn,
       validTill,
       details: [],
     },
-    update: {
-      // Keep originatedOn, refreshesOn, validTill unchanged on subsequent visits
-    },
+    update: {},
   });
 }
 
@@ -263,7 +227,7 @@ export async function buildIdentityDetails(accountId: string): Promise<IdentityD
  */
 export async function issueSilentAuthCode(
   accountId: string,
-  trackId: string,
+  guestAccountId: string,
   appId: string,
   codeChallenge?: string,
   codeChallengeMethod?: string
@@ -277,7 +241,7 @@ export async function issueSilentAuthCode(
       status: 'pending',
       data: {
         appId,
-        trackId,
+        guestAccountId,
         ...(codeChallenge
           ? {
               codeChallenge,
@@ -290,7 +254,7 @@ export async function issueSilentAuthCode(
     },
   });
 
-  const identity = await resolveOrCreateIdentity(trackId, appId);
+  const identity = await resolveOrCreateIdentity(guestAccountId, appId);
 
   return { code, identity };
 }

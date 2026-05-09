@@ -2455,3 +2455,73 @@ The table `public.account_ownership` does not exist in the current database.
     at async requestHandlerImpl (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/router-server.js:496:13)
     at async Server.requestListener (/Users/neupkishor/Code/neup.account/node_modules/next/dist/server/lib/start-server.js:226:13)
 --------------------------------------------------------------------------------
+[2026-05-07T17:29:03.825Z] [auth] [auto] [resolve_cookies] [IP: ::1] [Account: null] [Signature: 2d94b951986f9574bda29fc9b17a6024]
+Message: ReferenceError: TRACK_COOKIE is not defined
+    at resolveCookies (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__495c3a98._.js:549:49)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at listOnTimeout (node:internal/timers:567:9)
+    at process.processTimers (node:internal/timers:541:7)
+    at async AuthLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__495c3a98._.js:598:5)
+--------------------------------------------------------------------------------
+[2026-05-07T17:29:05.617Z] [auth] [auto] [resolve_cookies] [IP: ::1] [Account: null] [Signature: 2d94b951986f9574bda29fc9b17a6024]
+Message: ReferenceError: TRACK_COOKIE is not defined
+    at resolveCookies (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__495c3a98._.js:549:49)
+    at async AuthLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__495c3a98._.js:598:5)
+--------------------------------------------------------------------------------
+[2026-05-07T17:29:19.589Z] [auth] [auto] [resolve_cookies] [IP: ::1] [Account: null] [Signature: 2d94b951986f9574bda29fc9b17a6024]
+Message: ReferenceError: TRACK_COOKIE is not defined
+    at resolveCookies (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__495c3a98._.js:549:49)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at listOnTimeout (node:internal/timers:567:9)
+    at process.processTimers (node:internal/timers:541:7)
+    at async AuthLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__495c3a98._.js:598:5)
+--------------------------------------------------------------------------------
+[2026-05-07T17:29:23.154Z] [auth] [auto] [resolve_cookies] [IP: ::1] [Account: null] [Signature: 53f0cb1ef3b16b3961ab6e8c4e4df278]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.identityTrack.create()` invocation:
+
+
+The table `public.identity_track` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async resolveCookies (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__a50d3bdc._.js:567:23)
+    at async AuthLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__a50d3bdc._.js:615:5)
+--------------------------------------------------------------------------------
+[2026-05-07T17:31:26.976Z] [auth] [auto] [resolve_cookies] [IP: ::1] [Account: null] [Signature: 53f0cb1ef3b16b3961ab6e8c4e4df278]
+Message: PrismaClientKnownRequestError: 
+Invalid `prisma.identityTrack.create()` invocation:
+
+
+The table `public.identity_track` does not exist in the current database.
+    at zr.handleRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7335:19)
+    at zr.handleAndLogRequestError (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7298:18)
+    at zr.request (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7279:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/prisma_generated_client_runtime_client_a93760b1.js:7911:25)
+    at async resolveCookies (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__a50d3bdc._.js:567:23)
+    at async AuthLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__a50d3bdc._.js:615:5)
+--------------------------------------------------------------------------------
+[2026-05-07T17:32:07.003Z] [auth] [auto] [resolve_cookies] [IP: ::1] [Account: null] [Signature: dc335224ced8380b924832fed5505285]
+Message: Error: Cookies can only be modified in a Server Action or Route Handler. Read more: https://nextjs.org/docs/app/api-reference/functions/cookies#options
+    at Proxy.callable (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:32:18685)
+    at resolveCookies (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__a50d3bdc._.js:570:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__a50d3bdc._.js:615:5)
+--------------------------------------------------------------------------------
+[2026-05-07T17:32:13.995Z] [auth] [auto] [resolve_cookies] [IP: ::1] [Account: null] [Signature: dc335224ced8380b924832fed5505285]
+Message: Error: Cookies can only be modified in a Server Action or Route Handler. Read more: https://nextjs.org/docs/app/api-reference/functions/cookies#options
+    at Proxy.callable (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:32:18685)
+    at resolveCookies (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__a50d3bdc._.js:570:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__a50d3bdc._.js:615:5)
+--------------------------------------------------------------------------------
+[2026-05-07T17:33:15.512Z] [auth] [auto] [resolve_cookies] [IP: ::1] [Account: null] [Signature: dc335224ced8380b924832fed5505285]
+Message: Error: Cookies can only be modified in a Server Action or Route Handler. Read more: https://nextjs.org/docs/app/api-reference/functions/cookies#options
+    at Proxy.callable (/Users/neupkishor/Code/neup.account/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js:32:18685)
+    at resolveCookies (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__a50d3bdc._.js:570:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async AuthLayout (/Users/neupkishor/Code/neup.account/.next/dev/server/chunks/ssr/[root-of-the-server]__a50d3bdc._.js:615:5)
+--------------------------------------------------------------------------------
