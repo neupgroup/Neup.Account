@@ -18,7 +18,8 @@ function getFirstValue(value: string | string[] | undefined) {
  * Function getAuthStartPageData.
  */
 export async function getAuthStartPageData(searchParams: Record<string, string | string[] | undefined>) {
-  let accounts = await getValidatedStoredAccounts();
+  // Filter out guest accounts — they cannot sign in and should not appear in the UI
+  let accounts = (await getValidatedStoredAccounts()).filter(a => !a.guest);
   const activeSession = await getActiveSession();
   const appId = getFirstValue(searchParams.appId) || getFirstValue(searchParams.appid);
 
