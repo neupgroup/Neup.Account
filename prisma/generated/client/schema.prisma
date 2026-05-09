@@ -8,15 +8,16 @@ datasource db {
 }
 
 model Account {
-  id              String   @id(map: "accounts_pkey") @default(uuid())
+  id              String    @id(map: "accounts_pkey") @default(uuid())
   displayName     String?
-  accountType     String   @default("individual")
+  accountType     String    @default("individual")
   displayImage    String?
   status          String?
-  isVerified      Boolean  @default(false)
+  isVerified      Boolean   @default(false)
   details         Json?
-  createdAt       DateTime @default(now())
-  linkedAccountId String?  @map("linked_account_id")
+  createdAt       DateTime  @default(now())
+  lastActive      DateTime? @map("last_active")
+  linkedAccountId String?   @map("linked_account_id")
 
   brandProfile            AccountTypeBrand?
   individualProfile       AccountTypeIndividual?

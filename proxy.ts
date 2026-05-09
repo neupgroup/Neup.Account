@@ -34,7 +34,7 @@ export function proxy(request: NextRequest) {
   }
 
   // 5. Public Routes (Bridge, Auth pages)
-  // These paths are entry points — they create the id_track cookie and do
+  // These paths are entry points — they create the guest_acc cookie and do
   // not require it to already exist.
   if (
     pathname.startsWith('/bridge') ||

@@ -129,6 +129,7 @@ exports.Prisma.AccountScalarFieldEnum = {
   isVerified: 'isVerified',
   details: 'details',
   createdAt: 'createdAt',
+  lastActive: 'lastActive',
   linkedAccountId: 'linkedAccountId'
 };
 

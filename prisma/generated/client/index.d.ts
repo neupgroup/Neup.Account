@@ -4107,6 +4107,7 @@ export namespace Prisma {
     status: string | null
     isVerified: boolean | null
     createdAt: Date | null
+    lastActive: Date | null
     linkedAccountId: string | null
   }
 
@@ -4118,6 +4119,7 @@ export namespace Prisma {
     status: string | null
     isVerified: boolean | null
     createdAt: Date | null
+    lastActive: Date | null
     linkedAccountId: string | null
   }
 
@@ -4130,6 +4132,7 @@ export namespace Prisma {
     isVerified: number
     details: number
     createdAt: number
+    lastActive: number
     linkedAccountId: number
     _all: number
   }
@@ -4143,6 +4146,7 @@ export namespace Prisma {
     status?: true
     isVerified?: true
     createdAt?: true
+    lastActive?: true
     linkedAccountId?: true
   }
 
@@ -4154,6 +4158,7 @@ export namespace Prisma {
     status?: true
     isVerified?: true
     createdAt?: true
+    lastActive?: true
     linkedAccountId?: true
   }
 
@@ -4166,6 +4171,7 @@ export namespace Prisma {
     isVerified?: true
     details?: true
     createdAt?: true
+    lastActive?: true
     linkedAccountId?: true
     _all?: true
   }
@@ -4251,6 +4257,7 @@ export namespace Prisma {
     isVerified: boolean
     details: JsonValue | null
     createdAt: Date
+    lastActive: Date | null
     linkedAccountId: string | null
     _count: AccountCountAggregateOutputType | null
     _min: AccountMinAggregateOutputType | null
@@ -4280,6 +4287,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: boolean
     createdAt?: boolean
+    lastActive?: boolean
     linkedAccountId?: boolean
     brandProfile?: boolean | Account$brandProfileArgs<ExtArgs>
     individualProfile?: boolean | Account$individualProfileArgs<ExtArgs>
@@ -4317,6 +4325,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: boolean
     createdAt?: boolean
+    lastActive?: boolean
     linkedAccountId?: boolean
     linkedAccount?: boolean | Account$linkedAccountArgs<ExtArgs>
   }, ExtArgs["result"]["account"]>
@@ -4330,6 +4339,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: boolean
     createdAt?: boolean
+    lastActive?: boolean
     linkedAccountId?: boolean
     linkedAccount?: boolean | Account$linkedAccountArgs<ExtArgs>
   }, ExtArgs["result"]["account"]>
@@ -4343,10 +4353,11 @@ export namespace Prisma {
     isVerified?: boolean
     details?: boolean
     createdAt?: boolean
+    lastActive?: boolean
     linkedAccountId?: boolean
   }
 
-  export type AccountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "displayName" | "accountType" | "displayImage" | "status" | "isVerified" | "details" | "createdAt" | "linkedAccountId", ExtArgs["result"]["account"]>
+  export type AccountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "displayName" | "accountType" | "displayImage" | "status" | "isVerified" | "details" | "createdAt" | "lastActive" | "linkedAccountId", ExtArgs["result"]["account"]>
   export type AccountInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     brandProfile?: boolean | Account$brandProfileArgs<ExtArgs>
     individualProfile?: boolean | Account$individualProfileArgs<ExtArgs>
@@ -4418,6 +4429,7 @@ export namespace Prisma {
       isVerified: boolean
       details: Prisma.JsonValue | null
       createdAt: Date
+      lastActive: Date | null
       linkedAccountId: string | null
     }, ExtArgs["result"]["account"]>
     composites: {}
@@ -4874,6 +4886,7 @@ export namespace Prisma {
     readonly isVerified: FieldRef<"Account", 'Boolean'>
     readonly details: FieldRef<"Account", 'Json'>
     readonly createdAt: FieldRef<"Account", 'DateTime'>
+    readonly lastActive: FieldRef<"Account", 'DateTime'>
     readonly linkedAccountId: FieldRef<"Account", 'String'>
   }
     
@@ -38544,6 +38557,7 @@ export namespace Prisma {
     isVerified: 'isVerified',
     details: 'details',
     createdAt: 'createdAt',
+    lastActive: 'lastActive',
     linkedAccountId: 'linkedAccountId'
   };
 
@@ -39051,6 +39065,7 @@ export namespace Prisma {
     isVerified?: BoolFilter<"Account"> | boolean
     details?: JsonNullableFilter<"Account">
     createdAt?: DateTimeFilter<"Account"> | Date | string
+    lastActive?: DateTimeNullableFilter<"Account"> | Date | string | null
     linkedAccountId?: StringNullableFilter<"Account"> | string | null
     brandProfile?: XOR<AccountTypeBrandNullableScalarRelationFilter, AccountTypeBrandWhereInput> | null
     individualProfile?: XOR<AccountTypeIndividualNullableScalarRelationFilter, AccountTypeIndividualWhereInput> | null
@@ -39087,6 +39102,7 @@ export namespace Prisma {
     isVerified?: SortOrder
     details?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    lastActive?: SortOrderInput | SortOrder
     linkedAccountId?: SortOrderInput | SortOrder
     brandProfile?: AccountTypeBrandOrderByWithRelationInput
     individualProfile?: AccountTypeIndividualOrderByWithRelationInput
@@ -39126,6 +39142,7 @@ export namespace Prisma {
     isVerified?: BoolFilter<"Account"> | boolean
     details?: JsonNullableFilter<"Account">
     createdAt?: DateTimeFilter<"Account"> | Date | string
+    lastActive?: DateTimeNullableFilter<"Account"> | Date | string | null
     linkedAccountId?: StringNullableFilter<"Account"> | string | null
     brandProfile?: XOR<AccountTypeBrandNullableScalarRelationFilter, AccountTypeBrandWhereInput> | null
     individualProfile?: XOR<AccountTypeIndividualNullableScalarRelationFilter, AccountTypeIndividualWhereInput> | null
@@ -39162,6 +39179,7 @@ export namespace Prisma {
     isVerified?: SortOrder
     details?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    lastActive?: SortOrderInput | SortOrder
     linkedAccountId?: SortOrderInput | SortOrder
     _count?: AccountCountOrderByAggregateInput
     _max?: AccountMaxOrderByAggregateInput
@@ -39180,6 +39198,7 @@ export namespace Prisma {
     isVerified?: BoolWithAggregatesFilter<"Account"> | boolean
     details?: JsonNullableWithAggregatesFilter<"Account">
     createdAt?: DateTimeWithAggregatesFilter<"Account"> | Date | string
+    lastActive?: DateTimeNullableWithAggregatesFilter<"Account"> | Date | string | null
     linkedAccountId?: StringNullableWithAggregatesFilter<"Account"> | string | null
   }
 
@@ -41125,6 +41144,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -41160,6 +41180,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -41195,6 +41216,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -41230,6 +41252,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -41265,6 +41288,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
   }
 
@@ -41277,6 +41301,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type AccountUncheckedUpdateManyInput = {
@@ -41288,6 +41313,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -43349,6 +43375,17 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type AccountTypeBrandNullableScalarRelationFilter = {
     is?: AccountTypeBrandWhereInput | null
     isNot?: AccountTypeBrandWhereInput | null
@@ -43538,6 +43575,7 @@ export namespace Prisma {
     isVerified?: SortOrder
     details?: SortOrder
     createdAt?: SortOrder
+    lastActive?: SortOrder
     linkedAccountId?: SortOrder
   }
 
@@ -43549,6 +43587,7 @@ export namespace Prisma {
     status?: SortOrder
     isVerified?: SortOrder
     createdAt?: SortOrder
+    lastActive?: SortOrder
     linkedAccountId?: SortOrder
   }
 
@@ -43560,6 +43599,7 @@ export namespace Prisma {
     status?: SortOrder
     isVerified?: SortOrder
     createdAt?: SortOrder
+    lastActive?: SortOrder
     linkedAccountId?: SortOrder
   }
 
@@ -43647,7 +43687,7 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
     notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -43655,7 +43695,10 @@ export namespace Prisma {
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type AccountScalarRelationFilter = {
@@ -43692,20 +43735,6 @@ export namespace Prisma {
     dateOfBirth?: SortOrder
     countryOfResidence?: SortOrder
     roleId?: SortOrder
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type AccountTypeBrandCountOrderByAggregateInput = {
@@ -45016,6 +45045,10 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
   export type AccountTypeBrandUpdateOneWithoutAccountNestedInput = {
     create?: XOR<AccountTypeBrandCreateWithoutAccountInput, AccountTypeBrandUncheckedCreateWithoutAccountInput>
     connectOrCreate?: AccountTypeBrandCreateOrConnectWithoutAccountInput
@@ -45658,10 +45691,6 @@ export namespace Prisma {
     create?: XOR<AccountCreateWithoutIndividualProfileInput, AccountUncheckedCreateWithoutIndividualProfileInput>
     connectOrCreate?: AccountCreateOrConnectWithoutIndividualProfileInput
     connect?: AccountWhereUniqueInput
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
   }
 
   export type AccountUpdateOneRequiredWithoutIndividualProfileNestedInput = {
@@ -46992,6 +47021,17 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -47091,17 +47131,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -47628,6 +47657,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -47662,6 +47692,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -47701,6 +47732,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -47735,6 +47767,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -48389,6 +48422,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -48423,6 +48457,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -48476,6 +48511,7 @@ export namespace Prisma {
     isVerified?: BoolFilter<"Account"> | boolean
     details?: JsonNullableFilter<"Account">
     createdAt?: DateTimeFilter<"Account"> | Date | string
+    lastActive?: DateTimeNullableFilter<"Account"> | Date | string | null
     linkedAccountId?: StringNullableFilter<"Account"> | string | null
   }
 
@@ -48580,6 +48616,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
     authMethods?: AuthnMethodCreateNestedManyWithoutAccountInput
@@ -48614,6 +48651,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -48664,6 +48702,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
     authMethods?: AuthnMethodUpdateManyWithoutAccountNestedInput
@@ -48698,6 +48737,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -48732,6 +48772,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
     authMethods?: AuthnMethodCreateNestedManyWithoutAccountInput
@@ -48766,6 +48807,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionUncheckedCreateNestedManyWithoutAccountInput
@@ -48816,6 +48858,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
     authMethods?: AuthnMethodUpdateManyWithoutAccountNestedInput
@@ -48850,6 +48893,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -48884,6 +48928,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -48918,6 +48963,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -48968,6 +49014,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -49002,6 +49049,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -49036,6 +49084,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -49070,6 +49119,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -49109,6 +49159,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -49143,6 +49194,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -49193,6 +49245,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -49227,6 +49280,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -49272,6 +49326,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -49306,6 +49361,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -49395,6 +49451,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -49429,6 +49486,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -49502,6 +49560,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -49536,6 +49595,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -49570,6 +49630,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -49604,6 +49665,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -49643,6 +49705,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -49677,6 +49740,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -49727,6 +49791,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -49761,6 +49826,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -49806,6 +49872,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -49840,6 +49907,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -49874,6 +49942,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -49908,6 +49977,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -49958,6 +50028,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -49992,6 +50063,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -50026,6 +50098,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -50060,6 +50133,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -50110,6 +50184,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -50144,6 +50219,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -50178,6 +50254,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -50212,6 +50289,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -50262,6 +50340,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -50296,6 +50375,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -50330,6 +50410,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -50364,6 +50445,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -50414,6 +50496,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -50448,6 +50531,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -50482,6 +50566,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -50516,6 +50601,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -50566,6 +50652,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -50600,6 +50687,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -51263,6 +51351,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -51297,6 +51386,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -51372,6 +51462,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -51406,6 +51497,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -51471,6 +51563,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -51505,6 +51598,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -51544,6 +51638,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -51578,6 +51673,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -51628,6 +51724,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -51662,6 +51759,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -51707,6 +51805,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -51741,6 +51840,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -51775,6 +51875,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     authMethods?: AuthnMethodCreateNestedManyWithoutAccountInput
@@ -51809,6 +51910,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -51904,6 +52006,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     authMethods?: AuthnMethodUpdateManyWithoutAccountNestedInput
@@ -51938,6 +52041,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -52698,6 +52802,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -52732,6 +52837,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -52771,6 +52877,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -52805,6 +52912,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -52950,6 +53058,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -52984,6 +53093,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -53029,6 +53139,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -53063,6 +53174,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -53231,6 +53343,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -53265,6 +53378,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -53392,6 +53506,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -53426,6 +53541,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -53522,6 +53638,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -53556,6 +53673,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -53595,6 +53713,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     brandProfile?: AccountTypeBrandCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualCreateNestedOneWithoutAccountInput
     appConnections?: ApplicationConnectionCreateNestedManyWithoutAccountInput
@@ -53629,6 +53748,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
     linkedAccountId?: string | null
     brandProfile?: AccountTypeBrandUncheckedCreateNestedOneWithoutAccountInput
     individualProfile?: AccountTypeIndividualUncheckedCreateNestedOneWithoutAccountInput
@@ -53679,6 +53799,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -53713,6 +53834,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -53758,6 +53880,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -53792,6 +53915,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linkedAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
@@ -54059,6 +54183,7 @@ export namespace Prisma {
     isVerified?: boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    lastActive?: Date | string | null
   }
 
   export type RequestCreateManyRecipientInput = {
@@ -54523,6 +54648,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUpdateManyWithoutAccountNestedInput
@@ -54557,6 +54683,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     brandProfile?: AccountTypeBrandUncheckedUpdateOneWithoutAccountNestedInput
     individualProfile?: AccountTypeIndividualUncheckedUpdateOneWithoutAccountNestedInput
     appConnections?: ApplicationConnectionUncheckedUpdateManyWithoutAccountNestedInput
@@ -54591,6 +54718,7 @@ export namespace Prisma {
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastActive?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type RequestUpdateWithoutRecipientInput = {
