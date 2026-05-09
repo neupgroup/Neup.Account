@@ -4,4 +4,3 @@
  */
 
 export const COOKIE_AUTH_ACC = 'auth_acc';
-export const COOKIE_GUEST_ACC = 'guest_acc';

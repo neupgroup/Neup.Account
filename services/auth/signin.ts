@@ -58,6 +58,16 @@ export async function submitNeupId(data: z.infer<typeof neupIdSchema>) {
         return { success: false, error: "Account mapping is missing." };
     }
 
+    // Guest accounts cannot sign in — they have no neupId by design,
+    // but guard explicitly in case of data inconsistency.
+    const accountCheck = await prisma.account.findUnique({
+        where: { id: accountId },
+        select: { accountType: true },
+    });
+    if (accountCheck?.accountType === 'guest') {
+        return { success: false, error: 'Invalid NeupID.' };
+    }
+
     const currentData = (request.data.data as SigninRequestData) || {};
     
     await prisma.authnRequest.update({
@@ -117,7 +127,10 @@ export async function submitPasswordWithNeupId(data: { neupId: string; password:
         return { success: false, mfaRequired: false, error: 'Invalid credentials.' };
     }
 
-    const account = await prisma.account.findUnique({ where: { id: accountId }, select: { status: true } });
+    const account = await prisma.account.findUnique({ where: { id: accountId }, select: { status: true, accountType: true } });
+    if (account?.accountType === 'guest') {
+        return { success: false, mfaRequired: false, error: 'Invalid credentials.' };
+    }
     const isPendingDeletion = account?.status === 'pending_deletion';
 
     const passwordRecord = await prisma.authnMethod.findFirst({

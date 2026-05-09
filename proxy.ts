@@ -34,7 +34,7 @@ export function proxy(request: NextRequest) {
   }
 
   // 5. Public Routes (Bridge, Auth pages)
-  // These paths are entry points — they create the guest_acc cookie and do
+  // These paths are entry points — they create the auth_acc cookie and do
   // not require it to already exist.
   if (
     pathname.startsWith('/bridge') ||
@@ -43,25 +43,9 @@ export function proxy(request: NextRequest) {
     return NextResponse.next({ request: { headers: requestHeaders } });
   }
 
-  // 6. Guest Account Check
-  // Every protected page requires a `guest_acc` cookie. This cookie holds
-  // the guest account ID created when the user first visits any /auth/* page
-  // or goes through the handshake/silent SSO entry points.
-  //
-  // If the cookie is missing the user has never been through an entry point —
-  // redirect to /auth/start where a guest account will be created automatically.
-  const hasGuestAcc = !!request.cookies.get('guest_acc')?.value;
-  if (!hasGuestAcc) {
-    const url = request.nextUrl.clone();
-    url.pathname = '/auth/start';
-    if (pathname !== '/') {
-      url.searchParams.set('redirects', pathname + request.nextUrl.search);
-    }
-    return NextResponse.redirect(url);
-  }
-
-  // 7. Auth Check
+  // 6. Auth Check
   // Parse auth_acc and look for an entry with def === 1 that has aid, sid, skey.
+  // Guest accounts (no nid) are valid here — they pass this check.
   const authAccRaw = request.cookies.get('auth_acc')?.value;
   let hasActiveSession = false;
   if (authAccRaw) {
@@ -91,7 +75,7 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // 8. Continue
+  // 7. Continue
   return NextResponse.next({ request: { headers: requestHeaders } });
 }
 

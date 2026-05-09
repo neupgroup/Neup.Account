@@ -1,109 +1,126 @@
-'use server';
-
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import prisma from '@/core/helpers/prisma';
 import { logError } from '@/core/helpers/logger';
-import { COOKIE_GUEST_ACC } from '@/core/auth/constants';
+import { addAccount, getAccounts } from '@/core/auth/accounts';
+import crypto from 'crypto';
 
-const GUEST_COOKIE_MAX_AGE_YEARS = 1;
+const GUEST_SESSION_DURATION_DAYS = 365;
+const ONE_MONTH_MS = 30 * 24 * 60 * 60 * 1000;
+
+/**
+ * Creates a new guest Account + AuthnSession in a single transaction.
+ * Writes the guest into the auth_acc cookie as the active account (def: 1).
+ *
+ * Guest accounts have:
+ *   - accountType = 'guest'
+ *   - no neupId (nid = '')
+ *   - loginType = 'guest' on the session
+ */
+async function createGuestAccountWithSession(
+  linkedAccountId: string | null,
+  ipAddress: string,
+  userAgent: string
+): Promise<{ accountId: string; sessionId: string; sessionKey: string }> {
+  const sessionKey = crypto.randomBytes(32).toString('hex');
+  const validTill = new Date();
+  validTill.setDate(validTill.getDate() + GUEST_SESSION_DURATION_DAYS);
+
+  const result = await prisma.$transaction(async (tx) => {
+    const account = await tx.account.create({
+      data: { accountType: 'guest', linkedAccountId },
+      select: { id: true },
+    });
+
+    const session = await tx.authnSession.create({
+      data: {
+        accountId: account.id,
+        key: sessionKey,
+        ipAddress,
+        userAgent,
+        lastLoggedIn: new Date(),
+        loginType: 'guest',
+        validTill,
+      },
+      select: { id: true },
+    });
+
+    return { accountId: account.id, sessionId: session.id };
+  });
+
+  return { ...result, sessionKey };
+}
 
 /**
  * Resolves or creates a guest account for the current browser.
  *
- * The `guest_acc` cookie stores the guest account ID. A guest account is a
- * real Account row with accountType = 'guest'. It acts as the anonymous
- * identity for the device before (and after) the user signs in.
+ * The guest account is stored in the auth_acc cookie as:
+ *   { aid: guestAccountId, def: 1, sid: sessionId, skey: sessionKey, nid: '' }
  *
- * Login behaviour (linkedAccountId provided):
- *   - Guest account created < 30 days ago → link it to the real account
- *     by setting linkedAccountId on the guest account
- *   - Guest account created ≥ 30 days ago → expire the guest account
- *     (set status = 'expired'), create a new guest account linked to the
- *     real account
+ * This means the proxy's auth check passes for guest accounts — they have
+ * a valid aid/sid/skey, just no nid (which identifies them as guests).
  *
- * Logout behaviour:
- *   - The existing guest account is expired
- *   - A new unlinked guest account is created for the device
+ * Rules:
+ *   - If auth_acc already has a def:1 account with a nid → real user, skip
+ *   - If auth_acc has a def:1 guest (no nid) → reuse if < 30 days, else expire + create new
+ *   - If auth_acc is empty or has no def:1 → create a new guest account
  *
- * No cookie → create a new guest account and set the cookie.
- * Expired guest account in cookie → create a new one.
- *
- * @param linkedAccountId - The real account to link to. Pass null for
- *                          anonymous/logout scenarios.
+ * @param linkedAccountId - Real account to link to (pass null for anonymous)
  */
 export async function resolveGuestAccount(
   linkedAccountId: string | null = null
 ): Promise<void> {
   try {
-    const cookieStore = await cookies();
-    const existingGuestId = cookieStore.get(COOKIE_GUEST_ACC)?.value ?? null;
+    const headersList = await headers();
+    const ipAddress = headersList.get('x-forwarded-for') ?? 'Unknown IP';
+    const userAgent = headersList.get('user-agent') ?? 'Unknown';
 
-    let guestAccountId: string;
+    const accounts = await getAccounts();
+    const activeAccount = accounts.find(a => a.def === 1);
 
-    if (existingGuestId) {
-      const existing = await prisma.account.findUnique({
-        where: { id: existingGuestId },
-        select: { id: true, accountType: true, status: true, createdAt: true, linkedAccountId: true },
-      });
-
-      const isValidGuest = existing && existing.accountType === 'guest' && existing.status !== 'expired';
-
-      if (isValidGuest) {
-        if (linkedAccountId) {
-          // Authenticated — check age
-          const ageMs = Date.now() - existing.createdAt.getTime();
-          const ONE_MONTH_MS = 30 * 24 * 60 * 60 * 1000;
-
-          if (ageMs < ONE_MONTH_MS) {
-            // Fresh guest — link to real account if not already linked
-            if (!existing.linkedAccountId) {
-              await prisma.account.update({
-                where: { id: existingGuestId },
-                data: { linkedAccountId },
-              });
-            }
-            guestAccountId = existingGuestId;
-          } else {
-            // Stale guest — expire it and create a new one linked to the account
-            await prisma.account.update({
-              where: { id: existingGuestId },
-              data: { status: 'expired' },
-            });
-            const newGuest = await prisma.account.create({
-              data: { accountType: 'guest', linkedAccountId },
-            });
-            guestAccountId = newGuest.id;
-          }
-        } else {
-          // Anonymous — reuse as-is
-          guestAccountId = existingGuestId;
-        }
-      } else {
-        // Cookie points to a non-existent or expired guest — create a new one
-        const newGuest = await prisma.account.create({
-          data: { accountType: 'guest', linkedAccountId },
-        });
-        guestAccountId = newGuest.id;
-      }
-    } else {
-      // No cookie — create a new guest account
-      const newGuest = await prisma.account.create({
-        data: { accountType: 'guest', linkedAccountId },
-      });
-      guestAccountId = newGuest.id;
+    // If there's already a real signed-in user (has nid), don't touch anything
+    if (activeAccount?.nid) {
+      return;
     }
 
-    // Set/refresh the guest_acc cookie
-    const expires = new Date();
-    expires.setFullYear(expires.getFullYear() + GUEST_COOKIE_MAX_AGE_YEARS);
+    // Check if there's an existing guest account in the cookie
+    if (activeAccount && !activeAccount.nid && activeAccount.aid) {
+      const existing = await prisma.account.findUnique({
+        where: { id: activeAccount.aid },
+        select: { accountType: true, status: true, createdAt: true, linkedAccountId: true },
+      });
 
-    cookieStore.set(COOKIE_GUEST_ACC, guestAccountId, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'lax',
-      path: '/',
-      expires,
-    });
+      const isValidGuest =
+        existing &&
+        existing.accountType === 'guest' &&
+        existing.status !== 'expired';
+
+      if (isValidGuest) {
+        const ageMs = Date.now() - existing.createdAt.getTime();
+
+        if (ageMs < ONE_MONTH_MS) {
+          // Fresh guest — link to real account if provided and not already linked
+          if (linkedAccountId && !existing.linkedAccountId) {
+            await prisma.account.update({
+              where: { id: activeAccount.aid },
+              data: { linkedAccountId },
+            });
+          }
+          // Already in auth_acc, nothing more to do
+          return;
+        } else {
+          // Stale guest — expire it
+          await prisma.account.update({
+            where: { id: activeAccount.aid },
+            data: { status: 'expired' },
+          });
+          // Fall through to create a new guest below
+        }
+      }
+    }
+
+    // No valid guest in cookie — create a new one and write to auth_acc
+    const created = await createGuestAccountWithSession(linkedAccountId, ipAddress, userAgent);
+    await addAccount(created.accountId, created.sessionId, created.sessionKey, '');
   } catch (error) {
     await logError('auth', error, 'resolve_guest_account');
   }
@@ -115,32 +132,24 @@ export async function resolveGuestAccount(
  */
 export async function rotateGuestAccountOnLogout(): Promise<void> {
   try {
-    const cookieStore = await cookies();
-    const currentGuestId = cookieStore.get(COOKIE_GUEST_ACC)?.value ?? null;
+    const headersList = await headers();
+    const ipAddress = headersList.get('x-forwarded-for') ?? 'Unknown IP';
+    const userAgent = headersList.get('user-agent') ?? 'Unknown';
 
-    // Expire the current guest account
-    if (currentGuestId) {
+    const accounts = await getAccounts();
+    const activeAccount = accounts.find(a => a.def === 1);
+
+    // Expire the current guest account if it exists
+    if (activeAccount && !activeAccount.nid && activeAccount.aid) {
       await prisma.account.updateMany({
-        where: { id: currentGuestId, accountType: 'guest' },
+        where: { id: activeAccount.aid, accountType: 'guest' },
         data: { status: 'expired' },
       });
     }
 
-    // Create a new anonymous guest account for this device
-    const newGuest = await prisma.account.create({
-      data: { accountType: 'guest' },
-    });
-
-    const expires = new Date();
-    expires.setFullYear(expires.getFullYear() + 1);
-
-    cookieStore.set(COOKIE_GUEST_ACC, newGuest.id, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'lax',
-      path: '/',
-      expires,
-    });
+    // Create a new anonymous guest account and write to auth_acc
+    const created = await createGuestAccountWithSession(null, ipAddress, userAgent);
+    await addAccount(created.accountId, created.sessionId, created.sessionKey, '');
   } catch (error) {
     await logError('auth', error, 'rotate_guest_account_on_logout');
   }

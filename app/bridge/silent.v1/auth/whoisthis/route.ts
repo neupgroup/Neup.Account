@@ -1,10 +1,9 @@
 import { NextRequest } from 'next/server';
-import { cookies } from 'next/headers';
 import { getSessionCookies } from '@/core/helpers/cookies';
+import { getAccounts } from '@/core/auth/accounts';
 import prisma from '@/core/helpers/prisma';
 import { logError } from '@/core/helpers/logger';
 import { resolveGuestAccount } from '@/services/auth/guestAccount';
-import { COOKIE_GUEST_ACC } from '@/core/auth/constants';
 import {
   checkRateLimit,
   validateSilentSsoOrigin,
@@ -117,11 +116,13 @@ export async function GET(request: NextRequest): Promise<Response> {
     }
   }
 
-  // 5. Resolve guest account (creates or links it)
+  // 5. Resolve guest account (creates or links it, writes to auth_acc)
   await resolveGuestAccount(isAuthenticated ? (accountId || null) : null);
 
-  const cookieStore = await cookies();
-  const guestAccountId = cookieStore.get(COOKIE_GUEST_ACC)?.value ?? null;
+  // Read the guest account ID from auth_acc (the def:1 account with no nid)
+  const allAccounts = await getAccounts();
+  const guestEntry = allAccounts.find(a => a.def === 1 && !a.nid);
+  const guestAccountId = guestEntry?.aid ?? null;
 
   if (!guestAccountId) {
     return buildHtmlResponse(
