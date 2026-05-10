@@ -1,7 +1,6 @@
 import { NextRequest } from 'next/server';
 import { validateSilentSsoOrigin } from '@/services/auth/silent-sso';
 import { resolveGuestAccount } from '@/services/auth/guestAccount';
-import { getSessionCookies } from '@/core/helpers/cookies';
 
 export const dynamic = 'force-dynamic';
 
@@ -62,6 +61,7 @@ function buildPostMessageResponse(payload: object, targetOrigin: string): Respon
  *   3. postMessage { type: 'neupid:silent_init', ok: true } back to parent.
  *
  * On any failure, postMessage { type: 'neupid:silent_init', ok: false, reason }.
+ * No identities, track IDs, or app-scoped records are created here.
  */
 export async function GET(request: NextRequest): Promise<Response> {
   // 1. Resolve origin
@@ -91,13 +91,9 @@ export async function GET(request: NextRequest): Promise<Response> {
     );
   }
 
-  // 3. Check if already authenticated
-  const { accountId } = await getSessionCookies();
-
-  // 4. Initialize the guest cookie (creates guest account if none exists,
-  //    links to real account if authenticated)
+  // 3. Initialize the guest cookie (creates guest account if none exists)
   try {
-    await resolveGuestAccount(accountId || null);
+    await resolveGuestAccount(null);
   } catch {
     return buildPostMessageResponse(
       { type: 'neupid:silent_init', ok: false, reason: 'init_failed' },
@@ -105,9 +101,9 @@ export async function GET(request: NextRequest): Promise<Response> {
     );
   }
 
-  // 5. Done — postMessage success back to parent frame
+  // 4. Done — postMessage success back to parent frame
   return buildPostMessageResponse(
-    { type: 'neupid:silent_init', ok: true, appId },
+    { type: 'neupid:silent_init', ok: true },
     targetOrigin
   );
 }
