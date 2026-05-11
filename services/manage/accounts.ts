@@ -43,6 +43,7 @@ export type AccountBasics = {
     status: string | null;
     isVerified: boolean;
     accountType: string;
+    lastActive: Date | null;
 };
 
 /**
@@ -181,6 +182,46 @@ export async function getAccessableAccountIds(accountId: string): Promise<string
 
 
 /**
+ * Function getAllAccounts.
+ *
+ * Returns all accounts in the system regardless of type.
+ * Requires root.account.view permission.
+ */
+export async function getAllAccounts(): Promise<AccountBasics[]> {
+    const canView = await checkPermissions(['root.account.view']);
+    if (!canView) return [];
+
+    try {
+        const accounts = await prisma.account.findMany({
+            select: {
+                id: true,
+                displayName: true,
+                displayImage: true,
+                status: true,
+                isVerified: true,
+                accountType: true,
+                lastActive: true,
+            },
+            orderBy: { createdAt: 'desc' },
+        });
+
+        return accounts.map((a) => ({
+            id: a.id,
+            displayName: a.displayName,
+            displayImage: a.displayImage,
+            status: a.status,
+            isVerified: a.isVerified,
+            accountType: a.accountType,
+            lastActive: a.lastActive,
+        }));
+    } catch (error) {
+        await logError('database', error, 'getAllAccounts');
+        return [];
+    }
+}
+
+
+/**
  * Function getAccessableAccounts.
  *
  * Calls getAccessableAccountIds, then fetches basic details for each unique
@@ -231,6 +272,7 @@ export async function getAccessableBrandAccounts(accountId: string): Promise<Acc
                 status: true,
                 isVerified: true,
                 accountType: true,
+                lastActive: true,
             },
         });
 
@@ -248,6 +290,7 @@ export async function getAccessableBrandAccounts(accountId: string): Promise<Acc
                 status: a.status,
                 isVerified: a.isVerified,
                 accountType: a.accountType,
+                lastActive: a.lastActive,
             }));
     } catch (error) {
         await logError('database', error, `getAccessableBrandAccounts:${accountId}`);
@@ -272,6 +315,7 @@ export async function getAccountBasics(accountId: string): Promise<AccountBasics
                 status: true,
                 isVerified: true,
                 accountType: true,
+                lastActive: true,
             },
         });
 
@@ -284,6 +328,7 @@ export async function getAccountBasics(accountId: string): Promise<AccountBasics
             status: account.status,
             isVerified: account.isVerified,
             accountType: account.accountType,
+            lastActive: account.lastActive,
         };
     } catch (error) {
         await logError('database', error, `getAccountBasics:${accountId}`);
@@ -362,6 +407,7 @@ export async function getAccessableAccountsWithCapabilities(
                     status: true,
                     isVerified: true,
                     accountType: true,
+                    lastActive: true,
                 },
             }),
             // Fetch all grants for this accessor across all owner accounts in one query
@@ -424,6 +470,7 @@ export async function getAccessableAccountsWithCapabilities(
                 status: a.status,
                 isVerified: a.isVerified,
                 accountType: a.accountType,
+                lastActive: a.lastActive,
                 capabilities: Array.from(ownerCapMap.get(a.id) ?? []),
             }));
     } catch (error) {
@@ -459,6 +506,7 @@ export async function getAccessableBrandAccountsWithCapabilities(
                     status: true,
                     isVerified: true,
                     accountType: true,
+                    lastActive: true,
                 },
             }),
             prisma.authzAccountAccessGrant.findMany({
@@ -522,6 +570,7 @@ export async function getAccessableBrandAccountsWithCapabilities(
                 status: a.status,
                 isVerified: a.isVerified,
                 accountType: a.accountType,
+                lastActive: a.lastActive,
                 capabilities: Array.from(ownerCapMap.get(a.id) ?? []),
             }));
     } catch (error) {

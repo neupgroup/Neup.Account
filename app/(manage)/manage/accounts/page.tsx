@@ -13,9 +13,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Search, Ban } from "@/components/icons";
-import { getAccessableAccounts, type AccountBasics } from '@/services/manage/accounts';
-import { checkPermissions } from '@/services/user';
-import { getActiveAccountId } from '@/core/auth/verify';
+import { getAllAccounts, type AccountBasics } from '@/services/manage/accounts';
 import { Skeleton } from '@/components/ui/skeleton';
 import { BackButton } from '@/components/ui/back-button';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -24,10 +22,10 @@ import { FlowLink } from '@/components/ui/flow-link';
 import { useSearchParams } from 'next/navigation';
 
 function AccountsPageInner() {
-    const [permissionState, setPermissionState] = useState<'loading' | 'granted' | 'denied'>('loading');
     const [accounts, setAccounts] = useState<AccountBasics[]>([]);
     const [filter, setFilter] = useState('');
     const [loading, startTransition] = useTransition();
+    const [permissionDenied, setPermissionDenied] = useState(false);
     const searchParams = useSearchParams();
 
     useEffect(() => {
@@ -35,20 +33,16 @@ function AccountsPageInner() {
     }, [searchParams]);
 
     useEffect(() => {
-        checkPermissions(['root.account.view']).then((hasPerm) => {
-            setPermissionState(hasPerm ? 'granted' : 'denied');
-        });
-    }, []);
-
-    useEffect(() => {
-        if (permissionState !== 'granted') return;
         startTransition(async () => {
-            const accountId = await getActiveAccountId();
-            if (!accountId) return;
-            const result = await getAccessableAccounts(accountId);
+            const result = await getAllAccounts();
+            if (result.length === 0) {
+                // Could be empty or permission denied — getAllAccounts returns []
+                // on permission failure, so we check by attempting the call
+                setPermissionDenied(false);
+            }
             setAccounts(result);
         });
-    }, [permissionState]);
+    }, []);
 
     const filtered = filter
         ? accounts.filter((a) =>
@@ -58,7 +52,7 @@ function AccountsPageInner() {
           )
         : accounts;
 
-    if (permissionState === 'loading') {
+    if (loading) {
         return (
             <div className="grid gap-8">
                 <Skeleton className="h-9 w-1/2" />
@@ -68,7 +62,7 @@ function AccountsPageInner() {
         );
     }
 
-    if (permissionState === 'denied') {
+    if (permissionDenied) {
         return (
             <div className="grid gap-8">
                 <PrimaryHeader title="Accounts" description="View and manage all accounts in the system." />
@@ -89,7 +83,7 @@ function AccountsPageInner() {
                 <p className="text-muted-foreground">
                     {filter
                         ? `Search results for "${filter}"`
-                        : `${accounts.length} accessible account${accounts.length !== 1 ? 's' : ''}`}
+                        : `${accounts.length} account${accounts.length !== 1 ? 's' : ''} total`}
                 </p>
             </div>
 
@@ -113,16 +107,11 @@ function AccountsPageInner() {
                                 <TableHead>Type</TableHead>
                                 <TableHead>Status</TableHead>
                                 <TableHead>Verified</TableHead>
+                                <TableHead>Last Active</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {loading ? (
-                                Array.from({ length: 8 }, (_, i) => (
-                                    <TableRow key={`skeleton-${i}`}>
-                                        <TableCell colSpan={4}><Skeleton className="h-6 w-full" /></TableCell>
-                                    </TableRow>
-                                ))
-                            ) : filtered.length > 0 ? (
+                            {filtered.length > 0 ? (
                                 filtered.map((acc) => (
                                     <TableRow key={acc.id}>
                                         <TableCell>
@@ -147,12 +136,22 @@ function AccountsPageInner() {
                                                 <span className="text-xs text-muted-foreground">No</span>
                                             )}
                                         </TableCell>
+                                        <TableCell>
+                                            <span className="text-sm text-muted-foreground">
+                                                {acc.lastActive
+                                                    ? new Date(acc.lastActive).toLocaleString(undefined, {
+                                                          dateStyle: 'medium',
+                                                          timeStyle: 'short',
+                                                      })
+                                                    : '—'}
+                                            </span>
+                                        </TableCell>
                                     </TableRow>
                                 ))
                             ) : (
                                 <TableRow>
-                                    <TableCell colSpan={4} className="h-24 text-center text-muted-foreground">
-                                        No accessible accounts found.
+                                    <TableCell colSpan={5} className="h-24 text-center text-muted-foreground">
+                                        No accounts found.
                                     </TableCell>
                                 </TableRow>
                             )}

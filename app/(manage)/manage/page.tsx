@@ -58,6 +58,13 @@ function AccountsPageSkeleton() {
 }
 
 const otherManagementItems = [
+    {
+        href: "/manage/accounts",
+        label: "Accounts",
+        description: "Browse and manage all accounts in the system.",
+        icon: Users,
+        permission: "root.account.view"
+    },
     { 
         href: "/manage/requests", 
         label: "Requests", 
