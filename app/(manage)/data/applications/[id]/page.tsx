@@ -7,8 +7,11 @@ import {
   getApplicationDetailsForViewer,
   getSilentSsoOrigins,
 } from '@/services/applications/manage';
+import { getAppCapabilities, getAppRoles } from '@/services/applications/authz-manage';
+import { getAuthzWebhookUrl } from '@/services/applications/authz-webhook';
 import { deleteManagedApplicationFromDetailsPage } from '@/services/applications/form-actions';
 import { AppWindow, Building, BarChart, Share2, ExternalLink, type LucideIcon } from '@/components/icons';
+import { AuthzManagementPanel } from '@/app/(manage)/data/applications/_components/authz-management-panel';
 
 type ApplicationDetailPageProps = {
   params: Promise<{ id: string }>;
@@ -57,6 +60,14 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
   const deleteAction = deleteManagedApplicationFromDetailsPage.bind(null, id);
 
   const silentSsoOrigins = details.canDelete ? await getSilentSsoOrigins(id) : [];
+
+  const [capabilities, roles, webhookUrl] = details.canDelete
+    ? await Promise.all([
+        getAppCapabilities(id),
+        getAppRoles(id),
+        getAuthzWebhookUrl(id),
+      ])
+    : [[], [], null];
 
   const accessItems = details.hasUsedApp
     ? details.accessedData
@@ -203,6 +214,23 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
           </div>
         </CardContent>
       </Card>
+
+      {details.canDelete ? (
+        <div className="grid gap-6">
+          <div>
+            <h2 className="text-xl font-semibold tracking-tight">Roles &amp; Permissions</h2>
+            <p className="text-sm text-muted-foreground">
+              Define capabilities and roles for this application, then push them to the receiving app via webhook.
+            </p>
+          </div>
+          <AuthzManagementPanel
+            appId={id}
+            initialCapabilities={capabilities}
+            initialRoles={roles}
+            hasWebhook={Boolean(webhookUrl)}
+          />
+        </div>
+      ) : null}
 
       {details.canDelete ? (
         <Card>
