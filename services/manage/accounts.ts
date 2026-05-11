@@ -183,6 +183,122 @@ export async function getAccessableAccountIds(accountId: string): Promise<string
 
 
 /**
+ * Type AccountsPage — paginated result from getAllAccountsPaginated.
+ */
+export type AccountsPage = {
+    accounts: AccountBasics[];
+    total: number;
+    page: number;
+    pageSize: number;
+    totalPages: number;
+};
+
+export type AccountFilterTab = 'all' | 'active' | 'guest' | 'brand' | 'individual';
+export type AccountSortKey = 'newest' | 'oldest' | 'name_asc' | 'name_desc' | 'last_active';
+
+/**
+ * Function getAllAccountsPaginated.
+ *
+ * Returns a paginated, filtered, and sorted slice of all accounts.
+ * Requires root.account.view permission.
+ */
+export async function getAllAccountsPaginated(params: {
+    page: number;
+    pageSize?: number;
+    search?: string;
+    filter?: AccountFilterTab;
+    sort?: AccountSortKey;
+}): Promise<AccountsPage> {
+    const canView = await checkPermissions(['root.account.view']);
+    if (!canView) return { accounts: [], total: 0, page: 1, pageSize: 10, totalPages: 0 };
+
+    const { page, pageSize = 10, search = '', filter = 'all', sort = 'newest' } = params;
+
+    try {
+        // Build where clause
+        const where: Record<string, unknown> = {};
+
+        if (filter === 'active') {
+            where.status = 'active';
+        } else if (filter === 'guest') {
+            where.accountType = 'guest';
+        } else if (filter === 'brand') {
+            where.accountType = { in: ['brand', 'branch'] };
+        } else if (filter === 'individual') {
+            where.accountType = 'individual';
+        }
+
+        if (search) {
+            where.OR = [
+                { displayName: { contains: search, mode: 'insensitive' } },
+                { neupIds: { some: { neupId: { contains: search, mode: 'insensitive' } } } },
+                { id: { contains: search, mode: 'insensitive' } },
+            ];
+        }
+
+        // Build orderBy
+        const orderByMap: Record<AccountSortKey, object> = {
+            oldest:      { createdAt: 'asc' },
+            name_asc:    { displayName: 'asc' },
+            name_desc:   { displayName: 'desc' },
+            last_active: { lastActive: 'desc' },
+            newest:      { createdAt: 'desc' },
+        };
+        const orderBy = orderByMap[sort] ?? { createdAt: 'desc' };
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const whereArg = where as any;
+
+        const [total, rows] = await Promise.all([
+            prisma.account.count({ where: whereArg }),
+            prisma.account.findMany({
+                where: whereArg,
+                orderBy,
+                skip: (page - 1) * pageSize,
+                take: pageSize,
+                select: {
+                    id: true,
+                    displayName: true,
+                    displayImage: true,
+                    status: true,
+                    isVerified: true,
+                    accountType: true,
+                    lastActive: true,
+                    neupIds: {
+                        where: { isPrimary: true },
+                        select: { neupId: true },
+                        take: 1,
+                    },
+                },
+            }),
+        ]);
+
+        const accounts = rows.map((a) => ({
+            id: a.id,
+            displayName: a.displayName,
+            displayImage: a.displayImage,
+            status: a.status,
+            isVerified: a.isVerified,
+            accountType: a.accountType,
+            lastActive: a.lastActive,
+            neupId: a.neupIds[0]?.neupId ?? null,
+        }));
+
+        return {
+            accounts,
+            total,
+            page,
+            pageSize,
+            totalPages: Math.ceil(total / pageSize),
+        };
+    } catch (error) {
+        await logError('database', error, 'getAllAccountsPaginated');
+        return { accounts: [], total: 0, page: 1, pageSize: 10, totalPages: 0 };
+    }
+}
+
+
+/**
  * Function getAllAccounts.
  *
  * Returns all accounts in the system regardless of type.

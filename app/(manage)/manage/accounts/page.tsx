@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState, useTransition, Suspense } from 'react';
+import { useEffect, useState, useTransition, Suspense, useCallback } from 'react';
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -11,8 +12,16 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Search, Ban, CheckCircle2, AtSign, Clock, ArrowUpDown } from "@/components/icons";
-import { getAllAccounts, type AccountBasics } from '@/services/manage/accounts';
+import {
+    Search, Ban, CheckCircle2, AtSign, Clock,
+    ArrowUpDown, ChevronLeft, ChevronRight,
+} from "@/components/icons";
+import {
+    getAllAccountsPaginated,
+    type AccountBasics,
+    type AccountFilterTab,
+    type AccountSortKey,
+} from '@/services/manage/accounts';
 import { Skeleton } from '@/components/ui/skeleton';
 import { BackButton } from '@/components/ui/back-button';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -20,10 +29,9 @@ import { PrimaryHeader } from "@/components/ui/primary-header";
 import { FlowLink } from '@/components/ui/flow-link';
 import { useSearchParams } from 'next/navigation';
 
-type FilterTab = 'all' | 'active' | 'guest' | 'brand' | 'individual';
-type SortKey = 'newest' | 'oldest' | 'name_asc' | 'name_desc' | 'last_active';
+const PAGE_SIZE = 10;
 
-const FILTER_TABS: { value: FilterTab; label: string }[] = [
+const FILTER_TABS: { value: AccountFilterTab; label: string }[] = [
     { value: 'all',        label: 'All' },
     { value: 'active',     label: 'Active' },
     { value: 'individual', label: 'Individual' },
@@ -46,12 +54,10 @@ function AccountRow({ acc, isFirst, isLast }: { acc: AccountBasics; isFirst: boo
           })
         : null;
 
-    const roundingClass = isFirst && isLast
-        ? 'rounded-lg'
-        : isFirst
-        ? 'rounded-t-lg'
-        : isLast
-        ? 'rounded-b-lg'
+    const roundingClass =
+        isFirst && isLast ? 'rounded-lg'
+        : isFirst          ? 'rounded-t-lg'
+        : isLast           ? 'rounded-b-lg'
         : '';
 
     return (
@@ -65,12 +71,10 @@ function AccountRow({ acc, isFirst, isLast }: { acc: AccountBasics; isFirst: boo
                     ${!isFirst ? '-mt-px' : ''}
                 `}
             >
-                {/* Avatar initial */}
                 <div className="h-9 w-9 rounded-md bg-muted flex items-center justify-center shrink-0 text-sm font-semibold text-muted-foreground select-none">
                     {acc.displayName?.charAt(0).toUpperCase() ?? '?'}
                 </div>
 
-                {/* Main info */}
                 <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-1.5">
                         <StatusDot status={acc.status} />
@@ -93,7 +97,6 @@ function AccountRow({ acc, isFirst, isLast }: { acc: AccountBasics; isFirst: boo
                     </div>
                 </div>
 
-                {/* Right: type badge + last active */}
                 <div className="flex flex-col items-end gap-1 shrink-0">
                     <Badge variant="outline" className="text-xs capitalize">
                         {acc.accountType}
@@ -111,13 +114,13 @@ function AccountRow({ acc, isFirst, isLast }: { acc: AccountBasics; isFirst: boo
 function AccountListSkeleton() {
     return (
         <div>
-            {Array.from({ length: 6 }, (_, i) => (
+            {Array.from({ length: PAGE_SIZE }, (_, i) => (
                 <div
                     key={i}
                     className={`
                         flex items-center gap-4 px-4 py-3.5 border border-border bg-card
                         ${i === 0 ? 'rounded-t-lg' : ''}
-                        ${i === 5 ? 'rounded-b-lg' : ''}
+                        ${i === PAGE_SIZE - 1 ? 'rounded-b-lg' : ''}
                         ${i > 0 ? '-mt-px' : ''}
                     `}
                 >
@@ -136,88 +139,63 @@ function AccountListSkeleton() {
     );
 }
 
-function applyFilter(accounts: AccountBasics[], tab: FilterTab): AccountBasics[] {
-    switch (tab) {
-        case 'active':     return accounts.filter((a) => a.status === 'active');
-        case 'guest':      return accounts.filter((a) => a.accountType === 'guest');
-        case 'brand':      return accounts.filter((a) => ['brand', 'branch'].includes(a.accountType));
-        case 'individual': return accounts.filter((a) => a.accountType === 'individual');
-        default:           return accounts;
-    }
-}
-
-function applySort(accounts: AccountBasics[], sort: SortKey): AccountBasics[] {
-    const copy = [...accounts];
-    switch (sort) {
-        case 'name_asc':
-            return copy.sort((a, b) => (a.displayName ?? '').localeCompare(b.displayName ?? ''));
-        case 'name_desc':
-            return copy.sort((a, b) => (b.displayName ?? '').localeCompare(a.displayName ?? ''));
-        case 'last_active':
-            return copy.sort((a, b) => {
-                if (!a.lastActive && !b.lastActive) return 0;
-                if (!a.lastActive) return 1;
-                if (!b.lastActive) return -1;
-                return new Date(b.lastActive).getTime() - new Date(a.lastActive).getTime();
-            });
-        case 'oldest':
-            return copy.reverse();
-        default: // 'newest' — server already returns newest first
-            return copy;
-    }
-}
-
 function AccountsPageInner() {
-    const [accounts, setAccounts] = useState<AccountBasics[]>([]);
-    const [filter, setFilter] = useState('');
-    const [activeTab, setActiveTab] = useState<FilterTab>('all');
-    const [sort, setSort] = useState<SortKey>('newest');
-    const [loading, startTransition] = useTransition();
-    const [permissionDenied, setPermissionDenied] = useState(false);
     const searchParams = useSearchParams();
 
+    const [accounts, setAccounts]           = useState<AccountBasics[]>([]);
+    const [total, setTotal]                 = useState(0);
+    const [totalPages, setTotalPages]       = useState(0);
+    const [page, setPage]                   = useState(1);
+    const [search, setSearch]               = useState('');
+    const [debouncedSearch, setDebouncedSearch] = useState('');
+    const [activeTab, setActiveTab]         = useState<AccountFilterTab>('all');
+    const [sort, setSort]                   = useState<AccountSortKey>('newest');
+    const [loading, startTransition]        = useTransition();
+    const [permissionDenied, setPermissionDenied] = useState(false);
+
+    // Seed search from URL ?q=
     useEffect(() => {
-        setFilter(searchParams.get('q') || '');
+        const q = searchParams.get('q') || '';
+        setSearch(q);
+        setDebouncedSearch(q);
     }, [searchParams]);
 
+    // Debounce search input — reset to page 1 on change
     useEffect(() => {
+        const t = setTimeout(() => {
+            setDebouncedSearch(search);
+            setPage(1);
+        }, 300);
+        return () => clearTimeout(t);
+    }, [search]);
+
+    // Reset to page 1 when filter or sort changes
+    useEffect(() => { setPage(1); }, [activeTab, sort]);
+
+    const fetchPage = useCallback(() => {
         startTransition(async () => {
-            const result = await getAllAccounts();
-            setPermissionDenied(result.length === 0);
-            setAccounts(result);
+            const result = await getAllAccountsPaginated({
+                page,
+                pageSize: PAGE_SIZE,
+                search: debouncedSearch,
+                filter: activeTab,
+                sort,
+            });
+            if (result.total === 0 && !debouncedSearch && activeTab === 'all') {
+                setPermissionDenied(true);
+            } else {
+                setPermissionDenied(false);
+            }
+            setAccounts(result.accounts);
+            setTotal(result.total);
+            setTotalPages(result.totalPages);
         });
-    }, []);
+    }, [page, debouncedSearch, activeTab, sort]);
 
-    // counts per tab for labels
-    const counts: Record<FilterTab, number> = {
-        all:        accounts.length,
-        active:     accounts.filter((a) => a.status === 'active').length,
-        individual: accounts.filter((a) => a.accountType === 'individual').length,
-        brand:      accounts.filter((a) => ['brand', 'branch'].includes(a.accountType)).length,
-        guest:      accounts.filter((a) => a.accountType === 'guest').length,
-    };
+    useEffect(() => { fetchPage(); }, [fetchPage]);
 
-    const searched = filter
-        ? accounts.filter((a) =>
-              a.id.toLowerCase().includes(filter.toLowerCase()) ||
-              (a.displayName ?? '').toLowerCase().includes(filter.toLowerCase()) ||
-              (a.neupId ?? '').toLowerCase().includes(filter.toLowerCase()) ||
-              a.accountType.toLowerCase().includes(filter.toLowerCase()),
-          )
-        : accounts;
-
-    const filtered = applySort(applyFilter(searched, activeTab), sort);
-
-    if (loading) {
-        return (
-            <div className="grid gap-6">
-                <Skeleton className="h-9 w-1/2" />
-                <Skeleton className="h-10 w-full" />
-                <Skeleton className="h-10 w-full" />
-                <AccountListSkeleton />
-            </div>
-        );
-    }
+    const start = total === 0 ? 0 : (page - 1) * PAGE_SIZE + 1;
+    const end   = Math.min(page * PAGE_SIZE, total);
 
     if (permissionDenied) {
         return (
@@ -238,9 +216,11 @@ function AccountsPageInner() {
             <div>
                 <h1 className="text-3xl font-bold tracking-tight">Accounts</h1>
                 <p className="text-muted-foreground">
-                    {filter
-                        ? `${filtered.length} result${filtered.length !== 1 ? 's' : ''} for "${filter}"`
-                        : `${filtered.length} of ${accounts.length} account${accounts.length !== 1 ? 's' : ''}`}
+                    {loading
+                        ? 'Loading…'
+                        : total === 0
+                        ? 'No accounts found'
+                        : `${start}–${end} of ${total} account${total !== 1 ? 's' : ''}`}
                 </p>
             </div>
 
@@ -248,16 +228,16 @@ function AccountsPageInner() {
             <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
-                    placeholder="Filter by name, NeupID, or type..."
-                    value={filter}
-                    onChange={(e) => setFilter(e.target.value)}
+                    placeholder="Search by name, NeupID, or ID…"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
                     className="pl-10"
                 />
             </div>
 
             {/* Filter tabs + sort */}
             <div className="flex items-center justify-between gap-4 flex-wrap">
-                <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as FilterTab)}>
+                <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as AccountFilterTab)}>
                     <TabsList className="h-auto flex-wrap gap-1 bg-transparent p-0">
                         {FILTER_TABS.map((tab) => (
                             <TabsTrigger
@@ -266,13 +246,12 @@ function AccountsPageInner() {
                                 className="rounded-full border border-border bg-background px-3 py-1 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary data-[state=active]:shadow-none"
                             >
                                 {tab.label}
-                                <span className="ml-1.5 text-[10px] opacity-60">{counts[tab.value]}</span>
                             </TabsTrigger>
                         ))}
                     </TabsList>
                 </Tabs>
 
-                <Select value={sort} onValueChange={(v) => setSort(v as SortKey)}>
+                <Select value={sort} onValueChange={(v) => setSort(v as AccountSortKey)}>
                     <SelectTrigger className="w-44 h-8 text-xs gap-1.5">
                         <ArrowUpDown className="h-3 w-3 shrink-0" />
                         <SelectValue />
@@ -288,20 +267,81 @@ function AccountsPageInner() {
             </div>
 
             {/* List */}
-            {filtered.length > 0 ? (
+            {loading ? (
+                <AccountListSkeleton />
+            ) : accounts.length > 0 ? (
                 <div>
-                    {filtered.map((acc, i) => (
+                    {accounts.map((acc, i) => (
                         <AccountRow
                             key={acc.id}
                             acc={acc}
                             isFirst={i === 0}
-                            isLast={i === filtered.length - 1}
+                            isLast={i === accounts.length - 1}
                         />
                     ))}
                 </div>
             ) : (
                 <div className="py-16 text-center text-muted-foreground">
                     No accounts found.
+                </div>
+            )}
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+                <div className="flex items-center justify-between gap-2">
+                    <span className="text-sm text-muted-foreground">
+                        Page {page} of {totalPages}
+                    </span>
+                    <div className="flex items-center gap-1">
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            className="h-8 w-8"
+                            disabled={page <= 1 || loading}
+                            onClick={() => setPage((p) => p - 1)}
+                        >
+                            <ChevronLeft className="h-4 w-4" />
+                        </Button>
+
+                        {/* Page number pills */}
+                        {Array.from({ length: totalPages }, (_, i) => i + 1)
+                            .filter((p) =>
+                                p === 1 ||
+                                p === totalPages ||
+                                Math.abs(p - page) <= 1,
+                            )
+                            .reduce<(number | 'ellipsis')[]>((acc, p, idx, arr) => {
+                                if (idx > 0 && p - (arr[idx - 1] as number) > 1) acc.push('ellipsis');
+                                acc.push(p);
+                                return acc;
+                            }, [])
+                            .map((item, idx) =>
+                                item === 'ellipsis' ? (
+                                    <span key={`ellipsis-${idx}`} className="px-1 text-muted-foreground text-sm">…</span>
+                                ) : (
+                                    <Button
+                                        key={item}
+                                        variant={item === page ? 'default' : 'outline'}
+                                        size="icon"
+                                        className="h-8 w-8 text-xs"
+                                        disabled={loading}
+                                        onClick={() => setPage(item)}
+                                    >
+                                        {item}
+                                    </Button>
+                                ),
+                            )}
+
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            className="h-8 w-8"
+                            disabled={page >= totalPages || loading}
+                            onClick={() => setPage((p) => p + 1)}
+                        >
+                            <ChevronRight className="h-4 w-4" />
+                        </Button>
+                    </div>
                 </div>
             )}
         </div>
