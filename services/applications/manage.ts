@@ -511,20 +511,24 @@ export async function getManagedApplication(appId: string): Promise<ManagedAppli
       return null;
     }
 
-    const application = await prisma.application.findFirst({
-      where: {
-        id: appId,
-      },
-      select: {
-        id: true,
-        name: true,
-        createdAt: true,
-        appSecret: true,
-        details: true,
-        policies: true,
-        endpoints: true,
-      },
-    });
+    const [application, authzWebhookRecord] = await Promise.all([
+      prisma.application.findFirst({
+        where: { id: appId },
+        select: {
+          id: true,
+          name: true,
+          createdAt: true,
+          appSecret: true,
+          details: true,
+          policies: true,
+          endpoints: true,
+        },
+      }),
+      prisma.applicationBridge.findFirst({
+        where: { appId, type: 'authzWebhook' },
+        select: { value: true },
+      }),
+    ]);
 
     if (!application) {
       return null;
@@ -538,6 +542,7 @@ export async function getManagedApplication(appId: string): Promise<ManagedAppli
       access: normalizeAccess((application as any).details?.access ?? []),
       policies: normalizePolicies(application.policies),
       endpoints: normalizeEndpoints(application.endpoints),
+      authzWebhookUrl: authzWebhookRecord?.value ?? null,
     };
   } catch (error) {
     await logError('database', error, `getManagedApplication:${appId}`);

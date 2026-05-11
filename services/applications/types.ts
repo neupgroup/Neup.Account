@@ -51,4 +51,5 @@ export type ManagedApplication = {
   access: ApplicationAccessField[];
   policies: ApplicationPolicyEntry[];
   endpoints: ApplicationEndpointConfig;
+  authzWebhookUrl: string | null;
 };

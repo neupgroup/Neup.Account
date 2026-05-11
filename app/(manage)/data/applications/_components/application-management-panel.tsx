@@ -14,6 +14,7 @@ import {
   saveApplicationPolicies,
   saveApplicationSecret,
 } from '@/services/applications/manage';
+import { saveAuthzWebhookUrl } from '@/services/applications/authz-webhook';
 import {
   applicationAccessFields,
   type ApplicationAccessField,
@@ -70,6 +71,7 @@ export function ApplicationManagementPanel({ application }: { application: Manag
     logoutPage: application.endpoints.logoutPage,
     logoutApi: application.endpoints.logoutApi,
   });
+  const [authzWebhookUrl, setAuthzWebhookUrl] = useState(application.authzWebhookUrl ?? '');
 
   const handleGenerateSecret = async () => {
     const secretKey = generateSecretKey();
@@ -134,6 +136,19 @@ export function ApplicationManagementPanel({ application }: { application: Manag
     }
 
     toast({ title: 'Endpoints saved', description: 'Public links and API endpoints were updated.' });
+  };
+
+  const handleSaveAuthzWebhook = async () => {
+    setPendingSection('authzWebhook');
+    const result = await saveAuthzWebhookUrl({ appId: application.id, url: authzWebhookUrl });
+    setPendingSection(null);
+
+    if (!result.success) {
+      toast({ variant: 'destructive', title: 'Webhook not saved', description: result.error || 'Could not save webhook URL.' });
+      return;
+    }
+
+    toast({ title: 'Webhook saved', description: authzWebhookUrl ? 'Role and permission changes will be pushed to this URL.' : 'Webhook removed.' });
   };
 
   return (
@@ -330,6 +345,35 @@ export function ApplicationManagementPanel({ application }: { application: Manag
           <div className="flex justify-end">
             <Button type="button" onClick={handleSaveEndpoints} disabled={pendingSection === 'endpoints'}>
               {pendingSection === 'endpoints' ? 'Saving...' : 'Save Endpoints'}
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Webhook — Roles &amp; Permissions</CardTitle>
+          <CardDescription>
+            When roles, capabilities, or access grants change for this application, the change is
+            pushed to this URL via POST. Leave blank to disable.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Webhook URL</label>
+            <Input
+              value={authzWebhookUrl}
+              onChange={(event) => setAuthzWebhookUrl(event.target.value)}
+              placeholder="https://..."
+              type="url"
+            />
+            <p className="text-xs text-muted-foreground">
+              Must be HTTPS. Requests are signed with <code className="rounded bg-muted px-1 py-0.5">x-bridge-secret</code>.
+            </p>
+          </div>
+          <div className="flex justify-end">
+            <Button type="button" onClick={handleSaveAuthzWebhook} disabled={pendingSection === 'authzWebhook'}>
+              {pendingSection === 'authzWebhook' ? 'Saving...' : 'Save Webhook'}
             </Button>
           </div>
         </CardContent>
