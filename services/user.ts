@@ -56,6 +56,11 @@ export async function getUserProfile(
       include: {
         individualProfile: true,
         brandProfile: true,
+        neupIds: {
+          where: { isPrimary: true },
+          select: { neupId: true },
+          take: 1,
+        },
       },
     });
 
@@ -78,6 +83,7 @@ export async function getUserProfile(
         accountType: account.accountType || undefined,
         permit: "default",
         pro: false,
+        neupIdPrimary: account.neupIds[0]?.neupId || undefined,
       };
 
       // Fall back to the default avatar if no photo is set
