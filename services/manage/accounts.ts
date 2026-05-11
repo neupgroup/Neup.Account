@@ -44,6 +44,7 @@ export type AccountBasics = {
     isVerified: boolean;
     accountType: string;
     lastActive: Date | null;
+    neupId: string | null;
 };
 
 /**
@@ -201,6 +202,11 @@ export async function getAllAccounts(): Promise<AccountBasics[]> {
                 isVerified: true,
                 accountType: true,
                 lastActive: true,
+                neupIds: {
+                    where: { isPrimary: true },
+                    select: { neupId: true },
+                    take: 1,
+                },
             },
             orderBy: { createdAt: 'desc' },
         });
@@ -213,6 +219,7 @@ export async function getAllAccounts(): Promise<AccountBasics[]> {
             isVerified: a.isVerified,
             accountType: a.accountType,
             lastActive: a.lastActive,
+            neupId: a.neupIds[0]?.neupId ?? null,
         }));
     } catch (error) {
         await logError('database', error, 'getAllAccounts');
@@ -273,6 +280,11 @@ export async function getAccessableBrandAccounts(accountId: string): Promise<Acc
                 isVerified: true,
                 accountType: true,
                 lastActive: true,
+                neupIds: {
+                    where: { isPrimary: true },
+                    select: { neupId: true },
+                    take: 1,
+                },
             },
         });
 
@@ -291,6 +303,7 @@ export async function getAccessableBrandAccounts(accountId: string): Promise<Acc
                 isVerified: a.isVerified,
                 accountType: a.accountType,
                 lastActive: a.lastActive,
+                neupId: a.neupIds[0]?.neupId ?? null,
             }));
     } catch (error) {
         await logError('database', error, `getAccessableBrandAccounts:${accountId}`);
@@ -316,6 +329,11 @@ export async function getAccountBasics(accountId: string): Promise<AccountBasics
                 isVerified: true,
                 accountType: true,
                 lastActive: true,
+                neupIds: {
+                    where: { isPrimary: true },
+                    select: { neupId: true },
+                    take: 1,
+                },
             },
         });
 
@@ -329,6 +347,7 @@ export async function getAccountBasics(accountId: string): Promise<AccountBasics
             isVerified: account.isVerified,
             accountType: account.accountType,
             lastActive: account.lastActive,
+            neupId: account.neupIds[0]?.neupId ?? null,
         };
     } catch (error) {
         await logError('database', error, `getAccountBasics:${accountId}`);
@@ -471,6 +490,7 @@ export async function getAccessableAccountsWithCapabilities(
                 isVerified: a.isVerified,
                 accountType: a.accountType,
                 lastActive: a.lastActive,
+                neupId: null,
                 capabilities: Array.from(ownerCapMap.get(a.id) ?? []),
             }));
     } catch (error) {
@@ -571,6 +591,7 @@ export async function getAccessableBrandAccountsWithCapabilities(
                 isVerified: a.isVerified,
                 accountType: a.accountType,
                 lastActive: a.lastActive,
+                neupId: null,
                 capabilities: Array.from(ownerCapMap.get(a.id) ?? []),
             }));
     } catch (error) {
