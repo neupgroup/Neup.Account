@@ -133,6 +133,93 @@ export async function getPermissions(accountId: string): Promise<UserPermissions
     };
 }
 
+// Returns the roles currently assigned to an account (self-grants).
+export async function getAccountRoles(accountId: string): Promise<{ id: string; name: string; description: string | null }[]> {
+    try {
+        const grants = await prisma.authzAccountAccessGrant.findMany({
+            where: {
+                ownerAccountId: accountId,
+                targetAccountId: accountId,
+                appId: 'neup.account',
+            },
+            select: {
+                role: { select: { id: true, name: true, description: true } },
+            },
+        });
+        const seen = new Set<string>();
+        return grants
+            .map((g) => g.role)
+            .filter((r) => {
+                if (seen.has(r.id)) return false;
+                seen.add(r.id);
+                return true;
+            });
+    } catch (error) {
+        await logError('database', error, `getAccountRoles:${accountId}`);
+        return [];
+    }
+}
+
+// Returns all roles available for assignment (scoped to neup.account, excluding per-account custom roles).
+export async function getAvailableRoles(): Promise<{ id: string; name: string; description: string | null }[]> {
+    try {
+        const roles = await prisma.authzRole.findMany({
+            where: {
+                appId: 'neup.account',
+                NOT: { id: { startsWith: 'account.custom.' } },
+            },
+            select: { id: true, name: true, description: true },
+            orderBy: { name: 'asc' },
+        });
+        return roles;
+    } catch (error) {
+        await logError('database', error, 'getAvailableRoles');
+        return [];
+    }
+}
+
+// Replaces the role assignments for an account with the given set of role IDs.
+// Removes all existing self-grants and creates new ones for each selected role.
+export async function updateAccountRoles(accountId: string, roleIds: string[]): Promise<{ success: boolean; error?: string }> {
+    const canUpdate = await checkPermissions(['root.permission.edit']);
+    if (!canUpdate) return { success: false, error: 'Permission denied.' };
+
+    const adminId = await getPersonalAccountId();
+    if (!adminId) return { success: false, error: 'Administrator not authenticated.' };
+
+    try {
+        await prisma.$transaction(async (tx) => {
+            // Remove all existing self-grants for this account
+            await tx.authzAccountAccessGrant.deleteMany({
+                where: {
+                    ownerAccountId: accountId,
+                    targetAccountId: accountId,
+                    appId: 'neup.account',
+                },
+            });
+
+            // Create new grants for each selected role
+            if (roleIds.length > 0) {
+                await tx.authzAccountAccessGrant.createMany({
+                    data: roleIds.map((roleId) => ({
+                        ownerAccountId: accountId,
+                        targetAccountId: accountId,
+                        roleId,
+                        appId: 'neup.account',
+                    })),
+                });
+            }
+        });
+
+        await logActivity(accountId, `Roles updated by admin ${adminId}: [${roleIds.join(', ')}]`, 'Success', undefined, adminId);
+        revalidatePath(`/manage/accounts/${accountId}/permissions`);
+        return { success: true };
+    } catch (error) {
+        await logError('database', error, `updateAccountRoles:${accountId}`);
+        return { success: false, error: 'An unexpected error occurred.' };
+    }
+}
+
 
 // --- Write ---
 

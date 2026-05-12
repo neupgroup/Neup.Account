@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation";
-import { getPermissions, getUserDetails } from "@/services/manage/users";
-import { getMasterPermissions } from "@/services/manage/access/index";
+import { getUserDetails, getAccountRoles, getAvailableRoles } from "@/services/manage/users";
 import { BackButton } from "@/components/ui/back-button";
-import { PermissionEditor } from "./form";
+import { RoleEditor } from "./form";
 import { PrimaryHeader } from "@/components/ui/primary-header";
 
 export default async function UserPermissionsPage({ params }: { params: Promise<{ id: string }> }) {
@@ -12,23 +11,22 @@ export default async function UserPermissionsPage({ params }: { params: Promise<
         notFound();
     }
 
-    const [userPermissions, allPermissions] = await Promise.all([
-        getPermissions(id),
-        getMasterPermissions(),
+    const [assignedRoles, availableRoles] = await Promise.all([
+        getAccountRoles(id),
+        getAvailableRoles(),
     ]);
 
     return (
         <div className="grid gap-8">
             <BackButton href={`/manage/accounts/${id}`} />
             <PrimaryHeader
-                title="Manage User Permissions"
-                description={`Assign or restrict permission sets for @${userDetails.neupId}.`}
+                title="Manage Roles"
+                description={`Assign roles to @${userDetails.neupId}. Roles determine what the account can access.`}
             />
-            <PermissionEditor
+            <RoleEditor
                 accountId={id}
-                allPermissions={allPermissions}
-                initialAssignedPermissions={userPermissions.assignedPermissions}
-                initialRestrictedPermissions={userPermissions.restrictedPermissions}
+                availableRoles={availableRoles}
+                initialAssignedRoleIds={assignedRoles.map((r) => r.id)}
             />
         </div>
     );
